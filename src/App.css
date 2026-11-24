@@ -961,10 +961,12 @@ html[data-window="gift"] body {
 .theme-surface.live .event.event-row-with-menu {
   position: relative;
 }
-.theme-surface.live .event-row-slot-content:has(> .event-row-with-menu) {
+.theme-surface.live .event-row-slot-content:has(> .event-row-with-menu),
+.event-row-slot-content:has(> .event-surface-archive.event-row-with-menu) {
   isolation: isolate;
 }
-.theme-surface.live .event-row-slot-content:has(> .event-row-with-menu)::before {
+.theme-surface.live .event-row-slot-content:has(> .event-row-with-menu)::before,
+.event-row-slot-content:has(> .event-surface-archive.event-row-with-menu)::before {
   content: "";
   position: absolute;
   inset: 0 0 var(--event-menu-bottom);
@@ -977,7 +979,9 @@ html[data-window="gift"] body {
   transition: opacity 140ms ease;
 }
 .theme-surface.live .event-row-slot-content:has(> .event-row-with-menu):hover::before,
-.theme-surface.live .event-row-slot-content:has(> .event-row-with-menu:focus-within)::before {
+.theme-surface.live .event-row-slot-content:has(> .event-row-with-menu:focus-within)::before,
+.event-row-slot-content:has(> .event-surface-archive.event-row-with-menu):hover::before,
+.event-row-slot-content:has(> .event-surface-archive.event-row-with-menu:focus-within)::before {
   opacity: 1;
 }
 .review-event-search-hit {
@@ -1518,7 +1522,13 @@ html[data-window="gift"] body {
 }
 
 /* 事件菜单只在悬停/聚焦时显露：右缘渐变提示可操作区域，不改变列表行高度。 */
-.theme-surface.live .event-row-slot-content:has(> .event-row-with-menu)::after {
+.theme-surface.live .event-row-slot-content:has(> .event-row-with-menu)::after,
+.event.event-surface-archive.event-row-with-menu::after {
+  display: block;
+  left: auto;
+  height: auto;
+  transform: none;
+  border-radius: inherit;
   position: absolute;
   top: 0;
   right: 0;
@@ -1532,7 +1542,11 @@ html[data-window="gift"] body {
   transition: opacity 140ms ease;
 }
 .theme-surface.live .event-row-slot-content:has(> .event-row-with-menu):is(:hover, :focus-within)::after,
-.theme-surface.live .event-row-slot-content:has(> .event-row-has-persistent-action)::after {
+.theme-surface.live .event-row-slot-content:has(> .event-row-has-persistent-action)::after,
+.theme-surface.live .event-row-slot-content:has(> .event-row-with-menu .event-menu-trigger[aria-expanded="true"])::after,
+.event.event-surface-archive.event-row-with-menu:is(:hover, :focus-within)::after,
+.event.event-surface-archive.event-row-with-menu:has(.event-menu-trigger[aria-expanded="true"])::after,
+.event.event-surface-archive.event-row-has-persistent-action::after {
   opacity: 1;
 }
 

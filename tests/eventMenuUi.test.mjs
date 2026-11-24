@@ -343,8 +343,8 @@ test("事件菜单顶部把用户名放在头像上方，并把两种时间分�
   assert.match(menuBlock, /--type-micro-line: var\(--event-context-menu-event-size, 16px\)/);
 });
 
-test("操作渐变由整行槽位承载，不占用主题伪元素", () => {
+test("现场操作渐变由整行槽位承载，不占用主题伪元素", () => {
   assert.match(cssSource, /event-row-slot-content:has\(> \.event-row-with-menu\)::after/);
-  assert.doesNotMatch(cssSource, /\.event-row-with-menu::after\s*\{/);
+  assert.doesNotMatch(cssSource, /(?:^|\n)\.event-row-with-menu::after\s*\{/);
   assert.match(cssSource, /bottom: var\(--event-menu-bottom\)/);
 });

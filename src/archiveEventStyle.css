@@ -9,7 +9,8 @@
   --review-secondary: #59666f;
   --review-muted: #75817f;
   --review-border: #dde5e1;
-  --review-hover: #e7efeb;
+  --review-hover: color-mix(in srgb, var(--surface-raised) 86%, var(--accent) 14%);
+  --event-menu-bottom: 0px;
   --review-anchor: rgb(246, 66, 117);
   --review-admin: rgb(36, 128, 97);
   --review-captain: rgb(17, 135, 204);
@@ -55,7 +56,6 @@
   --review-secondary: #adbcb9;
   --review-muted: #8c9d98;
   --review-border: #34413e;
-  --review-hover: #2e403a;
   --review-anchor: rgb(250, 123, 159);
   --review-admin: rgb(137, 212, 187);
   --review-captain: rgb(117, 187, 227);
@@ -536,21 +536,7 @@
   display: none;
 }
 .event.event-surface-archive::after {
-  content: "";
-  position: absolute;
-  inset: 0;
-  width: auto;
-  height: auto;
-  transform: none;
-  border-radius: inherit;
-  background: var(--review-hover);
-  opacity: 0;
-  z-index: 0;
-  pointer-events: none;
-}
-.event.event-surface-archive:hover::after,
-.event.event-surface-archive:focus-within::after {
-  opacity: 0.72;
+  display: none;
 }
 .event.event-surface-archive > .event-body,
 .event.event-surface-archive > .avatar-wrap,
