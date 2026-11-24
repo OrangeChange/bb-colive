@@ -65,3 +65,6 @@ src-tauri/licenses/*.pdf
 # 本机项目说明与历史资料
 /AGENTS.md
 /docs/archive/
+
+# 已停用的字体子集
+/src/assets/fonts/MiSans-*.subset.woff2
