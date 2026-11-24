@@ -21,7 +21,7 @@
 | [事件显示](features/event-display.md) | 元信息、身份图标、礼物口径、显示设置与样例 |
 | [弹幕窗与收益窗](features/auxiliary-windows.md) | 只读投影、收益分窗、固定展示、切房、恢复与布局 |
 | [回看与档案](features/review-archive.md) | 导航、场次状态、时间线、写入、管理与封面 |
-| [云端记录恢复](features/cloud-recovery.md) | 服务器连接、完整／增量下载、断点与档案写入 |
+| [云端记录恢复](features/cloud-recovery.md) | EventFetcher 0.7.15 对接基线、选择性／增量恢复、场次修订、登录态与采集管理 |
 | [收藏](features/favorites.md) | 备注、标签、检索与批量操作 |
 | [数据导出](features/data-export.md) | 格式、范围、列、金额、汇总与命名 |
 | [语音与个性播报](features/voice-and-broadcast.md) | 队列、引擎、提示音和输出设备 |
@@ -33,7 +33,7 @@
 [规划索引](roadmap/README.md)区分未来功能与已接入功能的早期设计。
 
 - [协议与数据研究](research/README.md)：字段分析、协议证据与样本。
-- [BB EventFetcher 设计](roadmap/event-fetcher-design.md)：独立采集服务设计资料；客户端已接入[云端恢复](features/cloud-recovery.md)，服务端版本独立维护。
+- [BB EventFetcher 设计](roadmap/event-fetcher-design.md)：早期独立采集服务设计快照；当前对接版本与职责见[云端恢复](features/cloud-recovery.md)，服务端设计和发布独立维护。
 - [平台与更新规划](roadmap/platform-and-updates.md)：跨平台边界、双源分发及更新渠道。
 
 ## 开发与发布

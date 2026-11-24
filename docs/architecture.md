@@ -64,3 +64,12 @@ B 站接口与 WebSocket
 现场 `EventList` 与回看 `ReviewSessionTimeline` 保持独立虚拟滚动机制，共用 `EventRowSlot` 与 ResizeObserver 测量边界。现场顶部锁定阅读使用稳定事件键和视口偏移持续保护前插与高度重测；底部只在尺寸重排期间恢复稳定锚点，普通追加和跟随沿用原路径。`src/events/feedScroll.ts` 读取未裁剪的行测量起点，在最终滚动位置计算后限制范围。回看继续由原分页、阅读和刷新模块管理定位、阅读锁定及持续跟随。
 
 交互契约见 [UX-CONTRACT.md](specifications/UX-CONTRACT.md)，具体行为以[功能文档](README.md#功能文档)为准。架构调整的阶段证据保存在[历史记录](README.md#历史记录)。
+
+
+## 云端记录边界
+
+BB EventFetcher 独立采集并保存原始记录，BB CoLive 负责将恢复内容转换为本地回看档案。当前对接基线为服务端源码 0.7.15、恢复 API v2、直播协议 0.1.3、恢复契约 0.3；采集房间、账号、保留设置及封面资源仍通过管理 API v1 读取。兼容版本、服务端修订和维护依据集中在[云端记录恢复](features/cloud-recovery.md)。
+
+React 通过 `cloudRecoveryBinding.ts` 核对服务能力，通过 `cloudRecoverySelection.ts` 构造范围与内容选择。Rust 的 `cloud_recovery_commands.rs` 和 `cloud_recovery_transport.rs` 负责身份码、账号凭据和服务器请求；云端账号同步由 Rust 直接读取并发送凭据，不将凭据作为云端管理接口的返回值交给 WebView。
+
+恢复对象经目录与块验证、流式转换和 `RecoveryArchiveSink` 写入既有 SQLite 档案。服务端场次身份、归属、资料、质量和封面修订与事件一并消费；暂停、继续和取消由同一任务控制器协调，恢复结果不进入现场分发、播报或特效。服务端保存来源事实，客户端不将其等同于已经完成跨源匹配、字段级合并和冲突审阅。
