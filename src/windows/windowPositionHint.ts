@@ -1,6 +1,7 @@
+import { uiText } from "../i18n/index.ts";
 import type { WindowAppearanceSettings } from '../windowAppearance.ts';
 
-export const EVENT_WINDOW_NAMES = { display:'弹幕窗', gift:'收益窗', 'gift-only':'礼物窗', superchat:'醒目留言窗', guard:'大航海窗' };
+export const EVENT_WINDOW_NAMES = { display:uiText("common.chatWindow"), gift:uiText("common.revenueWindow"), 'gift-only':uiText("windowPositionHint.EVENT_WINDOW_NAMES.giftonly"), superchat:uiText("windowPositionHint.EVENT_WINDOW_NAMES.superchat"), guard:uiText("windowPositionHint.EVENT_WINDOW_NAMES.guard") };
 
 export function shouldShowWindowPositionHint(material: WindowAppearanceSettings['material'], locked: boolean | null, locating: boolean) {
   return locating || (material === 'transparent' && locked === false);

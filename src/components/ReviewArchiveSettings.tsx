@@ -1,3 +1,4 @@
+import { uiText } from "../i18n/index.ts";
 import { useEffect, useMemo, useState } from "react";
 import { Upload, Download, Eye } from "lucide-react";
 import { SettingsIcon } from "./SettingsIcon";
@@ -29,25 +30,25 @@ export interface ReviewArchiveSettingsProps {
 type DeleteMode = "all" | "before" | "range" | "retention" | "keep-owner";
 
 const retentionOptions = [
-  { value: "permanent", label: "永久保留" },
-  { value: "7", label: "最近 7 天" },
-  { value: "30", label: "最近 30 天" },
-  { value: "90", label: "最近 90 天" },
-  { value: "180", label: "最近 180 天" },
-  { value: "365", label: "最近一年" },
-  { value: "custom", label: "自定义时长" },
+  { value: "permanent", label: uiText("reviewArchiveSettings.retentionOptions.label") },
+  { value: "7", label: uiText("reviewArchiveSettings.retentionOptions.label2") },
+  { value: "30", label: uiText("reviewArchiveSettings.retentionOptions.label3") },
+  { value: "90", label: uiText("reviewArchiveSettings.retentionOptions.label4") },
+  { value: "180", label: uiText("reviewArchiveSettings.retentionOptions.label5") },
+  { value: "365", label: uiText("reviewArchiveSettings.retentionOptions.label6") },
+  { value: "custom", label: uiText("reviewArchiveSettings.retentionOptions.label7") },
 ] as const;
 const archiveCleanupOptions = [
-  { value: "all", label: "全部档案" },
-  { value: "retention", label: "按保留周期" },
-  { value: "before", label: "按日期之前" },
-  { value: "range", label: "按日期范围" },
-  { value: "keep-owner", label: "仅保留指定主播" },
+  { value: "all", label: uiText("reviewArchiveSettings.archiveCleanupOptions.label") },
+  { value: "retention", label: uiText("reviewArchiveSettings.archiveCleanupOptions.label2") },
+  { value: "before", label: uiText("reviewArchiveSettings.archiveCleanupOptions.label3") },
+  { value: "range", label: uiText("reviewArchiveSettings.archiveCleanupOptions.label4") },
+  { value: "keep-owner", label: uiText("reviewArchiveSettings.archiveCleanupOptions.label5") },
 ] as const;
 const ownerRetentionPolicyOptions = [
-  { value: "global", label: "跟随全局设置" },
-  { value: "permanent", label: "永久保留" },
-  { value: "custom", label: "单独设置保留时长" },
+  { value: "global", label: uiText("reviewArchiveSettings.ownerRetentionPolicyOptions.label") },
+  { value: "permanent", label: uiText("reviewArchiveSettings.ownerRetentionPolicyOptions.label2") },
+  { value: "custom", label: uiText("reviewArchiveSettings.ownerRetentionPolicyOptions.label3") },
 ] as const;
 
 function formatError(error: unknown): string {
@@ -68,16 +69,16 @@ const DAY_MS = 86_400_000;
 
 function DeletePreview({ preview }: { preview: ArchiveDeletePreview }) {
   return <div className="archive-delete-preview mt-3 border-l-2 border-warning pl-3 ui-type-meta text-t2">
-    <p>将删除</p>
+    <p>{uiText("reviewArchiveSettings.DeletePreview")}</p>
     <dl className="archive-summary mt-1">
-      <div><dt>主播</dt><dd>{preview.ownerCount ?? 0} 位</dd></div>
-      <div><dt>场次</dt><dd>{preview.sessionCount} 场</dd></div>
-      <div><dt>事件</dt><dd>{preview.eventCount} 个</dd></div>
-      <div><dt>收藏</dt><dd>{preview.favoriteCount} 个</dd></div>
-      <div><dt>关联资源地址</dt><dd>{preview.resourceReferenceCount} 个</dd></div>
-      <div><dt>预计释放</dt><dd>{formatBytes(preview.bytes)}</dd></div>
+      <div><dt>{uiText("reviewArchiveSettings.DeletePreview2")}</dt><dd>{preview.ownerCount ?? 0} {uiText("reviewArchiveSettings.DeletePreview3")}</dd></div>
+      <div><dt>{uiText("reviewArchiveSettings.DeletePreview4")}</dt><dd>{preview.sessionCount} {uiText("reviewArchiveSettings.DeletePreview5")}</dd></div>
+      <div><dt>{uiText("reviewArchiveSettings.DeletePreview6")}</dt><dd>{preview.eventCount} {uiText("reviewArchiveSettings.DeletePreview7")}</dd></div>
+      <div><dt>{uiText("reviewArchiveSettings.DeletePreview8")}</dt><dd>{preview.favoriteCount} {uiText("reviewArchiveSettings.DeletePreview7")}</dd></div>
+      <div><dt>{uiText("reviewArchiveSettings.DeletePreview9")}</dt><dd>{preview.resourceReferenceCount} {uiText("reviewArchiveSettings.DeletePreview7")}</dd></div>
+      <div><dt>{uiText("reviewArchiveSettings.DeletePreview10")}</dt><dd>{formatBytes(preview.bytes)}</dd></div>
     </dl>
-    {preview.blockedSessionCount > 0 && <p className="mt-2 text-warning">记录中或重连中的场次 {preview.blockedSessionCount} 场不会删除。</p>}
+    {preview.blockedSessionCount > 0 && <p className="mt-2 text-warning">{uiText("reviewArchiveSettings.DeletePreview11")}{preview.blockedSessionCount} {uiText("reviewArchiveSettings.DeletePreview12")}</p>}
   </div>;
 }
 
@@ -179,11 +180,11 @@ export function ReviewArchiveSettings({ repository, retentionDays, onRetentionDa
   };
 
   const exportAll = () => run(async () => {
-    if (!service) throw new Error("回看档案暂不可用，请稍后再试");
+    if (!service) throw new Error(uiText("reviewArchiveSettings.ReviewArchiveSettings.exportAll"));
     const requestId = createArchiveRequestId("export-all");
     const path = await save({
       defaultPath: `danmu-archive-all-${formatExportDate()}.json`,
-      filters: [{ name: "回看档案 JSON", extensions: ["json"] }],
+      filters: [{ name: uiText("reviewArchiveSettings.path.filters.name"), extensions: ["json"] }],
     });
     if (!path) {
       recordArchiveDiagnostic("cancel", "archive-export", "canceled", { requestId, pathProvided: false, data: { phase: "path-select", scope: "all" } });
@@ -194,7 +195,7 @@ export function ReviewArchiveSettings({ repository, retentionDays, onRetentionDa
       const manifest = JSON.parse(content).manifest as { counts?: { eventCount?: number } };
       await invoke("write_archive_transfer", { path, contents: content });
       recordArchiveDiagnostic("success", "archive-export", "written", { requestId, pathProvided: true, count: manifest.counts?.eventCount, data: { phase: "write", scope: "all" } });
-      setNotice(`全部主播档案已导出：${path}`);
+      setNotice(uiText("reviewArchiveSettings.ReviewArchiveSettings.exportAll2", { path: path }));
     } catch (reason) {
       recordArchiveDiagnostic("failure", "archive-export", "failed", { requestId, pathProvided: true, data: { phase: "write", scope: "all", error: formatError(reason) } });
       throw reason;
@@ -202,9 +203,9 @@ export function ReviewArchiveSettings({ repository, retentionDays, onRetentionDa
   });
 
   const importAll = () => run(async () => {
-    if (!service) throw new Error("回看档案暂不可用，请稍后再试");
+    if (!service) throw new Error(uiText("reviewArchiveSettings.ReviewArchiveSettings.importAll"));
     const requestId = createArchiveRequestId("import-all");
-    const selected = await open({ multiple: false, directory: false, filters: [{ name: "回看档案 JSON", extensions: ["json"] }] });
+    const selected = await open({ multiple: false, directory: false, filters: [{ name: uiText("reviewArchiveSettings.selected.filters.name"), extensions: ["json"] }] });
     const path = Array.isArray(selected) ? selected[0] : selected;
     if (!path) {
       recordArchiveDiagnostic("cancel", "archive-import", "canceled", { requestId, pathProvided: false, data: { phase: "path-select", scope: "all" } });
@@ -231,17 +232,17 @@ export function ReviewArchiveSettings({ repository, retentionDays, onRetentionDa
   });
 
   const exportDateRange = () => run(async () => {
-    if (!service) throw new Error("回看档案暂不可用，请稍后再试");
+    if (!service) throw new Error(uiText("reviewArchiveSettings.ReviewArchiveSettings.exportDateRange"));
     const fromTs = Date.parse(`${exportFromDate}T00:00:00`);
     const toStartTs = Date.parse(`${exportToDate}T00:00:00`);
     const toTs = toStartTs + DAY_MS;
     if (!exportFromDate || !exportToDate || !Number.isFinite(fromTs) || !Number.isFinite(toStartTs) || fromTs >= toTs) {
-      throw new Error("请选择有效的开始日期和结束日期");
+      throw new Error(uiText("reviewArchiveSettings.ReviewArchiveSettings.exportDateRange2"));
     }
     const requestId = createArchiveRequestId("export-date-range");
     const path = await save({
       defaultPath: `danmu-archive-${exportFromDate}-${exportToDate}.json`,
-      filters: [{ name: "回看档案 JSON", extensions: ["json"] }],
+      filters: [{ name: uiText("reviewArchiveSettings.path.filters.name"), extensions: ["json"] }],
     });
     if (!path) {
       recordArchiveDiagnostic("cancel", "archive-export", "canceled", { requestId, pathProvided: false, data: { phase: "path-select", scope: "date" } });
@@ -252,7 +253,7 @@ export function ReviewArchiveSettings({ repository, retentionDays, onRetentionDa
       const manifest = JSON.parse(content).manifest as { counts?: { eventCount?: number } };
       await invoke("write_archive_transfer", { path, contents: content });
       recordArchiveDiagnostic("success", "archive-export", "written", { requestId, pathProvided: true, count: manifest.counts?.eventCount, data: { phase: "write", scope: "date", fromTs, toTs } });
-      setNotice(`日期范围档案已导出：${path}`);
+      setNotice(uiText("reviewArchiveSettings.ReviewArchiveSettings.exportDateRange3", { path: path }));
     } catch (reason) {
       recordArchiveDiagnostic("failure", "archive-export", "failed", { requestId, pathProvided: true, data: { phase: "write", scope: "date", error: formatError(reason) } });
       throw reason;
@@ -266,27 +267,27 @@ export function ReviewArchiveSettings({ repository, retentionDays, onRetentionDa
   };
 
   const previewDelete = () => run(async () => {
-    if (!service) throw new Error("回看档案暂不可用，请稍后再试");
+    if (!service) throw new Error(uiText("reviewArchiveSettings.ReviewArchiveSettings.previewDelete"));
     const requestId = createArchiveRequestId("delete-all");
     let scope;
     if (deleteMode === "all") {
       scope = { all: true };
     } else if (deleteMode === "before") {
       const beforeTs = Date.parse(`${deleteDate}T00:00:00`);
-      if (!Number.isFinite(beforeTs)) throw new Error("请选择删除日期");
+      if (!Number.isFinite(beforeTs)) throw new Error(uiText("reviewArchiveSettings.ReviewArchiveSettings.previewDelete2"));
       scope = { beforeTs };
     } else if (deleteMode === "range") {
       const fromTs = Date.parse(`${deleteFromDate}T00:00:00`);
       const toStartTs = Date.parse(`${deleteToDate}T00:00:00`);
       const toTs = toStartTs + DAY_MS;
-      if (!deleteFromDate || !deleteToDate || !Number.isFinite(fromTs) || !Number.isFinite(toStartTs) || fromTs >= toTs) throw new Error("请选择有效的删除开始日期和结束日期");
+      if (!deleteFromDate || !deleteToDate || !Number.isFinite(fromTs) || !Number.isFinite(toStartTs) || fromTs >= toTs) throw new Error(uiText("reviewArchiveSettings.ReviewArchiveSettings.previewDelete3"));
       scope = { fromTs, toTs };
     } else if (deleteMode === "keep-owner") {
-      if (!keepOwnerId) throw new Error("请选择要保留的主播");
+      if (!keepOwnerId) throw new Error(uiText("reviewArchiveSettings.ReviewArchiveSettings.previewDelete4"));
       scope = { keepOnlyOwnerId: keepOwnerId };
     } else {
       const beforeTs = Date.now() - Number(retentionDraft) * DAY_MS;
-      if (!Number.isFinite(Number(retentionDraft)) || Number(retentionDraft) <= 0 || !Number.isFinite(beforeTs)) throw new Error("保留天数必须是正数");
+      if (!Number.isFinite(Number(retentionDraft)) || Number(retentionDraft) <= 0 || !Number.isFinite(beforeTs)) throw new Error(uiText("reviewArchiveSettings.ReviewArchiveSettings.previewDelete5"));
       scope = { beforeTs };
     }
     const preview = await service.previewDelete(scope, { requestId });
@@ -303,7 +304,7 @@ export function ReviewArchiveSettings({ repository, retentionDays, onRetentionDa
       setDeletePreview(null);
       setDeleteRequestId(null);
       setDeleteConfirmOpen(false);
-      setNotice("档案已删除，收藏关系和阅读位置已一并清理。");
+      setNotice(uiText("reviewArchiveSettings.ReviewArchiveSettings.confirmDelete"));
       onChanged?.();
       setHealthRevision((value) => value + 1);
     } catch (reason) {
@@ -323,117 +324,117 @@ export function ReviewArchiveSettings({ repository, retentionDays, onRetentionDa
 
   return (
     <div data-review-archive-settings className="settings-review-settings mt-1 border-t border-line pt-2">
-      <section className="settings-review-group settings-review-task" aria-label="档案传输">
-        <h3 className="settings-subsection-title settings-review-group-title"><SettingsIcon name="档案传输" />档案传输</h3>
+      <section className="settings-review-group settings-review-task" aria-label={uiText("reviewArchiveSettings.aria_label")}>
+        <h3 className="settings-subsection-title settings-review-group-title"><SettingsIcon name="archiveTransfer" />{uiText("reviewArchiveSettings.ReviewArchiveSettings")}</h3>
       <div className="settings-review-setting settings-control-row settings-switch-row">
         <div className="min-w-0">
-          <div className="settings-control-label ui-type-control text-t2" title="导入或导出全部主播档案；包含事件内容和资源地址，不包含图片、设置或凭证。">全部主播档案</div>
+          <div className="settings-control-label ui-type-control text-t2" title={uiText("reviewArchiveSettings.title")}>{uiText("reviewArchiveSettings.ReviewArchiveSettings2")}</div>
         </div>
         <div className="settings-review-setting-actions settings-review-actions flex gap-1.5">
-          <button type="button" disabled={!repository || busy} className="settings-action-button settings-inline-button ui-type-control" onClick={importAll}><Upload size={15} aria-hidden="true" />导入档案</button>
-          <button type="button" disabled={!repository || busy} className="settings-action-button settings-inline-button ui-type-control" onClick={exportAll}><Download size={15} aria-hidden="true" />导出档案</button>
+          <button type="button" disabled={!repository || busy} className="settings-action-button settings-inline-button ui-type-control" onClick={importAll}><Upload size={15} aria-hidden="true" />{uiText("reviewArchiveSettings.ReviewArchiveSettings3")}</button>
+          <button type="button" disabled={!repository || busy} className="settings-action-button settings-inline-button ui-type-control" onClick={exportAll}><Download size={15} aria-hidden="true" />{uiText("reviewArchiveSettings.ReviewArchiveSettings4")}</button>
         </div>
       </div>
       <div className="settings-review-setting settings-control-row settings-input-row">
         <div className="min-w-0">
-          <div className="settings-control-label ui-type-control text-t2" title="按开播日期筛选，结束日期包含当天。">按日期范围导出</div>
+          <div className="settings-control-label ui-type-control text-t2" title={uiText("reviewArchiveSettings.title2")}>{uiText("reviewArchiveSettings.ReviewArchiveSettings5")}</div>
         </div>
         <div className="settings-review-setting-actions settings-review-actions flex flex-wrap items-center gap-1.5">
-          <label className="settings-date-pair"><span className="ui-type-meta text-t2">开始</span><input type="date" value={exportFromDate} aria-label="导出开始日期" onChange={(event) => setExportFromDate(event.target.value)} className="settings-date-input ui-type-control" /></label>
-          <label className="settings-date-pair"><span className="ui-type-meta text-t2">结束</span><input type="date" value={exportToDate} aria-label="导出结束日期" onChange={(event) => setExportToDate(event.target.value)} className="settings-date-input ui-type-control" /></label>
-          <button type="button" disabled={!repository || busy || !exportFromDate || !exportToDate} className="settings-action-button settings-inline-button ui-type-control" onClick={exportDateRange}><Download size={15} aria-hidden="true" />导出</button>
+          <label className="settings-date-pair"><span className="ui-type-meta text-t2">{uiText("reviewArchiveSettings.ReviewArchiveSettings6")}</span><input type="date" value={exportFromDate} aria-label={uiText("reviewArchiveSettings.aria_label2")} onChange={(event) => setExportFromDate(event.target.value)} className="settings-date-input ui-type-control" /></label>
+          <label className="settings-date-pair"><span className="ui-type-meta text-t2">{uiText("reviewArchiveSettings.ReviewArchiveSettings7")}</span><input type="date" value={exportToDate} aria-label={uiText("reviewArchiveSettings.aria_label3")} onChange={(event) => setExportToDate(event.target.value)} className="settings-date-input ui-type-control" /></label>
+          <button type="button" disabled={!repository || busy || !exportFromDate || !exportToDate} className="settings-action-button settings-inline-button ui-type-control" onClick={exportDateRange}><Download size={15} aria-hidden="true" />{uiText("common.export")}</button>
         </div>
       </div>
       {importPreview && (
         <div className="mt-2 rounded-md border border-accent/40 bg-accent/5 px-3 py-2 ui-type-meta text-t3">
-          <div>导入预览</div>
+          <div>{uiText("reviewArchiveSettings.ReviewArchiveSettings8")}</div>
           <dl className="archive-summary mt-1">
-            <div><dt>主播</dt><dd>{importPreview.ownerCount} 位</dd></div>
-            <div><dt>场次</dt><dd>{importPreview.sessionCount} 场</dd></div>
-            <div><dt>新增事件</dt><dd>{importPreview.imported} 个</dd></div>
-            <div><dt>跳过事件</dt><dd>{importPreview.skipped} 个</dd></div>
-            <div><dt>冲突事件</dt><dd>{importPreview.conflicts} 个</dd></div>
-            <div><dt>补全字段</dt><dd>{importPreview.completedFields} 个</dd></div>
+            <div><dt>{uiText("reviewArchiveSettings.ReviewArchiveSettings9")}</dt><dd>{importPreview.ownerCount} {uiText("reviewArchiveSettings.ReviewArchiveSettings10")}</dd></div>
+            <div><dt>{uiText("reviewArchiveSettings.ReviewArchiveSettings11")}</dt><dd>{importPreview.sessionCount} {uiText("reviewArchiveSettings.ReviewArchiveSettings12")}</dd></div>
+            <div><dt>{uiText("reviewArchiveSettings.ReviewArchiveSettings13")}</dt><dd>{importPreview.imported} {uiText("reviewArchiveSettings.ReviewArchiveSettings14")}</dd></div>
+            <div><dt>{uiText("reviewArchiveSettings.ReviewArchiveSettings15")}</dt><dd>{importPreview.skipped} {uiText("reviewArchiveSettings.ReviewArchiveSettings14")}</dd></div>
+            <div><dt>{uiText("reviewArchiveSettings.ReviewArchiveSettings16")}</dt><dd>{importPreview.conflicts} {uiText("reviewArchiveSettings.ReviewArchiveSettings14")}</dd></div>
+            <div><dt>{uiText("reviewArchiveSettings.ReviewArchiveSettings17")}</dt><dd>{importPreview.completedFields} {uiText("reviewArchiveSettings.ReviewArchiveSettings14")}</dd></div>
           </dl>
           <div className="mt-2 flex gap-2">
-            <button type="button" disabled={busy} className="settings-inline-button ui-type-control" onClick={confirmImport}>确认导入</button>
-            <button type="button" disabled={busy} className="settings-inline-button ui-type-control" onClick={cancelImport}>取消</button>
+            <button type="button" disabled={busy} className="settings-inline-button ui-type-control" onClick={confirmImport}>{uiText("reviewArchiveSettings.ReviewArchiveSettings18")}</button>
+            <button type="button" disabled={busy} className="settings-inline-button ui-type-control" onClick={cancelImport}>{uiText("common.cancel")}</button>
           </div>
         </div>
       )}
-      {importResult && <div className="mt-2 ui-type-meta text-success">导入完成：新增 {importResult.imported} 个事件，跳过 {importResult.skipped} 个，冲突 {importResult.conflicts} 个。</div>}
+      {importResult && <div className="mt-2 ui-type-meta text-success">{uiText("reviewArchiveSettings.ReviewArchiveSettings19")}{importResult.imported} {uiText("reviewArchiveSettings.ReviewArchiveSettings20")}{importResult.skipped} {uiText("reviewArchiveSettings.ReviewArchiveSettings21")}{importResult.conflicts} {uiText("reviewArchiveSettings.ReviewArchiveSettings22")}</div>}
       </section>
 
-      <section className="settings-review-group settings-review-task" aria-label="保留策略">
-        <h3 className="settings-subsection-title settings-review-group-title"><SettingsIcon name="保留策略" />保留策略</h3>
+      <section className="settings-review-group settings-review-task" aria-label={uiText("reviewArchiveSettings.aria_label4")}>
+        <h3 className="settings-subsection-title settings-review-group-title"><SettingsIcon name="retention" />{uiText("reviewArchiveSettings.ReviewArchiveSettings23")}</h3>
       <div className="settings-review-setting settings-control-row settings-input-row">
-        <span className="settings-control-label ui-type-control text-t2">默认保留策略</span>
+        <span className="settings-control-label ui-type-control text-t2">{uiText("reviewArchiveSettings.ReviewArchiveSettings24")}</span>
         <span className="settings-review-setting-actions settings-review-actions flex flex-wrap items-center gap-1.5">
-          <UiSelect ariaLabel="默认档案保留策略" size="standard" className="settings-inline-select ui-type-control" options={retentionOptions} value={retentionPreset} onValueChange={(value) => {
+          <UiSelect ariaLabel={uiText("reviewArchiveSettings.ariaLabel")} size="standard" className="settings-inline-select ui-type-control" options={retentionOptions} value={retentionPreset} onValueChange={(value) => {
             if (value === "permanent") onRetentionDaysChange(null);
             else if (value === "custom") onRetentionDaysChange(retentionDays ?? 30);
             else onRetentionDaysChange(Number(value));
           }} />
-          {retentionPreset === "custom" && <><input type="number" min="1" value={retentionDays ?? ""} placeholder="天数" onChange={(event) => {
+          {retentionPreset === "custom" && <><input type="number" min="1" value={retentionDays ?? ""} placeholder={uiText("reviewArchiveSettings.placeholder")} onChange={(event) => {
             const value = event.target.value;
             const days = value === "" ? null : Number(value);
             setRetentionDraft(value || "30");
             onRetentionDaysChange(days === null || !Number.isFinite(days) || days <= 0 ? null : days);
-          }} className="settings-number-input ui-type-control" aria-label="自定义档案保留天数" /><span className="ui-type-meta text-t3">天</span></>}
+          }} className="settings-number-input ui-type-control" aria-label={uiText("reviewArchiveSettings.aria_label5")} /><span className="ui-type-meta text-t3">{uiText("reviewArchiveSettings.ReviewArchiveSettings25")}</span></>}
         </span>
       </div>
       <div className="settings-review-setting settings-control-row settings-input-row">
         <div className="min-w-0">
-          <div className="settings-control-label ui-type-control text-t2" title="可为指定主播单独设置，只影响手动清理。">主播档案保留策略</div>
+          <div className="settings-control-label ui-type-control text-t2" title={uiText("reviewArchiveSettings.title3")}>{uiText("reviewArchiveSettings.ReviewArchiveSettings26")}</div>
         </div>
         <span className="settings-review-setting-actions settings-review-actions flex flex-wrap items-center gap-1.5">
           {owners.length > 0 ? <>
-            <UiSelect ariaLabel="选择主播保留策略" size="standard" className="settings-inline-select ui-type-control" options={owners.map((owner) => ({ value: owner.ownerId, label: getArchiveOwnerLabel(owner, anchors) }))} value={selectedOwnerId} onValueChange={setSelectedOwnerId} />
-            <UiSelect ariaLabel="主播档案保留策略" size="standard" className="settings-inline-select ui-type-control" options={ownerRetentionPolicyOptions} value={selectedOwnerPolicyMode} onValueChange={(value) => {
+            <UiSelect ariaLabel={uiText("reviewArchiveSettings.ariaLabel2")} size="standard" className="settings-inline-select ui-type-control" options={owners.map((owner) => ({ value: owner.ownerId, label: getArchiveOwnerLabel(owner, anchors) }))} value={selectedOwnerId} onValueChange={setSelectedOwnerId} />
+            <UiSelect ariaLabel={uiText("reviewArchiveSettings.ariaLabel3")} size="standard" className="settings-inline-select ui-type-control" options={ownerRetentionPolicyOptions} value={selectedOwnerPolicyMode} onValueChange={(value) => {
               setOwnerRetentionDays(selectedOwnerId, value === "global" ? undefined : value === "permanent" ? null : Number(ownerRetentionDraft));
               recordArchiveDiagnostic("setting-change", "review-owner-retention", "changed", { data: { ownerId: selectedOwnerId, policy: value, source: "settings" } });
             }} />
-            {selectedOwnerPolicyMode === "custom" && <><input type="number" min="1" value={selectedOwnerPolicy ?? ownerRetentionDraft} aria-label="主播单独保留天数" className="settings-number-input ui-type-control" onChange={(event) => { setOwnerRetentionDraft(event.target.value); const days = Number(event.target.value); if (Number.isFinite(days) && days > 0) setOwnerRetentionDays(selectedOwnerId, days); }} /><span className="ui-type-meta text-t3">天</span></>}
-          </> : <span className="ui-type-meta text-t3">暂无主播档案</span>}
+            {selectedOwnerPolicyMode === "custom" && <><input type="number" min="1" value={selectedOwnerPolicy ?? ownerRetentionDraft} aria-label={uiText("reviewArchiveSettings.aria_label6")} className="settings-number-input ui-type-control" onChange={(event) => { setOwnerRetentionDraft(event.target.value); const days = Number(event.target.value); if (Number.isFinite(days) && days > 0) setOwnerRetentionDays(selectedOwnerId, days); }} /><span className="ui-type-meta text-t3">{uiText("reviewArchiveSettings.ReviewArchiveSettings25")}</span></>}
+          </> : <span className="ui-type-meta text-t3">{uiText("reviewArchiveSettings.ReviewArchiveSettings27")}</span>}
         </span>
       </div>
       </section>
 
-      <section className="settings-review-group settings-review-task" aria-label="空间与清理">
-        <h3 className="settings-subsection-title settings-review-group-title"><SettingsIcon name="空间与清理" />空间与清理</h3>
+      <section className="settings-review-group settings-review-task" aria-label={uiText("reviewArchiveSettings.aria_label7")}>
+        <h3 className="settings-subsection-title settings-review-group-title"><SettingsIcon name="storage" />{uiText("reviewArchiveSettings.ReviewArchiveSettings28")}</h3>
       <div className="settings-review-setting settings-control-row settings-input-row">
         <div className="min-w-0">
-          <div className="settings-control-label ui-type-control text-t2" title="图片只保存链接，不保存图片文件。">档案占用空间</div>
+          <div className="settings-control-label ui-type-control text-t2" title={uiText("reviewArchiveSettings.title4")}>{uiText("reviewArchiveSettings.ReviewArchiveSettings29")}</div>
         </div>
         <div className="settings-review-setting-value text-left ui-type-meta text-t2" aria-live="polite">
-          {healthLoading ? "正在读取…" : health?.available ? <><div className="ui-type-section-title text-t1">{formatBytes(health.bytes)}</div><dl className="archive-summary mt-1 text-t3">
-            <div><dt>主播</dt><dd>{health.ownerCount} 位</dd></div>
-            <div><dt>场次</dt><dd>{health.sessionCount} 场</dd></div>
-            <div><dt>事件</dt><dd>{health.eventCount} 个</dd></div>
-            <div><dt>收藏</dt><dd>{health.favoriteCount} 个</dd></div>
-          </dl></> : <span className="text-warning">暂不可用</span>}
+          {healthLoading ? uiText("reviewArchiveSettings.ReviewArchiveSettings30") : health?.available ? <><div className="ui-type-section-title text-t1">{formatBytes(health.bytes)}</div><dl className="archive-summary mt-1 text-t3">
+            <div><dt>{uiText("reviewArchiveSettings.ReviewArchiveSettings9")}</dt><dd>{health.ownerCount} {uiText("reviewArchiveSettings.ReviewArchiveSettings10")}</dd></div>
+            <div><dt>{uiText("reviewArchiveSettings.ReviewArchiveSettings11")}</dt><dd>{health.sessionCount} {uiText("reviewArchiveSettings.ReviewArchiveSettings12")}</dd></div>
+            <div><dt>{uiText("reviewArchiveSettings.ReviewArchiveSettings31")}</dt><dd>{health.eventCount} {uiText("reviewArchiveSettings.ReviewArchiveSettings14")}</dd></div>
+            <div><dt>{uiText("reviewArchiveSettings.ReviewArchiveSettings32")}</dt><dd>{health.favoriteCount} {uiText("reviewArchiveSettings.ReviewArchiveSettings14")}</dd></div>
+          </dl></> : <span className="text-warning">{uiText("reviewArchiveSettings.ReviewArchiveSettings33")}</span>}
         </div>
       </div>
       <div className="settings-review-setting settings-control-row settings-input-row">
-        <span className="settings-control-label ui-type-control text-t2" title="先预览影响范围。仅保留指定主播会删除其他可删除档案。">按范围清理档案</span>
+        <span className="settings-control-label ui-type-control text-t2" title={uiText("reviewArchiveSettings.title5")}>{uiText("reviewArchiveSettings.ReviewArchiveSettings34")}</span>
         <span className="settings-review-setting-actions settings-review-actions flex flex-wrap items-center gap-1.5">
-          <UiSelect ariaLabel="清理档案范围" size="standard" className="settings-inline-select ui-type-control" options={archiveCleanupOptions} value={deleteMode} onValueChange={(value) => setDeleteMode(value as DeleteMode)} />
+          <UiSelect ariaLabel={uiText("reviewArchiveSettings.ariaLabel4")} size="standard" className="settings-inline-select ui-type-control" options={archiveCleanupOptions} value={deleteMode} onValueChange={(value) => setDeleteMode(value as DeleteMode)} />
           {deleteMode === "all" ? (
-            <span className="ui-type-meta text-warning">进行中的场次不会删除</span>
+            <span className="ui-type-meta text-warning">{uiText("reviewArchiveSettings.ReviewArchiveSettings35")}</span>
           ) : deleteMode === "retention" ? (
-            <span className="flex items-center gap-1"><input type="number" min="1" value={retentionDraft} onChange={(event) => setRetentionDraft(event.target.value)} className="settings-number-input ui-type-control" aria-label="清理保留天数" /><span className="ui-type-meta text-t3">天</span></span>
-          ) : deleteMode === "before" ? <input type="date" value={deleteDate} onChange={(event) => setDeleteDate(event.target.value)} className="settings-inline-select ui-type-control" aria-label="删除日期之前" />
-            : deleteMode === "range" ? <><label className="settings-date-pair"><span className="ui-type-meta text-t2">开始</span><input type="date" value={deleteFromDate} onChange={(event) => setDeleteFromDate(event.target.value)} className="settings-inline-select ui-type-control" aria-label="删除开始日期" /></label><label className="settings-date-pair"><span className="ui-type-meta text-t2">结束</span><input type="date" value={deleteToDate} onChange={(event) => setDeleteToDate(event.target.value)} className="settings-inline-select ui-type-control" aria-label="删除结束日期" /></label></>
-              : <UiSelect ariaLabel="要保留的主播" size="standard" className="settings-inline-select ui-type-control" options={[{ value: "", label: "选择主播" }, ...owners.map((owner) => ({ value: owner.ownerId, label: getArchiveOwnerLabel(owner, anchors) }))]} value={keepOwnerId} onValueChange={setKeepOwnerId} />}
-          <button type="button" disabled={!repository || busy || (deleteMode === "keep-owner" && !keepOwnerId)} className="settings-action-button settings-inline-button ui-type-control" onClick={previewDelete}><Eye size={15} aria-hidden="true" />预览清理</button>
+            <span className="flex items-center gap-1"><input type="number" min="1" value={retentionDraft} onChange={(event) => setRetentionDraft(event.target.value)} className="settings-number-input ui-type-control" aria-label={uiText("reviewArchiveSettings.aria_label8")} /><span className="ui-type-meta text-t3">{uiText("reviewArchiveSettings.ReviewArchiveSettings25")}</span></span>
+          ) : deleteMode === "before" ? <input type="date" value={deleteDate} onChange={(event) => setDeleteDate(event.target.value)} className="settings-inline-select ui-type-control" aria-label={uiText("reviewArchiveSettings.aria_label9")} />
+            : deleteMode === "range" ? <><label className="settings-date-pair"><span className="ui-type-meta text-t2">{uiText("reviewArchiveSettings.ReviewArchiveSettings6")}</span><input type="date" value={deleteFromDate} onChange={(event) => setDeleteFromDate(event.target.value)} className="settings-inline-select ui-type-control" aria-label={uiText("reviewArchiveSettings.aria_label10")} /></label><label className="settings-date-pair"><span className="ui-type-meta text-t2">{uiText("reviewArchiveSettings.ReviewArchiveSettings7")}</span><input type="date" value={deleteToDate} onChange={(event) => setDeleteToDate(event.target.value)} className="settings-inline-select ui-type-control" aria-label={uiText("reviewArchiveSettings.aria_label11")} /></label></>
+              : <UiSelect ariaLabel={uiText("reviewArchiveSettings.ariaLabel5")} size="standard" className="settings-inline-select ui-type-control" options={[{ value: "", label: uiText("reviewArchiveSettings.options.label") }, ...owners.map((owner) => ({ value: owner.ownerId, label: getArchiveOwnerLabel(owner, anchors) }))]} value={keepOwnerId} onValueChange={setKeepOwnerId} />}
+          <button type="button" disabled={!repository || busy || (deleteMode === "keep-owner" && !keepOwnerId)} className="settings-action-button settings-inline-button ui-type-control" onClick={previewDelete}><Eye size={15} aria-hidden="true" />{uiText("reviewArchiveSettings.ReviewArchiveSettings36")}</button>
         </span>
       </div>
       {deletePreview && <DeletePreview preview={deletePreview} />}
-      {deletePreview && <div className="mt-2 flex justify-end gap-2"><button type="button" disabled={busy} className="settings-inline-button settings-inline-button-danger ui-type-control" onClick={() => setDeleteConfirmOpen(true)}>确认清理</button><button type="button" disabled={busy} className="settings-inline-button ui-type-control" onClick={cancelDelete}>取消</button></div>}
+      {deletePreview && <div className="mt-2 flex justify-end gap-2"><button type="button" disabled={busy} className="settings-inline-button settings-inline-button-danger ui-type-control" onClick={() => setDeleteConfirmOpen(true)}>{uiText("reviewArchiveSettings.ReviewArchiveSettings37")}</button><button type="button" disabled={busy} className="settings-inline-button ui-type-control" onClick={cancelDelete}>{uiText("common.cancel")}</button></div>}
       </section>
       {notice && <div role="status" className="mt-2 ui-type-meta text-success">{notice}</div>}
       {error && <div role="alert" className="mt-2 ui-type-meta text-danger">{error}</div>}
-      {deleteConfirmOpen && deletePreview && <ConfirmDialog title="确认清理档案" description={`将删除 ${deletePreview.ownerCount ?? 0} 位主播、${deletePreview.sessionCount} 场、${deletePreview.eventCount} 个事件和 ${deletePreview.favoriteCount} 个收藏。删除后无法恢复。`} confirmLabel="确认清理" confirmTone="danger" errorMessage="清理失败，请重新预览后重试。" cancelAriaLabel="取消清理" onCancel={() => { if (!busy) setDeleteConfirmOpen(false); }} onConfirm={confirmDelete} />}
+      {deleteConfirmOpen && deletePreview && <ConfirmDialog title={uiText("reviewArchiveSettings.title6")} description={uiText("reviewArchiveSettings.description", { value: deletePreview.ownerCount ?? 0, sessionCount: deletePreview.sessionCount, eventCount: deletePreview.eventCount, favoriteCount: deletePreview.favoriteCount })} confirmLabel={uiText("reviewArchiveSettings.confirmLabel")} confirmTone="danger" errorMessage={uiText("reviewArchiveSettings.errorMessage")} cancelAriaLabel="取消清理" onCancel={() => { if (!busy) setDeleteConfirmOpen(false); }} onConfirm={confirmDelete} />}
     </div>
   );
 }

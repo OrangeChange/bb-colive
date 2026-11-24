@@ -1,3 +1,4 @@
+import { uiText } from "../i18n/index.ts";
 import { parseThemeCssMetadata } from "./themeCssMetadata.ts";
 import type { ThemeAssetChanges, ThemeSaveOptions } from "./themeEditorSession.ts";
 import { saveThemeDocument } from "./themeReferences.ts";
@@ -58,7 +59,7 @@ export async function installImportedThemePackage(
   catch { /* 首次导入没有本地主题。 */ }
 
   if (action === "update" && existing?.origin === "builtin") {
-    throw new Error("内置主题不能覆盖，请导入为副本");
+    throw new Error(uiText("themeImport.installImportedThemePackage"));
   }
 
   const document = {

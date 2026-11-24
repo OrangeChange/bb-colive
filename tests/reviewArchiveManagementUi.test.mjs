@@ -1,10 +1,11 @@
+import { readUiSource } from "./helpers/readUiSource.mjs";
 import test from "node:test";
 import assert from "node:assert/strict";
 import { readFileSync } from "node:fs";
 import { fileURLToPath } from "node:url";
 
 const root = fileURLToPath(new URL("../", import.meta.url));
-const read = (path) => readFileSync(`${root}/${path}`, "utf8");
+const read = (path) => readUiSource(`${root}/${path}`, "utf8");
 
 test("回看档案管理提供文件导入导出、删除预览和确认入口", () => {
   const source = read("src/components/ReviewArchiveManagement.tsx");

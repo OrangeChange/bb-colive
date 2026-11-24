@@ -1,3 +1,4 @@
+import { UiMessageError } from "../i18n/index.ts";
 /**
  * 登录会话管理：cookie 缓存（tauri-plugin-store，文件 cookies.local.json，已被 .gitignore 排除）
  * + web 扫码登录流程（poll set-cookie -> SESSDATA，crossDomain fallback）
@@ -165,7 +166,7 @@ export async function qrLogin(opts: QrLoginOptions): Promise<Session> {
     gen = await qrGenerate()
   } catch {
     recordFeatureDiagnostic({ featureId: 'session', stage: 'failure', action: 'qr-login', outcome: 'generate-failed', requestId })
-    throw new Error('无法生成登录二维码，请检查网络后重试')
+    throw new UiMessageError("login.qrLogin")
   }
   throwIfAborted(signal) // 生成二维码期间被取消（StrictMode 双调用）：不再回调，避免覆盖界面
   onQrUrl(gen.url)
@@ -198,7 +199,7 @@ export async function qrLogin(opts: QrLoginOptions): Promise<Session> {
       }
 
       if (!cookies.SESSDATA) {
-        throw new Error('登录成功但未拿到 SESSDATA，请重试')
+        throw new UiMessageError("login.qrLogin2")
       }
 
       let nav: Awaited<ReturnType<typeof getNav>>
@@ -206,9 +207,9 @@ export async function qrLogin(opts: QrLoginOptions): Promise<Session> {
         nav = await getNav(cookieStr)
       } catch {
         recordFeatureDiagnostic({ featureId: 'session', stage: 'failure', action: 'qr-login', outcome: 'nav-failed', requestId })
-        throw new Error('登录成功但无法确认登录状态，请重试')
+        throw new UiMessageError("login.qrLogin3")
       }
-      if (!nav.isLogin) throw new Error('登录态异常：nav 显示未登录')
+      if (!nav.isLogin) throw new UiMessageError("login.qrLogin4")
 
       recordFeatureDiagnostic({ featureId: 'session', stage: 'success', action: 'qr-login', outcome: 'logged-in', requestId })
       return {
@@ -224,7 +225,7 @@ export async function qrLogin(opts: QrLoginOptions): Promise<Session> {
     } else if (code === 86038) {
       onStatus?.({ kind: 'expired' })
       recordFeatureDiagnostic({ featureId: 'session', stage: 'request', action: 'qr-login', outcome: 'expired-retry', requestId })
-      throw new Error('二维码已过期，请重新生成')
+      throw new UiMessageError("login.qrLogin5")
     } else {
       onStatus?.({ kind: 'pending' })
     }

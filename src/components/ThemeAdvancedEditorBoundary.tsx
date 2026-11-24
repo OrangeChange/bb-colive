@@ -1,3 +1,4 @@
+import { uiText } from "../i18n/index.ts";
 import { Component, type ReactNode } from "react";
 
 export class ThemeAdvancedEditorBoundary extends Component<{
@@ -11,8 +12,8 @@ export class ThemeAdvancedEditorBoundary extends Component<{
   render() {
     if (!this.state.failed) return this.props.children;
     return <div className="theme-editor-empty" role="alert">
-      <p>高级编辑加载失败。请返回保存当前修改，再重新打开程序。</p>
-      <button type="button" onClick={this.props.onReturn}>返回基础设置</button>
+      <p>{uiText("themeAdvancedEditorBoundary.render")}</p>
+      <button type="button" onClick={this.props.onReturn}>{uiText("themeAdvancedEditorBoundary.render2")}</button>
     </div>;
   }
 }

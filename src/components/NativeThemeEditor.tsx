@@ -1,3 +1,4 @@
+import { uiText } from "../i18n/index.ts";
 import type {ThemeImageDecorations} from "../themes/themeImageDecorations.ts";
 import {applyThemeAssetUrls} from "../themes/themeAssets.ts";
 import { themePriceGradient } from '../themes/nativePriceGradient.ts';
@@ -97,6 +98,7 @@ export function NativeThemeEditor({
   visualCss,
   customCss,
   cssMessage,
+  cssMessageKind,
   visualCssControlled,
   previewTarget,
   previewHeaderTarget,
@@ -131,6 +133,7 @@ export function NativeThemeEditor({
   visualCss: string;
   customCss: string;
   cssMessage: string;
+  cssMessageKind?: "error" | "notice";
   visualCssControlled: ThemeCssControlledField[];
   previewTarget: HTMLElement | null;
   previewHeaderTarget: HTMLElement | null;
@@ -345,7 +348,7 @@ export function NativeThemeEditor({
       <StylePreviewToolbar
         eventValues={previewEventKinds}
         onEventsChange={setPreviewEventKinds}
-        eventOptions={["混合流", "弹幕", "互动", "礼物", "红包/天选", "醒目留言", "大航海", "系统"].map(value => ({ value, label: value }))}
+        eventOptions={[{ value: "混合流", label: uiText("nativeThemeEditor.eventOptions") }, { value: "弹幕", label: uiText("nativeThemeEditor.eventOptions2") }, { value: "互动", label: uiText("nativeThemeEditor.eventOptions3") }, { value: "礼物", label: uiText("nativeThemeEditor.eventOptions4") }, { value: "红包/天选", label: uiText("nativeThemeEditor.eventOptions5") }, { value: "醒目留言", label: uiText("nativeThemeEditor.eventOptions6") }, { value: "大航海", label: uiText("nativeThemeEditor.eventOptions7") }, { value: "系统", label: uiText("nativeThemeEditor.eventOptions8") }]}
         scheme={previewScheme}
         motion={previewMotion}
         playing={previewPlaying}
@@ -373,7 +376,7 @@ export function NativeThemeEditor({
       >
         <div className="native-preview-canvas" style={{backgroundColor:previewTransparent ? undefined : previewBackground}}>
           <NativeStylePreviewSurface
-            title="主题样式预览"
+            title={uiText("nativeThemeEditor.title")}
             payload={previewPayload}
             previewScheme={canvas.geometry.scheme}
             previewPalette={canvas.geometry.palette}
@@ -414,7 +417,7 @@ export function NativeThemeEditor({
   );
   return (
     <div className="native-theme-editor">
-      <ThemeEditorHeader dirty={dirty} saving={saving} document={document} description="原生样式 · 现场、副窗口和 OBS" onBack={onBack} onEditMetadata={onEditMetadata} onApply={onApply} applyLabel={applyLabel} applyTargets={applyTargets} draftStatus={draftStatus} onRetryDraft={onRetryDraft} onSaveAs={onSaveAs} onRestore={onRestore} />
+      <ThemeEditorHeader dirty={dirty} saving={saving} document={document} description={uiText("nativeThemeEditor.description")} onBack={onBack} onEditMetadata={onEditMetadata} onApply={onApply} applyLabel={applyLabel} applyTargets={applyTargets} draftStatus={draftStatus} onRetryDraft={onRetryDraft} onSaveAs={onSaveAs} onRestore={onRestore} />
       <ThemeEditorTabs section={section} onChange={setSection} />
       <ThemeEditorContent section={section}>
         {section === "basic" ? (
@@ -458,7 +461,7 @@ export function NativeThemeEditor({
         ) : (
           <ThemeAdvancedEditorBoundary onReturn={() => setSection("basic")}><Suspense
             fallback={
-              <div className="theme-editor-empty">正在打开高级编辑…</div>
+              <div className="theme-editor-empty">{uiText("nativeThemeEditor.fallback")}</div>
             }
           >
             <NativeThemeAdvancedEditor
@@ -466,6 +469,7 @@ export function NativeThemeEditor({
               visualCss={visualCss}
               customCss={customCss}
               cssMessage={cssMessage}
+              cssMessageKind={cssMessageKind}
               onCustomCssChange={onCustomCssChange}
               onVisualCssChange={onVisualCssChange}
               onSave={onSave}

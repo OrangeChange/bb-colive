@@ -38,7 +38,7 @@ async fn source_offer(
     let releases = json(client, source.releases_api()).await?;
     let mut releases: Vec<&Value> = releases
         .as_array()
-        .ok_or("无法读取版本列表")?
+        .ok_or(ui_text!("backend.transport.source_offer"))?
         .iter()
         .filter(|r| {
             !r["draft"].as_bool().unwrap_or(false)
@@ -138,10 +138,8 @@ pub async fn check(
         }
     }
     if successes.is_empty() {
-        return Err(format!(
-            "无法检查更新，请更换线路或前往下载页。{}",
-            errors.join("；")
-        ));
+        return Err(ui_format!("backend.transport.check",
+            errors.join("；")));
     }
     let mut offers: Vec<UpdateOffer> = successes
         .iter()
@@ -205,7 +203,7 @@ pub async fn download(
         .build()
         .map_err(|e| e.to_string())?;
     let response = tokio::select! {
-        _ = cancelled(cancel,signal) => return Err("下载已取消".into()),
+        _ = cancelled(cancel,signal) => return Err(ui_text!("backend.transport.download").into()),
         response = client.get(&package.url).send() => response,
     };
     let mut response = response
@@ -216,12 +214,12 @@ pub async fn download(
     let mut received = 0;
     loop {
         let chunk = tokio::select! {
-            _ = cancelled(cancel,signal) => return Err("下载已取消".into()),
+            _ = cancelled(cancel,signal) => return Err(ui_text!("backend.transport.download").into()),
             chunk = response.chunk() => chunk.map_err(|e|e.to_string())?,
         };
         let Some(chunk) = chunk else { break };
         if cancel.load(Ordering::Relaxed) {
-            return Err("下载已取消".into());
+            return Err(ui_text!("backend.transport.download").into());
         }
         file.write_all(&chunk).map_err(|e| e.to_string())?;
         verifier.update(&chunk);
@@ -229,14 +227,14 @@ pub async fn download(
         progress(received, package.size);
     }
     if cancel.load(Ordering::Relaxed) {
-        return Err("下载已取消".into());
+        return Err(ui_text!("backend.transport.download").into());
     }
     if received != package.size {
-        return Err("更新包下载不完整，请重试".into());
+        return Err(ui_text!("backend.transport.download2").into());
     }
     verifier
         .finalize()
-        .map_err(|_| "更新包签名验证失败，请重新下载".to_string())?;
+        .map_err(|_| ui_text!("backend.transport.download3").to_string())?;
     file.sync_all().map_err(|e| e.to_string())
 }
 async fn cancelled(cancel: &AtomicBool, signal: &tokio::sync::Notify) {

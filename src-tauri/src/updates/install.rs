@@ -74,7 +74,7 @@ pub fn apply_portable(
     plan: &InstallPlan,
     mut progress: impl FnMut(usize, usize),
 ) -> Result<(), String> {
-    let staging = plan.package.parent().ok_or("更新包位置无效")?;
+    let staging = plan.package.parent().ok_or(ui_text!("backend.install.apply_portable"))?;
     let unpacked = staging.join("unpacked");
     fs::create_dir_all(&unpacked).map_err(|e| e.to_string())?;
     let file = fs::File::open(&plan.package).map_err(|e| e.to_string())?;
@@ -88,7 +88,7 @@ pub fn apply_portable(
             .filter_map(Result::ok)
             .map(|e| e.path())
             .find(|p| p.join(&plan.executable).is_file())
-            .ok_or("更新包缺少程序文件")?
+            .ok_or(ui_text!("backend.install.apply_portable2"))?
     };
     let mut files = Vec::new();
     fn collect(root: &Path, here: &Path, output: &mut Vec<PathBuf>) -> io::Result<()> {
@@ -136,11 +136,9 @@ pub fn apply_portable(
             }
         }
         return Err(match restore_error {
-            Some(e) => format!(
-                "更新失败：{error}。恢复未完成：{e}。备份位于 {}",
-                backup.display()
-            ),
-            None => format!("更新失败，已恢复程序文件：{error}。请关闭占用文件的程序后重试"),
+            Some(e) => ui_format!("backend.install.collect",
+                backup.display(), error = error, e = e),
+            None => ui_format!("backend.install.collect2", error = error),
         });
     }
     Ok(())

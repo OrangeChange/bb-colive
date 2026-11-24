@@ -1,8 +1,8 @@
-import { readFileSync } from "node:fs";
+import { readUiSource } from "./readUiSource.mjs";
 import assert from "node:assert/strict";
 
 export function readReviewTimelineSources() {
-  const read = (path) => readFileSync(new URL(`../../${path}`, import.meta.url), "utf8");
+  const read = (path) => readUiSource(new URL(`../../${path}`, import.meta.url), "utf8");
   const timeline = read("src/components/ReviewSessionTimeline.tsx");
   for (const entry of ["useReviewTimelinePages", "useReviewTimelineReading", "useReviewTimelineRefresh", "createReviewTimelineEntries"]) {
     assert.match(timeline, new RegExp(`\\b${entry}\\(`));

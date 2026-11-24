@@ -1,3 +1,4 @@
+import { uiText } from "../../i18n/index.ts";
 import {invoke} from "@tauri-apps/api/core";
 import {parseThemeCssMetadata} from "../../themes/themeCssMetadata.ts";
 import { MAX_CSS_LENGTH, prependRemoteHistory, type RemoteTemplateHistoryEntry, type RemoteTemplateMetadata } from './styles.ts';
@@ -22,33 +23,33 @@ export const LAPLACE_TEMPLATE_HASHES: Readonly<Record<string, string>> = {
   "zelda": "23385098d7765fac2fdb16f540f35eac527cd999cd8c55b47a8543b25ae721c7"
 };
 export const LAPLACE_TEMPLATE_OPTIONS = [
-  { value: '', label: '不使用内置模板', group: '内置模板' },
-  { value: 'bubble', label: 'LAPLACE 气泡 × 明前奶绿', group: '内置模板' },
-  { value: 'bubble-next', label: 'LAPLACE 气泡 Next × 明前奶绿', group: '内置模板' },
-  { value: 'bubble-rhea', label: '紫色气泡 × 瑞娅 Rhea', group: '内置模板' },
-  { value: 'outline', label: '极简描边 × 岁己 SUI', group: '内置模板' },
-  { value: 'zelda', label: '奇幻', group: '内置模板' },
-  { value: 'simple', label: '简约气泡（复刻）', group: '内置模板' },
-  { value: 'modern', label: '摩登样式（复刻）', group: '内置模板' },
-  { value: 'collab', label: '联动气泡', group: '内置模板' },
-  { value: 'rotated', label: '反转了！', group: '内置模板' },
-  { value: 'orange', label: '橙子气泡', group: '第三方模板' },
-  { value: 'shed', label: 'SHED 气泡', group: '第三方模板' },
-  { value: 'shed-bubble', label: 'SHED 透明波动', group: '第三方模板' },
-  { value: 'orange-block', label: '橙子色块', group: '第三方模板' },
+  { value: '', label: uiText("styleLoader.LAPLACE_TEMPLATE_OPTIONS.label"), group: "内置模板" },
+  { value: 'bubble', label: "LAPLACE 气泡 × 明前奶绿", group: "内置模板" },
+  { value: 'bubble-next', label: "LAPLACE 气泡 Next × 明前奶绿", group: "内置模板" },
+  { value: 'bubble-rhea', label: "紫色气泡 × 瑞娅 Rhea", group: "内置模板" },
+  { value: 'outline', label: "极简描边 × 岁己 SUI", group: "内置模板" },
+  { value: 'zelda', label: "奇幻", group: "内置模板" },
+  { value: 'simple', label: "简约气泡（复刻）", group: "内置模板" },
+  { value: 'modern', label: "摩登样式（复刻）", group: "内置模板" },
+  { value: 'collab', label: "联动气泡", group: "内置模板" },
+  { value: 'rotated', label: "反转了！", group: "内置模板" },
+  { value: 'orange', label: "橙子气泡", group: "第三方模板" },
+  { value: 'shed', label: "SHED 气泡", group: "第三方模板" },
+  { value: 'shed-bubble', label: "SHED 透明波动", group: "第三方模板" },
+  { value: 'orange-block', label: "橙子色块", group: "第三方模板" },
 ] as const;
 export const CURATED_REMOTE_TEMPLATES = [
-  { url: 'https://pub-d4d706263dfc409fb4c0991a6f6ba4f1.r2.dev/gradient_chat/normal.css', title: '渐变弹幕' },
-  { url: 'https://rsrc.laplace.cn/assets/bubble-snow.css', title: '雪色气泡' },
-  { url: 'https://rsrc.laplace.cn/assets/subspace-glitch.css', title: '子空间故障' },
-  { url: 'https://rsrc.laplace.cn/assets/wechat-bubbles.css', title: '微信气泡' },
+  { url: 'https://pub-d4d706263dfc409fb4c0991a6f6ba4f1.r2.dev/gradient_chat/normal.css', title: "渐变弹幕" },
+  { url: 'https://rsrc.laplace.cn/assets/bubble-snow.css', title: "雪色气泡" },
+  { url: 'https://rsrc.laplace.cn/assets/subspace-glitch.css', title: "子空间故障" },
+  { url: 'https://rsrc.laplace.cn/assets/wechat-bubbles.css', title: "微信气泡" },
 ] as const;
 export type CssFetch = (input: string, init?: RequestInit) => Promise<Response>;
 export function remoteCssRequestUrl(url: string): string { return `${REMOTE_CSS_PREPROCESS_ENDPOINT}?url=${encodeURIComponent(url)}`; }
 function validateCss(css: unknown): asserts css is string {
-  if (typeof css !== 'string') throw new Error('模板服务未返回 CSS 文本');
-  if (css.length > MAX_CSS_LENGTH) throw new Error('CSS 超过隔离预览的安全大小限制');
-  if (/^\s*(?:<!doctype\s+html|<html\b)/i.test(css)) throw new Error('收到网页而不是 CSS，请检查模板地址');
+  if (typeof css !== 'string') throw new Error(uiText("styleLoader.validateCss"));
+  if (css.length > MAX_CSS_LENGTH) throw new Error(uiText("styleLoader.validateCss2"));
+  if (/^\s*(?:<!doctype\s+html|<html\b)/i.test(css)) throw new Error(uiText("styleLoader.validateCss3"));
 }
 /** Inspect remote response trivia only; leave browser-tolerated CSS and returned bytes intact. */
 function rejectRemoteHtmlPage(css: string): void {
@@ -61,19 +62,19 @@ function rejectRemoteHtmlPage(css: string): void {
     if (end === -1) break;
     offset = end + 2;
   }
-  if (/^(?:<!doctype\s+html|<html\b)/i.test(css.slice(offset))) throw new Error('收到网页而不是 CSS，请检查模板地址');
+  if (/^(?:<!doctype\s+html|<html\b)/i.test(css.slice(offset))) throw new Error(uiText("styleLoader.rejectRemoteHtmlPage"));
 }
 export async function loadBuiltinCss(name: string, fetcher: CssFetch = fetch, signal?: AbortSignal): Promise<string> {
   if (!name.trim()) return '';
   // Deliberately look up the original input, not its trimmed version (upstream contract).
-  if (!Object.prototype.hasOwnProperty.call(LAPLACE_TEMPLATE_HASHES, name)) throw new Error(`未知内置模板：${name}`);
+  if (!Object.prototype.hasOwnProperty.call(LAPLACE_TEMPLATE_HASHES, name)) throw new Error(uiText("styleLoader.loadBuiltinCss", { name: name }));
   const response = await fetcher(`/laplace/templates/${name}.css`, { signal });
-  if (!response.ok) throw new Error(`内置模板载入失败（HTTP ${response.status}）`);
+  if (!response.ok) throw new Error(uiText("styleLoader.loadBuiltinCss2", { status: response.status }));
   const css = await response.text(); validateCss(css);
   if (globalThis.crypto?.subtle) {
     const bytes = await crypto.subtle.digest('SHA-256', new TextEncoder().encode(css));
     const hash = Array.from(new Uint8Array(bytes), byte => byte.toString(16).padStart(2, '0')).join('');
-    if (hash !== LAPLACE_TEMPLATE_HASHES[name]) throw new Error('内置模板字节校验失败，请重新构建 LAPLACE 资源');
+    if (hash !== LAPLACE_TEMPLATE_HASHES[name]) throw new Error(uiText("styleLoader.loadBuiltinCss3"));
   }
   return css;
 }
@@ -82,7 +83,7 @@ export async function loadRemoteCss(url: string, fetcher?: CssFetch, signal?: Ab
   const requestUrl = remoteCssRequestUrl(url);
   if (!fetcher && isTauri()) {
     const result = await invoke<{text:string;finalUrl:string}>("load_theme_resource", {url,refresh,css:true});
-    if (signal?.aborted) throw new Error("网址主题载入已取消");
+    if (signal?.aborted) throw new Error(uiText("styleLoader.loadRemoteCss"));
     validateCss(result.text); rejectRemoteHtmlPage(result.text);
     return {css:result.text,metadata:{...parseThemeCssMetadata(result.text)},requestUrl:url,finalUrl:result.finalUrl};
   }
@@ -91,12 +92,12 @@ export async function loadRemoteCss(url: string, fetcher?: CssFetch, signal?: Ab
     : await fetch(requestUrl, { signal });
   if (!response.ok) {
     await response.body?.cancel();
-    throw new Error(`远程模板预处理失败（HTTP ${response.status}）`);
+    throw new Error(uiText("styleLoader.loadRemoteCss2", { status: response.status }));
   }
   const value: unknown = await response.json();
-  if (!value || typeof value !== 'object' || Array.isArray(value)) throw new Error('模板服务返回格式无效');
+  if (!value || typeof value !== 'object' || Array.isArray(value)) throw new Error(uiText("styleLoader.loadRemoteCss3"));
   const result = value as Record<string, unknown>;
-  if (!result.success) throw new Error(typeof result.error === 'string' ? result.error : '远程模板预处理失败');
+  if (!result.success) throw new Error(typeof result.error === 'string' ? result.error : uiText("styleLoader.loadRemoteCss4"));
   validateCss(result.css);
   rejectRemoteHtmlPage(result.css);
   const metadata = result.metadata && typeof result.metadata === 'object' && !Array.isArray(result.metadata) ? result.metadata as RemoteTemplateMetadata : null;
@@ -132,7 +133,7 @@ export class LaplaceStyleLoader {
       if (generation !== this.cloudGeneration) return null;
       this.update({ cloud: css, cloudName: name.trim() ? name : '', cloudLoading: false }); return css;
     } catch (error) {
-      if (generation === this.cloudGeneration) this.update({ cloudLoading: false, cloudError: `${error instanceof Error ? error.message : '内置模板载入失败'}。已保留最后成功的内置样式，请重试。` });
+      if (generation === this.cloudGeneration) this.update({ cloudLoading: false, cloudError: uiText("styleLoader.loadCloud.cloudError", { value: error instanceof Error ? error.message : uiText("styleLoader.loadCloud.cloudError.value") }) });
       return null;
     }
   }
@@ -146,7 +147,7 @@ export class LaplaceStyleLoader {
       if (generation !== this.remoteGeneration) return null;
       this.update({ remote: result.css, remoteUrl: url, remoteLoading: false, history: prependRemoteHistory(this.snapshot.history, { url, metadata: result.metadata }) }); return result;
     } catch (error) {
-      if (generation === this.remoteGeneration) this.update({ remoteLoading: false, remoteError: `${error instanceof Error ? error.message : '远程模板载入失败'}。已保留最后成功的远程样式，请检查地址或重试。` });
+      if (generation === this.remoteGeneration) this.update({ remoteLoading: false, remoteError: uiText("styleLoader.loadRemote.remoteError", { value: error instanceof Error ? error.message : uiText("styleLoader.loadRemote.remoteError.value") }) });
       return null;
     } finally {
       if (this.remoteAbort === controller) this.remoteAbort = undefined;

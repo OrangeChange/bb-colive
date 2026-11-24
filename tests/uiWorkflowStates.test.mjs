@@ -1,3 +1,4 @@
+import { readUiSource } from "./helpers/readUiSource.mjs";
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import {readFileSync} from 'node:fs';
@@ -63,7 +64,7 @@ test('连接信息读取失败可重新查询，恢复已有连接而不填写�
 });
 
 test('首次保存和另存期间共用保存状态，结束后释放', async () => {
-  const source=ts.createSourceFile('ThemeWorkspace.tsx',readFileSync('src/components/ThemeWorkspace.tsx','utf8'),ts.ScriptTarget.Latest,true,ts.ScriptKind.TSX);
+  const source=ts.createSourceFile('ThemeWorkspace.tsx',readUiSource('src/components/ThemeWorkspace.tsx','utf8'),ts.ScriptTarget.Latest,true,ts.ScriptKind.TSX);
   let callback;
   function visit(node){if(ts.isVariableDeclaration(node)&&node.name.getText(source)==='saveAs')callback=node.initializer.getText(source);ts.forEachChild(node,visit);}visit(source);
   let saving=new Set(),release;
@@ -76,7 +77,7 @@ test('首次保存和另存期间共用保存状态，结束后释放', async ()
 
 test('应用保存当前内容并更新全部既有引用，无引用时只保存', async () => {
   const {saveAndUpdateThemeReferences,listThemeReferences,ThemeReferenceUpdateError}=await import('../src/themes/themeReferences.ts');
-  const source=ts.createSourceFile('ThemeWorkspace.tsx',readFileSync('src/components/ThemeWorkspace.tsx','utf8'),ts.ScriptTarget.Latest,true,ts.ScriptKind.TSX);
+  const source=ts.createSourceFile('ThemeWorkspace.tsx',readUiSource('src/components/ThemeWorkspace.tsx','utf8'),ts.ScriptTarget.Latest,true,ts.ScriptKind.TSX);
   let callback;
   function visit(node){if(ts.isVariableDeclaration(node)&&node.name.getText(source)==='apply')callback=node.initializer.getText(source);ts.forEachChild(node,visit);}visit(source);
   for(const used of [true,false]){

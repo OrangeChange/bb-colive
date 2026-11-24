@@ -1,3 +1,4 @@
+import { uiText } from "../i18n/index.ts";
 import { useEffect, useRef, useState } from "react";
 import { ImagePlus, ImageUp } from "lucide-react";
 import { UiSelect } from "./ui/Select.tsx";
@@ -55,7 +56,7 @@ export function ThemeImagePicker({
         value={path}
         onValueChange={setPath}
         options={[
-          { value: "", label: "从文件选择" },
+          { value: "", label: uiText("themeImagePicker.options.label") },
           ...(assets?.images.map((asset) => ({
             value: asset.path,
             label: asset.name,
@@ -70,11 +71,11 @@ export function ThemeImagePicker({
         <ImagePlus size={18} />
         {single
           ? path
-            ? "使用图片"
+            ? uiText("themeImagePicker.ThemeImagePicker")
             : onReplace
-              ? "更换图片"
-              : "选择图片"
-          : "添加图片"}
+              ? uiText("themeImagePicker.ThemeImagePicker2")
+              : uiText("themeImagePicker.ThemeImagePicker3")
+          : uiText("themeImagePicker.ThemeImagePicker4")}
       </button>
       {!single && onReplace && (
         <button
@@ -83,8 +84,7 @@ export function ThemeImagePicker({
           onClick={() => useImage(true)}
         >
           <ImageUp size={18} />
-          更换图片
-        </button>
+          {uiText("themeImagePicker.ThemeImagePicker2")}</button>
       )}
     </div>
   );

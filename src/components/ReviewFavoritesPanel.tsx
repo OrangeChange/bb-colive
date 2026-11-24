@@ -1,3 +1,4 @@
+import { uiText } from "../i18n/index.ts";
 import { UiSearchInput } from "./ui/SearchInput.tsx";
 import { useCallback, useEffect, useMemo, useState } from "react";
 import { EventRowSlot } from "./EventRowSlot";
@@ -34,37 +35,37 @@ const inputClass = "h-8 rounded-md border border-line bg-bg px-2.5 ui-type-contr
 const buttonClass = actionButtonClass;
 const tagFilterButtonClass = "inline-flex h-7 items-center rounded-md border px-2 ui-type-control transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent-ring";
 const favoriteKeywordFieldOptions = [
-  { value: "all", label: "全部字段" },
-  { value: "user", label: "用户" },
-  { value: "fanMedal", label: "粉丝牌" },
-  { value: "gift", label: "礼物" },
-  { value: "content", label: "内容" },
-  { value: "note", label: "备注" },
+  { value: "all", label: uiText("reviewFavoritesPanel.favoriteKeywordFieldOptions.label") },
+  { value: "user", label: uiText("reviewFavoritesPanel.favoriteKeywordFieldOptions.label2") },
+  { value: "fanMedal", label: uiText("reviewFavoritesPanel.favoriteKeywordFieldOptions.label3") },
+  { value: "gift", label: uiText("reviewFavoritesPanel.favoriteKeywordFieldOptions.label4") },
+  { value: "content", label: uiText("reviewFavoritesPanel.favoriteKeywordFieldOptions.label5") },
+  { value: "note", label: uiText("reviewFavoritesPanel.favoriteKeywordFieldOptions.label6") },
 ] as const;
 const favoriteTimeFieldOptions = [
-  { value: "favoritedAt", label: "收藏时间" },
-  { value: "eventTs", label: "事件时间" },
+  { value: "favoritedAt", label: uiText("reviewFavoritesPanel.favoriteTimeFieldOptions.label") },
+  { value: "eventTs", label: uiText("reviewFavoritesPanel.favoriteTimeFieldOptions.label2") },
 ] as const;
 const favoriteTimePresetOptions = [
-  { value: "all", label: "全部时间" },
-  { value: "today", label: "今天" },
-  { value: "yesterday", label: "昨天" },
-  { value: "1w", label: "过去 7 天" },
-  { value: "1mo", label: "过去 30 天" },
-  { value: "week", label: "本周" },
-  { value: "lastWeek", label: "上周" },
-  { value: "month", label: "本月" },
-  { value: "lastMonth", label: "上月" },
-  { value: "custom", label: "自定义" },
+  { value: "all", label: uiText("reviewFavoritesPanel.favoriteTimePresetOptions.label") },
+  { value: "today", label: uiText("reviewFavoritesPanel.favoriteTimePresetOptions.label2") },
+  { value: "yesterday", label: uiText("reviewFavoritesPanel.favoriteTimePresetOptions.label3") },
+  { value: "1w", label: uiText("reviewFavoritesPanel.favoriteTimePresetOptions.label4") },
+  { value: "1mo", label: uiText("reviewFavoritesPanel.favoriteTimePresetOptions.label5") },
+  { value: "week", label: uiText("reviewFavoritesPanel.favoriteTimePresetOptions.label6") },
+  { value: "lastWeek", label: uiText("reviewFavoritesPanel.favoriteTimePresetOptions.label7") },
+  { value: "month", label: uiText("reviewFavoritesPanel.favoriteTimePresetOptions.label8") },
+  { value: "lastMonth", label: uiText("reviewFavoritesPanel.favoriteTimePresetOptions.label9") },
+  { value: "custom", label: uiText("reviewFavoritesPanel.favoriteTimePresetOptions.label10") },
 ] as const;
 const favoriteSortOptions = favoriteTimeFieldOptions;
 const favoriteDirectionOptions = [
-  { value: "desc", label: "倒序排列" },
-  { value: "asc", label: "顺序排列" },
+  { value: "desc", label: uiText("reviewFavoritesPanel.favoriteDirectionOptions.label") },
+  { value: "asc", label: uiText("reviewFavoritesPanel.favoriteDirectionOptions.label2") },
 ] as const;
 const favoriteTagModeOptions = [
-  { value: "any", label: "任一标签" },
-  { value: "all", label: "全部标签" },
+  { value: "any", label: uiText("reviewFavoritesPanel.favoriteTagModeOptions.label") },
+  { value: "all", label: uiText("reviewFavoritesPanel.favoriteTagModeOptions.label2") },
 ] as const;
 
 function eventFromItem(item: ArchiveFavoriteItem): DanmakuEvent | null {
@@ -140,7 +141,7 @@ export function ReviewFavoritesPanel({
     && range.fromTs !== undefined
     && range.toTs !== undefined
     && range.fromTs >= range.toTs
-    ? "开始时间必须早于结束时间"
+    ? uiText("reviewFavoritesPanel.ReviewFavoritesPanel.rangeError")
     : null;
   const hasActiveFilters = Boolean(
     keyword.trim()
@@ -270,7 +271,7 @@ export function ReviewFavoritesPanel({
     });
     try {
       const result = await createArchiveFavoriteActions(repository).remove(selectedItems.map((item) => ({ sourceKind: item.sourceKind, stableId: item.stableId })));
-      setActionError(result.refresh === "failed" ? "已保存，刷新失败" : null);
+      setActionError(result.refresh === "failed" ? uiText("reviewFavoritesPanel.ReviewFavoritesPanel.removeSelected") : null);
       setConfirmRemove(false);
       setSelected(new Set());
       recordArchiveDiagnostic("success", "archive-favorite", "removed", {
@@ -298,7 +299,7 @@ export function ReviewFavoritesPanel({
     });
     try {
       const result = await createArchiveFavoriteActions(repository).remove([{ sourceKind: singleRemove.sourceKind, stableId: singleRemove.stableId }]);
-      setActionError(result.refresh === "failed" ? "已保存，刷新失败" : null);
+      setActionError(result.refresh === "failed" ? uiText("reviewFavoritesPanel.ReviewFavoritesPanel.removeSingle") : null);
       setSingleRemove(null);
       setSelected((current) => {
         const next = new Set(current);
@@ -535,46 +536,46 @@ export function ReviewFavoritesPanel({
 
   return (
     <div className="flex min-w-0 flex-col gap-3">
-      <section className="rounded-xl border border-line bg-surface p-3" aria-label="收藏筛选">
+      <section className="rounded-xl border border-line bg-surface p-3" aria-label={uiText("reviewFavoritesPanel.aria_label")}>
         <div className="flex flex-wrap items-center gap-2">
-          <strong className="ui-type-section-title text-t1">收藏</strong>
-          {page.totalCount !== null && <span className="ui-type-meta text-t3">共 {page.totalCount} 条</span>}
-          <UiSelect ariaLabel="收藏关键词字段" className={inputClass} options={favoriteKeywordFieldOptions} value={keywordField} onValueChange={(value) => setKeywordField(value as typeof keywordField)} />
-          <UiSearchInput aria-label="搜索收藏" value={keyword} onValueChange={setKeyword} placeholder="搜索收藏" className="min-w-40 flex-1" />
+          <strong className="ui-type-section-title text-t1">{uiText("reviewFavoritesPanel.ReviewFavoritesPanel")}</strong>
+          {page.totalCount !== null && <span className="ui-type-meta text-t3">{uiText("reviewFavoritesPanel.ReviewFavoritesPanel2")}{page.totalCount} {uiText("reviewFavoritesPanel.ReviewFavoritesPanel3")}</span>}
+          <UiSelect ariaLabel={uiText("reviewFavoritesPanel.ariaLabel")} className={inputClass} options={favoriteKeywordFieldOptions} value={keywordField} onValueChange={(value) => setKeywordField(value as typeof keywordField)} />
+          <UiSearchInput aria-label={uiText("reviewFavoritesPanel.aria_label2")} value={keyword} onValueChange={setKeyword} placeholder={uiText("reviewFavoritesPanel.placeholder")} className="min-w-40 flex-1" />
           <UiSelect
-            ariaLabel="收藏主播"
+            ariaLabel={uiText("reviewFavoritesPanel.ariaLabel2")}
             className={inputClass}
-            options={[{ value: "", label: "全部主播" }, ...owners.map((owner) => ({ value: owner.ownerId, label: owner.name?.trim() || `房间 ${owner.roomId}` }))]}
+            options={[{ value: "", label: uiText("reviewFavoritesPanel.options.label") }, ...owners.map((owner) => ({ value: owner.ownerId, label: owner.name?.trim() || uiText("reviewFavoritesPanel.options.label2", { roomId: owner.roomId }) }))]}
             value={ownerId}
             onValueChange={setOwnerId}
           />
-          <button type="button" className={buttonClass} aria-expanded={advanced} onClick={() => setAdvanced((value) => !value)}>{advanced ? "收起筛选" : "更多筛选"}</button>
-          {hasActiveFilters && <button type="button" className={filterActionButtonClass} onClick={clearFilters}>清除条件</button>}
+          <button type="button" className={buttonClass} aria-expanded={advanced} onClick={() => setAdvanced((value) => !value)}>{advanced ? uiText("reviewFavoritesPanel.ReviewFavoritesPanel4") : uiText("reviewFavoritesPanel.ReviewFavoritesPanel5")}</button>
+          {hasActiveFilters && <button type="button" className={filterActionButtonClass} onClick={clearFilters}>{uiText("reviewFavoritesPanel.ReviewFavoritesPanel6")}</button>}
         </div>
         <div className="mt-3 flex flex-wrap items-center gap-2 border-t border-line pt-3 ui-type-meta text-t2">
-          <span>标签</span>
-          {tags.length === 0 && <span className="text-t3">暂无标签</span>}
+          <span>{uiText("reviewFavoritesPanel.ReviewFavoritesPanel7")}</span>
+          {tags.length === 0 && <span className="text-t3">{uiText("reviewFavoritesPanel.ReviewFavoritesPanel8")}</span>}
           {tags.map((tag) => {
             const activeTag = tagFilter.names.includes(tag.name);
             return <button key={tag.tagId} type="button" className={`${tagFilterButtonClass} ${activeTag ? "border-accent bg-accent-subtle font-medium text-accent-text" : "border-line bg-bg text-t2 hover:border-accent/50 hover:bg-raised hover:text-t1"}`} aria-pressed={activeTag} onClick={() => setTagFilter((current) => ({ ...current, names: current.names.includes(tag.name) ? current.names.filter((value) => value !== tag.name) : [...current.names, tag.name] }))}>{activeTag ? "✓ " : ""}{tag.name}</button>;
           })}
-          {tagFilter.names.length > 1 && <UiSelect ariaLabel="标签筛选方式" className={inputClass} options={favoriteTagModeOptions} value={tagFilter.mode ?? "any"} onValueChange={(value) => setTagFilter((current) => ({ ...current, mode: value as "any" | "all" }))} />}
+          {tagFilter.names.length > 1 && <UiSelect ariaLabel={uiText("reviewFavoritesPanel.ariaLabel3")} className={inputClass} options={favoriteTagModeOptions} value={tagFilter.mode ?? "any"} onValueChange={(value) => setTagFilter((current) => ({ ...current, mode: value as "any" | "all" }))} />}
         </div>
         {advanced && (
           <div className="mt-3 border-t border-line pt-3">
             <div className="flex flex-wrap items-center gap-x-4 gap-y-2 ui-type-meta text-t2">
-              <label className="flex items-center gap-2"><span>事件分类</span><UiSelect ariaLabel="事件分类" className={`${inputClass} min-w-32`} options={[{ value: "", label: "全部分类" }, ...CATEGORY_OPTIONS]} value={category} onValueChange={setCategory} /></label>
+              <label className="flex items-center gap-2"><span>{uiText("reviewFavoritesPanel.ReviewFavoritesPanel9")}</span><UiSelect ariaLabel={uiText("reviewFavoritesPanel.ariaLabel4")} className={`${inputClass} min-w-32`} options={[{ value: "", label: uiText("reviewFavoritesPanel.options.label3") }, ...CATEGORY_OPTIONS]} value={category} onValueChange={setCategory} /></label>
               <div className="flex flex-wrap items-center gap-2">
-                <span>时间</span>
-                <UiSelect ariaLabel="时间依据" className={inputClass} options={favoriteTimeFieldOptions} value={timeField} onValueChange={(value) => setTimeField(value as ArchiveFavoriteSort)} />
-                <UiSelect ariaLabel="时间范围" className={inputClass} options={favoriteTimePresetOptions} value={timePreset} onValueChange={(value) => setTimePreset(value as ReviewDatePreset)} />
+                <span>{uiText("reviewFavoritesPanel.ReviewFavoritesPanel10")}</span>
+                <UiSelect ariaLabel={uiText("reviewFavoritesPanel.ariaLabel5")} className={inputClass} options={favoriteTimeFieldOptions} value={timeField} onValueChange={(value) => setTimeField(value as ArchiveFavoriteSort)} />
+                <UiSelect ariaLabel={uiText("reviewFavoritesPanel.ariaLabel6")} className={inputClass} options={favoriteTimePresetOptions} value={timePreset} onValueChange={(value) => setTimePreset(value as ReviewDatePreset)} />
               </div>
             </div>
             {timePreset === "custom" && (
               <div className="mt-2 flex flex-wrap items-center gap-2 ui-type-meta text-t2">
-                <label className="flex flex-wrap items-center gap-2"><span>开始</span><input aria-label="时间范围开始" type="datetime-local" step="60" className={inputClass} value={from} onChange={(event) => setFrom(event.target.value)} /></label>
-                <span>至</span>
-                <label className="flex flex-wrap items-center gap-2"><span>结束</span><input aria-label="时间范围结束" type="datetime-local" step="60" className={inputClass} value={to} onChange={(event) => setTo(event.target.value)} /></label>
+                <label className="flex flex-wrap items-center gap-2"><span>{uiText("reviewFavoritesPanel.ReviewFavoritesPanel11")}</span><input aria-label={uiText("reviewFavoritesPanel.aria_label3")} type="datetime-local" step="60" className={inputClass} value={from} onChange={(event) => setFrom(event.target.value)} /></label>
+                <span>{uiText("reviewFavoritesPanel.ReviewFavoritesPanel12")}</span>
+                <label className="flex flex-wrap items-center gap-2"><span>{uiText("reviewFavoritesPanel.ReviewFavoritesPanel13")}</span><input aria-label={uiText("reviewFavoritesPanel.aria_label4")} type="datetime-local" step="60" className={inputClass} value={to} onChange={(event) => setTo(event.target.value)} /></label>
                 {rangeError && <span role="alert" className="text-danger">{rangeError}</span>}
               </div>
             )}
@@ -583,21 +584,21 @@ export function ReviewFavoritesPanel({
       </section>
 
       <div className="flex flex-wrap items-center gap-2 px-1">
-        <span className="ui-type-meta text-t3">排序</span>
-        <UiSelect ariaLabel="收藏排序字段" className={inputClass} options={favoriteSortOptions} value={sort} onValueChange={(value) => setSort(value as ArchiveFavoriteSort)} />
-        <UiSelect ariaLabel="收藏排序方向" className={inputClass} options={favoriteDirectionOptions} value={direction} onValueChange={(value) => setDirection(value as ArchiveSortDirection)} />
-        <button type="button" className={buttonClass} aria-expanded={manageTags} onClick={() => setManageTags((value) => !value)}>{manageTags ? "收起标签管理" : "管理标签"}</button>
-        <button type="button" className={buttonClass} onClick={toggleAllLoaded} disabled={visibleItems.length === 0}>{allLoadedSelected ? "取消全选" : "全选当前列表"}</button>
-        {selectedItems.length > 0 && <><span className="ui-type-meta text-accent-text">已选 {selectedItems.length} 条</span><button type="button" className={dangerActionButtonClass} onClick={() => setConfirmRemove(true)}>取消收藏</button><button type="button" className={buttonClass} onClick={() => void exportSelected()}>导出所选</button><input className={`${inputClass} w-28`} value={tagBatchName} onChange={(event) => setTagBatchName(event.target.value)} placeholder="输入标签名称" /><button type="button" className={buttonClass} onClick={() => void addTagToSelected()} disabled={!tagBatchName.trim()}>添加标签</button><UiSelect ariaLabel="批量移除标签" className={inputClass} options={[{ value: "", label: "移除标签…" }, ...tags.map((tag) => ({ value: tag.name, label: tag.name }))]} value="" onValueChange={(value) => { if (value) void removeTagFromSelected(value); }} /></>}
+        <span className="ui-type-meta text-t3">{uiText("reviewFavoritesPanel.ReviewFavoritesPanel14")}</span>
+        <UiSelect ariaLabel={uiText("reviewFavoritesPanel.ariaLabel7")} className={inputClass} options={favoriteSortOptions} value={sort} onValueChange={(value) => setSort(value as ArchiveFavoriteSort)} />
+        <UiSelect ariaLabel={uiText("reviewFavoritesPanel.ariaLabel8")} className={inputClass} options={favoriteDirectionOptions} value={direction} onValueChange={(value) => setDirection(value as ArchiveSortDirection)} />
+        <button type="button" className={buttonClass} aria-expanded={manageTags} onClick={() => setManageTags((value) => !value)}>{manageTags ? uiText("reviewFavoritesPanel.ReviewFavoritesPanel15") : uiText("reviewFavoritesPanel.ReviewFavoritesPanel16")}</button>
+        <button type="button" className={buttonClass} onClick={toggleAllLoaded} disabled={visibleItems.length === 0}>{allLoadedSelected ? uiText("reviewFavoritesPanel.ReviewFavoritesPanel17") : uiText("reviewFavoritesPanel.ReviewFavoritesPanel18")}</button>
+        {selectedItems.length > 0 && <><span className="ui-type-meta text-accent-text">{uiText("reviewFavoritesPanel.ReviewFavoritesPanel19")}{selectedItems.length} {uiText("reviewFavoritesPanel.ReviewFavoritesPanel3")}</span><button type="button" className={dangerActionButtonClass} onClick={() => setConfirmRemove(true)}>{uiText("reviewFavoritesPanel.ReviewFavoritesPanel20")}</button><button type="button" className={buttonClass} onClick={() => void exportSelected()}>{uiText("reviewFavoritesPanel.ReviewFavoritesPanel21")}</button><input className={`${inputClass} w-28`} value={tagBatchName} onChange={(event) => setTagBatchName(event.target.value)} placeholder={uiText("reviewFavoritesPanel.placeholder2")} /><button type="button" className={buttonClass} onClick={() => void addTagToSelected()} disabled={!tagBatchName.trim()}>{uiText("reviewFavoritesPanel.ReviewFavoritesPanel22")}</button><UiSelect ariaLabel={uiText("reviewFavoritesPanel.ariaLabel9")} className={inputClass} options={[{ value: "", label: uiText("reviewFavoritesPanel.options.label4") }, ...tags.map((tag) => ({ value: tag.name, label: tag.name }))]} value="" onValueChange={(value) => { if (value) void removeTagFromSelected(value); }} /></>}
       </div>
 
-        {manageTags && <div className="rounded-xl border border-line bg-surface p-3"><p className="mb-2 ui-type-meta text-t3">只删除标签关联，不影响收藏、备注或原始事件。</p><div className="flex flex-col gap-2">{tags.length === 0 ? <span className="ui-type-meta text-t3">暂无标签</span> : tags.map((tag) => <div key={tag.tagId} className="flex flex-wrap items-center gap-2"><input aria-label={`重命名标签 ${tag.name}`} className={`${inputClass} min-w-32 flex-1`} value={tagRenameValues[tag.tagId] ?? tag.name} onChange={(event) => setTagRenameValues((current) => ({ ...current, [tag.tagId]: event.target.value }))} /><span className="ui-type-meta text-t3">已用 {tag.usageCount} 条</span><button type="button" className={buttonClass} onClick={() => void renameTag(tag)}>重命名</button><button type="button" className={dangerActionButtonClass} onClick={() => setTagToDelete(tag)}>删除</button></div>)}</div></div>}
+        {manageTags && <div className="rounded-xl border border-line bg-surface p-3"><p className="mb-2 ui-type-meta text-t3">{uiText("reviewFavoritesPanel.ReviewFavoritesPanel23")}</p><div className="flex flex-col gap-2">{tags.length === 0 ? <span className="ui-type-meta text-t3">{uiText("reviewFavoritesPanel.ReviewFavoritesPanel8")}</span> : tags.map((tag) => <div key={tag.tagId} className="flex flex-wrap items-center gap-2"><input aria-label={uiText("reviewFavoritesPanel.aria_label5", { name: tag.name })} className={`${inputClass} min-w-32 flex-1`} value={tagRenameValues[tag.tagId] ?? tag.name} onChange={(event) => setTagRenameValues((current) => ({ ...current, [tag.tagId]: event.target.value }))} /><span className="ui-type-meta text-t3">{uiText("reviewFavoritesPanel.ReviewFavoritesPanel24")}{tag.usageCount} {uiText("reviewFavoritesPanel.ReviewFavoritesPanel3")}</span><button type="button" className={buttonClass} onClick={() => void renameTag(tag)}>{uiText("reviewFavoritesPanel.ReviewFavoritesPanel25")}</button><button type="button" className={dangerActionButtonClass} onClick={() => setTagToDelete(tag)}>{uiText("common.delete")}</button></div>)}</div></div>}
 
-      {error && <div role="alert" className="rounded-lg border border-danger/40 bg-danger/10 px-3 py-2 ui-type-control text-danger">收藏暂时无法加载：{error}<button type="button" className="ml-2 underline" onClick={() => void load()}>重试</button></div>}
-      {actionError && <div role="alert" className="rounded-lg border border-danger/40 bg-danger/10 px-3 py-2 ui-type-control text-danger">收藏操作失败：{actionError}<button type="button" className="ml-2 underline" onClick={() => setActionError(null)}>关闭</button></div>}
-      {!error && loading && page.items.length === 0 && <div role="status" className="rounded-xl border border-line px-4 py-10 text-center ui-type-control text-t3">正在加载收藏…</div>}
-      {!error && !loading && visibleItems.length === 0 && <div className="px-4 py-10 text-center ui-type-control text-t3"><p>{hasActiveFilters ? "没有符合条件的收藏" : page.items.length ? "当前收藏已被事件显示设置隐藏" : "还没有收藏"}</p>{hasActiveFilters ? <button type="button" className={`${filterActionButtonClass} mt-3`} onClick={clearFilters}>清除筛选</button> : <p className="mt-2">{page.items.length ? "可在设置中调整自动弹幕和未验证手机号用户的显示范围。" : "在现场或回看中收藏事件后，可以在这里查找和整理。"}</p>}</div>}
-      <section aria-label="收藏列表" data-style-api="1"  className="event-area review flex min-w-0 flex-col gap-2">
+      {error && <div role="alert" className="rounded-lg border border-danger/40 bg-danger/10 px-3 py-2 ui-type-control text-danger">{uiText("reviewFavoritesPanel.ReviewFavoritesPanel26")}{error}<button type="button" className="ml-2 underline" onClick={() => void load()}>{uiText("common.retry")}</button></div>}
+      {actionError && <div role="alert" className="rounded-lg border border-danger/40 bg-danger/10 px-3 py-2 ui-type-control text-danger">{uiText("reviewFavoritesPanel.ReviewFavoritesPanel27")}{actionError}<button type="button" className="ml-2 underline" onClick={() => setActionError(null)}>{uiText("common.close")}</button></div>}
+      {!error && loading && page.items.length === 0 && <div role="status" className="rounded-xl border border-line px-4 py-10 text-center ui-type-control text-t3">{uiText("reviewFavoritesPanel.ReviewFavoritesPanel28")}</div>}
+      {!error && !loading && visibleItems.length === 0 && <div className="px-4 py-10 text-center ui-type-control text-t3"><p>{hasActiveFilters ? uiText("reviewFavoritesPanel.ReviewFavoritesPanel29") : page.items.length ? uiText("reviewFavoritesPanel.ReviewFavoritesPanel30") : uiText("reviewFavoritesPanel.ReviewFavoritesPanel31")}</p>{hasActiveFilters ? <button type="button" className={`${filterActionButtonClass} mt-3`} onClick={clearFilters}>{uiText("reviewFavoritesPanel.ReviewFavoritesPanel32")}</button> : <p className="mt-2">{page.items.length ? uiText("reviewFavoritesPanel.ReviewFavoritesPanel33") : uiText("reviewFavoritesPanel.ReviewFavoritesPanel34")}</p>}</div>}
+      <section aria-label={uiText("reviewFavoritesPanel.aria_label6")} data-style-api="1"  className="event-area review flex min-w-0 flex-col gap-2">
 
         <div className="event-list flex min-w-0 flex-col gap-2">
         {visibleItems.map((item) => {
@@ -605,28 +606,28 @@ export function ReviewFavoritesPanel({
           const key = targetKey(item);
           return <article key={key} className={`rounded-xl border border-line bg-surface p-2.5 ${selected.has(key) ? "border-accent/60 ring-1 ring-accent/30" : ""}`}>
             <div className="flex items-start gap-2">
-              <input type="checkbox" aria-label={`选择收藏：${item.userName || "未知用户"}`} checked={selected.has(key)} onChange={() => toggleSelected(item)} className="mt-2 size-4 accent-[var(--accent)]" />
+              <input type="checkbox" aria-label={uiText("reviewFavoritesPanel.aria_label7", { value: item.userName || uiText("reviewFavoritesPanel.aria_label.value") })} checked={selected.has(key)} onChange={() => toggleSelected(item)} className="mt-2 size-4 accent-[var(--accent)]" />
               <div className="min-w-0 flex-1">
-                {event ? <EventRowSlot><EventRow ev={event} archiveLayout reviewLayout showTime   animateOnMount={false} /></EventRowSlot> : <div className="px-2 py-2 ui-type-control text-t2">{item.userName || "未知用户"}　{item.searchText || "暂时无法显示事件内容"}</div>}
+                {event ? <EventRowSlot><EventRow ev={event} archiveLayout reviewLayout showTime   animateOnMount={false} /></EventRowSlot> : <div className="px-2 py-2 ui-type-control text-t2">{item.userName || uiText("reviewFavoritesPanel.ReviewFavoritesPanel35")}　{item.searchText || uiText("reviewFavoritesPanel.ReviewFavoritesPanel36")}</div>}
                 <div className="mt-1 flex flex-wrap items-center gap-x-2 gap-y-1 pl-2 ui-type-meta text-t3">
-                  <span>{item.ownerName || `房间 ${item.roomId}`}</span><span>/</span><span>{item.sessionTitle || (item.sessionId ? "未命名场次" : "无法定位原事件")}</span><span>/</span><time>{formatArchiveDateTime(item.eventTs)}</time><span>· 收藏于 {formatArchiveDateTime(item.favoritedAt)}</span>
+                  <span>{item.ownerName || uiText("reviewFavoritesPanel.ReviewFavoritesPanel37", { roomId: item.roomId })}</span><span>/</span><span>{item.sessionTitle || (item.sessionId ? uiText("reviewFavoritesPanel.ReviewFavoritesPanel38") : uiText("reviewFavoritesPanel.ReviewFavoritesPanel39"))}</span><span>/</span><time>{formatArchiveDateTime(item.eventTs)}</time><span>{uiText("reviewFavoritesPanel.ReviewFavoritesPanel40")}{formatArchiveDateTime(item.favoritedAt)}</span>
                   {item.tags.map((tag) => <span key={tag} className="rounded-full bg-accent-subtle px-1.5 py-0.5 text-accent-text">#{tag}</span>)}
-                  {item.note && <span className="truncate text-t2" title={item.note}>备注：{item.note}</span>}
+                  {item.note && <span className="truncate text-t2" title={item.note}>{uiText("reviewFavoritesPanel.ReviewFavoritesPanel41")}{item.note}</span>}
                 </div>
               </div>
               <div className="flex shrink-0 flex-wrap justify-end gap-1">
-                <button type="button" className={editingItem && targetKey(editingItem) === key ? filterActionButtonClass : buttonClass} onClick={() => setEditingItem((current) => current && targetKey(current) === key ? null : item)}>{editingItem && targetKey(editingItem) === key ? "关闭编辑" : "编辑收藏"}</button>
-                <button type="button" className={dangerActionButtonClass} onClick={() => setSingleRemove(item)}>取消收藏</button>
-                {item.canLocate && item.sessionId && item.eventKey ? <button type="button" className={buttonClass} onClick={() => onOpenFavorite(item)}>查看上下文</button> : <span className="rounded-md border border-line px-2.5 py-1.5 ui-type-meta text-t3" title="这条收藏没有关联到当前档案场次">无法定位原事件</span>}
+                <button type="button" className={editingItem && targetKey(editingItem) === key ? filterActionButtonClass : buttonClass} onClick={() => setEditingItem((current) => current && targetKey(current) === key ? null : item)}>{editingItem && targetKey(editingItem) === key ? uiText("reviewFavoritesPanel.ReviewFavoritesPanel42") : uiText("reviewFavoritesPanel.ReviewFavoritesPanel43")}</button>
+                <button type="button" className={dangerActionButtonClass} onClick={() => setSingleRemove(item)}>{uiText("reviewFavoritesPanel.ReviewFavoritesPanel20")}</button>
+                {item.canLocate && item.sessionId && item.eventKey ? <button type="button" className={buttonClass} onClick={() => onOpenFavorite(item)}>{uiText("reviewFavoritesPanel.ReviewFavoritesPanel44")}</button> : <span className="rounded-md border border-line px-2.5 py-1.5 ui-type-meta text-t3" title={uiText("reviewFavoritesPanel.title")}>{uiText("reviewFavoritesPanel.ReviewFavoritesPanel39")}</span>}
               </div>
             </div>
           </article>;
         })}
         </div>
       </section>
-      {page.nextCursor && <button type="button" className={`${buttonClass} mx-auto`} disabled={loading} onClick={() => void load(page.nextCursor, true)}>{loading ? "正在加载…" : "加载更多收藏"}</button>}
+      {page.nextCursor && <button type="button" className={`${buttonClass} mx-auto`} disabled={loading} onClick={() => void load(page.nextCursor, true)}>{loading ? uiText("reviewFavoritesPanel.ReviewFavoritesPanel45") : uiText("reviewFavoritesPanel.ReviewFavoritesPanel46")}</button>}
       {editingItem && <FavoriteOrganizationEditor
-        title={`编辑收藏 · ${editingItem.userName || "未知用户"}`}
+        title={uiText("reviewFavoritesPanel.title2", { value: editingItem.userName || uiText("reviewFavoritesPanel.title.value") })}
         initialNote={editingItem.note}
         initialTags={editingItem.tags}
         tags={tags}
@@ -634,9 +635,9 @@ export function ReviewFavoritesPanel({
         onSave={saveEditedFavorite}
         onCancel={() => setEditingItem(null)}
       />}
-      {confirmRemove && <ConfirmDialog title="取消所选收藏" description={`将取消 ${selectedItems.length} 条收藏；备注和标签也会随收藏关系一起移除。档案事件本身不会删除。`} confirmLabel="取消收藏" confirmTone="danger" onCancel={() => setConfirmRemove(false)} onConfirm={removeSelected} />}
-      {singleRemove && <ConfirmDialog title="取消收藏" description="将取消这条收藏，并移除它的备注和标签；档案事件本身不会删除。" confirmLabel="取消收藏" confirmTone="danger" onCancel={() => setSingleRemove(null)} onConfirm={removeSingle} />}
-      {tagToDelete && <ConfirmDialog title={`删除标签“${tagToDelete.name}”`} description={`将删除这个标签以及它与收藏的关联，但不会删除收藏、备注或原始事件。`} confirmLabel="删除标签" confirmTone="danger" onCancel={() => setTagToDelete(null)} onConfirm={deleteTag} />}
+      {confirmRemove && <ConfirmDialog title={uiText("reviewFavoritesPanel.title3")} description={uiText("reviewFavoritesPanel.description", { length: selectedItems.length })} confirmLabel={uiText("reviewFavoritesPanel.confirmLabel")} confirmTone="danger" onCancel={() => setConfirmRemove(false)} onConfirm={removeSelected} />}
+      {singleRemove && <ConfirmDialog title={uiText("reviewFavoritesPanel.title4")} description={uiText("reviewFavoritesPanel.description2")} confirmLabel={uiText("reviewFavoritesPanel.confirmLabel")} confirmTone="danger" onCancel={() => setSingleRemove(null)} onConfirm={removeSingle} />}
+      {tagToDelete && <ConfirmDialog title={uiText("reviewFavoritesPanel.title5", { name: tagToDelete.name })} description={uiText("reviewFavoritesPanel.description3")} confirmLabel={uiText("reviewFavoritesPanel.confirmLabel2")} confirmTone="danger" onCancel={() => setTagToDelete(null)} onConfirm={deleteTag} />}
     </div>
   );
 }

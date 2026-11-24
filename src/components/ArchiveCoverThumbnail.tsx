@@ -1,3 +1,4 @@
+import { uiText } from "../i18n/index.ts";
 import { useEffect, useRef, useState } from "react";
 import { ImagePreviewOverlay } from "./ImagePreviewOverlay";
 import { loadSessionCover, readRecoveryCover } from '../cloudSync/recoveryCoverDisplay';
@@ -78,8 +79,8 @@ export function ArchiveCoverThumbnail({ url, alt, size, cloudSessionId, previewE
           ref={triggerRef}
           type="button"
           className={`${thumbnailClass} cursor-zoom-in p-0 text-left transition-[border-color,box-shadow] hover:border-accent/70 hover:shadow-lg hover:shadow-black/20 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent-ring`}
-          aria-label={`查看${alt}`}
-          title="查看封面预览"
+          aria-label={uiText("archiveCoverThumbnail.aria_label", { alt: alt })}
+          title={uiText("archiveCoverThumbnail.title")}
           onClick={() => setPreviewOpen(true)}
         >
           <img
@@ -93,14 +94,14 @@ export function ArchiveCoverThumbnail({ url, alt, size, cloudSessionId, previewE
         </button>
       ) : failed ? (
         <button type="button" className={`${thumbnailClass} ui-type-micro text-t3 hover:text-t1 focus-visible:ring-2 focus-visible:ring-accent-ring`}
-          title="封面未能加载，请检查服务器连接后重试" onClick={() => setRetry(value => value + 1)}>重试封面</button>
+          title={uiText("archiveCoverThumbnail.title2")} onClick={() => setRetry(value => value + 1)}>{uiText("archiveCoverThumbnail.ArchiveCoverThumbnail")}</button>
       ) : (
         <span
           className={thumbnailClass}
           role="img"
-          aria-label={alt + "（暂无封面）"}
+          aria-label={alt + uiText("archiveCoverThumbnail.aria_label2")}
         >
-          <span className="flex size-full items-center justify-center px-1 text-center ui-type-meta text-t3">{cloud && visible && localImage === null ? '加载封面…' : '暂无封面'}</span>
+          <span className="flex size-full items-center justify-center px-1 text-center ui-type-meta text-t3">{cloud && visible && localImage === null ? uiText("archiveCoverThumbnail.ArchiveCoverThumbnail2") : uiText("archiveCoverThumbnail.ArchiveCoverThumbnail3")}</span>
         </span>
       )}
       {showImage && imageUrl && previewEnabled && (
@@ -108,8 +109,8 @@ export function ArchiveCoverThumbnail({ url, alt, size, cloudSessionId, previewE
           open={previewOpen}
           src={imageUrl}
           alt={alt}
-          label={`${alt}预览`}
-          closeLabel="关闭封面预览"
+          label={uiText("archiveCoverThumbnail.label", { alt: alt })}
+          closeLabel={uiText("archiveCoverThumbnail.closeLabel")}
           variant="cover"
           restoreFocusRef={triggerRef}
           onClose={() => setPreviewOpen(false)}

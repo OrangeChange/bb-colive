@@ -1,3 +1,4 @@
+import { uiText } from "../i18n/index.ts";
 import { resolveThemeEventVisibility } from "../themes/themeEventVisibility.ts";
 import { projectNativePreviewActivities } from "../preview/nativePreviewActivities";
 import { createNativeEventVisibilityPredicate } from "../events/outputEventPolicy.ts";
@@ -56,13 +57,13 @@ export function StylePreviewArea({ context, mode, events, eventStyleSettings, ar
     event.preventDefault();
     target.scrollLeft += event.deltaY;
   };
-  const sticky = showStickyPreview && <div className="sticky-area native-preview-sticky-scroll" onWheel={handleStickyWheel} data-style-api="1" data-event-style-scope={area.scope} data-position={stickyPosition} aria-label="置顶栏">{stickyCards.map(card => <StickyEventCard key={card.event.reactKey ?? card.event.id} card={card} now={now} display={resolved.displayPreferences} eventStyleSettings={eventStyleSettings} />)}</div>;
+  const sticky = showStickyPreview && <div className="sticky-area native-preview-sticky-scroll" onWheel={handleStickyWheel} data-style-api="1" data-event-style-scope={area.scope} data-position={stickyPosition} aria-label={uiText("stylePreviewArea.aria_label")}>{stickyCards.map(card => <StickyEventCard key={card.event.reactKey ?? card.event.id} card={card} now={now} display={resolved.displayPreferences} eventStyleSettings={eventStyleSettings} />)}</div>;
   return <div ref={areaRef} data-style-api="1" data-native-theme-surface data-native-canvas data-preview-context={context} data-preview-mode={mode}
     data-event-style-scope={area.scope} className={`native-theme-preview preview ${context === "review" ? "" : "theme-surface"} ${resolved.areaClass} style-editor-preview-list native-preview-regions`}>
     {area.style}
     {stickyPosition === "top" && sticky}
     <div ref={setScrollNode} data-native-list className={`event-list native-preview-message-scroll feed-virtual-viewport feed-virtual-viewport-${getFeedStackAlignment(direction, alignment)}`}>
-      {visible.length === 0 && <p role="status" className="ui-type-control text-t3">当前区域没有此类样例，请选择其他事件类型</p>}
+      {visible.length === 0 && <p role="status" className="ui-type-control text-t3">{uiText("stylePreviewArea.StylePreviewArea")}</p>}
       {visible.map((event, index) => <EventRowSlot key={event.reactKey ?? event.id} className="event-row-slot"
         data-event-id={event.reactKey ?? event.id} showEventSpacing={index < visible.length - 1}>
         <EventRow maskUsername={maskUsername} ev={event} activityNow={input.previewMotion === "simulation" ? undefined : previewNow} liveLayout={resolved.layout !== "review"} reviewLayout={resolved.layout === "review"}

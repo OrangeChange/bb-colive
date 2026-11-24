@@ -1,6 +1,7 @@
 import { readFileSync } from "node:fs";
 import { createRequire } from "node:module";
 import ts from "typescript";
+import * as uiMessages from "../../src/i18n/index.ts";
 
 const require = createRequire(import.meta.url);
 
@@ -54,6 +55,7 @@ export function componentRuntime(path, ports = {}, extraExports = []) {
   }] } }).outputText;
   const module = { exports: {} };
   new Function("require", "module", "exports", "testImportMeta", code)((id) => {
+    if (id.endsWith("i18n/index.ts")) return uiMessages;
     if (id === "react") return hooks;
     if (id === "react/jsx-runtime") return require(id);
     if (id === "react-dom") return { createPortal: (children) => children };

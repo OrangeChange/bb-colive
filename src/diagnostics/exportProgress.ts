@@ -1,3 +1,4 @@
+import { uiText } from "../i18n/index.ts";
 export type ExportProgressSample = {
   processedBytes: number;
   totalBytes: number;
@@ -37,10 +38,10 @@ export function estimateExportRemainingSeconds(sample: ExportProgressSample & { 
 }
 
 export function formatExportRemaining(seconds: number | null): string {
-  if (seconds == null) return "剩余时间计算中";
-  if (seconds <= 1) return "即将完成";
-  if (seconds < 60) return `预计剩余 ${seconds} 秒`;
+  if (seconds == null) return uiText("exportProgress.formatExportRemaining");
+  if (seconds <= 1) return uiText("exportProgress.formatExportRemaining2");
+  if (seconds < 60) return uiText("exportProgress.formatExportRemaining3", { seconds: seconds });
   const minutes = Math.floor(seconds / 60);
   const remainder = seconds % 60;
-  return remainder === 0 ? `预计剩余 ${minutes} 分钟` : `预计剩余 ${minutes} 分 ${remainder} 秒`;
+  return remainder === 0 ? uiText("exportProgress.formatExportRemaining4", { minutes: minutes }) : uiText("exportProgress.formatExportRemaining5", { minutes: minutes, remainder: remainder });
 }

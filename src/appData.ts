@@ -1,3 +1,4 @@
+import { uiText } from "./i18n/index.ts";
 import { invoke } from '@tauri-apps/api/core';
 import { load as loadStore, type Store } from '@tauri-apps/plugin-store';
 export type { Store } from '@tauri-apps/plugin-store';
@@ -15,6 +16,6 @@ export async function createAppWindow(label: string, options: ConstructorParamet
   const { WebviewWindow } = await import('@tauri-apps/api/webviewWindow');
   await invoke('create_app_window', { options: { ...options, label } });
   const window = await WebviewWindow.getByLabel(label);
-  if (!window) throw new Error('窗口创建失败，请重试');
+  if (!window) throw new Error(uiText("appData.createAppWindow"));
   return window;
 }

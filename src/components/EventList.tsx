@@ -1,3 +1,4 @@
+import { uiText } from "../i18n/index.ts";
 /**
  * 事件列表：贴底自动跟随（向上滚动即暂停跟随；「回到最新」完整版是 3b）
  * 现场记录完整保留，使用虚拟滚动只渲染可见行，避免直播时间变长后 DOM 无限增长。
@@ -103,7 +104,7 @@ export function EventList({
   queryActive = false,
   feedKey,
   feedSession,
-  emptyLabel = "暂无符合条件的事件",
+  emptyLabel = uiText("eventList.EventList"),
   liveLayout = false,
   onUserFilter,
   displayPreferences,
@@ -912,10 +913,10 @@ export function EventList({
                   });
                 }}
                 className="pointer-events-auto inline-flex min-h-8 items-center gap-1.5 rounded-full border border-accent/60 bg-surface px-3.5 py-1.5 ui-type-control font-semibold text-accent-text shadow-lg ring-1 ring-black/5 transition-colors hover:border-accent hover:bg-raised focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent-ring"
-                aria-label="跳转到标记"
+                aria-label={uiText("eventList.aria_label")}
               >
                 <span aria-hidden="true" className="inline-flex h-4 items-center text-sm leading-none">⌖</span>
-                <span className="inline-flex h-4 items-center ui-type-control">跳转到标记</span>
+                <span className="inline-flex h-4 items-center ui-type-control">{uiText("eventList.EventList2")}</span>
               </button>
             )}
             {unreadCount > 0 && (
@@ -923,13 +924,12 @@ export function EventList({
                 type="button"
                 onClick={scrollToLatest}
                 className="pointer-events-auto inline-flex min-h-8 items-center gap-1.5 rounded-full border border-accent/60 bg-surface px-3.5 py-1.5 ui-type-control font-semibold text-accent-text shadow-lg ring-1 ring-black/5 transition-colors hover:border-accent hover:bg-raised focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent-ring"
-                aria-label="回到最新消息"
+                aria-label={uiText("eventList.aria_label2")}
               >
                 <span aria-hidden="true" className="inline-flex h-4 items-center text-sm leading-none">{latestArrow}</span>
-                <span className="inline-flex h-4 items-center ui-type-control">回到最新</span>
+                <span className="inline-flex h-4 items-center ui-type-control">{uiText("eventList.EventList3")}</span>
                 <span className="inline-flex h-4 items-center rounded-full bg-accent-subtle px-1.5 ui-type-micro">
-                  {unreadCount >= 999 ? "999+" : unreadCount} 条
-                </span>
+                  {unreadCount >= 999 ? "999+" : unreadCount} {uiText("eventList.EventList4")}</span>
               </button>
             )}
           </div>

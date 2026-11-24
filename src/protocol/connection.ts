@@ -1,3 +1,4 @@
+import { uiText } from "../i18n/index.ts";
 /**
  * 弹幕连接生命周期：room_init -> getDanmuInfo(wbi) -> finger(buvid) -> KeepLiveWS
  *
@@ -161,7 +162,7 @@ export class DanmuConnection {
     this.activeStages.clear()
     this.recordConnectionLifecycle('connection:start')
     try {
-      this.cb.onState({ status: 'connecting', message: '正在解析房间…' })
+      this.cb.onState({ status: 'connecting', message: uiText("connection.connect.message") })
 
       // 1. nav（wbi 密钥）
       const nav = await this.runStage('nav', async () => {
@@ -178,8 +179,8 @@ export class DanmuConnection {
       // 2. room_init（短号 -> 真实房间号 + 主播 uid）
       const roomInit = await this.runStage('room_init', async () => {
         const value = await getRealRoomId(params.roomIdInput.trim(), params.cookie)
-        if (value.locked) throw new Error('直播间已被封禁')
-        if (value.encrypted) throw new Error('直播间已加密')
+        if (value.locked) throw new Error(uiText("connection.connect.roomInit"))
+        if (value.encrypted) throw new Error(uiText("connection.connect.roomInit2"))
         return value
       })
       if (!roomInit || this.closedByUser) return
@@ -256,7 +257,7 @@ export class DanmuConnection {
         ...(this.roomTitle ? { title: this.roomTitle } : {}),
         ...(this.ctx?.roomGuardProfile ? { roomGuardProfile: this.ctx.roomGuardProfile } : {}),
         roomIdInput: params.roomIdInput.trim(),
-        message: '正在获取弹幕凭证…',
+        message: uiText("connection.connect.message2"),
       })
 
       // 3. getDanmuInfo（wbi 签名，风控核心步骤）
@@ -280,7 +281,7 @@ export class DanmuConnection {
       if (this.closedByUser) return
 
       // 5. WS
-      this.cb.onState({ status: 'connecting', roomId: roomInit.room_id, liveStatus: roomInit.live_status, message: '正在连接弹幕服务器…' })
+      this.cb.onState({ status: 'connecting', roomId: roomInit.room_id, liveStatus: roomInit.live_status, message: uiText("connection.connect.message3") })
       const address = danmuInfo.host_list?.[0]
         ? `wss://${danmuInfo.host_list[0].host}:${danmuInfo.host_list[0].wss_port}/sub`
         : DEFAULT_WS_URL
@@ -307,9 +308,9 @@ export class DanmuConnection {
         e instanceof ApiError
           ? e.friendly
             ? e.code !== undefined ? `${e.friendly}（${e.code}）` : e.friendly
-            : e.code !== undefined ? `接口异常（${e.code}）` : '接口异常'
+            : e.code !== undefined ? uiText("connection.connect.message4", { code: e.code }) : uiText("connection.connect.message5")
           : e instanceof BiliTransportError || e instanceof TypeError
-            ? '网络异常，请检查网络后重试'
+            ? uiText("connection.connect.message6")
             : e instanceof Error ? e.message : String(e)
       this.cb.onState({ status: 'error', message })
       throw e
@@ -486,7 +487,7 @@ export class DanmuConnection {
       this.settleStage('websocket', 'success', { phase: 'open' })
       this.markConnectionSuccess('open')
       this.recordConnectionLifecycle('open', { roomId })
-      this.cb.onState({ status: 'connecting', roomId, message: '连接已建立，等待进入房间…' })
+      this.cb.onState({ status: 'connecting', roomId, message: uiText("connection.openWs.message") })
     })
     let reconnecting = false
     let reconnectGeneration = 0
@@ -506,7 +507,7 @@ export class DanmuConnection {
         liveStartedAt: this.liveStartedAt,
         ...(this.roomCoverUrl ? { coverUrl: this.roomCoverUrl } : {}),
         ...(this.ctx?.roomGuardProfile ? { roomGuardProfile: this.ctx.roomGuardProfile } : {}),
-        message: buvid ? undefined : '（无 buvid 连接）',
+        message: buvid ? undefined : uiText("connection.openWs.publishConnected.message"),
       })
     }
     live.addEventListener('live', () => {
@@ -551,7 +552,7 @@ export class DanmuConnection {
         reconnectGeneration += 1
         this.recordWebsocketFailure('websocket error')
         this.recordConnectionLifecycle('reconnect', { roomId, reason: 'error' })
-        this.cb.onState({ status: 'reconnecting', roomId, message: '连接出错，重连中…' })
+        this.cb.onState({ status: 'reconnecting', roomId, message: uiText("connection.openWs.message2") })
       }
     })
     live.addEventListener('close', () => {
@@ -563,7 +564,7 @@ export class DanmuConnection {
         reconnectGeneration += 1
         this.recordWebsocketFailure('websocket closed')
         this.recordConnectionLifecycle('reconnect', { roomId, reason: 'close' })
-        this.cb.onState({ status: 'reconnecting', roomId, message: '连接断开，重连中…' })
+        this.cb.onState({ status: 'reconnecting', roomId, message: uiText("connection.openWs.message3") })
       }
     })
 

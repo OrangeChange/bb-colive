@@ -1,3 +1,4 @@
+import { uiText } from "../i18n/index.ts";
 import { previewEditorAccent } from '../../public/previewEditorHit.mjs';
 import { useTheme } from '../theme.ts';
 import { resolveCompatiblePreviewScheme } from "../themes/compatPreviewScheme.ts";
@@ -153,7 +154,7 @@ export function CompatibleThemePreview({ onPreviewReady, onPreviewFailure, trans
   return <div className={`compatible-theme-preview${thumbnail ? " is-thumbnail theme-library-thumbnail-canvas" : ""}${transparent && !thumbnail && !transparentCanvas ? " is-checkerboard" : ""} is-${actualScheme}`} style={previewWidth ? { width: `${previewWidth}px`, maxWidth: "100%" } : undefined}>
     <div className="compatible-theme-preview-viewport" key={!previewFrame && previewMode === "simulation" ? `simulation:${previewRestartKey}` : "content"}>
     {getCompatibleThemeEditingSurface(document.mode)?.ownsPreviewDocument ? preview : <IsolatedPreviewFrame
-      title={thumbnail ? "主题缩略预览" : "主题样式预览"}
+      title={thumbnail ? uiText("compatibleThemePreview.title") : uiText("compatibleThemePreview.title2")}
       previewCss={previewCss}
       previewScheme={actualScheme}
       previewBackground={previewBackground}

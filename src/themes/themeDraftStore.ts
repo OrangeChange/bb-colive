@@ -1,3 +1,4 @@
+import { uiText } from "../i18n/index.ts";
 import type { ThemeEditorSession } from "./themeEditorSession.ts";
 
 export type ThemeEditorDraft = Omit<ThemeEditorSession, "undo" | "redo" | "externalDocument" | "historyGroup">;
@@ -23,7 +24,7 @@ export function createThemeDraftStore(factory: IDBFactory = indexedDB) {
         const request = operation(transaction.objectStore("drafts"));
         transaction.oncomplete = () => resolve(request.result);
         transaction.onerror = () => reject(transaction.error ?? request.error);
-        transaction.onabort = () => reject(transaction.error ?? new Error("草稿写入已中断"));
+        transaction.onabort = () => reject(transaction.error ?? new Error(uiText("themeDraftStore.createThemeDraftStore.run.result")));
       });
     });
     pending = result.catch(() => undefined);

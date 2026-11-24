@@ -1,3 +1,4 @@
+import { uiText } from "../i18n/index.ts";
 import {formatThemeDate} from "../themes/themeDate.ts";
 import {useEffect,useState} from 'react';
 import type {ThemeDocument} from '../themes/themeTypes.ts';
@@ -5,5 +6,5 @@ export function ThemeMetadataDetails({document,themeId,load}:{document?:ThemeDoc
  const [stored,setStored]=useState<ThemeDocument>();
  useEffect(()=>{let active=true;setStored(undefined);if(themeId)void load(themeId).then(d=>{if(active)setStored(d)}).catch(()=>{});return()=>{active=false}},[themeId,load]);
  const metadata=(document??stored)?.metadata;
- return <dl className="theme-metadata-details">{([['来源网址',metadata?.sourceUrl],['作者更新时间',metadata?.updatedAt],['导入时间',metadata?.importedAt],['本地修改时间',metadata?.localModifiedAt]] as const).map(([label,value])=><div key={label}><dt>{label}</dt><dd title={value}>{label==='来源网址' ? value||'未标注' : formatThemeDate(value)}</dd></div>)}</dl>;
+ return <dl className="theme-metadata-details">{([['source',uiText("themeMetadataDetails.sourceUrl"),metadata?.sourceUrl],["updated",uiText("themeMetadataDetails.ThemeMetadataDetails"),metadata?.updatedAt],["imported",uiText("themeMetadataDetails.ThemeMetadataDetails2"),metadata?.importedAt],["modified",uiText("themeMetadataDetails.ThemeMetadataDetails3"),metadata?.localModifiedAt]] as const).map(([id,label,value])=><div key={id}><dt>{label}</dt><dd title={value}>{id==='source' ? value||uiText("themeMetadataDetails.ThemeMetadataDetails4") : formatThemeDate(value)}</dd></div>)}</dl>;
 }

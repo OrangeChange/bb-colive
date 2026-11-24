@@ -1,3 +1,4 @@
+import { uiText, UiMessageError } from "../i18n/index.ts";
 import type { ThemeEditorDraft } from "./themeDraftStore.ts";
 import { formatThemeTimestamp } from "./themeDate.ts";
 import { restoreThemeAdjustments } from "./themeAdjustments.ts";
@@ -230,7 +231,7 @@ export function createThemeSessionHost(repository: SessionRepository, options: S
     session.visualCssDraft = draft;
     if (result.error || !result.document) {
       session.dirty = true;
-      session.visualCssError = result.error || "CSS 语法有误";
+      session.visualCssError = result.error || uiText("themeEditorSession.createThemeSessionHost.updateThemeVisualCssDraft");
       session.visualCssDiagnostics = [];
       return { error: session.visualCssError };
     }
@@ -279,7 +280,7 @@ export function createThemeSessionHost(repository: SessionRepository, options: S
     try {
       disk = await repository.loadThemeDocument(session.themeId);
     } catch (error) {
-      if (error instanceof Error && /不存在|移除/.test(error.message)) return "deleted";
+      if (error instanceof UiMessageError && error.messageKey === "themeRepository.createThemeRepository.loadThemeDocument") return "deleted";
       throw error;
     }
     if (JSON.stringify(disk) === JSON.stringify(session.saved)) {
@@ -340,8 +341,8 @@ export function createThemeSessionHost(repository: SessionRepository, options: S
   }
 
   async function saveThemeSession(session: ThemeEditorSession, keepDraft = false): Promise<ThemeEditorSession> {
-    if (session.visualCssError) throw new Error("请先修正可视化 CSS 错误");
-    if (session.customCssError) throw new Error("请先修正自定义 CSS 错误");
+    if (session.visualCssError) throw new Error(uiText("themeEditorSession.createThemeSessionHost.saveThemeSession"));
+    if (session.customCssError) throw new Error(uiText("themeEditorSession.createThemeSessionHost.saveThemeSession2"));
     const draft = session.document;
     const previous = pendingSaves.get(session);
     if (previous?.draft === draft) { await previous.promise; return session; }
@@ -398,8 +399,8 @@ export function createThemeSessionHost(repository: SessionRepository, options: S
   }
 
   async function saveThemeSessionAs(session: ThemeEditorSession, metadata: { name: string; author: string; version?: string }): Promise<ThemeEditorSession> {
-    if (session.visualCssError) throw new Error("请先修正可视化 CSS 错误");
-    if (session.customCssError) throw new Error("请先修正自定义 CSS 错误");
+    if (session.visualCssError) throw new Error(uiText("themeEditorSession.createThemeSessionHost.saveThemeSessionAs"));
+    if (session.customCssError) throw new Error(uiText("themeEditorSession.createThemeSessionHost.saveThemeSessionAs2"));
     const document: ThemeDocument = {
       ...structuredClone(session.document), themeId: createId(), origin: "custom",
       permissions: permissionsForOrigin("custom"), revision: 1,

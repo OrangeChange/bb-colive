@@ -1,3 +1,4 @@
+import { readUiSource } from "./helpers/readUiSource.mjs";
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import fs from 'node:fs';
@@ -6,11 +7,11 @@ import { resolveThemeResourceSource } from '../src/themes/themeRemoteCss.ts';
 import { rebaseThemeResourceOrigin } from '../src/themes/themeResourceOrigin.ts';
 
 test('旧快照素材映射保留完整远程来源，引用现有主题', () => {
- const aliases = JSON.parse(fs.readFileSync('src-tauri/style-distribution/catalog-assets.json', 'utf8'));
+ const aliases = JSON.parse(readUiSource('src-tauri/style-distribution/catalog-assets.json', 'utf8'));
  const originals = JSON.parse(fs.readFileSync('resources/theme-catalog/legacy-assets.json', 'utf8'));
  const ids = new Set();
  for (const mode of ['native','blc','blc-open','laplace']) for (const entry of fs.readdirSync(`src-tauri/style-distribution/${mode}`,{withFileTypes:true})) {
-   if (entry.isDirectory()) ids.add(JSON.parse(fs.readFileSync(`src-tauri/style-distribution/${mode}/${entry.name}/theme.json`,'utf8')).themeId);
+   if (entry.isDirectory()) ids.add(JSON.parse(readUiSource(`src-tauri/style-distribution/${mode}/${entry.name}/theme.json`,'utf8')).themeId);
  }
  assert.ok(Object.keys(aliases).length > 200);
  for (const [previous, original] of Object.entries(originals)) {

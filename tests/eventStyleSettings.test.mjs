@@ -1,3 +1,4 @@
+import { readUiSource } from "./helpers/readUiSource.mjs";
 import test from "node:test";
 import assert from "node:assert/strict";
 import fs from "node:fs";
@@ -90,7 +91,7 @@ test("全局事件样式提供内置字体和文字描边设置", () => {
 });
 
 test("完整字体资源覆盖中日韩与免费价格文字", () => {
-  const css = fs.readFileSync(path.resolve("src/App.css"), "utf8");
+  const css = readUiSource(path.resolve("src/App.css"), "utf8");
   const requiredAssets = [
     "MiSans-Regular.woff2",
     "MiSans-Medium.woff2",

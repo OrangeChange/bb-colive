@@ -1,3 +1,4 @@
+import { uiText } from "../i18n/index.ts";
 import { invoke } from "@tauri-apps/api/core";
 import type { FishAudioSettings, VoiceInfo, VoiceSynthesisRequest } from "./voiceTypes.ts";
 import { normalizeFishReferenceVoice, type FishReferenceVoice } from "./fishAudioModels.ts";
@@ -24,15 +25,15 @@ export type FishAudioInvoke = <T>(command: string, args?: Record<string, unknown
 
 export async function lookupFishAudioModel(input: FishAudioModelLookupInput, invokeImpl: FishAudioInvoke = invoke): Promise<FishReferenceVoice> {
   const modelId = input.modelId.trim();
-  if (!modelId) throw new Error("请先填写参考音色 ID");
-  if (!input.apiKey.trim()) throw new Error("请先填写 Fish Audio API Key");
-  if (!input.baseUrl.trim()) throw new Error("请先填写 Fish Audio API 地址");
+  if (!modelId) throw new Error(uiText("fishAudioProvider.lookupFishAudioModel"));
+  if (!input.apiKey.trim()) throw new Error(uiText("fishAudioProvider.lookupFishAudioModel2"));
+  if (!input.baseUrl.trim()) throw new Error(uiText("fishAudioProvider.lookupFishAudioModel3"));
   const result = normalizeFishReferenceVoice(await invokeImpl<unknown>("lookup_fish_audio_model", {
     baseUrl: input.baseUrl.trim(),
     apiKey: input.apiKey,
     modelId,
   }));
-  if (!result) throw new Error("Fish Audio 返回的模型信息无效");
+  if (!result) throw new Error(uiText("fishAudioProvider.lookupFishAudioModel4"));
   return result;
 }
 
@@ -64,11 +65,11 @@ export function createFishAudioProvider(dependencies: FishAudioProviderDependenc
       const startedAt = Date.now();
       let settings: FishAudioSettings | null = null;
       try {
-        if (!request.text.trim()) throw new VoiceProviderError(PROVIDER_NAME, "invalid", "没有可播报的文字", false);
+        if (!request.text.trim()) throw new VoiceProviderError(PROVIDER_NAME, "invalid", uiText("fishAudioProvider.createFishAudioProvider.synthesize"), false);
         settings = dependencies.getSettings();
-        if (!settings.apiKey.trim()) throw new VoiceProviderError(PROVIDER_NAME, "invalid", "请先填写 Fish Audio API Key", false);
+        if (!settings.apiKey.trim()) throw new VoiceProviderError(PROVIDER_NAME, "invalid", uiText("fishAudioProvider.createFishAudioProvider.synthesize2"), false);
         if (!settings.baseUrl.trim() || !settings.model.trim()) {
-          throw new VoiceProviderError(PROVIDER_NAME, "invalid", "请先填写 Fish Audio 地址和模型", false);
+          throw new VoiceProviderError(PROVIDER_NAME, "invalid", uiText("fishAudioProvider.createFishAudioProvider.synthesize3"), false);
         }
         activeRequestIds.add(requestId);
         const bytes = await invokeImpl<number[]>("synthesize_fish_audio", {
@@ -109,7 +110,7 @@ export function createFishAudioProvider(dependencies: FishAudioProviderDependenc
         });
         if (error instanceof VoiceProviderError) throw error;
         const detail = error instanceof Error ? error.message : String(error);
-        throw new VoiceProviderError(PROVIDER_NAME, "protocol", `Fish Audio 语音合成失败：${detail}`, true);
+        throw new VoiceProviderError(PROVIDER_NAME, "protocol", uiText("fishAudioProvider.createFishAudioProvider.synthesize4", { detail: detail }), true);
       } finally {
         activeRequestIds.delete(requestId);
         cancelledRequestIds.delete(requestId);

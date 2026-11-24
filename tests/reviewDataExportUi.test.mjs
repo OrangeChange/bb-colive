@@ -1,3 +1,4 @@
+import { readUiSource } from "./helpers/readUiSource.mjs";
 import test from "node:test";
 import assert from "node:assert/strict";
 import fs from "node:fs";
@@ -5,7 +6,7 @@ import fs from "node:fs";
 const root = new URL("../", import.meta.url);
 function read(relativePath) {
   try {
-    return fs.readFileSync(new URL(relativePath, root), "utf8");
+    return readUiSource(new URL(relativePath, root), "utf8");
   } catch (error) {
     if (error?.code === "ENOENT") return "";
     throw error;
@@ -33,7 +34,7 @@ test("导出对话框提供三种格式和CSV分类选择", () => {
   assert.match(dialog, /await save/);
   assert.match(dialog, /useState<ArchiveSortDirection>\("asc"\)/);
   assert.match(dialog, /\["asc", "desc"\]/);
-  assert.match(dialog, /value === "asc" \? "顺序排列" : "倒序排列"/);
+  assert.match(dialog, /value === "asc" \? ["']顺序排列["'] : ["']倒序排列["']/);
   assert.match(dialog, /safeFilePart/);
   assert.match(dialog, /scopeFilePart/);
   assert.match(dialog, /exportFilePart/);

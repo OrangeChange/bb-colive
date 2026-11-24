@@ -1,3 +1,4 @@
+import { uiText } from "../i18n/index.ts";
 import type {
   ConnectParams,
   ConnectionCallbacks,
@@ -39,7 +40,7 @@ export function createRoomSessions(ports: {
         entry.state = {
           status: "error",
           roomId,
-          message: error instanceof Error ? (error as Error & { friendly?: string }).friendly ?? error.message : "无法连接直播间",
+          message: error instanceof Error ? (error as Error & { friendly?: string }).friendly ?? error.message : uiText("obsRoomSessions.createRoomSessions.connect.message"),
         };
         entry.callbacks.forEach((cb) => cb.onState(entry.state!));
       });

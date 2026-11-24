@@ -1,3 +1,4 @@
+import { uiText } from "../i18n/index.ts";
 import type { DanmakuEvent, DanmakuUser } from "../protocol/types";
 import type { RefObject } from "react";
 import type { GiftEffectNotice } from "../windows/giftEffectBus";
@@ -80,7 +81,7 @@ export function EventPane({
       <header className="flex h-9 shrink-0 items-center justify-between border-b border-line px-3">
         <h2 className="ui-type-section-title font-semibold tracking-wide text-t2">{title}</h2>
         <span className="flex min-w-0 items-center gap-1.5 ui-type-meta text-t3">
-          <span className="shrink-0">事件 <span className="font-mono tabular-nums">{count}</span></span>
+          <span className="shrink-0">{uiText("eventPane.EventPane")}<span className="font-mono tabular-nums">{count}</span></span>
           {summary && (
             <>
               <span className="shrink-0 text-t3" aria-hidden="true">·</span>

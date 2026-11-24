@@ -1,3 +1,4 @@
+import { uiText } from "../i18n/index.ts";
 import type { SessionState } from './recoveryContract.ts';
 import type { RecoverySessionMetadata } from './recoveryArchiveSink.ts';
 
@@ -12,7 +13,7 @@ export function recoverySessionMetadata(row: SessionState): RecoverySessionMetad
   const base = object(anchor.base_info ?? raw.base ?? raw);
   const text = (value: unknown) => value === null || value === undefined || value === '' ? null : String(value);
   const captureStartedAt = recoveryTimestamp(row.capture_started_at);
-  if (captureStartedAt === null) throw new Error('云端场次的采集时间无效，请重新读取场次');
+  if (captureStartedAt === null) throw new Error(uiText("recoverySessionMetadata.recoverySessionMetadata"));
   return { serverSessionId: row.server_session_id, title: row.title, captureStartedAt,
     sourceLiveStartedAt: recoveryTimestamp(row.source_live_started_at), endedAt: recoveryTimestamp(row.ended_at),
     liveStatus: row.live_status, quality: row.quality, qualityReasons: [...row.quality_reasons],

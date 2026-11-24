@@ -1,3 +1,4 @@
+import { readUiSource } from "./helpers/readUiSource.mjs";
 import test from "node:test";
 import assert from "node:assert/strict";
 import fs from "node:fs";
@@ -24,9 +25,9 @@ test("颜色拖动每帧只预览最后一个值并在结束时提交一次", ()
 });
 
 test("可视化颜色拖动使用临时预览，完成后才写入主题", () => {
-  const field = fs.readFileSync("src/components/ThemeColorField.tsx", "utf8");
-  const visual = fs.readFileSync("src/components/NativeThemeVisualEditor.tsx", "utf8");
-  const editor = fs.readFileSync("src/components/NativeThemeEditor.tsx", "utf8");
+  const field = readUiSource("src/components/ThemeColorField.tsx", "utf8");
+  const visual = readUiSource("src/components/NativeThemeVisualEditor.tsx", "utf8");
+  const editor = readUiSource("src/components/NativeThemeEditor.tsx", "utf8");
   assert.match(field, /onPreviewChange/);
   assert.match(field, /createThemeColorDragInteraction/);
   assert.match(visual, /onPreviewChange/);

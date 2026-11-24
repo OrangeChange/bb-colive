@@ -1,3 +1,4 @@
+import { uiText } from "../i18n/index.ts";
 import { createAppWindow } from "../appData.ts";
 import {
   createPreviewResourceSender,
@@ -66,7 +67,7 @@ export async function openNativeStylePreviewWindow(): Promise<void> {
   }
   await createAppWindow(NATIVE_STYLE_PREVIEW_LABEL, {
     url: "?window=native-style-preview",
-    title: "样式预览 · BB CoLive",
+    title: uiText("nativeStylePreviewBridge.openNativeStylePreviewWindow.title"),
     width: 480,
     height: 720,
     minWidth: 240,

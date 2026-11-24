@@ -1,3 +1,4 @@
+import { uiText } from "../i18n/index.ts";
 import { load } from "../appData.ts";
 import { getThemeModeDefinition } from "../themes/themeModes.ts";
 import type { ThemeMode } from "../themes/themeTypes.ts";
@@ -23,7 +24,7 @@ export function obsThemeOptions(configuration: Pick<NativeObsConfiguration, "the
   for (const theme of themes) counts.set(theme.name, (counts.get(theme.name) ?? 0) + 1);
   const options = themes.map(theme => ({ value: theme.themeId, label: theme.mode && (counts.get(theme.name) ?? 0) > 1 ? `${theme.name} · ${getThemeModeDefinition(theme.mode).label}` : theme.name, ...(theme.mode ? {group:getThemeModeDefinition(theme.mode).label} : {}) }));
   if (!configuration.themeId || themes.some(theme => theme.themeId === configuration.themeId)) return options;
-  return [{ value: configuration.themeId, label: `${configuration.themeName || "原主题"}（已删除）`, disabled: true }, ...options];
+  return [{ value: configuration.themeId, label: uiText("nativeObsConfigurations.obsThemeOptions.label", { value: configuration.themeName || uiText("nativeObsConfigurations.obsThemeOptions.label.value") }), disabled: true }, ...options];
 }
 
 export interface NativeObsConfigurationPort {

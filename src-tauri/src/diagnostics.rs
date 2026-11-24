@@ -106,7 +106,7 @@ fn dir(a: &AppHandle) -> Result<PathBuf, String> {
 }
 pub fn append_log_sync(a: &AppHandle, n: &str, lines: &str) -> Result<(), String> {
     if !is_safe_log_file_name(n) {
-        return Err(format!("非法日志文件名: {n}"));
+        return Err(ui_format!("backend.diagnostics.append_log_sync", n = n));
     }
     let _g = LOCK
         .get_or_init(|| Mutex::new(()))
@@ -786,7 +786,7 @@ pub async fn export_diagnostic_bundle(
         export_diagnostic_bundle_sync(a, output_path, mode, snapshot)
     })
     .await
-    .map_err(|error| format!("生成诊断包失败：{error}"))?
+    .map_err(|error| ui_format!("backend.diagnostics.export_diagnostic_bundle", error = error))?
 }
 
 fn export_diagnostic_bundle_sync(
@@ -808,7 +808,7 @@ fn export_bundle_from_directory(
     let bm = match mode.as_str() {
         "24h" => BundleMode::Diagnostic24h,
         "full" => BundleMode::Full,
-        _ => return Err("mode 只能是 24h 或 full".into()),
+        _ => return Err(ui_text!("backend.diagnostics.export_bundle_from_directory").into()),
     };
     let es = entries(&d);
     let names = select_bundle_files(bm, &es);

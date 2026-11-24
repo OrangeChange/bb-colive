@@ -1,3 +1,4 @@
+import { uiText } from "../i18n/index.ts";
 import type { Anchor } from "../protocol/anchors.ts";
 import type {
   ArchiveEventRecord,
@@ -109,7 +110,7 @@ export function getArchiveOwnerLabel(
   const savedName = owner.name?.trim();
   if (savedName) return savedName;
   const anchorName = anchors.find((anchor) => anchor.realRoomId === owner.roomId)?.uname.trim();
-  return anchorName || `房间 ${owner.roomId}`;
+  return anchorName || uiText("archiveState.getArchiveOwnerLabel", { roomId: owner.roomId });
 }
 
 export const DEFAULT_REVIEW_QUERY: ReviewQueryState = {

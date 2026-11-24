@@ -1,3 +1,4 @@
+import { uiText } from "../i18n/index.ts";
 import { IsolatedPreviewFrame } from "./IsolatedPreviewFrame.tsx";
 import { useMemo, useRef } from "react";
 import type { EventDisplayPreferences } from "../eventDisplaySettings.ts";
@@ -31,7 +32,7 @@ export function NativeThemeThumbnail({ themeId, revision, displayPreferences, lo
   const content = <div className="theme-library-thumbnail-canvas" data-theme-id={themeId} style={full ? { zoom: displayScale } : undefined}><StylePreviewArea context={context} mode="all" events={full ? createStylePreviewEvents("混合流") : createStylePreviewEvents("混合流").slice(0, 2)} eventStyleSettings={settings as EventStyleSettings} displayPreferences={{ ...displayPreferences, ...display }} eventFontSize={full ? display.baseFontSize : Math.min(display.baseFontSize, 14)} windowEventFontSize={display.baseFontSize} /></div>;
   return <ThemeThumbnailShell root={root} failed={false} ready full={full}>
     {/@font-face\b/i.test(previewCss)
-      ? <IsolatedPreviewFrame title="主题缩略图" previewCss={previewCss}>{content}</IsolatedPreviewFrame>
+      ? <IsolatedPreviewFrame title={uiText("nativeThemeThumbnail.title")} previewCss={previewCss}>{content}</IsolatedPreviewFrame>
       : <><style>{previewCss}</style>{content}</>}
   </ThemeThumbnailShell>;
 }

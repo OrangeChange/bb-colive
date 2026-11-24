@@ -1,3 +1,4 @@
+import { uiText } from "../i18n/index.ts";
 import { load } from "../appData.ts";
 import { emit } from "@tauri-apps/api/event";
 import type { ThemeTarget } from "./themeTypes.ts";
@@ -66,7 +67,7 @@ export function createThemeBindingRegistry(port: ThemeBindingPort): ThemeBinding
     async setDisplayScale(targetId, displayScale) {
       const saved = await mutate(current => {
         const existing = current.find(item => item.targetId === targetId);
-        if (!existing) throw new Error("目标尚未绑定主题");
+        if (!existing) throw new Error(uiText("themeBindings.createThemeBindingRegistry.setDisplayScale.saved"));
         const binding = normalizeBinding({ ...existing, displayScale });
         return { next: current.map(item => item.targetId === targetId ? binding : item), result: binding };
       });

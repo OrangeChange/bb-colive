@@ -1,3 +1,4 @@
+import { uiText } from "../i18n/index.ts";
 import EditorWorker from "monaco-editor/esm/vs/editor/editor.worker?worker";
 import CssWorker from "monaco-editor/esm/vs/language/css/css.worker?worker";
 import { NATIVE_PART_SELECTORS } from "../themes/nativeSemanticSelectors.ts";
@@ -34,7 +35,7 @@ export function loadNativeMonaco(): Promise<MonacoModule> {
           const word = model.getWordUntilPosition(position);
           const range = { startLineNumber: position.lineNumber, endLineNumber: position.lineNumber, startColumn: word.startColumn, endColumn: word.endColumn };
           const selectors = [...new Set(Object.values(NATIVE_PART_SELECTORS).flatMap(selector => selector.split(/\s*,\s*/u)))];
-          return { suggestions: selectors.map(selector => ({ label: selector, kind: monaco.languages.CompletionItemKind.Class, insertText: selector, range, detail: "BB CoLive 语义选择器" })) };
+          return { suggestions: selectors.map(selector => ({ label: selector, kind: monaco.languages.CompletionItemKind.Class, insertText: selector, range, detail: uiText("nativeMonacoLoader.provideCompletionItems.suggestions.detail") })) };
         },
       });
     }

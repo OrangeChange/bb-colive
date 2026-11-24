@@ -1,10 +1,11 @@
+import { readUiSource } from "./helpers/readUiSource.mjs";
 import { readApplicationSources } from "./helpers/applicationSources.mjs";
 import test from "node:test";
 import assert from "node:assert/strict";
 import { readFileSync } from "node:fs";
 import ts from 'typescript';
 
-const read = (path) => readFileSync(new URL(`../${path}`, import.meta.url), "utf8");
+const read = (path) => readUiSource(new URL(`../${path}`, import.meta.url), "utf8");
 
 test('全部恢复使用同一工作区与弹幕目标，收益列不读取恢复中的旧窗口位置', async () => {
   const source=read('src/App.tsx');

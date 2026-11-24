@@ -1,3 +1,4 @@
+import { uiText, UiMessageError } from "../i18n/index.ts";
 import { zipSync } from "fflate";
 import type { ThemeDocument } from "./themeTypes.ts";
 import { permissionsForOrigin } from "./themeTypes.ts";
@@ -7,7 +8,7 @@ const encoder = new TextEncoder();
 
 export function exportThemeDocumentBytes(document: ThemeDocument, assets: Record<string, Uint8Array> = {}): Uint8Array {
   const { settings, styles, ...manifest } = document;
-  for (const asset of document.assets) if (!assets[asset.path]) throw new Error(`主题素材缺失：${asset.name}，请恢复文件后重新导出`);
+  for (const asset of document.assets) if (!assets[asset.path]) throw new UiMessageError("themeTransfer.exportThemeDocumentBytes", { name: asset.name });
   manifest.assets = document.assets.map(({sharedResourceId,cacheResourceId,resourceFileName,sourceUrl,...asset}) => ({...asset,...(sourceUrl && /^https?:/i.test(sourceUrl)?{sourceUrl}:{})}));
   return zipSync({
     "theme.json": encoder.encode(JSON.stringify(manifest, null, 2)),
@@ -41,10 +42,10 @@ export function importThemePackageBytesAsync(bytes: Uint8Array): Promise<Decoded
     worker.onmessage = event => {
       worker.terminate();
       const result = event.data as { ok: true; value: DecodedThemePackage } | { ok: false; error?: string };
-      if (!result.ok) reject(new Error(result.error ?? "主题文件无效"));
+      if (!result.ok) reject(new Error(result.error ?? uiText("themeTransfer.importThemePackageBytesAsync")));
       else resolve(normalizeImportedPackage(result.value));
     };
-    worker.onerror = () => { worker.terminate(); reject(new Error("主题文件无效")); };
+    worker.onerror = () => { worker.terminate(); reject(new UiMessageError("themeTransfer.importThemePackageBytesAsync")); };
     const transferable = bytes.slice();
     worker.postMessage({ kind: "import", bytes: transferable }, [transferable.buffer]);
   });
@@ -66,7 +67,7 @@ export function zipEntriesBytesAsync(entries: Record<string, Uint8Array>, level 
 
 export function exportThemeDocumentBytesAsync(document: ThemeDocument, assets: Record<string, Uint8Array> = {}): Promise<Uint8Array> {
   const { settings, styles, ...manifest } = document;
-  for (const asset of document.assets) if (!assets[asset.path]) throw new Error(`主题素材缺失：${asset.name}，请恢复文件后重新导出`);
+  for (const asset of document.assets) if (!assets[asset.path]) throw new UiMessageError("themeTransfer.exportThemeDocumentBytesAsync", { name: asset.name });
   manifest.assets = document.assets.map(({sharedResourceId,cacheResourceId,resourceFileName,sourceUrl,...asset}) => ({...asset,...(sourceUrl && /^https?:/i.test(sourceUrl)?{sourceUrl}:{})}));
   return zipEntriesBytesAsync({
     "theme.json": encoder.encode(JSON.stringify(manifest, null, 2)),
@@ -83,8 +84,8 @@ export async function importThemeEntriesBytesAsync(bytes: Uint8Array): Promise<T
   if (typeof Worker === "undefined") return normalize(decodeThemeImport(bytes));
   return new Promise((resolve, reject) => {
     const worker = new Worker(new URL("./themeTransferWorker.ts", import.meta.url), { type: "module" });
-    worker.onmessage = event => { worker.terminate(); event.data.ok ? resolve(normalize(event.data.value)) : reject(new Error(event.data.error ?? "主题文件无效")); };
-    worker.onerror = () => { worker.terminate(); reject(new Error("主题文件无效")); };
+    worker.onmessage = event => { worker.terminate(); event.data.ok ? resolve(normalize(event.data.value)) : reject(new Error(event.data.error ?? uiText("themeTransfer.importThemeEntriesBytesAsync"))); };
+    worker.onerror = () => { worker.terminate(); reject(new UiMessageError("themeTransfer.importThemeEntriesBytesAsync")); };
     const transferable = bytes.slice();
     worker.postMessage({ kind: "import-many", bytes: transferable }, [transferable.buffer]);
   });

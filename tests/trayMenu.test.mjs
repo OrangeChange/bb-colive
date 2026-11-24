@@ -1,10 +1,11 @@
+import { readUiSource } from "./helpers/readUiSource.mjs";
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
 import { fileURLToPath } from 'node:url';
 import { readApplicationSources } from './helpers/applicationSources.mjs';
 
-const rust = readFileSync(
+const rust = readUiSource(
   fileURLToPath(new URL('../src-tauri/src/lib.rs', import.meta.url)),
   'utf8',
 );
@@ -18,10 +19,10 @@ test('托盘菜单提供主窗口、两个副窗口、设置和问题标记入�
       `缺少托盘菜单项：${id}`,
     );
   }
-  assert.match(rust, /"显示弹幕窗"/);
-  assert.match(rust, /"隐藏弹幕窗"/);
-  assert.match(rust, /"显示收益窗"/);
-  assert.match(rust, /"隐藏收益窗"/);
+  assert.match(rust, /["']显示弹幕窗["']/);
+  assert.match(rust, /["']隐藏弹幕窗["']/);
+  assert.match(rust, /["']显示收益窗["']/);
+  assert.match(rust, /["']隐藏收益窗["']/);
 });
 
 test('托盘动作转发到前端而不重复实现窗口和诊断逻辑', () => {
@@ -40,8 +41,8 @@ test('托盘动作转发到前端而不重复实现窗口和诊断逻辑', () =>
 
 test('副窗口状态变化会更新托盘菜单文案', () => {
   assert.match(rust, /fn build_tray_menu/);
-  assert.match(rust, /if display_open \{ "隐藏弹幕窗" \} else \{ "显示弹幕窗" \}/);
-  assert.match(rust, /if gift_open \{ "隐藏收益窗" \} else \{ "显示收益窗" \}/);
+  assert.match(rust, /if display_open \{ ["']隐藏弹幕窗["'] \} else \{ ["']显示弹幕窗["'] \}/);
+  assert.match(rust, /if gift_open \{ ["']隐藏收益窗["'] \} else \{ ["']显示收益窗["'] \}/);
   assert.match(rust, /fn set_tray_window_state/);
   assert.match(rust, /tray\.set_menu\(Some\(menu\)\)/);
   assert.match(app, /invoke\("set_tray_window_state"/);
@@ -60,5 +61,5 @@ test('托盘标记问题先打开诊断对话框，不直接写入默认备注',
   assert.match(markBranch, /app\.emit\("tray:mark-issue", \(\)\)/);
   assert.match(app, /openDiagnosticMarker/);
   assert.match(app, /sectionId:\s*"other",\s*anchorId:\s*"diagnostics",\s*action:\s*"mark-issue"/);
-  assert.doesNotMatch(app, /tray:mark-issue[\s\S]*markDiagnosticIssue\("托盘标记"\)/);
+  assert.doesNotMatch(app, /tray:mark-issue[\s\S]*markDiagnosticIssue\(["']托盘标记["']\)/);
 });

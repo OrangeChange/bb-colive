@@ -3,19 +3,19 @@ use crate::data_migration;
 static ROOT: OnceLock<PathBuf> = OnceLock::new();
 
 pub fn initialize() -> Result<PathBuf, String> {
-    let program = std::env::current_exe().map_err(|e| e.to_string())?.parent().ok_or("无法确定程序目录")?.to_path_buf();
-    let roaming = std::env::var_os("APPDATA").map(PathBuf::from).ok_or("无法读取用户数据目录")?;
-    let local = std::env::var_os("LOCALAPPDATA").map(PathBuf::from).ok_or("无法读取本地数据目录")?;
+    let program = std::env::current_exe().map_err(|e| e.to_string())?.parent().ok_or(ui_text!("backend.data_paths.initialize"))?.to_path_buf();
+    let roaming = std::env::var_os("APPDATA").map(PathBuf::from).ok_or(ui_text!("backend.data_paths.initialize2"))?;
+    let local = std::env::var_os("LOCALAPPDATA").map(PathBuf::from).ok_or(ui_text!("backend.data_paths.initialize3"))?;
     let root = data_migration::select_root(&program, &roaming, program.join("portable.flag").is_file());
     data_migration::migrate(&root, &roaming.join("cc.orange.danmu-app"), &local.join("cc.orange.danmu-app"))
-        .map_err(|e| format!("无法迁移旧版数据：{e}。请关闭旧版 danmu-app 后重试，并检查目标目录权限；原数据未删除。"))?;
+        .map_err(|e| ui_format!("backend.data_paths.initialize4", e = e))?;
     migrate_program_themes(&program, &root)?;
-    ROOT.set(root.clone()).map_err(|_| "数据目录已初始化")?;
+    ROOT.set(root.clone()).map_err(|_| ui_text!("backend.data_paths.initialize5"))?;
     Ok(root)
 }
 
 pub fn root() -> Result<PathBuf, String> {
-    ROOT.get().cloned().ok_or_else(|| "数据目录尚未初始化".into())
+    ROOT.get().cloned().ok_or_else(|| ui_text!("backend.data_paths.root").into())
 }
 
 #[tauri::command]
@@ -27,12 +27,12 @@ fn read_anchor_list_file(path: &std::path::Path) -> Result<Vec<serde_json::Value
     let bytes = match std::fs::read(path) {
         Ok(bytes) => bytes,
         Err(error) if error.kind() == std::io::ErrorKind::NotFound => return Ok(Vec::new()),
-        Err(error) => return Err(format!("无法读取主播列表，请检查文件权限后重试：{error}")),
+        Err(error) => return Err(ui_format!("backend.data_paths.read_anchor_list_file", error = error)),
     };
     let document: serde_json::Value = serde_json::from_slice(&bytes)
-        .map_err(|error| format!("主播列表文件无法解析，请恢复备份后重试：{error}"))?;
+        .map_err(|error| ui_format!("backend.data_paths.read_anchor_list_file2", error = error))?;
     document.get("anchors").and_then(serde_json::Value::as_array).cloned()
-        .ok_or_else(|| "主播列表文件缺少有效的列表，请恢复备份后重试".into())
+        .ok_or_else(|| ui_text!("backend.data_paths.read_anchor_list_file3").into())
 }
 
 #[tauri::command]
@@ -47,7 +47,7 @@ fn migrate_program_themes(program: &std::path::Path, data: &std::path::Path) -> 
         let source = old_program.join("style");
         let destination = program.join("style");
         if source.is_dir() && source != destination {
-            copy_missing(&source, &destination).map_err(|e| format!("无法复制旧主题：{e}。请检查程序目录权限后重试；原主题未删除。"))?;
+            copy_missing(&source, &destination).map_err(|e| ui_format!("backend.data_paths.migrate_program_themes", e = e))?;
         }
     }
     std::fs::write(marker, b"1.0.0\n").map_err(|e| e.to_string())

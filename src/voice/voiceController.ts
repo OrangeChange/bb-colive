@@ -1,3 +1,4 @@
+import { uiText } from "../i18n/index.ts";
 import type { DanmakuEvent } from "../protocol/types.ts";
 import { MsgType } from "../protocol/types.ts";
 import { useVoiceSettings } from "./voiceSettings.ts";
@@ -346,7 +347,7 @@ export function createVoiceController(dependencies: VoiceControllerDependencies)
     },
     reset: () => resetRuntime(true),
     shutdown: () => resetRuntime(false),
-    test: async (text = "这是一条测试语音") => {
+    test: async (text = uiText("voiceController.createVoiceController.test")) => {
       const settings = getSettings();
       const provider = dependencies.getProvider?.() ?? dependencies.provider;
       const audio = await provider.synthesize({

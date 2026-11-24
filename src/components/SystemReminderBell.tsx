@@ -1,3 +1,4 @@
+import { uiText } from "../i18n/index.ts";
 import { Bell as LucideBell } from "lucide-react";
 import { useEffect, useRef, useState, type ReactNode } from "react";
 import { MsgType, type DanmakuEvent } from "../protocol/types";
@@ -49,9 +50,9 @@ export function SystemReminderBell({ events, placement = "bottom", children }: {
     <div ref={rootRef} className="relative">
       <button
         type="button"
-        aria-label="系统提醒"
+        aria-label={uiText("systemReminderBell.aria_label")}
         aria-expanded={open}
-        title="系统提醒"
+        title={uiText("systemReminderBell.title")}
         onClick={toggle}
         className="relative inline-flex size-7 items-center justify-center rounded-md border border-line text-t2 transition-colors hover:border-accent/50 hover:bg-raised hover:text-t1 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent-ring"
       >
@@ -66,12 +67,12 @@ export function SystemReminderBell({ events, placement = "bottom", children }: {
       {open && (
         <div
           role="dialog"
-          aria-label="系统提醒"
+          aria-label={uiText("systemReminderBell.aria_label")}
           className={`ui-motion-enter absolute right-0 z-40 w-80 max-w-[calc(100vw-2rem)] overflow-hidden rounded-lg border border-line bg-surface shadow-xl shadow-black/20 ${placement === "top" ? "bottom-9" : "top-9"}`}
         >
           <div className="flex items-center justify-between border-b border-line px-3 py-2">
-            <h2 className="ui-type-section-title font-semibold text-t1">系统提醒</h2>
-            <span className="font-mono ui-type-meta text-t3">共 {reminders.length} 条</span>
+            <h2 className="ui-type-section-title font-semibold text-t1">{uiText("systemReminderBell.SystemReminderBell")}</h2>
+            <span className="font-mono ui-type-meta text-t3">{uiText("systemReminderBell.SystemReminderBell2")}{reminders.length} {uiText("systemReminderBell.SystemReminderBell3")}</span>
           </div>
           {latest.length > 0 ? (
             <ul className="max-h-72 overflow-y-auto py-1">
@@ -85,7 +86,7 @@ export function SystemReminderBell({ events, placement = "bottom", children }: {
               ))}
             </ul>
           ) : (
-            <div className="px-3 py-6 text-center ui-type-control text-t3">暂无系统提醒</div>
+            <div className="px-3 py-6 text-center ui-type-control text-t3">{uiText("systemReminderBell.SystemReminderBell4")}</div>
           )}
         </div>
       )}

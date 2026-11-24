@@ -1,3 +1,4 @@
+import { uiText } from "../i18n/index.ts";
 import { appDataFile } from "../appData.ts";
 import Database from "@tauri-apps/plugin-sql";
 import { readArchiveCloudMetadata } from './archiveCloudMetadata.ts';
@@ -187,7 +188,7 @@ function asNullableString(value: unknown): string | null {
 function fallbackArchiveTitle(startedAt: number): string {
   const date = new Date(startedAt);
   const pad = (value: number) => String(value).padStart(2, "0");
-  return `${date.getFullYear()}-${pad(date.getMonth() + 1)}-${pad(date.getDate())} ${pad(date.getHours())}:${pad(date.getMinutes())} 直播`;
+  return uiText("archiveRepository.fallbackArchiveTitle", { value: date.getFullYear(), value2: pad(date.getMonth() + 1), value3: pad(date.getDate()), value4: pad(date.getHours()), value5: pad(date.getMinutes()) });
 }
 
 function normalizeLimit(value: number | undefined, fallback: number): number {
@@ -570,7 +571,7 @@ function deleteScopeParts(scope: ArchiveDeleteScope, includeLifecycle = true): {
   }
   if (scope.sessionIds !== undefined) {
     const sessionIds = [...new Set(scope.sessionIds)];
-    if (sessionIds.length === 0) throw new Error("删除范围至少需要一个场次");
+    if (sessionIds.length === 0) throw new Error(uiText("archiveRepository.deleteScopeParts"));
     const placeholders = sessionIds.map((sessionId) => appendPlaceholder(conditions, values, sessionId));
     conditions.push(`s.session_id IN (${placeholders.join(", ")})`);
   }
@@ -924,7 +925,7 @@ export class ArchiveRepository implements ArchiveRepositoryContract {
 
   async reassignSourceEventRange(input: ArchiveSourceEventRangeUpdate): Promise<number> {
     if (!/^(0|[1-9][0-9]*)$/.test(input.fromSequence) || !/^(0|[1-9][0-9]*)$/.test(input.throughSequence)
-      || BigInt(input.fromSequence) > BigInt(input.throughSequence)) throw new Error('恢复记录的归属范围无效');
+      || BigInt(input.fromSequence) > BigInt(input.throughSequence)) throw new Error(uiText("archiveRepository.reassignSourceEventRange"));
     if (input.targetSessionId === null) return 0;
     let changed = 0;
     while (true) {
@@ -1854,7 +1855,7 @@ export class ArchiveRepository implements ArchiveRepositoryContract {
 
   async createFavoriteTag(name: string): Promise<ArchiveFavoriteTag> {
     const normalized = name.trim();
-    if (!normalized) throw new Error("标签名称不能为空");
+    if (!normalized) throw new Error(uiText("archiveRepository.createFavoriteTag"));
     const now = Date.now();
     await this.executeWrite(
       `INSERT INTO archive_favorite_tag (name, created_at, updated_at)
@@ -1868,7 +1869,7 @@ export class ArchiveRepository implements ArchiveRepositoryContract {
       [normalized],
     );
     const row = rows[0];
-    if (!row) throw new Error("标签创建后无法读取");
+    if (!row) throw new Error(uiText("archiveRepository.createFavoriteTag2"));
     return {
       tagId: asNumber(rowValue(row, "tagId", "tag_id")),
       name: asString(rowValue(row, "name", "name")),
@@ -1880,7 +1881,7 @@ export class ArchiveRepository implements ArchiveRepositoryContract {
 
   async renameFavoriteTag(tagId: number, name: string): Promise<void> {
     const normalized = name.trim();
-    if (!normalized) throw new Error("标签名称不能为空");
+    if (!normalized) throw new Error(uiText("archiveRepository.renameFavoriteTag"));
     await this.executeWrite(
       `UPDATE archive_favorite_tag SET name = $1, updated_at = $2 WHERE tag_id = $3`,
       [normalized, Date.now(), tagId],
@@ -2022,7 +2023,7 @@ export class ArchiveRepository implements ArchiveRepositoryContract {
     const ownerValues: unknown[] = [];
     if (scope.kind === "owner") {
       if (scope.ownerId === undefined && scope.ownerUid === undefined) {
-        throw new Error("档案导出范围需要 ownerId 或 ownerUid");
+        throw new Error(uiText("archiveRepository.getTransferSnapshot"));
       }
       if (scope.ownerId !== undefined) {
         ownerConditions.push(`o.owner_id = ${appendPlaceholder(ownerConditions, ownerValues, scope.ownerId)}`);
@@ -2628,7 +2629,7 @@ export class ArchiveRepository implements ArchiveRepositoryContract {
       },
     ]);
     if (exactIds !== undefined && (result?.rowsAffected ?? 0) !== exactIds.length) {
-      throw new Error("删除目标已变化，请重新预览");
+      throw new Error(uiText("archiveRepository.deleteArchive"));
     }
   }
 

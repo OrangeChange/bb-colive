@@ -1,3 +1,4 @@
+import { readUiSource } from "./helpers/readUiSource.mjs";
 import { tmpdir as ssrTemporaryDirectory } from 'node:os';
 import assert from "node:assert/strict";
 import test, { after, before } from "node:test";
@@ -133,9 +134,9 @@ test("BLC 动态单条样例与固定预览执行相同清理", () => {
 });
 
 test("BLC 原版缩略图使用顶部流布局且不会在水合后跳到最新事件", () => {
-  const source = fs.readFileSync(fileURLToPath(new URL("../src/compat/blivechat/BlivechatSourceSurface.tsx", import.meta.url)), "utf8");
+  const source = readUiSource(fileURLToPath(new URL("../src/compat/blivechat/BlivechatSourceSurface.tsx", import.meta.url)), "utf8");
   assert.doesNotMatch(source, /event\.data\.command === "hydrated" && thumbnail[\s\S]{0,500}command: "scroll-latest"/);
-  const register = fs.readFileSync(fileURLToPath(new URL("../src/compat/blivechat/register.tsx", import.meta.url)), "utf8");
+  const register = readUiSource(fileURLToPath(new URL("../src/compat/blivechat/register.tsx", import.meta.url)), "utf8");
   assert.match(register, /#item-scroller\.yt-live-chat-item-list-renderer\{[^}]*overflow-y:auto;/);
   assert.match(register, /#item-scroller\.animated\.yt-live-chat-item-list-renderer #items\.yt-live-chat-item-list-renderer\{position:relative!important;inset:auto!important;transform:none!important;flex:none!important\}/);
   const host = fs.readFileSync(fileURLToPath(new URL("../vendor/blivechat/host/entry.js", import.meta.url)), "utf8");

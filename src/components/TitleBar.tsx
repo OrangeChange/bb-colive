@@ -1,3 +1,4 @@
+import { uiText } from "../i18n/index.ts";
 import { Minus as LucideMinus, Square as LucideSquare, Copy as LucideCopy, X as LucideX } from "lucide-react";
 import { useEffect, useState } from "react";
 import { getCurrentWindow } from "@tauri-apps/api/window";
@@ -103,15 +104,15 @@ export function TitleBar() {
         <CoLiveLogo state={resolveCoLiveState(status, liveStatus)} className="titlebar-logo pointer-events-none" />
         <span className="truncate ui-type-control font-medium text-t1">BB CoLive</span>
       </div>
-      <div className="flex h-full shrink-0 items-center" aria-label="窗口控制">
-        <button type="button" className={windowButton} aria-label="最小化窗口" title="最小化" onClick={minimize}>
+      <div className="flex h-full shrink-0 items-center" aria-label={uiText("titleBar.aria_label")}>
+        <button type="button" className={windowButton} aria-label={uiText("titleBar.aria_label2")} title={uiText("titleBar.title")} onClick={minimize}>
           <IconMinimize />
         </button>
         <button
           type="button"
           className={windowButton}
-          aria-label={maximized ? "还原窗口" : "最大化窗口"}
-          title={maximized ? "还原" : "最大化"}
+          aria-label={maximized ? uiText("titleBar.aria_label3") : uiText("titleBar.aria_label4")}
+          title={maximized ? uiText("titleBar.title2") : uiText("titleBar.title3")}
           onClick={toggleMaximize}
         >
           {maximized ? <IconRestore /> : <IconMaximize />}
@@ -119,8 +120,8 @@ export function TitleBar() {
         <button
           type="button"
           className={`${windowButton} hover:bg-danger-solid hover:text-danger-fg focus-visible:ring-danger`}
-          aria-label="关闭窗口"
-          title="关闭"
+          aria-label={uiText("common.closeWindow")}
+          title={uiText("common.close")}
           onClick={close}
         >
           <IconClose />

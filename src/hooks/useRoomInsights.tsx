@@ -1,3 +1,4 @@
+import { uiText } from "../i18n/index.ts";
 import { useContext, useEffect, useLayoutEffect, useMemo, useRef, useState, type ReactNode } from 'react'
 import { QueryClient, QueryClientProvider, useInfiniteQuery, useQuery, useQueryClient } from '@tanstack/react-query'
 import { useConnection } from '../stores/connection'
@@ -128,6 +129,6 @@ export function RoomInsightsProvider({ children }: { children: ReactNode }) {
 
 export function useRoomInsights() {
   const value = useContext(InsightsContext)
-  if (!value) throw new Error('RoomInsightsProvider 未挂载')
+  if (!value) throw new Error(uiText("useRoomInsights.useRoomInsights"))
   return value
 }

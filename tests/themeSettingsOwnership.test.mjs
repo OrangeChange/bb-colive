@@ -1,3 +1,4 @@
+import { readUiSource } from "./helpers/readUiSource.mjs";
 import assert from "node:assert/strict";
 import fs from "node:fs";
 import test from "node:test";
@@ -26,7 +27,7 @@ test("旧主题字号只在读取时归一为单一基准字段", async () => {
 });
 
 test("软件设置不再提供元素外观的第二套入口", () => {
-  const panel = fs.readFileSync("src/components/SettingsPanel.tsx", "utf8");
+  const panel = readUiSource("src/components/SettingsPanel.tsx", "utf8");
   for (const label of ["显示大航海标记", "显示荣耀等级", "显示榜单排名", "显示房管标记", "显示主播标记", "显示头像", "显示头像框", "显示粉丝牌", "仅显示主播粉丝牌", "隐藏未点亮粉丝牌", "显示礼物图片"]) {
     assert.doesNotMatch(panel, new RegExp(`<SettingSwitch label="${label}"`));
   }
@@ -35,9 +36,9 @@ test("软件设置不再提供元素外观的第二套入口", () => {
 });
 
 test("样式是左侧导航中的一级主工作区", () => {
-  const mainView = fs.readFileSync("src/components/mainView.ts", "utf8");
-  const sidebar = fs.readFileSync("src/components/Sidebar.tsx", "utf8");
-  const app = fs.readFileSync("src/App.tsx", "utf8");
+  const mainView = readUiSource("src/components/mainView.ts", "utf8");
+  const sidebar = readUiSource("src/components/Sidebar.tsx", "utf8");
+  const app = readUiSource("src/App.tsx", "utf8");
   assert.match(mainView, /"style"/);
   assert.match(sidebar, /activeMainView === "style"/);
   assert.match(app, /mainView !== "style"/);
@@ -45,9 +46,9 @@ test("样式是左侧导航中的一级主工作区", () => {
 });
 
 test("样式工作区预留兼容分类并由原生主题共用完整编辑器", () => {
-  const workspace = fs.readFileSync("src/components/ThemeWorkspace.tsx", "utf8");
-  const editor = fs.readFileSync("src/components/NativeThemeEditor.tsx", "utf8");
-  const app = fs.readFileSync("src/App.tsx", "utf8");
+  const workspace = readUiSource("src/components/ThemeWorkspace.tsx", "utf8");
+  const editor = readUiSource("src/components/NativeThemeEditor.tsx", "utf8");
+  const app = readUiSource("src/App.tsx", "utf8");
   assert.match(workspace, /THEME_CATEGORIES/);
   for (const mode of ["native", "blivechat", "blivechat-open", "laplace"]) assert.match(workspace, new RegExp(mode));
   assert.match(workspace, /CompatibleThemeEditor/);
@@ -59,18 +60,18 @@ test("样式工作区预留兼容分类并由原生主题共用完整编辑器",
 });
 
 test("筛选和动画留在软件设置，回看不进入主题编辑器", () => {
-  const panel = fs.readFileSync("src/components/SettingsPanel.tsx", "utf8");
-  const editor = fs.readFileSync("src/components/NativeThemeVisualEditor.tsx", "utf8");
+  const panel = readUiSource("src/components/SettingsPanel.tsx", "utf8");
+  const editor = readUiSource("src/components/NativeThemeVisualEditor.tsx", "utf8");
   assert.match(panel, /显示自动弹幕/);
   assert.match(panel, /显示未验证手机号用户弹幕/);
   assert.match(panel, /事件动画/);
   assert.doesNotMatch(editor, /事件动画/);
-  assert.doesNotMatch(editor, /\["review", "回看"\]/);
+  assert.doesNotMatch(editor, /\["review", ["']回看["']\]/);
 });
 
 test("OBS 快照保存主题元素显示并交给真实事件行", () => {
-  const snapshot = fs.readFileSync("src/obs/nativeObsTheme.ts", "utf8");
-  const renderer = fs.readFileSync("src/obs/ObsOutputView.tsx", "utf8");
+  const snapshot = readUiSource("src/obs/nativeObsTheme.ts", "utf8");
+  const renderer = readUiSource("src/obs/ObsOutputView.tsx", "utf8");
   assert.match(snapshot, /display: projection\.display/);
   assert.match(renderer, /displayPreferences=\{effectiveDisplay\}/);
   assert.match(renderer, /eventFontSize=\{snapshot\.eventFontSize\}/);

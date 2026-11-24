@@ -1,3 +1,4 @@
+import { readUiSource } from "./helpers/readUiSource.mjs";
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { componentRuntime, findElement } from './helpers/componentRuntime.mjs';
@@ -112,7 +113,7 @@ test('真实档案管理禁止预览删除重连场次，停止场次可以预�
 });
 
 test('Panel全选和单选保护重连，场次恢复后移除旧删除选择', () => {
-  const source = ts.createSourceFile('ReviewPanel.tsx', readFileSync(new URL('../src/components/ReviewPanel.tsx', import.meta.url), 'utf8'), ts.ScriptTarget.Latest, true, ts.ScriptKind.TSX);
+  const source = ts.createSourceFile('ReviewPanel.tsx', readUiSource(new URL('../src/components/ReviewPanel.tsx', import.meta.url), 'utf8'), ts.ScriptTarget.Latest, true, ts.ScriptKind.TSX);
   const callbacks = {};
   function visit(node) {
     if (ts.isVariableDeclaration(node) && ['toggleSessionSelection', 'toggleAllSessionSelection'].includes(node.name.getText(source))) callbacks[node.name.getText(source)] = node.initializer.arguments[0].getText(source);

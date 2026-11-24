@@ -1,3 +1,4 @@
+import { readUiSource } from "./helpers/readUiSource.mjs";
 import { tmpdir as ssrTemporaryDirectory } from 'node:os';
 import assert from "node:assert/strict";
 import fs from "node:fs";
@@ -253,7 +254,7 @@ test("开放版固定预览保留来源头像并统一使用本地默认头像",
 });
 
 test("开放版置顶栏透明、可滚动且隐藏滚动条", () => {
-  const source = fs.readFileSync(path.join(rootPath, "src/compat/openlive/css.ts"), "utf8");
+  const source = readUiSource(path.join(rootPath, "src/compat/openlive/css.ts"), "utf8");
   assert.match(source, /yt-live-chat-ticker-renderer[^}]*background:\s*transparent\s*;/);
   assert.match(source, /yt-live-chat-ticker-renderer > #container[^}]*overflow-x:\s*auto\s*!important/);
   assert.match(source, /yt-live-chat-ticker-renderer #items[^}]*width:\s*max-content\s*!important/);
@@ -262,14 +263,14 @@ test("开放版置顶栏透明、可滚动且隐藏滚动条", () => {
 });
 
 test("开放版来源根与主列表保持透明", () => {
-  const css = fs.readFileSync(path.join(rootPath, "src/compat/openlive/css.ts"), "utf8");
+  const css = readUiSource(path.join(rootPath, "src/compat/openlive/css.ts"), "utf8");
   assert.match(css, /html, body, #app\s*\{[^}]*background:\s*transparent\s*;/);
   assert.match(css, /--yt-live-chat-background-color:\s*transparent/);
   assert.match(css, /yt-live-chat-renderer\s*\{[\s\S]*#item-scroller[\s\S]*background:\s*transparent\s*;/);
   assert.match(css, /#item-scroller[^}]*scrollbar-width:\s*thin/);
   assert.match(css, /#item-scroller::\-webkit-scrollbar[^}]*width:\s*6px/);
   assert.match(css, /yt-live-chat-ticker-renderer[^}]*width:\s*var\(--bb-list-content-width,\s*100%\)/);
-  const runtime = fs.readFileSync(path.join(rootPath, "src/compat/openlive/runtime/entry.mjs"), "utf8");
+  const runtime = readUiSource(path.join(rootPath, "src/compat/openlive/runtime/entry.mjs"), "utf8");
   assert.match(runtime, /--bb-list-content-width/);
   assert.match(runtime, /ResizeObserver/);
 });

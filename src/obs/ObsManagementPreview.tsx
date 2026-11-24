@@ -1,3 +1,4 @@
+import { uiText } from "../i18n/index.ts";
 import { useEffect, useMemo, useState } from "react";
 import { createPortal } from "react-dom";
 import { emit, listen } from "@tauri-apps/api/event";
@@ -29,7 +30,7 @@ export function ObsManagementPreview({configuration,saved,displayScale,loadDocum
  const [document,setDocument]=useState<ThemeDocument>();
  const [error,setError]=useState('');
  const [eventKinds,setEventKinds]=useState<string[]>([]);
- const kind=document?.mode==='native'?'混合流':'all';
+ const kind=document?.mode==='native'?uiText("obsManagementPreview.ObsManagementPreview.kind"):'all';
  const displayAll=true;
  const [realtime,setRealtime]=useState(false);
  const [live,setLive]=useState<ObsWireState>();
@@ -41,7 +42,7 @@ export function ObsManagementPreview({configuration,saved,displayScale,loadDocum
  const [speed,setSpeed]=useState(1);
  const [restart,setRestart]=useState(0);
  const options=OBS_SAMPLE_KINDS.map(value=>({value,label:value}));
- useEffect(()=>{let active=true;setDocument(undefined);setError('');void loadDocument(configuration.themeId).then(value=>{if(active)setDocument(value)}).catch(()=>{if(active)setError('无法读取主题，请重新选择主题')});return()=>{active=false}},[configuration.themeId,loadDocument]);
+ useEffect(()=>{let active=true;setDocument(undefined);setError('');void loadDocument(configuration.themeId).then(value=>{if(active)setDocument(value)}).catch(()=>{if(active)setError(uiText("obsManagementPreview.ObsManagementPreview"))});return()=>{active=false}},[configuration.themeId,loadDocument]);
  useEffect(()=>{
   if(!realtime||!saved)return;
   const clientId=`preview:${crypto.randomUUID()}`;let active=true;let stop:(()=>void)|undefined;

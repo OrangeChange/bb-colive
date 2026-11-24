@@ -1,3 +1,4 @@
+import { uiText } from "../i18n/index.ts";
 import { forwardRef, useEffect, useImperativeHandle, useRef, useState } from "react";
 import type * as Monaco from "monaco-editor";
 import { createNativeMonacoModelUri, NATIVE_MONACO_OPTIONS } from "./nativeMonacoEditorConfig.ts";
@@ -120,24 +121,24 @@ export const NativeCssCodeEditor = forwardRef<NativeCssCodeEditorHandle, { value
         ariaLabel: latestLabel.current,
         theme: "danmu-ui",
       });
-      actions.push(editor.addAction({ id: "danmu.save-css", label: "保留草稿", precondition: "!editorReadonly", contextMenuGroupId: "3_css", contextMenuOrder: 3, keybindings: [monaco.KeyMod.CtrlCmd | monaco.KeyCode.KeyS], run: () => { save.current(); } }));
-      actions.push(editor.addAction({ id: "danmu.format-css", label: "格式化 CSS", precondition: "!editorReadonly", contextMenuGroupId: "3_css", contextMenuOrder: 1, keybindings: [monaco.KeyMod.Shift | monaco.KeyMod.Alt | monaco.KeyCode.KeyF], run: () => { format.current?.(); } }));
-      for (const [id, label, command, order] of [["undo", "撤销", "undo", 1], ["redo", "重做", "redo", 2], ["find", "查找", "actions.find", 3], ["replace", "替换", "editor.action.startFindReplaceAction", 4], ["select-all", "全选", "editor.action.selectAll", 5]] as const) {
+      actions.push(editor.addAction({ id: "danmu.save-css", label: uiText("nativeCssCodeEditor.NativeCssCodeEditor.label"), precondition: "!editorReadonly", contextMenuGroupId: "3_css", contextMenuOrder: 3, keybindings: [monaco.KeyMod.CtrlCmd | monaco.KeyCode.KeyS], run: () => { save.current(); } }));
+      actions.push(editor.addAction({ id: "danmu.format-css", label: uiText("nativeCssCodeEditor.NativeCssCodeEditor.label2"), precondition: "!editorReadonly", contextMenuGroupId: "3_css", contextMenuOrder: 1, keybindings: [monaco.KeyMod.Shift | monaco.KeyMod.Alt | monaco.KeyCode.KeyF], run: () => { format.current?.(); } }));
+      for (const [id, label, command, order] of [["undo", uiText("nativeCssCodeEditor.NativeCssCodeEditor"), "undo", 1], ["redo", uiText("nativeCssCodeEditor.NativeCssCodeEditor2"), "redo", 2], ["find", uiText("nativeCssCodeEditor.NativeCssCodeEditor3"), "actions.find", 3], ["replace", uiText("nativeCssCodeEditor.NativeCssCodeEditor4"), "editor.action.startFindReplaceAction", 4], ["select-all", uiText("common.selectAll"), "editor.action.selectAll", 5]] as const) {
         actions.push(editor.addAction({ id: `danmu.${id}`, label, contextMenuGroupId: "2_edit", contextMenuOrder: order, ...(["undo", "redo", "replace"].includes(id) ? { precondition: "!editorReadonly" } : {}), run: () => {
           const action = editor.getAction(command);
           if (action) return action.run();
           editor.trigger("context-menu", command, null);
         } }));
       }
-      for (const [id, label, command, order] of [["goto-line", "跳转到行…", "editor.action.gotoLine", 1], ["fold-all", "折叠全部", "editor.foldAll", 2], ["unfold-all", "展开全部", "editor.unfoldAll", 3], ["comment", "切换注释", "editor.action.blockComment", 4]] as const) {
+      for (const [id, label, command, order] of [["goto-line", uiText("nativeCssCodeEditor.NativeCssCodeEditor5"), "editor.action.gotoLine", 1], ["fold-all", uiText("nativeCssCodeEditor.NativeCssCodeEditor6"), "editor.foldAll", 2], ["unfold-all", uiText("nativeCssCodeEditor.NativeCssCodeEditor7"), "editor.unfoldAll", 3], ["comment", uiText("nativeCssCodeEditor.NativeCssCodeEditor8"), "editor.action.blockComment", 4]] as const) {
         actions.push(editor.addAction({ id: `danmu.${id}`, label, contextMenuGroupId: "4_navigation", contextMenuOrder: order, ...(id === "comment" ? { precondition: "!editorReadonly" } : {}), run: () => {
           const action = editor.getAction(command);
           if (action) return action.run();
           editor.trigger("context-menu", command, null);
         } }));
       }
-      actions.push(editor.addAction({ id: "danmu.copy-css", label: "复制全部 CSS", contextMenuGroupId: "3_css", contextMenuOrder: 2, run: () => { copy.current?.(); } }));
-      actions.push(editor.addAction({ id: "danmu.clear-css", label: "清空 CSS…", precondition: "!editorReadonly", contextMenuGroupId: "3_css", contextMenuOrder: 4, run: () => { requestClear.current?.(); } }));
+      actions.push(editor.addAction({ id: "danmu.copy-css", label: uiText("nativeCssCodeEditor.NativeCssCodeEditor.label3"), contextMenuGroupId: "3_css", contextMenuOrder: 2, run: () => { copy.current?.(); } }));
+      actions.push(editor.addAction({ id: "danmu.clear-css", label: uiText("nativeCssCodeEditor.NativeCssCodeEditor.label4"), precondition: "!editorReadonly", contextMenuGroupId: "3_css", contextMenuOrder: 4, run: () => { requestClear.current?.(); } }));
       changeSubscription = editor.onDidChangeModelContent(() => { if (!syncing.current) change.current(editor.getValue()); });
       editorRef.current = editor;
       resizeObserver = new ResizeObserver(() => editor.layout());
@@ -196,7 +197,7 @@ export const NativeCssCodeEditor = forwardRef<NativeCssCodeEditorHandle, { value
 
   return <div className="native-css-code-shell">
     <div ref={host} className="native-css-code" aria-label={label} />
-    {loadState === "loading" && <div className="native-css-code-state" role="status">正在加载编辑器…</div>}
-    {loadState === "error" && <div className="native-css-code-state is-error" role="alert"><span>编辑器加载失败</span><button type="button" onClick={() => setLoadAttempt(current => current + 1)}>重试</button></div>}
+    {loadState === "loading" && <div className="native-css-code-state" role="status">{uiText("nativeCssCodeEditor.NativeCssCodeEditor9")}</div>}
+    {loadState === "error" && <div className="native-css-code-state is-error" role="alert"><span>{uiText("nativeCssCodeEditor.NativeCssCodeEditor10")}</span><button type="button" onClick={() => setLoadAttempt(current => current + 1)}>{uiText("common.retry")}</button></div>}
   </div>;
 });

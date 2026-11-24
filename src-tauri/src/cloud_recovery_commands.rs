@@ -12,24 +12,24 @@ use base64::Engine;
 
 fn cover_reference(server_id: &str, resource_id: &str, mime_type: &str) -> Result<String, String> {
     if !valid_uuid(server_id) || !valid_uuid(resource_id) {
-        return Err("封面编号无效".into());
+        return Err(ui_text!("backend.cloud_recovery_commands.cover_reference").into());
     }
     let extension = match mime_type {
         "image/jpeg" => "jpg",
         "image/png" => "png",
         "image/webp" => "webp",
-        _ => return Err("封面格式不受支持".into()),
+        _ => return Err(ui_text!("backend.cloud_recovery_commands.cover_reference2").into()),
     };
     Ok(format!("cloud-cover://{server_id}/{resource_id}.{extension}"))
 }
 
 fn cover_parts(reference: &str) -> Result<(&str, &str, &str), String> {
     let (server, file) = reference.strip_prefix("cloud-cover://")
-        .and_then(|value| value.split_once('/')).ok_or("封面地址无效")?;
-    let (resource, extension) = file.rsplit_once('.').ok_or("封面地址无效")?;
+        .and_then(|value| value.split_once('/')).ok_or(ui_text!("backend.cloud_recovery_commands.cover_parts"))?;
+    let (resource, extension) = file.rsplit_once('.').ok_or(ui_text!("backend.cloud_recovery_commands.cover_parts"))?;
     let mime = match extension {
         "jpg" => "image/jpeg", "png" => "image/png", "webp" => "image/webp",
-        _ => return Err("封面格式不受支持".into()),
+        _ => return Err(ui_text!("backend.cloud_recovery_commands.cover_parts2").into()),
     };
     cover_reference(server, resource, mime)?;
     Ok((server, file, mime))
@@ -37,7 +37,7 @@ fn cover_parts(reference: &str) -> Result<(&str, &str, &str), String> {
 
 fn local_cover_path(app: &AppHandle, reference: &str) -> Result<PathBuf, String> {
     let (server, file, _) = cover_parts(reference)?;
-    Ok(crate::data_paths::root().map_err(|_| "无法读取封面目录")?
+    Ok(crate::data_paths::root().map_err(|_| ui_text!("backend.cloud_recovery_commands.local_cover_path"))?
         .join("archive-resources").join("covers").join(server).join(file))
 }
 
@@ -49,34 +49,34 @@ pub async fn download_cloud_recovery_cover(app: AppHandle, state: State<'_, Reco
     if path.is_file() { return Ok(reference); }
     let access = NativeRecoveryAccess { app: app.clone() };
     let stamp = load_recovery_access(&app)?.stamp;
-    if stamp.server_id != server_id { return Err("请连接保存此封面的服务器后重试".into()); }
+    if stamp.server_id != server_id { return Err(ui_text!("backend.cloud_recovery_commands.download_cloud_recovery_cover").into()); }
     let reply = request_bound(&access, &stamp, &RecoveryCancellation::default(), &state.slots,
         reqwest::Method::GET, &format!("api/v1/resources/{resource_id}"), None,
         8 * 1024 * 1024, &mime_type, None).await?;
-    let directory = path.parent().ok_or("无法读取封面目录")?;
-    fs::create_dir_all(directory).map_err(|_| "无法创建封面目录")?;
+    let directory = path.parent().ok_or(ui_text!("backend.cloud_recovery_commands.download_cloud_recovery_cover2"))?;
+    fs::create_dir_all(directory).map_err(|_| ui_text!("backend.cloud_recovery_commands.download_cloud_recovery_cover3"))?;
     let temporary = directory.join(format!("{}.partial", uuid::Uuid::new_v4()));
-    fs::write(&temporary, &reply.bytes).map_err(|_| "无法保存封面，请检查磁盘空间")?;
-    fs::rename(&temporary, &path).map_err(|_| "无法保存封面，请稍后重试")?;
+    fs::write(&temporary, &reply.bytes).map_err(|_| ui_text!("backend.cloud_recovery_commands.download_cloud_recovery_cover4"))?;
+    fs::rename(&temporary, &path).map_err(|_| ui_text!("backend.cloud_recovery_commands.download_cloud_recovery_cover5"))?;
     Ok(reference)
 }
 
 #[tauri::command]
 pub fn read_cloud_recovery_cover(app: AppHandle, reference: String) -> Result<String, String> {
     let (_, _, mime) = cover_parts(&reference)?;
-    let bytes = fs::read(local_cover_path(&app, &reference)?).map_err(|_| "封面尚未保存，请重试封面")?;
+    let bytes = fs::read(local_cover_path(&app, &reference)?).map_err(|_| ui_text!("backend.cloud_recovery_commands.read_cloud_recovery_cover"))?;
     Ok(format!("data:{mime};base64,{}", base64::engine::general_purpose::STANDARD.encode(bytes)))
 }
 
 #[tauri::command]
 pub async fn list_cloud_recovery_covers(app: AppHandle, state: State<'_, RecoveryTransportState>,
     session_id: String) -> Result<serde_json::Value, String> {
-    if !valid_uuid(&session_id) { return Err("场次编号无效".into()); }
+    if !valid_uuid(&session_id) { return Err(ui_text!("backend.cloud_recovery_commands.list_cloud_recovery_covers").into()); }
     let stamp = load_recovery_access(&app)?.stamp;
     let items = cloud_json_request(&app, &state, reqwest::Method::GET,
         &format!("api/v1/sessions/{session_id}/covers"), None).await?;
     if load_recovery_access(&app)?.stamp.server_id != stamp.server_id {
-        return Err("服务器已切换，请重新打开恢复窗口".into());
+        return Err(ui_text!("backend.cloud_recovery_commands.list_cloud_recovery_covers2").into());
     }
     Ok(serde_json::json!({"serverId": stamp.server_id, "items": items["items"]}))
 }

@@ -1,3 +1,4 @@
+import { UiMessageError } from "../i18n/index.ts";
 import {isImageBackgroundDraft} from "../components/themeImageValue.ts";
 import valueParser, {type Node as ValueNode} from "postcss-value-parser";
 import safeParse from "postcss-safe-parser";
@@ -42,7 +43,7 @@ export async function readThemeAssetDraft(
 ): Promise<Uint8Array> {
   if (Object.prototype.hasOwnProperty.call(changes, path)) {
     const value = changes[path];
-    if (value === null) throw new Error(`资源已从草稿移除：${path}`);
+    if (value === null) throw new UiMessageError("themeAssets.readThemeAssetDraft", { path: path });
     return value;
   }
   return readSaved(path);

@@ -1,3 +1,4 @@
+import { uiText } from "../i18n/index.ts";
 import { UiSearchInput } from "./ui/SearchInput.tsx";
 import { useState } from "react";
 import type {
@@ -30,31 +31,31 @@ function parseDateValue(value: string): number | undefined {
 }
 
 const sortOptions: readonly { value: ArchiveSessionSort; label: string }[] = [
-  { value: "startedAt", label: "开播时间" },
-  { value: "duration", label: "直播时长" },
-  { value: "eventCount", label: "事件数量" },
-  { value: "paidTotal", label: "付费总额" },
-  { value: "favoriteCount", label: "收藏数量" },
+  { value: "startedAt", label: uiText("reviewOwnerSessionFilters.sortOptions.label") },
+  { value: "duration", label: uiText("reviewOwnerSessionFilters.sortOptions.label2") },
+  { value: "eventCount", label: uiText("reviewOwnerSessionFilters.sortOptions.label3") },
+  { value: "paidTotal", label: uiText("reviewOwnerSessionFilters.sortOptions.label4") },
+  { value: "favoriteCount", label: uiText("reviewOwnerSessionFilters.sortOptions.label5") },
 ];
 
 const dateOptions: readonly { value: ReviewDatePreset; label: string }[] = [
-  { value: "all", label: "全部时间" },
-  { value: "today", label: "今天" },
-  { value: "yesterday", label: "昨天" },
-  { value: "week", label: "本周" },
-  { value: "lastWeek", label: "上周" },
-  { value: "month", label: "本月" },
-  { value: "lastMonth", label: "上月" },
-  { value: "custom", label: "自定义" },
+  { value: "all", label: uiText("reviewOwnerSessionFilters.dateOptions.label") },
+  { value: "today", label: uiText("reviewOwnerSessionFilters.dateOptions.label2") },
+  { value: "yesterday", label: uiText("reviewOwnerSessionFilters.dateOptions.label3") },
+  { value: "week", label: uiText("reviewOwnerSessionFilters.dateOptions.label4") },
+  { value: "lastWeek", label: uiText("reviewOwnerSessionFilters.dateOptions.label5") },
+  { value: "month", label: uiText("reviewOwnerSessionFilters.dateOptions.label6") },
+  { value: "lastMonth", label: uiText("reviewOwnerSessionFilters.dateOptions.label7") },
+  { value: "custom", label: uiText("reviewOwnerSessionFilters.dateOptions.label8") },
 ];
 
 const statusOptions = [
-  { value: "all", label: "全部" },
+  { value: "all", label: uiText("reviewOwnerSessionFilters.statusOptions.label") },
   ...(["active", "ended", "unclean"] as const).map(value => ({ value, label: formatArchiveSessionStatus(value) })),
 ] as const;
 
 const qualityOptions = [
-  { value: "all", label: "全部" },
+  { value: "all", label: uiText("reviewOwnerSessionFilters.qualityOptions.label") },
   ...(["in-progress", "complete", "incomplete"] as const).map(value => ({ value, label: formatArchiveQuality(value) })),
 ] as const;
 
@@ -122,7 +123,7 @@ export function ReviewOwnerSessionFilters({
 
   return (
     <ReviewFilterShell
-      ariaLabel="场次筛选"
+      ariaLabel={uiText("reviewOwnerSessionFilters.ariaLabel")}
       contentId="review-owner-session-filter-content"
       conditionCount={conditionCount}
       collapsed={collapsed}
@@ -132,46 +133,46 @@ export function ReviewOwnerSessionFilters({
     >
       <div className="review-owner-session-filters flex min-w-0 flex-col gap-2">
       <div className="flex min-w-0 flex-wrap items-center gap-1.5">
-        <label className="sr-only" htmlFor="review-owner-session-title">搜索直播标题</label>
-        <UiSearchInput id="review-owner-session-title" aria-label="搜索直播标题" placeholder="搜索直播标题" value={query.title} onValueChange={title => onChange({ title })} className="min-w-44 flex-1" />
+        <label className="sr-only" htmlFor="review-owner-session-title">{uiText("reviewOwnerSessionFilters.ReviewOwnerSessionFilters")}</label>
+        <UiSearchInput id="review-owner-session-title" aria-label={uiText("reviewOwnerSessionFilters.aria_label")} placeholder={uiText("reviewOwnerSessionFilters.placeholder")} value={query.title} onValueChange={title => onChange({ title })} className="min-w-44 flex-1" />
         <div className="flex items-center gap-1 ui-type-meta text-t2">
-          <span>开播时间</span>
-          <UiSelect ariaLabel="场次开播时间" options={dateOptions} value={datePreset} onValueChange={(value) => setDatePreset(value as ReviewDatePreset)} />
+          <span>{uiText("reviewOwnerSessionFilters.ReviewOwnerSessionFilters2")}</span>
+          <UiSelect ariaLabel={uiText("reviewOwnerSessionFilters.ariaLabel2")} options={dateOptions} value={datePreset} onValueChange={(value) => setDatePreset(value as ReviewDatePreset)} />
         </div>
       </div>
 
       {(customDateOpen || query.startedFromTs !== undefined || query.startedToTs !== undefined) && (
         <div className="flex min-w-0 flex-wrap items-center gap-1.5">
           <label className="flex items-center gap-1 ui-type-meta text-t2">
-            <span>开始</span>
-            <input type="datetime-local" step="60" aria-label="场次开播起始时间" className={controlClass} value={dateValue(query.startedFromTs)} onChange={(event) => onChange({ startedFromTs: parseDateValue(event.target.value) })} />
+            <span>{uiText("reviewOwnerSessionFilters.ReviewOwnerSessionFilters3")}</span>
+            <input type="datetime-local" step="60" aria-label={uiText("reviewOwnerSessionFilters.aria_label2")} className={controlClass} value={dateValue(query.startedFromTs)} onChange={(event) => onChange({ startedFromTs: parseDateValue(event.target.value) })} />
           </label>
           <label className="flex items-center gap-1 ui-type-meta text-t2">
-            <span>结束</span>
-            <input type="datetime-local" step="60" aria-label="场次开播结束时间" className={controlClass} value={dateValue(query.startedToTs)} onChange={(event) => onChange({ startedToTs: parseDateValue(event.target.value) })} />
+            <span>{uiText("reviewOwnerSessionFilters.ReviewOwnerSessionFilters4")}</span>
+            <input type="datetime-local" step="60" aria-label={uiText("reviewOwnerSessionFilters.aria_label3")} className={controlClass} value={dateValue(query.startedToTs)} onChange={(event) => onChange({ startedToTs: parseDateValue(event.target.value) })} />
           </label>
         </div>
       )}
 
       <div className="flex min-w-0 flex-wrap items-center gap-1.5">
         <div className="flex items-center gap-1 ui-type-meta text-t2">
-          <span>直播状态</span>
-          <UiSelect ariaLabel="直播状态" options={statusOptions} value={selectedStatus(query)} onValueChange={setStatus} />
+          <span>{uiText("reviewOwnerSessionFilters.ReviewOwnerSessionFilters5")}</span>
+          <UiSelect ariaLabel={uiText("reviewOwnerSessionFilters.ariaLabel3")} options={statusOptions} value={selectedStatus(query)} onValueChange={setStatus} />
         </div>
         <div className="flex items-center gap-1 ui-type-meta text-t2">
-          <span>记录质量</span>
-          <UiSelect ariaLabel="记录质量" options={qualityOptions} value={selectedQuality(query)} onValueChange={setQuality} />
+          <span>{uiText("reviewOwnerSessionFilters.ReviewOwnerSessionFilters6")}</span>
+          <UiSelect ariaLabel={uiText("reviewOwnerSessionFilters.ariaLabel4")} options={qualityOptions} value={selectedQuality(query)} onValueChange={setQuality} />
         </div>
         <button
           type="button"
           aria-pressed={query.favoriteOnly}
           className={`${buttonClass} ${query.favoriteOnly ? "border-accent bg-accent-subtle text-accent-text" : "border-line bg-bg text-t2 hover:border-accent/50 hover:bg-raised hover:text-t1"}`}
           onClick={() => onChange({ favoriteOnly: !query.favoriteOnly })}
-        >只看有收藏的场次</button>
+        >{uiText("reviewOwnerSessionFilters.ReviewOwnerSessionFilters7")}</button>
         <div className="ml-auto flex items-center gap-1 ui-type-meta text-t2">
-          <span>排序</span>
-          <UiSelect ariaLabel="场次排序字段" options={sortOptions} value={query.sort} onValueChange={(value) => onChange({ sort: value as ArchiveSessionSort })} />
-          <UiSelect ariaLabel="场次排序方向" options={(["desc", "asc"] as const).map(value => ({ value, label: formatArchiveSortDirection(value, query.sort) }))} value={query.direction} onValueChange={(value) => onChange({ direction: value as ArchiveSortDirection })} />
+          <span>{uiText("reviewOwnerSessionFilters.ReviewOwnerSessionFilters8")}</span>
+          <UiSelect ariaLabel={uiText("reviewOwnerSessionFilters.ariaLabel5")} options={sortOptions} value={query.sort} onValueChange={(value) => onChange({ sort: value as ArchiveSessionSort })} />
+          <UiSelect ariaLabel={uiText("reviewOwnerSessionFilters.ariaLabel6")} options={(["desc", "asc"] as const).map(value => ({ value, label: formatArchiveSortDirection(value, query.sort) }))} value={query.direction} onValueChange={(value) => onChange({ direction: value as ArchiveSortDirection })} />
         </div>
       </div>
       </div>

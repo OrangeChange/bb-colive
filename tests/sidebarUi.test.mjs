@@ -1,8 +1,9 @@
+import { readUiSource } from "./helpers/readUiSource.mjs";
 import test from "node:test";
 import assert from "node:assert/strict";
 import fs from "node:fs";
 
-const source = fs.readFileSync(new URL("../src/components/Sidebar.tsx", import.meta.url), "utf8");
+const source = readUiSource(new URL("../src/components/Sidebar.tsx", import.meta.url), "utf8");
 
 test("登录后的侧栏隐藏常驻用户名，并在头像悬停时显示登录状态", () => {
   assert.match(source, /aria-label=\{`已登录：\$\{session\.uname\}，打开用户菜单`\}/);
@@ -39,7 +40,7 @@ test("语音图标使用折中宽度的中心话筒主体", () => {
 test("个性播报入口使用可识别的音频波形图标", () => {
   const icon = source.match(/function IconAudioWaveform\(\) \{[\s\S]*?\n\}/)?.[0];
   assert.ok(icon, "个性播报音频波形图标实现尚未找到");
-  assert.match(source, /mainTitle="个性播报（提示音）"[\s\S]*?mainIcon=\{<IconAudioWaveform \/>\}/);
+  assert.match(source, /mainTitle=["']个性播报（提示音）["'][\s\S]*?mainIcon=\{<IconAudioWaveform \/>\}/);
   assert.match(icon, /<LucideAudioLines\b/);
   assert.doesNotMatch(icon, /function IconPromptSound/);
 });
@@ -54,7 +55,7 @@ test("语音快捷开关与个性播报使用完全相同的铃铛图标", () =>
 });
 
 test("语音侧栏入口悬停展开快捷播报开关，并与副窗口展开条对齐", () => {
-  const css = fs.readFileSync(new URL("../src/App.css", import.meta.url), "utf8");
+  const css = readUiSource(new URL("../src/App.css", import.meta.url), "utf8");
   assert.match(source, /useVoiceSettings/);
   assert.match(source, /voiceController/);
   assert.match(source, /sidebar-feature-controls/);
@@ -69,7 +70,7 @@ test("语音侧栏入口悬停展开快捷播报开关，并与副窗口展开�
 });
 
 test("个性播报快捷开关使用独立铃铛图标，并与语音共享完全相同的展开容器", () => {
-  const css = fs.readFileSync(new URL("../src/App.css", import.meta.url), "utf8");
+  const css = readUiSource(new URL("../src/App.css", import.meta.url), "utf8");
   assert.match(source, /function IconBell\(/);
   assert.match(source, /mainView="personal"[\s\S]*?toggleIcon=\{<IconBell muted=\{!personalBroadcastEnabled\} \/>\}/);
   assert.match(source, /setVoiceSettings\(\{ personalBroadcast: \{ \.\.\.personalBroadcast, enabled: !personalBroadcastEnabled \} \}\)/);

@@ -1,3 +1,4 @@
+import { readUiSource } from "./helpers/readUiSource.mjs";
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { createDiagnosticContext, flushAllDiagnosticLogs } from '../src/diagnostics/diagnosticLogger.ts';
@@ -104,7 +105,7 @@ test('副窗两类诊断经接收屏障和真实刷盘进入 Rust 实际 ZIP', a
       env: { ...process.env, DIAGNOSTIC_EXPORT_EVIDENCE: evidence, DIAGNOSTIC_EXPORT_DIAGNOSTICS: JSON.stringify(args.snapshot.diagnostics) },
     });
     console.log(rust.stdout + rust.stderr); assert.equal(rust.status, 0);
-    return JSON.parse(readFileSync(join(evidence, 'result.json'), 'utf8'));
+    return JSON.parse(readUiSource(join(evidence, 'result.json'), 'utf8'));
   } });
   const result = await bridge.exportBundle('full', join(evidence, 'diagnostic.zip'), {});
   assert.equal(result.flush.failed, 0); assert.equal(result.flush.flushed, 2);

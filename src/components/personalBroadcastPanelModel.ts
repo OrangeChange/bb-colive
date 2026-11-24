@@ -1,3 +1,4 @@
+import { uiText } from "../i18n/index.ts";
 import { getPersonalBroadcastRuleKey } from "../voice/personalBroadcastProjection.ts";
 import type { PersonalBroadcastMode, PersonalBroadcastRuleKey, PersonalBroadcastSettings } from "../voice/personalBroadcastTypes.ts";
 import type { PersonalBroadcastRuntimeSnapshot } from "../voice/personalBroadcastController.ts";
@@ -44,5 +45,5 @@ export function getPersonalBroadcastRuleError(
   localError: { key: PersonalBroadcastRuleKey; message: string } | null,
 ): string | null {
   if (localError?.key === key) return localError.message;
-  return snapshot.failedRuleKey === key && snapshot.error ? `文件不可用：${snapshot.error}` : null;
+  return snapshot.failedRuleKey === key && snapshot.error ? uiText("personalBroadcastPanelModel.getPersonalBroadcastRuleError", { error: snapshot.error }) : null;
 }

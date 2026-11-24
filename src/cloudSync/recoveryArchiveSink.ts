@@ -1,3 +1,4 @@
+import { uiText } from "../i18n/index.ts";
 import type {
   ArchiveOwnerInput,
   ArchiveRepositoryContract,
@@ -89,7 +90,7 @@ export class RecoveryArchiveSink {
 
   async syncSessions(source: RecoveryArchiveSource, values: readonly RecoverySessionMetadata[]): Promise<void> {
     const roomId = Number(source.roomId);
-    if (!Number.isSafeInteger(roomId) || roomId <= 0) throw new Error('恢复记录的直播间编号无效');
+    if (!Number.isSafeInteger(roomId) || roomId <= 0) throw new Error(uiText("recoveryArchiveSink.syncSessions"));
     const now = Date.now();
     for (const session of values) {
       const next = sessionInput(source, session, now);
@@ -125,7 +126,7 @@ export class RecoveryArchiveSink {
   Promise<{ insertedEvents: number; state: RecoveryArchiveState }> {
     const batch: RecoveryArchiveBatch = { source, sessions: [], records };
     const roomId = Number(batch.source.roomId);
-    if (!Number.isSafeInteger(roomId) || roomId <= 0) throw new Error('恢复记录的直播间编号无效');
+    if (!Number.isSafeInteger(roomId) || roomId <= 0) throw new Error(uiText("recoveryArchiveSink.writeRecords"));
     const state: RecoveryArchiveState = { lastSequence: previous.lastSequence, lastOutputIndex: previous.lastOutputIndex ?? -1,
       eventKeysByPlatformId: { ...previous.eventKeysByPlatformId } };
     const ordinals = new Map<string, number>();
@@ -135,7 +136,7 @@ export class RecoveryArchiveSink {
     const ordered = [...batch.records].sort((a, b) => compareSequence(a.source.sequence, b.source.sequence));
     for (const record of ordered) {
       if (record.source.serverId !== batch.source.serverId || record.source.roomId !== batch.source.roomId) {
-        throw new Error('恢复记录不属于当前服务器或直播间');
+        throw new Error(uiText("recoveryArchiveSink.writeRecords2"));
       }
       const serverSessionId = record.evidence.serverSessionId;
       if (!serverSessionId) continue;

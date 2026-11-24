@@ -1,3 +1,4 @@
+import { uiText } from "../i18n/index.ts";
 import { useState, type ReactNode } from 'react';
 import { openUrl } from '@tauri-apps/plugin-opener';
 import react from '../assets/brands/react.svg?raw';
@@ -16,26 +17,26 @@ function BrandIcon({ source }: { source: string }) {
 export function AboutLinks() {
   const [error, setError] = useState('');
   function link(name: string, href: string, icon: ReactNode, brand: string) {
-    return <a className={`about-badge about-badge-${brand}`} href={href} title={`在浏览器打开 ${name}`} onClick={event => {
+    return <a className={`about-badge about-badge-${brand}`} href={href} title={uiText("thirdPartyNotices.title", { name: name })} onClick={event => {
       event.preventDefault();
       setError('');
-      void openUrl(href).catch(() => setError('无法打开链接，请复制链接地址后在浏览器打开。'));
+      void openUrl(href).catch(() => setError(uiText("thirdPartyNotices.onClick")));
     }}>{icon && <span className="about-badge-logo">{icon}</span>}<span className="about-badge-name">{name}</span></a>;
   }
   return <div className="about-links">
-    <div className="about-compatible"><span className="about-group-label">兼容样式</span><div className="about-link-row">
+    <div className="about-compatible"><span className="about-group-label">{uiText("thirdPartyNotices.AboutLinks")}</span><div className="about-link-row">
       {link('Blivechat', 'https://github.com/xfgryujk/blivechat', <img className="about-brand-icon" src={blivechat} alt="" />, 'blivechat')}
       {link('LAPLACE Chat', 'https://chat.laplace.live/', <img className="about-brand-icon" src={laplace} alt="" />, 'laplace')}
     </div></div>
-    <nav className="about-link-row about-technologies" aria-label="框架与组件">
+    <nav className="about-link-row about-technologies" aria-label={uiText("thirdPartyNotices.aria_label")}>
       {link('React', 'https://react.dev/', <BrandIcon source={react} />, 'react')}
       {link('Tauri', 'https://tauri.app/', <BrandIcon source={tauri} />, 'tauri')}
       {link('Tailwind CSS', 'https://tailwindcss.com/', <BrandIcon source={tailwind} />, 'tailwind')}
       {link('Radix UI', 'https://www.radix-ui.com/', <BrandIcon source={radix} />, 'radix')}
     </nav>
-    <nav className="about-link-row about-profiles" aria-label="作者主页">
-      {link('橙橙子君', 'https://space.bilibili.com/4261481', <BrandIcon source={bilibili} />, 'bilibili')}
-      {link('爱发电', 'https://afdian.com/a/orangeee', <BrandIcon source={afdian} />, 'afdian')}
+    <nav className="about-link-row about-profiles" aria-label={uiText("thirdPartyNotices.aria_label2")}>
+      {link(uiText("thirdPartyNotices.AboutLinks2"), 'https://space.bilibili.com/4261481', <BrandIcon source={bilibili} />, 'bilibili')}
+      {link(uiText("thirdPartyNotices.AboutLinks3"), 'https://afdian.com/a/orangeee', <BrandIcon source={afdian} />, 'afdian')}
     </nav>
     {error && <p className="about-link-error" role="status">{error}</p>}
   </div>;

@@ -1,3 +1,4 @@
+import { uiText } from "../i18n/index.ts";
 import { useEffect, useRef, useState } from "react";
 import { createPortal } from "react-dom";
 import { Settings2, X, RotateCcw } from "lucide-react";
@@ -55,8 +56,7 @@ export function ReviewStyleSettings() {
         onClick={() => setOpen(true)}
       >
         <Settings2 size={16} strokeWidth={2} />
-        样式设置
-      </button>
+        {uiText("reviewStyleSettings.ReviewStyleSettings")}</button>
       {open &&
         createPortal(
           <dialog
@@ -81,18 +81,18 @@ export function ReviewStyleSettings() {
             }}
           >
             <header>
-              <h2 id="review-style-title">样式设置</h2>
-              <button type="button" aria-label="关闭样式设置" onClick={close}>
+              <h2 id="review-style-title">{uiText("reviewStyleSettings.ReviewStyleSettings")}</h2>
+              <button type="button" aria-label={uiText("reviewStyleSettings.aria_label")} onClick={close}>
                 <X size={20} />
               </button>
             </header>
             <div className="review-style-options">
               <label className="review-style-toggle">
-                <span>基准字号</span>
+                <span>{uiText("reviewStyleSettings.ReviewStyleSettings2")}</span>
                 <span>
                   <input
                     className="review-style-font"
-                    aria-label="基准字号"
+                    aria-label={uiText("reviewStyleSettings.aria_label2")}
                     type="number"
                     min={MIN_EVENT_FONT_SIZE}
                     max={MAX_EVENT_FONT_SIZE}
@@ -124,10 +124,10 @@ export function ReviewStyleSettings() {
                   px
                 </span>
               </label>
-              {toggle("showAvatar", "头像")}
-              {toggle("showAvatarFrame", "头像框", !settings.showAvatar)}
+              {toggle("showAvatar", uiText("reviewStyleSettings.ReviewStyleSettings3"))}
+              {toggle("showAvatarFrame", uiText("reviewStyleSettings.ReviewStyleSettings4"), !settings.showAvatar)}
               <fieldset>
-                <legend><SettingsIcon name="身份标记" />身份标记</legend>
+                <legend><SettingsIcon name="badges" />{uiText("reviewStyleSettings.ReviewStyleSettings5")}</legend>
                 <div className="review-style-identities">
                   {(
                     [
@@ -144,28 +144,27 @@ export function ReviewStyleSettings() {
                           update({ [key]: event.target.checked })
                         }
                       />
-                      {["大航海", "主播", "房管"][index]}
+                      {[uiText("reviewStyleSettings.ReviewStyleSettings6"), uiText("reviewStyleSettings.ReviewStyleSettings7"), uiText("reviewStyleSettings.ReviewStyleSettings8")][index]}
                     </label>
                   ))}
                 </div>
               </fieldset>
               <div className="review-style-toggle">
-                <span>身份标记形式</span>
-                <SettingsChoiceControl label="身份标记形式" value={settings.identityDisplayMode} onChange={identityDisplayMode => update({ identityDisplayMode })} options={[{ value: "icon", label: "图标" }, { value: "text", label: "文字" }]} />
+                <span>{uiText("reviewStyleSettings.ReviewStyleSettings9")}</span>
+                <SettingsChoiceControl label={uiText("reviewStyleSettings.label")} value={settings.identityDisplayMode} onChange={identityDisplayMode => update({ identityDisplayMode })} options={[{ value: "icon", label: uiText("reviewStyleSettings.options.label") }, { value: "text", label: uiText("reviewStyleSettings.options.label2") }]} />
               </div>
-              {toggle("showFanMedal", "粉丝牌")}
-              {toggle("showLevelAndRank", "等级与排名")}
-              {toggle("showIcons", "图标")}
-              {toggle("usePriceGradient", "按价格梯度配色")}
-              {toggle("uniformTextColor", "统一文字颜色")}
+              {toggle("showFanMedal", uiText("reviewStyleSettings.ReviewStyleSettings10"))}
+              {toggle("showLevelAndRank", uiText("reviewStyleSettings.ReviewStyleSettings11"))}
+              {toggle("showIcons", uiText("reviewStyleSettings.ReviewStyleSettings12"))}
+              {toggle("usePriceGradient", uiText("reviewStyleSettings.ReviewStyleSettings13"))}
+              {toggle("uniformTextColor", uiText("reviewStyleSettings.ReviewStyleSettings14"))}
             </div>
             <footer>
-              <button type="button" className="settings-icon-action" title="恢复默认" aria-label="恢复默认" onClick={reset}>
+              <button type="button" className="settings-icon-action" title={uiText("common.restoreDefaults")} aria-label={uiText("common.restoreDefaults")} onClick={reset}>
                 <RotateCcw size={16} aria-hidden="true" />
               </button>
               <button type="button" onClick={close}>
-                完成
-              </button>
+                {uiText("reviewStyleSettings.ReviewStyleSettings15")}</button>
             </footer>
           </dialog>,
           document.body,

@@ -1,3 +1,4 @@
+import { uiText } from "../i18n/index.ts";
 import * as Popover from "@radix-ui/react-popover";
 import { Plus, Trash2, X } from "lucide-react";
 import { useEffect, useMemo, useRef, useState } from "react";
@@ -267,11 +268,11 @@ export function ThemeBackgroundField({
           <span className="theme-color-swatch" style={{ background: value }} />
           <span>
             {mixed
-              ? "混合值"
+              ? uiText("themeBackgroundField.ThemeBackgroundField")
               : /gradient\(/i.test(value)
-                ? "渐变"
+                ? uiText("themeBackgroundField.ThemeBackgroundField2")
                 : value === "transparent"
-                  ? "透明"
+                  ? uiText("themeBackgroundField.ThemeBackgroundField3")
                   : value}
           </span>
         </button>
@@ -279,7 +280,7 @@ export function ThemeBackgroundField({
       <Popover.Portal>
         <Popover.Content
           className="theme-background-popover"
-          aria-label={`${label}面板`}
+          aria-label={uiText("themeBackgroundField.aria_label", { label: label })}
           side="left"
           align="start"
           sideOffset={8}
@@ -288,19 +289,19 @@ export function ThemeBackgroundField({
         >
           <div className="theme-color-popover-header">
             <strong>{label}</strong>
-            <Popover.Close aria-label="关闭背景面板" title="关闭">
+            <Popover.Close aria-label={uiText("themeBackgroundField.aria_label2")} title={uiText("common.close")}>
               <X size={16} />
             </Popover.Close>
           </div>
           <div
             className="theme-background-preview theme-fill-checker"
-            aria-label="整体背景效果"
-            title="整体背景效果"
+            aria-label={uiText("themeBackgroundField.aria_label3")}
+            title={uiText("themeBackgroundField.title")}
           >
             <span style={{ background: draft }} />
           </div>
           {containsImage && (
-            <span className="theme-background-image-notice">背景含图片</span>
+            <span className="theme-background-image-notice">{uiText("themeBackgroundField.ThemeBackgroundField4")}</span>
           )}
           {background.layers.length > 1 && (
             <div className="theme-background-layers">
@@ -311,7 +312,7 @@ export function ThemeBackgroundField({
                 <span style={{ background: currentLayer }} />
               </span>
               <UiSelect
-                ariaLabel="背景图层"
+                ariaLabel={uiText("themeBackgroundField.ariaLabel")}
                 contentClassName="theme-background-select-menu"
                 value={String(selected)}
                 onValueChange={(next) => {
@@ -321,14 +322,14 @@ export function ThemeBackgroundField({
                 }}
                 options={background.layers.map((item, i) => ({
                   value: String(i),
-                  label: `${i === 0 ? "顶层" : i === background.layers.length - 1 ? "底层" : `第 ${i + 1} 层`} · ${parseGradient(item) ? "渐变" : hasBackgroundImage(item) ? "图片" : "底色"}`,
+                  label: `${i === 0 ? uiText("themeBackgroundField.options.label") : i === background.layers.length - 1 ? uiText("themeBackgroundField.options.label2") : uiText("themeBackgroundField.options.label3", { value: i + 1 })} · ${parseGradient(item) ? uiText("themeBackgroundField.options.label4") : hasBackgroundImage(item) ? uiText("themeBackgroundField.options.label5") : uiText("themeBackgroundField.options.label6")}`,
                 }))}
               />
               <button
                 type="button"
                 className="theme-fill-icon"
-                aria-label="移除当前渐变层"
-                title="移除当前渐变层，保留其他图层"
+                aria-label={uiText("themeBackgroundField.aria_label4")}
+                title={uiText("themeBackgroundField.title2")}
                 disabled={!gradient}
                 onClick={removeLayer}
               >
@@ -339,13 +340,13 @@ export function ThemeBackgroundField({
           <div
             className="theme-background-modes"
             role="group"
-            aria-label="背景填充类型"
+            aria-label={uiText("themeBackgroundField.aria_label5")}
           >
             {(
               [
-                { value: "solid", label: "纯色" },
-                { value: "linear", label: "线性" },
-                { value: "radial", label: "径向" },
+                { value: "solid", label: uiText("themeBackgroundField.ThemeBackgroundField.label") },
+                { value: "linear", label: uiText("themeBackgroundField.ThemeBackgroundField.label2") },
+                { value: "radial", label: uiText("themeBackgroundField.ThemeBackgroundField.label3") },
               ] as const
             ).map((mode) => (
               <button
@@ -364,7 +365,7 @@ export function ThemeBackgroundField({
                   mode.value === "solid" &&
                   gradient &&
                   background.layers.length > 1
-                    ? "移除当前渐变层后可编辑底色"
+                    ? uiText("themeBackgroundField.title3")
                     : undefined
                 }
                 onClick={() => switchKind(mode.value)}
@@ -388,11 +389,11 @@ export function ThemeBackgroundField({
                 ) : (
                   <>
                     <div className="theme-gradient-shape">
-                      <span>形状</span>
+                      <span>{uiText("themeBackgroundField.ThemeBackgroundField5")}</span>
                       <div
                         className="theme-gradient-options"
                         role="group"
-                        aria-label="径向形状"
+                        aria-label={uiText("themeBackgroundField.aria_label6")}
                       >
                         {(["circle", "ellipse"] as const).map((shape) => (
                           <button
@@ -401,16 +402,16 @@ export function ThemeBackgroundField({
                             aria-pressed={gradient.shape === shape}
                             onClick={() => update({ ...gradient, shape })}
                           >
-                            {shape === "circle" ? "圆形" : "椭圆"}
+                            {shape === "circle" ? uiText("themeBackgroundField.ThemeBackgroundField6") : uiText("themeBackgroundField.ThemeBackgroundField7")}
                           </button>
                         ))}
                       </div>
                     </div>
                     {(["X", "Y"] as const).map((axis, i) => (
                       <label key={axis}>
-                        中心 {axis} %
+                        {uiText("themeBackgroundField.ThemeBackgroundField8")}{axis} %
                         <ThemeNumberInput
-                          label={`径向中心${axis}`}
+                          label={uiText("themeBackgroundField.label", { axis: axis })}
                           value={gradient.center[i]}
                           onChange={(number) => {
                             const center: [number, number] = [
@@ -436,8 +437,8 @@ export function ThemeBackgroundField({
               <div
                 ref={track}
                 className="theme-gradient-track theme-fill-checker"
-                aria-label="渐变色点轨道"
-                title="点击轨道添加色点"
+                aria-label={uiText("themeBackgroundField.aria_label7")}
+                title={uiText("themeBackgroundField.title4")}
                 onClick={(event) => {
                   if (event.target === event.currentTarget) {
                     const rect = event.currentTarget.getBoundingClientRect();
@@ -472,7 +473,7 @@ export function ThemeBackgroundField({
                       left: `clamp(0px, ${trackPosition(item)}, 100%)`,
                       width: `max(4px, min(28px${i > 0 ? `, calc(${trackPosition(item)} - ${trackPosition(gradient.stops[i - 1])})` : ""}${i < gradient.stops.length - 1 ? `, calc(${trackPosition(gradient.stops[i + 1])} - ${trackPosition(item)})` : ""}))`,
                     }}
-                    aria-label={`色点 ${i + 1}`}
+                    aria-label={uiText("themeBackgroundField.aria_label8", { value: i + 1 })}
                     aria-valuenow={item.position}
                     aria-valuemin={Math.min(0, item.position)}
                     aria-valuemax={Math.max(
@@ -482,7 +483,7 @@ export function ThemeBackgroundField({
                       item.position,
                     )}
                     aria-valuetext={`${item.position}${item.unit}`}
-                    title={`色点 ${i + 1} · ${item.position}${item.unit}`}
+                    title={uiText("themeBackgroundField.title5", { value: i + 1, position: item.position, unit: item.unit })}
                     onFocus={() => setStop(i)}
                     onClick={(event) => {
                       event.stopPropagation();
@@ -548,11 +549,11 @@ export function ThemeBackgroundField({
               </div>
               <div className="theme-gradient-stop-actions">
                 <span className="theme-gradient-stop-label">
-                  色点 {stopIndex + 1}
+                  {uiText("themeBackgroundField.ThemeBackgroundField9")}{stopIndex + 1}
                 </span>
                 <ThemeNumberInput
                   key={`${selected}:${stopIndex}`}
-                  label="色点位置"
+                  label={uiText("themeBackgroundField.label2")}
                   value={gradient.stops[stopIndex].position}
                   onChange={(position) => positionStop(position)}
                   onPreviewChange={(position) => positionStop(position, true)}
@@ -561,7 +562,7 @@ export function ThemeBackgroundField({
                 <div
                   className="theme-gradient-options is-unit"
                   role="group"
-                  aria-label="色点单位"
+                  aria-label={uiText("themeBackgroundField.aria_label9")}
                 >
                   {(["%", "px"] as const).map((unit) => (
                     <button
@@ -569,7 +570,7 @@ export function ThemeBackgroundField({
                       type="button"
                       aria-pressed={gradient.stops[stopIndex].unit === unit}
                       title={
-                        unit === "%" ? "相对于背景长度的位置" : "固定像素位置"
+                        unit === "%" ? uiText("themeBackgroundField.title6") : uiText("themeBackgroundField.title7")
                       }
                       onClick={() =>
                         update({
@@ -587,8 +588,8 @@ export function ThemeBackgroundField({
                 <button
                   type="button"
                   className="theme-fill-icon"
-                  aria-label="添加色点"
-                  title="在相邻色点之间添加"
+                  aria-label={uiText("themeBackgroundField.aria_label10")}
+                  title={uiText("themeBackgroundField.title8")}
                   onClick={() => addStop()}
                 >
                   <Plus size={16} />
@@ -596,8 +597,8 @@ export function ThemeBackgroundField({
                 <button
                   type="button"
                   className="theme-fill-icon"
-                  aria-label="删除色点"
-                  title="删除当前色点（Delete）"
+                  aria-label={uiText("themeBackgroundField.aria_label11")}
+                  title={uiText("themeBackgroundField.title9")}
                   disabled={gradient.stops.length <= 2}
                   onClick={() => removeStop()}
                 >
@@ -609,7 +610,7 @@ export function ThemeBackgroundField({
           {gradient ? (
             <ThemeColorField
               inline
-              label="色点颜色"
+              label={uiText("themeBackgroundField.label3")}
               value={gradient.stops[stopIndex].color}
               onChange={(color) => changeStop(color)}
               onPreviewChange={(color) => changeStop(color, true)}
@@ -618,7 +619,7 @@ export function ThemeBackgroundField({
           ) : editableSolid ? (
             <ThemeColorField
               inline
-              label="底色"
+              label={uiText("themeBackgroundField.label4")}
               value={solidLayerColor(currentLayer)}
               onChange={(color) => {
                 const layers = [...background.layers];
@@ -634,8 +635,7 @@ export function ThemeBackgroundField({
             />
           ) : (
             <p className="theme-background-note">
-              此图层由 CSS 控制，选择线性或径向可添加渐变层。
-            </p>
+              {uiText("themeBackgroundField.ThemeBackgroundField10")}</p>
           )}
         </Popover.Content>
       </Popover.Portal>

@@ -1,3 +1,4 @@
+import { readUiSource } from "./helpers/readUiSource.mjs";
 import test from "node:test";
 import assert from "node:assert/strict";
 import fs from "node:fs";
@@ -87,14 +88,14 @@ test("点选解析覆盖事件与区域专用选择器", () => {
 });
 
 test("兼容编辑器复用现有颜色、高级 CSS 和隔离预览接点", () => {
-  const editor = fs.readFileSync("src/components/CompatibleThemeEditor.tsx", "utf8");
-  const nativeEditor = fs.readFileSync("src/components/NativeThemeVisualEditor.tsx", "utf8");
-  const sharedNavigation = fs.readFileSync("src/components/ThemeVisualNavigation.tsx", "utf8");
-  const chrome = fs.readFileSync("src/components/ThemeEditorChrome.tsx", "utf8");
-  const preview = fs.readFileSync("src/components/CompatibleThemePreview.tsx", "utf8");
-  const workspace = fs.readFileSync("src/components/ThemeWorkspace.tsx", "utf8");
+  const editor = readUiSource("src/components/CompatibleThemeEditor.tsx", "utf8");
+  const nativeEditor = readUiSource("src/components/NativeThemeVisualEditor.tsx", "utf8");
+  const sharedNavigation = readUiSource("src/components/ThemeVisualNavigation.tsx", "utf8");
+  const chrome = readUiSource("src/components/ThemeEditorChrome.tsx", "utf8");
+  const preview = readUiSource("src/components/CompatibleThemePreview.tsx", "utf8");
+  const workspace = readUiSource("src/components/ThemeWorkspace.tsx", "utf8");
   assert.match(editor, /ThemeVisualPropertyField/);
-  assert.match(fs.readFileSync("src/components/ThemeVisualPropertyField.tsx", "utf8"), /ThemeColorField/);
+  assert.match(readUiSource("src/components/ThemeVisualPropertyField.tsx", "utf8"), /ThemeColorField/);
   for (const source of [editor, nativeEditor]) {
     assert.match(source, /ThemeVisualNavigation/);
     assert.match(source, /ThemeVisualPropertyPanel/);
@@ -107,13 +108,13 @@ test("兼容编辑器复用现有颜色、高级 CSS 和隔离预览接点", () 
   assert.match(workspace, /CompatibleThemeThumbnail/);
   assert.match(editor, /<ThemeEditorHeader/);
   assert.match(chrome, /onClick=\{onApply\}/);
-  assert.match(chrome, /ThemeActionMenu[^>]*items=\{\[\{ label: "更新已有输出", action: onApply \}, \.\.\.applyTargets\]\}/);
+  assert.match(chrome, /ThemeActionMenu[^>]*items=\{\[\{ label: ["']更新已有输出["'], action: onApply \}, \.\.\.applyTargets\]\}/);
   assert.match(editor, /<ThemeEditorHeader[^>]*onApply=\{onApply\}[^>]*applyTargets=\{applyTargets\}/);
   assert.match(editor, /previewTarget && createPortal/);
   assert.match(editor, /native-event-scope-primary/);
   assert.match(editor, /native-event-scope-children/);
   assert.match(editor, /buildCompatibleVisualNavigation/);
-  assert.match(sharedNavigation, /aria-label="语义部件"/);
+  assert.match(sharedNavigation, /aria-label=["']语义部件["']/);
   assert.match(sharedNavigation, /data-native-nav-level="1"/);
   assert.match(sharedNavigation, /render\(item,\s*\[group.id\],\s*2\)/);
   assert.doesNotMatch(editor, />区域范围</);
@@ -123,12 +124,12 @@ test("兼容编辑器复用现有颜色、高级 CSS 和隔离预览接点", () 
 });
 
 test("兼容缩略图使用透明来源背景并只取顶部样例", () => {
-  const blivechat = fs.readFileSync("src/compat/blivechat/register.tsx", "utf8");
-  const openlive = fs.readFileSync("src/compat/openlive/register.tsx", "utf8");
-  const laplace = fs.readFileSync("src/compat/laplace/register.tsx", "utf8");
-  const surface = fs.readFileSync("src/compat/blivechat/BlivechatSourceSurface.tsx", "utf8");
-  const openliveSurface = fs.readFileSync("src/compat/openlive/OpenLiveSourceSurface.tsx", "utf8");
-  const presentation = fs.readFileSync("src/compat/thumbnailFramePresentation.ts", "utf8");
+  const blivechat = readUiSource("src/compat/blivechat/register.tsx", "utf8");
+  const openlive = readUiSource("src/compat/openlive/register.tsx", "utf8");
+  const laplace = readUiSource("src/compat/laplace/register.tsx", "utf8");
+  const surface = readUiSource("src/compat/blivechat/BlivechatSourceSurface.tsx", "utf8");
+  const openliveSurface = readUiSource("src/compat/openlive/OpenLiveSourceSurface.tsx", "utf8");
+  const presentation = readUiSource("src/compat/thumbnailFramePresentation.ts", "utf8");
   for (const source of [blivechat, openlive]) assert.match(source, /html,body,#app,yt-live-chat-renderer,yt-live-chat-item-list-renderer,#item-scroller,#items\{background:transparent!important/);
   assert.match(laplace, /html,body,#root[^}]*background:transparent!important/);
   assert.match(surface, /thumbnail\s*\?\s*records\.slice\(0, 6\)/);
@@ -146,8 +147,8 @@ test("兼容缩略图使用透明来源背景并只取顶部样例", () => {
 });
 
 test("缩略预览有固定画布边界且棋盘背景不写入主题 CSS", () => {
-  const preview = fs.readFileSync("src/components/CompatibleThemePreview.tsx", "utf8");
-  const workspaceCss = fs.readFileSync("src/components/themeWorkspace.css", "utf8");
+  const preview = readUiSource("src/components/CompatibleThemePreview.tsx", "utf8");
+  const workspaceCss = readUiSource("src/components/themeWorkspace.css", "utf8");
   assert.match(preview, /is-thumbnail/);
   assert.match(preview, /previewBackground/);
   assert.doesNotMatch(preview, /background[^\n]*customCss/);
@@ -156,20 +157,20 @@ test("缩略预览有固定画布边界且棋盘背景不写入主题 CSS", () =
 });
 
 test("兼容编辑预览宽度跟随画布，宽度值不再固定来源 iframe", () => {
-  const preview = fs.readFileSync("src/components/CompatibleThemePreview.tsx", "utf8");
+  const preview = readUiSource("src/components/CompatibleThemePreview.tsx", "utf8");
   assert.doesNotMatch(preview, /minWidth:\s*previewWidth/);
   assert.doesNotMatch(preview, /width:\s*previewWidth/);
 });
 
 test("快速拖色只更新瞬时预览，结束后才提交主题设置", () => {
-  const editor = fs.readFileSync("src/components/CompatibleThemeEditor.tsx", "utf8");
+  const editor = readUiSource("src/components/CompatibleThemeEditor.tsx", "utf8");
   assert.match(editor, /onPreviewChange=\{value=>previewUpdate/);
   assert.match(editor, /setTransientModel/);
   assert.doesNotMatch(editor, /onPreviewChange=\{next => update/);
 });
 
 test("可视化编辑定位不被预览样例筛选覆盖", () => {
-  const editor = fs.readFileSync("src/components/CompatibleThemeEditor.tsx", "utf8");
+  const editor = readUiSource("src/components/CompatibleThemeEditor.tsx", "utf8");
   assert.match(editor, /const previewSelection = section !== "basic" \? selection : sampleSelection/);
   assert.doesNotMatch(editor, /const previewSelection = useMemo\(\(\) => \(\{ \.\.\.selection, event:/);
 });

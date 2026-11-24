@@ -1,3 +1,4 @@
+import { uiText } from "../i18n/index.ts";
 import { Pin as LucidePin, ChevronRight as LucideChevronRight } from "lucide-react";
 import { useEffect, useRef } from "react";
 import type { Anchor } from "../protocol/anchors.ts";
@@ -38,10 +39,10 @@ export interface ReviewOwnerListProps {
 }
 
 function liveStatusLabel(liveStatus: Anchor["liveStatus"]): string {
-  if (liveStatus === 1) return "直播中";
-  if (liveStatus === 2) return "轮播中";
-  if (liveStatus === 0) return "未开播";
-  return "状态未知";
+  if (liveStatus === 1) return uiText("reviewOwnerList.liveStatusLabel");
+  if (liveStatus === 2) return uiText("reviewOwnerList.liveStatusLabel2");
+  if (liveStatus === 0) return uiText("reviewOwnerList.liveStatusLabel3");
+  return uiText("reviewOwnerList.liveStatusLabel4");
 }
 
 function OwnerAvatar({ anchor }: { anchor: Anchor }) {
@@ -84,7 +85,7 @@ function OwnerCard({
       <button
         type="button"
         className="flex min-w-0 flex-1 items-center gap-3 rounded-lg px-1 py-0.5 text-left after:absolute after:inset-0 after:rounded-xl focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent-ring"
-        aria-label={`打开${card.anchor.uname}的主播档案`}
+        aria-label={uiText("reviewOwnerList.aria_label", { uname: card.anchor.uname })}
         onClick={() => onOpen(card.roomId)}
       >
         <OwnerAvatar anchor={card.anchor} />
@@ -95,17 +96,17 @@ function OwnerCard({
               <span className={`size-1.5 rounded-full ${isLive ? "bg-accent" : "bg-t3"}`} aria-hidden="true" />
               {liveStatusLabel(card.anchor.liveStatus)}
             </span>
-            <span className="min-w-0 truncate text-t3" title={sessionCount > 0 ? `${sessionCount} 场 · 最近 ${formatArchiveDateTime(card.owner?.latestSessionAt)}` : undefined}>
-              {sessionCount > 0 ? `${sessionCount} 场 · 最近 ${formatArchiveDateTime(card.owner?.latestSessionAt)}` : ownersLoading ? "正在加载…" : "暂无档案"}
+            <span className="min-w-0 truncate text-t3" title={sessionCount > 0 ? uiText("reviewOwnerList.title", { sessionCount: sessionCount, value: formatArchiveDateTime(card.owner?.latestSessionAt) }) : undefined}>
+              {sessionCount > 0 ? uiText("reviewOwnerList.OwnerCard", { sessionCount: sessionCount, value: formatArchiveDateTime(card.owner?.latestSessionAt) }) : ownersLoading ? uiText("reviewOwnerList.OwnerCard2") : uiText("reviewOwnerList.OwnerCard3")}
             </span>
           </span>
         </span>
       </button>
       <button
         type="button"
-        aria-label={pinned ? `取消置顶${card.anchor.uname}` : `置顶主播${card.anchor.uname}`}
+        aria-label={pinned ? uiText("reviewOwnerList.aria_label2", { uname: card.anchor.uname }) : uiText("reviewOwnerList.aria_label3", { uname: card.anchor.uname })}
         aria-pressed={pinned}
-        title={pinned ? "取消置顶" : "置顶主播"}
+        title={pinned ? uiText("reviewOwnerList.title2") : uiText("reviewOwnerList.title3")}
         className={`relative z-10 inline-flex size-8 shrink-0 items-center justify-center rounded-md text-accent-text transition-[opacity,background-color,color,transform] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent-ring ${pinned ? "bg-accent-subtle opacity-100" : "opacity-100 sm:opacity-0 sm:group-hover:opacity-100 sm:group-focus-within:opacity-100 hover:bg-accent-subtle"}`}
         onClick={() => onTogglePinned(card.roomId, !pinned)}
       >
@@ -134,12 +135,12 @@ function SessionRow({
   return (
     <div className="review-session-row flex w-full items-stretch gap-2 border-b border-line px-3 py-2.5 transition-colors last:border-b-0 hover:bg-raised">
       {onToggle && (
-        <label className="flex shrink-0 items-start pt-1.5" title={protectedSession ? "记录中或重连中的场次不可删除" : undefined}>
+        <label className="flex shrink-0 items-start pt-1.5" title={protectedSession ? uiText("reviewOwnerList.title4") : undefined}>
           <input
             type="checkbox"
             checked={selected}
             disabled={protectedSession}
-            aria-label={protectedSession ? `${session.title ?? "未命名场次"}，记录中或重连中的场次不可删除` : `选择${session.title ?? "未命名场次"}`}
+            aria-label={protectedSession ? uiText("reviewOwnerList.aria_label4", { value: session.title ?? uiText("reviewOwnerList.aria_label.value") }) : uiText("reviewOwnerList.aria_label5", { value: session.title ?? uiText("reviewOwnerList.aria_label.value") })}
             className="size-4 accent-accent focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent-ring"
             onChange={(event) => onToggle(session.sessionId, event.currentTarget.checked)}
           />
@@ -147,27 +148,27 @@ function SessionRow({
       )}
       <ArchiveCoverThumbnail
         url={session.coverUrl}
-        alt={(session.title ?? "未命名场次") + "封面"}
+        alt={(session.title ?? uiText("reviewOwnerList.alt")) + uiText("reviewOwnerList.alt2")}
         size="session-list"
       />
       <button
         type="button"
         className="flex min-w-0 flex-1 flex-col gap-1 rounded-md text-left focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent-ring"
-        aria-label={`打开直播场次 ${session.title ?? "未命名场次"}`}
+        aria-label={uiText("reviewOwnerList.aria_label6", { value: session.title ?? uiText("reviewOwnerList.aria_label.value") })}
         onClick={() => onOpen(session.roomId, session.sessionId)}
       >
         <span className="flex min-w-0 flex-wrap items-center gap-2">
           <span data-review-session-status={session.status} className={`shrink-0 rounded-full px-1.5 py-0.5 ui-type-meta ${session.status === "active" ? "bg-success/10 text-success" : "bg-raised text-t2"}`}>{formatArchiveSessionStatus(session.status)}</span>
-          <span title={session.title ?? "未命名场次"} className="min-w-24 flex-1 truncate ui-type-section-title text-t1">{session.title ?? "未命名场次"}</span>
+          <span title={session.title ?? uiText("reviewOwnerList.title5")} className="min-w-24 flex-1 truncate ui-type-section-title text-t1">{session.title ?? uiText("reviewOwnerList.SessionRow")}</span>
           <span className="shrink-0 ui-type-meta text-t3">{formatArchiveDateTime(session.startedAt)}</span>
         </span>
         <span className="flex flex-wrap items-center gap-x-3 gap-y-0.5 pl-1 ui-type-meta text-t3">
           <span data-review-session-recording-status={session.recordingStatus}>{formatArchiveRecordingStatus(session.recordingStatus)}</span>
           <span data-review-session-quality={session.quality} title={noticeLabel || undefined} aria-label={qualityNotice ? `${formatArchiveQuality(session.quality)}：${qualityNotice.message}` : formatArchiveQuality(session.quality)} className={qualityNotice ? "text-warning" : "text-t3"}>{formatArchiveQuality(session.quality)}</span>
           <span>{formatArchiveSessionDuration(session.durationMs, session.status)}</span>
-          <span>{session.eventCount ?? 0} 事件</span>
-          <span>{session.paidTotal ?? 0} 付费</span>
-          <span>{session.favoriteCount ?? 0} 收藏</span>
+          <span>{session.eventCount ?? 0} {uiText("reviewOwnerList.SessionRow2")}</span>
+          <span>{session.paidTotal ?? 0} {uiText("reviewOwnerList.SessionRow3")}</span>
+          <span>{session.favoriteCount ?? 0} {uiText("reviewOwnerList.SessionRow4")}</span>
         </span>
       </button>
     </div>
@@ -225,17 +226,17 @@ export function ReviewOwnerList({
         .some((value) => String(value).toLocaleLowerCase().includes(normalizedSearch)))
       : cards;
     return (
-      <section aria-label="主播档案列表" className="flex min-h-0 flex-col gap-3">
+      <section aria-label={uiText("reviewOwnerList.aria_label7")} className="flex min-h-0 flex-col gap-3">
         <div className="flex items-baseline justify-between">
-          <h2 className="ui-type-section-title text-t1">主播档案</h2>
-          <span className="ui-type-meta text-t3">{visibleCards.length} 位主播</span>
+          <h2 className="ui-type-section-title text-t1">{uiText("reviewOwnerList.ReviewOwnerList")}</h2>
+          <span className="ui-type-meta text-t3">{visibleCards.length} {uiText("reviewOwnerList.ReviewOwnerList2")}</span>
         </div>
         {visibleCards.length === 0 ? (
           <div className="px-4 py-8 text-center ui-type-control text-t3">
-            <p>{ownersLoading ? "正在加载主播档案…" : normalizedSearch ? "没有匹配的主播档案" : "暂无主播档案"}</p>
+            <p>{ownersLoading ? uiText("reviewOwnerList.ReviewOwnerList3") : normalizedSearch ? uiText("reviewOwnerList.ReviewOwnerList4") : uiText("reviewOwnerList.ReviewOwnerList5")}</p>
             {!ownersLoading && (normalizedSearch && onClearSearch
-              ? <button type="button" className={`${compactFilterActionButtonClass} mt-3`} onClick={onClearSearch}>清除搜索</button>
-              : !normalizedSearch && <p className="mt-2">连接直播间后会自动记录，也可在设置中导入已有档案。</p>)}
+              ? <button type="button" className={`${compactFilterActionButtonClass} mt-3`} onClick={onClearSearch}>{uiText("reviewOwnerList.ReviewOwnerList6")}</button>
+              : !normalizedSearch && <p className="mt-2">{uiText("reviewOwnerList.ReviewOwnerList7")}</p>)}
           </div>
         ) : (
           <div className="grid min-w-0 gap-2.5">
@@ -256,38 +257,38 @@ export function ReviewOwnerList({
   }
 
   return (
-    <section aria-label="直播场次" className="flex min-h-0 flex-col gap-2">
+    <section aria-label={uiText("reviewOwnerList.aria_label8")} className="flex min-h-0 flex-col gap-2">
       <div className="flex items-baseline justify-between">
-        <h2 className="ui-type-section-title text-t1">直播场次</h2>
-        <span className="ui-type-meta text-t3">{owner?.sessionCount ?? sessions.length} 场</span>
+        <h2 className="ui-type-section-title text-t1">{uiText("reviewOwnerList.ReviewOwnerList8")}</h2>
+        <span className="ui-type-meta text-t3">{owner?.sessionCount ?? sessions.length} {uiText("reviewOwnerList.ReviewOwnerList9")}</span>
       </div>
       {onToggleSession && sessions.length > 0 && (
-        <div className="flex flex-wrap items-center gap-2 rounded-lg border border-line bg-surface px-3 py-2" aria-label="场次批量操作">
+        <div className="flex flex-wrap items-center gap-2 rounded-lg border border-line bg-surface px-3 py-2" aria-label={uiText("reviewOwnerList.aria_label9")}>
           <label className="inline-flex items-center gap-2 ui-type-control text-t2">
             <input
               ref={selectAllRef}
               type="checkbox"
               checked={allSelectableSelected}
               disabled={selectableSessions.length === 0}
-              aria-label="全选当前列表"
+              aria-label={uiText("reviewOwnerList.aria_label10")}
               className="size-4 accent-accent focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent-ring"
               onChange={(event) => onToggleAllSessions?.(event.currentTarget.checked)}
             />
-            <span>全选当前列表</span>
+            <span>{uiText("reviewOwnerList.ReviewOwnerList10")}</span>
           </label>
-          <span className="ui-type-meta text-t3">已选 {selectedSessionIds.length} 场</span>
-          {owner && owner.sessionCount > sessions.length && <span className="ui-type-meta text-warning">已显示 {sessions.length} / {owner.sessionCount} 场；全选只作用于当前列表</span>}
-          <span className="mr-auto ui-type-meta text-t3">记录中或重连中的场次不可删除</span>
-          <button type="button" disabled={selectedSessionIds.length === 0} className={compactFilterActionButtonClass} onClick={onExportSelected}>导出所选</button>
-          <button type="button" disabled={selectedSessionIds.length === 0} className={compactDangerActionButtonClass} onClick={onDeleteSelected}>删除所选</button>
-          <button type="button" disabled={selectedSessionIds.length === 0} className={compactFilterActionButtonClass} onClick={onClearSelection}>清除选择</button>
+          <span className="ui-type-meta text-t3">{uiText("reviewOwnerList.ReviewOwnerList11")}{selectedSessionIds.length} {uiText("reviewOwnerList.ReviewOwnerList9")}</span>
+          {owner && owner.sessionCount > sessions.length && <span className="ui-type-meta text-warning">{uiText("reviewOwnerList.ReviewOwnerList12")}{sessions.length} / {owner.sessionCount} {uiText("reviewOwnerList.ReviewOwnerList13")}</span>}
+          <span className="mr-auto ui-type-meta text-t3">{uiText("reviewOwnerList.ReviewOwnerList14")}</span>
+          <button type="button" disabled={selectedSessionIds.length === 0} className={compactFilterActionButtonClass} onClick={onExportSelected}>{uiText("reviewOwnerList.ReviewOwnerList15")}</button>
+          <button type="button" disabled={selectedSessionIds.length === 0} className={compactDangerActionButtonClass} onClick={onDeleteSelected}>{uiText("reviewOwnerList.ReviewOwnerList16")}</button>
+          <button type="button" disabled={selectedSessionIds.length === 0} className={compactFilterActionButtonClass} onClick={onClearSelection}>{uiText("reviewOwnerList.ReviewOwnerList17")}</button>
         </div>
       )}
       <div className="overflow-hidden rounded-xl border border-line bg-surface">
         {sessionsLoading ? (
-          <div className="px-3 py-8 text-center ui-type-control text-t3">正在加载场次…</div>
+          <div className="px-3 py-8 text-center ui-type-control text-t3">{uiText("reviewOwnerList.ReviewOwnerList18")}</div>
         ) : sessions.length === 0 ? (
-          <div className="px-3 py-8 text-center ui-type-control text-t3">暂无场次</div>
+          <div className="px-3 py-8 text-center ui-type-control text-t3">{uiText("reviewOwnerList.ReviewOwnerList19")}</div>
         ) : (
           sessions.map((session) => (
             <SessionRow
@@ -306,7 +307,7 @@ export function ReviewOwnerList({
           disabled={sessionsLoadingMore}
           className="self-center rounded-lg border border-line bg-surface px-3 py-1.5 ui-type-control text-t2 transition-colors enabled:hover:border-accent enabled:hover:text-accent-text disabled:cursor-wait disabled:opacity-60"
           onClick={onLoadMoreSessions}
-        >{sessionsLoadingMore ? "正在加载…" : `加载更多场次（${sessions.length}/${owner?.sessionCount ?? "更多"}）`}</button>
+        >{sessionsLoadingMore ? uiText("reviewOwnerList.ReviewOwnerList20") : uiText("reviewOwnerList.ReviewOwnerList21", { length: sessions.length, value: owner?.sessionCount ?? uiText("reviewOwnerList.ReviewOwnerList.value") })}</button>
       )}
     </section>
   );

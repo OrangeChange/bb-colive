@@ -1,3 +1,4 @@
+import { uiText } from "../i18n/index.ts";
 import { Radio as LucideRadio, History as LucideHistory, Mic as LucideMic, AudioLines as LucideAudioLines, Paintbrush as LucidePaintbrush, Bell as LucideBell, BellOff as LucideBellOff, MessagesSquare as LucideMessagesSquare, Lock as LucideLock, LockOpen as LucideLockOpen, Gift as LucideGift, Wallet as LucideWallet, MessageSquareQuote as LucideMessageSquareQuote, Ship as LucideShip, Palette as LucidePalette, Sun as LucideSun, Moon as LucideMoon, Contrast as LucideContrast } from "lucide-react";
 /**
  * 左侧边栏（64px 图标栏，ui-design §四）：
@@ -106,16 +107,16 @@ function ThemeQuickToggle() {
   const mode = useTheme((state) => state.mode);
   const setMode = useTheme((state) => state.setMode);
   const nextMode = mode === "system" ? "light" : mode === "light" ? "dark" : "system";
-  const paletteLabel = palette === "pine" ? "青瓷绿" : palette === "custom" ? "自定义" : "樱花粉";
-  const modeLabel = mode === "system" ? "跟随系统" : mode === "light" ? "浅色" : "深色";
+  const paletteLabel = palette === "pine" ? uiText("sidebar.ThemeQuickToggle.paletteLabel") : palette === "custom" ? uiText("sidebar.ThemeQuickToggle.paletteLabel2") : uiText("sidebar.ThemeQuickToggle.paletteLabel3");
+  const modeLabel = mode === "system" ? uiText("common.followSystem") : mode === "light" ? uiText("common.light") : uiText("common.dark");
 
   return (
-    <div className="flex flex-col items-center gap-1" aria-label="主题快捷设置">
+    <div className="flex flex-col items-center gap-1" aria-label={uiText("sidebar.aria_label")}>
       <button
         type="button"
         className={btnIdle}
-        aria-label={`配色：${paletteLabel}`}
-        title={`配色：${paletteLabel}`}
+        aria-label={uiText("sidebar.aria_label2", { paletteLabel: paletteLabel })}
+        title={uiText("sidebar.title", { paletteLabel: paletteLabel })}
         onClick={cyclePalette}
       >
         <IconPalette />
@@ -123,8 +124,8 @@ function ThemeQuickToggle() {
       <button
         type="button"
         className={btnIdle}
-        aria-label={`深浅色：${modeLabel}`}
-        title={`深浅模式：${modeLabel}`}
+        aria-label={uiText("sidebar.aria_label3", { modeLabel: modeLabel })}
+        title={uiText("sidebar.title2", { modeLabel: modeLabel })}
         onClick={() => setMode(nextMode)}
       >
         {mode === "system" ? <IconSystem /> : mode === "light" ? <IconSun /> : <IconMoon />}
@@ -258,8 +259,8 @@ function UserBadge() {
     <div ref={rootRef} className="relative">
       <button
         className={`${btnIdle} flex-col gap-0.5 ${open ? "bg-raised text-t1" : ""}`}
-        aria-label={`已登录：${session.uname}，打开用户菜单`}
-        title={`已登录：${session.uname}`}
+        aria-label={uiText("sidebar.aria_label4", { uname: session.uname })}
+        title={uiText("sidebar.title3", { uname: session.uname })}
         onClick={() => setOpen((v) => !v)}
       >
         <span className="size-6">{face}</span>
@@ -280,8 +281,7 @@ function UserBadge() {
               void logout();
             }}
           >
-            退出登录
-          </button>
+            {uiText("sidebar.UserBadge")}</button>
         </div>
       )}
     </div>
@@ -494,14 +494,14 @@ export function Sidebar({
 
   return (
     <aside className="flex w-16 shrink-0 flex-col items-center gap-1 border-r border-line bg-surface py-3">
-      <button type="button" aria-current={activeMainView === "scene" ? "page" : undefined} className={activeMainView === "scene" ? btnOn : btnIdle} title="现场（当前页）" onClick={() => onSelectMainView?.("scene")}>
+      <button type="button" aria-current={activeMainView === "scene" ? "page" : undefined} className={activeMainView === "scene" ? btnOn : btnIdle} title={uiText("sidebar.title4")} onClick={() => onSelectMainView?.("scene")}>
         <IconBroadcast />
       </button>
       <button
         type="button"
         aria-current={activeMainView === "review" ? "page" : undefined}
         className={activeMainView === "review" ? btnOn : btnIdle}
-        title="回看"
+        title={uiText("common.review")}
         onClick={() => onSelectMainView?.("review")}
       >
         <IconHistory />
@@ -512,7 +512,7 @@ export function Sidebar({
         mainTitle="语音（TTS播报）"
         mainIcon={<IconVoice />}
         enabled={voiceEnabled}
-        toggleLabel={voiceEnabled ? "关闭语音播报" : "开启语音播报"}
+        toggleLabel={voiceEnabled ? uiText("sidebar.toggleLabel") : uiText("sidebar.toggleLabel2")}
         toggleIcon={<IconBell muted={!voiceEnabled} />}
         onSelectMainView={onSelectMainView}
         onToggle={toggleVoice}
@@ -523,7 +523,7 @@ export function Sidebar({
         mainTitle="个性播报（提示音）"
         mainIcon={<IconAudioWaveform />}
         enabled={personalBroadcastEnabled}
-        toggleLabel={personalBroadcastEnabled ? "关闭个性播报" : "开启个性播报"}
+        toggleLabel={personalBroadcastEnabled ? uiText("sidebar.toggleLabel3") : uiText("sidebar.toggleLabel4")}
         toggleIcon={<IconBell muted={!personalBroadcastEnabled} />}
         onSelectMainView={onSelectMainView}
         onToggle={togglePersonalBroadcast}
@@ -532,8 +532,8 @@ export function Sidebar({
         type="button"
         aria-current={activeMainView === "style" ? "page" : undefined}
         className={activeMainView === "style" ? btnOn : btnIdle}
-        title="样式"
-        aria-label="样式"
+        title={uiText("common.styles")}
+        aria-label={uiText("common.styles")}
         onClick={() => onSelectMainView?.("style")}
       >
         <IconStyle />
@@ -552,8 +552,8 @@ export function Sidebar({
           <button
             type="button"
             className={onToggleDisplay ? (displayOpen ? btnOn : btnIdle) : btnOff}
-            title={`${displayOpen ? "关闭弹幕窗" : "打开弹幕窗"} · 右键设置`}
-            aria-label={displayOpen ? "关闭弹幕窗" : "打开弹幕窗"}
+            title={uiText("sidebar.title5", { value: displayOpen ? uiText("sidebar.title.value") : uiText("sidebar.title.value2") })}
+            aria-label={displayOpen ? uiText("sidebar.aria_label5") : uiText("sidebar.aria_label6")}
             aria-pressed={displayOpen}
             onClick={handleDisplayButtonClick}
             onContextMenu={(event) => { event.preventDefault(); onOpenDisplaySettings?.(); }}
@@ -565,8 +565,8 @@ export function Sidebar({
             <button
               type="button"
               className={`${btnIdle} sidebar-display-lock ${displayLocked ? "bg-accent-subtle text-accent-text" : ""}`}
-              title={displayLocked ? "解锁弹幕窗" : "锁定弹幕窗（鼠标穿透）"}
-              aria-label={displayLocked ? "解锁弹幕窗" : "锁定弹幕窗（鼠标穿透）"}
+              title={displayLocked ? uiText("sidebar.title6") : uiText("sidebar.title7")}
+              aria-label={displayLocked ? uiText("sidebar.aria_label7") : uiText("sidebar.aria_label8")}
               aria-pressed={displayLocked}
               onClick={onToggleDisplayLock}
             >
@@ -585,8 +585,8 @@ export function Sidebar({
           <button
             type="button"
             className={onToggleGift ? (giftOpen ? btnOn : btnIdle) : btnOff}
-            title={`${giftOpen ? "关闭收益窗" : "打开收益窗"} · 右键设置`}
-            aria-label={giftOpen ? "关闭收益窗" : "打开收益窗"}
+            title={uiText("sidebar.title5", { value: giftOpen ? uiText("sidebar.title.value3") : uiText("sidebar.title.value4") })}
+            aria-label={giftOpen ? uiText("sidebar.aria_label9") : uiText("sidebar.aria_label10")}
             aria-pressed={giftOpen}
             onClick={handleGiftButtonClick}
             onContextMenu={(event) => { event.preventDefault(); onOpenGiftSettings?.(); }}
@@ -594,12 +594,12 @@ export function Sidebar({
           >
           <IconRevenue />
           </button>
-          {hasGiftControls && <div className="sidebar-gift-actions" role="group" aria-label={revenueSplit ? "收益分窗" : "收益窗控制"}>
+          {hasGiftControls && <div className="sidebar-gift-actions" role="group" aria-label={revenueSplit ? uiText("sidebar.aria_label11") : uiText("sidebar.aria_label12")}>
           {revenueSplit && (['gift', 'superchat', 'guard'] as const).map((kind, index) => {
             const open = revenueSelection.selected.includes(kind);
-            const name = ['礼物', '醒目留言', '大航海'][index];
+            const name = [uiText("sidebar.Sidebar.name"), uiText("sidebar.Sidebar.name2"), uiText("sidebar.Sidebar.name3")][index];
             return <button key={kind} type="button" className={open ? btnOn : btnIdle}
-              aria-label={`${name}窗：${open ? '已开启' : '已关闭'}`} title={`${name}窗：${open ? '已开启' : '已关闭'}`}
+              aria-label={uiText("sidebar.aria_label13", { name: name, value: open ? uiText("sidebar.aria_label.value") : uiText("sidebar.aria_label.value2") })} title={uiText("sidebar.title8", { name: name, value: open ? uiText("sidebar.title.value5") : uiText("sidebar.title.value6") })}
               aria-pressed={open} onClick={() => onToggleRevenueChild?.(kind)} disabled={!onToggleRevenueChild}>
               {kind === 'gift' ? <IconGiftBox /> : kind === 'superchat' ? <IconSuperChat /> : <IconGuard />}
             </button>;
@@ -608,8 +608,8 @@ export function Sidebar({
             <button
               type="button"
               className={giftOpen ? `${btnIdle} sidebar-gift-lock ${giftLocked ? "bg-accent-subtle text-accent-text" : ""}` : btnOff}
-              title={giftLocked ? "解锁收益窗" : "锁定收益窗（鼠标穿透）"}
-              aria-label={giftLocked ? "解锁收益窗" : "锁定收益窗（鼠标穿透）"}
+              title={giftLocked ? uiText("sidebar.title9") : uiText("sidebar.title10")}
+              aria-label={giftLocked ? uiText("sidebar.aria_label14") : uiText("sidebar.aria_label15")}
               aria-pressed={giftLocked}
               onClick={giftOpen ? onToggleGiftLock : undefined}
               disabled={!giftOpen}

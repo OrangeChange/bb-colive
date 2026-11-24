@@ -1,8 +1,9 @@
+import { readUiSourceAsync } from "./helpers/readUiSource.mjs";
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { readFile } from 'node:fs/promises';
 
-const read = path => readFile(new URL(path, import.meta.url), 'utf8');
+const read = path => readUiSourceAsync(new URL(path, import.meta.url), 'utf8');
 
 test('主播档案页提供云端恢复入口并在未连接时打开对应设置', async () => {
   const source = await read('../src/components/ReviewPanel.tsx');

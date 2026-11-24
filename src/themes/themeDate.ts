@@ -1,3 +1,4 @@
+import { uiText } from "../i18n/index.ts";
 const pad = (value: number) => String(value).padStart(2, '0');
 const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
 
@@ -27,7 +28,7 @@ function offsetFor(source: string): string | undefined {
 }
 
 export function formatThemeDate(value?: string, timeZone?: string): string {
-  if (!value?.trim()) return '未标注';
+  if (!value?.trim()) return uiText("themeDate.formatThemeDate");
   const source = value.trim().replace(/[\u00a0\u202f]/g, ' ');
   if (/^\d{4}-\d{2}-\d{2}$/.test(source)) return source;
   const english = source.match(/^(Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Oct|Nov|Dec) (\d{1,2}), (\d{4}), (\d{1,2}):(\d{2})(?::(\d{2}))?\s*(AM|PM)(?:\s+(.+))?$/);
@@ -35,19 +36,19 @@ export function formatThemeDate(value?: string, timeZone?: string): string {
   if (english) {
     date = `${english[3]}-${pad(months.indexOf(english[1]) + 1)}-${pad(Number(english[2]))}`;
     hour = Number(english[4]);
-    if (hour < 1 || hour > 12) return `${date}（时间未明确）`;
+    if (hour < 1 || hour > 12) return uiText("themeDate.formatThemeDate2", { date: date });
     hour = hour % 12 + (english[7] === 'PM' ? 12 : 0);
     minute = english[5]; second = english[6] ?? '00'; zone = english[8];
   } else {
     const numeric = source.match(/^(\d{4}-\d{2}-\d{2})[T ](\d{2}):(\d{2})(?::(\d{2})(?:\.\d+)?)?\s*(Z|[+-]\d{2}:?\d{2})?$/);
-    if (!numeric) return '时间格式无法识别';
+    if (!numeric) return uiText("themeDate.formatThemeDate3");
     date = numeric[1]; hour = Number(numeric[2]); minute = numeric[3]; second = numeric[4] ?? '00'; zone = numeric[5];
   }
-  if (hour > 23 || Number(minute) > 59 || Number(second) > 59) return `${date}（时间未明确）`;
+  if (hour > 23 || Number(minute) > 59 || Number(second) > 59) return uiText("themeDate.formatThemeDate2", { date: date });
   const clock = `${pad(hour)}:${minute}`;
-  if (!zone) return `${date} ${clock}（时区未注明）`;
+  if (!zone) return uiText("themeDate.formatThemeDate4", { date: date, clock: clock });
   const offset = offsetFor(zone);
-  if (!offset) return `${date} ${clock}（时区未注明）`;
+  if (!offset) return uiText("themeDate.formatThemeDate4", { date: date, clock: clock });
   const instant = new Date(`${date}T${clock}:${second}${offset}`);
-  return Number.isNaN(instant.getTime()) ? '时间格式无法识别' : localDateTime(instant, timeZone);
+  return Number.isNaN(instant.getTime()) ? uiText("themeDate.formatThemeDate3") : localDateTime(instant, timeZone);
 }

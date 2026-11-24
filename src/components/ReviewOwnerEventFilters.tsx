@@ -1,3 +1,4 @@
+import { uiText } from "../i18n/index.ts";
 import { useEffect, useMemo, useRef, useState, type KeyboardEvent } from "react";
 import type {
   ArchiveFilterState,
@@ -161,7 +162,7 @@ export function ReviewOwnerEventFilters({
   return (
     <>
     <ReviewFilterShell
-      ariaLabel="事件检索条件"
+      ariaLabel={uiText("reviewOwnerEventFilters.ariaLabel2")}
       contentId="review-owner-event-filter-content"
       conditionCount={conditionCount}
       collapsed={collapsed}
@@ -175,7 +176,7 @@ export function ReviewOwnerEventFilters({
       <div data-review-owner-event-keyword-row className="flex min-w-0 flex-wrap items-center gap-1.5">
         <UiSelect
           id="review-owner-event-keyword-field"
-          ariaLabel="关键词字段"
+          ariaLabel={uiText("reviewOwnerEventFilters.ariaLabel3")}
           options={KEYWORD_FIELDS}
           value={keywordField}
           onValueChange={(value) => setKeywordField(value as ArchiveKeywordField)}
@@ -183,8 +184,8 @@ export function ReviewOwnerEventFilters({
         <div data-review-owner-event-keyword-input className="min-w-40 flex-1">
           <UiCombobox
             id="review-owner-event-keyword-input"
-            ariaLabel="关键词"
-            placeholder="输入关键词"
+            ariaLabel={uiText("reviewOwnerEventFilters.ariaLabel4")}
+            placeholder={uiText("reviewOwnerEventFilters.placeholder")}
             value={keywordDraft}
             options={suggestionOptions}
             onValueChange={setKeywordDraft}
@@ -192,20 +193,20 @@ export function ReviewOwnerEventFilters({
             className="w-full"
           />
         </div>
-        <button type="button" disabled={!keywordDraft.trim()} className={`${toggleClass} border-line bg-bg text-t2 enabled:hover:border-accent/50 enabled:hover:text-t1 disabled:opacity-40`} onClick={addKeyword}>添加</button>
+        <button type="button" disabled={!keywordDraft.trim()} className={`${toggleClass} border-line bg-bg text-t2 enabled:hover:border-accent/50 enabled:hover:text-t1 disabled:opacity-40`} onClick={addKeyword}>{uiText("common.add")}</button>
       </div>
 
       {keywordConditions.length > 0 && (
-        <div role="list" aria-label="已添加的关键词条件" className="flex flex-wrap items-center gap-1.5">
+        <div role="list" aria-label={uiText("reviewOwnerEventFilters.aria_label")} className="flex flex-wrap items-center gap-1.5">
           {keywordConditions.map((condition, index) => (
             <span key={`${condition.field}:${condition.value}:${index}`} className="inline-flex items-center gap-1">
               {index > 0 && (
                 <label className="inline-flex items-center gap-1 ui-type-meta text-t3">
-                  <span className="sr-only">关键词连接</span>
+                  <span className="sr-only">{uiText("reviewOwnerEventFilters.ReviewOwnerEventFilters")}</span>
                   <UiSelect
-                    ariaLabel={`关键词连接 ${index + 1}`}
+                    ariaLabel={uiText("reviewOwnerEventFilters.ariaLabel", { value: index + 1 })}
                     size="micro"
-                    options={[{ value: "and", label: "且" }, { value: "or", label: "或" }]}
+                    options={[{ value: "and", label: uiText("reviewOwnerEventFilters.options.label") }, { value: "or", label: uiText("reviewOwnerEventFilters.options.label2") }]}
                     value={getArchiveKeywordJoin(condition, index, legacyKeywordOperator)}
                     onValueChange={(value) => setKeywordJoin(index, value as ArchiveKeywordOperator)}
                     className="w-12"
@@ -214,24 +215,24 @@ export function ReviewOwnerEventFilters({
               )}
               <span role="listitem" className="inline-flex items-center gap-1 rounded-full bg-accent-subtle px-2 py-0.5 ui-type-meta text-accent-text">
                 {keywordFieldLabel(condition.field)}：{condition.value}
-                <button type="button" aria-label={`移除关键词 ${condition.value}`} className="rounded-full px-1 text-accent-text hover:bg-accent/15 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent-ring" onClick={() => removeKeyword(index)}>×</button>
+                <button type="button" aria-label={uiText("reviewOwnerEventFilters.aria_label2", { value: condition.value })} className="rounded-full px-1 text-accent-text hover:bg-accent/15 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent-ring" onClick={() => removeKeyword(index)}>×</button>
               </span>
             </span>
           ))}
         </div>
       )}
 
-      <div className="flex min-w-0 flex-wrap items-center gap-1.5" aria-label="快捷筛选">
-        <span className="ui-type-meta text-t3">快捷筛选</span>
+      <div className="flex min-w-0 flex-wrap items-center gap-1.5" aria-label={uiText("reviewOwnerEventFilters.aria_label3")}>
+        <span className="ui-type-meta text-t3">{uiText("reviewOwnerEventFilters.ReviewOwnerEventFilters2")}</span>
         {REVIEW_QUICK_CONDITIONS.map((condition) => {
           const active = isReviewQuickConditionActive(filters, condition.value);
           return <button key={condition.value} type="button" aria-pressed={active} className={`${toggleClass} ${active ? "border-accent bg-accent-subtle text-accent-text" : "border-line bg-bg text-t2 hover:border-accent/50 hover:text-t1"}`} onClick={() => applyQuickCondition(condition.value)}>{condition.label}</button>;
         })}
         <ReviewFilterPresetMenu activePresetId={activePresetId} presets={filterPresets} onApply={applyPreset} onSave={savePreset} onRename={renamePreset} onDelete={deletePreset} />
         <span aria-hidden="true" className="review-filter-inline-divider mx-1 h-4 w-px bg-line" />
-        <button type="button" aria-label="只看收藏" aria-pressed={filters.favoriteOnly === true} className={`${toggleClass} ${filters.favoriteOnly ? "border-accent bg-accent-subtle text-accent-text" : "border-line bg-bg text-t2 hover:border-accent/50 hover:text-t1"}`} onClick={() => updateFilters({ favoriteOnly: filters.favoriteOnly ? undefined : true })}>只看收藏</button>
-        <button ref={moreConditionsTriggerRef} type="button" aria-expanded={moreConditionsOpen} aria-controls="review-owner-event-advanced" aria-label="更多筛选" className={`ml-auto ${toggleClass} ${moreConditionsOpen ? "border-accent bg-accent-subtle text-accent-text" : "border-line bg-bg text-t2 hover:border-accent/50 hover:text-t1"}`} onClick={() => setMoreConditionsOpen((current) => !current)}>
-          {moreConditionsOpen ? "收起筛选" : "更多筛选"}
+        <button type="button" aria-label={uiText("reviewOwnerEventFilters.aria_label4")} aria-pressed={filters.favoriteOnly === true} className={`${toggleClass} ${filters.favoriteOnly ? "border-accent bg-accent-subtle text-accent-text" : "border-line bg-bg text-t2 hover:border-accent/50 hover:text-t1"}`} onClick={() => updateFilters({ favoriteOnly: filters.favoriteOnly ? undefined : true })}>{uiText("reviewOwnerEventFilters.ReviewOwnerEventFilters3")}</button>
+        <button ref={moreConditionsTriggerRef} type="button" aria-expanded={moreConditionsOpen} aria-controls="review-owner-event-advanced" aria-label={uiText("reviewOwnerEventFilters.aria_label5")} className={`ml-auto ${toggleClass} ${moreConditionsOpen ? "border-accent bg-accent-subtle text-accent-text" : "border-line bg-bg text-t2 hover:border-accent/50 hover:text-t1"}`} onClick={() => setMoreConditionsOpen((current) => !current)}>
+          {moreConditionsOpen ? uiText("reviewOwnerEventFilters.ReviewOwnerEventFilters4") : uiText("reviewOwnerEventFilters.ReviewOwnerEventFilters5")}
           {advancedFilterConditionCount(filters) > 0 ? ` · ${advancedFilterConditionCount(filters)}` : ""}
         </button>
       </div>

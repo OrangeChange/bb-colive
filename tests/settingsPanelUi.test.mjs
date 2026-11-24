@@ -1,10 +1,11 @@
+import { readUiSource } from "./helpers/readUiSource.mjs";
 import test from "node:test";
 import assert from "node:assert/strict";
 import { readFileSync } from "node:fs";
 import { fileURLToPath } from "node:url";
 
 const root = fileURLToPath(new URL("..", import.meta.url));
-const read = (path) => readFileSync(`${root}/${path}`, "utf8");
+const read = (path) => readUiSource(`${root}/${path}`, "utf8");
 const source = read("src/components/SettingsPanel.tsx");
 const stylePanelSource = read("src/components/StylePanel.tsx");
 const listSelectSource = read("src/components/SettingsListSelect.tsx");
@@ -25,7 +26,7 @@ test("设置面板使用连续信息流内框与固定分类导航", () => {
 test("设置分类保留滚轮导航，并提供可定位到具体设置项的查找入口", () => {
   assert.match(source, /查找设置/);
   assert.match(source, /SETTINGS_SEARCH_ENTRIES/);
-  assert.match(source, /id: "window-opacity", label: "玻璃着色与不透明度"/);
+  assert.match(source, /id: "window-opacity", label: ["']玻璃着色与不透明度["']/);
   assert.match(source, /jumpToSearchResult/);
   assert.match(source, /settingsSearchPopoverRef/);
   assert.match(source, /settingsSearchPosition/);
@@ -47,7 +48,7 @@ test("顶部设置分类下拉的箭头、提示和定位不应干扰菜单", ()
   assert.match(source, /settings-section-navigator-shell/);
   assert.match(source, /settings-section-navigator-label/);
   assert.match(source, /aria-label=\{`\$\{currentLabel\}，滚轮切换分类/);
-  assert.doesNotMatch(source, /title="滚轮切换 · 展开"/);
+  assert.doesNotMatch(source, /title=["']滚轮切换 · 展开["']/);
   assert.match(css, /\.settings-section-navigator-label\s*\{[\s\S]*?flex:\s*1 1 auto/);
   assert.match(css, /\.settings-section-navigator-menu\s*\{[^}]*left:\s*0[^}]*right:\s*auto/);
   assert.match(css, /\.settings-section-navigator-menu\s*\{[\s\S]*?top:\s*calc\(100% \+ 4px\)/);
@@ -78,7 +79,7 @@ test("其他设置与关于行复用统一标签布局", () => {
   assert.match(otherSection, /settings-control-label[^>]*>全部窗口布局/);
   assert.match(otherSection, /settings-control-label[^>]*>设置页默认/);
   assert.match(source.slice(aboutStart), /SoftwareUpdateSettings/);
-  assert.match(read("src/updates/SoftwareUpdateSettings.tsx"), /aria-label="关于 BB CoLive"/);
+  assert.match(read("src/updates/SoftwareUpdateSettings.tsx"), /aria-label=["']关于 BB CoLive["']/);
 });
 
 test("设置页渲染已经接入真实状态的分类", () => {
@@ -167,12 +168,12 @@ test("样式工作区提供字体选择和文字描边开关", () => {
 });
 
 test("事件显示分别命名内容对齐和最新事件位置，事件筛选承载金额计算", () => {
-  assert.match(source, /label="内容对齐"/);
-  assert.match(source, /label="最新事件位置"/);
-  assert.doesNotMatch(source, /label="信息流方向"/);
-  assert.match(source, /label="金额计算"/);
-  assert.doesNotMatch(source, /label="事件滚动方向"/);
-  assert.doesNotMatch(source, /label="判断方式"/);
+  assert.match(source, /label=["']内容对齐["']/);
+  assert.match(source, /label=["']最新事件位置["']/);
+  assert.doesNotMatch(source, /label=["']信息流方向["']/);
+  assert.match(source, /label=["']金额计算["']/);
+  assert.doesNotMatch(source, /label=["']事件滚动方向["']/);
+  assert.doesNotMatch(source, /label=["']判断方式["']/);
 });
 
 test("副窗口通用外观和事件定时消失位于两个窗口控件之前", () => {
@@ -187,8 +188,8 @@ test("副窗口通用外观和事件定时消失位于两个窗口控件之前",
 });
 
 test("副窗口外观提供相同弹幕合并开关和时间窗口", () => {
-  assert.match(source, /title="副窗口"|<SectionTitle title="副窗口"/);
-  assert.match(source, /label="合并相同弹幕"/);
+  assert.match(source, /title=["']副窗口["']|<SectionTitle title=["']副窗口["']/);
+  assert.match(source, /label=["']合并相同弹幕["']/);
   assert.match(source, /mergeSameDanmu/);
   assert.match(source, /sameDanmuWindowSeconds/);
 });
@@ -198,8 +199,8 @@ test("副窗口设置按一级、二级、三级标题区分，并提供弹幕�
   assert.match(source, /data-settings-level=\{level\}/);
   assert.match(source, /level=\{3\}/);
   assert.match(source, /事件筛选/);
-  assert.match(source, /label="弹幕"/);
-  assert.match(source, /label="互动"/);
+  assert.match(source, /label=["']弹幕["']/);
+  assert.match(source, /label=["']互动["']/);
   for (const label of ["进房", "关注", "分享", "特别关注", "互相关注", "点赞"]) {
     assert.match(eventViewSource, new RegExp(label));
   }
@@ -212,7 +213,7 @@ test("副窗口筛选使用扁平筛选行，一级状态与二级展开彼此�
   assert.match(source, /settings-filter-row/);
   assert.match(source, /settings-filter-row-toggle/);
   assert.match(source, /settings-filter-row-disclosure/);
-  assert.match(source, /active \? "显示" : "隐藏"/);
+  assert.match(source, /active \? ["']显示["'] : ["']隐藏["']/);
   assert.doesNotMatch(source, /function SettingsFilterSubmenu/);
   const filterBlock = source.slice(source.indexOf("function SettingsFilterRow"), source.indexOf("export function SettingsPanel"));
   assert.doesNotMatch(filterBlock, /SwitchButton/);
@@ -302,9 +303,9 @@ test("副窗口保留圆角，事件定时消失集中到事件显示", () => {
   const displayStart = source.indexOf('data-settings-section="display"');
   const filtersStart = source.indexOf('data-settings-section="filters"', displayStart);
   const common = source.slice(windowsStart, source.indexOf('data-settings-anchor="display"', windowsStart));
-  assert.match(common, /label="圆角"/);
-  assert.doesNotMatch(common, /label="事件定时消失"/);
-  assert.match(source.slice(displayStart, filtersStart), /label="事件定时消失"/);
+  assert.match(common, /label=["']圆角["']/);
+  assert.doesNotMatch(common, /label=["']事件定时消失["']/);
+  assert.match(source.slice(displayStart, filtersStart), /label=["']事件定时消失["']/);
 });
 
 test("副窗口外观颜色弹层根据可用空间选择上下方向并使用紧凑宽度", () => {
@@ -348,9 +349,9 @@ test("每个分类的恢复默认覆盖该分类内的全部选项", () => {
 
   assert.match(windowsBlock, /setWindowEventFontSize|resetWindowsSettings/);
   assert.match(windowsBlock, /setWindowBigEmoteWidth|resetWindowsSettings/);
-  assert.match(source, /label="开启弹幕窗"/);
-  assert.match(source, /label="锁定并穿透鼠标"/);
-  assert.match(source, /label="开启收益窗"/);
+  assert.match(source, /label=["']开启弹幕窗["']/);
+  assert.match(source, /label=["']锁定并穿透鼠标["']/);
+  assert.match(source, /label=["']开启收益窗["']/);
   assert.match(source, /onToggleGiftLock/);
 
   assert.match(source, /const resetAll = \(\) => \{[\s\S]*?resetGeneral\(\);[\s\S]*?resetDisplay\(\);[\s\S]*?resetFilters\(\);[\s\S]*?resetLive\(\);[\s\S]*?resetWindows\(\);/);
@@ -475,18 +476,18 @@ test("设置分类触发器的文字左对齐，备注收敛到悬停提示", ()
   const css = read("src/App.css");
   assert.match(css, /\.settings-section-navigator\s*\{[\s\S]*?text-align:\s*left/);
   assert.match(source, /className="settings-section-navigator settings-control-surface ml-0 flex h-8 min-w-0 items-center justify-start/);
-  assert.match(source, /hint="仅在托盘运行；若同时开启启动后自动连接，会连接最近使用的主播；没有凭证或主播记录时跳过。"/);
-  assert.match(source, /hint="开启后，收藏事件会立即打开备注和标签编辑；关闭时可长按收藏图标编辑。"/);
-  assert.match(source, /title="开启后优先进入当前连接栏主播的档案；关闭后进入所有主播档案馆。快捷入口仍可直接查看当前主播和当前场次。"/);
-  assert.match(source, /hint="事件行的更多菜单左侧可显示快捷按钮；收藏和标记状态会单独常驻。"/);
-  assert.doesNotMatch(source, /hint="语音与个性播报共用此输出设置。"/);
+  assert.match(source, /hint=["']仅在托盘运行；若同时开启启动后自动连接，会连接最近使用的主播；没有凭证或主播记录时跳过。["']/);
+  assert.match(source, /hint=["']开启后，收藏事件会立即打开备注和标签编辑；关闭时可长按收藏图标编辑。["']/);
+  assert.match(source, /title=["']开启后优先进入当前连接栏主播的档案；关闭后进入所有主播档案馆。快捷入口仍可直接查看当前主播和当前场次。["']/);
+  assert.match(source, /hint=["']事件行的更多菜单左侧可显示快捷按钮；收藏和标记状态会单独常驻。["']/);
+  assert.doesNotMatch(source, /hint=["']语音与个性播报共用此输出设置。["']/);
   for (const phrase of ["开机自启时仅在托盘运行。", "开启后，收藏事件会立即打开备注和标签编辑；", "开启后优先进入当前连接栏主播的档案；", "事件行的更多菜单左侧可显示快捷按钮；", "语音与个性播报共用此输出设置。"])
     assert.doesNotMatch(source, new RegExp(`settings-helper-copy[^>]*>[\\s\\S]*?${phrase}`));
 });
 
 test("设置页移除普通解释性备注且不承载样式入口", () => {
   assert.doesNotMatch(source, />拖动可排序<\/div>/);
-  assert.match(source, /settings-shortcut-selected-list[^>]*title="拖动或使用方向键调整顺序"/);
+  assert.match(source, /settings-shortcut-selected-list[^>]*title=["']拖动或使用方向键调整顺序["']/);
   assert.doesNotMatch(source, /主题、元素显示和外观|编辑样式|ThemeWorkspace/);
   assert.doesNotMatch(source, /昵称作为通用用户名，影响界面显示和语音播报。<\/p>/);
   assert.doesNotMatch(source, /语音与个性播报共用此输出设置。/);

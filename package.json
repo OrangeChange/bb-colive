@@ -12,6 +12,7 @@
     "tauri": "tauri",
     "themes:prepare": "node --experimental-transform-types scripts/prepare-native-themes.mjs && node --experimental-transform-types scripts/materialize-builtin-themes.mjs",
     "predev": "npm run themes:prepare && node scripts/build-laplace-product.mjs",
+    "translations:export": "node scripts/export-ui-translations.mjs",
     "licenses:collect": "node scripts/collect-third-party-notices.mjs",
     "pretest": "npm run themes:prepare"
   },

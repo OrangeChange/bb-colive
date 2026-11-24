@@ -1,3 +1,4 @@
+import { uiText } from "../i18n/index.ts";
 import { assignEventRenderKey } from "../events/eventIdentity.ts";
 import { emit } from '@tauri-apps/api/event';
 import { activityStore, ACTIVITY_UPDATE_EVENT } from '../events/activityStore';
@@ -924,7 +925,7 @@ export const useConnection = create<ConnectionState>((set, get) => ({
     set({
       state: {
         status: "connecting",
-        message: "正在连接…",
+        message: uiText("connection.connect.state.message"),
         liveStartedAt: undefined,
         ...preservedRoomGuardProfile,
         ...(target

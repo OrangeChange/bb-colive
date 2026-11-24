@@ -1,3 +1,4 @@
+import { uiText } from "../i18n/index.ts";
 import type { NativeVisualModel, NativeVisualProperty, NativeVisualScheme, NativeVisualSetting } from "./nativeComponentAppearance.ts";
 import type { CompatibleThemeMode } from "./compatThemeSettings.ts";
 
@@ -69,20 +70,20 @@ export function installCompatibleEventGroups(capability: CompatibleThemeCapabili
 export function compatibleVisualEventScopes(capability: CompatibleThemeCapabilityMap, placement: CompatiblePlacement) {
   const allowed = capability.eventSelectorsByPlacement?.[placement] ?? capability.eventSelectors ?? {};
   const children = capability.mode === "laplace"
-    ? [{ id: "gift-regular", label: "普通礼物" }, { id: "redpocket", label: "红包" }, { id: "lottery", label: "天选" }]
+    ? [{ id: "gift-regular", label: uiText("compatThemeCapabilities.compatibleVisualEventScopes.children.label") }, { id: "redpocket", label: uiText("compatThemeCapabilities.compatibleVisualEventScopes.children.label2") }, { id: "lottery", label: uiText("compatThemeCapabilities.compatibleVisualEventScopes.children.label3") }]
     : undefined;
   return [
-    { id: "danmaku", label: "弹幕", children: undefined },
-    { id: "interaction", label: "互动", children: capability.mode === "laplace" ? [
-      { id: "entry", label: "进入直播间" }, { id: "follow", label: "关注" }, { id: "share", label: "分享" },
-      { id: "special-follow", label: "特别关注" }, { id: "mutual-follow", label: "互相关注" }, { id: "like", label: "点赞" },
-    ] : [{ id: "like", label: "点赞" }] },
-    { id: "gift", label: "礼物", children },
-    { id: "superchat", label: "醒目留言", children: undefined },
-    { id: "guard", label: "大航海", children: undefined },
-    { id: "system", label: "系统", children: capability.mode === "laplace" ? [
-      { id: "live-status", label: "开播与下播" }, { id: "user-block", label: "用户禁言" }, { id: "room-mute", label: "全员禁言" },
-      { id: "room-change", label: "房间信息变更" }, { id: "warning", label: "直播警告与切断" },
+    { id: "danmaku", label: uiText("compatThemeCapabilities.compatibleVisualEventScopes.label"), children: undefined },
+    { id: "interaction", label: uiText("compatThemeCapabilities.compatibleVisualEventScopes.label2"), children: capability.mode === "laplace" ? [
+      { id: "entry", label: uiText("compatThemeCapabilities.compatibleVisualEventScopes.children.label4") }, { id: "follow", label: uiText("compatThemeCapabilities.compatibleVisualEventScopes.children.label5") }, { id: "share", label: uiText("compatThemeCapabilities.compatibleVisualEventScopes.children.label6") },
+      { id: "special-follow", label: uiText("compatThemeCapabilities.compatibleVisualEventScopes.children.label7") }, { id: "mutual-follow", label: uiText("compatThemeCapabilities.compatibleVisualEventScopes.children.label8") }, { id: "like", label: uiText("compatThemeCapabilities.compatibleVisualEventScopes.children.label9") },
+    ] : [{ id: "like", label: uiText("compatThemeCapabilities.compatibleVisualEventScopes.children.label9") }] },
+    { id: "gift", label: uiText("compatThemeCapabilities.compatibleVisualEventScopes.label3"), children },
+    { id: "superchat", label: uiText("compatThemeCapabilities.compatibleVisualEventScopes.label4"), children: undefined },
+    { id: "guard", label: uiText("compatThemeCapabilities.compatibleVisualEventScopes.label5"), children: undefined },
+    { id: "system", label: uiText("compatThemeCapabilities.compatibleVisualEventScopes.label6"), children: capability.mode === "laplace" ? [
+      { id: "live-status", label: uiText("compatThemeCapabilities.compatibleVisualEventScopes.children.label10") }, { id: "user-block", label: uiText("compatThemeCapabilities.compatibleVisualEventScopes.children.label11") }, { id: "room-mute", label: uiText("compatThemeCapabilities.compatibleVisualEventScopes.children.label12") },
+      { id: "room-change", label: uiText("compatThemeCapabilities.compatibleVisualEventScopes.children.label13") }, { id: "warning", label: uiText("compatThemeCapabilities.compatibleVisualEventScopes.children.label14") },
     ] : undefined },
   ].filter(scope => allowed[scope.id]).map(scope => ({ ...scope, children: scope.children?.filter(child => allowed[child.id]) }));
 }

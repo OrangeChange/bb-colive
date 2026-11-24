@@ -1,3 +1,4 @@
+import { readUiSource } from "./helpers/readUiSource.mjs";
 import assert from "node:assert/strict";
 import test from "node:test";
 import { appendFileSync, mkdirSync, mkdtempSync, readFileSync } from "node:fs";
@@ -45,7 +46,7 @@ test("Rust DTO 实际序列化结果映射实际路径与最终缺失项", async
     });
     console.log(rust.stdout + rust.stderr);
     assert.equal(rust.status, 0, rust.stdout + rust.stderr);
-    dto = JSON.parse(readFileSync(join(evidence, "result.json"), "utf8"));
+    dto = JSON.parse(readUiSource(join(evidence, "result.json"), "utf8"));
     return dto;
   } });
   try {

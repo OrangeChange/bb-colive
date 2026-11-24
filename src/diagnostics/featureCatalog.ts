@@ -1,3 +1,4 @@
+import { uiText } from "../i18n/index.ts";
 export type FeatureDiagnosticStream = "app" | "source" | "render" | "tts" | "markers";
 
 export type FeatureDiagnosticStage =
@@ -48,10 +49,10 @@ export const PRODUCTION_FEATURE_IDS = [
 
 /** 新功能或新面板必须先在这里登记自己的诊断覆盖契约。 */
 export const FEATURE_DIAGNOSTIC_CATALOG: FeatureDiagnosticContract[] = [
-  { id: "software-updates", panel: "软件更新", streams: ["app"], stages: FULL_FEATURE_STAGES, snapshotSchema: { version: 1, keys: ["environment.appVersion"] }, failureHooks: COMMON_FAILURE_HOOKS },
+  { id: "software-updates", panel: uiText("featureCatalog.FEATURE_DIAGNOSTIC_CATALOG.panel"), streams: ["app"], stages: FULL_FEATURE_STAGES, snapshotSchema: { version: 1, keys: ["environment.appVersion"] }, failureHooks: COMMON_FAILURE_HOOKS },
   {
     id: "scene",
-    panel: "现场",
+    panel: uiText("common.live"),
     streams: ["app", "source", "render"],
     stages: FULL_FEATURE_STAGES,
     snapshotSchema: { version: 1, keys: ["settings.scene"] },
@@ -59,7 +60,7 @@ export const FEATURE_DIAGNOSTIC_CATALOG: FeatureDiagnosticContract[] = [
   },
   {
     id: "floating-windows",
-    panel: "副窗口",
+    panel: uiText("featureCatalog.FEATURE_DIAGNOSTIC_CATALOG.panel2"),
     streams: ["app", "render"],
     stages: FULL_FEATURE_STAGES,
     snapshotSchema: { version: 2, keys: ["environment.live", "settings.general.stickyEvents"] },
@@ -67,7 +68,7 @@ export const FEATURE_DIAGNOSTIC_CATALOG: FeatureDiagnosticContract[] = [
   },
   {
     id: "voice",
-    panel: "语音",
+    panel: uiText("common.voice"),
     streams: ["app", "tts"],
     stages: FULL_FEATURE_STAGES,
     snapshotSchema: { version: 1, keys: ["settings.voice"] },
@@ -75,7 +76,7 @@ export const FEATURE_DIAGNOSTIC_CATALOG: FeatureDiagnosticContract[] = [
   },
   {
     id: "personal-broadcast",
-    panel: "个性播报",
+    panel: uiText("common.personalBroadcast"),
     streams: ["app", "tts", "render"],
     stages: FULL_FEATURE_STAGES,
     snapshotSchema: { version: 1, keys: ["settings.voice.personalBroadcast"] },
@@ -83,7 +84,7 @@ export const FEATURE_DIAGNOSTIC_CATALOG: FeatureDiagnosticContract[] = [
   },
   {
     id: "event-interaction",
-    panel: "事件交互",
+    panel: uiText("featureCatalog.FEATURE_DIAGNOSTIC_CATALOG.panel3"),
     streams: ["app", "render", "markers"],
     stages: FULL_FEATURE_STAGES,
     snapshotSchema: { version: 1, keys: ["settings.voice.eventIntervalSeconds", "settings.voice.shortcutActions"] },
@@ -91,7 +92,7 @@ export const FEATURE_DIAGNOSTIC_CATALOG: FeatureDiagnosticContract[] = [
   },
   {
     id: "event-personalization",
-    panel: "样式",
+    panel: uiText("common.styles"),
     streams: ["app", "render"],
     stages: FULL_FEATURE_STAGES,
     snapshotSchema: { version: 1, keys: ["settings.general.eventFontSize", "settings.general.windowEventFontSize", "settings.general.eventDisplayPreferences", "settings.general.eventStyleSettings"] },
@@ -99,7 +100,7 @@ export const FEATURE_DIAGNOSTIC_CATALOG: FeatureDiagnosticContract[] = [
   },
   {
     id: "startup-behavior",
-    panel: "启动行为",
+    panel: uiText("featureCatalog.FEATURE_DIAGNOSTIC_CATALOG.panel4"),
     streams: ["app"],
     stages: ["open", "setting-change", "request", "success", "failure", "cancel"],
     snapshotSchema: { version: 1, keys: ["settings.general.startOnBoot", "settings.general.autoConnectOnStartup"] },
@@ -107,7 +108,7 @@ export const FEATURE_DIAGNOSTIC_CATALOG: FeatureDiagnosticContract[] = [
   },
   {
     id: "room-insights",
-    panel: "直播间概览",
+    panel: uiText("featureCatalog.FEATURE_DIAGNOSTIC_CATALOG.panel5"),
     streams: ["app", "source", "render"],
     stages: NO_SETTING_FEATURE_STAGES,
     snapshotSchema: { version: 1, keys: ["environment.live"] },
@@ -115,7 +116,7 @@ export const FEATURE_DIAGNOSTIC_CATALOG: FeatureDiagnosticContract[] = [
   },
   {
     id: "gift-effects",
-    panel: "礼物特效",
+    panel: uiText("featureCatalog.FEATURE_DIAGNOSTIC_CATALOG.panel6"),
     streams: ["app", "source", "render"],
     stages: NO_SETTING_FEATURE_STAGES,
     snapshotSchema: { version: 1, keys: ["environment.live.giftOpen"] },
@@ -123,7 +124,7 @@ export const FEATURE_DIAGNOSTIC_CATALOG: FeatureDiagnosticContract[] = [
   },
   {
     id: "diagnostics",
-    panel: "诊断与日志",
+    panel: uiText("featureCatalog.FEATURE_DIAGNOSTIC_CATALOG.panel7"),
     streams: ["app", "markers"],
     stages: NO_SETTING_FEATURE_STAGES,
     snapshotSchema: { version: 1, keys: ["build"] },
@@ -131,7 +132,7 @@ export const FEATURE_DIAGNOSTIC_CATALOG: FeatureDiagnosticContract[] = [
   },
   {
     id: "review-archive",
-    panel: "回看档案",
+    panel: uiText("featureCatalog.FEATURE_DIAGNOSTIC_CATALOG.panel8"),
     streams: ["app", "source", "render"],
     stages: ["open", "setting-change", "request", "query", "success", "failure", "cancel", "render"],
     snapshotSchema: {
@@ -152,7 +153,7 @@ export const FEATURE_DIAGNOSTIC_CATALOG: FeatureDiagnosticContract[] = [
   },
   {
     id: "cloud-recovery",
-    panel: "云端记录恢复",
+    panel: uiText("featureCatalog.FEATURE_DIAGNOSTIC_CATALOG.panel9"),
     streams: ["app"],
     stages: ["open", "setting-change", "request", "success", "failure", "cancel"],
     snapshotSchema: { version: 1, keys: ["archive"] },
@@ -160,7 +161,7 @@ export const FEATURE_DIAGNOSTIC_CATALOG: FeatureDiagnosticContract[] = [
   },
   {
     id: "session",
-    panel: "登录",
+    panel: uiText("featureCatalog.FEATURE_DIAGNOSTIC_CATALOG.panel10"),
     streams: ["app"],
     stages: ["open", "request", "success", "failure", "cancel"],
     snapshotSchema: { version: 1, keys: ["environment.appVersion"] },

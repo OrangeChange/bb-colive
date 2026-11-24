@@ -11,15 +11,15 @@ static THEME_FILE_INDEX: OnceLock<Mutex<HashMap<(PathBuf, String), PathBuf>>> = 
 static PREPARED_THEME_ROOT: OnceLock<Mutex<Option<PathBuf>>> = OnceLock::new();
 
 fn program_style_write_error(error: impl std::fmt::Display) -> String {
-    format!("无法写入程序目录中的 style 文件夹：{error}。请调整文件夹权限或将程序安装到可写位置后重试")
+    format!("theme-directory-unwritable:{error}")
 }
 
 pub(crate) fn theme_root() -> Result<PathBuf, String> {
     std::env::current_exe()
-        .map_err(|error| format!("无法确定程序目录：{error}"))?
+        .map_err(|error| ui_format!("backend.theme_store.theme_root", error = error))?
         .parent()
         .map(|path| path.join("style"))
-        .ok_or_else(|| "无法确定程序目录".to_string())
+        .ok_or_else(|| ui_text!("backend.theme_store.theme_root2").to_string())
 }
 
 fn copy_theme_directory(source: &Path, target: &Path) -> Result<(), String> {
@@ -55,7 +55,7 @@ fn migrate_legacy_themes(legacy: &Path, root: &Path) -> Result<(), String> {
             continue;
         }
         let entries = fs::read_dir(&legacy_directory).map_err(|error| {
-            format!("无法读取旧主题目录 {}：{error}", legacy_directory.display())
+            ui_format!("backend.theme_store.migrate_legacy_themes", legacy_directory.display(), error = error)
         })?;
         for entry in entries {
             let entry = match entry {
@@ -69,7 +69,7 @@ fn migrate_legacy_themes(legacy: &Path, root: &Path) -> Result<(), String> {
             let is_directory = match entry.file_type() {
                 Ok(file_type) => file_type.is_dir(),
                 Err(error) => {
-                    failures.push(format!("无法读取旧主题类型 {}：{error}", source.display()));
+                    failures.push(ui_format!("backend.theme_store.migrate_legacy_themes2", source.display(), error = error));
                     continue;
                 }
             };
@@ -80,14 +80,14 @@ fn migrate_legacy_themes(legacy: &Path, root: &Path) -> Result<(), String> {
             let content = match fs::read_to_string(&manifest) {
                 Ok(content) => content,
                 Err(error) => {
-                    failures.push(format!("无法读取旧主题 {}：{error}", manifest.display()));
+                    failures.push(ui_format!("backend.theme_store.migrate_legacy_themes3", manifest.display(), error = error));
                     continue;
                 }
             };
             let document = match serde_json::from_str::<Value>(&content) {
                 Ok(document) => document,
                 Err(error) => {
-                    failures.push(format!("旧主题清单无效 {}：{error}", manifest.display()));
+                    failures.push(ui_format!("backend.theme_store.migrate_legacy_themes4", manifest.display(), error = error));
                     continue;
                 }
             };
@@ -95,7 +95,7 @@ fn migrate_legacy_themes(legacy: &Path, root: &Path) -> Result<(), String> {
                 continue;
             }
             let Some(theme_id) = document.get("themeId").and_then(Value::as_str) else {
-                failures.push(format!("旧主题标识缺失：{}", manifest.display()));
+                failures.push(ui_format!("backend.theme_store.migrate_legacy_themes5", manifest.display()));
                 continue;
             };
             let existing = match find_theme_file(root, theme_id) {
@@ -115,7 +115,7 @@ fn migrate_legacy_themes(legacy: &Path, root: &Path) -> Result<(), String> {
             let name = document
                 .pointer("/metadata/name")
                 .and_then(Value::as_str)
-                .unwrap_or("未命名主题");
+                .unwrap_or(ui_text!("backend.theme_store.migrate_legacy_themes9"));
             let target = match theme_file_for_write(root, mode, theme_id, name) {
                 Ok(file) => file.parent().unwrap_or(root).to_path_buf(),
                 Err(error) => {
@@ -123,19 +123,19 @@ fn migrate_legacy_themes(legacy: &Path, root: &Path) -> Result<(), String> {
                     continue;
                 }
             };
-            let name = target.file_name().ok_or("主题目录无效")?.to_string_lossy();
+            let name = target.file_name().ok_or(ui_text!("backend.theme_store.migrate_legacy_themes6"))?.to_string_lossy();
             let staging = target.with_file_name(format!(".{name}.migrating"));
             if staging.exists() {
                 fs::remove_dir_all(&staging).map_err(|error| error.to_string())?;
             }
             if let Err(error) = copy_theme_directory(&source, &staging) {
                 let _ = fs::remove_dir_all(&staging);
-                failures.push(format!("迁移旧主题 {theme_id} 失败：{error}"));
+                failures.push(ui_format!("backend.theme_store.migrate_legacy_themes7", theme_id = theme_id, error = error));
                 continue;
             }
             if let Err(error) = fs::rename(&staging, &target) {
                 let _ = fs::remove_dir_all(&staging);
-                failures.push(format!("迁移旧主题 {theme_id} 失败：{error}"));
+                failures.push(ui_format!("backend.theme_store.migrate_legacy_themes7", theme_id = theme_id, error = error));
             }
         }
     }
@@ -143,7 +143,7 @@ fn migrate_legacy_themes(legacy: &Path, root: &Path) -> Result<(), String> {
         return Err(failures.join("；"));
     }
     fs::write(root.join(LEGACY_MIGRATION_MARKER), b"complete")
-        .map_err(|error| format!("无法记录旧主题迁移状态：{error}"))?;
+        .map_err(|error| ui_format!("backend.theme_store.migrate_legacy_themes8", error = error))?;
     Ok(())
 }
 
@@ -151,7 +151,7 @@ fn prepare_theme_root(app: &AppHandle, require_writable: bool) -> Result<PathBuf
     let prepared = PREPARED_THEME_ROOT.get_or_init(|| Mutex::new(None));
     let mut prepared = prepared
         .lock()
-        .map_err(|_| "无法访问主题目录状态".to_string())?;
+        .map_err(|_| ui_text!("backend.theme_store.prepare_theme_root2").to_string())?;
     if let Some(root) = prepared.as_ref() {
         return Ok(root.clone());
     }
@@ -163,7 +163,7 @@ fn prepare_theme_root(app: &AppHandle, require_writable: bool) -> Result<PathBuf
         if require_writable {
             program_style_write_error(error)
         } else {
-            format!("旧主题迁移失败：{error}。请检查程序目录权限后重试")
+            ui_format!("backend.theme_store.prepare_theme_root", error = error)
         }
     })?;
     *prepared = Some(root.clone());
@@ -184,13 +184,13 @@ fn mode_directory(mode: &str) -> Result<&'static str, String> {
         "blivechat" => Ok("blc"),
         "blivechat-open" => Ok("blc-open"),
         "laplace" => Ok("laplace"),
-        _ => Err("主题模式无效".to_string()),
+        _ => Err(ui_text!("backend.theme_store.mode_directory").to_string()),
     }
 }
 
 fn theme_directory_name(name: &str, theme_id: &str) -> Result<String, String> {
     if !safe_id(theme_id) {
-        return Err("主题标识无效".to_string());
+        return Err(ui_text!("backend.theme_store.theme_directory_name").to_string());
     }
     let clean = name
         .chars()
@@ -749,7 +749,7 @@ pub fn write_theme_document(
         }
         let stored_revision = stored.get("revision").and_then(Value::as_u64).unwrap_or(0);
         if incoming_revision != stored_revision + 1 {
-            return Err("主题已在其他位置更新，请重新打开后再试".to_string());
+            return Err("theme-file-conflict".to_string());
         }
     }
     let source_directory = source_theme_id
@@ -1071,10 +1071,10 @@ mod tests {
     #[test]
     fn colliding_short_ids_use_different_theme_directories() {
         let root = temporary_directory("short-id-collision");
-        let first = theme_file_for_write(&root, "native", "abcdefgh-1111", "同名主题").unwrap();
+        let first = theme_file_for_write(&root, "native", "abcdefgh-1111", ui_text!("backend.theme_store.colliding_short_ids_use_different_theme_directories")).unwrap();
         fs::create_dir_all(first.parent().unwrap()).unwrap();
         fs::write(&first, r#"{"themeId":"abcdefgh-1111","mode":"native"}"#).unwrap();
-        let second = theme_file_for_write(&root, "native", "abcdefgh-2222", "同名主题").unwrap();
+        let second = theme_file_for_write(&root, "native", "abcdefgh-2222", ui_text!("backend.theme_store.colliding_short_ids_use_different_theme_directories")).unwrap();
         assert_ne!(first.parent(), second.parent());
         let _ = fs::remove_dir_all(root);
     }
@@ -1082,10 +1082,10 @@ mod tests {
     #[test]
     fn punctuation_only_id_difference_still_uses_a_distinct_directory() {
         let root = temporary_directory("punctuation-id-collision");
-        let first = theme_file_for_write(&root, "native", "same-id", "同名主题").unwrap();
+        let first = theme_file_for_write(&root, "native", "same-id", ui_text!("backend.theme_store.punctuation_only_id_difference_still_uses_a_distinct_directory")).unwrap();
         fs::create_dir_all(first.parent().unwrap()).unwrap();
         fs::write(&first, r#"{"themeId":"same-id","mode":"native"}"#).unwrap();
-        let second = theme_file_for_write(&root, "native", "same_id", "同名主题").unwrap();
+        let second = theme_file_for_write(&root, "native", "same_id", ui_text!("backend.theme_store.punctuation_only_id_difference_still_uses_a_distinct_directory")).unwrap();
         assert_ne!(first.parent(), second.parent());
         let _ = fs::remove_dir_all(root);
     }
@@ -1094,7 +1094,7 @@ mod tests {
     fn summary_omits_theme_content() {
         let result = summary(&json!({
             "themeId":"one", "mode":"native", "origin":"custom", "revision":1,
-            "metadata":{"name":"一","author":"","version":"1.0.0","updatedAt":"now"},
+            "metadata":{"name":ui_text!("backend.theme_store.summary_omits_theme_content"),"author":"","version":"1.0.0","updatedAt":"now"},
             "settings":{"large":"content"}, "assets":[{"path":"large.png"}]
         }))
         .unwrap();
@@ -1133,7 +1133,7 @@ mod tests {
         fs::write(source.join("assets/frame.webp"), b"source asset").unwrap();
         let document = json!({
             "themeId":"copy", "mode":"blivechat", "origin":"custom", "revision":1,
-            "metadata":{"name":"副本"},
+            "metadata":{"name":ui_text!("backend.theme_store.save_as_copies_declared_assets_into_an_independent_theme_directory")},
             "settings":{},
             "styles":{"baseCss":"","visualCss":"","customCss":""},
             "assets":[{"id":"frame","name":"图片","path":"assets/frame.webp","mediaType":"image/webp"}]
@@ -1186,7 +1186,7 @@ mod tests {
         let base = temporary_directory("migration-dotted-names");
         let legacy = base.join("legacy/style");
         let target = base.join("program/style");
-        let existing = target.join("native/主题.migrating");
+        let existing = target.join(ui_text!("backend.theme_store.migration_does_not_collide_with_dotted_theme_names"));
         write_legacy_theme(&existing, "existing-theme", "主题.migrating");
         fs::create_dir_all(existing.join("assets")).unwrap();
         fs::write(existing.join("assets/keep.svg"), b"existing material").unwrap();

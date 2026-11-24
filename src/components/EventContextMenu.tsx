@@ -1,3 +1,4 @@
+import { uiText } from "../i18n/index.ts";
 import { Funnel as LucideFunnel, LocateFixed as LucideLocateFixed, Volume2 as LucideVolume2, Tag as LucideTag, UserRound as LucideUserRound, Star as LucideStar, Bookmark as LucideBookmark, Copy as LucideCopy, Sparkles as LucideSparkles, Ellipsis as LucideEllipsis } from "lucide-react";
 import { useEffect, useLayoutEffect, useRef, useState, type PointerEvent as ReactPointerEvent, type RefObject } from "react";
 import type { CSSProperties } from "react";
@@ -144,7 +145,7 @@ export function resolveVisibleShortcutActions(
 }
 
 function formatEventTime(ts: number): string {
-  if (!Number.isFinite(ts) || ts <= 0) return "时间未知";
+  if (!Number.isFinite(ts) || ts <= 0) return uiText("eventContextMenu.formatEventTime");
   return new Date(ts).toLocaleString("zh-CN", {
     year: "numeric",
     month: "2-digit",
@@ -365,7 +366,7 @@ export function EventContextMenu({ event, nickname, eventFontSize, shortcutActio
 
   const user = event.user;
   const userNickname = nickname?.trim();
-  const userName = user?.uname?.trim() || "未知用户";
+  const userName = user?.uname?.trim() || uiText("eventContextMenu.EventContextMenu.userName");
   const userIdentity = userNickname ? `${userName}（${userNickname}）` : userName;
   const menuEventSize = Number.isFinite(eventFontSize) ? eventFontSize : 16;
   const userFiltered = Boolean(user && handlers.isUserFiltered?.(user));
@@ -379,10 +380,10 @@ export function EventContextMenu({ event, nickname, eventFontSize, shortcutActio
   const visibleShortcutActions = resolveVisibleShortcutActions(shortcutActions, favorited, marked)
     .filter((action) => scope === "review" ? action !== "mark" : true);
   const shortcutActionLabel = (action: VoiceShortcutAction): string => {
-    if (action === "speak") return "语音播报";
-    if (action === "filter") return userFiltered ? "退出筛选" : "筛选该用户";
-    if (action === "favorite") return favorited ? "取消收藏" : "收藏事件";
-    return marked ? "取消标记" : "标记事件";
+    if (action === "speak") return uiText("eventContextMenu.EventContextMenu.shortcutActionLabel");
+    if (action === "filter") return userFiltered ? uiText("eventContextMenu.EventContextMenu.shortcutActionLabel2") : uiText("eventContextMenu.EventContextMenu.shortcutActionLabel3");
+    if (action === "favorite") return favorited ? uiText("eventContextMenu.EventContextMenu.shortcutActionLabel4") : uiText("eventContextMenu.EventContextMenu.shortcutActionLabel5");
+    return marked ? uiText("eventContextMenu.EventContextMenu.shortcutActionLabel6") : uiText("eventContextMenu.EventContextMenu.shortcutActionLabel7");
   };
   const shortcutActionActive = (action: VoiceShortcutAction): boolean => (
     action === "filter" ? userFiltered : action === "favorite" ? favorited : action === "mark" ? marked : false
@@ -393,7 +394,7 @@ export function EventContextMenu({ event, nickname, eventFontSize, shortcutActio
   const persistentShortcutActions = visibleShortcutActions.filter(shortcutActionPersistent);
   const actions: MenuAction[] = [
     {
-      label: userFiltered ? "退出筛选" : "筛选该用户",
+      label: userFiltered ? uiText("eventContextMenu.EventContextMenu.actions.label") : uiText("eventContextMenu.EventContextMenu.actions.label2"),
       icon: "filter",
       disabled: !user || actionDisabled,
       active: userFiltered,
@@ -404,17 +405,17 @@ export function EventContextMenu({ event, nickname, eventFontSize, shortcutActio
       },
     },
     ...(handlers.onViewContext ? [{
-      label: "查看上下文",
+      label: uiText("eventContextMenu.EventContextMenu.actions.label3"),
       icon: "context" as const,
       onSelect: () => handlers.onViewContext?.(event, handlers.regionKey),
     }] : []),
     {
-      label: "语音播报",
+      label: uiText("eventContextMenu.EventContextMenu.actions.label4"),
       icon: "voice",
       onSelect: () => handlers.onSpeakEvent(event),
     },
     {
-      label: "复制内容",
+      label: uiText("eventContextMenu.EventContextMenu.actions.label5"),
       icon: "copy",
       disabled: !buildEventContentText(event),
       onSelect: () => {
@@ -423,7 +424,7 @@ export function EventContextMenu({ event, nickname, eventFontSize, shortcutActio
       },
     },
     {
-      label: userNickname ? "更改昵称" : "添加昵称",
+      label: userNickname ? uiText("eventContextMenu.EventContextMenu.actions.label6") : uiText("eventContextMenu.EventContextMenu.actions.label7"),
       icon: "nickname",
       disabled: !user || !handlers.onSaveNickname,
       active: Boolean(userNickname),
@@ -436,13 +437,13 @@ export function EventContextMenu({ event, nickname, eventFontSize, shortcutActio
       },
     },
     {
-      label: "打开用户主页",
+      label: uiText("eventContextMenu.EventContextMenu.actions.label8"),
       icon: "profile",
       disabled: !user || !handlers.onOpenUser,
       onSelect: () => { if (user) handlers.onOpenUser?.(user); },
     },
     {
-      label: favoriteError ? `${favorited ? "取消收藏" : "收藏事件"}（上次失败）` : favorited ? "取消收藏" : "收藏事件",
+      label: favoriteError ? uiText("eventContextMenu.EventContextMenu.actions.label9", { value: favorited ? uiText("eventContextMenu.actions.label.value") : uiText("eventContextMenu.actions.label.value2") }) : favorited ? uiText("eventContextMenu.EventContextMenu.actions.label10") : uiText("eventContextMenu.EventContextMenu.actions.label11"),
       icon: "favorite",
       pressed: favorited,
       active: favorited,
@@ -453,12 +454,12 @@ export function EventContextMenu({ event, nickname, eventFontSize, shortcutActio
       } : undefined,
     },
     ...(handlers.onPlayGiftEffect ? [{
-      label: (event.guard || event.honor) && scope !== "review" ? "播放大航海特效" : "播放礼物特效",
+      label: (event.guard || event.honor) && scope !== "review" ? uiText("eventContextMenu.EventContextMenu.actions.label12") : uiText("eventContextMenu.EventContextMenu.actions.label13"),
       icon: "effect" as const,
       onSelect: () => handlers.onPlayGiftEffect?.(event),
     }] : []),
     ...(scope === "review" ? [] : [{
-      label: marked ? "取消标记" : "标记事件",
+      label: marked ? uiText("eventContextMenu.EventContextMenu.actions.label14") : uiText("eventContextMenu.EventContextMenu.actions.label15"),
       icon: "mark" as const,
       pressed: marked,
       active: marked,
@@ -491,7 +492,7 @@ export function EventContextMenu({ event, nickname, eventFontSize, shortcutActio
                 "--shortcut-hover-offset": shortcutHoverOffset,
               } as CSSProperties}
               aria-label={shortcutActionLabel(shortcutAction)}
-              title={shortcutAction === "favorite" && handlers.onEditFavorite ? (favorited ? "点击取消收藏；长按编辑备注和标签" : "点击收藏；长按编辑备注和标签") : shortcutActionLabel(shortcutAction)}
+              title={shortcutAction === "favorite" && handlers.onEditFavorite ? (favorited ? uiText("eventContextMenu.title") : uiText("eventContextMenu.title2")) : shortcutActionLabel(shortcutAction)}
               aria-pressed={shortcutAction === "filter" || shortcutAction === "favorite" || shortcutAction === "mark" ? active : undefined}
               disabled={disabled}
               onPointerDown={(pointerEvent) => {
@@ -530,7 +531,7 @@ export function EventContextMenu({ event, nickname, eventFontSize, shortcutActio
           ref={triggerRef}
           type="button"
           className="event-menu-trigger inline-flex items-center justify-center rounded-md border border-transparent bg-transparent text-t2 shadow-none transition-[opacity,transform,color,border-color,background-color] hover:border-accent/60 hover:bg-raised hover:text-accent-text focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent-ring"
-          aria-label="打开事件菜单"
+          aria-label={uiText("eventContextMenu.aria_label")}
           aria-haspopup="menu"
           aria-expanded={open}
           onKeyDown={(keyboardEvent) => {
@@ -557,7 +558,7 @@ export function EventContextMenu({ event, nickname, eventFontSize, shortcutActio
         <div
           ref={menuRef}
           role="menu"
-          aria-label="事件菜单"
+          aria-label={uiText("eventContextMenu.aria_label2")}
           className="ui-motion-enter event-context-menu fixed z-[70] w-[238px] max-h-[min(440px,calc(100vh-16px))] overflow-y-auto rounded-lg border border-line bg-surface p-1.5 shadow-2xl shadow-black/30"
           style={{
             left: position.left,
@@ -579,8 +580,8 @@ export function EventContextMenu({ event, nickname, eventFontSize, shortcutActio
                   <button
                     type="button"
                     className="shrink-0 rounded-full focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent-ring"
-                    aria-label={`${userName}头像预览`}
-                    title="查看头像预览"
+                    aria-label={uiText("eventContextMenu.aria_label3", { userName: userName })}
+                    title={uiText("eventContextMenu.title3")}
                     onClick={() => {
                       setOpen(false);
                       setAvatarPreviewOpen(true);
@@ -607,7 +608,7 @@ export function EventContextMenu({ event, nickname, eventFontSize, shortcutActio
                 role="menuitem"
                 aria-disabled={action.disabled || undefined}
                 aria-pressed={action.pressed}
-                title={action.icon === "favorite" && action.onLongPress ? (favorited ? "点击取消收藏；长按编辑备注和标签" : "点击收藏；长按编辑备注和标签") : undefined}
+                title={action.icon === "favorite" && action.onLongPress ? (favorited ? uiText("eventContextMenu.title") : uiText("eventContextMenu.title2")) : undefined}
                 disabled={action.disabled}
                 className={`event-context-menu-item flex min-h-9 w-full items-center justify-between rounded-md px-2.5 py-1.5 text-left ui-type-control text-t2 transition-colors enabled:hover:bg-raised enabled:hover:text-t1 focus-visible:bg-raised focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent-ring disabled:cursor-not-allowed disabled:opacity-45 ${actionToneClass(action.icon, action.active)}`}
                 onPointerDown={(pointerEvent) => { if (action.icon === "favorite") beginFavoriteLongPress(pointerEvent, action.onLongPress); }}
@@ -644,9 +645,9 @@ export function EventContextMenu({ event, nickname, eventFontSize, shortcutActio
         <ImagePreviewOverlay
           open={avatarPreviewOpen}
           src={user.avatar}
-          alt={`${userName}头像`}
-          label={`${userName}头像预览`}
-          closeLabel="关闭头像预览"
+          alt={uiText("eventContextMenu.alt", { userName: userName })}
+          label={uiText("eventContextMenu.label", { userName: userName })}
+          closeLabel={uiText("eventContextMenu.closeLabel")}
           variant="avatar"
           boundsRef={eventAreaRef}
           restoreFocusRef={triggerRef}
@@ -657,7 +658,7 @@ export function EventContextMenu({ event, nickname, eventFontSize, shortcutActio
         <div
           ref={nicknameDialogRef}
           role="dialog"
-          aria-label={userNickname ? "更改昵称" : "添加昵称"}
+          aria-label={userNickname ? uiText("eventContextMenu.aria_label4") : uiText("eventContextMenu.aria_label5")}
           className="ui-motion-enter event-context-nickname-dialog fixed z-[71] w-[min(460px,calc(100vw-16px))] rounded-lg border border-line bg-surface p-3 shadow-2xl shadow-black/30"
           style={{
             left: nicknameDialogPosition.left,
@@ -667,16 +668,16 @@ export function EventContextMenu({ event, nickname, eventFontSize, shortcutActio
         >
           <div
             className={`flex items-center justify-between gap-3 ${nicknameDragging ? "cursor-grabbing" : "cursor-move"}`}
-            title="拖动移动昵称弹窗"
+            title={uiText("eventContextMenu.title4")}
             onPointerDown={handleNicknameDragStart}
             onPointerMove={handleNicknameDragMove}
             onPointerUp={handleNicknameDragEnd}
             onPointerCancel={handleNicknameDragEnd}
           >
-            <div className="ui-type-control font-medium text-t1">{userNickname ? "更改昵称" : "添加昵称"}</div>
+            <div className="ui-type-control font-medium text-t1">{userNickname ? uiText("eventContextMenu.EventContextMenu") : uiText("eventContextMenu.EventContextMenu2")}</div>
             <button
               type="button"
-              aria-label="关闭昵称编辑"
+              aria-label={uiText("eventContextMenu.aria_label6")}
               className="rounded px-1.5 py-0.5 ui-type-control text-t3 transition-colors hover:bg-raised hover:text-t1 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent-ring"
               onPointerDown={(event) => event.stopPropagation()}
               onClick={() => {
@@ -687,16 +688,16 @@ export function EventContextMenu({ event, nickname, eventFontSize, shortcutActio
               ×
             </button>
           </div>
-          <p className="mt-1.5 whitespace-nowrap ui-type-meta text-t3" title="昵称作为通用用户名，影响界面显示和语音播报。">昵称作为通用用户名，影响界面显示和语音播报。</p>
+          <p className="mt-1.5 whitespace-nowrap ui-type-meta text-t3" title={uiText("eventContextMenu.title5")}>{uiText("eventContextMenu.EventContextMenu3")}</p>
           <label className="mt-3 block">
-            <span className="ui-type-micro text-t3">昵称</span>
+            <span className="ui-type-micro text-t3">{uiText("eventContextMenu.EventContextMenu4")}</span>
             <input
               ref={nicknameInputRef}
               value={nicknameDraft}
               onChange={(inputEvent) => setNicknameDraft(inputEvent.target.value)}
               className="settings-control-surface mt-1 h-8 w-full px-2 ui-type-control text-t1"
-              aria-label="输入昵称"
-              placeholder="输入通用昵称"
+              aria-label={uiText("eventContextMenu.aria_label7")}
+              placeholder={uiText("eventContextMenu.placeholder")}
             />
           </label>
           <div className="mt-3 flex items-center justify-end gap-1.5">
@@ -708,8 +709,7 @@ export function EventContextMenu({ event, nickname, eventFontSize, shortcutActio
                 triggerRef.current?.focus();
               }}
             >
-              取消
-            </button>
+              {uiText("common.cancel")}</button>
             {userNickname && handlers.onDeleteNickname && (
               <button
                 type="button"
@@ -721,8 +721,7 @@ export function EventContextMenu({ event, nickname, eventFontSize, shortcutActio
                   triggerRef.current?.focus();
                 }}
               >
-                删除昵称
-              </button>
+                {uiText("eventContextMenu.EventContextMenu5")}</button>
             )}
             <button
               type="button"
@@ -736,8 +735,7 @@ export function EventContextMenu({ event, nickname, eventFontSize, shortcutActio
                 triggerRef.current?.focus();
               }}
             >
-              保存
-            </button>
+              {uiText("common.save")}</button>
           </div>
         </div>,
         document.body,

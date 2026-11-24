@@ -1,3 +1,4 @@
+import { uiText, UiMessageError } from "../i18n/index.ts";
 import { unzipSync } from "fflate";
 import type { ThemeDocument } from "./themeTypes.ts";
 import { THEME_MODE_VALUES } from "./themeTypes.ts";
@@ -26,7 +27,7 @@ export function decodeThemePackage(bytes: Uint8Array): DecodedThemePackage {
   };
   if (!document || typeof document.themeId !== "string" || !THEME_MODE_VALUES.includes(document.mode) || typeof document.metadata?.name !== "string") throw new Error("shape");
   const assetList = Array.isArray(document.assets) ? document.assets : [];
-  for (const asset of assetList) if (!files[asset.path]) throw new Error(`主题素材缺失：${asset.name}`);
+  for (const asset of assetList) if (!files[asset.path]) throw new UiMessageError("themePackageCodec.decodeThemePackage", { name: asset.name });
   return {
     document: { ...document, assets: assetList.map(({sharedResourceId,cacheResourceId,resourceFileName,...asset}) => asset) },
     assets: Object.fromEntries(assetList.flatMap(asset => files[asset.path] ? [[asset.path, files[asset.path]]] : [])),
@@ -43,7 +44,7 @@ export function decodeThemeImport(bytes: Uint8Array): ThemeImportEntry[] {
 
   const entries = Object.entries(files).filter(([name]) => /\.zip$/i.test(name));
 
-  if (!entries.length) throw new Error("主题文件无效");
+  if (!entries.length) throw new UiMessageError("themePackageCodec.decodeThemeImport");
 
   return entries.map(([name, content]) => {
 
@@ -56,5 +57,5 @@ export function decodeThemeImport(bytes: Uint8Array): ThemeImportEntry[] {
 }
 
 export function themePackageError(error: unknown): string {
-  return error instanceof Error && error.message.startsWith("主题素材缺失：") ? `${error.message}，请重新导出完整主题包` : "主题文件无效，请检查文件后重试";
+  return error instanceof UiMessageError && error.messageKey === "themePackageCodec.decodeThemePackage" ? uiText("themePackageCodec.themePackageError", { message: error.message }) : uiText("themePackageCodec.themePackageError2");
 }

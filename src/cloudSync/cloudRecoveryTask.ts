@@ -1,3 +1,4 @@
+import { uiText } from "../i18n/index.ts";
 import type { ArchiveRepositoryContract } from '../archive/archiveTypes.ts';
 import type { CloudRecoveryRunProgress } from './cloudRecoveryRunner.ts';
 import type { CloudRecoverySelection } from './recoveryContract.ts';
@@ -58,11 +59,11 @@ const INITIAL_SNAPSHOT: CloudRecoveryTaskSnapshot = {
 
 const recoveryErrorMessage = (error: unknown): string => {
   const code = error instanceof Error ? error.message : String(error);
-  if (code.includes('credential') || code.includes('unauthorized')) return '身份码无效或已失效，请重新连接服务器';
-  if (code.includes('incompatible')) return '服务器版本与当前软件不兼容';
-  if (code.includes('recovery_checkpoint_mismatch')) return '服务器返回的恢复范围与本地进度不一致';
-  if (code.includes('fetch') || code.includes('network')) return '无法连接服务器，请检查地址和网络后重试';
-  return code || '恢复失败，请稍后重试';
+  if (code.includes('credential') || code.includes('unauthorized')) return uiText("cloudRecoveryTask.recoveryErrorMessage");
+  if (code.includes('incompatible')) return uiText("cloudRecoveryTask.recoveryErrorMessage2");
+  if (code.includes('recovery_checkpoint_mismatch')) return uiText("cloudRecoveryTask.recoveryErrorMessage3");
+  if (code.includes('fetch') || code.includes('network')) return uiText("cloudRecoveryTask.recoveryErrorMessage4");
+  return code || uiText("cloudRecoveryTask.recoveryErrorMessage5");
 };
 
 export function createCloudRecoveryTaskController(dependencies: CloudRecoveryTaskDependencies) {
@@ -86,14 +87,14 @@ export function createCloudRecoveryTaskController(dependencies: CloudRecoveryTas
       const result = await dependencies.execute({ ...request, serverId, signal,
         restartFromBeginning, recoveryRunId, onProgress: progress => publish({ progress }), onCancelReady: value => { cancel = value; } });
       const notice = result.pendingAssignments > 0
-        ? `已恢复可确认的记录，仍有 ${result.pendingAssignments} 条等待场次归属`
-        : result.incremental ? '新增记录已恢复到回看档案' : '云端记录已恢复到回看档案';
+        ? uiText("cloudRecoveryTask.createCloudRecoveryTaskController.perform.notice", { pendingAssignments: result.pendingAssignments })
+        : result.incremental ? uiText("cloudRecoveryTask.createCloudRecoveryTaskController.perform.notice2") : uiText("cloudRecoveryTask.createCloudRecoveryTaskController.perform.notice3");
       publish({ status: 'complete', notice, error: null, canRestartFully: false });
       dependencies.release?.(recoveryRunId);
       request.onChanged?.();
     } catch (error) {
       if (signal.aborted || error instanceof DOMException && error.name === 'AbortError') {
-        publish({ status: 'paused', notice: '恢复已暂停，可稍后继续', error: null, canRestartFully: false });
+        publish({ status: 'paused', notice: uiText("cloudRecoveryTask.createCloudRecoveryTaskController.perform.notice4"), error: null, canRestartFully: false });
       } else {
         const code = error instanceof Error ? error.message : String(error);
         publish({ status: 'failed', error: recoveryErrorMessage(error), notice: null,
@@ -123,7 +124,7 @@ export function createCloudRecoveryTaskController(dependencies: CloudRecoveryTas
       activeServerId = binding.binding.serverId;
       if (controller.signal.aborted) {
         controller = null;
-        publish({ status: 'paused', notice: '恢复已暂停，可稍后继续', error: null });
+        publish({ status: 'paused', notice: uiText("cloudRecoveryTask.createCloudRecoveryTaskController.startRequest.notice"), error: null });
         return 'started';
       }
       activeRun = perform(request, binding.binding.serverId, controller.signal, restartFromBeginning, recoveryRunId);
@@ -152,7 +153,7 @@ export function createCloudRecoveryTaskController(dependencies: CloudRecoveryTas
       const result = serverId ? await dependencies.rollback?.({ ...request, serverId, recoveryRunId }) : 'cancelled';
       if (result === 'restart-required') {
         publish({ status: 'failed', notice: null,
-          error: '这项恢复在软件更新前开始，无法自动撤销。请重新启动软件后再恢复' });
+          error: uiText("cloudRecoveryTask.createCloudRecoveryTaskController.cancelRecovery.error") });
         return;
       }
       dependencies.release?.(recoveryRunId);

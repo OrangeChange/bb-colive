@@ -1,3 +1,4 @@
+import { uiText } from "../i18n/index.ts";
 import { ExternalLink, Link, Radio, Check } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
 import { notifyWorkspace } from "./WorkspaceNotice.tsx";
@@ -26,12 +27,12 @@ export function StylePreviewActions({
       let status = await obsServiceStatus();
       if (!status.running)
         status = await invoke<ObsServiceStatus>("obs_start_service");
-      if (!status.running) throw Error(status.error || "本机服务未启动");
+      if (!status.running) throw Error(status.error || uiText("stylePreviewActions.StylePreviewActions.copy"));
       await navigator.clipboard.writeText(stylePreviewUrl(status.port));
       setCopied(true);
       copiedTimer.current = setTimeout(() => setCopied(false), 1500);
     } catch {
-      notifyWorkspace("无法复制预览链接，请确认本机服务及剪贴板权限后重试");
+      notifyWorkspace(uiText("stylePreviewActions.StylePreviewActions.copy2"));
     } finally {
       setCopying(false);
     }
@@ -41,8 +42,8 @@ export function StylePreviewActions({
       <button
         type="button"
         className="native-preview-open-button ui-type-control"
-        title="打开独立预览"
-        aria-label="打开独立预览"
+        title={uiText("stylePreviewActions.title")}
+        aria-label={uiText("stylePreviewActions.aria_label")}
         onClick={() => void openNativeStylePreviewWindow()}
       >
         <ExternalLink size={16} aria-hidden="true" />
@@ -50,26 +51,26 @@ export function StylePreviewActions({
       <button
         type="button"
         className="native-preview-open-button ui-type-control"
-        title={copied ? "预览链接已复制" : "复制预览链接"}
-        aria-label="复制预览链接"
+        title={copied ? uiText("stylePreviewActions.title2") : uiText("stylePreviewActions.title3")}
+        aria-label={uiText("stylePreviewActions.aria_label2")}
         disabled={copying}
         onClick={() => void copy()}
       >
         {copied ? <Check size={16} aria-hidden="true" /> : <Link size={16} aria-hidden="true" />}
       </button>
-      <span role="status" className="sr-only">{copied ? "预览链接已复制" : ""}</span>
+      <span role="status" className="sr-only">{copied ? uiText("stylePreviewActions.StylePreviewActions") : ""}</span>
       {onRealtimeChange && (
         <button
           type="button"
           className={`native-preview-open-button ui-type-control preview-live-toggle${realtime ? " is-active" : ""}`}
           title={
             realtimeDisabled
-              ? "保存配置后可查看实时事件"
+              ? uiText("stylePreviewActions.title4")
               : realtime
-                ? "实时事件已开启，点击返回样例"
-                : "查看实时事件"
+                ? uiText("stylePreviewActions.title5")
+                : uiText("stylePreviewActions.title6")
           }
-          aria-label="实时事件"
+          aria-label={uiText("stylePreviewActions.aria_label3")}
           aria-pressed={realtime}
           disabled={realtimeDisabled}
           onClick={onRealtimeChange}

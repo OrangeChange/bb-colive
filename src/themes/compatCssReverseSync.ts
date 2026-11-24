@@ -1,3 +1,4 @@
+import { uiText } from "../i18n/index.ts";
 import { normalizeCompatibleTargetSource, normalizeCompatibleVisualTargets, normalizeCompatibleVisualAuthored } from "./compatManagedCss.ts";
 import postcss, { type Declaration } from "postcss";
 import type { NativeVisualModel, NativeVisualProperty, NativeVisualSetting } from "./nativeComponentAppearance.ts";
@@ -68,11 +69,11 @@ export function reverseSyncCompatibleCss(source: string, capability: CompatibleT
         if (child.prop === "border-style" && child.value === "solid" && !child.important
           && definition.properties.includes("borderWidth") && counts.has("border-width")) continue;
         const property = compatibleVisualPropertyForCss(definition, child.prop);
-        if (!property || !definition.properties.includes(property)) { diagnostics.push(`${child.prop} 未受可视化编辑管理，已保留`); continue; }
-        if (node.nodes.filter(candidate => candidate.type === "decl" && compatibleVisualPropertyForCss(definition, candidate.prop) === property).length !== 1) { delete settings[property]; setAuthored(authored, active.scheme, active.key, property, true); diagnostics.push(`${child.prop} 存在多个声明，已保留`); continue; }
+        if (!property || !definition.properties.includes(property)) { diagnostics.push(uiText("compatCssReverseSync.reverseSyncCompatibleCss", { prop: child.prop })); continue; }
+        if (node.nodes.filter(candidate => candidate.type === "decl" && compatibleVisualPropertyForCss(definition, candidate.prop) === property).length !== 1) { delete settings[property]; setAuthored(authored, active.scheme, active.key, property, true); diagnostics.push(uiText("compatCssReverseSync.reverseSyncCompatibleCss2", { prop: child.prop })); continue; }
         const unit = definition.units?.[property] ?? (property === "visible" ? "visible" : property === "lineHeight" ? "number" : ["fontSize", "paddingX", "paddingY", "marginX", "marginY", "gap", "width", "height", "borderWidth", "borderRadius"].includes(property) ? "px" : "raw");
         const value = parseValue(child, unit);
-        if (value === undefined) { delete settings[property]; setAuthored(authored, active.scheme, active.key, property, true); diagnostics.push(`${child.prop} 无法明确回填，已保留`); continue; }
+        if (value === undefined) { delete settings[property]; setAuthored(authored, active.scheme, active.key, property, true); diagnostics.push(uiText("compatCssReverseSync.reverseSyncCompatibleCss3", { prop: child.prop })); continue; }
         settings[property as NativeVisualProperty] = { source: "custom", value } as NativeVisualSetting;
         setAuthored(authored, active.scheme, active.key, property, false);
       }
@@ -95,6 +96,6 @@ export function reverseSyncCompatibleCss(source: string, capability: CompatibleT
     }
     return { model, authored, unmanagedCss: source, error: "", diagnostics };
   } catch (error) {
-    return { model: cloneModel(previous), authored: cloneAuthored(previousAuthored), unmanagedCss: source, error: error instanceof Error ? error.message : "CSS 语法有误", diagnostics: [] };
+    return { model: cloneModel(previous), authored: cloneAuthored(previousAuthored), unmanagedCss: source, error: error instanceof Error ? error.message : uiText("compatCssReverseSync.reverseSyncCompatibleCss.error"), diagnostics: [] };
   }
 }

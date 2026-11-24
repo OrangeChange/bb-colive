@@ -1,13 +1,14 @@
+import { readUiSource } from "./helpers/readUiSource.mjs";
 import test from "node:test";
 import assert from "node:assert/strict";
 import fs from "node:fs";
 
-const read = (path) => fs.readFileSync(new URL(`../${path}`, import.meta.url), "utf8");
+const read = (path) => readUiSource(new URL(`../${path}`, import.meta.url), "utf8");
 
 test("设置分类将语音与播报放在副窗口之后", () => {
   const source = read("src/components/settingsNavigation.ts");
   assert.match(source, /id: "voice"/);
-  assert.match(source, /label: "语音与播报"/);
+  assert.match(source, /label: ["']语音与播报["']/);
   assert.ok(source.indexOf('id: "windows"') < source.indexOf('id: "voice"'));
 });
 
@@ -27,8 +28,8 @@ test("声音输出下拉继续复用设置页的自绘触发器和滚动列表",
   const source = read("src/components/SettingsPanel.tsx");
   const listSelectSource = read("src/components/SettingsListSelect.tsx");
   const css = read("src/App.css");
-  assert.match(source, /SharedSettingsListSelect[\s\S]*?ariaLabel="主播输出设备"/);
-  assert.match(source, /SharedSettingsListSelect[\s\S]*?ariaLabel="观众输出设备"/);
+  assert.match(source, /SharedSettingsListSelect[\s\S]*?ariaLabel=["']主播输出设备["']/);
+  assert.match(source, /SharedSettingsListSelect[\s\S]*?ariaLabel=["']观众输出设备["']/);
   assert.match(listSelectSource, /role="combobox"/);
   assert.match(listSelectSource, /role="listbox"/);
   assert.match(listSelectSource, /onFocus\?: \(\) => void/);
@@ -43,7 +44,7 @@ test("保存的设备暂时不可用时不会伪装成跟随系统默认设备",
   const listSelectSource = read("src/components/SettingsListSelect.tsx");
   assert.match(listSelectSource, /selectedOptionIndex/);
   assert.match(listSelectSource, /设备不可用/);
-  assert.match(listSelectSource, /selectedOption\?\.label \?\? "设备不可用"/);
+  assert.match(listSelectSource, /selectedOption\?\.label \?\? ["']设备不可用["']/);
 });
 
 test("输出设备不被初始化逻辑写死，播放时保留跟随系统默认设备的语义", () => {

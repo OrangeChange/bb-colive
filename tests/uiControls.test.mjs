@@ -1,10 +1,11 @@
+import { readUiSourceAsync } from "./helpers/readUiSource.mjs";
 import assert from "node:assert/strict";
 import fs from "node:fs/promises";
 import test from "node:test";
 
 async function read(path) {
   try {
-    return await fs.readFile(new URL(`../${path}`, import.meta.url), "utf8");
+    return await readUiSourceAsync(new URL(`../${path}`, import.meta.url), "utf8");
   } catch (error) {
     if (error?.code === "ENOENT") return "";
     throw error;
@@ -149,7 +150,7 @@ test("现场和回看筛选不再使用浏览器原生选择器浮层", async ()
 test("现场工具按钮和搜索框使用紧凑统一高度", async () => {
   const liveFilterBar = await read("src/components/LiveFilterBar.tsx");
   assert.match(liveFilterBar, /filterButtonBase\s*=\s*"[^"]*h-8/);
-  assert.match(liveFilterBar, /<UiSearchInput\b[^>]*aria-label="搜索现场事件内容"/);
+  assert.match(liveFilterBar, /<UiSearchInput\b[^>]*aria-label=["']搜索现场事件内容["']/);
   const searchInput = await read("src/components/ui/SearchInput.tsx");
   assert.match(searchInput, /ui-search-field[^`]*\bh-8\b/);
 });

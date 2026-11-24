@@ -1,3 +1,4 @@
+import { uiText } from "../i18n/index.ts";
 import { invoke } from "@tauri-apps/api/core";
 import type { VoiceInfo, VoiceSynthesisRequest } from "./voiceTypes.ts";
 import { VoiceProviderError, type VoiceProvider } from "./voiceProvider.ts";
@@ -23,14 +24,14 @@ function isRecord(value: unknown): value is Record<string, unknown> {
 
 function getVoiceGroup(locale: string, shortName: string): { group: string; multilingual: boolean } | null {
   const multilingual = shortName.includes("Multilingual");
-  if (multilingual && locale === "en-US") return { group: "多语言音色", multilingual: true };
-  if (locale === "zh-CN") return { group: "中文（普通话）", multilingual };
-  if (locale === "zh-HK") return { group: "中文（粤语）", multilingual };
-  if (locale === "zh-TW") return { group: "中文（台湾）", multilingual };
-  if (locale.startsWith("zh-CN-")) return { group: "中文（方言）", multilingual };
-  if (locale === "en-US") return { group: "English（美国）", multilingual };
-  if (locale === "en-GB") return { group: "English（英国）", multilingual };
-  if (locale === "ja-JP") return { group: "日本語", multilingual };
+  if (multilingual && locale === "en-US") return { group: uiText("edgeOnlineProvider.getVoiceGroup.group"), multilingual: true };
+  if (locale === "zh-CN") return { group: uiText("edgeOnlineProvider.getVoiceGroup.group2"), multilingual };
+  if (locale === "zh-HK") return { group: uiText("edgeOnlineProvider.getVoiceGroup.group3"), multilingual };
+  if (locale === "zh-TW") return { group: uiText("edgeOnlineProvider.getVoiceGroup.group4"), multilingual };
+  if (locale.startsWith("zh-CN-")) return { group: uiText("edgeOnlineProvider.getVoiceGroup.group5"), multilingual };
+  if (locale === "en-US") return { group: uiText("edgeOnlineProvider.getVoiceGroup.group6"), multilingual };
+  if (locale === "en-GB") return { group: uiText("edgeOnlineProvider.getVoiceGroup.group7"), multilingual };
+  if (locale === "ja-JP") return { group: uiText("edgeOnlineProvider.getVoiceGroup.group8"), multilingual };
   return null;
 }
 
@@ -56,7 +57,7 @@ export function createEdgeOnlineProvider(dependencies: EdgeProviderDependencies 
 
   return {
     async listVoices(): Promise<VoiceInfo[]> {
-      if (!fetchImpl) throw new VoiceProviderError(PROVIDER_NAME, "unavailable", "当前环境没有可用的网络请求能力", false);
+      if (!fetchImpl) throw new VoiceProviderError(PROVIDER_NAME, "unavailable", uiText("edgeOnlineProvider.createEdgeOnlineProvider.listVoices"), false);
       try {
         const response = await fetchImpl(`${VOICE_LIST_ENDPOINT}?trustedclienttoken=${TRUSTED_CLIENT_TOKEN}`, {
           headers: { Accept: "application/json", "User-Agent": userAgent },
@@ -67,12 +68,12 @@ export function createEdgeOnlineProvider(dependencies: EdgeProviderDependencies 
       } catch (error) {
         if (error instanceof VoiceProviderError) throw error;
         const detail = error instanceof Error ? error.message : String(error);
-        throw new VoiceProviderError(PROVIDER_NAME, "network", `Edge 在线音色列表获取失败：${detail}`, true);
+        throw new VoiceProviderError(PROVIDER_NAME, "network", uiText("edgeOnlineProvider.createEdgeOnlineProvider.listVoices2", { detail: detail }), true);
       }
     },
 
     async synthesize(request: VoiceSynthesisRequest): Promise<Uint8Array> {
-      if (!request.text.trim()) throw new VoiceProviderError(PROVIDER_NAME, "invalid", "没有可播报的文字", false);
+      if (!request.text.trim()) throw new VoiceProviderError(PROVIDER_NAME, "invalid", uiText("edgeOnlineProvider.createEdgeOnlineProvider.synthesize"), false);
       try {
         const bytes = await invokeImpl<number[]>("synthesize_edge_speech", {
           text: request.text,
@@ -85,7 +86,7 @@ export function createEdgeOnlineProvider(dependencies: EdgeProviderDependencies 
       } catch (error) {
         if (error instanceof VoiceProviderError) throw error;
         const detail = error instanceof Error ? error.message : String(error);
-        throw new VoiceProviderError(PROVIDER_NAME, "protocol", `Edge 在线语音合成失败：${detail}`, true);
+        throw new VoiceProviderError(PROVIDER_NAME, "protocol", uiText("edgeOnlineProvider.createEdgeOnlineProvider.synthesize2", { detail: detail }), true);
       }
     },
 

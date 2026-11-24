@@ -1,3 +1,4 @@
+import { uiText } from "./i18n/index.ts";
 import type { ConnState } from "./protocol/types";
 
 const APP_NAME = "BB CoLive";
@@ -7,15 +8,15 @@ type WindowTitleState = Pick<ConnState, "status" | "anchorName" | "roomId" | "li
 function subjectLabel(state: WindowTitleState): string | null {
   const name = state.anchorName?.trim();
   if (name) return name;
-  if (state.roomId) return `房间 ${state.roomId}`;
+  if (state.roomId) return uiText("windowTitle.subjectLabel", { roomId: state.roomId });
   return null;
 }
 
 function connectedLabel(liveStatus: WindowTitleState["liveStatus"]): string {
-  if (liveStatus === 1) return "直播中";
-  if (liveStatus === 2) return "轮播";
-  if (liveStatus === 0) return "未开播";
-  return "已连接";
+  if (liveStatus === 1) return uiText("windowTitle.connectedLabel");
+  if (liveStatus === 2) return uiText("windowTitle.connectedLabel2");
+  if (liveStatus === 0) return uiText("windowTitle.connectedLabel3");
+  return uiText("windowTitle.connectedLabel4");
 }
 
 /** 生成 Windows 原生窗口标题；只反映连接生命周期，不随事件流刷新。 */
@@ -29,13 +30,13 @@ export function getWindowTitle(state: WindowTitleState): string {
 
   const status =
     state.status === "connecting"
-      ? "连接中"
+      ? uiText("windowTitle.getWindowTitle.status")
       : state.status === "reconnecting"
-        ? "重连中"
+        ? uiText("windowTitle.getWindowTitle.status2")
         : state.status === "error"
-          ? "连接失败"
+          ? uiText("windowTitle.getWindowTitle.status3")
           : state.status === "closed"
-            ? "未连接"
+            ? uiText("windowTitle.getWindowTitle.status4")
             : connectedLabel(state.liveStatus);
 
   return `${subject} · ${status} · ${APP_NAME}`;

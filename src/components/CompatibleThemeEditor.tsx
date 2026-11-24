@@ -1,3 +1,4 @@
+import { uiText } from "../i18n/index.ts";
 import { ThemeVisualScope } from "./ThemeVisualScope.tsx";
 import { SettingsIcon } from "./SettingsIcon";
 import {resolveThemeImageDecorations,clearThemeImageDecorations,imageEventParents} from "../themes/themeImageDecorations.ts";
@@ -97,9 +98,9 @@ export function compatiblePlacementOptions(
   capability: CompatibleThemeCapabilityMap,
 ) {
   const labels: Record<CompatiblePlacement, string> = {
-    main: "主消息区",
-    sticky: "置顶栏",
-    detail: "展开详情",
+    main: uiText("compatibleThemeEditor.compatiblePlacementOptions.labels.main"),
+    sticky: uiText("compatibleThemeEditor.compatiblePlacementOptions.labels.sticky"),
+    detail: uiText("compatibleThemeEditor.compatiblePlacementOptions.labels.detail"),
   };
   return (["main", "sticky", "detail"] as const)
     .filter(
@@ -121,6 +122,7 @@ export function CompatibleThemeEditor({
   visualCss,
   customCss,
   cssMessage,
+  cssMessageKind,
   fontFamilyOptions,
   basicControls,
   advancedControls,
@@ -158,6 +160,7 @@ export function CompatibleThemeEditor({
   visualCss: string;
   customCss: string;
   cssMessage: string;
+  cssMessageKind?: "error" | "notice";
   fontFamilyOptions: string[];
   basicControls?: ReactNode;
   advancedControls?: ReactNode;
@@ -341,7 +344,7 @@ export function CompatibleThemeEditor({
   }, [eventOptions, selection.event]);
   const identityOptions = useMemo(
     () => [
-      { value: "all", label: "所有用户" },
+      { value: "all", label: uiText("compatibleThemeEditor.CompatibleThemeEditor.identityOptions.label") },
       ...["normal", "captain", "admiral", "governor", "anchor", "streamer", "moderator"]
         .filter((value) => capability.identitySelectors?.[value] !== undefined)
         .map((value) => ({
@@ -409,7 +412,7 @@ export function CompatibleThemeEditor({
     const authored=settings.visualAuthored?.[editScheme]?.[key]?.includes(property);
     const complex=!pending && (authored || inspected?.controlled || inspected && !inspected.mixed && property!=="visible" && property!=="fontFamily" && !["color","background","borderColor","borderImage"].includes(property) && typeof value!=="number" && value!=="normal" && value!=="auto");
     const missing=Boolean(current&&!Object.keys(current.computed).length);
-    const status=missing?"当前样例没有此部件":inspected?.mixed?"混合值":complex?"由 CSS 控制":control.direct?"当前层覆盖":editScheme==="common"?"继承主题":"继承自通用";
+    const status=missing?uiText("compatibleThemeEditor.CompatibleThemeEditor.renderControl.status"):inspected?.mixed?uiText("compatibleThemeEditor.CompatibleThemeEditor.renderControl.status2"):complex?uiText("compatibleThemeEditor.CompatibleThemeEditor.renderControl.status3"):control.direct?uiText("compatibleThemeEditor.CompatibleThemeEditor.renderControl.status4"):editScheme==="common"?uiText("compatibleThemeEditor.CompatibleThemeEditor.renderControl.status5"):uiText("compatibleThemeEditor.CompatibleThemeEditor.renderControl.status6");
     return <ThemeVisualPropertyField saved={!dirty} key={`${visualInteractionKey}|${property}`} property={property} imageScale={document.mode==="laplace"?{variable:"--event-base-size",value:Number(settings.baseFontSize)||20}:document.mode==="blivechat"?{variable:"--blc-g",value:Number(settings.globalScale)||1}:undefined} value={value} status={status} mixed={!pending&&inspected?.mixed} missing={missing} controlled={Boolean(complex)} unit={expectedUnit==="px"?"px":undefined}
       fontFamilyOptions={fontFamilyOptions} onOpenFonts={onOpenFonts??(()=>{})} onChange={value=>{setTransientModel(null);setTransientAuthored(null);update(property,{source:"custom",value});}}
       onPreviewChange={value=>previewUpdate(property,{source:"custom",value})} onPreviewCancel={()=>{setTransientModel(null);setTransientAuthored(null);}} onRestore={control.direct||authored?()=>update(property,{source:"inherit"}):undefined}/>;
@@ -417,11 +420,11 @@ export function CompatibleThemeEditor({
   const activeNavigation = findCompatibleNavigation(capability, selection, navigationId);
   const globalScope = part?.scope === "global";
   const staffFirst = ["anchor","streamer","moderator"].includes(capability.identityPriority?.[0] ?? "");
-  const priorityControl = <div className="native-scope-setting native-identity-priority"><span>身份优先级</span><UiSelect ariaLabel="身份样式优先级" value={staffFirst?"staff-first":"guard-first"} onValueChange={next=>{
+  const priorityControl = <div className="native-scope-setting native-identity-priority"><span>{uiText("compatibleThemeEditor.CompatibleThemeEditor.priorityControl")}</span><UiSelect ariaLabel={uiText("compatibleThemeEditor.ariaLabel")} value={staffFirst?"staff-first":"guard-first"} onValueChange={next=>{
     const ids=Object.keys(capability.identitySelectors??{}).filter(id=>id!=="all");
     const staff=ids.filter(id=>["anchor","streamer","moderator"].includes(id)),guards=ids.filter(id=>!["anchor","streamer","moderator","normal"].includes(id));
     onSettingsChange({...settings,identityPriority:next==="staff-first"?[...staff,...guards,...ids.filter(id=>id==="normal")]:[...guards,...staff,...ids.filter(id=>id==="normal")]});
-  }} options={[{value:"guard-first",label:"大航海优先"},{value:"staff-first",label:"房管／主播优先"}]}/></div>;
+  }} options={[{value:"guard-first",label:uiText("compatibleThemeEditor.options.label")},{value:"staff-first",label:uiText("compatibleThemeEditor.options.label2")}]}/></div>;
   const navigationNodes = (items: readonly CompatibleNavigationItem[]): ThemeVisualNavigationNode[] => items.map(item=>({
     id:item.id,label:compatibleNavigationItemLabel(item),part:item.part,active:activeNavigation?.item.id===item.id && activeNavigation.item.placement===item.placement && activeNavigation.item.event===item.event,
     children:item.children ? navigationNodes(item.children) : undefined,
@@ -432,7 +435,7 @@ export function CompatibleThemeEditor({
       <StylePreviewToolbar
         eventValues={previewEventKinds}
         onEventsChange={setPreviewEventKinds}
-        eventOptions={["混合流", "弹幕", "互动", "礼物", "红包/天选", "醒目留言", "大航海", "系统"].map(value => ({value,label:value}))}
+        eventOptions={[uiText("compatibleThemeEditor.eventOptions"), uiText("compatibleThemeEditor.eventOptions2"), uiText("compatibleThemeEditor.eventOptions3"), uiText("compatibleThemeEditor.eventOptions4"), uiText("compatibleThemeEditor.eventOptions5"), uiText("compatibleThemeEditor.eventOptions6"), uiText("compatibleThemeEditor.eventOptions7"), uiText("compatibleThemeEditor.eventOptions8")].map(value => ({value,label:value}))}
         scheme={previewScheme}
         motion={previewMotion}
         supportedMotions={["static", "design", "dynamic"]}
@@ -485,7 +488,7 @@ export function CompatibleThemeEditor({
   );
   return (
     <div className="native-theme-editor compatible-theme-editor">
-      <ThemeEditorHeader dirty={dirty} saving={saving} document={document} description={`${getThemeModeDefinition(document.mode).label} · 现场、副窗口和 OBS`} onBack={onBack} onEditMetadata={onEditMetadata} onApply={onApply} applyLabel={applyLabel} applyTargets={applyTargets} draftStatus={draftStatus} onRetryDraft={onRetryDraft} onSaveAs={onSaveAs} onRestore={onRestore} />
+      <ThemeEditorHeader dirty={dirty} saving={saving} document={document} description={uiText("compatibleThemeEditor.description", { label: getThemeModeDefinition(document.mode).label })} onBack={onBack} onEditMetadata={onEditMetadata} onApply={onApply} applyLabel={applyLabel} applyTargets={applyTargets} draftStatus={draftStatus} onRetryDraft={onRetryDraft} onSaveAs={onSaveAs} onRestore={onRestore} />
       <ThemeEditorTabs section={section} onChange={(value) => { setSection(value); setEditorInspection(null); if (value !== "visual") setRevealPart(null); }} />
       <ThemeEditorContent section={section}>
         {section === "basic" ? (
@@ -493,41 +496,41 @@ export function CompatibleThemeEditor({
             {basicControls ?? (
               <section className="native-editor-section">
                 <header>
-                  <h3><SettingsIcon name="模式设置" />模式设置</h3>
-                  <p>该模式没有额外基础设置。</p>
+                  <h3><SettingsIcon name="mode" />{uiText("compatibleThemeEditor.CompatibleThemeEditor")}</h3>
+                  <p>{uiText("compatibleThemeEditor.CompatibleThemeEditor2")}</p>
                 </header>
               </section>
             )}
           </div>
         ) : section === "visual" ? (
           <div className="native-visual-editor">
-            {document.mode !== "laplace" && (Object.keys(model.light).length > 0 || Object.keys(model.dark).length > 0) && <p role="status">此样式的可视化编辑仅支持通用配色。已有深浅色规则已保留，可在高级编辑中修改；实际输出不保证应用这些规则。</p>}
-            <ThemeVisualScope summary={`${eventOptions.find(option=>option.value===selection.event)?.label??selection.event} · ${identityOptions.find(option=>option.value===selection.identity)?.label??selection.identity}`}><div className="native-scope-strip">{globalScope ? <div className="native-global-scope"><span>适用范围</span><strong>全部事件与所有用户</strong><div className="native-scope-setting native-edit-scheme"><span>编辑配色</span>{document.mode !== "laplace" ? <strong className="native-fixed-scheme">通用</strong> : <UiSelect ariaLabel="编辑配色" value={editScheme} onValueChange={(next) => setEditScheme(next as NativeVisualScheme)} options={document.mode === "laplace" ? [{ value: "common", label: "通用" }, { value: "light", label: "浅色" }, { value: "dark", label: "深色" }] : [{ value: "common", label: "通用" }]} />}</div>{priorityControl}</div> : <>
+            {document.mode !== "laplace" && (Object.keys(model.light).length > 0 || Object.keys(model.dark).length > 0) && <p role="status">{uiText("compatibleThemeEditor.CompatibleThemeEditor3")}</p>}
+            <ThemeVisualScope summary={`${eventOptions.find(option=>option.value===selection.event)?.label??selection.event} · ${identityOptions.find(option=>option.value===selection.identity)?.label??selection.identity}`}><div className="native-scope-strip">{globalScope ? <div className="native-global-scope"><span>{uiText("compatibleThemeEditor.CompatibleThemeEditor4")}</span><strong>{uiText("compatibleThemeEditor.CompatibleThemeEditor5")}</strong><div className="native-scope-setting native-edit-scheme"><span>{uiText("compatibleThemeEditor.CompatibleThemeEditor6")}</span>{document.mode !== "laplace" ? <strong className="native-fixed-scheme">{uiText("compatibleThemeEditor.CompatibleThemeEditor7")}</strong> : <UiSelect ariaLabel={uiText("compatibleThemeEditor.ariaLabel2")} value={editScheme} onValueChange={(next) => setEditScheme(next as NativeVisualScheme)} options={document.mode === "laplace" ? [{ value: "common", label: uiText("compatibleThemeEditor.options.label3") }, { value: "light", label: uiText("common.light") }, { value: "dark", label: uiText("common.dark") }] : [{ value: "common", label: uiText("compatibleThemeEditor.options.label3") }]} />}</div>{priorityControl}</div> : <>
               <div className="native-scope-compact">
-                <div className="native-scope-setting"><span>事件范围</span><UiSelect ariaLabel="事件范围" value={selection.event} options={eventOptions} onValueChange={event=>setSelection(current=>({...current,event}))} /></div>
-                <div className="native-scope-setting"><span>编辑配色</span>{document.mode !== "laplace" ? <strong className="native-fixed-scheme">通用</strong> : <UiSelect ariaLabel="编辑配色" value={editScheme} onValueChange={next=>setEditScheme(next as NativeVisualScheme)} options={[{value:"common",label:"通用"},{value:"light",label:"浅色"},{value:"dark",label:"深色"}]} />}</div>
-                <div className="native-scope-setting"><span>用户身份</span><UiSelect ariaLabel="用户身份" value={selection.identity} options={identityOptions} onValueChange={identity=>setSelection(current=>({...current,identity}))} /></div>
+                <div className="native-scope-setting"><span>{uiText("compatibleThemeEditor.CompatibleThemeEditor8")}</span><UiSelect ariaLabel={uiText("compatibleThemeEditor.ariaLabel3")} value={selection.event} options={eventOptions} onValueChange={event=>setSelection(current=>({...current,event}))} /></div>
+                <div className="native-scope-setting"><span>{uiText("compatibleThemeEditor.CompatibleThemeEditor6")}</span>{document.mode !== "laplace" ? <strong className="native-fixed-scheme">{uiText("compatibleThemeEditor.CompatibleThemeEditor7")}</strong> : <UiSelect ariaLabel={uiText("compatibleThemeEditor.ariaLabel2")} value={editScheme} onValueChange={next=>setEditScheme(next as NativeVisualScheme)} options={[{value:"common",label:uiText("compatibleThemeEditor.options.label3")},{value:"light",label:uiText("common.light")},{value:"dark",label:uiText("common.dark")}]} />}</div>
+                <div className="native-scope-setting"><span>{uiText("compatibleThemeEditor.CompatibleThemeEditor9")}</span><UiSelect ariaLabel={uiText("compatibleThemeEditor.ariaLabel4")} value={selection.identity} options={identityOptions} onValueChange={identity=>setSelection(current=>({...current,identity}))} /></div>
                 {priorityControl}
               </div>
-              <div className="native-event-scope-primary"><span>事件范围</span><button type="button" className={selection.event === "all" ? "is-active" : ""} onClick={() => setSelection(current => ({ ...current, event: "all" }))}>全部事件</button>{eventScopes.map(scope => <button type="button" className={activeEventScope?.id === scope.id ? "is-active" : ""} onClick={() => setSelection(current => ({ ...current, event: scope.id }))} key={scope.id}>{scope.label}</button>)}<div className="native-scope-setting native-edit-scheme"><span>编辑配色</span>{document.mode !== "laplace" ? <strong className="native-fixed-scheme">通用</strong> : <UiSelect ariaLabel="编辑配色" value={editScheme} onValueChange={(next) => setEditScheme(next as NativeVisualScheme)} options={document.mode === "laplace" ? [{ value: "common", label: "通用" }, { value: "light", label: "浅色" }, { value: "dark", label: "深色" }] : [{ value: "common", label: "通用" }]} />}</div></div>
-              {(activeEventScope?.children?.length ?? 0) > 0 && <div className="native-event-scope-children"><span>子分类</span>{activeEventScope?.children?.map(child => <button type="button" className={selection.event === child.id ? "is-active" : ""} onClick={() => setSelection(current => ({ ...current, event: child.id }))} key={child.id}>{child.label}</button>)}</div>}
-              <div className="native-identity-scope"><span>用户身份</span>{identityOptions.map(option => <button type="button" className={selection.identity === option.value ? "is-active" : ""} onClick={() => setSelection(current => ({ ...current, identity: option.value }))} key={option.value}>{option.label}</button>)}{priorityControl}</div>
+              <div className="native-event-scope-primary"><span>{uiText("compatibleThemeEditor.CompatibleThemeEditor8")}</span><button type="button" className={selection.event === "all" ? "is-active" : ""} onClick={() => setSelection(current => ({ ...current, event: "all" }))}>{uiText("compatibleThemeEditor.CompatibleThemeEditor10")}</button>{eventScopes.map(scope => <button type="button" className={activeEventScope?.id === scope.id ? "is-active" : ""} onClick={() => setSelection(current => ({ ...current, event: scope.id }))} key={scope.id}>{scope.label}</button>)}<div className="native-scope-setting native-edit-scheme"><span>{uiText("compatibleThemeEditor.CompatibleThemeEditor6")}</span>{document.mode !== "laplace" ? <strong className="native-fixed-scheme">{uiText("compatibleThemeEditor.CompatibleThemeEditor7")}</strong> : <UiSelect ariaLabel={uiText("compatibleThemeEditor.ariaLabel2")} value={editScheme} onValueChange={(next) => setEditScheme(next as NativeVisualScheme)} options={document.mode === "laplace" ? [{ value: "common", label: uiText("compatibleThemeEditor.options.label3") }, { value: "light", label: uiText("common.light") }, { value: "dark", label: uiText("common.dark") }] : [{ value: "common", label: uiText("compatibleThemeEditor.options.label3") }]} />}</div></div>
+              {(activeEventScope?.children?.length ?? 0) > 0 && <div className="native-event-scope-children"><span>{uiText("compatibleThemeEditor.CompatibleThemeEditor11")}</span>{activeEventScope?.children?.map(child => <button type="button" className={selection.event === child.id ? "is-active" : ""} onClick={() => setSelection(current => ({ ...current, event: child.id }))} key={child.id}>{child.label}</button>)}</div>}
+              <div className="native-identity-scope"><span>{uiText("compatibleThemeEditor.CompatibleThemeEditor9")}</span>{identityOptions.map(option => <button type="button" className={selection.identity === option.value ? "is-active" : ""} onClick={() => setSelection(current => ({ ...current, identity: option.value }))} key={option.value}>{option.label}</button>)}{priorityControl}</div>
 </>}</div></ThemeVisualScope>
             <div className="native-visual-body native-visual-layout">
               <ThemeVisualNavigation groups={navigationGroups.map(group=>({...group,items:navigationNodes(group.items)}))} />
-              <ThemeVisualPropertyPanel imageTarget={{root:previewCanvasNode,selector:compatibleSelectorFor(capability,`${selection.event}|${selection.identity}|${selection.placement??'main'}|${selection.part==='avatarFrame'?'avatarWrap':selection.part}`,editScheme)??''}} title={part?.label ?? selection.part} context={[...(globalScope ? [{label:"范围",value:"全局"}] : [{label:"事件",value:eventOptions.find(option=>option.value===selection.event)?.label??selection.event},{label:"身份",value:identityOptions.find(option=>option.value===selection.identity)?.label??selection.identity}]),{label:"部件",value:activeNavigation?.path.join(" / ")??part?.label??selection.part,path:true},{label:"配色",value:editScheme==="common"?"通用":editScheme==="light"?"浅色":"深色"}]} canRestore={Boolean(settings.imageDecorations?.[`${editScheme}|${selection.event}|${selection.identity}|${selection.placement ?? "main"}|${selection.part}`] || model[editScheme][`${selection.event}|${selection.identity}|${selection.placement ?? "main"}|${selection.part}`] || settings.visualAuthored?.[editScheme]?.[`${selection.event}|${selection.identity}|${selection.placement ?? "main"}|${selection.part}`])} onRestore={restoreCurrentTarget}>
-                {applicable && !part?.properties.includes("fontFamily") && ["event", "allEvents", "contentArea", "body", "card", "cardHeader", "cardHeaderContent"].includes(selection.part) && <div className="native-text-edit-links"><span>容器控制布局，文字请分别编辑：</span>{[["username", "用户名"], ["message", "正文"]].filter(([id]) => capability.parts[id]?.properties.includes("fontFamily")).map(([id, label]) => <button type="button" key={id} onClick={() => { setSelection(current => ({ ...current, part: id, eventId: undefined })); setRevealPart(id); }}>{label}</button>)}</div>}
-                {currentInspection&&Object.values(currentInspection.computed).some(value=>value?.applicable===false)&&<p role="status">部分设置不适用于此部件当前的排版。</p>}
-                {!applicable && <p role="status">此部件不适用于当前事件，请选择其他部件。</p>}
+              <ThemeVisualPropertyPanel imageTarget={{root:previewCanvasNode,selector:compatibleSelectorFor(capability,`${selection.event}|${selection.identity}|${selection.placement??'main'}|${selection.part==='avatarFrame'?'avatarWrap':selection.part}`,editScheme)??''}} title={part?.label ?? selection.part} context={[...(globalScope ? [{label:uiText("compatibleThemeEditor.context.label"),value:uiText("compatibleThemeEditor.context.value")}] : [{label:uiText("compatibleThemeEditor.context.label2"),value:eventOptions.find(option=>option.value===selection.event)?.label??selection.event},{label:uiText("compatibleThemeEditor.context.label3"),value:identityOptions.find(option=>option.value===selection.identity)?.label??selection.identity}]),{label:uiText("compatibleThemeEditor.context.label4"),value:activeNavigation?.path.join(" / ")??part?.label??selection.part,path:true},{label:uiText("compatibleThemeEditor.context.label5"),value:editScheme==="common"?uiText("compatibleThemeEditor.context.value2"):editScheme==="light"?uiText("common.light"):uiText("common.dark")}]} canRestore={Boolean(settings.imageDecorations?.[`${editScheme}|${selection.event}|${selection.identity}|${selection.placement ?? "main"}|${selection.part}`] || model[editScheme][`${selection.event}|${selection.identity}|${selection.placement ?? "main"}|${selection.part}`] || settings.visualAuthored?.[editScheme]?.[`${selection.event}|${selection.identity}|${selection.placement ?? "main"}|${selection.part}`])} onRestore={restoreCurrentTarget}>
+                {applicable && !part?.properties.includes("fontFamily") && ["event", "allEvents", "contentArea", "body", "card", "cardHeader", "cardHeaderContent"].includes(selection.part) && <div className="native-text-edit-links"><span>{uiText("compatibleThemeEditor.CompatibleThemeEditor12")}</span>{[["username", uiText("compatibleThemeEditor.CompatibleThemeEditor13")], ["message", uiText("compatibleThemeEditor.CompatibleThemeEditor14")]].filter(([id]) => capability.parts[id]?.properties.includes("fontFamily")).map(([id, label]) => <button type="button" key={id} onClick={() => { setSelection(current => ({ ...current, part: id, eventId: undefined })); setRevealPart(id); }}>{label}</button>)}</div>}
+                {currentInspection&&Object.values(currentInspection.computed).some(value=>value?.applicable===false)&&<p role="status">{uiText("compatibleThemeEditor.CompatibleThemeEditor15")}</p>}
+                {!applicable && <p role="status">{uiText("compatibleThemeEditor.CompatibleThemeEditor16")}</p>}
                 {applicable&&<ThemeDecorationField inherited={!Object.prototype.hasOwnProperty.call(settings.imageDecorations??{},`${editScheme}|${selection.event}|${selection.identity}|${selection.placement??'main'}|${selection.part}`)} onPreviewInherit={()=>setTransientImages(clearThemeImageDecorations(settings.imageDecorations,`${editScheme}|${selection.event}|${selection.identity}|${selection.placement??'main'}|${selection.part}`))} scale={document.mode==="laplace"?{variable:"--event-base-size",value:Number(settings.baseFontSize)||20}:document.mode==="blivechat"?{variable:"--blc-g",value:Number(settings.globalScale)||1}:undefined} avatarFrame={selection.part==='avatarFrame'} root={previewCanvasNode} selector={compatibleSelectorFor(capability,`${selection.event}|${selection.identity}|${selection.placement??'main'}|${selection.part==='avatarFrame'?'avatarWrap':selection.part}`,editScheme)??''} images={resolveThemeImageDecorations(settings.imageDecorations,`${editScheme}|${selection.event}|${selection.identity}|${selection.placement??'main'}|${selection.part}`,imageEventParents(selection.event,capability.eventGroups))} onInherit={()=>onSettingsChange({...settings,imageDecorations:clearThemeImageDecorations(settings.imageDecorations,`${editScheme}|${selection.event}|${selection.identity}|${selection.placement??'main'}|${selection.part}`)})} onPreviewCancel={()=>setTransientImages(null)} onPreviewChange={images=>setTransientImages({...settings.imageDecorations,[`${editScheme}|${selection.event}|${selection.identity}|${selection.placement??'main'}|${selection.part}`]:images})} onChange={images=>onSettingsChange({...settings,imageDecorations:{...settings.imageDecorations,[`${editScheme}|${selection.event}|${selection.identity}|${selection.placement??'main'}|${selection.part}`]:images}})}/>}
-                <div className="native-property-sections">{(selection.part==="avatarFrame"?[]:propertyGroups).map((group) => <details key={group.id} open={expandedPropertyGroups.has(group.id)}><summary onClick={(event) => { event.preventDefault(); setExpandedPropertyGroups((current) => { const next = new Set(current); next.has(group.id) ? next.delete(group.id) : next.add(group.id); return next; }); }}><SettingsIcon name={group.label} />{group.label}</summary><div className="native-property-grid">{group.properties.map(renderControl)}</div></details>)}</div>
+                <div className="native-property-sections">{(selection.part==="avatarFrame"?[]:propertyGroups).map((group) => <details key={group.id} open={expandedPropertyGroups.has(group.id)}><summary onClick={(event) => { event.preventDefault(); setExpandedPropertyGroups((current) => { const next = new Set(current); next.has(group.id) ? next.delete(group.id) : next.add(group.id); return next; }); }}><SettingsIcon name={group.id === "display" ? "visibility" : group.id} />{group.label}</summary><div className="native-property-grid">{group.properties.map(renderControl)}</div></details>)}</div>
               </ThemeVisualPropertyPanel>
             </div>
           </div>
         ) : (
           <ThemeAdvancedEditorBoundary onReturn={() => setSection("basic")}><Suspense
             fallback={
-              <div className="theme-editor-empty">正在打开高级编辑…</div>
+              <div className="theme-editor-empty">{uiText("compatibleThemeEditor.fallback")}</div>
             }
           >
             {advancedControls}
@@ -536,6 +539,7 @@ export function CompatibleThemeEditor({
               visualCss={visualCss}
               customCss={customCss}
               cssMessage={cssMessage}
+              cssMessageKind={cssMessageKind}
               onCustomCssChange={onCustomCssChange}
               onVisualCssChange={onVisualCssChange}
               onSave={onSave}

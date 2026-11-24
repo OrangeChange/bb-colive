@@ -1,3 +1,4 @@
+import { uiText } from "../i18n/index.ts";
 import { X as LucideX, Check, Pipette, Eraser } from "lucide-react";
 import { useEffect, useMemo, useRef, useState } from "react";
 import { createPortal } from "react-dom";
@@ -11,12 +12,12 @@ import { createThemeColorDragInteraction } from "./themeColorInteraction.ts";
 
 type EyeDropperConstructor = new () => { open: () => Promise<{ sRGBHex: string }> };
 const COLOR_PRESETS = [
-  { label: "白色", value: "#ffffff" }, { label: "黑色", value: "#000000" },
-  { label: "B站粉", value: "#fb7299" }, { label: "紫色", value: "#7c3aed" },
-  { label: "蓝色", value: "#23ade5" }, { label: "靛蓝", value: "#6366f1" },
-  { label: "青瓷绿", value: "#4c9a8d" }, { label: "青绿", value: "#14b8a6" },
-  { label: "琥珀", value: "#f59e0b" }, { label: "橙色", value: "#f97316" },
-  { label: "珊瑚红", value: "#ef4444" }, { label: "灰蓝", value: "#64748b" },
+  { label: uiText("themeColorField.COLOR_PRESETS.label"), value: "#ffffff" }, { label: uiText("themeColorField.COLOR_PRESETS.label2"), value: "#000000" },
+  { label: uiText("themeColorField.COLOR_PRESETS.label3"), value: "#fb7299" }, { label: uiText("themeColorField.COLOR_PRESETS.label4"), value: "#7c3aed" },
+  { label: uiText("themeColorField.COLOR_PRESETS.label5"), value: "#23ade5" }, { label: uiText("themeColorField.COLOR_PRESETS.label6"), value: "#6366f1" },
+  { label: uiText("themeColorField.COLOR_PRESETS.label7"), value: "#4c9a8d" }, { label: uiText("themeColorField.COLOR_PRESETS.label8"), value: "#14b8a6" },
+  { label: uiText("themeColorField.COLOR_PRESETS.label9"), value: "#f59e0b" }, { label: uiText("themeColorField.COLOR_PRESETS.label10"), value: "#f97316" },
+  { label: uiText("themeColorField.COLOR_PRESETS.label11"), value: "#ef4444" }, { label: uiText("themeColorField.COLOR_PRESETS.label12"), value: "#64748b" },
 ] as const;
 
 export function ThemeColorField({ value, onChange, onPreviewChange, onPreviewCancel, label, allowTransparent = true, opaque = false, mixed = false, inline = false }: { opaque?: boolean; inline?: boolean; value: string; onChange: (value: string) => void; onPreviewChange?: (value: string) => void; onPreviewCancel?: () => void; label: string; allowTransparent?: boolean; mixed?: boolean }) {
@@ -130,10 +131,10 @@ export function ThemeColorField({ value, onChange, onPreviewChange, onPreviewCan
     };
   }, [open]);
 
-  const editor = <div ref={panel} className={`theme-color-popover${inline ? " is-inline" : ""}`} role={inline ? "group" : "dialog"} aria-modal={inline ? undefined : true} aria-label={`${label}面板`} style={inline ? undefined : position ?? undefined}>
+  const editor = <div ref={panel} className={`theme-color-popover${inline ? " is-inline" : ""}`} role={inline ? "group" : "dialog"} aria-modal={inline ? undefined : true} aria-label={uiText("themeColorField.aria_label", { label: label })} style={inline ? undefined : position ?? undefined}>
 
-      {!inline && <div className="theme-color-popover-header"><strong>{label}</strong><button type="button" aria-label="关闭颜色面板" onClick={() => { cancelDrag(); setOpen(false); setPosition(null); trigger.current?.focus(); }}><LucideX aria-hidden="true" width="16" height="16" /></button></div>}
-      <div ref={presets} className="theme-color-presets" role="group" aria-label="常用颜色" onKeyDown={event => {
+      {!inline && <div className="theme-color-popover-header"><strong>{label}</strong><button type="button" aria-label={uiText("themeColorField.aria_label2")} onClick={() => { cancelDrag(); setOpen(false); setPosition(null); trigger.current?.focus(); }}><LucideX aria-hidden="true" width="16" height="16" /></button></div>}
+      <div ref={presets} className="theme-color-presets" role="group" aria-label={uiText("themeColorField.aria_label3")} onKeyDown={event => {
         const buttons = [...event.currentTarget.querySelectorAll<HTMLButtonElement>("button")];
         const index = buttons.indexOf(event.target as HTMLButtonElement);
         if (index < 0) return;
@@ -178,24 +179,24 @@ export function ThemeColorField({ value, onChange, onPreviewChange, onPreviewCan
         }} /> : <RgbaColorPicker color={pickerColor} onChange={(next) => { if (pickerCancelled.current) return; const selected = applyThemeColorPickerChange(pickerColor, next, selectsVisibleColor.current); setPickerColor(selected); const serialized = serializeThemeColor(selected, format); setDraft(serialized); if (draggingPicker.current && onPreviewChange) dragInteraction.move(serialized); else onChange(serialized); }} />}
       </div>
       <div className="theme-color-precise-row">
-        <UiSelect ariaLabel="颜色格式" contentClassName="theme-color-format-menu" value={format} onValueChange={next=>{const selected=next as ThemeColorFormat;setFormat(selected);if(opaque)setDraft(serializeThemeColor(savedColor.current,selected,true));else onChange(serializeThemeColor(color,selected));}} options={[{value:'hex',label:'HEX'},{value:'rgba',label:opaque?'RGB':'RGBA'},{value:'hsla',label:opaque?'HSL':'HSLA'}]}/>
-        {inline && !opaque && <label className="theme-color-opacity"><span>不透明度</span><ThemeNumberInput label="不透明度" value={Number((color.a*100).toFixed(2))} min={0} max={100}
+        <UiSelect ariaLabel={uiText("themeColorField.ariaLabel")} contentClassName="theme-color-format-menu" value={format} onValueChange={next=>{const selected=next as ThemeColorFormat;setFormat(selected);if(opaque)setDraft(serializeThemeColor(savedColor.current,selected,true));else onChange(serializeThemeColor(color,selected));}} options={[{value:'hex',label:'HEX'},{value:'rgba',label:opaque?'RGB':'RGBA'},{value:'hsla',label:opaque?'HSL':'HSLA'}]}/>
+        {inline && !opaque && <label className="theme-color-opacity"><span>{uiText("themeColorField.ThemeColorField.editor")}</span><ThemeNumberInput label={uiText("themeColorField.label")} value={Number((color.a*100).toFixed(2))} min={0} max={100}
           onChange={opacity=>onChange(serializeThemeColor({...color,a:opacity/100},format))}
           onPreviewChange={opacity=>onPreviewChange?.(serializeThemeColor({...color,a:opacity/100},format))} onPreviewCancel={onPreviewCancel}/><span>%</span></label>}
-        <label className="theme-color-precise"><span>精确值</span><input value={draft} onChange={event=>{const next=event.target.value;setDraft(next);if(parseThemeColor(next))onChange(next);}} onBlur={()=>setDraft(opaque?serializeThemeColor(savedColor.current,formatRef.current,true):value)}/></label>
+        <label className="theme-color-precise"><span>{uiText("themeColorField.ThemeColorField.editor2")}</span><input value={draft} onChange={event=>{const next=event.target.value;setDraft(next);if(parseThemeColor(next))onChange(next);}} onBlur={()=>setDraft(opaque?serializeThemeColor(savedColor.current,formatRef.current,true):value)}/></label>
       </div>
       <div className="theme-color-actions">
-        {allowTransparent && !opaque && <button type="button" className="settings-icon-action" aria-label="透明" title="透明" onClick={() => onChange("transparent")}><Eraser size={16} aria-hidden="true" /></button>}
-        <button type="button" className="settings-icon-action" aria-label="取色" disabled={!eyeDropper} title={eyeDropper ? "取色" : "当前环境不支持屏幕取色"} onClick={() => { if (!eyeDropper) return; setEyeDropperError(""); void new eyeDropper().open().then((result) => { const next = parseThemeColor(result.sRGBHex); if (next) onChange(serializeThemeColor(next, format, opaque)); }).catch((error: unknown) => { if (!(error instanceof DOMException && error.name === "AbortError")) setEyeDropperError("取色器未能读取颜色，请重试"); }); }}><Pipette size={16} aria-hidden="true" /></button>
+        {allowTransparent && !opaque && <button type="button" className="settings-icon-action" aria-label={uiText("themeColorField.aria_label4")} title={uiText("themeColorField.title")} onClick={() => onChange("transparent")}><Eraser size={16} aria-hidden="true" /></button>}
+        <button type="button" className="settings-icon-action" aria-label={uiText("themeColorField.aria_label5")} disabled={!eyeDropper} title={eyeDropper ? uiText("themeColorField.title2") : uiText("themeColorField.title3")} onClick={() => { if (!eyeDropper) return; setEyeDropperError(""); void new eyeDropper().open().then((result) => { const next = parseThemeColor(result.sRGBHex); if (next) onChange(serializeThemeColor(next, format, opaque)); }).catch((error: unknown) => { if (!(error instanceof DOMException && error.name === "AbortError")) setEyeDropperError(uiText("themeColorField.onClick")); }); }}><Pipette size={16} aria-hidden="true" /></button>
       </div>
       {eyeDropperError && <p className="theme-color-error" role="status">{eyeDropperError}</p>}
     </div>;
-  if (inline && !parsed) return <div className="theme-background-note"><p>此颜色由 CSS 控制</p><code>{value}</code><div className="theme-color-actions"><button type="button" onClick={()=>onChange("#ffffff")}>改为自定义颜色</button></div></div>;
+  if (inline && !parsed) return <div className="theme-background-note"><p>{uiText("themeColorField.ThemeColorField")}</p><code>{value}</code><div className="theme-color-actions"><button type="button" onClick={()=>onChange("#ffffff")}>{uiText("themeColorField.ThemeColorField2")}</button></div></div>;
   if (inline) return editor;
   return <div className="theme-color-field">
     <button ref={trigger} type="button" className={`theme-color-trigger${transparent || mixed ? " is-transparent" : ""}`} aria-label={label} aria-expanded={open} onClick={() => setOpen((current) => { if (current) setPosition(null); return !current; })}>
       <span className="theme-color-swatch" style={transparent || mixed ? undefined : { background: value }} aria-hidden="true" />
-      <span>{mixed ? "混合值" : transparent ? "透明" : value}</span>
+      <span>{mixed ? uiText("themeColorField.ThemeColorField3") : transparent ? uiText("themeColorField.ThemeColorField4") : value}</span>
     </button>
     {open && position && createPortal(editor, document.body)}
   </div>;

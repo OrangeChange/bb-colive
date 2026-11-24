@@ -1,3 +1,4 @@
+import { uiText } from "../i18n/index.ts";
 import { useStylePreviewPresentation } from "../preview/useStylePreviewPresentation.ts";
 import type { StylePreviewSnapshot } from "../preview/stylePreviewState.ts";
 import { NativeStylePreviewSurface } from "./NativeStylePreviewSurface.tsx";
@@ -30,7 +31,7 @@ export function StylePreviewContent({
   if (state.kind === "native") {
     const p = state.content;
     content = (
-      <NativeStylePreviewSurface title="主题样式预览" payload={p} previewScheme={state.scheme} previewPalette={state.palette} customColor={state.customColor} previewBackground={transparent ? "transparent" : background} readingResetKey={state.frame.restart} />
+      <NativeStylePreviewSurface title={uiText("stylePreviewContent.title")} payload={p} previewScheme={state.scheme} previewPalette={state.palette} customColor={state.customColor} previewBackground={transparent ? "transparent" : background} readingResetKey={state.frame.restart} />
     );
   } else if (state.kind === "compatible") {
     const p = state.content,

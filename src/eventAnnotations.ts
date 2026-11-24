@@ -1,3 +1,4 @@
+import { uiText } from "./i18n/index.ts";
 import { create } from "zustand";
 import { persist } from "zustand/middleware";
 import type { DanmakuEvent } from "./protocol/types.ts";
@@ -7,7 +8,7 @@ import type { FavoriteActionChange } from "./archive/favoriteActions.ts";
 
 export const LEGACY_EVENT_ANNOTATIONS_STORAGE_KEY = "danmu-event-annotations";
 export const LEGACY_FAVORITES_MIGRATION_STORAGE_KEY = "danmu-event-annotations.archive-migration-v1";
-export const HISTORICAL_UNKNOWN_FAVORITE_LABEL = "历史收藏（场次未知）";
+export const HISTORICAL_UNKNOWN_FAVORITE_LABEL = uiText("eventAnnotations.HISTORICAL_UNKNOWN_FAVORITE_LABEL");
 const FAVORITES_MIGRATION_VERSION = "1";
 
 export interface FavoriteEventRecord {
@@ -159,12 +160,12 @@ export function clearRegionMark(marks: RegionMarks, regionKey: string): RegionMa
 }
 
 export function formatEventAge(eventTs: number, now: number): string {
-  if (!Number.isFinite(eventTs) || eventTs <= 0 || !Number.isFinite(now)) return "时间未知";
+  if (!Number.isFinite(eventTs) || eventTs <= 0 || !Number.isFinite(now)) return uiText("eventAnnotations.formatEventAge");
   const elapsedSeconds = Math.max(0, Math.floor((now - eventTs) / 1000));
-  if (elapsedSeconds < 60) return `${elapsedSeconds}秒前`;
+  if (elapsedSeconds < 60) return uiText("eventAnnotations.formatEventAge2", { elapsedSeconds: elapsedSeconds });
   const elapsedMinutes = Math.floor(elapsedSeconds / 60);
-  if (elapsedMinutes < 60) return `${elapsedMinutes}分钟前`;
-  return `${Math.round(elapsedMinutes / 60)}小时前`;
+  if (elapsedMinutes < 60) return uiText("eventAnnotations.formatEventAge3", { elapsedMinutes: elapsedMinutes });
+  return uiText("eventAnnotations.formatEventAge4", { value: Math.round(elapsedMinutes / 60) });
 }
 
 interface EventAnnotationState {
@@ -367,7 +368,7 @@ export async function migrateLegacyFavorites(repository: FavoriteRepository): Pr
     try {
       storage.setItem(LEGACY_FAVORITES_MIGRATION_STORAGE_KEY, FAVORITES_MIGRATION_VERSION);
     } catch {
-      throw new Error("无法确认旧收藏迁移状态");
+      throw new Error(uiText("eventAnnotations.migrateLegacyFavorites"));
     }
     recordMigrationDiagnostic("favorite-migration", "migrated", {
       migrated: result.migrated,

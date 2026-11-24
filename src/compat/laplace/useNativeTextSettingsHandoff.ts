@@ -1,3 +1,4 @@
+import { uiText } from "../../i18n/index.ts";
 import { useCallback, useLayoutEffect, useRef, type Dispatch, type SetStateAction } from 'react';
 import { LAPLACE_SETTINGS_STORAGE_KEY, pickLaplaceSettings, type LaplaceSettings } from './settings';
 
@@ -56,9 +57,9 @@ function useLegacySettingsHandoff<K extends Key>(keys: readonly K[], errorMessag
 /** Existing two-key API and handoff behavior stay unchanged. */
 export function useNativeTextSettingsHandoff(active: boolean, settings: LaplaceSettings,
   setSettings: Dispatch<SetStateAction<LaplaceSettings>>, onReadError: (message: string) => void) {
-  return useLegacySettingsHandoff(NATIVE_TEXT_LEGACY_KEYS, '无法读取最新模式设置；自动弹幕和手机号原值仍受保护，读取成功前不会被旧值覆盖。', false, active, settings, setSettings, onReadError);
+  return useLegacySettingsHandoff(NATIVE_TEXT_LEGACY_KEYS, uiText("useNativeTextSettingsHandoff.useNativeTextSettingsHandoff"), false, active, settings, setSettings, onReadError);
 }
 export function useNativeGuardEntrySettingsHandoff(active: boolean, settings: LaplaceSettings,
   setSettings: Dispatch<SetStateAction<LaplaceSettings>>, onReadError: (message: string) => void) {
-  return useLegacySettingsHandoff(NATIVE_GUARD_ENTRY_LEGACY_KEYS, '无法读取最新模式设置；大航海进房原值仍受保护，读取成功前不会被旧值覆盖。', true, active, settings, setSettings, onReadError);
+  return useLegacySettingsHandoff(NATIVE_GUARD_ENTRY_LEGACY_KEYS, uiText("useNativeTextSettingsHandoff.useNativeGuardEntrySettingsHandoff"), true, active, settings, setSettings, onReadError);
 }

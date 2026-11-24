@@ -1,3 +1,4 @@
+import { uiText } from "../i18n/index.ts";
 import { useRef } from "react";
 import { ThemeNumberInput } from "./ThemeNumberInput.tsx";
 
@@ -29,11 +30,11 @@ export function ThemeAngleInput({
   };
   return (
     <div className="theme-gradient-angle">
-      <span>角度</span>
+      <span>{uiText("themeAngleInput.ThemeAngleInput")}</span>
       <button
         type="button"
         role="slider"
-        aria-label="渐变角度圆盘"
+        aria-label={uiText("themeAngleInput.aria_label")}
         aria-valuemin={0}
         aria-valuemax={360}
         aria-valuenow={((value % 360) + 360) % 360}
@@ -80,7 +81,7 @@ export function ThemeAngleInput({
         />
       </button>
       <ThemeNumberInput
-        label="渐变角度"
+        label={uiText("themeAngleInput.label")}
         value={value}
         onChange={onChange}
         onPreviewChange={onPreviewChange}

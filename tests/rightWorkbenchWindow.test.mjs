@@ -1,10 +1,11 @@
+import { readUiSource } from "./helpers/readUiSource.mjs";
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import fs from 'node:fs';
 import { planWorkbenchWindowResize as plan, sameWindowGeometry, resetWorkbenchWindowState } from '../src/components/rightWorkbenchWindow.ts';
 import { RIGHT_WORKBENCH_DEFAULT_WIDTH } from '../src/components/rightWorkbenchState.ts';
 import * as windowState from '../src/components/rightWorkbenchWindow.ts';
-const rightWorkbenchSource = fs.readFileSync(new URL('../src/components/RightWorkbench.tsx', import.meta.url), 'utf8');
+const rightWorkbenchSource = readUiSource(new URL('../src/components/RightWorkbench.tsx', import.meta.url), 'utf8');
 const base = { maximized: false, windowWidth: 960, windowX: 100, sceneWidth: 832, minSceneWidth: 872, panelDelta: 336, workX: 0, workWidth: 1920, frameWidth: 0 };
 test('默认窗口展开前预留整个面板增量，保持现场原宽', () => {
   assert.deepEqual(plan(base), {width: 1296, x: 100});

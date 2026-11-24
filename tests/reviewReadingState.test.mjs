@@ -1,3 +1,4 @@
+import { readUiSource } from "./helpers/readUiSource.mjs";
 import test from "node:test";
 import assert from "node:assert/strict";
 import fs from "node:fs";
@@ -253,8 +254,8 @@ test("阅读位置按场次保存在运行期内存，并可在新一轮运行�
 });
 
 test("时间线使用运行期阅读位置恢复，并且不再读写数据库阅读状态", () => {
-  const timeline = fs.readFileSync(new URL("src/components/ReviewSessionTimeline.tsx", root), "utf8");
-  const panel = fs.readFileSync(new URL("src/components/ReviewPanel.tsx", root), "utf8");
+  const timeline = readUiSource(new URL("src/components/ReviewSessionTimeline.tsx", root), "utf8");
+  const panel = readUiSource(new URL("src/components/ReviewPanel.tsx", root), "utf8");
   assert.match(timeline, /readingMemory/);
   assert.match(timeline, /readingMemory\.get\(sessionId\)/);
   assert.match(timeline, /readingMemory\.set\(sessionId/);

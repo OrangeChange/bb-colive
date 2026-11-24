@@ -1,3 +1,4 @@
+import { uiText } from "../../i18n/index.ts";
 /** 开放版的既有设置默认值，与 BLC 原版独立。 */
 export const DEFAULT_OPENLIVE_SETTINGS = Object.freeze({
   skin: 'none',
@@ -26,14 +27,14 @@ export type OpenLiveSettings = { -readonly [K in keyof typeof DEFAULT_OPENLIVE_S
 export type OpenLiveSettingKey = keyof OpenLiveSettings;
 export const OPENLIVE_SETTING_KEYS = Object.freeze(Object.keys(DEFAULT_OPENLIVE_SETTINGS) as OpenLiveSettingKey[]);
 export const OPENLIVE_SETTING_LABELS: Record<OpenLiveSettingKey, string> = {
-  skin: '普通皮肤', minGiftPrice: '主列表最低礼物 / 上舰 / SC 价格（元）', minTickerPrice: '置顶条最低价格（元）',
-  showDanmaku: '显示弹幕', showSuperchat: '显示醒目留言', showNewMember: '显示上舰消息',
-  showGift: '显示礼物', showGiftInfo: '显示礼物名称与数量', mergeSimilarDanmaku: '合并相似弹幕',
-  mergeGift: '合并礼物', danmakuAtBottom: '弹幕置底', tickerAtButtom: '置顶条置底',
-  maxNumber: '显示消息数', fadeOutNum: '渐隐保留条数', pinTime: '主列表停留时间（秒，0 不定时移除）',
-  showLike: '显示点赞', blockMedalLevel: '屏蔽粉丝牌等级低于',
-  minDanmakuInterval: '预览最短间隔（毫秒）', maxDanmakuInterval: '预览最长间隔（毫秒）',
-  emoticonSize: '大表情大小（像素）',
+  skin: uiText("settings.OPENLIVE_SETTING_LABELS.skin"), minGiftPrice: uiText("settings.OPENLIVE_SETTING_LABELS.minGiftPrice"), minTickerPrice: uiText("settings.OPENLIVE_SETTING_LABELS.minTickerPrice"),
+  showDanmaku: uiText("settings.OPENLIVE_SETTING_LABELS.showDanmaku"), showSuperchat: uiText("settings.OPENLIVE_SETTING_LABELS.showSuperchat"), showNewMember: uiText("settings.OPENLIVE_SETTING_LABELS.showNewMember"),
+  showGift: uiText("settings.OPENLIVE_SETTING_LABELS.showGift"), showGiftInfo: uiText("settings.OPENLIVE_SETTING_LABELS.showGiftInfo"), mergeSimilarDanmaku: uiText("settings.OPENLIVE_SETTING_LABELS.mergeSimilarDanmaku"),
+  mergeGift: uiText("settings.OPENLIVE_SETTING_LABELS.mergeGift"), danmakuAtBottom: uiText("settings.OPENLIVE_SETTING_LABELS.danmakuAtBottom"), tickerAtButtom: uiText("settings.OPENLIVE_SETTING_LABELS.tickerAtButtom"),
+  maxNumber: uiText("settings.OPENLIVE_SETTING_LABELS.maxNumber"), fadeOutNum: uiText("settings.OPENLIVE_SETTING_LABELS.fadeOutNum"), pinTime: uiText("settings.OPENLIVE_SETTING_LABELS.pinTime"),
+  showLike: uiText("settings.OPENLIVE_SETTING_LABELS.showLike"), blockMedalLevel: uiText("settings.OPENLIVE_SETTING_LABELS.blockMedalLevel"),
+  minDanmakuInterval: uiText("settings.OPENLIVE_SETTING_LABELS.minDanmakuInterval"), maxDanmakuInterval: uiText("settings.OPENLIVE_SETTING_LABELS.maxDanmakuInterval"),
+  emoticonSize: uiText("settings.OPENLIVE_SETTING_LABELS.emoticonSize"),
 };
 
 /** The upstream bool parser does not trim strings. */
@@ -79,12 +80,12 @@ export const coerceOpenLiveSettings = parseOpenLiveSettings;
 /** Host controls validate separately. This never changes Room URL parsing. */
 export function validateOpenLiveSetting(key: OpenLiveSettingKey, value: unknown): string | null {
   const fallback = DEFAULT_OPENLIVE_SETTINGS[key];
-  if (typeof fallback === 'boolean') return typeof value === 'boolean' ? null : '请选择开关状态';
-  if (key === 'skin') return value === 'none' || value === 'default' ? null : '请选择已纳入的普通皮肤';
-  if (typeof value !== 'number' || !Number.isFinite(value)) return '请输入有效数字';
-  if (value < 0) return '数值不能小于 0';
-  if (key !== 'minGiftPrice' && key !== 'minTickerPrice' && !Number.isSafeInteger(value)) return '请输入整数';
-  if ((key === 'maxNumber' || key === 'emoticonSize') && value < 1) return '数值至少为 1';
+  if (typeof fallback === 'boolean') return typeof value === 'boolean' ? null : uiText("settings.validateOpenLiveSetting");
+  if (key === 'skin') return value === 'none' || value === 'default' ? null : uiText("settings.validateOpenLiveSetting2");
+  if (typeof value !== 'number' || !Number.isFinite(value)) return uiText("settings.validateOpenLiveSetting3");
+  if (value < 0) return uiText("settings.validateOpenLiveSetting4");
+  if (key !== 'minGiftPrice' && key !== 'minTickerPrice' && !Number.isSafeInteger(value)) return uiText("settings.validateOpenLiveSetting5");
+  if ((key === 'maxNumber' || key === 'emoticonSize') && value < 1) return uiText("settings.validateOpenLiveSetting6");
   return null;
 }
 

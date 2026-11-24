@@ -92,7 +92,7 @@ fn install(app: &tauri::AppHandle, state: &Helper) -> Result<(), String> {
                 let result = WaitForSingleObject(process, 60000);
                 CloseHandle(process);
                 if result == WAIT_TIMEOUT {
-                    return Err("软件尚未退出，请完成保存并关闭原窗口，然后重试".into());
+                    return Err(ui_text!("backend.helper.install").into());
                 }
             }
         }
@@ -109,12 +109,10 @@ fn install(app: &tauri::AppHandle, state: &Helper) -> Result<(), String> {
                 }
                 #[cfg(not(windows))]
                 command.arg(format!("/D={}",plan.target.display()));
-                let status=command.status().map_err(|e|format!("无法安装更新，请重试或前往下载页：{e}"))?;
+                let status=command.status().map_err(|e|ui_format!("backend.helper.install2", e = e))?;
                 if !status.success() {
-                    return Err(format!(
-                        "安装未完成（{}），请重试或前往下载页",
-                        status.code().unwrap_or(-1)
-                    ));
+                    return Err(ui_format!("backend.helper.install3",
+                        status.code().unwrap_or(-1)));
                 }
             }
         }
@@ -124,7 +122,7 @@ fn install(app: &tauri::AppHandle, state: &Helper) -> Result<(), String> {
     std::process::Command::new(plan.target.join(&plan.executable))
         .current_dir(&plan.target)
         .spawn()
-        .map_err(|e| format!("更新已安装，但无法启动软件。请重试启动：{e}"))?;
+        .map_err(|e| ui_format!("backend.helper.install4", e = e))?;
     Ok(())
 }
 pub fn run_if_requested() -> bool {
@@ -168,7 +166,7 @@ pub fn run_if_requested() -> bool {
                 "app-update",
                 tauri::WebviewUrl::App("index.html?window=app-update".into()),
             )
-            .title("BB CoLive 更新")
+            .title(ui_text!("backend.helper.run_if_requested"))
             .inner_size(494., 200.)
             .min_inner_size(400., 160.)
             .resizable(false)

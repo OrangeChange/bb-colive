@@ -1,3 +1,4 @@
+import { readUiSource } from "./helpers/readUiSource.mjs";
 import { readApplicationSources } from "./helpers/applicationSources.mjs";
 import test from "node:test";
 import assert from "node:assert/strict";
@@ -5,7 +6,7 @@ import { readFileSync } from "node:fs";
 import { fileURLToPath } from "node:url";
 
 const root = fileURLToPath(new URL("..", import.meta.url));
-const read = (path) => readFileSync(`${root}/${path}`, "utf8");
+const read = (path) => readUiSource(`${root}/${path}`, "utf8");
 
 test("其他设置包含诊断与日志操作", () => {
   const source = read("src/components/SettingsPanel.tsx");
@@ -30,9 +31,9 @@ test("诊断设置说明两种导出边界并包含原文资料提示", () => {
 test("诊断页的普通用途说明收敛到标题提示，状态和异常仍然可见", () => {
   const source = read("src/components/DiagnosticSettings.tsx");
   assert.doesNotMatch(source, /用于定位直播连接、事件处理、语音合成和播报问题。日志仅保存在本机。<\/p>/);
-  assert.match(source, /settings-subsection-title[^>]*title="用于定位直播连接、事件处理、语音合成和播报问题。日志仅保存在本机。"/);
+  assert.match(source, /settings-subsection-title[^>]*title=["']用于定位直播连接、事件处理、语音合成和播报问题。日志仅保存在本机。["']/);
   assert.doesNotMatch(source, /24小时诊断包只包含最近24小时的标准诊断资料；完整日志包包含本机保留的全部日志，生成前会确认数据范围。<\/p>/);
-  assert.match(source, /diagnostic-export-actions[^>]*title="24小时诊断包只包含最近24小时的标准诊断资料；完整日志包包含本机保留的全部日志，生成前会确认数据范围。"/);
+  assert.match(source, /diagnostic-export-actions[^>]*title=["']24小时诊断包只包含最近24小时的标准诊断资料；完整日志包包含本机保留的全部日志，生成前会确认数据范围。["']/);
 });
 
 test("成功诊断操作提示会自动消失并清理定时器", () => {

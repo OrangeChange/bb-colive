@@ -1,3 +1,4 @@
+import { uiText } from "../i18n/index.ts";
 import type { Root } from './recoveryContract.ts';
 import type { HistoryRecordDraft } from './cloudHistoryTypes.ts';
 import type { RecoveryArchiveBatch, RecoveryArchiveSource, RecoveryArchiveState,
@@ -37,12 +38,12 @@ export async function applyRecoveryBatch(input: RecoveryBatchInput, previous: Cl
   sink: ArchiveSink, save?: (progress: CloudRecoveryProgress) => Promise<void> | void): Promise<CloudRecoveryProgress> {
   const { root } = input;
   if (previous.version !== 1 || root.server_id !== previous.serverId || root.room_id !== previous.roomId) {
-    throw new Error('恢复任务与当前服务器或直播间不一致');
+    throw new Error(uiText("cloudRecoveryProgress.applyRecoveryBatch"));
   }
   if (root.mode === 'baseline') {
-    if (root.from_cut !== null) throw new Error('首次恢复的服务端范围无效');
+    if (root.from_cut !== null) throw new Error(uiText("cloudRecoveryProgress.applyRecoveryBatch2"));
   } else if (!previous.cutId || root.from_cut?.cut_id !== previous.cutId) {
-    throw new Error('服务器增量记录与本地恢复进度不连续');
+    throw new Error(uiText("cloudRecoveryProgress.applyRecoveryBatch3"));
   }
 
   let archiveState = previous.archiveState;

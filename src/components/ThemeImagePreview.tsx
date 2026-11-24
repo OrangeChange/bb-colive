@@ -1,3 +1,4 @@
+import { uiText } from "../i18n/index.ts";
 import {
   createContext,
   memo,
@@ -293,8 +294,8 @@ export function ThemeImagePreview() {
       tabIndex={0}
       className={`theme-image-resize-${axis}`}
       aria-orientation={axis === "width" ? "vertical" : "horizontal"}
-      aria-label={axis === "width" ? "调整预览宽度" : "调整预览高度"}
-      title={axis === "width" ? "拖动调整预览宽度" : "拖动调整预览高度"}
+      aria-label={axis === "width" ? uiText("themeImagePreview.aria_label") : uiText("themeImagePreview.aria_label2")}
+      title={axis === "width" ? uiText("themeImagePreview.title") : uiText("themeImagePreview.title2")}
       onPointerDown={(event) => {
         event.currentTarget.setPointerCapture(event.pointerId);
         drag.current = {
@@ -339,26 +340,24 @@ export function ThemeImagePreview() {
     <aside
       ref={pane}
       className="theme-image-effect"
-      aria-label="当前部件效果"
+      aria-label={uiText("themeImagePreview.aria_label3")}
       style={{ width: size.width }}
     >
       <div className="theme-image-preview-heading">
-        <strong>效果预览</strong>
-        <div className="theme-image-preview-modes" aria-label="预览范围">
+        <strong>{uiText("themeImagePreview.ThemeImagePreview")}</strong>
+        <div className="theme-image-preview-modes" aria-label={uiText("themeImagePreview.aria_label4")}>
           <button
             type="button"
             aria-pressed={mode === "part"}
             onClick={() => setMode("part")}
           >
-            当前部件
-          </button>
+            {uiText("themeImagePreview.ThemeImagePreview2")}</button>
           <button
             type="button"
             aria-pressed={mode === "event"}
             onClick={() => setMode("event")}
           >
-            事件效果
-          </button>
+            {uiText("themeImagePreview.ThemeImagePreview3")}</button>
         </div>
       </div>
       <div
@@ -370,7 +369,7 @@ export function ThemeImagePreview() {
           {state && <ImagePreviewRenderer state={state} transparent />}
         </div>
         {!state && (
-          <p className="theme-image-hint">选择有此部件的样例查看效果。</p>
+          <p className="theme-image-hint">{uiText("themeImagePreview.ThemeImagePreview4")}</p>
         )}
       </div>
       {separator("height")}

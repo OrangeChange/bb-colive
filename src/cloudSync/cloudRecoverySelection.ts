@@ -1,3 +1,4 @@
+import { uiText } from "../i18n/index.ts";
 import type { CloudRecoverySelection } from './recoveryContract.ts';
 
 export type CloudRecoveryScope = CloudRecoverySelection['scope'];
@@ -32,14 +33,14 @@ export function buildCloudRecoverySelection(draft: CloudRecoverySelectionDraft):
   if (draft.scope === 'sessions') {
     const sessionIds = [...new Set(draft.sessionIds)];
     return sessionIds.length === 0
-      ? { selection: null, error: '至少选择一场直播' }
+      ? { selection: null, error: uiText("cloudRecoverySelection.buildCloudRecoverySelection.error") }
       : { selection: { scope: 'sessions', session_ids: sessionIds, ...content }, error: null };
   }
-  if (!draft.startedAt || !draft.endedAt) return { selection: null, error: '请选择完整的开始和结束时间' };
+  if (!draft.startedAt || !draft.endedAt) return { selection: null, error: uiText("cloudRecoverySelection.buildCloudRecoverySelection.error2") };
   const startedAt = new Date(draft.startedAt);
   const endedAt = new Date(draft.endedAt);
   if (!Number.isFinite(startedAt.getTime()) || !Number.isFinite(endedAt.getTime()) || startedAt >= endedAt) {
-    return { selection: null, error: '结束时间必须晚于开始时间' };
+    return { selection: null, error: uiText("cloudRecoverySelection.buildCloudRecoverySelection.error3") };
   }
   return {
     selection: { scope: 'time', started_at: startedAt.toISOString(), ended_at: endedAt.toISOString(), ...content },

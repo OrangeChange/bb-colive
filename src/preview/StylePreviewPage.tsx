@@ -1,3 +1,4 @@
+import { uiText } from "../i18n/index.ts";
 import {
   createPreviewResourceReceiver,
   type StylePreviewWireMessage,
@@ -10,7 +11,7 @@ import { applyPreviewMessage } from "./stylePreviewProtocol.ts";
 import { rebaseThemeResourceOrigin } from "../themes/themeResourceOrigin.ts";
 export function StylePreviewPage() {
   const [state, setState] = useState<StylePreviewSnapshot | null>(null),
-    [status, setStatus] = useState("请在软件中打开样式预览"),
+    [status, setStatus] = useState(uiText("stylePreviewPage.StylePreviewPage.statussetStatus")),
     [disconnected, setDisconnected] = useState(false);
   useEffect(() => {
     if (location.search) history.replaceState(null, "", location.pathname);
@@ -31,11 +32,11 @@ export function StylePreviewPage() {
         const configured = message.type === "preview:replace" || message.type === "preview:configure"
           ? rebaseThemeResourceOrigin(message, location.origin) : message;
         setState((previous) => applyPreviewMessage(previous, configured));
-        setStatus("请在软件中打开样式预览");
+        setStatus(uiText("stylePreviewPage.StylePreviewPage.connect"));
       };
       socket.onclose = () => {
         setDisconnected(true);
-        setStatus("与软件的连接已断开，请确认软件正在运行");
+        setStatus(uiText("stylePreviewPage.StylePreviewPage.connect2"));
         if (!closed) retry = setTimeout(connect, 1500);
       };
     };

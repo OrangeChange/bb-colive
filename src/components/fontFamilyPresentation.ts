@@ -1,7 +1,8 @@
+import { uiText } from "../i18n/index.ts";
 import valueParser from "postcss-value-parser";
 
 export function fontFamilyPresentation(value: string): { label: string; title: string } {
-  if (value.trim() === "inherit") return { label: "继承主题", title: "继承主题字体" };
+  if (value.trim() === "inherit") return { label: uiText("fontFamilyPresentation.fontFamilyPresentation.label"), title: uiText("fontFamilyPresentation.fontFamilyPresentation.title") };
   const families: string[] = [];
   let current = "";
   for (const node of valueParser(value).nodes) {
@@ -13,7 +14,7 @@ export function fontFamilyPresentation(value: string): { label: string; title: s
   if (current.trim()) families.push(current.trim());
   const [first = value, ...fallbacks] = families;
   return {
-    label: fallbacks.length ? `${first} · ${fallbacks.length} 个后备字体` : first,
-    title: `首选：${first}${fallbacks.length ? `\n后备：${fallbacks.join(" → ")}` : ""}`,
+    label: fallbacks.length ? uiText("fontFamilyPresentation.fontFamilyPresentation.label2", { first: first, length: fallbacks.length }) : first,
+    title: uiText("fontFamilyPresentation.fontFamilyPresentation.title2", { first: first, value: fallbacks.length ? uiText("fontFamilyPresentation.fontFamilyPresentation.title.value", { value: fallbacks.join(" → ") }) : "" }),
   };
 }

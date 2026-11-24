@@ -1,3 +1,4 @@
+import { uiText } from "../i18n/index.ts";
 import type { ThemeBinding } from "./themeBindings.ts";
 import type { ThemeDocument } from "./themeTypes.ts";
 import { windowThemeLabel } from "./windowThemeTargets.ts";
@@ -7,9 +8,9 @@ export interface ThemeReference extends ThemeBinding {
 }
 
 function referenceLabel(binding: ThemeBinding): string {
-  if (binding.targetKind === "live") return "现场";
-  if (binding.targetKind === "windows") return binding.targetId === "windows" ? "副窗口" : windowThemeLabel(binding.targetId);
-  return `OBS 配置 ${binding.targetId}`;
+  if (binding.targetKind === "live") return uiText("common.live");
+  if (binding.targetKind === "windows") return binding.targetId === "windows" ? uiText("themeReferences.referenceLabel") : windowThemeLabel(binding.targetId);
+  return uiText("themeReferences.referenceLabel2", { targetId: binding.targetId });
 }
 
 export function listThemeReferences(themeId: string, bindings: ThemeBinding[]): ThemeReference[] {
@@ -44,7 +45,7 @@ export async function saveAndUpdateThemeReferences(document: ThemeDocument, port
 export class ThemeReferenceUpdateError extends Error {
   readonly saved: ThemeDocument;
   constructor(saved: ThemeDocument, readonly failures: Array<{ binding: ThemeBinding; message: string }>) {
-    super(`主题已保存，但部分目标未更新。${failures.map(item => item.message).join("；")}。请重试更新。`);
+    super(uiText("themeReferences.text", { value: failures.map(item => item.message).join("；") }));
     this.name = "ThemeReferenceUpdateError";
     this.saved = structuredClone(saved);
   }

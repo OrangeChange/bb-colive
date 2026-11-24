@@ -1,4 +1,5 @@
 fn main() {
+    build_ui_messages();
     #[cfg(target_os = "windows")]
     build_glass();
     tauri_build::build();
@@ -6,6 +7,27 @@ fn main() {
     let out = std::path::PathBuf::from(std::env::var_os("OUT_DIR").unwrap());
     let target = out.ancestors().nth(3).unwrap().join("style");
     deploy_themes(std::path::Path::new("style-distribution"), &target).expect("无法准备程序目录中的主题");
+}
+
+fn build_ui_messages() {
+    let source = "../src/i18n/zh-CN.json";
+    println!("cargo:rerun-if-changed={source}");
+    let messages: std::collections::BTreeMap<String, String> =
+        serde_json::from_slice(&std::fs::read(source).expect("无法读取界面文案"))
+            .expect("界面文案格式无效");
+    let mut text = String::from("macro_rules! ui_text {\n");
+    let mut formatted = String::from("macro_rules! ui_format {\n");
+    for (key, value) in messages.iter().filter(|(key, _)| key.starts_with("backend.")) {
+        let key = serde_json::to_string(key).unwrap();
+        let value = serde_json::to_string(value).unwrap();
+        text.push_str(&format!("    ({key}) => {{ {value} }};\n"));
+        formatted.push_str(&format!("    ({key}) => {{ format!({value}) }};\n"));
+        formatted.push_str(&format!("    ({key}, $($args:tt)*) => {{ format!({value}, $($args)*) }};\n"));
+    }
+    text.push_str("}\n");
+    formatted.push_str("}\n");
+    let out = std::path::PathBuf::from(std::env::var_os("OUT_DIR").unwrap());
+    std::fs::write(out.join("ui_messages.rs"), text + &formatted).expect("无法准备界面文案");
 }
 
 fn deploy_themes(source: &std::path::Path, target: &std::path::Path) -> std::io::Result<()> {

@@ -1,3 +1,5 @@
+#[macro_use]
+mod ui_messages;
 mod data_paths;
 mod data_migration;
 mod updates;
@@ -211,7 +213,7 @@ fn direct_external_client() -> Result<&'static reqwest::Client, String> {
                 .no_proxy()
                 .timeout(Duration::from_secs(45))
                 .build()
-                .map_err(|error| format!("创建直连外部语音请求客户端失败: {error}"))
+                .map_err(|error| ui_format!("backend.lib.direct_external_client", error = error))
         })
         .as_ref()
         .map_err(Clone::clone)
@@ -314,9 +316,9 @@ fn build_fish_audio_payload(
 
 fn external_endpoint(value: &str) -> Result<reqwest::Url, String> {
     let url =
-        reqwest::Url::parse(value.trim()).map_err(|error| format!("外部语音地址无效: {error}"))?;
+        reqwest::Url::parse(value.trim()).map_err(|error| ui_format!("backend.lib.external_endpoint", error = error))?;
     if !matches!(url.scheme(), "http" | "https") {
-        return Err("外部语音地址只支持 HTTP 或 HTTPS".to_string());
+        return Err(ui_text!("backend.lib.external_endpoint2").to_string());
     }
     Ok(url)
 }
@@ -366,7 +368,7 @@ fn build_custom_http_payload(
     let mut body = match config.fixed_body.clone() {
         serde_json::Value::Object(body) => body,
         serde_json::Value::Null => serde_json::Map::new(),
-        _ => return Err("自定义 API 固定请求字段必须是 JSON 对象".to_string()),
+        _ => return Err(ui_text!("backend.lib.build_custom_http_payload").to_string()),
     };
     set_custom_body_field(
         &mut body,
@@ -395,13 +397,13 @@ fn decode_external_audio(
     audio_field: &str,
 ) -> Result<Vec<u8>, String> {
     if response_format == "audio" {
-        return Err("原始音频响应不能按 JSON 文本解码".to_string());
+        return Err(ui_text!("backend.lib.decode_external_audio").to_string());
     }
     if response_format != "json-base64" {
-        return Err(format!("不支持的外部语音响应格式: {response_format}"));
+        return Err(ui_format!("backend.lib.decode_external_audio2", response_format = response_format));
     }
     let value: serde_json::Value = serde_json::from_str(response_body)
-        .map_err(|error| format!("自定义 API 返回的 JSON 无效: {error}"))?;
+        .map_err(|error| ui_format!("backend.lib.decode_external_audio3", error = error))?;
     let field = audio_field.trim();
     let encoded = field
         .split('.')
@@ -409,9 +411,9 @@ fn decode_external_audio(
         .filter(|part| !part.is_empty())
         .try_fold(&value, |current, key| current.get(key))
         .and_then(serde_json::Value::as_str)
-        .ok_or_else(|| format!("自定义 API 响应中没有 Base64 音频字段: {field}"))?;
+        .ok_or_else(|| ui_format!("backend.lib.decode_external_audio4", field = field))?;
     base64::Engine::decode(&base64::engine::general_purpose::STANDARD, encoded)
-        .map_err(|error| format!("自定义 API Base64 音频无效: {error}"))
+        .map_err(|error| ui_format!("backend.lib.decode_external_audio5", error = error))
 }
 
 fn compact_external_error(body: &[u8]) -> String {
@@ -447,13 +449,13 @@ where
             )
         }) {
             handle.abort();
-            return Err(format!("外部语音合成状态锁定失败: {error}"));
+            return Err(ui_format!("backend.lib.run_cancelable_external_synthesis", error = error));
         }
     }
 
     let result = match handle.await {
         Ok(result) => result,
-        Err(error) => Err(format!("外部语音合成任务失败: {error}")),
+        Err(error) => Err(ui_format!("backend.lib.run_cancelable_external_synthesis2", error = error)),
     };
     completion.complete();
     if !request_id.is_empty() {
@@ -477,7 +479,7 @@ async fn send_external_json_request(
         ExternalRequestRoute::SystemProxy => reqwest::Client::builder()
             .timeout(Duration::from_secs(45))
             .build()
-            .map_err(|error| format!("创建外部语音请求客户端失败: {error}"))?,
+            .map_err(|error| ui_format!("backend.lib.send_external_json_request", error = error))?,
     };
     let mut request = client.post(url).json(&body);
     for (name, value) in headers {
@@ -486,23 +488,23 @@ async fn send_external_json_request(
     let response = request
         .send()
         .await
-        .map_err(|error| format!("外部语音请求失败: {}", format_external_error(&error)))?;
+        .map_err(|error| ui_format!("backend.lib.send_external_json_request2", format_external_error(&error)))?;
     let status = response.status();
     let bytes = response
         .bytes()
         .await
-        .map_err(|error| format!("读取外部语音响应失败: {}", format_external_error(&error)))?;
+        .map_err(|error| ui_format!("backend.lib.send_external_json_request3", format_external_error(&error)))?;
     if !status.is_success() {
         let detail = compact_external_error(&bytes);
         return Err(if detail.is_empty() {
-            format!("外部语音请求失败（HTTP {}）", status.as_u16())
+            ui_format!("backend.lib.send_external_json_request4", status.as_u16())
         } else {
-            format!("外部语音请求失败（HTTP {}）：{detail}", status.as_u16())
+            ui_format!("backend.lib.send_external_json_request5", status.as_u16(), detail = detail)
         });
     }
     if response_format == "audio" {
         if bytes.is_empty() {
-            return Err("外部语音返回了空音频".to_string());
+            return Err(ui_text!("backend.lib.send_external_json_request6").to_string());
         }
         return Ok(bytes.to_vec());
     }
@@ -515,11 +517,11 @@ async fn send_external_json_request(
 
 fn parse_fish_audio_model_response(response_body: &[u8]) -> Result<FishAudioModelInfo, String> {
     let model: FishAudioModelResponse = serde_json::from_slice(response_body)
-        .map_err(|error| format!("Fish Audio 模型信息无效: {error}"))?;
+        .map_err(|error| ui_format!("backend.lib.parse_fish_audio_model_response", error = error))?;
     let id = model.id.trim();
     let title = model.title.trim();
     if id.is_empty() || title.is_empty() {
-        return Err("Fish Audio 模型信息缺少 ID 或名称".to_string());
+        return Err(ui_text!("backend.lib.parse_fish_audio_model_response2").to_string());
     }
     Ok(FishAudioModelInfo {
         id: id.to_string(),
@@ -544,38 +546,36 @@ async fn lookup_fish_audio_model(
     model_id: String,
 ) -> Result<FishAudioModelInfo, String> {
     if api_key.trim().is_empty() {
-        return Err("请先填写 Fish Audio API Key".to_string());
+        return Err(ui_text!("backend.lib.lookup_fish_audio_model").to_string());
     }
     let model_id = model_id.trim();
     if model_id.is_empty() {
-        return Err("请先填写参考音色 ID".to_string());
+        return Err(ui_text!("backend.lib.lookup_fish_audio_model2").to_string());
     }
     let base_url = base_url.trim().trim_end_matches('/');
     let endpoint = external_endpoint(&format!("{base_url}/model/{model_id}"))?;
     let client = reqwest::Client::builder()
         .timeout(Duration::from_secs(15))
         .build()
-        .map_err(|error| format!("创建 Fish Audio 查询客户端失败: {error}"))?;
+        .map_err(|error| ui_format!("backend.lib.lookup_fish_audio_model3", error = error))?;
     let response = client
         .get(endpoint)
         .bearer_auth(api_key.trim())
         .send()
         .await
-        .map_err(|error| format!("Fish Audio 模型查询失败: {error}"))?;
+        .map_err(|error| ui_format!("backend.lib.lookup_fish_audio_model4", error = error))?;
     let status = response.status();
     let bytes = response
         .bytes()
         .await
-        .map_err(|error| format!("读取 Fish Audio 模型信息失败: {error}"))?;
+        .map_err(|error| ui_format!("backend.lib.lookup_fish_audio_model5", error = error))?;
     if !status.is_success() {
         let detail = compact_external_error(&bytes);
         return Err(if detail.is_empty() {
-            format!("Fish Audio 模型查询失败（HTTP {}）", status.as_u16())
+            ui_format!("backend.lib.lookup_fish_audio_model6", status.as_u16())
         } else {
-            format!(
-                "Fish Audio 模型查询失败（HTTP {}）：{detail}",
-                status.as_u16()
-            )
+            ui_format!("backend.lib.lookup_fish_audio_model7",
+                status.as_u16(), detail = detail)
         });
     }
     parse_fish_audio_model_response(&bytes)
@@ -594,10 +594,10 @@ async fn synthesize_fish_audio(
 ) -> Result<Vec<u8>, String> {
     let _ = pitch;
     if config.api_key.trim().is_empty() {
-        return Err("请先填写 Fish Audio API Key".to_string());
+        return Err(ui_text!("backend.lib.synthesize_fish_audio").to_string());
     }
     if config.model.trim().is_empty() {
-        return Err("请先填写 Fish Audio 模型".to_string());
+        return Err(ui_text!("backend.lib.synthesize_fish_audio2").to_string());
     }
     let request_id_for_gateway = request_id.clone();
     let work = async move {
@@ -655,7 +655,7 @@ async fn synthesize_custom_http(
     state: tauri::State<'_, ExternalSynthesisState>,
 ) -> Result<Vec<u8>, String> {
     if !config.method.eq_ignore_ascii_case("POST") {
-        return Err("自定义 API 第一版只支持 POST".to_string());
+        return Err(ui_text!("backend.lib.synthesize_custom_http").to_string());
     }
     let body = build_custom_http_payload(&text, &voice_name, rate, pitch, volume, &config)?;
     let mut headers = config.extra_headers;
@@ -705,7 +705,7 @@ async fn cancel_voice_synthesis(
     let active = state
         .active
         .lock()
-        .map_err(|error| format!("外部语音合成状态锁定失败: {error}"))?
+        .map_err(|error| ui_format!("backend.lib.cancel_voice_synthesis", error = error))?
         .remove(request_id);
     if let Some(active) = active {
         active.abort.abort();
@@ -950,12 +950,12 @@ fn edge_format_attempt_error(error: &EdgeSpeechAttemptError) -> String {
                 .map(|body| edge_compact_detail(&String::from_utf8_lossy(body)))
                 .unwrap_or_default();
             if detail.is_empty() {
-                format!("Edge 在线语音请求被拒绝（HTTP {status}）")
+                ui_format!("backend.lib.edge_format_attempt_error", status = status)
             } else {
-                format!("Edge 在线语音请求被拒绝（HTTP {status}）：{detail}")
+                ui_format!("backend.lib.edge_format_attempt_error2", status = status, detail = detail)
             }
         }
-        EdgeSpeechAttemptError::Handshake(error) => format!("Edge 在线语音连接失败：{error}"),
+        EdgeSpeechAttemptError::Handshake(error) => ui_format!("backend.lib.edge_format_attempt_error3", error = error),
     }
 }
 
@@ -1582,7 +1582,7 @@ fn close_floating_windows(app: &tauri::AppHandle) {
 
 #[tauri::command]
 fn quit_app(app: tauri::AppHandle, state: tauri::State<AppQuitState>) -> Result<(), String> {
-    if !state.can_finish() { return Err("应用尚未准备退出".to_string()); }
+    if !state.can_finish() { return Err(ui_text!("backend.lib.quit_app").to_string()); }
     finish_app_quit(&app);
     Ok(())
 }
@@ -1653,13 +1653,13 @@ fn output_device(id: Option<&str>) -> Result<rodio::Device, String> {
     if let Some(expected) = id {
         let parsed = expected
             .parse::<rodio::cpal::DeviceId>()
-            .map_err(|error| format!("音频设备 ID 无效: {error}"))?;
+            .map_err(|error| ui_format!("backend.lib.output_device", error = error))?;
         return host
             .device_by_id(&parsed)
-            .ok_or_else(|| format!("找不到音频设备: {expected}"));
+            .ok_or_else(|| ui_format!("backend.lib.output_device2", expected = expected));
     }
     host.default_output_device()
-        .ok_or_else(|| "没有可用的默认音频输出设备".to_string())
+        .ok_or_else(|| ui_text!("backend.lib.output_device3").to_string())
 }
 
 fn format_audio_device_name(name: &str, interface_name: Option<&str>) -> String {
@@ -1687,7 +1687,7 @@ fn list_audio_output_devices() -> Result<Vec<AudioOutputDevice>, String> {
         .map(|id| id.to_string());
     let devices = host
         .output_devices()
-        .map_err(|error| format!("读取音频设备失败: {error}"))?
+        .map_err(|error| ui_format!("backend.lib.list_audio_output_devices", error = error))?
         .filter_map(|device| {
             let id = device.id().ok()?.to_string();
             let description = device.description().ok()?;
@@ -1711,7 +1711,7 @@ fn play_tts_audio(
     state: tauri::State<AudioOutputState>,
 ) -> Result<(), String> {
     if audio.is_empty() {
-        return Err("没有可播放的语音数据".to_string());
+        return Err(ui_text!("backend.lib.play_tts_audio").to_string());
     }
     start_audio_playback(
         app,
@@ -1768,9 +1768,9 @@ fn start_audio_playback(
     for device_id in selected_device_ids(&target) {
         let device = output_device(device_id.as_deref())?;
         let mut stream = rodio::DeviceSinkBuilder::from_device(device)
-            .map_err(|error| format!("打开音频设备失败: {error}"))?
+            .map_err(|error| ui_format!("backend.lib.start_audio_playback", error = error))?
             .open_stream()
-            .map_err(|error| format!("创建音频输出失败: {error}"))?;
+            .map_err(|error| ui_format!("backend.lib.start_audio_playback2", error = error))?;
         stream.log_on_drop(false);
         let player = rodio::Player::connect_new(stream.mixer());
         append_decoded_audio(&player, audio.clone(), playback_gain, decode_error)?;
@@ -1780,7 +1780,7 @@ fn start_audio_playback(
     let playback_id = channel.generation.fetch_add(1, Ordering::Relaxed) + 1;
     let active = Arc::clone(&channel.active);
     {
-        let mut current = active.lock().map_err(|_| "音频状态锁定失败".to_string())?;
+        let mut current = active.lock().map_err(|_| ui_text!("backend.lib.start_audio_playback3").to_string())?;
         *current = Some(ActiveAudioPlayback {
             id: playback_id,
             _streams: streams,
@@ -1820,11 +1820,11 @@ fn start_audio_playback(
 
 fn load_personal_audio(path: &str) -> Result<Vec<u8>, String> {
     if path.is_empty() {
-        return Err("本地音频文件路径不能为空".to_string());
+        return Err(ui_text!("backend.lib.load_personal_audio").to_string());
     }
-    let audio = std::fs::read(path).map_err(|error| format!("读取本地音频文件失败: {error}"))?;
+    let audio = std::fs::read(path).map_err(|error| ui_format!("backend.lib.load_personal_audio2", error = error))?;
     if audio.is_empty() {
-        return Err("本地音频文件为空".to_string());
+        return Err(ui_text!("backend.lib.load_personal_audio3").to_string());
     }
     Ok(audio)
 }
@@ -1832,7 +1832,7 @@ fn load_personal_audio(path: &str) -> Result<Vec<u8>, String> {
 fn validate_personal_audio(audio: &[u8]) -> Result<(), String> {
     rodio::Decoder::try_from(Cursor::new(audio.to_vec()))
         .map(|_| ())
-        .map_err(|error| format!("解析本地音频文件失败: {error}"))
+        .map_err(|error| ui_format!("backend.lib.validate_personal_audio", error = error))
 }
 
 #[tauri::command]
@@ -1853,11 +1853,11 @@ fn play_personal_audio(
 ) -> Result<(), String> {
     let path = path.trim();
     if path.is_empty() {
-        return Err("本地音频文件路径不能为空".to_string());
+        return Err(ui_text!("backend.lib.play_personal_audio").to_string());
     }
     let audio = match prepared_audio {
         Some(audio) if !audio.is_empty() => audio,
-        Some(_) => return Err("本地音频文件为空".to_string()),
+        Some(_) => return Err(ui_text!("backend.lib.play_personal_audio2").to_string()),
         None => load_personal_audio(path)?,
     };
     start_audio_playback(
@@ -1882,11 +1882,11 @@ fn play_personal_preview_audio(
 ) -> Result<(), String> {
     let path = path.trim();
     if path.is_empty() {
-        return Err("本地音频文件路径不能为空".to_string());
+        return Err(ui_text!("backend.lib.play_personal_preview_audio").to_string());
     }
     let audio = match prepared_audio {
         Some(audio) if !audio.is_empty() => audio,
-        Some(_) => return Err("本地音频文件为空".to_string()),
+        Some(_) => return Err(ui_text!("backend.lib.play_personal_preview_audio2").to_string()),
         None => load_personal_audio(path)?,
     };
     start_audio_playback(
@@ -1904,7 +1904,7 @@ fn pause_audio(channel: &AudioPlaybackChannel) -> Result<(), String> {
     let active = channel
         .active
         .lock()
-        .map_err(|_| "音频状态锁定失败".to_string())?;
+        .map_err(|_| ui_text!("backend.lib.pause_audio").to_string())?;
     if let Some(playback) = active.as_ref() {
         for player in &playback.players {
             player.pause();
@@ -1927,7 +1927,7 @@ fn resume_audio(channel: &AudioPlaybackChannel) -> Result<(), String> {
     let active = channel
         .active
         .lock()
-        .map_err(|_| "音频状态锁定失败".to_string())?;
+        .map_err(|_| ui_text!("backend.lib.resume_audio").to_string())?;
     if let Some(playback) = active.as_ref() {
         for player in &playback.players {
             player.play();
@@ -2020,7 +2020,7 @@ fn synthesize_edge_speech_once(
     let uri = socket_url
         .parse::<tungstenite::http::Uri>()
         .map_err(|error| {
-            EdgeSpeechAttemptError::Operation(format!("创建 Edge 在线语音请求失败: {error}"))
+            EdgeSpeechAttemptError::Operation(ui_format!("backend.lib.synthesize_edge_speech_once", error = error))
         })?;
     let muid = edge_connection_id().to_uppercase();
     let request = tungstenite::http::Request::builder()
@@ -2043,7 +2043,7 @@ fn synthesize_edge_speech_once(
         .header("Cookie", format!("muid={muid};"))
         .body(())
         .map_err(|error| {
-            EdgeSpeechAttemptError::Operation(format!("创建 Edge 在线语音请求失败: {error}"))
+            EdgeSpeechAttemptError::Operation(ui_format!("backend.lib.synthesize_edge_speech_once", error = error))
         })?;
 
     let (mut socket, _) =
@@ -2051,7 +2051,7 @@ fn synthesize_edge_speech_once(
     socket
         .send(Message::text(edge_speech_config(clock_skew_seconds)))
         .map_err(|error| {
-            EdgeSpeechAttemptError::Operation(format!("发送 Edge 语音配置失败: {error}"))
+            EdgeSpeechAttemptError::Operation(ui_format!("backend.lib.synthesize_edge_speech_once2", error = error))
         })?;
     socket
         .send(Message::text(edge_ssml(
@@ -2064,14 +2064,14 @@ fn synthesize_edge_speech_once(
             clock_skew_seconds,
         )))
         .map_err(|error| {
-            EdgeSpeechAttemptError::Operation(format!("发送 Edge 语音内容失败: {error}"))
+            EdgeSpeechAttemptError::Operation(ui_format!("backend.lib.synthesize_edge_speech_once3", error = error))
         })?;
 
     let mut audio = Vec::new();
     let mut response_details = Vec::new();
     loop {
         match socket.read().map_err(|error| {
-            EdgeSpeechAttemptError::Operation(format!("读取 Edge 在线语音失败: {error}"))
+            EdgeSpeechAttemptError::Operation(ui_format!("backend.lib.synthesize_edge_speech_once4", error = error))
         })? {
             Message::Text(message) => {
                 if let Some((path, body)) = edge_text_message_detail(message.as_str()) {
@@ -2094,9 +2094,7 @@ fn synthesize_edge_speech_once(
             }
             Message::Ping(payload) => {
                 socket.send(Message::Pong(payload)).map_err(|error| {
-                    EdgeSpeechAttemptError::Operation(format!(
-                        "回应 Edge 在线语音心跳失败: {error}"
-                    ))
+                    EdgeSpeechAttemptError::Operation(ui_format!("backend.lib.synthesize_edge_speech_once5", error = error))
                 })?;
             }
             Message::Close(_) => break,
@@ -2109,9 +2107,7 @@ fn synthesize_edge_speech_once(
             .first()
             .map(|value| format!("：{}", edge_compact_detail(value)))
             .unwrap_or_default();
-        return Err(EdgeSpeechAttemptError::Operation(format!(
-            "Edge 在线语音未收到音频{detail}"
-        )));
+        return Err(EdgeSpeechAttemptError::Operation(ui_format!("backend.lib.synthesize_edge_speech_once6", detail = detail)));
     }
     Ok(audio)
 }
@@ -2134,10 +2130,8 @@ fn synthesize_edge_speech_impl(
             };
             synthesize_edge_speech_once(&text, &voice_name, rate, pitch, volume, clock_skew_seconds)
                 .map_err(|retry_error| {
-                    format!(
-                        "{}；已按服务端时间重试一次",
-                        edge_format_attempt_error(&retry_error)
-                    )
+                    ui_format!("backend.lib.synthesize_edge_speech_impl",
+                        edge_format_attempt_error(&retry_error))
                 })
         }
     }
@@ -2155,7 +2149,7 @@ async fn synthesize_edge_speech(
         synthesize_edge_speech_impl(text, voice_name, rate, pitch, volume)
     })
     .await
-    .map_err(|error| format!("Edge 在线语音任务失败: {error}"))?
+    .map_err(|error| ui_format!("backend.lib.synthesize_edge_speech", error = error))?
 }
 
 #[cfg(target_os = "windows")]
@@ -2163,7 +2157,7 @@ fn list_windows_voices_impl() -> Result<Vec<WindowsVoice>, String> {
     use windows::Media::SpeechSynthesis::SpeechSynthesizer;
 
     let voices = SpeechSynthesizer::AllVoices()
-        .map_err(|error| format!("读取系统语音失败: {error}"))?
+        .map_err(|error| ui_format!("backend.lib.list_windows_voices_impl", error = error))?
         .into_iter()
         .filter_map(|voice| {
             let name = voice.Id().ok()?.to_string();
@@ -2186,7 +2180,7 @@ fn list_windows_voices() -> Result<Vec<WindowsVoice>, String> {
     }
     #[cfg(not(target_os = "windows"))]
     {
-        Err("Windows 系统语音只支持 Windows".to_string())
+        Err(ui_text!("backend.lib.list_windows_voices").to_string())
     }
 }
 
@@ -2203,9 +2197,9 @@ fn synthesize_windows_speech_impl(
     use windows::Storage::Streams::DataReader;
 
     let synthesizer =
-        SpeechSynthesizer::new().map_err(|error| format!("创建系统语音失败: {error}"))?;
+        SpeechSynthesizer::new().map_err(|error| ui_format!("backend.lib.synthesize_windows_speech_impl", error = error))?;
     let voices =
-        SpeechSynthesizer::AllVoices().map_err(|error| format!("读取系统语音失败: {error}"))?;
+        SpeechSynthesizer::AllVoices().map_err(|error| ui_format!("backend.lib.synthesize_windows_speech_impl2", error = error))?;
     let voice = voices
         .into_iter()
         .find(|voice| {
@@ -2214,41 +2208,41 @@ fn synthesize_windows_speech_impl(
                 .map(|id| id.to_string() == voice_name)
                 .unwrap_or(false)
         })
-        .ok_or_else(|| format!("找不到系统语音: {voice_name}"))?;
+        .ok_or_else(|| ui_format!("backend.lib.synthesize_windows_speech_impl3", voice_name = voice_name))?;
     synthesizer
         .SetVoice(&voice)
-        .map_err(|error| format!("设置系统语音失败: {error}"))?;
+        .map_err(|error| ui_format!("backend.lib.synthesize_windows_speech_impl4", error = error))?;
     let options = synthesizer
         .Options()
-        .map_err(|error| format!("读取系统语音选项失败: {error}"))?;
+        .map_err(|error| ui_format!("backend.lib.synthesize_windows_speech_impl5", error = error))?;
     options
         .SetSpeakingRate(rate)
-        .map_err(|error| format!("设置语速失败: {error}"))?;
+        .map_err(|error| ui_format!("backend.lib.synthesize_windows_speech_impl6", error = error))?;
     options
         .SetAudioPitch(pitch)
-        .map_err(|error| format!("设置音调失败: {error}"))?;
+        .map_err(|error| ui_format!("backend.lib.synthesize_windows_speech_impl7", error = error))?;
     options
         .SetAudioVolume(volume.clamp(0.0, 1.0))
-        .map_err(|error| format!("设置音量失败: {error}"))?;
+        .map_err(|error| ui_format!("backend.lib.synthesize_windows_speech_impl8", error = error))?;
     let stream = synthesizer
         .SynthesizeTextToStreamAsync(&HSTRING::from(text))
-        .map_err(|error| format!("开始系统语音合成失败: {error}"))?
+        .map_err(|error| ui_format!("backend.lib.synthesize_windows_speech_impl9", error = error))?
         .get()
-        .map_err(|error| format!("系统语音合成失败: {error}"))?;
+        .map_err(|error| ui_format!("backend.lib.synthesize_windows_speech_impl10", error = error))?;
     let size = stream
         .Size()
-        .map_err(|error| format!("读取语音长度失败: {error}"))?;
+        .map_err(|error| ui_format!("backend.lib.synthesize_windows_speech_impl11", error = error))?;
     let reader = DataReader::CreateDataReader(&stream)
-        .map_err(|error| format!("创建语音读取器失败: {error}"))?;
+        .map_err(|error| ui_format!("backend.lib.synthesize_windows_speech_impl12", error = error))?;
     reader
         .LoadAsync(size as u32)
-        .map_err(|error| format!("加载语音数据失败: {error}"))?
+        .map_err(|error| ui_format!("backend.lib.synthesize_windows_speech_impl13", error = error))?
         .get()
-        .map_err(|error| format!("读取语音数据失败: {error}"))?;
+        .map_err(|error| ui_format!("backend.lib.synthesize_windows_speech_impl14", error = error))?;
     let mut bytes = vec![0u8; size as usize];
     reader
         .ReadBytes(&mut bytes)
-        .map_err(|error| format!("复制语音数据失败: {error}"))?;
+        .map_err(|error| ui_format!("backend.lib.synthesize_windows_speech_impl15", error = error))?;
     Ok(bytes)
 }
 
@@ -2267,7 +2261,7 @@ fn synthesize_windows_speech(
     #[cfg(not(target_os = "windows"))]
     {
         let _ = (text, voice_name, rate, pitch, volume);
-        Err("Windows 系统语音只支持 Windows".to_string())
+        Err(ui_text!("backend.lib.synthesize_windows_speech").to_string())
     }
 }
 
@@ -2354,17 +2348,17 @@ fn list_installed_fonts_windows() -> Result<Vec<String>, String> {
     };
 
     let factory: IDWriteFactory = unsafe { DWriteCreateFactory(DWRITE_FACTORY_TYPE_SHARED) }
-        .map_err(|error| format!("创建 DirectWrite 工厂失败: {error}"))?;
+        .map_err(|error| ui_format!("backend.lib.list_installed_fonts_windows", error = error))?;
     let mut collection = None;
     unsafe { factory.GetSystemFontCollection(&mut collection, false) }
-        .map_err(|error| format!("读取系统字体集合失败: {error}"))?;
-    let collection = collection.ok_or_else(|| "系统字体集合为空".to_string())?;
+        .map_err(|error| ui_format!("backend.lib.list_installed_fonts_windows2", error = error))?;
+    let collection = collection.ok_or_else(|| ui_text!("backend.lib.list_installed_fonts_windows5").to_string())?;
     let mut fonts = Vec::new();
     for index in 0..unsafe { collection.GetFontFamilyCount() } {
         let family = unsafe { collection.GetFontFamily(index) }
-            .map_err(|error| format!("读取字体族失败: {error}"))?;
+            .map_err(|error| ui_format!("backend.lib.list_installed_fonts_windows3", error = error))?;
         let names = unsafe { family.GetFamilyNames() }
-            .map_err(|error| format!("读取字体名称失败: {error}"))?;
+            .map_err(|error| ui_format!("backend.lib.list_installed_fonts_windows4", error = error))?;
         if let Some(name) = read_directwrite_font_name(&names) {
             if !name.trim().is_empty() {
                 fonts.push(name);
@@ -2391,7 +2385,7 @@ fn list_installed_fonts() -> Result<Vec<String>, String> {
 #[tauri::command]
 fn install_floating_window_snap(window: tauri::WebviewWindow) -> Result<(), String> {
     if !FLOATING_WINDOW_LABELS.contains(&window.label()) {
-        return Err("仅实时副窗口支持几何吸附".to_string());
+        return Err(ui_text!("backend.lib.install_floating_window_snap").to_string());
     }
     #[cfg(target_os = "windows")]
     {
@@ -2405,10 +2399,10 @@ fn install_floating_window_snap(window: tauri::WebviewWindow) -> Result<(), Stri
 #[tauri::command]
 fn set_floating_window_material(window: tauri::WebviewWindow, material: String, radius: f64, scheme: String, glass_tint: f32, surface_color: Option<[f32; 4]>) -> Result<(), String> {
     if !FLOATING_WINDOW_LABELS.contains(&window.label()) {
-        return Err("仅副窗口支持材质设置".to_string());
+        return Err(ui_text!("backend.lib.set_floating_window_material").to_string());
     }
     if !["glass", "solid", "transparent"].contains(&material.as_str()) {
-        return Err("窗口材质无效".to_string());
+        return Err(ui_text!("backend.lib.set_floating_window_material2").to_string());
     }
     #[cfg(target_os = "windows")]
     {
@@ -2426,25 +2420,25 @@ fn build_tray_menu(
     display_open: bool,
     gift_open: bool,
 ) -> tauri::Result<Menu<tauri::Wry>> {
-    let show = MenuItem::with_id(app, "show", "显示主窗口", true, None::<&str>)?;
+    let show = MenuItem::with_id(app, "show", ui_text!("backend.lib.build_tray_menu"), true, None::<&str>)?;
     let display = MenuItem::with_id(
         app,
         "toggle-display",
-        if display_open { "隐藏弹幕窗" } else { "显示弹幕窗" },
+        if display_open { ui_text!("backend.lib.build_tray_menu2") } else { ui_text!("backend.lib.build_tray_menu3") },
         true,
         None::<&str>,
     )?;
     let gift = MenuItem::with_id(
         app,
         "toggle-gift",
-        if gift_open { "隐藏收益窗" } else { "显示收益窗" },
+        if gift_open { ui_text!("backend.lib.build_tray_menu4") } else { ui_text!("backend.lib.build_tray_menu5") },
         true,
         None::<&str>,
     )?;
-    let settings = MenuItem::with_id(app, "open-settings", "打开设置", true, None::<&str>)?;
-    let mark_issue = MenuItem::with_id(app, "mark-issue", "标记当前问题", true, None::<&str>)?;
+    let settings = MenuItem::with_id(app, "open-settings", ui_text!("backend.lib.build_tray_menu6"), true, None::<&str>)?;
+    let mark_issue = MenuItem::with_id(app, "mark-issue", ui_text!("backend.lib.build_tray_menu7"), true, None::<&str>)?;
     let separator = PredefinedMenuItem::separator(app)?;
-    let quit = MenuItem::with_id(app, "quit", "退出", true, None::<&str>)?;
+    let quit = MenuItem::with_id(app, "quit", ui_text!("backend.lib.build_tray_menu8"), true, None::<&str>)?;
     Menu::with_items(
         app,
         &[&show, &display, &gift, &settings, &mark_issue, &separator, &quit],
@@ -2462,22 +2456,22 @@ fn set_tray_window_state(
         let mut display_state = state
             .display_open
             .lock()
-            .map_err(|_| "托盘弹幕窗状态已损坏".to_string())?;
+            .map_err(|_| ui_text!("backend.lib.set_tray_window_state2").to_string())?;
         let mut gift_state = state
             .gift_open
             .lock()
-            .map_err(|_| "托盘礼物窗状态已损坏".to_string())?;
+            .map_err(|_| ui_text!("backend.lib.set_tray_window_state3").to_string())?;
         match window.as_str() {
             "display" => *display_state = open,
             "gift" => *gift_state = open,
-            _ => return Err(format!("未知的托盘副窗口：{window}")),
+            _ => return Err(ui_format!("backend.lib.set_tray_window_state", window = window)),
         }
         (*display_state, *gift_state)
     };
 
     let tray = app
         .tray_by_id("main-tray")
-        .ok_or_else(|| "找不到应用托盘图标".to_string())?;
+        .ok_or_else(|| ui_text!("backend.lib.set_tray_window_state4").to_string())?;
     let menu = build_tray_menu(&app, display_open, gift_open).map_err(|error| error.to_string())?;
     tray.set_menu(Some(menu)).map_err(|error| error.to_string())
 }

@@ -1,3 +1,4 @@
+import { uiText } from "../../i18n/index.ts";
 import { installCompatiblePropertyCapabilities } from "../../themes/compatThemeCapabilities.ts";
 import { installCompatibleEventGroups } from "../../themes/compatThemeCapabilities.ts";
 import type { CompatibleThemeCapabilityMap } from "../../themes/compatThemeCapabilities.ts";
@@ -70,16 +71,16 @@ const pxLineHeight = { lineHeight: "px" } as const;
 export const OPENLIVE_CAPABILITY: CompatibleThemeCapabilityMap = {
   mode: "blivechat-open",
   parts: {
-    avatarFrame: {label:"头像框",selector:"#author-photo",properties:[],placements:["main","sticky","detail"]},
-    modBadge: {label:"房管徽章",selector:"yt-live-chat-author-badge-renderer #image > yt-icon",properties:["visible","width","height","marginX","marginY"],events:["danmaku"],placements:["main"]},
-    guardBadge: {label:"大航海徽章",selector:"yt-live-chat-author-badge-renderer #image > img",properties:["visible","width","height","marginX","marginY"],placements:["main","detail"]},
-    smallEmote: { label: "行内表情", selector: "#message img.emoji:not(#emoticon):not(.blc-large-emoji):not(.openlive-large-emote), #image-and-message img.emoji:not(#emoticon):not(.blc-large-emoji):not(.openlive-large-emote)", events: ["danmaku"], placements: ["main"], properties: ["visible", "width", "height", "marginX", "marginY"], codeDefaults: { visible: true, width: 24, height: 24, marginX: 0, marginY: 0 } },
-    imageAndMessage: {label:"图文区域",selector:"#image-and-message",properties:box,codeDefaults:boxDefaults,events:["danmaku","like"],placements:["main"]},
+    avatarFrame: {label:uiText("theme.parts.avatarFrame.label"),selector:"#author-photo",properties:[],placements:["main","sticky","detail"]},
+    modBadge: {label:uiText("theme.parts.modBadge.label"),selector:"yt-live-chat-author-badge-renderer #image > yt-icon",properties:["visible","width","height","marginX","marginY"],events:["danmaku"],placements:["main"]},
+    guardBadge: {label:uiText("theme.parts.guardBadge.label"),selector:"yt-live-chat-author-badge-renderer #image > img",properties:["visible","width","height","marginX","marginY"],placements:["main","detail"]},
+    smallEmote: { label: uiText("theme.parts.smallEmote.label2"), selector: "#message img.emoji:not(#emoticon):not(.blc-large-emoji):not(.openlive-large-emote), #image-and-message img.emoji:not(#emoticon):not(.blc-large-emoji):not(.openlive-large-emote)", events: ["danmaku"], placements: ["main"], properties: ["visible", "width", "height", "marginX", "marginY"], codeDefaults: { visible: true, width: 24, height: 24, marginX: 0, marginY: 0 } },
+    imageAndMessage: {label:uiText("theme.parts.imageAndMessage.label"),selector:"#image-and-message",properties:box,codeDefaults:boxDefaults,events:["danmaku","like"],placements:["main"]},
 
-    eventArea: { scope: "global", label: "事件区", selector: "yt-live-chat-renderer", properties: box, placements: ["main"], codeDefaults: boxDefaults },
-    eventList: { scope: "global", label: "事件列表", selector: "yt-live-chat-item-list-renderer #items.yt-live-chat-item-list-renderer", properties: box, placements: ["main"], codeDefaults: boxDefaults },
+    eventArea: { scope: "global", label: uiText("theme.parts.eventArea.label"), selector: "yt-live-chat-renderer", properties: box, placements: ["main"], codeDefaults: boxDefaults },
+    eventList: { scope: "global", label: uiText("theme.parts.eventList.label"), selector: "yt-live-chat-item-list-renderer #items.yt-live-chat-item-list-renderer", properties: box, placements: ["main"], codeDefaults: boxDefaults },
     event: {
-      label: "事件容器",
+      label: uiText("theme.parts.event.label"),
       selector:
         "yt-live-chat-text-message-renderer, yt-live-chat-paid-message-renderer, yt-live-chat-membership-item-renderer",
       selectorsByPlacement: { sticky: "yt-live-chat-ticker-paid-message-item-renderer" },
@@ -88,7 +89,7 @@ export const OPENLIVE_CAPABILITY: CompatibleThemeCapabilityMap = {
       codeDefaults: { ...boxDefaults, paddingX: 4, paddingY: 4 },
     },
     username: {
-      label: "用户名",
+      label: uiText("theme.parts.username.label"),
       selector: "#author-name",
       events: [
         "danmaku",
@@ -109,17 +110,17 @@ export const OPENLIVE_CAPABILITY: CompatibleThemeCapabilityMap = {
         lineHeight: 20,
       },
     },
-    contentArea: { label: "内容区域", selector: "#content", properties: box, placements: ["main", "detail"], codeDefaults: boxDefaults },
-    card: { label: "卡片", selector: "#card", events: ["danmaku", "like", "gift", "gift-normal",  "superchat", "guard"], properties: box, placements: ["main", "detail"], codeDefaults: boxDefaults },
-    cardHeader: { label: "头部", selector: "#header", events: ["gift", "gift-normal",  "superchat", "guard"], properties: box, placements: ["main", "detail"], codeDefaults: boxDefaults },
-    cardHeaderContent: { label: "头部信息区", selector: "#header-content", events: ["gift", "gift-normal",  "superchat", "guard"], properties: box, placements: ["main", "detail"], codeDefaults: boxDefaults },
-    cardPrimaryColumn: { label: "主信息列", selector: "#header-content-primary-column", events: ["gift", "gift-normal",  "superchat", "guard"], properties: box, placements: ["main", "detail"], codeDefaults: boxDefaults },
-    membershipInfoRow: { label: "用户信息行", selector: "#header-content-inner-column", events: ["guard"], properties: box, placements: ["main", "detail"], codeDefaults: boxDefaults },
-    paidContent: { label: "正文区域", selector: "#content", events: ["gift", "gift-normal",  "superchat"], properties: box, placements: ["main", "detail"], codeDefaults: boxDefaults },
-    avatarWrap: { label: "头像区域", selector: "#author-photo", selectorsByPlacement: { sticky: "#author-photo" }, properties: box, placements: ["main", "sticky", "detail"], codeDefaults: boxDefaults },
-    userInfo: { label: "用户信息块", selector: "yt-live-chat-author-chip", properties: box, placements: ["main", "detail"], codeDefaults: boxDefaults },
+    contentArea: { label: uiText("theme.parts.contentArea.label"), selector: "#content", properties: box, placements: ["main", "detail"], codeDefaults: boxDefaults },
+    card: { label: uiText("theme.parts.card.label"), selector: "#card", events: ["danmaku", "like", "gift", "gift-normal",  "superchat", "guard"], properties: box, placements: ["main", "detail"], codeDefaults: boxDefaults },
+    cardHeader: { label: uiText("theme.parts.cardHeader.label"), selector: "#header", events: ["gift", "gift-normal",  "superchat", "guard"], properties: box, placements: ["main", "detail"], codeDefaults: boxDefaults },
+    cardHeaderContent: { label: uiText("theme.parts.cardHeaderContent.label"), selector: "#header-content", events: ["gift", "gift-normal",  "superchat", "guard"], properties: box, placements: ["main", "detail"], codeDefaults: boxDefaults },
+    cardPrimaryColumn: { label: uiText("theme.parts.cardPrimaryColumn.label"), selector: "#header-content-primary-column", events: ["gift", "gift-normal",  "superchat", "guard"], properties: box, placements: ["main", "detail"], codeDefaults: boxDefaults },
+    membershipInfoRow: { label: uiText("theme.parts.membershipInfoRow.label"), selector: "#header-content-inner-column", events: ["guard"], properties: box, placements: ["main", "detail"], codeDefaults: boxDefaults },
+    paidContent: { label: uiText("theme.parts.paidContent.label"), selector: "#content", events: ["gift", "gift-normal",  "superchat"], properties: box, placements: ["main", "detail"], codeDefaults: boxDefaults },
+    avatarWrap: { label: uiText("theme.parts.avatarWrap.label"), selector: "#author-photo", selectorsByPlacement: { sticky: "#author-photo" }, properties: box, placements: ["main", "sticky", "detail"], codeDefaults: boxDefaults },
+    userInfo: { label: uiText("theme.parts.userInfo.label"), selector: "yt-live-chat-author-chip", properties: box, placements: ["main", "detail"], codeDefaults: boxDefaults },
     message: {
-      label: "正文",
+      label: uiText("theme.parts.message.label"),
       selector: "#message",
       events: [
         "danmaku",
@@ -135,7 +136,7 @@ export const OPENLIVE_CAPABILITY: CompatibleThemeCapabilityMap = {
       codeDefaults: { ...textDefaults, color: "#ffffff" },
     },
     avatar: {
-      label: "头像",
+      label: uiText("theme.parts.avatar.label"),
       selector: "#author-photo img#img",
       selectorsByPlacement: { sticky: "#author-photo img#img" },
       events: [
@@ -178,7 +179,7 @@ export const OPENLIVE_CAPABILITY: CompatibleThemeCapabilityMap = {
       },
     },
     largeEmote: {
-      label: "大表情",
+      label: uiText("theme.parts.largeEmote.label"),
       selector: "#image-and-message > img#emoticon, #message img.emoji.blc-large-emoji, #image-and-message img.emoji.blc-large-emoji, #message img.openlive-large-emote",
       events: ["danmaku"],
       placements: ["main"],
@@ -193,7 +194,7 @@ export const OPENLIVE_CAPABILITY: CompatibleThemeCapabilityMap = {
       settingByProperty: { width: "emoticonSize", height: "emoticonSize" },
     },
     fanMedal: {
-      label: "粉丝牌",
+      label: uiText("theme.parts.fanMedal.label"),
       selector: "yt-live-chat-author-medal-renderer",
       events: ["danmaku", "like"],
       placements: ["main"],
@@ -224,11 +225,11 @@ export const OPENLIVE_CAPABILITY: CompatibleThemeCapabilityMap = {
         marginY: 0,
       },
     },
-    fanMedalWrap: { label: "粉丝牌区域", selector: "#chat-medal", events: ["danmaku", "like"], placements: ["main"], properties: box, codeDefaults: boxDefaults },
-    fanMedalName: { label: "名称", selector: "#medal-name", events: ["danmaku", "like"], placements: ["main"], properties: text, units: pxLineHeight, codeDefaults: textDefaults },
-    fanMedalLevel: { label: "等级", selector: "#medal-level", events: ["danmaku", "like"], placements: ["main"], properties: text, units: pxLineHeight, codeDefaults: textDefaults },
+    fanMedalWrap: { label: uiText("theme.parts.fanMedalWrap.label"), selector: "#chat-medal", events: ["danmaku", "like"], placements: ["main"], properties: box, codeDefaults: boxDefaults },
+    fanMedalName: { label: uiText("theme.parts.fanMedalName.label"), selector: "#medal-name", events: ["danmaku", "like"], placements: ["main"], properties: text, units: pxLineHeight, codeDefaults: textDefaults },
+    fanMedalLevel: { label: uiText("theme.parts.fanMedalLevel.label"), selector: "#medal-level", events: ["danmaku", "like"], placements: ["main"], properties: text, units: pxLineHeight, codeDefaults: textDefaults },
     identity: {
-      label: "身份",
+      label: uiText("theme.parts.identity.label"),
       selector: "yt-live-chat-author-badge-renderer",
       events: ["danmaku", "like", "guard"],
       placements: ["main"],
@@ -242,7 +243,7 @@ export const OPENLIVE_CAPABILITY: CompatibleThemeCapabilityMap = {
       },
     },
     amount: {
-      label: "金额",
+      label: uiText("theme.parts.amount.label"),
       selector: "#purchase-amount",
       selectorsByPlacement: { sticky: "#text" },
       events: ["gift", "gift-normal",  "superchat"],
@@ -252,7 +253,7 @@ export const OPENLIVE_CAPABILITY: CompatibleThemeCapabilityMap = {
       codeDefaults: { ...textDefaults, color: "#ffffff" },
     },
     membershipSubtext: {
-      label: "大航海说明",
+      label: uiText("theme.parts.membershipSubtext.label"),
       selector: "#header-subtext",
       events: ["guard"],
       placements: ["main", "detail"],
@@ -261,7 +262,7 @@ export const OPENLIVE_CAPABILITY: CompatibleThemeCapabilityMap = {
       codeDefaults: { ...textDefaults, color: "#ffffff" },
     },
     timestamp: {
-      label: "时间",
+      label: uiText("theme.parts.timestamp.label"),
       selector: "#timestamp",
       events: [
         "danmaku",
@@ -284,7 +285,7 @@ export const OPENLIVE_CAPABILITY: CompatibleThemeCapabilityMap = {
       },
     },
     paidCard: {
-      label: "付费卡片",
+      label: uiText("theme.parts.paidCard.label"),
       selector: "#card",
       events: ["gift", "gift-normal",  "superchat"],
       placements: ["main", "detail"],
@@ -292,7 +293,7 @@ export const OPENLIVE_CAPABILITY: CompatibleThemeCapabilityMap = {
       codeDefaults: { ...boxDefaults, borderRadius: 4 },
     },
     membership: {
-      label: "大航海卡片",
+      label: uiText("theme.parts.membership.label"),
       selector: "#card",
       events: ["guard"],
       placements: ["main", "detail"],
@@ -301,7 +302,7 @@ export const OPENLIVE_CAPABILITY: CompatibleThemeCapabilityMap = {
     },
     ticker: {
       scope: "global",
-      label: "置顶栏",
+      label: uiText("theme.parts.ticker.label"),
       selector: "yt-live-chat-ticker-renderer",
       events: ["gift", "gift-normal",  "superchat", "guard"],
       placements: ["sticky"],
@@ -313,9 +314,9 @@ export const OPENLIVE_CAPABILITY: CompatibleThemeCapabilityMap = {
         paddingY: 2,
       },
     },
-    tickerItem: { scope: "event", label: "单项背景", selector: "yt-live-chat-ticker-paid-message-item-renderer", placements: ["sticky"], properties: box, codeDefaults: boxDefaults },
-    tickerItemContent: { label: "单项内容", selector: "#content", placements: ["sticky"], properties: box, codeDefaults: boxDefaults },
-    tickerList: { scope: "global", label: "横向项目列表", selector: "yt-live-chat-ticker-renderer #items.yt-live-chat-ticker-renderer", placements: ["sticky"], properties: box, codeDefaults: boxDefaults },
+    tickerItem: { scope: "event", label: uiText("theme.parts.tickerItem.label"), selector: "yt-live-chat-ticker-paid-message-item-renderer", placements: ["sticky"], properties: box, codeDefaults: boxDefaults },
+    tickerItemContent: { label: uiText("theme.parts.tickerItemContent.label"), selector: "#content", placements: ["sticky"], properties: box, codeDefaults: boxDefaults },
+    tickerList: { scope: "global", label: uiText("theme.parts.tickerList.label"), selector: "yt-live-chat-ticker-renderer #items.yt-live-chat-ticker-renderer", placements: ["sticky"], properties: box, codeDefaults: boxDefaults },
   },
   eventSelectorsByPlacement: {
     main: {
@@ -362,24 +363,24 @@ export const OPENLIVE_CAPABILITY: CompatibleThemeCapabilityMap = {
     guard: "[privilegeType]:not([privilegeType='0'])",
   },
   eventLabels: {
-    interaction: "互动",
+    interaction: uiText("theme.OPENLIVE_CAPABILITY.eventLabels.interaction"),
 
-    all: "全部事件",
-    danmaku: "弹幕",
-    like: "点赞",
-    gift: "礼物",
-    "gift-normal": "普通与免费礼物",
+    all: uiText("theme.OPENLIVE_CAPABILITY.eventLabels.all"),
+    danmaku: uiText("theme.OPENLIVE_CAPABILITY.eventLabels.danmaku"),
+    like: uiText("theme.OPENLIVE_CAPABILITY.eventLabels.like"),
+    gift: uiText("theme.OPENLIVE_CAPABILITY.eventLabels.gift"),
+    "gift-normal": uiText("theme.OPENLIVE_CAPABILITY.eventLabels.giftnormal"),
 
-    superchat: "醒目留言",
-    guard: "大航海",
+    superchat: uiText("theme.OPENLIVE_CAPABILITY.eventLabels.superchat"),
+    guard: uiText("theme.OPENLIVE_CAPABILITY.eventLabels.guard"),
   },
   identityLabels: {
-    normal: "普通用户",
-    captain:"舰长", admiral:"提督", governor:"总督",
-    all: "全部身份",
-    streamer: "主播",
-    moderator: "房管",
-    guard: "大航海",
+    normal: uiText("theme.OPENLIVE_CAPABILITY.identityLabels.normal"),
+    captain:uiText("theme.OPENLIVE_CAPABILITY.identityLabels.captain"), admiral:uiText("theme.OPENLIVE_CAPABILITY.identityLabels.admiral"), governor:uiText("theme.OPENLIVE_CAPABILITY.identityLabels.governor"),
+    all: uiText("theme.OPENLIVE_CAPABILITY.identityLabels.all"),
+    streamer: uiText("theme.OPENLIVE_CAPABILITY.identityLabels.streamer"),
+    moderator: uiText("theme.OPENLIVE_CAPABILITY.identityLabels.moderator"),
+    guard: uiText("theme.OPENLIVE_CAPABILITY.identityLabels.guard"),
   },
   identityPriority: ["governor", "admiral", "captain", "guard", "streamer", "moderator"],
   schemeSelectors: {

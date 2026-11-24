@@ -1,3 +1,4 @@
+import { uiText } from "../i18n/index.ts";
 import { invoke } from "@tauri-apps/api/core";
 import { listen } from "@tauri-apps/api/event";
 import { open } from "@tauri-apps/plugin-dialog";
@@ -42,7 +43,7 @@ export async function selectLocalAudioFile(): Promise<string | null> {
   const path = await open({
     multiple: false,
     directory: false,
-    filters: [{ name: "音频", extensions: ["mp3", "wav"] }],
+    filters: [{ name: uiText("audioOutput.path.filters.name"), extensions: ["mp3", "wav"] }],
   });
   return typeof path === "string" ? path : null;
 }

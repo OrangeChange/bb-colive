@@ -1,3 +1,4 @@
+import { uiText } from "../i18n/index.ts";
 import { createAppWindow } from "../appData.ts";
 import { resolveOutputEventNeeds } from "../events/outputEventPolicy.ts";
 import { emitTo, listen, type UnlistenFn } from "@tauri-apps/api/event";
@@ -179,7 +180,7 @@ async function waitForNativeWindow(present: boolean, notification: Promise<void>
   while (true) {
     const existing = await WebviewWindow.getByLabel(GIFT_WINDOW_LABEL);
     if (Boolean(existing) === present) return;
-    if (Date.now() >= deadline) throw new Error(present ? '窗口创建未完成' : '窗口关闭未完成');
+    if (Date.now() >= deadline) throw new Error(present ? uiText("giftBridge.createRevenueBridge.waitForNativeWindow") : uiText("giftBridge.createRevenueBridge.waitForNativeWindow2"));
     const pause = new Promise<void>(resolve => setTimeout(resolve, 100));
     await (notified ? pause : Promise.race([notification, pause]));
   }
@@ -440,7 +441,7 @@ async function openGiftWindow(): Promise<void> {
     const minimum = getEventWindowMinSize(label);
     const created = await createAppWindow(GIFT_WINDOW_LABEL, {
       url: GIFT_URL,
-      title: `${label === 'superchat' ? '醒目留言窗' : label === 'guard' ? '大航海窗' : label === 'gift' ? '收益窗' : '礼物窗'} · BB CoLive`,
+      title: `${label === 'superchat' ? uiText("giftBridge.openGiftWindow.created.title") : label === 'guard' ? uiText("giftBridge.openGiftWindow.created.title2") : label === 'gift' ? uiText("common.revenueWindow") : uiText("giftBridge.openGiftWindow.created.title3")} · BB CoLive`,
       visible: false,
       width: placement.width,
       height: placement.height,
@@ -648,7 +649,7 @@ function publishGiftEffectEvent(notice: GiftEffectNotice): void {
 return { startGiftBridge, closeGiftBridge, openGiftWindow, closeGiftWindow, resetGiftWindowGeometry,
   async locate() {
     if (!giftWindow || !session.open) return;
-    if (!session.ready) throw new Error('窗口正在打开，请稍后重试。');
+    if (!session.ready) throw new Error(uiText("giftBridge.createRevenueBridge.locate"));
     if (await giftWindow.isMinimized()) await giftWindow.unminimize();
     await giftWindow.show();
     await emitTo(label, `${label}:locate`);
@@ -708,13 +709,13 @@ async function applySelection(action: RevenueSelectionAction | (() => RevenueSel
     const desired = retrySelection ?? changeRevenueWindowSelection(previous, resolved);
     applyingSelection = true;
     let activeLabel: RevenueWindowLabel = 'gift';
-    let operationName = '关闭';
+    let operationName = uiText("common.close");
     try {
       const labels: RevenueWindowLabel[] = !desired.open ? [] : desired.mode === 'combined' ? ['gift']
         : desired.selected.map(kind => kind === 'gift' ? 'gift-only' : kind);
       for (const label of REVENUE_WINDOW_LABELS.filter(label => !labels.includes(label))) {
         activeLabel = label;
-        operationName = '关闭';
+        operationName = uiText("common.close");
         await bridges[label].closeGiftWindow();
       }
       for (const label of labels) {
@@ -732,8 +733,8 @@ async function applySelection(action: RevenueSelectionAction | (() => RevenueSel
         remembered: actualSelected.length ? [...actualSelected] : previous.remembered };
       recordWindowDiagnostic({ windowLabel: activeLabel, action: operationName === '打开' ? 'open' : 'close', outcome: 'failed',
         data: { error: error instanceof Error ? error.message : String(error) } });
-      const name = activeLabel === 'superchat' ? '醒目留言窗' : activeLabel === 'guard' ? '大航海窗' : activeLabel === 'gift' ? '收益窗' : '礼物窗';
-      throw new RevenueWindowOperationError(`${name}未能${operationName}，请重试。`, () => applySelection(resolved, desired), error);
+      const name = activeLabel === 'superchat' ? uiText("giftBridge.applySelection.operation.name") : activeLabel === 'guard' ? uiText("giftBridge.applySelection.operation.name2") : activeLabel === 'gift' ? uiText("common.revenueWindow") : uiText("giftBridge.applySelection.operation.name3");
+      throw new RevenueWindowOperationError(uiText("giftBridge.applySelection.operation", { name: name, operationName: operationName }), () => applySelection(resolved, desired), error);
     } finally { applyingSelection = false; notifySelection(); }
   });
   selectionQueue = operation.catch(() => {});
@@ -823,7 +824,7 @@ export async function locateGiftWindows(): Promise<void> {
   const results = await Promise.allSettled(targets.map(bridge => bridge.locate()));
   const failed = results.flatMap((result,index) => result.status === 'rejected' ? [targets[index].snapshot().label] : []);
   if (failed.length) {
-    const names = {gift:'收益窗','gift-only':'礼物窗',superchat:'醒目留言窗',guard:'大航海窗'};
-    throw new Error(`${failed.map(label => names[label]).join('、')}未能定位，窗口正在打开时请稍后重试。`);
+    const names = {gift:uiText("common.revenueWindow"),'gift-only':uiText("giftBridge.locateGiftWindows.names.giftonly"),superchat:uiText("giftBridge.locateGiftWindows.names.superchat"),guard:uiText("giftBridge.locateGiftWindows.names.guard")};
+    throw new Error(uiText("giftBridge.locateGiftWindows", { value: failed.map(label => names[label]).join('、') }));
   }
 }

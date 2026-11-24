@@ -1,3 +1,4 @@
+import { uiText } from "../i18n/index.ts";
 import { Fragment, useRef, type RefObject } from "react";
 import type { DanmakuEvent, DanmakuUser } from "../protocol/types";
 import type { GiftEffectNotice } from "../windows/giftEffectBus";
@@ -13,11 +14,11 @@ import type { GiftEffectResource } from "../protocol/giftEffects";
 import type { CompatibleEventRender } from "../compat/CompatibleEventRenderer.tsx";
 
 const REGION_LABEL: Record<SceneRegionId, { title: string; emptyLabel: string }> = {
-  danmu: { title: "弹幕", emptyLabel: "暂无可见弹幕" },
-  interact: { title: "互动", emptyLabel: "暂无可见互动" },
-  gift: { title: "礼物", emptyLabel: "暂无符合条件的礼物" },
-  superChat: { title: "醒目留言", emptyLabel: "暂无醒目留言" },
-  guard: { title: "大航海", emptyLabel: "暂无大航海事件" },
+  danmu: { title: uiText("partitionColumn.REGION_LABEL.danmu.title"), emptyLabel: uiText("partitionColumn.REGION_LABEL.danmu.emptyLabel") },
+  interact: { title: uiText("partitionColumn.REGION_LABEL.interact.title"), emptyLabel: uiText("partitionColumn.REGION_LABEL.interact.emptyLabel") },
+  gift: { title: uiText("partitionColumn.REGION_LABEL.gift.title"), emptyLabel: uiText("partitionColumn.REGION_LABEL.gift.emptyLabel") },
+  superChat: { title: uiText("partitionColumn.REGION_LABEL.superChat.title"), emptyLabel: uiText("partitionColumn.REGION_LABEL.superChat.emptyLabel") },
+  guard: { title: uiText("partitionColumn.REGION_LABEL.guard.title"), emptyLabel: uiText("partitionColumn.REGION_LABEL.guard.emptyLabel") },
 };
 
 interface PartitionColumnProps {
@@ -197,7 +198,7 @@ export function PartitionColumn({
               <HorizontalSeparator
                 value={boundaries[index] ?? (index + 1) / regions.length}
                 onChange={(value) => onBoundaryChange(index, value)}
-                label={`调整${label.title}与${REGION_LABEL[regions[index + 1]].title}区域高度`}
+                label={uiText("partitionColumn.label", { title: label.title, title2: REGION_LABEL[regions[index + 1]].title })}
                 columnRef={columnRef}
                 previousBoundary={boundaries[index - 1] ?? 0}
                 nextBoundary={boundaries[index + 1] ?? 1}

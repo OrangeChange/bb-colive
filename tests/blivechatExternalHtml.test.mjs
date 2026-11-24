@@ -1,3 +1,4 @@
+import { readUiSource } from "./helpers/readUiSource.mjs";
 import { tmpdir as ssrTemporaryDirectory } from 'node:os';
 import assert from "node:assert/strict";
 import test from "node:test";
@@ -158,7 +159,7 @@ test("fixture 的真实 connect-before-load 顺序会为新 document 重新 init
 
 test("外部 HTML target 宿主保留 active 并以 request revision 单独挂载候选", async () => {
   const fs = await import("node:fs");
-  const source = fs.readFileSync("src/compat/blivechat/BlivechatExternalHtmlTarget.tsx", "utf8");
+  const source = readUiSource("src/compat/blivechat/BlivechatExternalHtmlTarget.tsx", "utf8");
   assert.match(source, /active.*candidate|candidate.*active/s);
   assert.match(source, /activeKey[\s\S]*candidateKey/);
   assert.match(source, /holdUntilCommit/);
@@ -166,7 +167,7 @@ test("外部 HTML target 宿主保留 active 并以 request revision 单独挂�
 
 test("SDK 1.0.1 CSS 不叠加，样式变化由新候选 iframe 替换", async () => {
   const fs = await import("node:fs");
-  const surfaceSource = fs.readFileSync("src/compat/blivechat/BlivechatExternalHtmlSurface.tsx", "utf8");
+  const surfaceSource = readUiSource("src/compat/blivechat/BlivechatExternalHtmlSurface.tsx", "utf8");
   assert.doesNotMatch(surfaceSource, /hostRef\.current\?\.injectCss\(descriptor\.css\)/);
   const fixture = fs.readFileSync("tests/fixtures/compat/blc-original/sdk-document.html", "utf8");
   assert.match(fixture, /id=['"]blivechat-theme-css['"]/);

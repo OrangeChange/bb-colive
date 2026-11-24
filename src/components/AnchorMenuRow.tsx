@@ -1,3 +1,4 @@
+import { uiText } from "../i18n/index.ts";
 import { useEffect, useRef, useState, type ReactNode } from "react";
 import { Trash2 } from "lucide-react";
 import type { Anchor } from "../protocol/anchors.ts";
@@ -24,12 +25,12 @@ export function AnchorMenuRow({ anchor, avatar, selected, current, onSelect, onR
       clearTimeout(timer.current);
       timer.current = setTimeout(() => setShowRemove(true), 500);
     }} onPointerLeave={reset} onPointerCancel={reset}>
-    <button type="button" className="anchor-menu-select" onClick={onSelect} title={`${anchor.uname}（房间 ${anchor.realRoomId}）`}>
+    <button type="button" className="anchor-menu-select" onClick={onSelect} title={uiText("anchorMenuRow.title", { uname: anchor.uname, realRoomId: anchor.realRoomId })}>
       {avatar}
       <span className={`anchor-menu-name${current || selected ? " text-accent-text" : ""}`}>{anchor.uname}</span>
       <span className="anchor-menu-room">{anchor.realRoomId}</span>
     </button>
-    <button type="button" className="anchor-menu-remove" aria-label={`删除主播：${anchor.uname}`} title="删除主播" onClick={onRemove}>
+    <button type="button" className="anchor-menu-remove" aria-label={uiText("anchorMenuRow.aria_label", { uname: anchor.uname })} title={uiText("anchorMenuRow.title2")} onClick={onRemove}>
       <Trash2 size={18} strokeWidth={2} aria-hidden="true" />
     </button>
   </div>;

@@ -1,3 +1,4 @@
+import { uiText } from "../i18n/index.ts";
 import { MsgType, type DanmakuEvent, type GiftInfo } from "../protocol/types.ts";
 
 export interface GiftSummary {
@@ -44,7 +45,7 @@ function money(value: number): string {
 
 export function formatGiftSummary(summary: GiftSummary): string {
   const blind = summary.blindCount > 0
-    ? ` · 盲盒盈亏 ${summary.blindProfitRmb > 0 ? "▲+" : summary.blindProfitRmb < 0 ? "▼-" : ""}${money(Math.abs(summary.blindProfitRmb)).slice(1)}`
+    ? uiText("liveSummary.blindProfit", { sign: summary.blindProfitRmb > 0 ? "▲+" : summary.blindProfitRmb < 0 ? "▼-" : "", amount: money(Math.abs(summary.blindProfitRmb)).slice(1) })
     : "";
-  return `总收益 ${money(summary.totalRmb)}${blind}`;
+  return uiText("liveSummary.total", { amount: money(summary.totalRmb), blind });
 }

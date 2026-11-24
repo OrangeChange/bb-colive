@@ -1,3 +1,4 @@
+import { uiText } from "../i18n/index.ts";
 import { imageTargetNodes } from "./ThemeImagePreview.tsx";
 import { ThemeImagePicker } from "./ThemeImagePicker.tsx";
 import { ThemeImageDialog } from "./ThemeImageDialog.tsx";
@@ -98,6 +99,7 @@ export function ThemeDecorationField({
     reference.style.outlineOffset = "-2px";
   };
   const [reference, setReference] = useState("");
+  const [referenceIsCurrent, setReferenceIsCurrent] = useState(false);
   const [clippingLabel, setClippingLabel] = useState("");
   const clippingTargets = useRef<HTMLElement[]>([]);
   const showClipping = () => {
@@ -202,7 +204,7 @@ export function ThemeDecorationField({
   const add = (asset: ThemeImageAsset, replace = false) => {
     const nodes = targetNodes(root, selector);
     if (!nodes.length) {
-      setMessage("当前样例没有此部件。");
+      setMessage(uiText("themeDecorationField.ThemeDecorationField.add"));
       return;
     }
     if (replace && item?.source) {
@@ -212,7 +214,7 @@ export function ThemeDecorationField({
     }
     const contexts = nodes.map(inspectImageTarget);
     if (contexts.some((c) => !c.box || c.replaced)) {
-      setMessage("此部件不能承载独立装饰，请选择外层区域。");
+      setMessage(uiText("themeDecorationField.ThemeDecorationField.add2"));
       return;
     }
     let slot =
@@ -235,8 +237,8 @@ export function ThemeDecorationField({
     if (!slot) {
       setMessage(
         draft.filter((image) => image.flow).length === 2
-          ? "此部件最多放两张随文图片；将一张改为自由定位后可继续添加。"
-          : "此部件的装饰位置已被样式占用，请选择其他部件。",
+          ? uiText("themeDecorationField.ThemeDecorationField.add3")
+          : uiText("themeDecorationField.ThemeDecorationField.add4"),
       );
       return;
     }
@@ -285,7 +287,7 @@ export function ThemeDecorationField({
       setSelected(avatarFrame ? 0 : draft.length);
       setMessage("");
     };
-    image.onerror = () => setMessage("图片未能载入，请重新选择。");
+    image.onerror = () => setMessage(uiText("themeDecorationField.ThemeDecorationField.add5"));
     image.src = asset.url;
   };
   return (
@@ -304,12 +306,12 @@ export function ThemeDecorationField({
               ...new Set(
                 clippingTargets.current.map((node) =>
                   node.matches(".event-list,#items")
-                    ? "事件列表"
+                    ? uiText("themeDecorationField.onClick")
                     : node.matches(".event")
-                      ? "事件"
+                      ? uiText("themeDecorationField.onClick2")
                       : node.matches(".event-area")
-                        ? "事件区域"
-                        : "上层区域",
+                        ? uiText("themeDecorationField.onClick3")
+                        : uiText("themeDecorationField.onClick4"),
                 ),
               ),
             ].join("、"),
@@ -367,18 +369,19 @@ export function ThemeDecorationField({
                 })
               : [],
           );
+          setReferenceIsCurrent(ref === nodes[0]);
           setReference(
             ref
               ? ref === nodes[0]
-                ? "当前部件"
+                ? uiText("themeDecorationField.currentPart")
                 : ref.matches(
                       ".event,yt-live-chat-text-message-renderer,yt-live-chat-paid-message-renderer,yt-live-chat-membership-item-renderer",
                     )
-                  ? "当前事件"
+                  ? uiText("themeDecorationField.onClick5")
                   : ref.matches(".event-list,#items")
-                    ? "事件列表"
-                    : "上层区域"
-              : "页面",
+                    ? uiText("themeDecorationField.onClick")
+                    : uiText("themeDecorationField.onClick4")
+              : uiText("themeDecorationField.onClick6"),
           );
           setDraft(
             structuredClone(images).map((image) => {
@@ -424,17 +427,16 @@ export function ThemeDecorationField({
         }}
       >
         <ImagePlus size={18} />
-        {avatarFrame ? "头像框" : "装饰图"}
+        {avatarFrame ? uiText("themeDecorationField.ThemeDecorationField") : uiText("themeDecorationField.ThemeDecorationField2")}
       </button>
       {open && (
         <ThemeImageDialog
-          title={avatarFrame ? "头像框" : "装饰图"}
+          title={avatarFrame ? uiText("themeDecorationField.title") : uiText("themeDecorationField.title2")}
           onClose={() => setOpen(false)}
           actions={
             <>
               <button type="button" onClick={() => setOpen(false)}>
-                取消
-              </button>
+                {uiText("common.cancel")}</button>
               <button
                 type="button"
                 disabled={
@@ -453,8 +455,7 @@ export function ThemeDecorationField({
                   setOpen(false);
                 }}
               >
-                完成设置
-              </button>
+                {uiText("themeDecorationField.actions")}</button>
             </>
           }
         >
@@ -462,13 +463,13 @@ export function ThemeDecorationField({
             <div
               className="theme-image-modes"
               role="group"
-              aria-label="头像框显示方式"
+              aria-label={uiText("themeDecorationField.aria_label")}
             >
               {(
                 [
-                  ["inherit", "沿用主题"],
-                  ["custom", "自定义"],
-                  ["hidden", "不显示"],
+                  ["inherit", uiText("themeDecorationField.ThemeDecorationField3")],
+                  ["custom", uiText("themeDecorationField.ThemeDecorationField4")],
+                  ["hidden", uiText("themeDecorationField.ThemeDecorationField5")],
                 ] as const
               ).map(([mode, label]) => (
                 <button
@@ -495,11 +496,10 @@ export function ThemeDecorationField({
                     setOpen(false);
                   }}
                 >
-                  恢复继承
-                </button>
+                  {uiText("themeDecorationField.ThemeDecorationField6")}</button>
               )}
               <ThemeImagePicker
-                label="装饰图片"
+                label={uiText("themeDecorationField.label")}
                 single={avatarFrame}
                 onChoose={(asset) => add(asset, avatarFrame)}
                 onReplace={
@@ -509,11 +509,11 @@ export function ThemeDecorationField({
               {message && <p role="status">{message}</p>}
               {clippingLabel && (
                 <details className="theme-image-hint">
-                  <summary>裁切范围：{clippingLabel.split("、")[0]}</summary>
-                  <p>超出{clippingLabel.split("、")[0]}的部分会被裁切。</p>
+                  <summary>{uiText("themeDecorationField.ThemeDecorationField7")}{clippingLabel.split("、")[0]}</summary>
+                  <p>{uiText("themeDecorationField.ThemeDecorationField8")}{clippingLabel.split("、")[0]}{uiText("themeDecorationField.ThemeDecorationField9")}</p>
                   {clippingLabel.includes("、") && (
                     <details>
-                      <summary>其他裁切范围</summary>
+                      <summary>{uiText("themeDecorationField.ThemeDecorationField10")}</summary>
                       {clippingLabel.split("、").slice(1).join("、")}
                     </details>
                   )}
@@ -524,13 +524,12 @@ export function ThemeDecorationField({
                     onFocus={showClipping}
                     onBlur={clearHighlight}
                   >
-                    查看裁切区域
-                  </button>
+                    {uiText("themeDecorationField.ThemeDecorationField11")}</button>
                 </details>
               )}
               {existing.map((entry) => (
                 <div key={entry.slot} className="theme-image-hint">
-                  现有装饰位置{entry.slot === "before" ? "一" : "二"}：
+                  {uiText("themeDecorationField.ThemeDecorationField12")}{entry.slot === "before" ? uiText("themeDecorationField.ThemeDecorationField13") : uiText("themeDecorationField.ThemeDecorationField14")}：
                   {entry.candidate ? (
                     <button
                       type="button"
@@ -542,18 +541,16 @@ export function ThemeDecorationField({
                         setSelected(draft.length);
                       }}
                     >
-                      编辑现有图片
-                    </button>
+                      {uiText("themeDecorationField.ThemeDecorationField15")}</button>
                   ) : (
-                    <span>由 CSS 控制</span>
+                    <span>{uiText("themeDecorationField.ThemeDecorationField16")}</span>
                   )}
                 </div>
               ))}
               {!avatarFrame && (
                 <>
                   <p className="theme-image-hint">
-                    同组图片越靠上越靠前；与文字的遮挡关系单独设置。
-                  </p>
+                    {uiText("themeDecorationField.ThemeDecorationField17")}</p>
                   <div className="theme-image-layers">
                     {draft.map((entry, index) => (
                       <div
@@ -588,7 +585,7 @@ export function ThemeDecorationField({
                           setSelected(index);
                         }}
                       >
-                        <span className="theme-image-grip" title="拖动排序">
+                        <span className="theme-image-grip" title={uiText("themeDecorationField.title3")}>
                           <GripVertical size={18} />
                         </span>
                         <span
@@ -605,13 +602,13 @@ export function ThemeDecorationField({
                           {assets?.images.find((a) => a.path === entry.source)
                             ?.name ??
                             (entry.source.startsWith("data:")
-                              ? "内嵌图片"
+                              ? uiText("themeDecorationField.ThemeDecorationField18")
                               : entry.source.split("/").pop()?.slice(0, 80) ||
-                                "图片")}
+                                uiText("themeDecorationField.ThemeDecorationField19"))}
                         </button>
                         <button
                           type="button"
-                          aria-label="上移装饰"
+                          aria-label={uiText("themeDecorationField.aria_label2")}
                           disabled={index === 0}
                           onClick={() => {
                             const next = [...draft];
@@ -627,7 +624,7 @@ export function ThemeDecorationField({
                         </button>
                         <button
                           type="button"
-                          aria-label="下移装饰"
+                          aria-label={uiText("themeDecorationField.aria_label3")}
                           disabled={index === draft.length - 1}
                           onClick={() => {
                             const next = [...draft];
@@ -643,7 +640,7 @@ export function ThemeDecorationField({
                         </button>
                         <button
                           type="button"
-                          aria-label="显示或隐藏装饰"
+                          aria-label={uiText("themeDecorationField.aria_label4")}
                           onClick={() =>
                             setDraft((current) =>
                               current.map((i, n) =>
@@ -660,7 +657,7 @@ export function ThemeDecorationField({
                         </button>
                         <button
                           type="button"
-                          aria-label="移除图片"
+                          aria-label={uiText("themeDecorationField.aria_label5")}
                           onClick={() => {
                             setDraft((current) =>
                               current.filter((_, n) => n !== index),
@@ -679,9 +676,8 @@ export function ThemeDecorationField({
                 <div className="theme-image-properties">
                   {!avatarFrame && (
                     <label>
-                      排列
-                      <UiSelect
-                        ariaLabel="装饰排列"
+                      {uiText("themeDecorationField.ThemeDecorationField20")}<UiSelect
+                        ariaLabel={uiText("themeDecorationField.ariaLabel3")}
                         value={item.flow ? "flow" : "absolute"}
                         onValueChange={(selectedValue) =>
                           selectedValue === "flow" &&
@@ -690,13 +686,13 @@ export function ThemeDecorationField({
                               entry.id !== item.id && entry.slot === item.slot,
                           )
                             ? setMessage(
-                                "同层多张图片共用自由定位。请先选择空闲装饰位置。",
+                                uiText("themeDecorationField.onValueChange"),
                               )
                             : update({ flow: selectedValue === "flow" })
                         }
                         options={[
-                          { value: "flow", label: "随文排列" },
-                          { value: "absolute", label: "自由定位" },
+                          { value: "flow", label: uiText("themeDecorationField.options.label") },
+                          { value: "absolute", label: uiText("themeDecorationField.options.label2") },
                         ]}
                       />
                     </label>
@@ -704,15 +700,14 @@ export function ThemeDecorationField({
                   {!avatarFrame && (
                     <p className="theme-image-hint">
                       {item.flow
-                        ? "图片参与排版，随文字换行。"
-                        : "图片独立定位，不占文字空间。"}
+                        ? uiText("themeDecorationField.ThemeDecorationField21")
+                        : uiText("themeDecorationField.ThemeDecorationField22")}
                     </p>
                   )}
                   {!item.flow && !avatarFrame && (
                     <label>
-                      遮挡关系
-                      <UiSelect
-                        ariaLabel="遮挡关系"
+                      {uiText("themeDecorationField.ThemeDecorationField23")}<UiSelect
+                        ariaLabel={uiText("themeDecorationField.ariaLabel4")}
                         value={item.depth ?? "front"}
                         onValueChange={(selectedValue) =>
                           setDraft((current) =>
@@ -727,8 +722,8 @@ export function ThemeDecorationField({
                           )
                         }
                         options={[
-                          { value: "front", label: "内容上方" },
-                          { value: "back", label: "内容下方" },
+                          { value: "front", label: uiText("themeDecorationField.options.label3") },
+                          { value: "back", label: uiText("themeDecorationField.options.label4") },
                         ]}
                       />
                     </label>
@@ -738,11 +733,11 @@ export function ThemeDecorationField({
                     open={item.flow}
                     hidden={avatarFrame}
                   >
-                    <summary>{item.flow ? "部件前后" : "高级图层设置"}</summary>{" "}
+                    <summary>{item.flow ? uiText("themeDecorationField.ThemeDecorationField24") : uiText("themeDecorationField.ThemeDecorationField25")}</summary>{" "}
                     <label>
-                      {item.flow ? "部件前后" : "高级图层设置"}
+                      {item.flow ? uiText("themeDecorationField.ThemeDecorationField24") : uiText("themeDecorationField.ThemeDecorationField25")}
                       <UiSelect
-                        ariaLabel="装饰位置"
+                        ariaLabel={uiText("themeDecorationField.ariaLabel5")}
                         value={item.slot}
                         onValueChange={(selectedValue) => {
                           const slot = selectedValue as "before" | "after";
@@ -757,7 +752,7 @@ export function ThemeDecorationField({
                                 !images.some((i) => i.slot === slot),
                             )
                           ) {
-                            setMessage("这个装饰位置已占用。");
+                            setMessage(uiText("themeDecorationField.onValueChange2"));
                             return;
                           }
                           update({ slot });
@@ -765,11 +760,11 @@ export function ThemeDecorationField({
                         options={[
                           {
                             value: "before",
-                            label: item.flow ? "部件前" : "位置一",
+                            label: item.flow ? uiText("themeDecorationField.options.label5") : uiText("themeDecorationField.options.label6"),
                           },
                           {
                             value: "after",
-                            label: item.flow ? "部件后" : "位置二",
+                            label: item.flow ? uiText("themeDecorationField.options.label7") : uiText("themeDecorationField.options.label8"),
                           },
                         ]}
                       />
@@ -778,31 +773,29 @@ export function ThemeDecorationField({
                   {!item.flow && (
                     <>
                       <p className="theme-image-hint">
-                        定位参照：
-                        {avatarFrame
-                          ? "头像"
+                        {uiText("themeDecorationField.ThemeDecorationField26")}{avatarFrame
+                          ? uiText("themeDecorationField.ThemeDecorationField27")
                           : item.localReference
-                            ? "当前部件"
+                            ? uiText("themeDecorationField.currentPart")
                             : reference}
-                        。移动百分比相对此区域。
-                      </p>
-                      {!avatarFrame && reference !== "当前部件" && (
+                        {uiText("themeDecorationField.ThemeDecorationField28")}</p>
+                      {!avatarFrame && !referenceIsCurrent && (
                         <details>
-                          <summary>更换定位参照</summary>
+                          <summary>{uiText("themeDecorationField.ThemeDecorationField29")}</summary>
                           <button
                             type="button"
                             onClick={() => {
                               update({ localReference: !item.localReference });
                               setMessage(
                                 !item.localReference
-                                  ? "应用后，当前部件内的绝对定位内容也会跟随此部件。"
+                                  ? uiText("themeDecorationField.onClick7")
                                   : "",
                               );
                             }}
                           >
                             {item.localReference
-                              ? "沿用现有参照"
-                              : "改为跟随当前部件"}
+                              ? uiText("themeDecorationField.ThemeDecorationField30")
+                              : uiText("themeDecorationField.ThemeDecorationField31")}
                           </button>
                         </details>
                       )}
@@ -813,10 +806,9 @@ export function ThemeDecorationField({
                         onFocus={showReference}
                         onBlur={clearHighlight}
                       >
-                        查看定位区域
-                      </button>
+                        {uiText("themeDecorationField.ThemeDecorationField32")}</button>
                       <section>
-                        <h4>图片位置</h4>
+                        <h4>{uiText("themeDecorationField.ThemeDecorationField33")}</h4>
                         <div className="theme-image-grid">
                           {Array.from({ length: 9 }, (_, i) => (
                             <button
@@ -832,7 +824,7 @@ export function ThemeDecorationField({
                                   ? "is-selected"
                                   : undefined
                               }
-                              aria-label={`装饰${["左上", "上中", "右上", "左中", "居中", "右中", "左下", "下中", "右下"][i]}`}
+                              aria-label={uiText("themeDecorationField.aria_label6", { value: [uiText("themeDecorationField.aria_label.value"), uiText("themeDecorationField.aria_label.value2"), uiText("themeDecorationField.aria_label.value3"), uiText("themeDecorationField.aria_label.value4"), uiText("themeDecorationField.aria_label.value5"), uiText("themeDecorationField.aria_label.value6"), uiText("themeDecorationField.aria_label.value7"), uiText("themeDecorationField.aria_label.value8"), uiText("themeDecorationField.aria_label.value9")][i] })}
                               onClick={() =>
                                 update({
                                   alignment: [
@@ -883,8 +875,7 @@ export function ThemeDecorationField({
                       }
                     >
                       <RotateCcw size={18} />
-                      恢复居中
-                    </button>
+                      {uiText("themeDecorationField.ThemeDecorationField34")}</button>
                   )}
                   <section className="theme-image-size">
                     <div className="theme-image-dimensions">
@@ -893,8 +884,8 @@ export function ThemeDecorationField({
                           {index === 1 && (
                             <button
                               type="button"
-                              aria-label={locked ? "解除比例" : "锁定比例"}
-                              title={locked ? "解除比例" : "锁定比例"}
+                              aria-label={locked ? uiText("themeDecorationField.aria_label7") : uiText("themeDecorationField.aria_label8")}
+                              title={locked ? uiText("themeDecorationField.title4") : uiText("themeDecorationField.title5")}
                               onClick={() => setLocked(!locked)}
                             >
                               {locked ? (
@@ -905,9 +896,9 @@ export function ThemeDecorationField({
                             </button>
                           )}
                           <label>
-                            {index ? "高" : "宽"}
+                            {index ? uiText("themeDecorationField.ThemeDecorationField35") : uiText("themeDecorationField.ThemeDecorationField36")}
                             <ThemeNumberInput
-                              label={`装饰${index ? "高度" : "宽度"}`}
+                              label={uiText("themeDecorationField.label2", { value: index ? uiText("themeDecorationField.label.value") : uiText("themeDecorationField.label.value2") })}
                               value={Number(item[key])}
                               onChange={(next) =>
                                 update(
@@ -974,20 +965,19 @@ export function ThemeDecorationField({
                       }}
                     >
                       <RotateCcw size={18} />
-                      恢复原图比例
-                    </button>
+                      {uiText("themeDecorationField.ThemeDecorationField37")}</button>
                   </section>
                   {(["move", "anchor"] as const).map((group) => (
                     <section key={group} className="theme-image-coordinate">
-                      <h4>{group === "move" ? "移动" : "图片锚点"}</h4>
+                      <h4>{group === "move" ? uiText("themeDecorationField.ThemeDecorationField38") : uiText("themeDecorationField.ThemeDecorationField39")}</h4>
                       {[0, 1].map((axis) => (
                         <label key={axis}>
-                          {axis ? "上下" : "左右"}
+                          {axis ? uiText("themeDecorationField.ThemeDecorationField40") : uiText("themeDecorationField.ThemeDecorationField41")}
                           <ThemeNumberInput
                             label={
                               group === "move"
-                                ? `装饰${axis ? "上下" : "左右"}移动`
-                                : `图片锚点${axis ? "纵向" : "横向"}`
+                                ? uiText("themeDecorationField.label3", { value: axis ? uiText("themeDecorationField.label.value3") : uiText("themeDecorationField.label.value4") })
+                                : uiText("themeDecorationField.label4", { value: axis ? uiText("themeDecorationField.label.value5") : uiText("themeDecorationField.label.value6") })
                             }
                             value={Number(item[group][axis].value)}
                             onChange={(inputValue) =>
@@ -1000,8 +990,8 @@ export function ThemeDecorationField({
                           <UiSelect
                             ariaLabel={
                               group === "move"
-                                ? `装饰${axis ? "上下" : "左右"}移动单位`
-                                : `图片锚点${axis ? "纵向" : "横向"}单位`
+                                ? uiText("themeDecorationField.ariaLabel", { value: axis ? uiText("themeDecorationField.ariaLabel.value") : uiText("themeDecorationField.ariaLabel.value2") })
+                                : uiText("themeDecorationField.ariaLabel2", { value: axis ? uiText("themeDecorationField.ariaLabel.value3") : uiText("themeDecorationField.ariaLabel.value4") })
                             }
                             value={item[group][axis].unit}
                             onValueChange={(selectedValue) => {
@@ -1028,8 +1018,8 @@ export function ThemeDecorationField({
           {avatarFrame && avatarMode !== "custom" && (
             <p className="theme-image-hint">
               {avatarMode === "inherit"
-                ? "使用主题原有头像框。"
-                : "不显示头像框。"}
+                ? uiText("themeDecorationField.ThemeDecorationField42")
+                : uiText("themeDecorationField.ThemeDecorationField43")}
             </p>
           )}
         </ThemeImageDialog>

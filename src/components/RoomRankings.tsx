@@ -1,3 +1,4 @@
+import { uiText } from "../i18n/index.ts";
 import { useEffect, useMemo, useRef, useState } from 'react'
 import { useVirtualizer } from '@tanstack/react-virtual'
 import { useRoomInsights } from '../hooks/useRoomInsights'
@@ -47,15 +48,15 @@ function RankRows({
     observer.observe(sentinel)
     return () => observer.disconnect()
   }, [hasMore, loadMoreError, onLoadMore])
-  return <div ref={scrollRef} tabIndex={0} aria-label="滚动查看榜单" className={`min-h-0 flex-1 overflow-y-auto overscroll-contain ${focusClass}`} style={{ scrollbarGutter: 'stable' }}>
-    {users.length <= 100 ? <RankList users={users} kind={kind} guardIdentityDisplayMode={guardIdentityDisplayMode} showGuardIdentity={showGuardIdentity} onUserFilter={onUserFilter} /> : <ol aria-label={kind === 'guard' ? '大航海陪伴总榜' : '观众榜'} className="relative" style={{ height: virtual.getTotalSize() }}>
+  return <div ref={scrollRef} tabIndex={0} aria-label={uiText("roomRankings.aria_label")} className={`min-h-0 flex-1 overflow-y-auto overscroll-contain ${focusClass}`} style={{ scrollbarGutter: 'stable' }}>
+    {users.length <= 100 ? <RankList users={users} kind={kind} guardIdentityDisplayMode={guardIdentityDisplayMode} showGuardIdentity={showGuardIdentity} onUserFilter={onUserFilter} /> : <ol aria-label={kind === 'guard' ? uiText("roomRankings.aria_label2") : uiText("roomRankings.aria_label3")} className="relative" style={{ height: virtual.getTotalSize() }}>
       {virtual.getVirtualItems().map(row => <li key={users[row.index].uid} aria-posinset={row.index + 1} aria-setsize={users.length}
         className="absolute left-0 top-0 w-full" style={{ height: row.size, transform: `translateY(${row.start}px)` }}>
         <RankUserRow user={users[row.index]} kind={kind} guardIdentityDisplayMode={guardIdentityDisplayMode} showGuardIdentity={showGuardIdentity} onUserFilter={onUserFilter} />
       </li>)}
     </ol>}
     {(hasMore || loadingMore || loadMoreError) && <div ref={sentinelRef} role={loadMoreError ? 'alert' : 'status'} className="flex min-h-8 items-center justify-center border-t border-line/50 px-3 py-2 ui-type-meta text-t3">
-      {loadingMore ? '正在加载下一页…' : loadMoreError ? <button type="button" onClick={() => loadMoreRef.current?.()} className={`cursor-pointer rounded px-2 py-1 ui-type-control text-accent-text hover:bg-accent-subtle ${focusClass}`}>重试</button> : '继续下滑'}
+      {loadingMore ? uiText("roomRankings.RankRows") : loadMoreError ? <button type="button" onClick={() => loadMoreRef.current?.()} className={`cursor-pointer rounded px-2 py-1 ui-type-control text-accent-text hover:bg-accent-subtle ${focusClass}`}>{uiText("common.retry")}</button> : uiText("roomRankings.RankRows2")}
     </div>}
   </div>
 }
@@ -76,7 +77,7 @@ function Ranking({ kind, onUserFilter }: { kind: 'contribution' | 'guard'; onUse
   const sourceUsers = guard ? guardUsers : contribution.data?.users ?? []
   const users = useMemo(() => applyObservedGuardIcons(sourceUsers, observedGuardIconUrls, roomGuardProfile), [sourceUsers, observedGuardIconUrls, roomGuardProfile])
   const top3 = applyObservedGuardIcons(guard ? guardUsers.slice(0, 3) : contribution.data?.users.slice(0, 3) ?? overview.data?.topContributors ?? [], observedGuardIconUrls, roomGuardProfile)
-  const label = guard ? '大航海' : '观众榜'
+  const label = guard ? uiText("roomRankings.Ranking.label") : uiText("roomRankings.Ranking.label2")
   const ready = !!overview.data?.anchorUid
   const error = query.isError || overview.isError && !ready
   const pending = enabled && (overview.isPending || ready && query.isPending)
@@ -109,7 +110,7 @@ function Ranking({ kind, onUserFilter }: { kind: 'contribution' | 'guard'; onUse
     onMouseLeave={() => {
       if (!pinned && !root.current?.contains(document.activeElement)) closeTimer.current = setTimeout(() => dismiss(kind), 180)
     }}>
-    <button ref={trigger} type="button" aria-label={`${label}，展开榜单`} aria-expanded={expanded} aria-haspopup="dialog" aria-controls={`room-rank-${kind}`}
+    <button ref={trigger} type="button" aria-label={uiText("roomRankings.aria_label4", { label: label })} aria-expanded={expanded} aria-haspopup="dialog" aria-controls={`room-rank-${kind}`}
       disabled={!roomId}
       onClick={() => { cancelClose(); setPinned(true); open(kind) }}
       onKeyDown={event => { if (event.key === 'ArrowDown') { event.preventDefault(); setPinned(true); open(kind) } }}
@@ -118,27 +119,27 @@ function Ranking({ kind, onUserFilter }: { kind: 'contribution' | 'guard'; onUse
       <RankTopThree users={top3} pending={pending} />
     </button>
     {expanded && <div className="ui-motion-enter absolute right-0 top-full z-50 pt-2">
-      <section id={`room-rank-${kind}`} role="dialog" aria-label={guard ? '大航海陪伴总榜' : '观众榜'}
+      <section id={`room-rank-${kind}`} role="dialog" aria-label={guard ? uiText("roomRankings.aria_label2") : uiText("roomRankings.aria_label3")}
         className="flex h-[400px] max-h-[calc(100dvh-110px)] w-[360px] max-w-[calc(100vw-100px)] flex-col overflow-hidden rounded-lg border border-line bg-surface shadow-xl shadow-black/20">
         <header className="flex shrink-0 items-center gap-2 border-b border-line px-3 py-2">
           <div className="min-w-0 flex-1">
             <div className="flex items-baseline gap-2 whitespace-nowrap">
             <h2 className="ui-type-section-title font-semibold text-t1">{label}</h2>
-            <span className="ui-type-meta tabular-nums text-t3">已显示 {users.length}{guard && guardFirst.data?.total !== undefined ? ` / ${guardFirst.data.total}` : ''} 人</span>
+            <span className="ui-type-meta tabular-nums text-t3">{uiText("roomRankings.Ranking")}{users.length}{guard && guardFirst.data?.total !== undefined ? ` / ${guardFirst.data.total}` : ''} {uiText("roomRankings.Ranking2")}</span>
             </div>
           </div>
-              <button type="button" onClick={refresh} disabled={!enabled || query.isFetching || overview.isFetching} className={`cursor-pointer rounded px-2 py-1 ui-type-control text-t2 enabled:hover:bg-raised disabled:cursor-wait disabled:opacity-50 ${focusClass}`}>刷新</button>
+              <button type="button" onClick={refresh} disabled={!enabled || query.isFetching || overview.isFetching} className={`cursor-pointer rounded px-2 py-1 ui-type-control text-t2 enabled:hover:bg-raised disabled:cursor-wait disabled:opacity-50 ${focusClass}`}>{uiText("roomRankings.Ranking3")}</button>
         </header>
-        {guard ? <div role="group" aria-label="大航海排序方式" className="flex shrink-0 gap-1 border-b border-line px-3 py-2">
+        {guard ? <div role="group" aria-label={uiText("roomRankings.aria_label5")} className="flex shrink-0 gap-1 border-b border-line px-3 py-2">
           {(['intimacy', 'accompany'] as const).map(sort => <button key={sort} type="button" aria-pressed={guardSort === sort}
             onPointerDown={event => { event.stopPropagation(); cancelClose(); setPinned(true) }}
             onClick={() => { cancelClose(); setPinned(true); setGuardSort(sort) }} className={`cursor-pointer rounded px-2.5 py-1 ui-type-control ${focusClass} ${guardSort === sort ? 'bg-accent-subtle text-accent-text' : 'text-t2 hover:bg-raised'}`}>
-            {sort === 'intimacy' ? '亲密度' : '陪伴天数'}
+            {sort === 'intimacy' ? uiText("roomRankings.Ranking4") : uiText("roomRankings.Ranking5")}
           </button>)}
-        </div> : <p className="shrink-0 border-b border-line px-3 py-2 ui-type-meta text-t3">贡献值 · 最多展示前100名</p>}
+        </div> : <p className="shrink-0 border-b border-line px-3 py-2 ui-type-meta text-t3">{uiText("roomRankings.Ranking6")}</p>}
         {error && <div role="status" className="flex shrink-0 items-center justify-between gap-2 border-b border-line px-3 py-2 ui-type-control text-warning">
-          <span>{users.length ? '更新失败，保留上次榜单' : '榜单读取失败'}</span>
-          <button type="button" onClick={refresh} disabled={!enabled || query.isFetching || overview.isFetching} className={`cursor-pointer rounded px-2 py-1 enabled:hover:bg-raised ${focusClass}`}>重试</button>
+          <span>{users.length ? uiText("roomRankings.Ranking7") : uiText("roomRankings.Ranking8")}</span>
+          <button type="button" onClick={refresh} disabled={!enabled || query.isFetching || overview.isFetching} className={`cursor-pointer rounded px-2 py-1 enabled:hover:bg-raised ${focusClass}`}>{uiText("common.retry")}</button>
         </div>}
         {users.length ? <RankRows
           key={guard ? guardSort : kind}
@@ -152,7 +153,7 @@ function Ranking({ kind, onUserFilter }: { kind: 'contribution' | 'guard'; onUse
           showGuardIdentity={showGuardIdentity}
           onUserFilter={onUserFilter ? filterUser : undefined}
               /> : <div role="status" className="flex min-h-0 flex-1 items-center justify-center ui-type-control text-t2">
-          {!enabled ? '连接直播间后读取榜单' : pending ? '正在读取榜单…' : error ? '稍后重试即可重新读取' : guard ? '暂无大航海成员' : '暂无观众榜用户'}
+          {!enabled ? uiText("roomRankings.Ranking9") : pending ? uiText("roomRankings.Ranking10") : error ? uiText("roomRankings.Ranking11") : guard ? uiText("roomRankings.Ranking12") : uiText("roomRankings.Ranking13")}
         </div>}
       </section>
     </div>}

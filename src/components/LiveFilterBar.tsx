@@ -1,3 +1,4 @@
+import { uiText } from "../i18n/index.ts";
 import { UiSearchInput } from "./ui/SearchInput.tsx";
 import { ChevronDown as LucideChevronDown } from "lucide-react";
 import { useState, type Dispatch, type FocusEvent, type SetStateAction } from "react";
@@ -31,9 +32,9 @@ interface LiveFilterBarProps {
 }
 
 const rightOptions: { key: RightFilterKey; label: string }[] = [
-  { key: "gift", label: "礼物" },
+  { key: "gift", label: uiText("liveFilterBar.rightOptions.label") },
   { key: "superChat", label: "SC" },
-  { key: "guard", label: "大航海" },
+  { key: "guard", label: uiText("liveFilterBar.rightOptions.label2") },
 ];
 
 const filterButtonBase = "inline-flex h-8 shrink-0 items-center justify-center whitespace-nowrap rounded-md border px-2 ui-type-control transition-colors";
@@ -118,7 +119,7 @@ function FilterSubmenu<K extends string>({
       </button>
       {open && (
         <div className="ui-motion-enter absolute left-0 top-full z-50 pt-1">
-          <div role="menu" aria-label={`${label}类型筛选`} className="min-w-32 overflow-hidden rounded-md border border-line bg-surface p-1 shadow-lg shadow-black/20">
+          <div role="menu" aria-label={uiText("liveFilterBar.aria_label", { label: label })} className="min-w-32 overflow-hidden rounded-md border border-line bg-surface p-1 shadow-lg shadow-black/20">
             {options.map((option) => {
               const checked = selected[option.key] !== false;
               return (
@@ -194,10 +195,10 @@ export function LiveFilterBar({
     <div data-scene-toolbar className="flex min-h-10 min-w-0 flex-wrap items-center gap-x-3 gap-y-1.5 overflow-visible border-b border-line bg-surface px-3 py-1.5">
       <div className="flex max-w-full flex-wrap items-center gap-1.5">
         <SettingsChoiceControl
-          label="现场布局"
+          label={uiText("liveFilterBar.label")}
           options={[
-            { value: "dual", label: "布局：双区" },
-            { value: "partition", label: "布局：多区" },
+            { value: "dual", label: uiText("liveFilterBar.options.label") },
+            { value: "partition", label: uiText("liveFilterBar.options.label2") },
           ]}
           value={layoutMode}
           onChange={onLayoutChange}
@@ -205,14 +206,14 @@ export function LiveFilterBar({
           iconOnly
           className="shrink-0"
         />
-        <div className="flex max-w-full flex-wrap items-center gap-1.5" aria-label="现场筛选">
+        <div className="flex max-w-full flex-wrap items-center gap-1.5" aria-label={uiText("liveFilterBar.aria_label2")}>
           <FilterToggle
-            label="弹幕"
+            label={uiText("liveFilterBar.label2")}
             active={filters.left.danmu}
             onClick={() => toggleLeft("danmu")}
           />
           <FilterSubmenu
-            label="互动"
+            label={uiText("liveFilterBar.label3")}
             active={filters.left.interact}
             onPrimaryToggle={() => toggleLeft("interact")}
             options={INTERACT_KIND_OPTIONS}
@@ -220,7 +221,7 @@ export function LiveFilterBar({
             onToggle={toggleInteractKind}
           />
           <FilterSubmenu
-            label="礼物"
+            label={uiText("liveFilterBar.label4")}
             active={filters.right.gift}
             onPrimaryToggle={() => toggleRight("gift")}
             options={GIFT_KIND_OPTIONS}
@@ -234,25 +235,24 @@ export function LiveFilterBar({
       </div>
       <div className="ml-auto flex max-w-full flex-wrap items-center gap-2">
         <div className="flex shrink-0 items-center gap-1.5">
-          <UiSearchInput aria-label="搜索现场事件内容" placeholder="搜索内容" value={query.text ?? ""} onValueChange={onSearchTextChange} className="w-44 max-w-full" />
+          <UiSearchInput aria-label={uiText("liveFilterBar.aria_label3")} placeholder={uiText("liveFilterBar.placeholder")} value={query.text ?? ""} onValueChange={onSearchTextChange} className="w-44 max-w-full" />
         </div>
         <GiftThresholdInput value={giftThreshold} mode={giftThresholdMode} onChange={setGiftThreshold} compact />
       </div>
       {queryActive ? (
         <div className="ui-motion-filter-context flex basis-full items-center justify-end gap-2 border-t border-line/60 pt-1">
           {query.userName ? (
-            <span className="max-w-52 truncate rounded-md border border-accent/40 bg-accent-subtle px-2 ui-type-control text-accent-text" title={`当前筛选用户：${query.userName}`}>
-              用户：{query.userName}
+            <span className="max-w-52 truncate rounded-md border border-accent/40 bg-accent-subtle px-2 ui-type-control text-accent-text" title={uiText("liveFilterBar.title", { userName: query.userName })}>
+              {uiText("liveFilterBar.LiveFilterBar")}{query.userName}
             </span>
           ) : null}
           <button
             type="button"
-            aria-label="退出筛选"
+            aria-label={uiText("liveFilterBar.aria_label4")}
             onClick={onClearQuery}
             className={`${compactFilterActionButtonClass} shrink-0`}
           >
-            退出筛选
-          </button>
+            {uiText("liveFilterBar.LiveFilterBar2")}</button>
         </div>
       ) : null}
     </div>

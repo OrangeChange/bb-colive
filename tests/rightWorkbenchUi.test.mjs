@@ -1,32 +1,33 @@
+import { readUiSource } from "./helpers/readUiSource.mjs";
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
 import { fileURLToPath } from 'node:url';
 
-const source = readFileSync(
+const source = readUiSource(
   fileURLToPath(new URL('../src/components/RightWorkbench.tsx', import.meta.url)),
   'utf8',
 );
-const cssSource = readFileSync(
+const cssSource = readUiSource(
   fileURLToPath(new URL('../src/App.css', import.meta.url)),
   'utf8',
 );
-const surfaceSource = readFileSync(
+const surfaceSource = readUiSource(
   fileURLToPath(new URL('../src/components/WorkbenchSurface.tsx', import.meta.url)),
   'utf8',
 );
-const uiDesignSource = readFileSync(
+const uiDesignSource = readUiSource(
   fileURLToPath(new URL('../docs/specifications/DESIGN.md', import.meta.url)),
   'utf8',
 );
-const requirementsSource = readFileSync(
+const requirementsSource = readUiSource(
   fileURLToPath(new URL('../docs/development/debugging-and-testing.md', import.meta.url)),
   'utf8',
 );
 
 test('工作台提供稳定的展开按钮、独立滚动区和底部设置区', () => {
   assert.match(source, /<aside/);
-  assert.match(source, /aria-label="功能工作台"/);
+  assert.match(source, /aria-label=["']功能工作台["']/);
   assert.match(source, /aria-expanded=\{expanded\}/);
   assert.match(source, /onClick=/);
   assert.match(surfaceSource, /overflow-y-auto/);
@@ -57,7 +58,7 @@ test('顶部功能区复用设置页的内框、正文滚动条和内容留白',
 });
 
 test('样式编辑时右侧工作台保留并切换为预览承载区', () => {
-  const appSource = readFileSync(
+  const appSource = readUiSource(
     fileURLToPath(new URL('../src/App.tsx', import.meta.url)),
     'utf8',
   );
@@ -74,7 +75,7 @@ test('工作台当前直播间状态使用紧邻的横向状态行，不套用�
 });
 
 test('设置入口只保留在右侧工作台，左侧不再放置旧设置按钮', () => {
-  const sidebarSource = readFileSync(
+  const sidebarSource = readUiSource(
     fileURLToPath(new URL('../src/components/Sidebar.tsx', import.meta.url)),
     'utf8',
   );

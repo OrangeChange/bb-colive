@@ -1,3 +1,4 @@
+import { uiText } from "../i18n/index.ts";
 import { AnchorMenuRow } from "./AnchorMenuRow.tsx";
 import { AnchorRemovalDialog } from "./AnchorRemovalDialog.tsx";
 /**
@@ -17,12 +18,12 @@ import { RoomRankings } from "./RoomRankings";
 import type { RankUser } from "../protocol/roomInsights";
 
 const STATUS_META: Record<ConnStatus, { label: string; dot: string }> = {
-  idle: { label: "未连接", dot: "bg-t3" },
-  connecting: { label: "连接中…", dot: "bg-warning" },
-  connected: { label: "已连接", dot: "bg-success-indicator" },
-  reconnecting: { label: "重连中…", dot: "bg-warning" },
-  closed: { label: "已断开", dot: "bg-t3" },
-  error: { label: "出错", dot: "bg-danger" },
+  idle: { label: uiText("connectBar.STATUS_META.idle.label"), dot: "bg-t3" },
+  connecting: { label: uiText("connectBar.STATUS_META.connecting.label"), dot: "bg-warning" },
+  connected: { label: uiText("connectBar.STATUS_META.connected.label"), dot: "bg-success-indicator" },
+  reconnecting: { label: uiText("connectBar.STATUS_META.reconnecting.label"), dot: "bg-warning" },
+  closed: { label: uiText("connectBar.STATUS_META.closed.label"), dot: "bg-t3" },
+  error: { label: uiText("connectBar.STATUS_META.error.label"), dot: "bg-danger" },
 };
 
 /** 圆形头像：右下角直播状态点（live 传 undefined 不显示）；加载失败（或无 URL）回退名字首字 */
@@ -61,7 +62,7 @@ function Avatar({
           className={`absolute -right-0.5 -bottom-0.5 size-2.5 rounded-full ring-2 ring-surface ${
             live ? "bg-success-indicator" : "bg-t3"
           }`}
-          title={live ? "直播中" : "未开播"}
+          title={live ? uiText("connectBar.title") : uiText("connectBar.title2")}
         />
       )}
     </span>
@@ -134,7 +135,7 @@ export function ConnectBar({ onUserFilter }: { onUserFilter?: (user: Pick<RankUs
         }
       } catch (e: any) {
         if (seq !== previewSeq.current) return;
-        setPreview({ status: "error", message: e?.friendly ?? "房间不存在" });
+        setPreview({ status: "error", message: e?.friendly ?? uiText("connectBar.ConnectBar.timer.message") });
       }
     }, 500);
     return () => clearTimeout(timer);
@@ -189,21 +190,21 @@ export function ConnectBar({ onUserFilter }: { onUserFilter?: (user: Pick<RankUs
                 ? "border-accent/40 bg-accent-subtle hover:border-accent/60"
                 : "border-line bg-bg hover:border-accent"
             }`}
-            title={card.uname ? `${card.uname}（房间 ${card.roomId}）${card.live ? " · 直播中" : ""}` : `房间 ${card.roomId}`}
+            title={card.uname ? uiText("connectBar.title3", { uname: card.uname, roomId: card.roomId, value: card.live ? uiText("connectBar.title.value") : "" }) : uiText("connectBar.title4", { roomId: card.roomId })}
           >
             <Avatar name={card.uname} face={card.face} live={card.live} />
             <span className="max-w-40 truncate">
-              {card.uname ?? (card.roomId !== undefined ? `房间 ${card.roomId}` : "…")}
+              {card.uname ?? (card.roomId !== undefined ? uiText("connectBar.ConnectBar", { roomId: card.roomId }) : "…")}
             </span>
             <span className={`text-t3 transition-transform ${menuOpen ? "rotate-180" : ""}`}>▾</span>
           </button>
 
           {menuOpen && (
             <div className="ui-motion-enter absolute left-0 top-10 z-50 w-72 rounded-lg border border-line bg-surface p-1 shadow-xl shadow-black/20">
-              <div className="px-2.5 py-1.5 ui-type-control text-t3">切换主播</div>
+              <div className="px-2.5 py-1.5 ui-type-control text-t3">{uiText("connectBar.ConnectBar2")}</div>
               <div className="max-h-[50vh] overflow-y-auto">
                 {anchors.length === 0 && (
-                  <div className="px-2.5 py-2 ui-type-control text-t3">暂无历史主播。输入房间号并连接后会自动保存。</div>
+                  <div className="px-2.5 py-2 ui-type-control text-t3">{uiText("connectBar.ConnectBar3")}</div>
                 )}
                 {anchors.map(a => <AnchorMenuRow key={a.realRoomId} anchor={a}
                   avatar={<Avatar name={a.uname} face={a.face} live={a.liveStatus === undefined ? undefined : a.liveStatus === 1} size={22} />}
@@ -219,8 +220,7 @@ export function ConnectBar({ onUserFilter }: { onUserFilter?: (user: Pick<RankUs
                   className="flex w-full items-center gap-2.5 rounded-md px-2 py-1.5 ui-type-section-title text-t2 hover:bg-raised"
                 >
                   <span className="inline-flex size-[22px] items-center justify-center rounded-full border border-dashed border-t3 text-t3">＋</span>
-                  连接新房间
-                </button>
+                  {uiText("connectBar.ConnectBar4")}</button>
               </div>
             </div>
           )}
@@ -236,7 +236,7 @@ export function ConnectBar({ onUserFilter }: { onUserFilter?: (user: Pick<RankUs
                 if (e.key === "Enter" && canConnect) onConnect();
                 if (e.key === "Escape" && showInput) setShowInput(false);
               }}
-              placeholder="房间号 / 直播间链接"
+              placeholder={uiText("connectBar.placeholder")}
               autoFocus={showInput}
               className="h-8 w-52 rounded-md border border-line bg-bg px-2.5 ui-type-section-title text-t1 placeholder:text-t3 focus:border-accent focus:outline-none focus:ring-2 focus:ring-accent-ring"
             />
@@ -244,13 +244,13 @@ export function ConnectBar({ onUserFilter }: { onUserFilter?: (user: Pick<RankUs
             {preview.status !== "idle" && (
               <div className="ui-motion-enter absolute left-0 top-9 z-50 w-72 rounded-lg border border-line bg-surface p-2 shadow-xl shadow-black/20">
                 {preview.status === "loading" && (
-                  <div className="px-1 ui-type-section-title text-t3">查询中…</div>
+                  <div className="px-1 ui-type-section-title text-t3">{uiText("connectBar.ConnectBar5")}</div>
                 )}
                 {preview.status === "ok" && (
-                  <div className="flex items-center gap-2.5 px-1 py-0.5" title="可连接">
+                  <div className="flex items-center gap-2.5 px-1 py-0.5" title={uiText("connectBar.title5")}>
                     <Avatar name={preview.uname} face={preview.face} live={preview.live} />
                     <span className="min-w-0 flex-1 truncate ui-type-section-title text-t1" title={preview.uname}>
-                      {preview.uname ?? "可连接"}
+                      {preview.uname ?? uiText("connectBar.ConnectBar6")}
                     </span>
                     {preview.realRoomId !== undefined && (
                       <span className="font-mono ui-type-meta text-t3">{preview.realRoomId}</span>
@@ -271,7 +271,7 @@ export function ConnectBar({ onUserFilter }: { onUserFilter?: (user: Pick<RankUs
                 setShowInput(false);
               }}
               className="rounded p-1 text-t3 transition-colors hover:bg-raised hover:text-t2"
-              title="取消，回到主播卡"
+              title={uiText("connectBar.title6")}
             >
               ✕
             </button>
@@ -289,10 +289,10 @@ export function ConnectBar({ onUserFilter }: { onUserFilter?: (user: Pick<RankUs
               }
               setShowInput(false);
             }}
-            title={hasPendingSwitch && selectedAnchor ? `切换连接到${selectedAnchor.uname}` : "断开当前直播间"}
+            title={hasPendingSwitch && selectedAnchor ? uiText("connectBar.title7", { uname: selectedAnchor.uname }) : uiText("connectBar.title8")}
             className="h-8 rounded-md bg-accent-solid px-4 ui-type-section-title font-semibold text-accent-fg transition-colors hover:bg-accent-solid-hover active:bg-accent-solid-active"
           >
-            {hasPendingSwitch ? "切换连接" : "断开"}
+            {hasPendingSwitch ? uiText("connectBar.ConnectBar7") : uiText("common.disconnect")}
           </button>
         ) : (
           // 未连接：连接当前选中的主播；未选择时连接最后使用的主播
@@ -304,8 +304,7 @@ export function ConnectBar({ onUserFilter }: { onUserFilter?: (user: Pick<RankUs
             }}
             className="h-8 rounded-md bg-accent-solid px-4 ui-type-section-title font-semibold text-accent-fg transition-colors hover:bg-accent-solid-hover active:bg-accent-solid-active"
           >
-            连接
-          </button>
+            {uiText("common.connect")}</button>
         )
       ) : (
         <button
@@ -313,8 +312,7 @@ export function ConnectBar({ onUserFilter }: { onUserFilter?: (user: Pick<RankUs
           disabled={!canConnect}
           className="h-8 rounded-md bg-accent-solid px-4 ui-type-section-title font-semibold text-accent-fg transition-colors enabled:hover:bg-accent-solid-hover enabled:active:bg-accent-solid-active disabled:cursor-not-allowed disabled:opacity-40"
         >
-          连接
-        </button>
+          {uiText("common.connect")}</button>
       )}
 
       <div className="flex items-center gap-1.5" title={state.message ?? meta.label}>
@@ -322,7 +320,7 @@ export function ConnectBar({ onUserFilter }: { onUserFilter?: (user: Pick<RankUs
         <span
           className={`ui-type-control ${state.status === "error" ? "text-danger" : "text-t2"}`}
         >
-          {state.status === "error" ? `出错：${state.message ?? "未知错误"}` : meta.label}
+          {state.status === "error" ? uiText("connectBar.ConnectBar8", { value: state.message ?? uiText("connectBar.ConnectBar.value") }) : meta.label}
         </span>
       </div>
 

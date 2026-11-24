@@ -1,3 +1,4 @@
+import { uiText } from "../i18n/index.ts";
 import { MsgType, type DanmakuEvent } from '../protocol/types.ts';
 import { stickyDisplayAmount } from '../windows/stickyEventModel.ts';
 
@@ -113,8 +114,8 @@ export function addPriceBand(value: NativePriceGradient): NativePriceGradient {
   return {...model,nextCustomId:model.nextCustomId+1,bands:[...model.bands,{id:`custom-${model.nextCustomId}`,min:Math.max(...model.bands.map(b=>b.min))+100}]};
 }
 export function priceBandLabel(band: PriceBand): string {
-  if(band.min===0)return '基础档';
-  return band.id.startsWith('band-')?`档位${band.id.slice(5)}`:band.id.startsWith('custom-')?`自定义${Number(band.id.slice(7))+1}`:band.id;
+  if(band.min===0)return uiText("priceBands.base");
+  return band.id.startsWith('band-')?uiText("priceBands.number", { number: band.id.slice(5) }):band.id.startsWith('custom-')?uiText("priceBands.custom", { number: Number(band.id.slice(7)) + 1 }):band.id;
 }
 export function themePriceGradient(value: unknown, baseCss: string): NativePriceGradient {
   return normalizePriceGradient(value,baseCss.includes('--bubble-surface')?'bubble':baseCss.includes('--card-surface')?'card':'default');

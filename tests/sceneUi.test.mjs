@@ -1,30 +1,31 @@
+import { readUiSource } from "./helpers/readUiSource.mjs";
 import test from "node:test";
 import assert from "node:assert/strict";
 import { readFileSync } from "node:fs";
 import { fileURLToPath } from "node:url";
 
-const appSource = readFileSync(fileURLToPath(new URL("../src/App.tsx", import.meta.url)), "utf8");
-const workbenchSource = readFileSync(fileURLToPath(new URL("../src/components/RightWorkbench.tsx", import.meta.url)), "utf8");
-const filterSource = readFileSync(fileURLToPath(new URL("../src/components/LiveFilterBar.tsx", import.meta.url)), "utf8");
-const reviewSearchSource = readFileSync(fileURLToPath(new URL("../src/components/ReviewSearchControls.tsx", import.meta.url)), "utf8");
-const rankingsSource = readFileSync(fileURLToPath(new URL("../src/components/RoomRankings.tsx", import.meta.url)), "utf8");
-const insightsSource = readFileSync(fileURLToPath(new URL("../src/components/RoomInsightsView.tsx", import.meta.url)), "utf8");
-const partitionSource = readFileSync(fileURLToPath(new URL("../src/components/PartitionColumn.tsx", import.meta.url)), "utf8");
-const paneSource = readFileSync(fileURLToPath(new URL("../src/components/EventPane.tsx", import.meta.url)), "utf8");
-const listSource = readFileSync(fileURLToPath(new URL("../src/components/EventList.tsx", import.meta.url)), "utf8");
-const rowSource = readFileSync(fileURLToPath(new URL("../src/components/EventRow.tsx", import.meta.url)), "utf8");
+const appSource = readUiSource(fileURLToPath(new URL("../src/App.tsx", import.meta.url)), "utf8");
+const workbenchSource = readUiSource(fileURLToPath(new URL("../src/components/RightWorkbench.tsx", import.meta.url)), "utf8");
+const filterSource = readUiSource(fileURLToPath(new URL("../src/components/LiveFilterBar.tsx", import.meta.url)), "utf8");
+const reviewSearchSource = readUiSource(fileURLToPath(new URL("../src/components/ReviewSearchControls.tsx", import.meta.url)), "utf8");
+const rankingsSource = readUiSource(fileURLToPath(new URL("../src/components/RoomRankings.tsx", import.meta.url)), "utf8");
+const insightsSource = readUiSource(fileURLToPath(new URL("../src/components/RoomInsightsView.tsx", import.meta.url)), "utf8");
+const partitionSource = readUiSource(fileURLToPath(new URL("../src/components/PartitionColumn.tsx", import.meta.url)), "utf8");
+const paneSource = readUiSource(fileURLToPath(new URL("../src/components/EventPane.tsx", import.meta.url)), "utf8");
+const listSource = readUiSource(fileURLToPath(new URL("../src/components/EventList.tsx", import.meta.url)), "utf8");
+const rowSource = readUiSource(fileURLToPath(new URL("../src/components/EventRow.tsx", import.meta.url)), "utf8");
 
 test("现场提供双区与分区模式切换，并保留筛选工具条", () => {
   assert.match(appSource, /layoutMode/);
   assert.match(appSource, /layoutMode === "partition"/);
   assert.match(appSource, /<LiveFilterBar[\s\S]*layoutMode/);
-  assert.match(filterSource, /label="现场布局"/);
+  assert.match(filterSource, /label=["']现场布局["']/);
   assert.match(filterSource, /<SettingsChoiceControl/);
   assert.match(filterSource, /iconOnly/);
   assert.match(filterSource, /布局：双区/);
   assert.match(filterSource, /布局：多区/);
   assert.doesNotMatch(filterSource, />现场<\/span>/);
-  assert.doesNotMatch(filterSource, /label: "系统"/);
+  assert.doesNotMatch(filterSource, /label: ["']系统["']/);
   assert.match(filterSource, /role="menuitemcheckbox"/);
   assert.match(filterSource, /relative flex h-8 items-center/);
   assert.match(filterSource, /filterButtonBase\s*=\s*"[^"\n]*inline-flex[^"\n]*h-8[^"\n]*items-center/);
@@ -52,7 +53,7 @@ test("现场工具栏按布局、筛选与右侧工具分组排列", () => {
 test("回看分类栏提供全选和取消全选快捷键", () => {
   assert.match(reviewSearchSource, /全选|取消全选/);
   assert.match(reviewSearchSource, /setAllReviewCategories/);
-  assert.match(reviewSearchSource, /aria-label="回看分类条件"/);
+  assert.match(reviewSearchSource, /aria-label=["']回看分类条件["']/);
   const helperStart = reviewSearchSource.indexOf("function setAllReviewCategories");
   const helperEnd = reviewSearchSource.indexOf("function filterConditionCount", helperStart);
   const helper = reviewSearchSource.slice(helperStart, helperEnd);
@@ -62,9 +63,9 @@ test("回看分类栏提供全选和取消全选快捷键", () => {
 });
 
 test("榜单非大航海项统一显示为观众榜", () => {
-  assert.match(rankingsSource, /const label = guard \? '大航海' : '观众榜'/);
-  assert.match(rankingsSource, /aria-label=\{guard \? '大航海陪伴总榜' : '观众榜'\}/);
-  assert.match(insightsSource, /kind === 'guard' \? '大航海陪伴总榜' : '观众榜'/);
+  assert.match(rankingsSource, /const label = guard \? ["']大航海["'] : ["']观众榜["']/);
+  assert.match(rankingsSource, /aria-label=\{guard \? ["']大航海陪伴总榜["'] : ["']观众榜["']\}/);
+  assert.match(insightsSource, /kind === 'guard' \? ["']大航海陪伴总榜["'] : ["']观众榜["']/);
 });
 
 test("大航海排序切换会固定并保留榜单弹层", () => {
@@ -103,8 +104,8 @@ test("事件数量和礼物汇总使用中文标签与点号分隔", () => {
 });
 
 test("双区右侧合并收益区域使用付费事件标题", () => {
-  assert.match(appSource, /title="付费事件"/);
-  assert.doesNotMatch(appSource, /title="礼物、SC 与大航海"/);
+  assert.match(appSource, /title=["']付费事件["']/);
+  assert.doesNotMatch(appSource, /title=["']礼物、SC 与大航海["']/);
 });
 
 test("现场提供全局文字搜索和安全区域退出筛选入口", () => {
@@ -138,45 +139,45 @@ test("进入用户筛选后在退出入口旁显示当前用户名", () => {
 });
 
 test("大表情筛选只属于回看菜单，不影响现场和副窗口", () => {
-  const timelineSource = readFileSync(fileURLToPath(new URL("../src/components/ReviewSessionTimeline.tsx", import.meta.url)), "utf8");
-  const floatingSource = readFileSync(fileURLToPath(new URL("../src/windows/FloatingEventWindow.tsx", import.meta.url)), "utf8");
-  const displayWindowSource = readFileSync(fileURLToPath(new URL("../src/windows/FloatingEventWindow.tsx", import.meta.url)), "utf8");
-  const settingsSource = readFileSync(fileURLToPath(new URL("../src/components/SettingsPanel.tsx", import.meta.url)), "utf8");
+  const timelineSource = readUiSource(fileURLToPath(new URL("../src/components/ReviewSessionTimeline.tsx", import.meta.url)), "utf8");
+  const floatingSource = readUiSource(fileURLToPath(new URL("../src/windows/FloatingEventWindow.tsx", import.meta.url)), "utf8");
+  const displayWindowSource = readUiSource(fileURLToPath(new URL("../src/windows/FloatingEventWindow.tsx", import.meta.url)), "utf8");
+  const settingsSource = readUiSource(fileURLToPath(new URL("../src/components/SettingsPanel.tsx", import.meta.url)), "utf8");
   assert.match(timelineSource, /显示大表情/);
   assert.match(timelineSource, /showBigEmote/);
-  assert.match(readFileSync(fileURLToPath(new URL("../src/archive/archiveProjection.ts", import.meta.url)), "utf8"), /filters\.showBigEmote/);
+  assert.match(readUiSource(fileURLToPath(new URL("../src/archive/archiveProjection.ts", import.meta.url)), "utf8"), /filters\.showBigEmote/);
   assert.doesNotMatch(timelineSource, /shouldShowBigEmote/);
   assert.doesNotMatch(listSource, /shouldShowBigEmote/);
   assert.doesNotMatch(rowSource, /shouldShowBigEmote/);
   assert.doesNotMatch(floatingSource, /shouldShowBigEmote/);
   assert.doesNotMatch(displayWindowSource, /shouldShowBigEmote/);
-  assert.doesNotMatch(settingsSource, /label="显示大表情"/);
+  assert.doesNotMatch(settingsSource, /label=["']显示大表情["']/);
 });
 
 test("现场挂载独立系统提醒入口", () => {
   assert.match(appSource, /UrgentSystemNotice/);
 
   const bellPath = fileURLToPath(new URL("../src/components/SystemReminderBell.tsx", import.meta.url));
-  const bellSource = readFileSync(bellPath, "utf8");
-  assert.match(bellSource, /aria-label="系统提醒"/);
+  const bellSource = readUiSource(bellPath, "utf8");
+  assert.match(bellSource, /aria-label=["']系统提醒["']/);
   assert.match(bellSource, /role="dialog"/);
   assert.match(bellSource, /hhmmss/);
   assert.match(bellSource, /<time[\s\S]*hhmmss\(event\.ts\)/);
-  const statusSource = readFileSync(fileURLToPath(new URL("../src/components/StatusBar.tsx", import.meta.url)), "utf8");
+  const statusSource = readUiSource(fileURLToPath(new URL("../src/components/StatusBar.tsx", import.meta.url)), "utf8");
   assert.match(statusSource, /SystemReminderBell/);
   assert.match(statusSource, /placement="top"/);
 });
 
 test("SYS_MSG 作为平台系统提示丢弃，不进入任何可见面板", () => {
   const adapterPath = fileURLToPath(new URL("../src/protocol/adapter.ts", import.meta.url));
-  const adapterSource = readFileSync(adapterPath, "utf8");
+  const adapterSource = readUiSource(adapterPath, "utf8");
 
   assert.match(adapterSource, /cmd === 'SYS_MSG'/);
 });
 
 test("预言玩法心跳丢弃，不进入现场或系统提醒", () => {
   const adapterPath = fileURLToPath(new URL("../src/protocol/adapter.ts", import.meta.url));
-  const adapterSource = readFileSync(adapterPath, "utf8");
+  const adapterSource = readUiSource(adapterPath, "utf8");
 
   assert.match(adapterSource, /cmd === 'INTERACTIVE_USER'/);
   assert.match(adapterSource, /cmd === 'PANEL_INTERACTIVE_NOTIFY_CHANGE'/);

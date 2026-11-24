@@ -1,3 +1,4 @@
+import { uiText } from "../i18n/index.ts";
 import { PanelRightOpen as LucidePanelRightOpen, PanelRightClose as LucidePanelRightClose } from "lucide-react";
 import { useCallback, useEffect, useRef, useState, type Dispatch, type PointerEvent, type RefObject, type SetStateAction, type KeyboardEvent } from "react";
 import { flushSync } from "react-dom";
@@ -345,7 +346,7 @@ export function RightWorkbench({
         await appWindow.setSize(new LogicalSize(target.width, target.height));
       }
       if (!await waitForWindowGeometry(() => geometry(geometryScale), target, frame)) {
-        throw new Error("原生窗口未达到工作台目标宽度");
+        throw new Error(uiText("rightWorkbench.RightWorkbench.toggle"));
       }
       // 原生窗口几何稳定后再提交展开状态，让内容进入动画从稳定的工作台宽度开始。
       if (opening) {
@@ -451,11 +452,11 @@ export function RightWorkbench({
     setView("home");
     await toggle();
   };
-  const settingsButtonLabel = expanded && view === "settings" ? "退出设置并收起工作台" : "打开设置";
+  const settingsButtonLabel = expanded && view === "settings" ? uiText("rightWorkbench.RightWorkbench.settingsButtonLabel") : uiText("rightWorkbench.RightWorkbench.settingsButtonLabel2");
 
   const standardWorkbenchWidth = rightWorkbenchWidth(expanded, workbenchWidth);
   return (
-      <aside ref={asideRef} hidden={!active} aria-label="功能工作台"
+      <aside ref={asideRef} hidden={!active} aria-label={uiText("rightWorkbench.aria_label")}
       className={`right-workbench relative min-h-0 shrink-0 overflow-hidden border-l border-line bg-surface text-t1 ${resizing ? "is-resizing" : ""}`}
       data-native-transition={nativeTransition}
       style={{ width: expanded && stylePreviewActive ? Math.min(STYLE_PREVIEW_WORKBENCH_MAX_WIDTH, Math.max(STYLE_PREVIEW_WORKBENCH_MIN_WIDTH, workbenchWidth)) : standardWorkbenchWidth }}>
@@ -463,7 +464,7 @@ export function RightWorkbench({
         <div
           className="right-workbench-resizer"
           role="separator"
-          aria-label="调整功能工作台宽度"
+          aria-label={uiText("rightWorkbench.aria_label2")}
           aria-orientation="vertical"
           aria-valuemin={stylePreviewActive ? STYLE_PREVIEW_WORKBENCH_MIN_WIDTH : RIGHT_WORKBENCH_MIN_WIDTH}
           aria-valuemax={maxResizableWorkbenchWidth()}
@@ -512,25 +513,25 @@ export function RightWorkbench({
         ) : (
           <div data-workbench-surface={stylePreviewActive ? "style-preview" : "home"} className="settings-panel-frame absolute inset-3 flex min-h-0 flex-col overflow-hidden rounded-lg border border-line bg-bg">
             <div className="settings-panel-header relative z-20 flex h-11 shrink-0 items-center border-b border-line px-4 pr-11">
-              <h2 className="ui-type-section-title font-medium text-t1">{stylePreviewActive ? stylePreviewTitle ?? "样式预览" : "功能工作台"}</h2>
+              <h2 className="ui-type-section-title font-medium text-t1">{stylePreviewActive ? stylePreviewTitle ?? uiText("rightWorkbench.RightWorkbench") : uiText("rightWorkbench.RightWorkbench2")}</h2>
               {stylePreviewActive && <div ref={onStylePreviewHeaderTarget} className="native-preview-header-actions ml-auto flex items-center" />}
             </div>
             {stylePreviewActive ? <div ref={previewRef} className="flex min-h-0 flex-1 flex-col overflow-hidden" /> : <WorkbenchScroll>
               <section className="settings-section">
                 <header className="settings-section-title">
-                  <h3 className="ui-type-section-title font-medium text-t1">当前直播间</h3>
+                  <h3 className="ui-type-section-title font-medium text-t1">{uiText("rightWorkbench.RightWorkbench3")}</h3>
                 </header>
                 <div className="settings-status-row">
                   <span className={`size-2 shrink-0 rounded-full ${live ? "bg-success-indicator" : "bg-t3"}`} aria-hidden="true" />
-                  <span className="ui-type-control text-t1">{live ? `当前连接：${anchorName || "直播间"} · ${roomId}` : status === "connecting" || status === "reconnecting" ? "正在连接直播间" : "当前未连接"}</span>
+                  <span className="ui-type-control text-t1">{live ? uiText("rightWorkbench.RightWorkbench4", { value: anchorName || uiText("rightWorkbench.RightWorkbench.value"), roomId: roomId }) : status === "connecting" || status === "reconnecting" ? uiText("rightWorkbench.RightWorkbench5") : uiText("rightWorkbench.RightWorkbench6")}</span>
                 </div>
               </section>
               <section className="settings-section">
                 <header className="settings-section-title">
-                  <h3 className="ui-type-section-title font-medium text-t1">功能模块</h3>
+                  <h3 className="ui-type-section-title font-medium text-t1">{uiText("rightWorkbench.RightWorkbench7")}</h3>
                 </header>
                 <div className="settings-control-row text-t3">
-                  <span className="ui-type-control">功能模块将在这里展开</span>
+                  <span className="ui-type-control">{uiText("rightWorkbench.RightWorkbench8")}</span>
                 </div>
               </section>
             </WorkbenchScroll>}
@@ -547,7 +548,7 @@ export function RightWorkbench({
           <button type="button" aria-label={settingsButtonLabel} title={settingsButtonLabel} aria-pressed={expanded && view === "settings"}
             onClick={() => void handleSettingsClick()}
             className={`${railButtonIdle} pointer-events-auto ${view === "settings" ? "bg-accent-subtle text-accent-text" : "bg-accent-subtle"}`}>
-            <IconSettings /><span className="sr-only">设置</span>
+            <IconSettings /><span className="sr-only">{uiText("common.settings")}</span>
           </button>
         </div>
       </div>

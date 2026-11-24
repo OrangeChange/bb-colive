@@ -1,3 +1,4 @@
+import { uiText } from "./i18n/index.ts";
 /**
  * 主窗口（ui-design §四布局骨架）：
  * 侧边栏 + [连接条 / 事件列表（或空态） / 状态栏]；未登录时整区为扫码登录页
@@ -227,7 +228,7 @@ function MainArea({
   const eventAreaRef = useRef<HTMLElement>(null);
   const [dismissedUrgentId, setDismissedUrgentId] = useState<string | null>(null);
   const [favoriteFailureKey, setFavoriteFailureKey] = useState<string | null>(null);
-  const [favoriteFailureMessage, setFavoriteFailureMessage] = useState("收藏同步失败，请重试");
+  const [favoriteFailureMessage, setFavoriteFailureMessage] = useState(uiText("app.MainArea.favoriteFailureMessagesetFavoriteFailureMessage"));
   const [favoriteEditor, setFavoriteEditor] = useState<{
     event: DanmakuEvent;
     stableId: string;
@@ -379,15 +380,15 @@ function MainArea({
       : setFavoriteEvent(state.favorites, event, nextFavorited, Date.now()) }));
     setFavoriteFailureKey(null);
     try {
-      if (!archiveRepository || !archiveSessionId) throw new Error("回看场次暂不可用，请稍后再试");
+      if (!archiveRepository || !archiveSessionId) throw new Error(uiText("app.MainArea.onToggleFavorite"));
       const archiveFlush = await flushArchiveWriter();
       if (archiveFlush.pending > 0 || archiveFlush.failed > 0) {
-        throw new Error("档案事件尚未写入，无法同步收藏");
+        throw new Error(uiText("app.MainArea.onToggleFavorite2"));
       }
       const result = await createArchiveFavoriteActions(archiveRepository).set(getArchiveEventKey(event, archiveSessionId), nextFavorited);
       if (favoriteOperationRef.current.get(operationKey) === operationId) {
         favoriteOperationRef.current.delete(operationKey);
-        setFavoriteFailureMessage("已保存，刷新失败");
+        setFavoriteFailureMessage(uiText("app.MainArea.onToggleFavorite3"));
         setFavoriteFailureKey(result.refresh === "failed" ? localKey : null);
       }
       recordFeatureDiagnostic({
@@ -402,7 +403,7 @@ function MainArea({
       if (favoriteOperationRef.current.get(operationKey) === operationId) {
         favoriteOperationRef.current.delete(operationKey);
         useEventAnnotations.setState((state) => ({ favorites: restoreFavoriteEvent(state.favorites, event, previousFavorites, operationKey) }));
-        setFavoriteFailureMessage("收藏同步失败，请重试");
+        setFavoriteFailureMessage(uiText("app.MainArea.onToggleFavorite4"));
         setFavoriteFailureKey(localKey);
       }
       recordFeatureDiagnostic({
@@ -427,7 +428,7 @@ function MainArea({
         archiveRepository.getFavoriteOrganization({ sourceKind: "archive", stableId }),
         archiveRepository.listFavoriteTags(),
       ]);
-      if (!organization) throw new Error("收藏关系尚未写入档案");
+      if (!organization) throw new Error(uiText("app.MainArea.onEditFavorite"));
       setFavoriteEditor({ event, stableId, ...organization, availableTags });
       setFavoriteFailureKey(null);
     } catch (error) {
@@ -565,7 +566,7 @@ function MainArea({
             {partitionColumns.left.length > 0 && partitionColumns.right.length > 0 && (
             <div
               role="separator"
-              aria-label="调整左右区域宽度"
+              aria-label={uiText("app.aria_label")}
               aria-orientation="vertical"
               aria-valuemin={28}
               aria-valuemax={72}
@@ -640,7 +641,7 @@ function MainArea({
                 <>
             <EventPane
               key={leftFeed.feedKey}
-              title="弹幕与互动"
+              title={uiText("app.title")}
               count={leftProjection.indices.length}
               roomGuardProfile={roomGuardProfile}
               events={events}
@@ -665,7 +666,7 @@ function MainArea({
             />
             <div
               role="separator"
-              aria-label="调整左右区域宽度"
+              aria-label={uiText("app.aria_label")}
               aria-orientation="vertical"
               aria-valuemin={28}
               aria-valuemax={72}
@@ -698,7 +699,7 @@ function MainArea({
             />
             <EventPane
               key={rightFeed.feedKey}
-              title="付费事件"
+              title={uiText("app.title2")}
               count={rightProjection.indices.length}
               summary={formatGiftSummary(summarizeGiftEvents(events, giftProjection.indices))}
               roomGuardProfile={roomGuardProfile}
@@ -737,7 +738,7 @@ function MainArea({
       </main>
       {favoriteEditor && archiveRepository && (
         <FavoriteOrganizationEditor
-          title={`编辑收藏 · ${favoriteEditor.event.user?.uname?.trim() || "未知用户"}`}
+          title={uiText("app.title3", { value: favoriteEditor.event.user?.uname?.trim() || uiText("app.title.value") })}
           initialNote={favoriteEditor.note}
           initialTags={favoriteEditor.tags}
           tags={favoriteEditor.availableTags}
@@ -794,7 +795,7 @@ function App() {
   const [stylePreviewHeaderTarget, setStylePreviewHeaderTarget] = useState<HTMLDivElement | null>(null);
   const [stylePreviewGeometry, setStylePreviewGeometry] = useState<NativePreviewGeometry | null>(null);
   const [styleEditorActive, setStyleEditorActive] = useState(false);
-  const [stylePreviewTitle, setStylePreviewTitle] = useState("样式预览");
+  const [stylePreviewTitle, setStylePreviewTitle] = useState(uiText("app.App.stylePreviewTitlesetStylePreviewTitle"));
   const archiveRepository = useArchiveInitialization();
   const [mainView, setMainView] = useState<MainView>("scene");
   const [sceneSettings, setSceneSettings] = useState<SceneSettings>(() => loadSceneSettings());
@@ -1108,7 +1109,7 @@ function App() {
     setRevenueWindowFailure(null);
     try { await operation(); } catch (error) {
       setRevenueWindowFailure({
-        message: error instanceof Error ? error.message : "窗口操作未完成，请重试。",
+        message: error instanceof Error ? error.message : uiText("app.App.runRevenueWindowOperation.message"),
         retry: error instanceof RevenueWindowOperationError ? error.retry : operation,
       });
     }
@@ -1373,18 +1374,18 @@ function App() {
       data-diagnostic-dropped-records={diagnosticFlushResult?.droppedRecords ?? 0}
     >
       <TitleBar />
-      {windowMaterialNotice && <div role="alert" className="window-material-notice"><span>{windowMaterialNotice}</span><button type="button" onClick={() => openWindowSettings('display')}>副窗口设置</button><button type="button" onClick={() => setWindowMaterialNotice('')} aria-label="关闭窗口提示">关闭</button></div>}
+      {windowMaterialNotice && <div role="alert" className="window-material-notice"><span>{windowMaterialNotice}</span><button type="button" onClick={() => openWindowSettings('display')}>{uiText("app.App")}</button><button type="button" onClick={() => setWindowMaterialNotice('')} aria-label={uiText("app.aria_label2")}>{uiText("common.close")}</button></div>}
       <style>{REVIEW_PRICE_GRADIENT_CSS}</style>
       {revenueWindowFailure && <ConfirmDialog
-        title="窗口操作未完成"
+        title={uiText("app.title4")}
         description={revenueWindowFailure.message}
-        confirmLabel="重试"
+        confirmLabel={uiText("common.retry")}
         errorMessage={revenueWindowFailure.message}
         onCancel={() => setRevenueWindowFailure(null)}
         onConfirm={async () => {
           try { await revenueWindowFailure.retry(); } catch (error) {
             setRevenueWindowFailure({
-              message: error instanceof Error ? error.message : "窗口操作未完成，请重试。",
+              message: error instanceof Error ? error.message : uiText("app.onConfirm.message"),
               retry: error instanceof RevenueWindowOperationError ? error.retry : revenueWindowFailure.retry,
             });
             throw error;
@@ -1446,8 +1447,7 @@ function App() {
                 ) : (
                   // restoring：恢复登录态的过渡
                   <div className="flex flex-1 items-center justify-center ui-type-control text-t3">
-                    正在恢复登录态…
-                  </div>
+                    {uiText("app.App2")}</div>
                 )}
               </>
             )}

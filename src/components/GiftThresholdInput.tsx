@@ -1,3 +1,4 @@
+import { uiText } from "../i18n/index.ts";
 import { ChevronUp as LucideChevronUp, ChevronDown as LucideChevronDown } from "lucide-react";
 import { GIFT_THRESHOLD_INPUT_STEP, normalizeGiftThreshold, stepGiftThreshold, type GiftThresholdMode } from "../giftThreshold";
 
@@ -16,9 +17,9 @@ export function GiftThresholdInput({
 }) {
   const normalizedValue = normalizeGiftThreshold(value);
   const label = compact
-    ? mode === "cumulative" ? "事件总额 ≥" : "单件金额 ≥"
-    : "最低显示金额";
-  const inputLabel = mode === "cumulative" ? "事件累计显示金额" : "事件单件显示金额";
+    ? mode === "cumulative" ? uiText("giftThresholdInput.GiftThresholdInput.label") : uiText("giftThresholdInput.GiftThresholdInput.label2")
+    : uiText("giftThresholdInput.GiftThresholdInput.label3");
+  const inputLabel = mode === "cumulative" ? uiText("giftThresholdInput.GiftThresholdInput.inputLabel") : uiText("giftThresholdInput.GiftThresholdInput.inputLabel2");
   const changeByStep = (direction: 1 | -1) => onChange(stepGiftThreshold(normalizedValue, direction));
 
   return (
@@ -42,8 +43,8 @@ export function GiftThresholdInput({
         <span className="gift-threshold-input-steppers" data-step={GIFT_THRESHOLD_INPUT_STEP}>
           <button
             type="button"
-            aria-label={`增加${inputLabel}`}
-            title={`增加${inputLabel}`}
+            aria-label={uiText("giftThresholdInput.aria_label", { inputLabel: inputLabel })}
+            title={uiText("giftThresholdInput.title", { inputLabel: inputLabel })}
             onMouseDown={(event) => event.preventDefault()}
             onClick={() => changeByStep(1)}
             className="gift-threshold-input-step"
@@ -52,8 +53,8 @@ export function GiftThresholdInput({
           </button>
           <button
             type="button"
-            aria-label={`减少${inputLabel}`}
-            title={`减少${inputLabel}`}
+            aria-label={uiText("giftThresholdInput.aria_label2", { inputLabel: inputLabel })}
+            title={uiText("giftThresholdInput.title2", { inputLabel: inputLabel })}
             disabled={normalizedValue <= 0}
             onMouseDown={(event) => event.preventDefault()}
             onClick={() => changeByStep(-1)}

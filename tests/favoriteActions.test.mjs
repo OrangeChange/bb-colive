@@ -1,3 +1,4 @@
+import { readUiSource } from "./helpers/readUiSource.mjs";
 import test from "node:test";
 import assert from "node:assert/strict";
 import { DatabaseSync } from "node:sqlite";
@@ -9,7 +10,7 @@ import { readFileSync } from "node:fs";
 import { projectArchiveEvents } from "../src/archive/archiveProjection.ts";
 
 function favoriteCallbacks(dependencies, path = "../src/App.tsx", names = ["onToggleFavorite", "onEditFavorite", "isFavorite"]) {
-  const source = ts.createSourceFile(path, readFileSync(new URL(path, import.meta.url), "utf8"), ts.ScriptTarget.Latest, true, ts.ScriptKind.TSX);
+  const source = ts.createSourceFile(path, readUiSource(new URL(path, import.meta.url), "utf8"), ts.ScriptTarget.Latest, true, ts.ScriptKind.TSX);
   const expressions = {};
   const visit = (node) => {
     if (ts.isVariableDeclaration(node) && names.includes(node.name.getText(source))) {

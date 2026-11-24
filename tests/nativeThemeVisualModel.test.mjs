@@ -1,3 +1,4 @@
+import { readUiSource } from "./helpers/readUiSource.mjs";
 import test from "node:test";
 import assert from "node:assert/strict";
 import {
@@ -68,12 +69,12 @@ test("关闭事件分类只隐藏该分类并保留子类选择", () => {
 });
 
 test("可视化编辑将一级事件范围与二级范围分行固定显示", () => {
-  const editor = fs.readFileSync("src/components/ThemeEditorChrome.tsx", "utf8");
-  const source = fs.readFileSync("src/components/NativeThemeVisualEditor.tsx", "utf8");
-  const capabilities = fs.readFileSync("src/themes/nativeThemeCapabilities.ts", "utf8");
+  const editor = readUiSource("src/components/ThemeEditorChrome.tsx", "utf8");
+  const source = readUiSource("src/components/NativeThemeVisualEditor.tsx", "utf8");
+  const capabilities = readUiSource("src/themes/nativeThemeCapabilities.ts", "utf8");
   assert.match(source, /native-event-scope-primary/);
   assert.match(source, /native-event-scope-children/);
-  const css = fs.readFileSync("src/components/nativeThemeEditor.css", "utf8");
+  const css = readUiSource("src/components/nativeThemeEditor.css", "utf8");
   assert.doesNotMatch(css, /\.native-scope-strip\{[^}]*position:sticky/);
   assert.match(capabilities, /所有用户/);
   assert.doesNotMatch(css, /\.native-event-scope-children\{[^}]*border-top/);
@@ -85,18 +86,18 @@ test("可视化编辑将一级事件范围与二级范围分行固定显示", ()
 });
 
 test("仅在当前部件存在局部覆盖时显示恢复继承", () => {
-  const source = fs.readFileSync("src/components/NativeThemeVisualEditor.tsx", "utf8");
+  const source = readUiSource("src/components/NativeThemeVisualEditor.tsx", "utf8");
   assert.match(source, /hasLocalOverrides/);
   assert.match(source, /canRestore=\{!activeBand&&hasLocalOverrides\}/);
   assert.match(source, /clearNativeVisualTarget/);
 });
 
 test("直接操作属性控件会切换到自定义而无需预先选择来源", () => {
-  const source = fs.readFileSync("src/components/NativeThemeVisualEditor.tsx", "utf8");
+  const source = readUiSource("src/components/NativeThemeVisualEditor.tsx", "utf8");
   assert.match(source, /const editDirect/);
   assert.doesNotMatch(source, /type="color" disabled=/);
   assert.doesNotMatch(source, /type="number"[^>]*disabled=/);
-  const field = fs.readFileSync("src/components/ThemeVisualPropertyField.tsx", "utf8");
+  const field = readUiSource("src/components/ThemeVisualPropertyField.tsx", "utf8");
   assert.match(field, /label=\{`\$\{label\}精确值`\}/);
 });
 
@@ -118,7 +119,7 @@ test("部件只公开在实际布局中有效的可视化属性", () => {
 });
 
 test("不存在真实 DOM 的事件文案不进入可选语义部件", () => {
-  const capabilities = fs.readFileSync("src/themes/nativeThemeCapabilities.ts", "utf8");
+  const capabilities = readUiSource("src/themes/nativeThemeCapabilities.ts", "utf8");
   assert.doesNotMatch(capabilities, /part\("eventText"/);
   assert.doesNotMatch(capabilities, /id: "connection"/);
   assert.match(capabilities, /id: "roomChange"/);
@@ -194,8 +195,8 @@ test("浅映卡片无预览时提供开播下播时间的字号和行高", () =>
 });
 
 test("大表情可视化只显示一个尺寸控件", () => {
-  const source = fs.readFileSync("src/components/NativeThemeVisualEditor.tsx", "utf8");
-  assert.match(source, /selection\.part\s*===\s*"bigEmote"\s*&&\s*property\s*===\s*"width"\s*\?\s*"尺寸"/);
+  const source = readUiSource("src/components/NativeThemeVisualEditor.tsx", "utf8");
+  assert.match(source, /selection\.part\s*===\s*"bigEmote"\s*&&\s*property\s*===\s*"width"\s*\?\s*["']尺寸["']/);
 });
 
 test("主题显示设置不再保存现场和副窗口大表情尺寸", () => {
@@ -233,7 +234,7 @@ test("深色 CSS 同步后可按深色层读取修改和恢复", () => {
 });
 
 test("可视化面板的读取写入恢复和 CSS 控制状态使用当前编辑配色", () => {
-  const source = fs.readFileSync("src/components/NativeThemeVisualEditor.tsx", "utf8");
+  const source = readUiSource("src/components/NativeThemeVisualEditor.tsx", "utf8");
   assert.match(source, /编辑配色/);
   assert.match(source, /readNativeVisualProperty\(model, selection, property, editScheme\)/);
   assert.match(source, /setNativeVisualProperty\(model, selection, property, setting, editScheme\)/);
@@ -242,13 +243,13 @@ test("可视化面板的读取写入恢复和 CSS 控制状态使用当前编辑
 });
 
 test("预览 iframe 内部提供画布语义节点", () => {
-  const editor = fs.readFileSync("src/components/NativeThemeEditor.tsx", "utf8");
+  const editor = readUiSource("src/components/NativeThemeEditor.tsx", "utf8");
   assert.match(editor, /className="native-theme-preview"\s+data-native-canvas/);
 });
 
 test("可视化草稿只保存结构化模型且预览消费独立 CSS 层", () => {
-  const workspace = fs.readFileSync("src/components/ThemeWorkspace.tsx", "utf8");
-  const editor = fs.readFileSync("src/components/NativeThemeEditor.tsx", "utf8");
+  const workspace = readUiSource("src/components/ThemeWorkspace.tsx", "utf8");
+  const editor = readUiSource("src/components/NativeThemeEditor.tsx", "utf8");
   const updateStart = workspace.indexOf("const updateSettings");
   const updateEnd = workspace.indexOf("\n  };", updateStart) + "\n  };".length;
   assert.doesNotMatch(workspace.slice(updateStart, updateEnd), /visualCss:/);

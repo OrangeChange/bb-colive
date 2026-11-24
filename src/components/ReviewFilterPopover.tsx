@@ -1,3 +1,4 @@
+import { uiText } from "../i18n/index.ts";
 import * as PopoverPrimitive from "@radix-ui/react-popover";
 import { createContext, useLayoutEffect, useMemo, useRef, useState, type ReactNode, type RefObject } from "react";
 import { positionReviewFilterPopover, type ReviewFilterPopoverPosition } from "../archive/reviewFilterPopover.ts";
@@ -75,7 +76,7 @@ export function ReviewFilterPopover({ open, onOpenChange, anchorRef, triggerRef,
       <PopoverPrimitive.Portal>
         <PopoverPrimitive.Content
           id={triggerRef.current?.getAttribute("aria-controls") ?? undefined}
-          aria-label="更多筛选条件"
+          aria-label={uiText("reviewFilterPopover.aria_label")}
           align="start"
           side="bottom"
           avoidCollisions={false}

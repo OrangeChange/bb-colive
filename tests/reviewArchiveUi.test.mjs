@@ -1,3 +1,4 @@
+import { readUiSource } from "./helpers/readUiSource.mjs";
 import { readReviewTimelineSources } from "./helpers/reviewTimelineSources.mjs";
 import { readApplicationSources } from "./helpers/applicationSources.mjs";
 import test from "node:test";
@@ -13,7 +14,7 @@ const root = new URL("../", import.meta.url);
 
 function read(relativePath) {
   try {
-    return fs.readFileSync(new URL(relativePath, root), "utf8");
+    return readUiSource(new URL(relativePath, root), "utf8");
   } catch {
     return "";
   }
@@ -165,7 +166,7 @@ test("首次进入回看默认打开当前主播，关闭偏好或无当前主�
 });
 
 test("侧栏启用回看一级入口并报告当前页状态", () => {
-  assert.match(sidebarSource, /title="回看"/);
+  assert.match(sidebarSource, /title=["']回看["']/);
   assert.match(sidebarSource, /activeMainView === "review"/);
   assert.match(sidebarSource, /onSelectMainView\?\.\("review"\)/);
   assert.doesNotMatch(sidebarSource, /disabled[^>]*title="回看/);
@@ -215,8 +216,8 @@ test("主播档案加载中不误显示空态，档案写入不会重启未完�
   assert.match(panelSource, /ownerSessionRefreshRevision/);
   assert.doesNotMatch(panelSource, /\}, \[active, managementRevision, owner\?\.ownerId, ownerSessionQuery, ownerState\.mode, refreshKey, repository, route\]\);/);
   assert.match(ownerListSource, /ownersLoading\?: boolean;/);
-  assert.match(ownerListSource, /ownersLoading \? "正在加载…" : "暂无档案"/);
-  assert.match(ownerListSource, /ownersLoading \? "正在加载主播档案…" : normalizedSearch \? "没有匹配的主播档案" : "暂无主播档案"/);
+  assert.match(ownerListSource, /ownersLoading \? ["']正在加载…["'] : ["']暂无档案["']/);
+  assert.match(ownerListSource, /ownersLoading \? ["']正在加载主播档案…["'] : normalizedSearch \? ["']没有匹配的主播档案["'] : ["']暂无主播档案["']/);
 });
 
 test("评审范围切换在显式清除后失效主播历史快照，未清除时仍恢复本场查询", () => {
@@ -232,7 +233,7 @@ test("回看使用保留的返回按钮和传统层级面包屑", () => {
   assert.match(ownerListSource, /主播档案/);
   assert.match(ownerListSource, /直播场次/);
   assert.match(panelSource, /navigateBack/);
-  assert.match(panelSource, /aria-label="档案路径"/);
+  assert.match(panelSource, /aria-label=["']档案路径["']/);
   assert.match(panelSource, /全部主播/);
   assert.match(panelSource, /ownerName/);
   assert.match(panelSource, /selectedSession\?\.title/);
@@ -300,7 +301,7 @@ test("回看标题和导航使用紧凑按钮，不展示重叠的大标题或�
   assert.doesNotMatch(panelSource, /<h1 className="ui-type-page-title text-t1">回看<\/h1>/);
   assert.doesNotMatch(panelSource, /更多 → 管理档案/);
   assert.match(panelSource, /管理档案/);
-  assert.match(panelSource, /aria-label="返回所有主播档案馆"/);
+  assert.match(panelSource, /aria-label=["']返回所有主播档案馆["']/);
 });
 
 test("场次封面使用统一固定比例组件，并覆盖场次列表和单场标题栏", () => {
@@ -332,12 +333,12 @@ test("回看筛选使用中文组合和排序文案", () => {
   const advancedFilters = read("src/components/ReviewSearchControls.tsx");
   assert.doesNotMatch(searchSource, />AND<|>OR<|新 → 旧|旧 → 新/);
   assert.match(searchSource, /<UiSelect/);
-  assert.match(searchSource, /options=\{\[\{ value: "and", label: "且" \}, \{ value: "or", label: "或" \}\]\}/);
+  assert.match(searchSource, /options=\{\[\{ value: "and", label: ["']且["'] \}, \{ value: "or", label: ["']或["'] \}\]\}/);
   assert.doesNotMatch(searchSource, /<select|<option/);
   assert.doesNotMatch(searchSource, /关键词组合方式/);
   assert.match(ownerSessionFilters, /formatArchiveSortDirection\(value, query\.sort\)/);
   assert.match(ownerEventResults, /formatArchiveSortDirection\(value, sort\)/);
-  assert.match(advancedFilters, /aria-label="回看分类条件"/);
+  assert.match(advancedFilters, /aria-label=["']回看分类条件["']/);
   assert.match(advancedFilters, /用户身份/);
   assert.match(advancedFilters, /主播粉丝牌/);
   assert.match(advancedFilters, /礼物最低价格/);
@@ -345,8 +346,8 @@ test("回看筛选使用中文组合和排序文案", () => {
 });
 
 test("回看筛选把昵称并入用户，并提供身份和礼物价格范围", () => {
-  assert.match(searchSource, /value: "user", label: "用户"/);
-  assert.doesNotMatch(searchSource, /value: "nickname", label: "昵称"/);
+  assert.match(searchSource, /value: "user", label: ["']用户["']/);
+  assert.doesNotMatch(searchSource, /value: "nickname", label: ["']昵称["']/);
   assert.match(searchSource, /用户身份/);
   assert.match(searchSource, /普通用户/);
   assert.match(searchSource, /礼物最低价格/);
@@ -377,17 +378,17 @@ test("管理档案面板不再重复提供内部关闭按钮", () => {
 test("回看设置按传输、保留策略和空间清理分组", () => {
   const settingsSource = read("src/components/ReviewArchiveSettings.tsx");
   const css = read("src/App.css");
-  assert.match(settingsSource, /aria-label="档案传输"/);
-  assert.match(settingsSource, /aria-label="保留策略"/);
-  assert.match(settingsSource, /aria-label="空间与清理"/);
+  assert.match(settingsSource, /aria-label=["']档案传输["']/);
+  assert.match(settingsSource, /aria-label=["']保留策略["']/);
+  assert.match(settingsSource, /aria-label=["']空间与清理["']/);
   assert.match(css, /\.settings-review-group\s*\{/);
   assert.match(css, /\.settings-review-group \.settings-control-row/);
   assert.match(settingsSource, /settings-review-setting/);
   assert.match(css, /\.settings-review-setting\s*\{/);
   assert.match(css, /\.settings-review-setting-actions/);
   assert.match(settingsSource, /<UiSelect/);
-  assert.match(settingsSource, /value: "7", label: "最近 7 天"/);
-  assert.match(settingsSource, /value: "all", label: "全部档案"/);
+  assert.match(settingsSource, /value: "7", label: ["']最近 7 天["']/);
+  assert.match(settingsSource, /value: "all", label: ["']全部档案["']/);
   assert.match(settingsSource, /deleteMode === "all"/);
 });
 
@@ -610,7 +611,7 @@ test("回看场次由事件时间线承担主滚动，外层页面不再抢占�
 test("档案馆首页支持按主播名称、UID或房间号检索", () => {
   const panel = read("src/components/ReviewPanel.tsx");
   const ownerList = read("src/components/ReviewOwnerList.tsx");
-  assert.match(panel, /<UiSearchInput aria-label="搜索主播档案"/);
+  assert.match(panel, /<UiSearchInput aria-label=["']搜索主播档案["']/);
   assert.match(panel, /搜索主播档案/);
   assert.match(ownerList, /ownerSearchText/);
 });
@@ -643,7 +644,7 @@ test("主播全部历史时间线按场次显示边界、日期、标题和质�
 test("主播事件检索结果展示场次归属、命中数量和定位动作", () => {
   const source = read("src/components/ReviewOwnerEventResults.tsx");
   assert.ok(source, "事件检索结果组件尚未创建");
-  assert.match(source, /符合条件 \{matchCount\} 条/);
+  assert.match(source, /符合条件 \$?\{matchCount\} 条/);
   assert.match(source, /查看本场结果/);
   assert.match(source, /最新事件/);
   assert.match(source, /符合条件数量/);
@@ -676,7 +677,7 @@ test("设置主播策略时优先显示档案名，再用本机主播名补齐�
 
 test("主播历史事件时间线以符合条件说明结果数，不再显示命中术语", () => {
   const timeline = readReviewTimelineSources();
-  assert.match(timeline, /符合条件 \{entry\.hitCount\} 条/);
+  assert.match(timeline, /符合条件 \$?\{entry\.hitCount\} 条/);
   assert.doesNotMatch(timeline, /命中/);
 });
 

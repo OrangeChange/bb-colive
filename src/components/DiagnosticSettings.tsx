@@ -1,3 +1,4 @@
+import { uiText } from "../i18n/index.ts";
 import { useEffect, useRef, useState, type CSSProperties, type ReactNode } from "react";
 import { createPortal } from "react-dom";
 import { SettingsIcon } from "./SettingsIcon";
@@ -93,15 +94,15 @@ function DiagnosticDialog({
 
   return (
     <div className="diagnostic-dialog-overlay absolute inset-0 z-[80]" role="presentation">
-      <button type="button" className="diagnostic-dialog-backdrop absolute inset-0 h-full w-full border-0" aria-label="关闭对话框" onClick={() => { if (!busy) onCancel(); }} />
+      <button type="button" className="diagnostic-dialog-backdrop absolute inset-0 h-full w-full border-0" aria-label={uiText("diagnosticSettings.aria_label")} onClick={() => { if (!busy) onCancel(); }} />
       <div ref={dialogRef} role="dialog" aria-modal="true" aria-labelledby="diagnostic-dialog-title" aria-describedby="diagnostic-dialog-description" tabIndex={-1} className="diagnostic-dialog absolute left-1/2 top-1/2 w-[min(460px,calc(100%-24px))] -translate-x-1/2 -translate-y-1/2 rounded-lg border border-line bg-surface p-4 shadow-2xl shadow-black/30">
         <h3 id="diagnostic-dialog-title" className="ui-type-section-title font-medium text-t1">{title}</h3>
         <p id="diagnostic-dialog-description" className="mt-2 ui-type-control leading-5 text-t2">{description}</p>
         {children}
         {onConfirm && (
           <div className="mt-4 flex justify-end gap-2">
-            <button type="button" disabled={busy} onClick={onCancel} className="h-8 rounded-md border border-line bg-bg px-3 ui-type-control text-t2 transition-colors enabled:hover:bg-raised enabled:hover:text-t1 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent-ring disabled:cursor-not-allowed disabled:opacity-50">取消</button>
-            <button type="button" disabled={busy} onClick={onConfirm} className="h-8 rounded-md bg-accent-solid px-3 ui-type-control text-accent-fg transition-colors enabled:hover:bg-accent-solid-hover enabled:active:bg-accent-solid-active focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent-ring disabled:cursor-not-allowed disabled:opacity-50">{busy ? "处理中…" : confirmLabel}</button>
+            <button type="button" disabled={busy} onClick={onCancel} className="h-8 rounded-md border border-line bg-bg px-3 ui-type-control text-t2 transition-colors enabled:hover:bg-raised enabled:hover:text-t1 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent-ring disabled:cursor-not-allowed disabled:opacity-50">{uiText("common.cancel")}</button>
+            <button type="button" disabled={busy} onClick={onConfirm} className="h-8 rounded-md bg-accent-solid px-3 ui-type-control text-accent-fg transition-colors enabled:hover:bg-accent-solid-hover enabled:active:bg-accent-solid-active focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent-ring disabled:cursor-not-allowed disabled:opacity-50">{busy ? uiText("diagnosticSettings.DiagnosticDialog") : confirmLabel}</button>
           </div>
         )}
       </div>
@@ -243,18 +244,18 @@ export function DiagnosticSettings({ status, markers, openMarkRequest, onMarkIss
   const hasWriteFailures = Boolean(status && (status.writeFailures > 0 || status.status === "degraded"));
   const queueFull = status?.queueFull === true;
   const statusTone = hasLostRecords ? "danger" : !status || hasWriteFailures || status.status === "full" ? "warning" : "success";
-  const statusText = !status ? "状态未知"
-    : hasLostRecords ? "有日志记录丢失"
-    : hasWriteFailures ? "日志写入异常"
-    : queueFull ? "日志待写队列已满"
-    : status.status === "full" ? "日志已达保留上限"
-    : "日志记录正常";
+  const statusText = !status ? uiText("diagnosticSettings.DiagnosticSettings.statusText")
+    : hasLostRecords ? uiText("diagnosticSettings.DiagnosticSettings.statusText2")
+    : hasWriteFailures ? uiText("diagnosticSettings.DiagnosticSettings.statusText3")
+    : queueFull ? uiText("diagnosticSettings.DiagnosticSettings.statusText4")
+    : status.status === "full" ? uiText("diagnosticSettings.DiagnosticSettings.statusText5")
+    : uiText("diagnosticSettings.DiagnosticSettings.statusText6");
   const collectingMarkers = markers.filter((marker) => getIssueMarkerStatus(marker, now) === "collecting");
   const collectingCount = collectingMarkers.length;
   const latestCollectionEnd = collectingMarkers.reduce((latest, marker) => Math.max(latest, marker.markedAt + 180_000), 0);
   const remainingSeconds = Math.max(0, Math.ceil((latestCollectionEnd - now) / 1000));
-  const remainingText = remainingSeconds >= 60 ? `${Math.floor(remainingSeconds / 60)}分${remainingSeconds % 60}秒` : `${remainingSeconds}秒`;
-  const fullDescription = `包含本机保留的全部诊断日志，可能含弹幕原文和用户资料。不包含设置、登录凭证或音频。${status ? `预计大小至少为 ${formatBytes(status.totalBytes)}。` : "预计大小尚未确定。"}继续生成吗？`;
+  const remainingText = remainingSeconds >= 60 ? uiText("diagnosticSettings.DiagnosticSettings.remainingText", { value: Math.floor(remainingSeconds / 60), value2: remainingSeconds % 60 }) : uiText("diagnosticSettings.DiagnosticSettings.remainingText2", { remainingSeconds: remainingSeconds });
+  const fullDescription = uiText("diagnosticSettings.DiagnosticSettings.fullDescription", { value: status ? uiText("diagnosticSettings.DiagnosticSettings.fullDescription.value", { value: formatBytes(status.totalBytes) }) : uiText("diagnosticSettings.DiagnosticSettings.fullDescription.value2") });
   const runExport = async (mode: DiagnosticExportMode) => {
     if (busy) return;
     setBusy(mode);
@@ -263,7 +264,7 @@ export function DiagnosticSettings({ status, markers, openMarkRequest, onMarkIss
     try {
       const outputPath = await save({
         defaultPath: buildDiagnosticExportFileName(mode, getDiagnosticExportId()),
-        filters: [{ name: "ZIP 压缩包", extensions: ["zip"] }],
+        filters: [{ name: uiText("diagnosticSettings.outputPath.filters.name"), extensions: ["zip"] }],
       });
       if (!outputPath) return;
       exportModeRef.current = mode;
@@ -283,10 +284,10 @@ export function DiagnosticSettings({ status, markers, openMarkRequest, onMarkIss
       const flush = result?.flush;
       const flushDegraded = Boolean(flush && (flush.failed > 0 || flush.pending > 0 || flush.droppedRecords > 0));
       const historicalWarning = flush && flush.writeFailures > 0
-        ? `历史诊断写入异常累计 ${flush.writeFailures} 次。`
+        ? uiText("diagnosticSettings.DiagnosticSettings.runExport.historicalWarning", { writeFailures: flush.writeFailures })
         : null;
       const warning = flushDegraded
-        ? `导出前有诊断记录未完全写入（写入失败 ${flush?.failed ?? 0} 次，待写 ${flush?.pending ?? 0} 条，丢弃 ${flush?.droppedRecords ?? 0} 条），分析结果可能不完整。`
+        ? uiText("diagnosticSettings.DiagnosticSettings.runExport.warning", { value: flush?.failed ?? 0, value2: flush?.pending ?? 0, value3: flush?.droppedRecords ?? 0 })
         : null;
       setNotice({
         tone: missingSnapshots.length > 0 || flushDegraded || historicalWarning ? "warning" : "success",
@@ -303,7 +304,7 @@ export function DiagnosticSettings({ status, markers, openMarkRequest, onMarkIss
     } catch (error) {
       setExportProgress(null);
       setExportRemaining(null);
-      setNotice({ tone: "error", text: `导出失败，源日志未删除：${error instanceof Error ? error.message : "请稍后重试"}` });
+      setNotice({ tone: "error", text: `导出失败，源日志未删除：${error instanceof Error ? error.message : uiText("diagnosticSettings.statusText")}` });
     } finally {
       if (exportStarted) onExportStateChange(false);
       exportModeRef.current = null;
@@ -322,9 +323,9 @@ export function DiagnosticSettings({ status, markers, openMarkRequest, onMarkIss
       setNote("");
       markOpenedAtRef.current = null;
       setMarkOpen(false);
-      setNotice({ tone: "success", text: "问题已标记，将收集标记时刻前2分钟和后3分钟的诊断信息。" });
+      setNotice({ tone: "success", text: uiText("diagnosticSettings.statusText2") });
     } catch (error) {
-      setNotice({ tone: "error", text: `标记失败：${error instanceof Error ? error.message : "请稍后重试"}` });
+      setNotice({ tone: "error", text: `标记失败：${error instanceof Error ? error.message : uiText("diagnosticSettings.statusText")}` });
     } finally {
       setBusy(null);
     }
@@ -334,9 +335,9 @@ export function DiagnosticSettings({ status, markers, openMarkRequest, onMarkIss
     setBusy("directory");
     try {
       await onOpenDirectory();
-      setNotice({ tone: "success", text: "已打开日志目录" });
+      setNotice({ tone: "success", text: uiText("diagnosticSettings.statusText3") });
     } catch (error) {
-      setNotice({ tone: "error", text: `打开日志目录失败：${error instanceof Error ? error.message : "请稍后重试"}` });
+      setNotice({ tone: "error", text: `打开日志目录失败：${error instanceof Error ? error.message : uiText("diagnosticSettings.statusText")}` });
     } finally {
       setBusy(null);
     }
@@ -346,41 +347,41 @@ export function DiagnosticSettings({ status, markers, openMarkRequest, onMarkIss
 
   return (
     <div ref={frameRef} className="diagnostic-settings min-w-0">
-      <div className="settings-subsection-title" title="用于定位直播连接、事件处理、语音合成和播报问题。日志仅保存在本机。"><SettingsIcon name="诊断与日志" />诊断与日志</div>
+      <div className="settings-subsection-title" title={uiText("diagnosticSettings.title")}><SettingsIcon name="diagnostics" />{uiText("diagnosticSettings.DiagnosticSettings")}</div>
       <div className="mt-3 settings-control-row">
-        <span className="settings-control-label ui-type-control text-t2">记录状态</span>
+        <span className="settings-control-label ui-type-control text-t2">{uiText("diagnosticSettings.DiagnosticSettings2")}</span>
         <span className="flex min-w-0 items-center justify-end gap-2 ui-type-control text-t2"><StatusIcon tone={statusTone} />{statusText}</span>
       </div>
       <div className="settings-control-row">
-        <span className="settings-control-label ui-type-control text-t2" title="普通日志和原始数据/界面渲染日志的占用空间。">日志占用空间</span>
-        <span className="ui-type-control text-t2">{status ? formatBytes(status.totalBytes) : "未知"}</span>
+        <span className="settings-control-label ui-type-control text-t2" title={uiText("diagnosticSettings.title2")}>{uiText("diagnosticSettings.DiagnosticSettings3")}</span>
+        <span className="ui-type-control text-t2">{status ? formatBytes(status.totalBytes) : uiText("diagnosticSettings.DiagnosticSettings4")}</span>
       </div>
       <div className="settings-control-row">
-        <span className="settings-control-label ui-type-control text-t2">待写记录</span>
-        <span className="ui-type-control text-t2">{status ? `${status.pending} 条` : "未知"}</span>
+        <span className="settings-control-label ui-type-control text-t2">{uiText("diagnosticSettings.DiagnosticSettings5")}</span>
+        <span className="ui-type-control text-t2">{status ? uiText("diagnosticSettings.DiagnosticSettings6", { pending: status.pending }) : uiText("diagnosticSettings.DiagnosticSettings4")}</span>
       </div>
       {(status?.writeFailures || status?.discarded || status?.truncated) ? (
-        <p className="mt-2 rounded-md border border-warning/40 bg-warning/10 px-2.5 py-2 ui-type-meta leading-4 text-t2">日志写入异常：失败 {status?.writeFailures ?? 0} 次；丢弃 {status?.discarded ?? 0} 条；截断 {status?.truncated ?? 0} 次。</p>
+        <p className="mt-2 rounded-md border border-warning/40 bg-warning/10 px-2.5 py-2 ui-type-meta leading-4 text-t2">{uiText("diagnosticSettings.DiagnosticSettings7")}{status?.writeFailures ?? 0} {uiText("diagnosticSettings.DiagnosticSettings8")}{status?.discarded ?? 0} {uiText("diagnosticSettings.DiagnosticSettings9")}{status?.truncated ?? 0} {uiText("diagnosticSettings.DiagnosticSettings10")}</p>
       ) : null}
       <div className="mt-3 settings-control-row">
-        <span className="settings-control-label ui-type-control text-t2">当前问题标记</span>
-        <span className="ui-type-control text-t2">{markers.length} 个{collectingCount > 0 ? `（${collectingCount} 个收集中，剩余约 ${remainingText}）` : markers.length > 0 ? "（已完成）" : ""}</span>
+        <span className="settings-control-label ui-type-control text-t2">{uiText("diagnosticSettings.DiagnosticSettings11")}</span>
+        <span className="ui-type-control text-t2">{markers.length} {uiText("diagnosticSettings.DiagnosticSettings12")}{collectingCount > 0 ? uiText("diagnosticSettings.DiagnosticSettings13", { collectingCount: collectingCount, remainingText: remainingText }) : markers.length > 0 ? uiText("diagnosticSettings.DiagnosticSettings14") : ""}</span>
       </div>
-      <div className="diagnostic-export-actions mt-3 flex min-w-0 flex-wrap gap-2" title="24小时诊断包只包含最近24小时的标准诊断资料；完整日志包包含本机保留的全部日志，生成前会确认数据范围。">
-        <button type="button" disabled={busy !== null} onClick={() => { setNotice(null); markOpenedAtRef.current = Date.now(); setMarkOpen(true); }} className="min-h-8 min-w-0 flex-1 rounded-md border border-line bg-bg px-2.5 ui-type-control text-t2 transition-colors enabled:hover:border-accent/50 enabled:hover:bg-raised enabled:hover:text-t1 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent-ring disabled:cursor-not-allowed disabled:opacity-50">标记问题</button>
-        <button type="button" disabled={busy !== null} onClick={() => void runExport("24h")} className="min-h-8 min-w-0 flex-1 rounded-md border border-line bg-bg px-2.5 ui-type-control text-t2 transition-colors enabled:hover:border-accent/50 enabled:hover:bg-raised enabled:hover:text-t1 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent-ring disabled:cursor-not-allowed disabled:opacity-50">{busy === "24h" ? "生成中…" : "生成24小时诊断包"}</button>
+      <div className="diagnostic-export-actions mt-3 flex min-w-0 flex-wrap gap-2" title={uiText("diagnosticSettings.title3")}>
+        <button type="button" disabled={busy !== null} onClick={() => { setNotice(null); markOpenedAtRef.current = Date.now(); setMarkOpen(true); }} className="min-h-8 min-w-0 flex-1 rounded-md border border-line bg-bg px-2.5 ui-type-control text-t2 transition-colors enabled:hover:border-accent/50 enabled:hover:bg-raised enabled:hover:text-t1 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent-ring disabled:cursor-not-allowed disabled:opacity-50">{uiText("diagnosticSettings.DiagnosticSettings15")}</button>
+        <button type="button" disabled={busy !== null} onClick={() => void runExport("24h")} className="min-h-8 min-w-0 flex-1 rounded-md border border-line bg-bg px-2.5 ui-type-control text-t2 transition-colors enabled:hover:border-accent/50 enabled:hover:bg-raised enabled:hover:text-t1 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent-ring disabled:cursor-not-allowed disabled:opacity-50">{busy === "24h" ? uiText("diagnosticSettings.DiagnosticSettings16") : uiText("diagnosticSettings.DiagnosticSettings17")}</button>
       </div>
       <div className="mt-2 flex min-w-0 flex-wrap gap-2">
-        <button type="button" disabled={busy !== null} onClick={() => { setNotice(null); setFullConfirmOpen(true); }} className="min-h-8 min-w-0 flex-1 rounded-md border border-line bg-bg px-2.5 ui-type-control text-t2 transition-colors enabled:hover:border-accent/50 enabled:hover:bg-raised enabled:hover:text-t1 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent-ring disabled:cursor-not-allowed disabled:opacity-50">生成完整日志包</button>
-        <button type="button" disabled={busy !== null} onClick={() => void openDirectory()} className="min-h-8 min-w-0 flex-1 rounded-md border border-line bg-bg px-2.5 ui-type-control text-t2 transition-colors enabled:hover:border-accent/50 enabled:hover:bg-raised enabled:hover:text-t1 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent-ring disabled:cursor-not-allowed disabled:opacity-50">{busy === "directory" ? "打开中…" : "打开日志目录"}</button>
+        <button type="button" disabled={busy !== null} onClick={() => { setNotice(null); setFullConfirmOpen(true); }} className="min-h-8 min-w-0 flex-1 rounded-md border border-line bg-bg px-2.5 ui-type-control text-t2 transition-colors enabled:hover:border-accent/50 enabled:hover:bg-raised enabled:hover:text-t1 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent-ring disabled:cursor-not-allowed disabled:opacity-50">{uiText("diagnosticSettings.DiagnosticSettings18")}</button>
+        <button type="button" disabled={busy !== null} onClick={() => void openDirectory()} className="min-h-8 min-w-0 flex-1 rounded-md border border-line bg-bg px-2.5 ui-type-control text-t2 transition-colors enabled:hover:border-accent/50 enabled:hover:bg-raised enabled:hover:text-t1 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent-ring disabled:cursor-not-allowed disabled:opacity-50">{busy === "directory" ? uiText("diagnosticSettings.DiagnosticSettings19") : uiText("diagnosticSettings.DiagnosticSettings20")}</button>
       </div>
       {exportProgress && (
         <div className="mt-3" aria-live="polite">
           <div className="flex items-center justify-between ui-type-meta text-t2">
             <span>{exportPercent}%</span>
-            <span>{exportProgress.complete ? "已完成" : formatExportRemaining(exportRemainingSeconds)}</span>
+            <span>{exportProgress.complete ? uiText("diagnosticSettings.DiagnosticSettings21") : formatExportRemaining(exportRemainingSeconds)}</span>
           </div>
-          <div className="mt-2 h-1.5 overflow-hidden rounded-full bg-raised" role="progressbar" aria-valuemin={0} aria-valuemax={100} aria-valuenow={exportPercent} aria-label="导出进度">
+          <div className="mt-2 h-1.5 overflow-hidden rounded-full bg-raised" role="progressbar" aria-valuemin={0} aria-valuemax={100} aria-valuenow={exportPercent} aria-label={uiText("diagnosticSettings.aria_label2")}>
             <div className="h-full origin-left rounded-full bg-accent motion-reduce:transition-none" style={{ transform: `scaleX(${exportPercent / 100})` }} />
           </div>
         </div>
@@ -389,13 +390,13 @@ export function DiagnosticSettings({ status, markers, openMarkRequest, onMarkIss
       {(markOpen || fullConfirmOpen) && createPortal(
         <div className="diagnostic-dialog-frame fixed z-[80]" style={dialogFrame ? { ...frameStyle, pointerEvents: "auto" } : { display: "none" }} role="presentation">
           {markOpen && (
-              <DiagnosticDialog title="标记问题" description="记录标记时刻前2分钟和后3分钟的诊断信息，用于定位问题。备注可留空。" onCancel={() => { if (!busy) { markOpenedAtRef.current = null; setMarkOpen(false); setNote(""); } }} onConfirm={() => void mark()} confirmLabel="确认标记" busy={busy === "mark"}>
-              <label htmlFor="diagnostic-marker-note" className="mt-3 block ui-type-control text-t2">问题备注（可选）</label>
-              <textarea id="diagnostic-marker-note" value={note} onChange={(event) => setNote(event.target.value)} rows={3} className="mt-1.5 w-full resize-none rounded-md border border-line bg-bg px-2.5 py-2 ui-type-control text-t1 outline-none transition-colors focus:border-accent focus:ring-2 focus:ring-accent-ring" placeholder="例如：礼物已显示，但语音或个性播报没有触发" />
+              <DiagnosticDialog title={uiText("diagnosticSettings.title4")} description={uiText("diagnosticSettings.description")} onCancel={() => { if (!busy) { markOpenedAtRef.current = null; setMarkOpen(false); setNote(""); } }} onConfirm={() => void mark()} confirmLabel={uiText("diagnosticSettings.confirmLabel")} busy={busy === "mark"}>
+              <label htmlFor="diagnostic-marker-note" className="mt-3 block ui-type-control text-t2">{uiText("diagnosticSettings.DiagnosticSettings22")}</label>
+              <textarea id="diagnostic-marker-note" value={note} onChange={(event) => setNote(event.target.value)} rows={3} className="mt-1.5 w-full resize-none rounded-md border border-line bg-bg px-2.5 py-2 ui-type-control text-t1 outline-none transition-colors focus:border-accent focus:ring-2 focus:ring-accent-ring" placeholder={uiText("diagnosticSettings.placeholder")} />
             </DiagnosticDialog>
           )}
           {fullConfirmOpen && (
-            <DiagnosticDialog title="生成完整日志包" description={fullDescription} onCancel={() => { if (!busy) setFullConfirmOpen(false); }} onConfirm={() => { setFullConfirmOpen(false); void runExport("full"); }} confirmLabel="继续生成" />
+            <DiagnosticDialog title={uiText("diagnosticSettings.title5")} description={fullDescription} onCancel={() => { if (!busy) setFullConfirmOpen(false); }} onConfirm={() => { setFullConfirmOpen(false); void runExport("full"); }} confirmLabel={uiText("diagnosticSettings.confirmLabel2")} />
           )}
         </div>,
         document.body,

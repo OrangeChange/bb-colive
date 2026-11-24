@@ -27,7 +27,7 @@ pub async fn check_software_update(
     region: Option<RegionCache>,
 ) -> Result<CheckResult, String> {
     if state.downloading.load(Ordering::Relaxed) {
-        return Err("请先取消当前下载".into());
+        return Err(ui_text!("backend.commands.check_software_update").into());
     }
     let program = std::env::current_exe().map_err(|e| e.to_string())?;
     let kind = if program.parent().unwrap().join("portable.flag").is_file() {
@@ -52,7 +52,7 @@ pub async fn download_software_update(
     state: tauri::State<'_, UpdateManager>,
 ) -> Result<(), String> {
     if state.downloading.swap(true, Ordering::SeqCst) {
-        return Err("正在下载更新".into());
+        return Err(ui_text!("backend.commands.download_software_update").into());
     }
     let result = download_inner(&app, &state).await;
     state.downloading.store(false, Ordering::SeqCst);
@@ -65,7 +65,7 @@ async fn download_inner(app: &tauri::AppHandle, state: &UpdateManager) -> Result
         .lock()
         .map_err(|e| e.to_string())?
         .clone()
-        .ok_or("请先检查更新")?;
+        .ok_or(ui_text!("backend.commands.download_inner"))?;
     let staging = app
         .path()
         .temp_dir()
@@ -74,7 +74,7 @@ async fn download_inner(app: &tauri::AppHandle, state: &UpdateManager) -> Result
         .join(uuid::Uuid::new_v4().to_string());
     std::fs::create_dir_all(&staging).map_err(|e| e.to_string())?;
     let package = staging.join(offer.kind.file_name());
-    let mut error = "没有可用的下载地址".to_string();
+    let mut error = ui_text!("backend.commands.download_inner2").to_string();
     for source in &offer.packages {
         let mut last_progress = std::time::Instant::now() - std::time::Duration::from_secs(1);
         let result=transport::download(source,&package,include_str!("../../update-public.key"),&state.cancel,&state.cancel_signal,|received,total|{if last_progress.elapsed()>=std::time::Duration::from_millis(100)||received==total {let _=app.emit("software-update-progress",serde_json::json!({"received":received,"total":total,"source":source.source}));last_progress=std::time::Instant::now();}}).await;
@@ -128,7 +128,7 @@ pub fn install_software_update(
         .lock()
         .map_err(|e| e.to_string())?
         .clone()
-        .ok_or("请先下载更新")?;
+        .ok_or(ui_text!("backend.commands.install_software_update"))?;
     plan.parent_pid = std::process::id();
     plan.appearance = appearance;
     let directory = plan.package.parent().unwrap();

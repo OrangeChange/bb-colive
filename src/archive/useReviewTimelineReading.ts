@@ -1,3 +1,4 @@
+import { uiText } from "../i18n/index.ts";
 import { useCallback, useEffect, useRef, useState } from "react";
 import type { ArchiveSortDirection } from "./archiveTypes.ts";
 import type { ReviewReadingMemoryPosition } from "./reviewReadingMemory.ts";
@@ -49,7 +50,7 @@ export function useReviewTimelineReading({ sessionId, targetEventKey, onTargetEv
 
   const completeTargetLocation = useCallback((found: boolean) => {
     if (found) updateFollowingLatest(false);
-    setTargetLocateMessage(found ? null : "没有找到该事件的原始位置，可能已被清理或不在当前场次中。");
+    setTargetLocateMessage(found ? null : uiText("useReviewTimelineReading.useReviewTimelineReading.completeTargetLocation"));
     onTargetEventConsumed?.(found);
   }, [onTargetEventConsumed, updateFollowingLatest]);
 

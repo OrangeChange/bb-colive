@@ -1,3 +1,4 @@
+import { uiText } from "../i18n/index.ts";
 import valueParser from "postcss-value-parser";
 import postcss from "postcss";
 import type { ThemeAssetReference, ThemeStyles } from "./themeTypes.ts";
@@ -58,7 +59,7 @@ export function findThemeAssetUsages(styles: ThemeStyles, asset: ThemeAssetRefer
         inspect(decl.value, colon + 1 + (decl.raws.between?.split(":")[1]?.length ?? 0), decl.parent?.type === "rule" ? decl.parent.selector : decl.prop);
       });
     } catch {
-      inspect(css, 0, "未完成的 CSS");
+      inspect(css, 0, uiText("themeAssetPresentation.findThemeAssetUsages"));
     }
   }
   return usages;

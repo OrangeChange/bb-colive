@@ -1,3 +1,4 @@
+import { uiText } from "../i18n/index.ts";
 import { ThemeImagePicker } from "./ThemeImagePicker.tsx";
 import { ThemeImageDialog } from "./ThemeImageDialog.tsx";
 import { UiSelect } from "./ui/Select.tsx";
@@ -135,34 +136,31 @@ export function ThemeImageBorderField({
     <div className="theme-image-field">
       <button
         type="button"
-        aria-label="图片边框"
+        aria-label={uiText("themeImageBorderField.aria_label")}
         onClick={start}
         disabled={disabled}
       >
         <ImagePlus size={18} />
-        图片边框
-      </button>
+        {uiText("themeImageBorderField.ThemeImageBorderField")}</button>
       {open && (
         <ThemeImageDialog
-          title="图片边框"
+          title={uiText("themeImageBorderField.title")}
           onClose={() => setOpen(false)}
           actions={
             <>
               <button type="button" onClick={() => setOpen(false)}>
-                取消
-              </button>
+                {uiText("common.cancel")}</button>
               <button
                 type="button"
                 disabled={!source && (!value || value === "none")}
                 onClick={apply}
               >
-                完成设置
-              </button>
+                {uiText("themeImageBorderField.actions")}</button>
             </>
           }
         >
           <ThemeImagePicker
-            label="边框图片"
+            label={uiText("themeImageBorderField.label")}
             single
             onChoose={chooseImage}
             onReplace={source ? chooseImage : undefined}
@@ -175,25 +173,23 @@ export function ThemeImageBorderField({
               }}
             >
               <X size={18} />
-              移除图片
-            </button>
+              {uiText("themeImageBorderField.ThemeImageBorderField2")}</button>
           )}
           {!source && (
             <section>
-              <h4>边框效果</h4>
-              <p className="theme-image-hint">选择图片后预览。</p>
+              <h4>{uiText("themeImageBorderField.ThemeImageBorderField3")}</h4>
+              <p className="theme-image-hint">{uiText("themeImageBorderField.ThemeImageBorderField4")}</p>
             </section>
           )}
           {source && (
             <div className="theme-image-border-workbench">
               <section>
-                <h4>边缘切分</h4>
+                <h4>{uiText("themeImageBorderField.ThemeImageBorderField5")}</h4>
                 <p className="theme-image-hint">
-                  拖动分界线，保留四角形状。
-                </p>{" "}
+                  {uiText("themeImageBorderField.ThemeImageBorderField6")}</p>{" "}
                 <div className="theme-image-slice-preview">
                   <img
-                    alt="边框切片预览"
+                    alt={uiText("themeImageBorderField.alt")}
                     src={
                       assets?.images.find(
                         (a) =>
@@ -219,7 +215,7 @@ export function ThemeImageBorderField({
                       <button
                         key={index}
                         type="button"
-                        aria-label={`拖动${["上", "右", "下", "左"][index]}切片`}
+                        aria-label={uiText("themeImageBorderField.aria_label2", { value: [uiText("themeImageBorderField.aria_label.value"), uiText("themeImageBorderField.aria_label.value2"), uiText("themeImageBorderField.aria_label.value3"), uiText("themeImageBorderField.aria_label.value4")][index] })}
                         className={`theme-image-slice-line ${vertical ? "is-vertical" : "is-horizontal"}`}
                         style={{
                           [["top", "right", "bottom", "left"][index]]:
@@ -297,21 +293,20 @@ export function ThemeImageBorderField({
                 </div>
                 <fieldset
                   className="theme-image-cuts"
-                  aria-label="边缘切分数值"
+                  aria-label={uiText("themeImageBorderField.aria_label3")}
                 >
                   <label>
-                    四边联动
-                    <input
+                    {uiText("themeImageBorderField.ThemeImageBorderField7")}<input
                       type="checkbox"
                       checked={linked}
                       onChange={(e) => setLinked(e.target.checked)}
                     />
                   </label>
-                  {["上", "右", "下", "左"].map((label, index) => (
+                  {[uiText("themeImageBorderField.ThemeImageBorderField8"), uiText("themeImageBorderField.ThemeImageBorderField9"), uiText("themeImageBorderField.ThemeImageBorderField10"), uiText("themeImageBorderField.ThemeImageBorderField11")].map((label, index) => (
                     <label key={label} className={`theme-image-cut-${index}`}>
                       {label}
                       <ThemeNumberInput
-                        label={`切片${label}`}
+                        label={uiText("themeImageBorderField.label2", { label: label })}
                         value={Number(cuts[index])}
                         onChange={(next) =>
                           setCuts(
@@ -332,7 +327,7 @@ export function ThemeImageBorderField({
                     </label>
                   ))}
                   <UiSelect
-                    ariaLabel="切片单位"
+                    ariaLabel={uiText("themeImageBorderField.ariaLabel")}
                     value={
                       new Set(sliceUnits).size === 1 ? sliceUnits[0] : "mixed"
                     }
@@ -351,9 +346,9 @@ export function ThemeImageBorderField({
                       setUnit(next);
                     }}
                     options={[
-                      { value: "mixed", label: "混合单位", disabled: true },
-                      { value: "", label: "原图单位" },
-                      { value: "%", label: "百分比" },
+                      { value: "mixed", label: uiText("themeImageBorderField.options.label"), disabled: true },
+                      { value: "", label: uiText("themeImageBorderField.options.label2") },
+                      { value: "%", label: uiText("themeImageBorderField.options.label3") },
                     ]}
                   />
                 </fieldset>
@@ -361,13 +356,12 @@ export function ThemeImageBorderField({
             </div>
           )}
           <label>
-            边框粗细
-            <input
-              aria-label="图片边框厚度"
+            {uiText("themeImageBorderField.ThemeImageBorderField12")}<input
+              aria-label={uiText("themeImageBorderField.aria_label4")}
               type="number"
               min="0"
               value={originalWidth !== null ? "" : width}
-              placeholder={originalWidth !== null ? "沿用现有" : ""}
+              placeholder={originalWidth !== null ? uiText("themeImageBorderField.placeholder") : ""}
               onChange={(e) => {
                 setOriginalWidth(null);
                 setWidth(Number(e.target.value));
@@ -376,38 +370,36 @@ export function ThemeImageBorderField({
             px
           </label>
           <label>
-            边缘显示
-            <UiSelect
-              ariaLabel="边缘重复"
+            {uiText("themeImageBorderField.ThemeImageBorderField13")}<UiSelect
+              ariaLabel={uiText("themeImageBorderField.ariaLabel2")}
               value={repeat}
               onValueChange={(selectedValue) => setRepeat(selectedValue)}
               options={[
                 ...(!["stretch", "repeat", "round"].includes(repeat)
-                  ? [{ value: repeat, label: "当前重复方式" }]
+                  ? [{ value: repeat, label: uiText("themeImageBorderField.options.label4") }]
                   : []),
-                { value: "stretch", label: "拉伸" },
-                { value: "repeat", label: "重复" },
-                { value: "round", label: "整段重复" },
+                { value: "stretch", label: uiText("themeImageBorderField.options.label5") },
+                { value: "repeat", label: uiText("themeImageBorderField.options.label6") },
+                { value: "round", label: uiText("themeImageBorderField.options.label7") },
               ]}
             />
           </label>
           <label>
-            填充内部
-            <input
+            {uiText("themeImageBorderField.ThemeImageBorderField14")}<input
               type="checkbox"
               checked={fill}
               onChange={(e) => setFill(e.target.checked)}
             />
           </label>
           <details>
-            <summary>向外延伸</summary>
-            <p className="theme-image-hint">向外绘制，不增加事件间距。</p>
+            <summary>{uiText("themeImageBorderField.ThemeImageBorderField15")}</summary>
+            <p className="theme-image-hint">{uiText("themeImageBorderField.ThemeImageBorderField16")}</p>
             <input
-              aria-label="边框外扩"
+              aria-label={uiText("themeImageBorderField.aria_label5")}
               type="number"
               min="0"
               value={originalOutset !== null ? "" : outset}
-              placeholder={originalOutset !== null ? "沿用现有" : ""}
+              placeholder={originalOutset !== null ? uiText("themeImageBorderField.placeholder") : ""}
               onChange={(e) => {
                 setOriginalOutset(null);
                 setOutset(Number(e.target.value));

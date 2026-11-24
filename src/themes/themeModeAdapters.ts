@@ -1,3 +1,4 @@
+import { uiText } from "../i18n/index.ts";
 import { themePriceGradient } from './nativePriceGradient.ts';
 import { builtinDetails, createBuiltinCompatibleTheme } from './builtinThemeDefaults.ts';
 import type { NativeThemeProjection } from "./nativeThemeProjection.ts";
@@ -96,7 +97,7 @@ export function createCompatibleThemeModeAdapter(mode: CompatibleThemeMode, opti
 } = {}): ThemeModeAdapter {
   const bindings = options.bindings ?? themeBindingRegistry;
   const renderer = options.renderer;
-  const pending = `${builtinDetails[mode].name.replace("默认", "")}当前可以编辑和保存；预览暂不可用，原有显示保持不变。`;
+  const pending = uiText("themeModeAdapters.createCompatibleThemeModeAdapter.pending", { value: builtinDetails[mode].name.replace("默认", "") });
   const currentContext = async (requested: ThemeRenderContext): Promise<ThemeRenderContext> => {
     const existing = (await bindings.load()).find(item => item.targetId === requested.targetId);
     const context = createRenderContext(existing ?? {

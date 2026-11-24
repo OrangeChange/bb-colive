@@ -1,4 +1,5 @@
-import { invoke } from "@tauri-apps/api/core";
+import { UiMessageError } from "../i18n/index.ts";
+import { invokeThemeCommand as invoke } from "./themeCommand.ts";
 import { mergeThemeIndex } from "./themeIndex.ts";
 import { permissionsForOrigin, type ThemeDocument, type ThemeSummary } from "./themeTypes.ts";
 import type { ThemeSaveOptions } from "./themeEditorSession.ts";
@@ -31,13 +32,13 @@ export function createThemeRepository(port: ThemeStoragePort, builtins: ThemeDoc
     async loadThemeDocument(themeId) {
       const document = await port.read(themeId);
       if (document) return { ...document, permissions: permissionsForOrigin(document.origin), settings: Object.keys(document.settings).length === 0 ? createInitialThemeSettings(document.mode) : document.settings };
-      throw new Error("主题不存在或已被移除，请恢复主题文件或重新导入");
+      throw new UiMessageError("themeRepository.createThemeRepository.loadThemeDocument");
     },
     async saveThemeDocument(document, options) {
       await port.write(document, options);
     },
     async deleteCustomTheme(themeId) {
-      if (builtinById.has(themeId)) throw new Error("内置主题不能删除");
+      if (builtinById.has(themeId)) throw new UiMessageError("themeRepository.createThemeRepository.deleteCustomTheme");
       await port.remove(themeId);
     },
     readThemeAsset: async (themeId, path) => {

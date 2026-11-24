@@ -1,10 +1,11 @@
+import { readUiSource } from "./helpers/readUiSource.mjs";
 import test from "node:test";
 import assert from "node:assert/strict";
 import { readFileSync } from "node:fs";
 import { fileURLToPath } from "node:url";
 
 const root = fileURLToPath(new URL("..", import.meta.url));
-const read = (path) => readFileSync(`${root}/${path}`, "utf8");
+const read = (path) => readUiSource(`${root}/${path}`, "utf8");
 
 test("最低显示金额在现场工具栏和设置中复用同一个组件", () => {
   const input = read("src/components/GiftThresholdInput.tsx");

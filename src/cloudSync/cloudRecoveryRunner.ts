@@ -1,3 +1,4 @@
+import { uiText } from "../i18n/index.ts";
 import { walkRecoveryCatalog, type RecoveryCatalogIndex } from './recoveryCatalog.ts';
 import type { CatalogRef, Effect, Fact, ObjectEntry, Snapshot, SnapshotRef,
   BaselineRow, Assignment, CloudRecoverySelection } from './recoveryContract.ts';
@@ -16,8 +17,8 @@ import type { HistoryOutputDraft, HistoryRecordDraft, HistorySnapshotEvidence } 
 class MemoryCatalogIndex implements RecoveryCatalogIndex {
   readonly entries = new Map<string, CatalogRef | ObjectEntry>();
   readonly snapshotRefs = new Map<string, SnapshotRef>();
-  async register(value: CatalogRef | ObjectEntry) { if (this.entries.has(value.object_id)) throw new Error('恢复目录包含重复项目'); this.entries.set(value.object_id, value); }
-  async addSnapshot(value: SnapshotRef) { if (this.snapshotRefs.has(value.snapshot_id)) throw new Error('恢复目录包含重复快照'); this.snapshotRefs.set(value.snapshot_id, value); }
+  async register(value: CatalogRef | ObjectEntry) { if (this.entries.has(value.object_id)) throw new Error(uiText("cloudRecoveryRunner.register")); this.entries.set(value.object_id, value); }
+  async addSnapshot(value: SnapshotRef) { if (this.snapshotRefs.has(value.snapshot_id)) throw new Error(uiText("cloudRecoveryRunner.addSnapshot")); this.snapshotRefs.set(value.snapshot_id, value); }
   async object(id: string) { return this.entries.get(id) ?? null; }
   async *objects() { for (const value of this.entries.values()) if ('type' in value && value.type === 'object') yield value; }
   async *snapshots() { yield* this.snapshotRefs.values(); }
@@ -86,20 +87,20 @@ export async function runCloudRecovery(input: { roomId: string; repository: Arch
   const mode = selection.scope === 'all' && input.previous.cutId ? 'delta' : 'baseline';
   const started = await transport.start(input.roomId, mode, mode === 'delta' ? input.previous.cutId ?? undefined : undefined, selection);
   input.onJobStarted?.(() => transport.cancel(started.localJobId));
-  const active = () => { if (input.signal?.aborted) throw new DOMException('恢复已暂停', 'AbortError'); };
+  const active = () => { if (input.signal?.aborted) throw new DOMException(uiText("cloudRecoveryRunner.runCloudRecovery.active"), 'AbortError'); };
   input.onProgress?.({ phase: 'preparing', current: 0, total: 1 });
   let status;
   for (;;) {
     active();
     status = await transport.status(started.localJobId);
     if (status.state === 'ready') break;
-    if (status.state === 'failed') throw new Error('服务器准备恢复记录失败，请稍后重试');
+    if (status.state === 'failed') throw new Error(uiText("cloudRecoveryRunner.runCloudRecovery"));
     await new Promise(resolve => setTimeout(resolve, 1_000));
   }
   const root = status.root!;
   const hasPendingAssignments = BigInt(root.counts.pending_assignments) > 0n;
   if (root.room_id !== input.roomId || JSON.stringify(root.selection) !== JSON.stringify(selection)
-    || mode === 'delta' && root.from_cut?.cut_id !== input.previous.cutId) throw new Error('服务器返回的恢复范围与本地进度不一致');
+    || mode === 'delta' && root.from_cut?.cut_id !== input.previous.cutId) throw new Error(uiText("cloudRecoveryRunner.runCloudRecovery2"));
   const index = new MemoryCatalogIndex();
   await walkRecoveryCatalog(root, ref => transport.downloadCatalog(started.localJobId, ref), index);
   const objects = [...index.entries.values()].filter((value): value is ObjectEntry => 'type' in value && value.type === 'object')
@@ -122,7 +123,7 @@ export async function runCloudRecovery(input: { roomId: string; repository: Arch
     const verified = async function* () { for (const object of group) yield downloaded.get(object.object_id)!; };
     for await (const row of decodeRecoveryStream(verified(), read, { serverId: root.server_id, roomId: root.room_id,
       eventThrough: kind === 'effects' ? root.cut.event_head : undefined })) {
-      if (row.status !== 'validated' || !row.value) throw new Error('服务器恢复记录无法读取，请重新开始本次恢复');
+      if (row.status !== 'validated' || !row.value) throw new Error(uiText("cloudRecoveryRunner.runCloudRecovery3"));
       metadataRows.push(row.value as BaselineRow | Effect);
       if (kind === 'baseline') {
         const value = row.value as BaselineRow;
@@ -157,13 +158,13 @@ export async function runCloudRecovery(input: { roomId: string; repository: Arch
     const cached = snapshotCache.get(id);
     if (cached) { snapshotCache.delete(id); snapshotCache.set(id, cached); return cached; }
     const descriptor = downloaded.get(reference.object_id);
-    if (!descriptor) throw new Error('服务器记录缺少所需的历史资料');
+    if (!descriptor) throw new Error(uiText("cloudRecoveryRunner.runCloudRecovery.loadSnapshot"));
     let value: Snapshot | null = null;
     for await (const row of decodeRecoveryLines(descriptor, read, { serverId: root.server_id, roomId: root.room_id })) {
-      if (row.status !== 'validated' || !row.value || value) throw new Error('服务器恢复记录无法读取，请重新开始本次恢复');
+      if (row.status !== 'validated' || !row.value || value) throw new Error(uiText("cloudRecoveryRunner.runCloudRecovery.loadSnapshot2"));
       value = row.value as Snapshot;
     }
-    if (!value) throw new Error('服务器恢复记录无法读取，请重新开始本次恢复');
+    if (!value) throw new Error(uiText("cloudRecoveryRunner.runCloudRecovery.loadSnapshot2"));
     snapshotCache.set(id, value);
     const bytes = new TextEncoder().encode(JSON.stringify(value)).length;
     snapshotSizes.set(id, bytes); snapshotBytes += bytes;
@@ -187,11 +188,11 @@ export async function runCloudRecovery(input: { roomId: string; repository: Arch
       eventFrom: context.lastSequence, eventThrough: root.cut.event_head })) {
       active();
       const fact = decoded.value as Fact | null;
-      if (!fact || !['validated', 'unsupported'].includes(decoded.status)) throw new Error('服务器事件记录无法读取，请重新开始本次恢复');
+      if (!fact || !['validated', 'unsupported'].includes(decoded.status)) throw new Error(uiText("cloudRecoveryRunner.runCloudRecovery4"));
       const assigned = fact.server_session_id ?? assignmentFor(fact.server_sequence, assignments);
       const captures: CapturedRecoverySnapshot[] = await Promise.all(fact.snapshot_ids.map(async id => {
         const reference = index.snapshotRefs.get(id);
-        if (!reference) throw new Error('服务器记录缺少所需的历史资料');
+        if (!reference) throw new Error(uiText("cloudRecoveryRunner.runCloudRecovery.captures"));
         return { reference, value: await loadSnapshot(id) };
       }));
       const expansion = recoveryExpansionInput(fact, context, captures, { preserveUnsupported: true });

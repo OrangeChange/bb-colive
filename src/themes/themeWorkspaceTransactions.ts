@@ -1,3 +1,4 @@
+import { uiText, UiMessageError } from "../i18n/index.ts";
 export interface ObsConfigurationTransaction<T extends { id: string }> {
   previous?: T;
   next: T;
@@ -43,14 +44,14 @@ export async function commitThemePublication<TSnapshot, TBinding>(transaction: T
         if (errors.length) throw new ThemeOutputRollbackError(errors);
       }),
     ]);
-    throw new ThemePublicationError(`主题发布失败：${String(cause)}`, restored, rollbackErrors, cause);
+    throw new ThemePublicationError(uiText("themeWorkspaceTransactions.commitThemePublication", { value: String(cause) }), restored, rollbackErrors, cause);
   }
 }
 
 export interface ThemeRollbackState { snapshot: boolean; binding: boolean; output: boolean }
 export type ThemeRollbackErrors = Partial<Record<keyof ThemeRollbackState, unknown>>;
 export class ThemeOutputRollbackError extends Error {
-  constructor(readonly errors: unknown[]) { super("目标输出恢复失败"); this.name = "ThemeOutputRollbackError"; }
+  constructor(readonly errors: unknown[]) { super(uiText("themeWorkspaceTransactions.text")); this.name = "ThemeOutputRollbackError"; }
 }
 export class ThemePublicationError extends Error {
   constructor(message: string, readonly restored: ThemeRollbackState, readonly rollbackErrors: ThemeRollbackErrors, readonly cause: unknown) {
@@ -83,9 +84,9 @@ export async function commitThemeRemoval(transaction: {
     try {
       await restore();
     } catch (rollbackCause) {
-      throw new ThemeRemovalError(`主题解绑失败，且无法恢复原有输出：${String(cause)}；${String(rollbackCause)}`, false, cause);
+      throw new ThemeRemovalError(uiText("themeWorkspaceTransactions.commitThemeRemoval", { value: String(cause), value2: String(rollbackCause) }), false, cause);
     }
-    throw new ThemeRemovalError(`主题解绑失败，原有输出已恢复：${String(cause)}`, true, cause);
+    throw new ThemeRemovalError(uiText("themeWorkspaceTransactions.commitThemeRemoval2", { value: String(cause) }), true, cause);
   }
   return restore;
 }
@@ -108,7 +109,7 @@ export async function commitObsConfiguration<T extends { id: string }>(transacti
       if (transaction.previous) await transaction.save(transaction.previous);
       else await transaction.remove(transaction.next.id);
     } catch (rollbackCause) {
-      throw new Error(`OBS 配置发布失败，且无法恢复原配置：${String(cause)}；${String(rollbackCause)}`);
+      throw new Error(uiText("themeWorkspaceTransactions.commitObsConfiguration", { value: String(cause), value2: String(rollbackCause) }));
     }
     throw cause;
   }
@@ -124,7 +125,7 @@ export async function deleteObsConfiguration(transaction: {
   } catch (cause) {
     const restored = cause instanceof Error && "restored" in cause && typeof cause.restored === "boolean" ? cause.restored : false;
     throw new ObsConfigurationDeleteError(
-      restored ? `OBS 配置删除失败，原有输出已恢复：${String(cause)}` : `OBS 配置删除失败，部分输出状态可能未恢复：${String(cause)}`,
+      restored ? uiText("themeWorkspaceTransactions.deleteObsConfiguration", { value: String(cause) }) : uiText("themeWorkspaceTransactions.deleteObsConfiguration2", { value: String(cause) }),
       restored,
       cause,
     );
@@ -135,9 +136,9 @@ export async function deleteObsConfiguration(transaction: {
     try {
       await restore();
     } catch (rollbackCause) {
-      throw new ObsConfigurationDeleteError(`OBS 配置删除失败，且无法恢复原有输出：${String(cause)}；${String(rollbackCause)}`, false, cause);
+      throw new ObsConfigurationDeleteError(uiText("themeWorkspaceTransactions.deleteObsConfiguration3", { value: String(cause), value2: String(rollbackCause) }), false, cause);
     }
-    throw new ObsConfigurationDeleteError(`OBS 配置删除失败，原有输出已恢复：${String(cause)}`, true, cause);
+    throw new ObsConfigurationDeleteError(uiText("themeWorkspaceTransactions.deleteObsConfiguration", { value: String(cause) }), true, cause);
   }
 }
 
@@ -151,6 +152,5 @@ export class ObsConfigurationDeleteError extends Error {
 }
 
 export function themeSaveErrorMessage(cause: unknown, fallback: string): string {
-  const message = cause instanceof Error ? cause.message : typeof cause === "string" ? cause : "";
-  return message.includes("无法写入程序目录中的 style 文件夹") ? message : fallback;
+  return cause instanceof UiMessageError && cause.messageKey === "backend.theme_store.program_style_write_error" ? cause.message : fallback;
 }

@@ -1,3 +1,4 @@
+import { uiText } from "../i18n/index.ts";
 import { ChevronDown as LucideChevronDown } from "lucide-react";
 import { useReviewTimelineRefresh } from "../archive/useReviewTimelineRefresh.ts";
 import { createReviewTimelineEntries, type ReviewTimelineEntry } from "../archive/reviewTimelineEntries.ts";
@@ -76,8 +77,8 @@ function ArchiveNotice({ notice, onDismiss }: {
       <button
         type="button"
         className="-my-0.5 shrink-0 rounded px-1 text-lg leading-5 opacity-70 transition-opacity hover:opacity-100 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent-ring"
-        aria-label={`关闭${notice.label}提示`}
-        title="关闭提示"
+        aria-label={uiText("reviewSessionTimeline.aria_label", { label: notice.label })}
+        title={uiText("reviewSessionTimeline.title")}
         onClick={() => onDismiss(notice.code)}
       >×</button>
     </div>
@@ -909,60 +910,59 @@ export function ReviewSessionTimeline({
   }, [resolveGiftEffect]);
 
   return (
-    <section aria-label="回看事件时间线" data-review-reading-reason={readingAction ?? undefined} className="review-timeline-shell relative flex min-h-0 flex-1 flex-col overflow-hidden rounded-xl border border-line bg-surface">
+    <section aria-label={uiText("reviewSessionTimeline.aria_label2")} data-review-reading-reason={readingAction ?? undefined} className="review-timeline-shell relative flex min-h-0 flex-1 flex-col overflow-hidden rounded-xl border border-line bg-surface">
       <header className="review-timeline-header shrink-0 border-b border-line px-3 py-2">
         <div className="review-timeline-title-row">
           <div className="review-timeline-title-group">
-            <h2 className="ui-type-section-title text-t1">{ownerHistory ? "历史事件" : "事件时间线"}</h2>
+            <h2 className="ui-type-section-title text-t1">{ownerHistory ? uiText("reviewSessionTimeline.ReviewSessionTimeline") : uiText("reviewSessionTimeline.ReviewSessionTimeline2")}</h2>
             <span className="review-timeline-count ui-type-meta text-t3">
-              显示 {displayProjected.length} 条 · 已加载 {records.length}{totalCount === null ? "" : ` / ${totalCount}`} 条{loading ? " · 加载中…" : ""}
+              {uiText("reviewSessionTimeline.ReviewSessionTimeline3")}{displayProjected.length} {uiText("reviewSessionTimeline.ReviewSessionTimeline4")}{records.length}{totalCount === null ? "" : ` / ${totalCount}`} {uiText("reviewSessionTimeline.ReviewSessionTimeline5")}{loading ? uiText("reviewSessionTimeline.ReviewSessionTimeline6") : ""}
             </span>
             {(archiveWriterStatus === "failed" || showArchivePending) && (
               <span role="status" aria-live="polite" className={`review-timeline-save-status ui-type-meta ${archiveWriterStatus === "failed" ? "text-danger" : "text-t2"}`}>
-                {archiveWriterStatus === "failed" ? "保存失败，正在重试。" : "保存中…"}
+                {archiveWriterStatus === "failed" ? uiText("reviewSessionTimeline.ReviewSessionTimeline7") : uiText("reviewSessionTimeline.ReviewSessionTimeline8")}
               </span>
             )}
           </div>
-          <div className="review-timeline-actions" aria-label="回看显示与阅读操作">
+          <div className="review-timeline-actions" aria-label={uiText("reviewSessionTimeline.aria_label3")}>
             <div ref={displayMenuRef} className="review-timeline-display-wrap">
               <button
                 ref={displayTriggerRef}
                 type="button"
-                aria-label="显示菜单"
+                aria-label={uiText("reviewSessionTimeline.aria_label4")}
                 aria-expanded={displayMenuOpen}
                 aria-controls="review-display-menu"
                 className={`review-timeline-action rounded-md border px-2 py-1 ui-type-meta transition-colors ${displayMenuOpen ? "border-accent bg-accent-subtle text-accent-text" : "border-line bg-bg text-t2 hover:border-accent/60 hover:text-accent-text"}`}
                 onClick={() => setDisplayMenuOpen((value) => !value)}
               >
-                显示
-                <LucideChevronDown aria-hidden="true" className="ml-1 inline-block h-3 w-3" />
+                {uiText("common.show")}<LucideChevronDown aria-hidden="true" className="ml-1 inline-block h-3 w-3" />
               </button>
               {displayMenuOpen && displayMenuPosition && createPortal(
-                <div ref={displayPanelRef} id="review-display-menu" role="menu" aria-label="回看显示菜单" className="ui-motion-enter review-timeline-display-menu" style={displayMenuPosition}>
-                  <div className="review-timeline-menu-label ui-type-meta text-t3">排列顺序</div>
-                  <div role="group" aria-label="事件排序方向" className="review-timeline-menu-group">
+                <div ref={displayPanelRef} id="review-display-menu" role="menu" aria-label={uiText("reviewSessionTimeline.aria_label5")} className="ui-motion-enter review-timeline-display-menu" style={displayMenuPosition}>
+                  <div className="review-timeline-menu-label ui-type-meta text-t3">{uiText("reviewSessionTimeline.ReviewSessionTimeline9")}</div>
+                  <div role="group" aria-label={uiText("reviewSessionTimeline.aria_label6")} className="review-timeline-menu-group">
                     {(["asc", "desc"] as const).map((sortDirection) => (
                       <button
                         key={sortDirection}
                         type="button"
                         role="menuitemradio"
-                        aria-label={sortDirection === "asc" ? "顺序排列" : "倒序排列"}
+                        aria-label={sortDirection === "asc" ? uiText("reviewSessionTimeline.aria_label7") : uiText("reviewSessionTimeline.aria_label8")}
                         aria-checked={direction === sortDirection}
                         className={`review-timeline-menu-item ui-type-control ${direction === sortDirection ? "is-selected" : ""}`}
                         onClick={() => onChangeSortDirection?.(sortDirection)}
-                      >{direction === sortDirection ? "✓ " : ""}{sortDirection === "asc" ? "顺序排列" : "倒序排列"}</button>
+                      >{direction === sortDirection ? "✓ " : ""}{sortDirection === "asc" ? uiText("reviewSessionTimeline.ReviewSessionTimeline10") : uiText("reviewSessionTimeline.ReviewSessionTimeline11")}</button>
                     ))}
                   </div>
                   <div className="review-timeline-menu-divider" />
-                  <div className="review-timeline-menu-label ui-type-meta text-t3">事件显示</div>
+                  <div className="review-timeline-menu-label ui-type-meta text-t3">{uiText("reviewSessionTimeline.ReviewSessionTimeline12")}</div>
                   <button
                     type="button"
                     role="menuitemcheckbox"
-                    aria-label="显示大表情"
+                    aria-label={uiText("reviewSessionTimeline.aria_label9")}
                     aria-checked={archiveFilters.showBigEmote !== false}
                     className={`review-timeline-menu-item ui-type-control ${archiveFilters.showBigEmote !== false ? "is-selected" : ""}`}
                     onClick={() => { onToggleShowBigEmote?.(archiveFilters.showBigEmote === false); setDisplayMenuOpen(false); }}
-                  >{archiveFilters.showBigEmote !== false ? "✓ " : ""}显示大表情</button>
+                  >{archiveFilters.showBigEmote !== false ? "✓ " : ""}{uiText("reviewSessionTimeline.ReviewSessionTimeline13")}</button>
                 </div>,
                 document.body,
               )}
@@ -972,13 +972,13 @@ export function ReviewSessionTimeline({
               className="review-timeline-action rounded-md border border-line bg-bg px-2 py-1 ui-type-meta text-t2 enabled:hover:border-accent/60 enabled:hover:text-accent-text disabled:cursor-not-allowed disabled:opacity-50"
               disabled={loading || projected.length === 0}
               onClick={() => { void jumpToLatest(); }}
-            >跳到最新</button>
+            >{uiText("reviewSessionTimeline.ReviewSessionTimeline14")}</button>
           </div>
         </div>
       </header>
       {visibleNotices.map((notice) => <ArchiveNotice key={notice.code} notice={notice} onDismiss={dismissNotice} />)}
       {!ownerHistory && session?.cloudMetadata && <ArchiveCloudDetails metadata={session.cloudMetadata} />}
-      {error && <div role="alert" className="shrink-0 border-b border-danger/40 bg-danger/10 px-3 py-2 ui-type-control text-danger">读取事件失败：{error}</div>}
+      {error && <div role="alert" className="shrink-0 border-b border-danger/40 bg-danger/10 px-3 py-2 ui-type-control text-danger">{uiText("reviewSessionTimeline.ReviewSessionTimeline15")}{error}</div>}
       {targetLocateMessage && <div role="status" className="shrink-0 border-b border-warning/30 bg-warning/5 px-3 py-2 ui-type-meta text-warning">{targetLocateMessage}</div>}
       <div
         ref={scrollRef}
@@ -1006,13 +1006,13 @@ export function ReviewSessionTimeline({
                     style={{ position: "absolute", top: 0, left: 0, width: "100%", transform: `translateY(${virtualRow.start}px)` }}
                   >
                     <span className="shrink-0">{formatArchiveDateTime(entry.startedAt)}</span>
-                    <span className="min-w-0 flex-1 truncate text-t1">{entry.title ?? "未命名场次"}</span>
+                    <span className="min-w-0 flex-1 truncate text-t1">{entry.title ?? uiText("reviewSessionTimeline.ReviewSessionTimeline16")}</span>
                     <span>{formatArchiveSessionStatus(entry.status)} · {formatArchiveRecordingStatus(entry.recordingStatus)}</span>
                     <button
                       type="button"
                       className="shrink-0 text-accent-text hover:text-t1"
                       title={boundaryNoticeLabel(entry) || undefined}
-                      aria-label={`${collapsedSessions.has(entry.sessionId) ? "展开场次" : "折叠场次"} ${entry.title ?? "未命名场次"}`}
+                      aria-label={`${collapsedSessions.has(entry.sessionId) ? uiText("reviewSessionTimeline.aria_label10") : uiText("reviewSessionTimeline.aria_label11")} ${entry.title ?? uiText("reviewSessionTimeline.aria_label12")}`}
                       aria-expanded={!collapsedSessions.has(entry.sessionId)}
                       onClick={() => setCollapsedSessions((current) => {
                         const next = new Set(current);
@@ -1020,7 +1020,7 @@ export function ReviewSessionTimeline({
                         else next.add(entry.sessionId);
                         return next;
                       })}
-                    >{formatArchiveQuality(entry.quality)} · 符合条件 {entry.hitCount} 条</button>
+                    >{formatArchiveQuality(entry.quality)} {uiText("reviewSessionTimeline.ReviewSessionTimeline17")}{entry.hitCount} {uiText("reviewSessionTimeline.ReviewSessionTimeline5")}</button>
                   </div>
                 );
               }
@@ -1065,7 +1065,7 @@ export function ReviewSessionTimeline({
             })}
           </>
         ) : loaded && !loading ? (
-          <div className="flex min-h-28 items-center justify-center px-4 ui-type-control text-t3">没有符合条件的事件</div>
+          <div className="flex min-h-28 items-center justify-center px-4 ui-type-control text-t3">{uiText("reviewSessionTimeline.ReviewSessionTimeline18")}</div>
         ) : null}
         </div>
       </div>

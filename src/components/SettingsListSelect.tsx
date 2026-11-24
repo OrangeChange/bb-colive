@@ -1,3 +1,4 @@
+import { uiText } from "../i18n/index.ts";
 import { ChevronDown as LucideChevronDown } from "lucide-react";
 import { useEffect, useId, useLayoutEffect, useRef, useState, type CSSProperties, type KeyboardEvent } from "react";
 import { createPortal } from "react-dom";
@@ -42,7 +43,7 @@ export function SettingsListSelect({
   const selectedOption = selectedOptionIndex >= 0
     ? options[selectedOptionIndex]
     : value
-      ? { value, label: "设备不可用", title: value }
+      ? { value, label: uiText("settingsListSelect.SettingsListSelect.selectedOption.label"), title: value }
       : options[0];
 
   const openMenu = () => {
@@ -162,7 +163,7 @@ export function SettingsListSelect({
         onClick={() => open ? setOpen(false) : openMenu()}
         onKeyDown={handleKeyDown}
       >
-        <span className="min-w-0 flex-1 truncate">{selectedOption?.label ?? "设备不可用"}</span>
+        <span className="min-w-0 flex-1 truncate">{selectedOption?.label ?? uiText("settingsListSelect.SettingsListSelect")}</span>
         <LucideChevronDown className={`settings-list-select-trigger-chevron ${open ? "rotate-180" : ""}`} aria-hidden="true" />
       </button>
       {open && createPortal(
@@ -205,7 +206,7 @@ export function SettingsFontFamilySelect({
   value,
   onChange,
   onOpen,
-  emptyLabel = "继承主题",
+  emptyLabel = uiText("settingsListSelect.SettingsFontFamilySelect"),
 }: {
   options: string[];
   value: string;
@@ -219,7 +220,7 @@ export function SettingsFontFamilySelect({
   return (
     <div className="settings-list-select-wrap">
       <UiSelect
-        ariaLabel="字体"
+        ariaLabel={uiText("common.font")}
         options={selectOptions}
         value={value}
         onValueChange={onChange}

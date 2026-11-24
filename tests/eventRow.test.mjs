@@ -1,3 +1,4 @@
+import { readUiSource } from "./helpers/readUiSource.mjs";
 import { tmpdir as ssrTemporaryDirectory } from 'node:os';
 import test, { before, after } from "node:test";
 import assert from "node:assert/strict";
@@ -10,8 +11,8 @@ import { getNativeEventSample } from "./fixtures/nativeEventSamples.ts";
 import { createEventAreaConfigCss } from "../src/eventAreaStyleConfig.ts";
 import { createDefaultEventStyleSettings } from "../src/eventStyleSettings.ts";
 
-const archiveCss = readFileSync(new URL('../src/archiveEventStyle.css', import.meta.url), 'utf8');
-const eventCss = readFileSync(new URL('../src/eventStyle.css', import.meta.url), 'utf8');
+const archiveCss = readUiSource(new URL('../src/archiveEventStyle.css', import.meta.url), 'utf8');
+const eventCss = readUiSource(new URL('../src/eventStyle.css', import.meta.url), 'utf8');
 let vite, EventRow;
 before(async () => {
   vite = await createServer({cacheDir:ssrTemporaryDirectory()+"/danmu-ssr-cache/tests-eventRow.test.mjs",optimizeDeps:{noDiscovery:true,include:[]}, configFile: false, root: fileURLToPath(new URL("..", import.meta.url)), server: { middlewareMode: true, watch: null }, appType: "custom", logLevel: "silent" });
@@ -20,7 +21,7 @@ before(async () => {
 after(async () => { await vite?.close(); });
 const render = (key, props = {}) => renderToStaticMarkup(React.createElement(EventRow, { ev: getNativeEventSample(key), showTime: false, ...props }));
 
-const source = readFileSync(
+const source = readUiSource(
   fileURLToPath(new URL("../src/components/EventRow.tsx", import.meta.url)),
   "utf8",
 );

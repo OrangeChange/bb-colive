@@ -1,10 +1,11 @@
+import { readUiSource } from "./helpers/readUiSource.mjs";
 import test from "node:test";
 import assert from "node:assert/strict";
 import { readFileSync } from "node:fs";
 import { fileURLToPath } from "node:url";
 
 const root = fileURLToPath(new URL("..", import.meta.url));
-const read = (path) => readFileSync(`${root}/${path}`, "utf8");
+const read = (path) => readUiSource(`${root}/${path}`, "utf8");
 
 test("设置页按显示、筛选、交互和输出职责拆分分类", () => {
   const navigation = read("src/components/settingsNavigation.ts");
@@ -30,7 +31,7 @@ test("设置页按显示、筛选、交互和输出职责拆分分类", () => {
   const other = section("other", "about");
 
   assert.doesNotMatch(display, /主题、元素显示和外观|编辑样式|ThemeWorkspace/);
-  assert.doesNotMatch(display, /<SettingSwitch label="显示头像"/);
+  assert.doesNotMatch(display, /<SettingSwitch label=["']显示头像["']/);
   assert.doesNotMatch(display, /GiftThresholdInput|只显示大航海进房/);
   assert.match(filters, /GiftThresholdInput|只显示大航海进房|金额计算|显示自动弹幕|显示未验证手机号用户弹幕/);
   assert.match(review, /进入回看时打开当前主播|reviewOpenCurrentOwner/);
@@ -44,16 +45,16 @@ test("设置页按显示、筛选、交互和输出职责拆分分类", () => {
 test("容量、过期和合并集中在副窗口与 OBS 分组，不进入弹幕窗专属设置", () => {
   const source = read("src/components/SettingsPanel.tsx");
   const displayStart = source.indexOf('data-settings-section="display"');
-  const commonStart = source.indexOf('<SettingsSubsectionTitle title="副窗口与 OBS"', displayStart);
+  const commonStart = source.indexOf('title="副窗口与 OBS"', displayStart);
   const commonEnd = source.indexOf('data-settings-section="filters"', commonStart);
   assert.ok(commonStart > displayStart && commonEnd > commonStart);
   const common = source.slice(commonStart, commonEnd);
-  assert.match(common, /hint="仅影响副窗口与 OBS，不影响现场历史和回看。"/);
+  assert.match(common, /hint=["']仅影响副窗口与 OBS，不影响现场历史和回看。["']/);
   for (const id of ["event-window-capacity", "event-expiry", "event-expiry-seconds", "merge-danmu", "merge-danmu-seconds"]) {
     assert.equal(source.split(`searchId="${id}"`).length - 1, 1, `${id} 只有一个控件`);
     assert.ok(common.includes(`searchId="${id}"`), `${id} 属于公共分组`);
   }
-  assert.match(common, /label="输出保留条数"/);
+  assert.match(common, /label=["']输出保留条数["']/);
   const display = source.slice(source.indexOf('data-settings-anchor="display"'), source.indexOf('data-settings-section="interaction"'));
   assert.doesNotMatch(display, /eventWindowCapacity|setEventWindowCapacity/);
 });
@@ -80,7 +81,7 @@ test("公共输出行为的搜索名称与分组同步，金额计算仍属于�
   const amount = entries.find((item) => item.id === "gift-threshold-mode");
   assert.equal(amount.label, "金额计算");
   assert.equal(amount.sectionId, "filters");
-  assert.match(source, /label="金额计算"/);
+  assert.match(source, /label=["']金额计算["']/);
 });
 
 test("副窗口恢复默认统一调用分类重置，不重复重置容量", () => {
@@ -98,19 +99,19 @@ test("信息流行为独立控制内容对齐和最新事件位置", () => {
   const start = source.indexOf('<SettingsSubsectionTitle title="信息流行为"');
   const end = source.indexOf('<SettingsSubsectionTitle title="事件动画"', start);
   const controls = source.slice(start, end);
-  const alignment = controls.match(/<Segmented[^>]*>\s*label="内容对齐"[\s\S]*?\/>/)?.[0];
-  const latest = controls.match(/<Segmented[^>]*>\s*label="最新事件位置"[\s\S]*?\/>/)?.[0];
+  const alignment = controls.match(/<Segmented[^>]*>\s*label=["']内容对齐["'][\s\S]*?\/>/)?.[0];
+  const latest = controls.match(/<Segmented[^>]*>\s*label=["']最新事件位置["'][\s\S]*?\/>/)?.[0];
   assert.ok(alignment, "信息流行为中有内容对齐控件");
   assert.ok(latest, "信息流行为中有最新事件位置控件");
   assert.match(alignment, /value=\{liveContentAlignment\}/);
   assert.match(alignment, /onChange=\{setLiveContentAlignment\}/);
-  assert.match(alignment, /value: "top", label: "顶部"/);
-  assert.match(alignment, /value: "bottom", label: "底部"/);
+  assert.match(alignment, /value: "top", label: ["']顶部["']/);
+  assert.match(alignment, /value: "bottom", label: ["']底部["']/);
   assert.match(alignment, /searchId="content-alignment"/);
   assert.match(latest, /value=\{liveScrollDirection\}/);
   assert.match(latest, /onChange=\{setLiveScrollDirection\}/);
-  assert.match(latest, /value: "top", label: "上方"/);
-  assert.match(latest, /value: "bottom", label: "下方"/);
+  assert.match(latest, /value: "top", label: ["']上方["']/);
+  assert.match(latest, /value: "bottom", label: ["']下方["']/);
   assert.match(latest, /searchId="feed-direction"/);
   assert.match(source, /const liveContentAlignment = useGeneralSettings\(\(state\) => state\.liveContentAlignment\)/);
   assert.match(source, /const setLiveContentAlignment = useGeneralSettings\(\(state\) => state\.setLiveContentAlignment\)/);

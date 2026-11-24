@@ -1,3 +1,4 @@
+import { uiText } from "../i18n/index.ts";
 import { useContext, useEffect, useRef, type ReactNode } from "react";
 import {
   ThemeImageEditingContext,
@@ -50,8 +51,8 @@ export function ThemeImageDialog({
           </div>
           <button
             type="button"
-            aria-label={`关闭${title}`}
-            title="关闭"
+            aria-label={uiText("themeImageDialog.aria_label", { title: title })}
+            title={uiText("common.close")}
             onClick={onClose}
           >
             <X size={18} aria-hidden="true" />

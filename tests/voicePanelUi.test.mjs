@@ -1,3 +1,4 @@
+import { readUiSource } from "./helpers/readUiSource.mjs";
 import { readApplicationSources } from "./helpers/applicationSources.mjs";
 import test from "node:test";
 import assert from "node:assert/strict";
@@ -6,13 +7,13 @@ import { MsgType } from "../src/protocol/types.ts";
 import { DEFAULT_PERSONAL_BROADCAST_SETTINGS } from "../src/voice/personalBroadcastTypes.ts";
 import { getPersonalBroadcastPendingCount, getPersonalBroadcastRuleError, getVoicePanelPlaybackState } from "../src/components/personalBroadcastPanelModel.ts";
 
-const read = (path) => fs.readFileSync(new URL(`../${path}`, import.meta.url), "utf8");
+const read = (path) => readUiSource(new URL(`../${path}`, import.meta.url), "utf8");
 
 test("主导航把语音放在回看下方且不删除现有快捷入口", () => {
   const source = read("src/components/Sidebar.tsx");
   assert.match(source, /title="回看/);
   assert.match(source, /mainView="voice"/);
-  assert.match(source, /mainTitle="语音（TTS播报）"/);
+  assert.match(source, /mainTitle=["']语音（TTS播报）["']/);
   assert.match(source, /IconChatWindow/);
   assert.match(source, /IconGiftBox/);
 });
@@ -77,7 +78,7 @@ test("Fish Audio 只提供当前原生链路可播放的 MP3 和 WAV", () => {
 
 test("自定义 API 的音色/参考音频只在专属配置区出现一次", () => {
   const source = read("src/components/VoicePanel.tsx");
-  assert.equal((source.match(/aria-label="自定义 API 音色或参考音频"/g) ?? []).length, 1);
+  assert.equal((source.match(/aria-label=["']自定义 API 音色或参考音频["']/g) ?? []).length, 1);
 });
 
 test("Fish Audio 的 API Key 和参考音色 ID 提供官方直达入口", () => {
@@ -91,7 +92,7 @@ test("Fish Audio 的 API Key 和参考音色 ID 提供官方直达入口", () =>
 
 test("Fish Audio 的参考音色 ID 只在专属配置区出现一次", () => {
   const source = read("src/components/VoicePanel.tsx");
-  assert.equal((source.match(/aria-label="参考音色 ID"/g) ?? []).length, 1);
+  assert.equal((source.match(/aria-label=["']参考音色 ID["']/g) ?? []).length, 1);
 });
 
 test("Fish Audio 参考音色把输入和删除收进下拉交互", () => {
@@ -120,8 +121,8 @@ test("Fish Audio 当前选中项不再显示重复的外层删除按钮", () => 
 test("Fish Audio 参考音色标签和选择器保持单行", () => {
   const source = read("src/components/VoicePanel.tsx");
   const css = read("src/App.css");
-  assert.match(source, /<SettingRow label="参考音色">/);
-  assert.doesNotMatch(source, /hint="Fish Audio 模型 ID"/);
+  assert.match(source, /<SettingRow label=["']参考音色["']>/);
+  assert.doesNotMatch(source, /hint=["']Fish Audio 模型 ID["']/);
   assert.match(source, /fish-reference-picker-trigger/);
   assert.match(css, /\.fish-reference-picker-trigger[^{]*\{[\s\S]*display:\s*flex/);
 });
@@ -146,7 +147,7 @@ test("Fish Audio 下拉点击外部区域会自动收起", () => {
 test("语音面板显示本机音色名称而不是内部注册表路径", () => {
   const source = read("src/components/VoicePanel.tsx");
   assert.match(source, /activeVoice\?\.label/);
-  assert.doesNotMatch(source, /<option value=\{settings\.voiceName\}>\{voiceNeedsSelection \? "需要选择音色" : settings\.voiceName\}<\/option>/);
+  assert.doesNotMatch(source, /<option value=\{settings\.voiceName\}>\{voiceNeedsSelection \? ["']需要选择音色["'] : settings\.voiceName\}<\/option>/);
 });
 
 test("语音面板提供大表情、低价事件屏蔽、播报间隔和滑杆数值显示", () => {
@@ -162,7 +163,7 @@ test("语音面板提供大表情、低价事件屏蔽、播报间隔和滑杆�
 
 test("播放增益独立于引擎音量并提供 100 到 200% 的调节范围", () => {
   const source = read("src/components/VoicePanel.tsx");
-  assert.match(source, /label="播放增益"/);
+  assert.match(source, /label=["']播放增益["']/);
   assert.match(source, /settings\.playbackGain/);
   assert.match(source, /min=\{1\} max=\{2\} step=\{0\.05\}/);
   assert.match(source, /Math\.round\(settings\.playbackGain \* 100\)/);
@@ -188,7 +189,7 @@ test("语音引擎控件使用统一的标签列、可伸缩控制区和整宽�
   const primitives = read("src/components/voicePanelPrimitives.tsx");
   assert.match(primitives, /voice-setting-row/);
   assert.match(primitives, /voice-setting-control/);
-  assert.match(source, /<UiSelect ariaLabel="语音引擎"/);
+  assert.match(source, /<UiSelect ariaLabel=["']语音引擎["']/);
   assert.doesNotMatch(source, /voice-engine-segmented/);
   assert.match(source, /className=\{selectClass\}/);
   assert.match(source, /min-w-0 flex-1/);
@@ -283,7 +284,7 @@ test("语音区标题与操作按钮使用独立的稳定工具栏", () => {
 test("语音运行区合并播放切换按钮，试听集中在声音参数后的独立区域", () => {
   const source = read("src/components/VoicePanel.tsx");
   assert.match(source, /const togglePlayback/);
-  assert.match(source, /playbackPaused \? "继续" : "暂停"/);
+  assert.match(source, /playbackPaused \? ["']继续["'] : ["']暂停["']/);
   assert.match(source, /onClick=\{togglePlayback\}/);
   assert.match(source, /<VoiceTestPanel[^>]*onTest=\{text => voiceController\.test\(text\)\}/);
   assert.match(source, /voice-runtime-actions/);
@@ -371,12 +372,12 @@ test("模板编辑器让动态字段模块支持鼠标拖动", () => {
 test("模板中的文字片段保留可编辑输入但不显示冗余占位词", () => {
   const source = read("src/components/VoicePanel.tsx");
   assert.match(source, /voice-template-text-slot/);
-  assert.match(source, /title="输入固定文字"/);
+  assert.match(source, /title=["']输入固定文字["']/);
   assert.match(source, /style=\{\{ width: segment\.value \?/);
   assert.match(source, /Math\.max\(1, segment\.value\.length\)/);
   assert.match(source, /calc\(\$\{Math\.min\(32,/);
   assert.doesNotMatch(source, /<input\b[^>]*\bsize=\{/);
-  assert.doesNotMatch(source, /placeholder="输入文字"/);
+  assert.doesNotMatch(source, /placeholder=["']输入文字["']/);
   assert.match(source, /segment\.value/);
 });
 
@@ -390,7 +391,7 @@ test("模板编辑器使用连续文字流、模块拖动区和模块删除按�
 });
 
 test("个性播报面板提供总开关、两种模式和所有事件文件控件", () => {
-  const source = fs.readFileSync(new URL("../src/components/PersonalBroadcastPanel.tsx", import.meta.url), "utf8");
+  const source = readUiSource(new URL("../src/components/PersonalBroadcastPanel.tsx", import.meta.url), "utf8");
   assert.match(source, /个性播报/);
   assert.match(source, /提示音间隔/);
   assert.match(source, /提示音与 TTS 间隔/);
@@ -430,7 +431,7 @@ test("模拟个性播报规则行渲染时，文件不可用只显示在对应�
 
 test("语音面板不再拥有个性播报或声音输出可见区", () => {
   const source = read("src/components/VoicePanel.tsx");
-  assert.doesNotMatch(source, /<SectionToolbar title="个性播报"/);
+  assert.doesNotMatch(source, /<SectionToolbar title=["']个性播报["']/);
   assert.doesNotMatch(source, /<SectionHeading>声音输出<\/SectionHeading>/);
 });
 

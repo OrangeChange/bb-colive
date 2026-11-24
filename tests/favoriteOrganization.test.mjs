@@ -1,10 +1,11 @@
+import { readUiSource } from "./helpers/readUiSource.mjs";
 import test from "node:test";
 import assert from "node:assert/strict";
 import { existsSync, readFileSync } from "node:fs";
 import { fileURLToPath } from "node:url";
 
 const root = fileURLToPath(new URL("..", import.meta.url));
-const read = (path) => readFileSync(`${root}/${path}`, "utf8");
+const read = (path) => readUiSource(`${root}/${path}`, "utf8");
 const loadHelper = async () => {
   const path = `${root}/src/favoriteOrganization.ts`;
   assert.equal(existsSync(path), true, "收藏整理状态辅助模块尚未创建");
@@ -86,7 +87,7 @@ test("收藏筛选把标签放在更多筛选之外，并将管理标签放到�
 test("收藏分类复用回看分类名称", () => {
   const source = read("src/components/ReviewFavoritesPanel.tsx");
   assert.match(source, /CATEGORY_OPTIONS/);
-  assert.doesNotMatch(source, /\["lottery", "抽奖"\]/);
+  assert.doesNotMatch(source, /\["lottery", ["']抽奖["']\]/);
 });
 
 test("收藏自定义时间按内容布局，并把开始结束输入放到下一行", () => {
@@ -94,8 +95,8 @@ test("收藏自定义时间按内容布局，并把开始结束输入放到下�
   assert.doesNotMatch(source, /md:grid-cols-2/);
   assert.match(source, /className="mt-2 flex flex-wrap items-center gap-2/);
   assert.match(source, /type="datetime-local" step="60"/);
-  assert.match(source, /aria-label="时间范围开始"/);
-  assert.match(source, /aria-label="时间范围结束"/);
+  assert.match(source, /aria-label=["']时间范围开始["']/);
+  assert.match(source, /aria-label=["']时间范围结束["']/);
 });
 
 test("档案刷新时不应清空收藏页的多选状态", () => {

@@ -1,3 +1,4 @@
+import { uiText } from "../i18n/index.ts";
 import { useGeneralSettings } from '../generalSettings'
 import type { RankUser } from '../protocol/roomInsights'
 import type { GuardIdentityDisplayMode } from '../eventDisplaySettings'
@@ -24,18 +25,18 @@ export function RankUserRow({ user, kind, guardIdentityDisplayMode = 'icon', sho
   const guard = user.guardLevel
   // 官方贡献榜对零贡献用户显示未排名；保留接口顺序和原始rank，大航海不套用此规则。
   const ranked = user.rank > 0 && !(kind === 'contribution' && user.score === 0)
-  const identity = guard === 1 ? '总督' : guard === 2 ? '提督' : guard === 3 ? '舰长' : ''
+  const identity = guard === 1 ? uiText("roomInsightsView.RankUserRow.identity") : guard === 2 ? '提督' : guard === 3 ? '舰长' : ''
   const tone = guard === 1 ? 'text-ev-guard3' : guard === 2 ? 'text-ev-guard2' : guard === 3 ? 'text-ev-guard1' : 'text-t1'
   const userName = onUserFilter ? <button
     type="button"
     onPointerDown={(event) => event.stopPropagation()}
     onClick={() => onUserFilter(user)}
-    aria-label={`筛选用户：${user.name}`}
-    title={`按用户筛选：${user.name}`}
+    aria-label={uiText("roomInsightsView.aria_label", { name: user.name })}
+    title={uiText("roomInsightsView.title", { name: user.name })}
     className="block w-full cursor-pointer truncate text-left ui-type-event font-medium hover:underline focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-accent-ring"
   >{user.name}</button> : <div className="truncate ui-type-event font-medium" title={user.name}>{user.name}</div>
   return <div className="flex h-14 min-w-0 items-center gap-2.5 border-b border-line/50 px-3">
-    <span className="w-6 shrink-0 text-center font-mono ui-type-meta text-t2" aria-label={ranked ? `第${user.rank}名` : '未排名'}>{ranked ? user.rank : '—'}</span>
+    <span className="w-6 shrink-0 text-center font-mono ui-type-meta text-t2" aria-label={ranked ? uiText("roomInsightsView.aria_label2", { rank: user.rank }) : uiText("roomInsightsView.aria_label3")}>{ranked ? user.rank : '—'}</span>
     <RankAvatar user={user} size={30} />
     <div className="min-w-0 flex-1">
       <div className={tone}>{userName}</div>
@@ -52,7 +53,7 @@ export function RankUserRow({ user, kind, guardIdentityDisplayMode = 'icon', sho
       </div>
     </div>
     <span className="shrink-0 font-mono ui-type-section-title tabular-nums text-t1">
-      {kind === 'guard' ? <>{user.accompany?.toLocaleString('zh-CN') ?? '—'}<span className="ml-0.5 font-ui ui-type-meta text-t2">天</span></> : user.score?.toLocaleString('zh-CN') ?? '—'}
+      {kind === 'guard' ? <>{user.accompany?.toLocaleString('zh-CN') ?? '—'}<span className="ml-0.5 font-ui ui-type-meta text-t2">{uiText("roomInsightsView.RankUserRow")}</span></> : user.score?.toLocaleString('zh-CN') ?? '—'}
     </span>
   </div>
 }
@@ -64,7 +65,7 @@ export function RankList({ users, kind, guardIdentityDisplayMode = 'icon', showG
   showGuardIdentity?: boolean
   onUserFilter?: (user: Pick<RankUser, 'uid' | 'name'>) => void
 }) {
-  return <ol aria-label={kind === 'guard' ? '大航海陪伴总榜' : '观众榜'}>
+  return <ol aria-label={kind === 'guard' ? uiText("roomInsightsView.aria_label4") : uiText("roomInsightsView.aria_label5")}>
     {users.map(user => <li key={user.uid}><RankUserRow user={user} kind={kind} guardIdentityDisplayMode={guardIdentityDisplayMode} showGuardIdentity={showGuardIdentity} onUserFilter={onUserFilter} /></li>)}
   </ol>
 }
@@ -76,12 +77,12 @@ export interface OverviewMetricsProps {
 export function OverviewMetrics({ viewers, watched, likes, fansClub, guards, medalName, duration }: OverviewMetricsProps) {
   const number = (value?: number) => value?.toLocaleString('zh-CN') ?? '—'
   const metrics = [
-    ['观众', viewers ?? '—', 'B站房间观众数'],
-    ['看过', number(watched), '本场累计看过'],
-    ['点赞', number(likes), '本场点赞数'],
-    [medalName || '粉丝团', number(fansClub), '粉丝团人数'],
-    ['大航海', number(guards), '大航海人数'],
-    ['时长', duration, '自本场开播起的时长；断开连接不等于下播'],
+    [uiText("roomInsightsView.OverviewMetrics.metrics"), viewers ?? '—', uiText("roomInsightsView.OverviewMetrics.metrics2")],
+    [uiText("roomInsightsView.OverviewMetrics.metrics3"), number(watched), uiText("roomInsightsView.OverviewMetrics.metrics4")],
+    [uiText("roomInsightsView.OverviewMetrics.metrics5"), number(likes), uiText("roomInsightsView.OverviewMetrics.metrics6")],
+    [medalName || uiText("roomInsightsView.OverviewMetrics.metrics7"), number(fansClub), uiText("roomInsightsView.OverviewMetrics.metrics8")],
+    [uiText("roomInsightsView.OverviewMetrics.metrics9"), number(guards), uiText("roomInsightsView.OverviewMetrics.metrics10")],
+    [uiText("roomInsightsView.OverviewMetrics.metrics11"), duration, uiText("roomInsightsView.OverviewMetrics.metrics12")],
   ]
   return <dl className="flex min-w-0 flex-nowrap items-center gap-x-3 overflow-hidden py-1.5 ui-type-meta">
     {metrics.map(([label, value, title]) => <div key={title} className="inline-flex shrink-0 items-center gap-1.5" title={title}>

@@ -1,3 +1,4 @@
+import { readUiSource } from "./helpers/readUiSource.mjs";
 import { readApplicationSources } from "./helpers/applicationSources.mjs";
 import test from "node:test";
 import assert from "node:assert/strict";
@@ -5,7 +6,7 @@ import { readFileSync } from "node:fs";
 import { fileURLToPath } from "node:url";
 
 const root = fileURLToPath(new URL("..", import.meta.url));
-const read = (path) => readFileSync(`${root}/${path}`, "utf8");
+const read = (path) => readUiSource(`${root}/${path}`, "utf8");
 
 test("全局事件显示设置包含字号、身份和礼物图片开关", () => {
   const source = read("src/eventDisplaySettings.ts");
@@ -32,7 +33,7 @@ test("荣耀等级默认隐藏，可独立打开，旧设置缺少该字段时�
   assert.equal(settings.DEFAULT_EVENT_DISPLAY_PREFERENCES.showHonorLevel, false);
   assert.equal(settings.normalizeEventDisplayPreferences({}).showHonorLevel, false);
   assert.equal(settings.normalizeEventDisplayPreferences({ showHonorLevel: true }).showHonorLevel, true);
-  assert.match(panel, /\["showHonorLevel", "荣耀勋章"\]/);
+  assert.match(panel, /\["showHonorLevel", ["']荣耀勋章["']\]/);
   assert.match(eventRow, /preferences\.showHonorLevel[\s\S]*\{user\.wealthLevel\}/);
   assert.match(eventRow, /getWealthMedalAssetPath\(user\.wealthLevel\)/);
   assert.match(eventRow, /src=\{wealthLevelAssetPath\}/);
@@ -46,7 +47,7 @@ test("榜单排名默认隐藏，可由设置打开，旧设置缺少该字段�
   assert.equal(settings.DEFAULT_EVENT_DISPLAY_PREFERENCES.showCurrentRank, false);
   assert.equal(settings.normalizeEventDisplayPreferences({}).showCurrentRank, false);
   assert.equal(settings.normalizeEventDisplayPreferences({ showCurrentRank: true }).showCurrentRank, true);
-  assert.match(panel, /\["showCurrentRank", "当前排行"\]/);
+  assert.match(panel, /\["showCurrentRank", ["']当前排行["']\]/);
 });
 
 test("大航海身份样式默认图标，旧设置和无效值保持图标模式", async () => {
@@ -149,7 +150,7 @@ test("现场和副窗口不再从独立大表情宽度生成渲染值", () => {
 
 test("回看不再提供大表情尺寸设置", () => {
   const editor = read("src/components/NativeThemeBasicSettings.tsx");
-  assert.doesNotMatch(editor, /label="大表情尺寸"|自定义大表情宽度|reviewBigEmoteMode === "custom"/);
+  assert.doesNotMatch(editor, /label=["']大表情尺寸["']|自定义大表情宽度|reviewBigEmoteMode === "custom"/);
 });
 
 test("通用设置状态提供现场和副窗口的分类级恢复接口", () => {

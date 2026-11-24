@@ -1,8 +1,9 @@
+import { uiText } from "../i18n/index.ts";
 import type { ArchiveCloudCover } from '../archive/archiveCloudMetadata.ts';
 
 export function recoveryCoverReference(serverId: string, resourceId: string, mime: string): string {
   const extension = { 'image/jpeg': 'jpg', 'image/png': 'png', 'image/webp': 'webp' }[mime];
-  if (!extension) throw new Error('封面格式不受支持');
+  if (!extension) throw new Error(uiText("recoveryCovers.recoveryCoverReference"));
   return `cloud-cover://${serverId}/${resourceId}.${extension}`;
 }
 
@@ -17,7 +18,7 @@ export async function restoreRecoveryCovers(serverId: string, covers: readonly A
     try {
       result.push({ ...cover, localUrl: await download(serverId, cover.resource_id, cover.mime_type), downloadError: null });
     } catch {
-      result.push({ ...cover, localUrl: null, downloadError: '封面未能下载，恢复连接后可重试封面' });
+      result.push({ ...cover, localUrl: null, downloadError: uiText("recoveryCovers.restoreRecoveryCovers.downloadError") });
     }
   }
   return result;

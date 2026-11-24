@@ -1,3 +1,4 @@
+import { readUiSource } from "./helpers/readUiSource.mjs";
 import { readReviewTimelineSources } from "./helpers/reviewTimelineSources.mjs";
 import { readApplicationSources } from "./helpers/applicationSources.mjs";
 import test from "node:test";
@@ -6,7 +7,7 @@ import fs from "node:fs";
 
 const root = new URL("../", import.meta.url);
 function read(relativePath) {
-  return fs.readFileSync(new URL(relativePath, root), "utf8");
+  return readUiSource(new URL(relativePath, root), "utf8");
 }
 
 test("ReviewPanel 的 session 路由接通 ReviewSessionTimeline，回看不耦合当前现场筛选", () => {
@@ -200,7 +201,7 @@ test("回看头像和礼物资源失败时使用固定占位，特效播放失�
   assert.match(row, /<UserAvatar user=\{user\} showAvatar=\{showAvatar\} showAvatarFrame=\{showAvatarFrame && !plain\} \/>/);
   assert.match(avatar, /event-avatar-placeholder/);
   assert.match(avatar, /failedSource === DEFAULT_AVATAR_PATH/);
-  assert.match(avatar, /aria-label="头像不可用"/);
+  assert.match(avatar, /aria-label=["']头像不可用["']/);
   assert.match(avatar, /onError=\{\(\) => setFailedSource\(source\)\}/);
   assert.match(row, /event-resource-retry/);
   assert.match(row, /重新加载/);
@@ -230,8 +231,8 @@ test("回看时间线标题栏承载事件排序和显示大表情开关", () =>
   const panel = read("src/components/ReviewPanel.tsx");
   assert.match(timeline, /onChangeSortDirection\?: \(direction: ArchiveSortDirection\)/);
   assert.match(timeline, /onToggleShowBigEmote\?: \(show: boolean\)/);
-  assert.match(timeline, /aria-label="事件排序方向"/);
-  assert.match(timeline, /aria-label="显示大表情"/);
+  assert.match(timeline, /aria-label=["']事件排序方向["']/);
+  assert.match(timeline, /aria-label=["']显示大表情["']/);
   assert.match(panel, /onChangeSortDirection=\{/);
   assert.match(panel, /onToggleShowBigEmote=\{/);
 });
@@ -247,8 +248,8 @@ test("回看排序切换复用已加载窗口，并避免跟随最新时自动�
 test("回看时间线标题栏在窄宽度下使用显示菜单且不为未激活保存状态预留空间", () => {
   const timeline = readReviewTimelineSources();
   const css = read("src/App.css");
-  assert.match(timeline, /aria-label="显示菜单"/);
-  assert.match(timeline, /aria-label="回看显示菜单"/);
+  assert.match(timeline, /aria-label=["']显示菜单["']/);
+  assert.match(timeline, /aria-label=["']回看显示菜单["']/);
   assert.match(timeline, /排列顺序/);
   assert.match(timeline, /顺序排列/);
   assert.match(timeline, /倒序排列/);

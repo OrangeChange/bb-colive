@@ -138,23 +138,23 @@ pub fn package_from_manifest(
     source: UpdateSource,
     version: &str,
 ) -> Result<UpdatePackage, String> {
-    let actual = value["version"].as_str().ok_or("更新清单缺少版本号")?;
+    let actual = value["version"].as_str().ok_or(ui_text!("backend.model.package_from_manifest"))?;
     if actual.trim_start_matches('v') != version.trim_start_matches('v') {
-        return Err("更新清单与发布版本不一致".into());
+        return Err(ui_text!("backend.model.package_from_manifest2").into());
     }
     let platform = &value["platforms"][kind.target()];
     let url = platform["url"]
         .as_str()
         .filter(|value| value.starts_with("https://"))
-        .ok_or("此版本尚未提供对应的更新包")?;
+        .ok_or(ui_text!("backend.model.package_from_manifest3"))?;
     let signature = platform["signature"]
         .as_str()
         .filter(|value| !value.trim().is_empty())
-        .ok_or("更新包缺少签名")?;
+        .ok_or(ui_text!("backend.model.package_from_manifest4"))?;
     let size = platform["size"]
         .as_u64()
         .filter(|value| *value > 0)
-        .ok_or("更新包缺少文件大小")?;
+        .ok_or(ui_text!("backend.model.package_from_manifest5"))?;
     Ok(UpdatePackage {
         source,
         url: url.into(),

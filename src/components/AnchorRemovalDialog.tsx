@@ -1,3 +1,4 @@
+import { uiText } from "../i18n/index.ts";
 import { useEffect, useId, useState } from "react";
 import type { Anchor } from "../protocol/anchors.ts";
 import type { ArchiveDeletePreview } from "../archive/archiveTypes.ts";
@@ -34,7 +35,7 @@ export function AnchorRemovalDialog({ anchor, onRemove, onClose }: {
         if (disposed) service.cancelDeletePreview(preview.previewId);
         else setArchive({ status: "ready", value: prepared });
       } catch (error) {
-        if (!disposed) setArchive({ status: "error", message: error instanceof Error ? error.message : "无法读取回看档案，请重试" });
+        if (!disposed) setArchive({ status: "error", message: error instanceof Error ? error.message : uiText("anchorRemovalDialog.AnchorRemovalDialog.message") });
       }
     })();
     return () => { disposed = true; if (prepared) prepared.service.cancelDeletePreview(prepared.preview.previewId); };
@@ -42,14 +43,14 @@ export function AnchorRemovalDialog({ anchor, onRemove, onClose }: {
   const prepared = archive.status === "ready" ? archive.value : null;
   const preview = prepared?.preview;
   const canDeleteArchive = Boolean(preview && preview.sessionCount > 0 && preview.blockedSessionCount === 0);
-  return <ConfirmDialog title="删除主播" description={`${anchor.uname} · 房间 ${anchor.realRoomId}`}
-    confirmLabel={includeArchive ? "删除主播卡和档案" : "移除主播卡"}
+  return <ConfirmDialog title={uiText("anchorRemovalDialog.title")} description={uiText("anchorRemovalDialog.description", { uname: anchor.uname, realRoomId: anchor.realRoomId })}
+    confirmLabel={includeArchive ? uiText("anchorRemovalDialog.confirmLabel") : uiText("anchorRemovalDialog.confirmLabel2")}
     confirmTone={includeArchive ? "danger" : "accent"} confirmDisabled={includeArchive && !canDeleteArchive}
-    errorMessage={error => error instanceof Error ? error.message : "删除失败，请重试"}
+    errorMessage={error => error instanceof Error ? error.message : uiText("anchorRemovalDialog.errorMessage")}
     onCancel={onClose} onConfirm={async () => {
       let archiveDeleted = false;
       if (includeArchive) {
-        if (!prepared || !canDeleteArchive) throw new Error("档案状态已变化，请重新打开后确认");
+        if (!prepared || !canDeleteArchive) throw new Error(uiText("anchorRemovalDialog.onConfirm"));
         try {
           await prepared.service.deleteArchive(prepared.preview.previewId, prepared.preview.previewId);
         } catch (error) {
@@ -63,16 +64,16 @@ export function AnchorRemovalDialog({ anchor, onRemove, onClose }: {
       }
       try { await onRemove(); }
       catch (error) {
-        if (archiveDeleted) throw new Error("回看档案已删除，主播卡移除失败，请重试");
+        if (archiveDeleted) throw new Error(uiText("anchorRemovalDialog.onConfirm2"));
         throw error;
       }
     }}>
     <div className="anchor-removal-options">
-      <label><input type="radio" name={group} aria-label="仅移除主播卡" checked={!includeArchive} onChange={() => setIncludeArchive(false)} />
-        <span>仅移除主播卡<small>保留全部回看档案。</small></span></label>
-      <label><input type="radio" name={group} aria-label="同时删除回看档案" checked={includeArchive} disabled={!canDeleteArchive} onChange={() => setIncludeArchive(true)} />
-        <span>同时删除回看档案<small>{archive.status === "loading" ? "正在读取回看档案…" : archive.status === "error" ? "暂时无法读取回看档案。" : preview?.blockedSessionCount ? `仍有 ${preview.blockedSessionCount} 场正在记录或重连，停止记录后再删除。` : preview?.sessionCount ? `将删除 ${preview.sessionCount} 场、${preview.eventCount} 个事件、${preview.favoriteCount} 个收藏。此操作不可恢复。` : "没有回看档案。"}</small></span></label>
-      {archive.status === "error" && <div><p role="alert" className="ui-type-control text-danger">{archive.message}</p><button type="button" className="settings-inline-button" onClick={() => setAttempt(value => value + 1)}>重试</button></div>}
+      <label><input type="radio" name={group} aria-label={uiText("anchorRemovalDialog.aria_label")} checked={!includeArchive} onChange={() => setIncludeArchive(false)} />
+        <span>{uiText("anchorRemovalDialog.AnchorRemovalDialog")}<small>{uiText("anchorRemovalDialog.AnchorRemovalDialog2")}</small></span></label>
+      <label><input type="radio" name={group} aria-label={uiText("anchorRemovalDialog.aria_label2")} checked={includeArchive} disabled={!canDeleteArchive} onChange={() => setIncludeArchive(true)} />
+        <span>{uiText("anchorRemovalDialog.AnchorRemovalDialog3")}<small>{archive.status === "loading" ? uiText("anchorRemovalDialog.AnchorRemovalDialog4") : archive.status === "error" ? uiText("anchorRemovalDialog.AnchorRemovalDialog5") : preview?.blockedSessionCount ? uiText("anchorRemovalDialog.AnchorRemovalDialog6", { blockedSessionCount: preview.blockedSessionCount }) : preview?.sessionCount ? uiText("anchorRemovalDialog.AnchorRemovalDialog7", { sessionCount: preview.sessionCount, eventCount: preview.eventCount, favoriteCount: preview.favoriteCount }) : uiText("anchorRemovalDialog.AnchorRemovalDialog8")}</small></span></label>
+      {archive.status === "error" && <div><p role="alert" className="ui-type-control text-danger">{archive.message}</p><button type="button" className="settings-inline-button" onClick={() => setAttempt(value => value + 1)}>{uiText("common.retry")}</button></div>}
     </div>
   </ConfirmDialog>;
 }

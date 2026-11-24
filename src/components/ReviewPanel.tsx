@@ -1,3 +1,4 @@
+import { uiText } from "../i18n/index.ts";
 import { UiSearchInput } from "./ui/SearchInput.tsx";
 import { ReviewStyleSettings } from './ReviewStyleSettings.tsx';
 import { ChevronLeft as LucideChevronLeft, Archive as LucideArchive, CloudDownload as LucideCloudDownload } from "lucide-react";
@@ -236,29 +237,29 @@ function OwnerSummary({
   const incompleteCount = owner?.incompleteSessionCount ?? sessions.filter((session) => session.quality === "incomplete").length;
 
   return (
-    <section aria-label="主播档案摘要" className="grid grid-cols-2 gap-2 sm:grid-cols-3 xl:grid-cols-6">
+    <section aria-label={uiText("reviewPanel.aria_label")} className="grid grid-cols-2 gap-2 sm:grid-cols-3 xl:grid-cols-6">
       <div className="rounded-lg border border-line bg-surface px-3 py-2">
-        <div className="ui-type-meta text-t3">场次</div>
+        <div className="ui-type-meta text-t3">{uiText("reviewPanel.OwnerSummary")}</div>
         <div className="mt-1 ui-type-section-title text-t1">{sessionCount}</div>
       </div>
       <div className="rounded-lg border border-line bg-surface px-3 py-2">
-        <div className="ui-type-meta text-t3">最近直播</div>
+        <div className="ui-type-meta text-t3">{uiText("reviewPanel.OwnerSummary2")}</div>
         <div className="mt-1 truncate ui-type-section-title text-t1" title={formatArchiveDateTime(latestSessionAt)}>{formatArchiveDateTime(latestSessionAt)}</div>
       </div>
       <div className="rounded-lg border border-line bg-surface px-3 py-2">
-        <div className="ui-type-meta text-t3">累计事件</div>
+        <div className="ui-type-meta text-t3">{uiText("reviewPanel.OwnerSummary3")}</div>
         <div className="mt-1 ui-type-section-title text-t1">{formatAmount(eventCount)}</div>
       </div>
       <div className="rounded-lg border border-line bg-surface px-3 py-2">
-        <div className="ui-type-meta text-t3">累计付费</div>
+        <div className="ui-type-meta text-t3">{uiText("reviewPanel.OwnerSummary4")}</div>
         <div className="mt-1 ui-type-section-title text-t1">{formatAmount(paidTotal)}</div>
       </div>
       <div className="rounded-lg border border-line bg-surface px-3 py-2">
-        <div className="ui-type-meta text-t3">累计收藏</div>
+        <div className="ui-type-meta text-t3">{uiText("reviewPanel.OwnerSummary5")}</div>
         <div className="mt-1 ui-type-section-title text-t1">{formatAmount(favoriteCount)}</div>
       </div>
       <div className="rounded-lg border border-line bg-surface px-3 py-2">
-        <div className="ui-type-meta text-t3">不完整场次</div>
+        <div className="ui-type-meta text-t3">{uiText("reviewPanel.OwnerSummary6")}</div>
         <div className="mt-1 ui-type-section-title text-t1">{incompleteCount}</div>
       </div>
     </section>
@@ -442,13 +443,13 @@ export function ReviewPanel({ repository, anchors, active, refreshKey, onOpenClo
           if (!name) {
             const cookie = useSession.getState().session?.cookie;
             const room = await getRealRoomId(item.roomId, cookie);
-            if (room.room_id !== item.roomId) throw new Error("房间资料不匹配");
+            if (room.room_id !== item.roomId) throw new Error(uiText("reviewPanel.ReviewPanel"));
             const master = await getMasterInfo(room.uid, cookie);
             name = master.uname?.trim();
             avatarUrl = master.face;
             uid = String(room.uid);
           }
-          if (!name) throw new Error("未获取到主播名称");
+          if (!name) throw new Error(uiText("reviewPanel.ReviewPanel2"));
           await repository.fillOwnerProfile({ ownerId: item.ownerId, roomId: item.roomId, name, avatarUrl, uid });
           setOwners(await repository.listOwners({ limit: 500 }));
           recordArchiveDiagnostic("success", "archive-query", "completed", {
@@ -521,15 +522,15 @@ export function ReviewPanel({ repository, anchors, active, refreshKey, onOpenClo
         : { kind: "session" as const, sessionId: route.sessionId, filters };
       options.push({
         id: hasConditions ? "session-filtered" : "session-current",
-        label: hasConditions ? "当前筛选结果" : "当前场次",
-        description: hasConditions ? "只导出符合当前筛选条件的事件" : "导出当前打开场次的全部事件",
+        label: hasConditions ? uiText("reviewPanel.ReviewPanel.dataExportScopeOptions.label") : uiText("reviewPanel.ReviewPanel.dataExportScopeOptions.label2"),
+        description: hasConditions ? uiText("reviewPanel.ReviewPanel.dataExportScopeOptions.description") : uiText("reviewPanel.ReviewPanel.dataExportScopeOptions.description2"),
         scope,
       });
       if (hasConditions) {
         options.push({
           id: "session-all",
-          label: "当前场次全部事件",
-          description: "忽略当前筛选条件，导出这场直播的全部事件",
+          label: uiText("reviewPanel.ReviewPanel.dataExportScopeOptions.label3"),
+          description: uiText("reviewPanel.ReviewPanel.dataExportScopeOptions.description3"),
           scope: { kind: "session", sessionId: route.sessionId },
         });
       }
@@ -538,30 +539,30 @@ export function ReviewPanel({ repository, anchors, active, refreshKey, onOpenClo
 
     options.push({
       id: "owner-all",
-      label: "主播全部场次",
-      description: "导出该主播档案中所有场次的事件",
+      label: uiText("reviewPanel.ReviewPanel.dataExportScopeOptions.label4"),
+      description: uiText("reviewPanel.ReviewPanel.dataExportScopeOptions.description4"),
       scope: { kind: "owner", ownerId },
     });
     if (ownerState.mode === "sessions") {
       options.push({
         id: "owner-filtered-sessions",
-        label: "当前场次筛选结果",
-        description: "按当前场次筛选条件导出符合条件的场次",
+        label: uiText("reviewPanel.ReviewPanel.dataExportScopeOptions.label5"),
+        description: uiText("reviewPanel.ReviewPanel.dataExportScopeOptions.description5"),
         scope: { kind: "owner", ownerId, sessionQuery: archiveSessionQueryFromOwnerQuery(ownerId, ownerSessionQuery) },
       });
       if (selectedSessionIds.length > 0) {
         options.push({
           id: "selected-sessions",
-          label: `已选 ${selectedSessionIds.length} 场`,
-          description: "只导出场次列表中勾选的场次",
+          label: uiText("reviewPanel.ReviewPanel.dataExportScopeOptions.label6", { length: selectedSessionIds.length }),
+          description: uiText("reviewPanel.ReviewPanel.dataExportScopeOptions.description6"),
           scope: { kind: "sessions", sessionIds: selectedSessionIds },
         });
       }
     } else if (ownerEventHasConditions) {
       options.unshift({
         id: "owner-event-results",
-        label: "当前事件检索结果",
-        description: "只导出符合当前事件检索条件的事件",
+        label: uiText("reviewPanel.ReviewPanel.dataExportScopeOptions.label7"),
+        description: uiText("reviewPanel.ReviewPanel.dataExportScopeOptions.description7"),
         scope: { kind: "owner", ownerId, filters: ownerEventQuery.filters },
       });
     }
@@ -1550,9 +1551,9 @@ export function ReviewPanel({ repository, anchors, active, refreshKey, onOpenClo
       data: { active: favorited },
     });
     try {
-      if (!repository) throw new Error("回看档案暂不可用，请稍后再试");
+      if (!repository) throw new Error(uiText("reviewPanel.ReviewPanel.onReviewToggleFavorite"));
       const result = await createArchiveFavoriteActions(repository).set(row.eventKey, favorited);
-      setReviewActionError(result.refresh === "failed" ? "已保存，刷新失败" : null);
+      setReviewActionError(result.refresh === "failed" ? uiText("reviewPanel.ReviewPanel.onReviewToggleFavorite2") : null);
       recordArchiveDiagnostic("success", "archive-favorite", "completed", {
         requestId,
         eventId: row.eventKey,
@@ -1579,10 +1580,10 @@ export function ReviewPanel({ repository, anchors, active, refreshKey, onOpenClo
         repository.getFavoriteOrganization({ sourceKind: "archive", stableId: row.eventKey }),
         repository.listFavoriteTags(),
       ]);
-      if (!organization) throw new Error("收藏关系尚未写入档案");
+      if (!organization) throw new Error(uiText("reviewPanel.ReviewPanel.onReviewEditFavorite"));
       setFavoriteEditor({
         stableId: row.eventKey,
-        title: `编辑收藏 · ${row.event.user?.uname?.trim() || "未知用户"}`,
+        title: uiText("reviewPanel.ReviewPanel.onReviewEditFavorite.title", { value: row.event.user?.uname?.trim() || uiText("reviewPanel.onReviewEditFavorite.title.value") }),
         ...organization,
         availableTags,
       });
@@ -1649,10 +1650,10 @@ export function ReviewPanel({ repository, anchors, active, refreshKey, onOpenClo
         eventKeys.push(...page.items.map((item) => item.eventKey));
         cursor = page.nextCursor;
       } while (cursor !== null);
-      if (eventKeys.length === 0) throw new Error(favoritesOnly ? "当前结果没有收藏事件" : "当前结果没有事件");
+      if (eventKeys.length === 0) throw new Error(favoritesOnly ? uiText("reviewPanel.ReviewPanel.exportReviewResult") : uiText("reviewPanel.ReviewPanel.exportReviewResult2"));
       const path = await save({
         defaultPath: `danmu-review-${favoritesOnly ? "favorites" : "result"}-${new Date().toISOString().slice(0, 10)}.json`,
-        filters: [{ name: "回看结果 JSON", extensions: ["json"] }],
+        filters: [{ name: uiText("reviewPanel.path.filters.name"), extensions: ["json"] }],
       });
       if (!path) {
         recordArchiveDiagnostic("cancel", "archive-export", "canceled", { requestId, data: { phase: "path-select", scope: "result", favoritesOnly } });
@@ -1675,7 +1676,7 @@ export function ReviewPanel({ repository, anchors, active, refreshKey, onOpenClo
     }
   }, [activeQuery.filters, activeQuery.searchScope, activeQuery.sortDirection, owner?.ownerId, repository, route, transferService]);
 
-  const ownerName = owner?.name ?? ownerAnchor?.uname ?? (route.level === "home" ? "" : `房间 ${route.roomId}`);
+  const ownerName = owner?.name ?? ownerAnchor?.uname ?? (route.level === "home" ? "" : uiText("reviewPanel.ReviewPanel.ownerName", { roomId: route.roomId }));
   const startCloudRecovery = async (selection: CloudRecoverySelection) => {
     if (!repository || route.level === "home") return 'binding-required' as const;
     return cloudRecoveryTask.start({
@@ -1690,71 +1691,69 @@ export function ReviewPanel({ repository, anchors, active, refreshKey, onOpenClo
   return (
     <div className="flex h-full min-h-0 flex-col bg-bg">
       <ConnectBar />
-      <div aria-label="回看快捷入口" className="flex min-h-10 shrink-0 flex-wrap items-center gap-2 border-b border-line bg-surface px-5 py-1.5">
-        <span className="mr-auto ui-type-meta text-t3">快捷入口</span>
+      <div aria-label={uiText("reviewPanel.aria_label2")} className="flex min-h-10 shrink-0 flex-wrap items-center gap-2 border-b border-line bg-surface px-5 py-1.5">
+        <span className="mr-auto ui-type-meta text-t3">{uiText("reviewPanel.ReviewPanel3")}</span>
         <ReviewStyleSettings />
         <button
           type="button"
           className="h-7 rounded-md border border-line bg-bg px-2.5 ui-type-control text-t2 transition-colors enabled:hover:border-accent/50 enabled:hover:bg-raised enabled:hover:text-t1 disabled:cursor-not-allowed disabled:opacity-40"
           disabled={currentRoomId == null}
-          title={currentRoomId == null ? "当前没有连接栏主播" : "打开连接栏当前主播的档案"}
+          title={currentRoomId == null ? uiText("reviewPanel.title") : uiText("reviewPanel.title2")}
           onClick={() => { if (currentRoomId != null) openRoute({ level: "owner", roomId: currentRoomId }); }}
         >
-          查看当前主播
-        </button>
+          {uiText("reviewPanel.ReviewPanel4")}</button>
         <button
           type="button"
           className="h-7 rounded-md border border-line bg-bg px-2.5 ui-type-control text-t2 transition-colors enabled:hover:border-accent/50 enabled:hover:bg-raised enabled:hover:text-t1 disabled:cursor-not-allowed disabled:opacity-40"
           disabled={currentRoomId == null || currentArchiveSessionId == null}
-          title={currentArchiveSessionId == null ? "当前没有可用场次" : "打开连接栏当前场次"}
+          title={currentArchiveSessionId == null ? uiText("reviewPanel.title3") : uiText("reviewPanel.title4")}
           onClick={() => {
             if (currentRoomId != null && currentArchiveSessionId != null) {
               openRoute({ level: "session", roomId: currentRoomId, sessionId: currentArchiveSessionId });
             }
           }}
         >
-          查看当前场次
-        </button>
+          {uiText("reviewPanel.ReviewPanel5")}</button>
       </div>
       <section
         className="flex min-h-0 flex-1 flex-col bg-bg"
-        aria-label="回看"
+        aria-label={uiText("common.review")}
         data-review-route={routeKey}
         data-review-search-scope={activeQuery.searchScope}
         data-review-sort-direction={activeQuery.sortDirection}
       >
       {route.level === "owner" ? (
         <header className="flex min-h-12 shrink-0 flex-wrap items-center gap-3 border-b border-line px-5 py-2">
-          <nav aria-label="档案路径" className="flex min-w-0 flex-1 basis-80 items-center gap-2">
-            <button type="button" aria-label="返回所有主播档案馆" className="inline-flex h-8 shrink-0 items-center gap-1.5 whitespace-nowrap rounded-md border border-line bg-surface px-2.5 ui-type-control text-t2 transition-colors hover:border-accent/50 hover:bg-raised hover:text-accent-text focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent-ring" onClick={goHome}>
+          <nav aria-label={uiText("reviewPanel.aria_label3")} className="flex min-w-0 flex-1 basis-80 items-center gap-2">
+            <button type="button" aria-label={uiText("reviewPanel.aria_label4")} className="inline-flex h-8 shrink-0 items-center gap-1.5 whitespace-nowrap rounded-md border border-line bg-surface px-2.5 ui-type-control text-t2 transition-colors hover:border-accent/50 hover:bg-raised hover:text-accent-text focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent-ring" onClick={goHome}>
               <ChevronLeftIcon />
-              <span>全部主播</span>
+              <span>{uiText("reviewPanel.ReviewPanel6")}</span>
             </button>
             <span className="text-t3" aria-hidden="true">/</span>
             <h1 className="min-w-0 truncate ui-type-page-title text-t1" title={ownerName}>{ownerName}</h1>
-            <span className="shrink-0 ui-type-meta text-t3">{owner?.sessionCount ?? sessions.length} 场</span>
+            <span className="shrink-0 ui-type-meta text-t3">{owner?.sessionCount ?? sessions.length} {uiText("reviewPanel.ReviewPanel7")}</span>
           </nav>
           <div className="flex max-w-full flex-wrap items-center gap-2">
           <button type="button" disabled={!repository} className="inline-flex h-8 shrink-0 items-center gap-1.5 whitespace-nowrap rounded-md border border-line bg-surface px-2.5 ui-type-control text-t2 transition-colors enabled:hover:border-accent/50 enabled:hover:bg-raised enabled:hover:text-accent-text disabled:cursor-not-allowed disabled:opacity-50 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent-ring" onClick={() => setCloudRecoveryOpen(true)}>
             <CloudRecoveryIcon />
-            <span>从云端恢复</span>
+            <span>{uiText("reviewPanel.ReviewPanel8")}</span>
           </button>
           <button type="button" aria-pressed={showManagement} className={`inline-flex h-8 shrink-0 items-center gap-1.5 whitespace-nowrap rounded-md border px-2.5 ui-type-control transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent-ring ${showManagement ? "border-accent bg-accent-subtle text-accent-text" : "border-line bg-surface text-t2 hover:border-accent/50 hover:bg-raised hover:text-accent-text"}`} onClick={() => setShowManagement((current) => !current)}>
             <ArchiveManageIcon />
-            <span>{showManagement ? "关闭管理" : "管理档案"}</span>
+            <span>{showManagement ? uiText("reviewPanel.ReviewPanel9") : uiText("reviewPanel.ReviewPanel10")}</span>
           </button>
-          {repository && <button type="button" className="inline-flex h-8 shrink-0 items-center rounded-md border border-line bg-surface px-2.5 ui-type-control text-t2 transition-colors hover:border-accent/50 hover:bg-raised hover:text-accent-text" onClick={() => openDataExport()}>导出数据</button>}
+          {repository && <button type="button" className="inline-flex h-8 shrink-0 items-center rounded-md border border-line bg-surface px-2.5 ui-type-control text-t2 transition-colors hover:border-accent/50 hover:bg-raised hover:text-accent-text" onClick={() => openDataExport()}>{uiText("reviewPanel.ReviewPanel11")}</button>}
           </div>
         </header>
       ) : route.level === "session" ? (
         <header className="review-session-header flex min-h-14 shrink-0 items-center border-b border-line py-3">
-          <nav aria-label="档案路径" className="flex min-w-0 flex-1 items-center">
-            <button type="button" aria-label="返回所有主播档案馆" className="inline-flex h-8 shrink-0 items-center gap-1.5 whitespace-nowrap rounded-md border border-line bg-surface px-2.5 ui-type-control text-t2 transition-colors hover:border-accent/50 hover:bg-raised hover:text-accent-text focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent-ring" onClick={goHome}>
+          <nav aria-label={uiText("reviewPanel.aria_label3")} className="flex min-w-0 flex-1 items-center">
+            <button type="button" aria-label={uiText("reviewPanel.aria_label4")} className="inline-flex h-8 shrink-0 items-center gap-1.5 whitespace-nowrap rounded-md border border-line bg-surface px-2.5 ui-type-control text-t2 transition-colors hover:border-accent/50 hover:bg-raised hover:text-accent-text focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent-ring" onClick={goHome}>
               <ChevronLeftIcon />
-              <span>全部主播</span>
+              <span>{uiText("reviewPanel.ReviewPanel6")}</span>
             </button>
             <span className="text-t3" aria-hidden="true">/</span>
-            <button type="button" aria-label="返回当前主播档案" title={ownerName} className="min-w-0 max-w-40 truncate ui-type-control text-t2 hover:text-accent-text" onClick={() => openRoute({ level: "owner", roomId: route.roomId })}>{ownerName}</button>
+            <button type="button" aria-label={uiText("reviewPanel.aria_label5")} title={ownerName} className="min-w-0 max-w-40 truncate ui-type-control text-t2 hover:text-accent-text" onClick={() => openRoute({ level: "owner", roomId: route.roomId })}>{ownerName}</button>
             <span className="text-t3" aria-hidden="true">/</span>
             <span className="min-w-0 flex-1 truncate ui-type-page-title text-t1" title={selectedSession?.title ?? route.sessionId}>{selectedSession?.title ?? route.sessionId}</span>
           </nav>
@@ -1762,15 +1761,15 @@ export function ReviewPanel({ repository, anchors, active, refreshKey, onOpenClo
           {selectedSession && (
             <ArchiveCoverThumbnail
               url={selectedSession?.coverUrl}
-              alt={(selectedSession.title ?? route.sessionId) + "封面"}
+              alt={(selectedSession.title ?? route.sessionId) + uiText("reviewPanel.alt")}
               size="session-header"
             />
           )}
           <button type="button" aria-pressed={showManagement} className={`inline-flex h-8 shrink-0 items-center gap-1.5 rounded-md border px-2.5 ui-type-control transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent-ring ${showManagement ? "border-accent bg-accent-subtle text-accent-text" : "border-line bg-surface text-t2 hover:border-accent/50 hover:bg-raised hover:text-accent-text"}`} onClick={() => setShowManagement((current) => !current)}>
             <ArchiveManageIcon />
-            <span>{showManagement ? "关闭管理" : "管理档案"}</span>
+            <span>{showManagement ? uiText("reviewPanel.ReviewPanel9") : uiText("reviewPanel.ReviewPanel10")}</span>
           </button>
-          {repository && <button type="button" className="inline-flex h-8 shrink-0 items-center rounded-md border border-line bg-surface px-2.5 ui-type-control text-t2 transition-colors hover:border-accent/50 hover:bg-raised hover:text-accent-text" onClick={() => openDataExport()}>导出数据</button>}
+          {repository && <button type="button" className="inline-flex h-8 shrink-0 items-center rounded-md border border-line bg-surface px-2.5 ui-type-control text-t2 transition-colors hover:border-accent/50 hover:bg-raised hover:text-accent-text" onClick={() => openDataExport()}>{uiText("reviewPanel.ReviewPanel11")}</button>}
           </div>
         </header>
       ) : null}
@@ -1783,13 +1782,13 @@ export function ReviewPanel({ repository, anchors, active, refreshKey, onOpenClo
       >
         {route.level === "home" ? (
           <div className="mx-auto flex max-w-5xl flex-col gap-4">
-            <div className="flex items-center gap-1 rounded-xl border border-line bg-surface p-1" role="tablist" aria-label="档案馆首页视图">
-              <button type="button" role="tab" aria-selected={homeMode === "owners"} className={`h-8 rounded-lg px-3 ui-type-control transition-colors ${homeMode === "owners" ? "bg-accent-subtle text-accent-text" : "text-t2 hover:bg-raised hover:text-t1"}`} onClick={() => setHomeMode("owners")}>主播档案</button>
-              <button type="button" role="tab" aria-selected={homeMode === "favorites"} className={`h-8 rounded-lg px-3 ui-type-control transition-colors ${homeMode === "favorites" ? "bg-accent-subtle text-accent-text" : "text-t2 hover:bg-raised hover:text-t1"}`} onClick={() => setHomeMode("favorites")}>收藏</button>
+            <div className="flex items-center gap-1 rounded-xl border border-line bg-surface p-1" role="tablist" aria-label={uiText("reviewPanel.aria_label6")}>
+              <button type="button" role="tab" aria-selected={homeMode === "owners"} className={`h-8 rounded-lg px-3 ui-type-control transition-colors ${homeMode === "owners" ? "bg-accent-subtle text-accent-text" : "text-t2 hover:bg-raised hover:text-t1"}`} onClick={() => setHomeMode("owners")}>{uiText("reviewPanel.ReviewPanel12")}</button>
+              <button type="button" role="tab" aria-selected={homeMode === "favorites"} className={`h-8 rounded-lg px-3 ui-type-control transition-colors ${homeMode === "favorites" ? "bg-accent-subtle text-accent-text" : "text-t2 hover:bg-raised hover:text-t1"}`} onClick={() => setHomeMode("favorites")}>{uiText("reviewPanel.ReviewPanel13")}</button>
             </div>
             {homeMode === "owners" ? <>
-              <UiSearchInput aria-label="搜索主播档案" placeholder="搜索主播档案" value={ownerSearchText} onValueChange={setOwnerSearchText} />
-              {ownersError && <div role="alert" className="rounded-lg border border-danger/40 bg-danger/10 px-3 py-2 ui-type-control text-danger">档案暂时不可用：{ownersError}</div>}
+              <UiSearchInput aria-label={uiText("reviewPanel.aria_label7")} placeholder={uiText("reviewPanel.placeholder")} value={ownerSearchText} onValueChange={setOwnerSearchText} />
+              {ownersError && <div role="alert" className="rounded-lg border border-danger/40 bg-danger/10 px-3 py-2 ui-type-control text-danger">{uiText("reviewPanel.ReviewPanel14")}{ownersError}</div>}
               <ReviewOwnerList
                 level="home"
                 anchors={anchors}
@@ -1802,7 +1801,7 @@ export function ReviewPanel({ repository, anchors, active, refreshKey, onOpenClo
                 ownerSearchText={ownerSearchText}
                 onClearSearch={() => setOwnerSearchText("")}
               />
-            </> : repository ? <ReviewFavoritesPanel repository={repository} owners={owners} active={active} refreshKey={refreshKey} onOpenFavorite={openFavorite} /> : <div role="alert" className="rounded-xl border border-dashed border-line px-4 py-12 text-center ui-type-control text-t3">回看档案暂不可用，请稍后再试</div>}
+            </> : repository ? <ReviewFavoritesPanel repository={repository} owners={owners} active={active} refreshKey={refreshKey} onOpenFavorite={openFavorite} /> : <div role="alert" className="rounded-xl border border-dashed border-line px-4 py-12 text-center ui-type-control text-t3">{uiText("reviewPanel.ReviewPanel15")}</div>}
           </div>
         ) : route.level === "owner" ? (
           <div className="mx-auto flex max-w-5xl flex-col gap-4">
@@ -1825,7 +1824,7 @@ export function ReviewPanel({ repository, anchors, active, refreshKey, onOpenClo
                   <>
                     <ReviewOwnerSessionFilters query={ownerSessionQuery} onChange={updateOwnerSessionQuery} onClear={clearOwnerSessionQuery} collapsed={reviewFiltersCollapsed} onCollapsedChange={setReviewFiltersCollapsedManually} />
                     <OwnerSummary owner={owner} sessions={sessions} />
-                    {sessionsError && <div role="alert" className="rounded-lg border border-danger/40 bg-danger/10 px-3 py-2 ui-type-control text-danger">场次暂时不可用：{sessionsError}</div>}
+                    {sessionsError && <div role="alert" className="rounded-lg border border-danger/40 bg-danger/10 px-3 py-2 ui-type-control text-danger">{uiText("reviewPanel.ReviewPanel16")}{sessionsError}</div>}
                     <ReviewOwnerList
                       level="owner"
                       anchors={anchors}
@@ -1935,7 +1934,7 @@ export function ReviewPanel({ repository, anchors, active, refreshKey, onOpenClo
                     onScrollIntent={handleReviewTimelineScrollIntent}
                   />
                 ) : (
-                  <div role="alert" className="rounded-xl border border-dashed border-line px-4 py-12 text-center ui-type-control text-t3">回看档案暂不可用，请稍后再试</div>
+                  <div role="alert" className="rounded-xl border border-dashed border-line px-4 py-12 text-center ui-type-control text-t3">{uiText("reviewPanel.ReviewPanel15")}</div>
                 )}
               </>
             )}
@@ -1945,11 +1944,11 @@ export function ReviewPanel({ repository, anchors, active, refreshKey, onOpenClo
       </section>
       {batchDeleteConfirmOpen && batchDeletePreview && (
         <ConfirmDialog
-          title="确认删除所选场次"
-          description={`将删除 ${batchDeletePreview.sessionCount} 场、${batchDeletePreview.eventCount} 个事件和 ${batchDeletePreview.favoriteCount} 个收藏。${batchDeletePreview.blockedSessionCount > 0 ? `另有 ${batchDeletePreview.blockedSessionCount} 场正在进行，不会删除。` : ""}删除后无法恢复。`}
-          confirmLabel={batchDeleteBusy ? "删除中…" : "确认删除"}
+          title={uiText("reviewPanel.title5")}
+          description={uiText("reviewPanel.description", { sessionCount: batchDeletePreview.sessionCount, eventCount: batchDeletePreview.eventCount, favoriteCount: batchDeletePreview.favoriteCount, value: batchDeletePreview.blockedSessionCount > 0 ? uiText("reviewPanel.description.value", { blockedSessionCount: batchDeletePreview.blockedSessionCount }) : "" })}
+          confirmLabel={batchDeleteBusy ? uiText("reviewPanel.confirmLabel") : uiText("reviewPanel.confirmLabel2")}
           confirmTone="danger"
-          errorMessage="批量删除失败，请重新预览后重试。"
+          errorMessage={uiText("reviewPanel.errorMessage")}
           cancelAriaLabel="取消批量删除"
           onCancel={cancelBatchDelete}
           onConfirm={confirmBatchDelete}
@@ -1996,7 +1995,7 @@ export function ReviewPanel({ repository, anchors, active, refreshKey, onOpenClo
           onStart={startCloudRecovery}
         />
       )}
-      {reviewActionError && <div role="alert" className="fixed bottom-4 left-1/2 z-50 -translate-x-1/2 rounded-md border border-danger/40 bg-surface px-3 py-2 ui-type-control text-danger shadow-lg">操作失败：{reviewActionError}</div>}
+      {reviewActionError && <div role="alert" className="fixed bottom-4 left-1/2 z-50 -translate-x-1/2 rounded-md border border-danger/40 bg-surface px-3 py-2 ui-type-control text-danger shadow-lg">{uiText("reviewPanel.ReviewPanel17")}{reviewActionError}</div>}
     </div>
   );
 }

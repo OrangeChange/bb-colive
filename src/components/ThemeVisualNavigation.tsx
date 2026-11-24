@@ -1,3 +1,4 @@
+import { uiText } from "../i18n/index.ts";
 import {
   useEffect,
   useRef,
@@ -130,7 +131,7 @@ export function ThemeVisualNavigation({
     );
   };
   return (
-    <nav ref={ref} aria-label="语义部件">
+    <nav ref={ref} aria-label={uiText("themeVisualNavigation.aria_label")}>
       {groups.map((group) => (
         <details
           key={group.id}

@@ -1,3 +1,4 @@
+import { readUiSource } from "./helpers/readUiSource.mjs";
 import test from "node:test";
 import assert from "node:assert/strict";
 import fs from "node:fs";
@@ -23,61 +24,61 @@ test("保存原生 OBS 配置采用明确传入的缩放", async () => {
 });
 
 test("现场与副窗口安装并订阅同一份已应用原生主题 CSS", () => {
-  const runtime = fs.readFileSync("src/themes/nativeThemeRuntime.ts", "utf8");
-  const floating = fs.readFileSync("src/windows/FloatingEventWindow.tsx", "utf8");
+  const runtime = readUiSource("src/themes/nativeThemeRuntime.ts", "utf8");
+  const floating = readUiSource("src/windows/FloatingEventWindow.tsx", "utf8");
   assert.match(runtime, /ACTIVE_NATIVE_THEME_CSS_KEY/);
   assert.match(runtime, /store\.set\(ACTIVE_NATIVE_THEME_CSS_KEY/);
   assert.match(floating, /subscribeNativeThemeTarget/);
 });
 
 test("OBS 无正式快照时仍挂载外部 HTML 候选，提交前保留原生输出", () => {
-  const source = fs.readFileSync("src/obs/NativeObsRenderer.tsx", "utf8");
+  const source = readUiSource("src/obs/NativeObsRenderer.tsx", "utf8");
   assert.match(source, /resolvePendingExternal[\s\S]*if \(!snapshot && !pendingExternalHtml\)/);
   assert.match(source, /BlivechatExternalHtmlTarget/);
 });
 
 test("现场已应用 CSS 只命中真实事件区，不污染主题缩略图", () => {
-  const runtime = fs.readFileSync("src/themes/nativeThemeRuntime.ts", "utf8");
-  const list = fs.readFileSync("src/components/EventList.tsx", "utf8");
-  const thumbnail = fs.readFileSync("src/components/NativeThemeThumbnail.tsx", "utf8");
+  const runtime = readUiSource("src/themes/nativeThemeRuntime.ts", "utf8");
+  const list = readUiSource("src/components/EventList.tsx", "utf8");
+  const thumbnail = readUiSource("src/components/NativeThemeThumbnail.tsx", "utf8");
   assert.match(runtime, /\.theme-surface\.theme-target-live/);
   assert.match(list, /data-native-runtime-target=\{liveLayout \? "live" : undefined\}/);
   assert.doesNotMatch(thumbnail, /data-native-runtime-target/);
 });
 
 test("主题草稿不写入已应用主题存储", () => {
-  const session = fs.readFileSync("src/themes/themeEditorSession.ts", "utf8");
+  const session = readUiSource("src/themes/themeEditorSession.ts", "utf8");
   assert.doesNotMatch(session, /localStorage/);
   assert.doesNotMatch(session, /applyNativeTheme/);
 });
 
 test("现场与副窗口订阅已发布主题修订而不是只在挂载时读取", () => {
-  const runtime = fs.readFileSync("src/themes/nativeThemeRuntime.ts", "utf8");
-  const app = fs.readFileSync("src/App.tsx", "utf8");
-  const floating = fs.readFileSync("src/windows/FloatingEventWindow.tsx", "utf8");
+  const runtime = readUiSource("src/themes/nativeThemeRuntime.ts", "utf8");
+  const app = readUiSource("src/App.tsx", "utf8");
+  const floating = readUiSource("src/windows/FloatingEventWindow.tsx", "utf8");
   assert.match(runtime, /subscribeNativeThemeTarget/);
   assert.match(app, /subscribeNativeThemeTarget/);
   assert.match(floating, /subscribeNativeThemeTarget/);
 });
 
 test("已发布主题保存完整投影并在订阅启动时恢复", () => {
-  const runtime = fs.readFileSync("src/themes/nativeThemeRuntime.ts", "utf8");
+  const runtime = readUiSource("src/themes/nativeThemeRuntime.ts", "utf8");
   assert.match(runtime, /targetIdProjectionKey/);
   assert.match(runtime, /store\.set\(targetIdProjectionKey\(targetId\), projection\)/);
   assert.match(runtime, /onProjection\?\.\(\{ \.\.\.projection,/);
 });
 
 test("副窗口按当前主题目标把投影合并到窗口视觉偏好", () => {
-  const floating = fs.readFileSync("src/windows/FloatingEventWindow.tsx", "utf8");
+  const floating = readUiSource("src/windows/FloatingEventWindow.tsx", "utf8");
   assert.match(floating, /applyNativeThemeProjectionToWindowPreferences/);
   assert.match(floating, /subscribeNativeThemeTarget\(themeTargetId, "windows", applyThemeProjection\)/);
 });
 
 test("时间显示消费主题开关，用户名打码仅用于副窗口与OBS", () => {
-  const row = fs.readFileSync("src/components/EventRow.tsx", "utf8");
-  const floating = fs.readFileSync("src/windows/FloatingEventWindow.tsx", "utf8");
-  const obs = fs.readFileSync("src/obs/ObsOutputView.tsx", "utf8");
-  const list = fs.readFileSync("src/components/EventList.tsx", "utf8");
+  const row = readUiSource("src/components/EventRow.tsx", "utf8");
+  const floating = readUiSource("src/windows/FloatingEventWindow.tsx", "utf8");
+  const obs = readUiSource("src/obs/ObsOutputView.tsx", "utf8");
+  const list = readUiSource("src/components/EventList.tsx", "utf8");
   assert.match(row, /displayName = maskUsername \? maskDisplayName\(originalDisplayName\) : originalDisplayName/);
   assert.match(floating, /showTime=\{windowPreferences\.display\.showTimestamp === true\}/);
   assert.match(floating, /maskUsername=\{windowPreferences\.display\.maskUsername === true\}/);
@@ -88,7 +89,7 @@ test("时间显示消费主题开关，用户名打码仅用于副窗口与OBS",
 });
 
 test("现场、副窗口和 OBS 只在事件内容容器应用各自显示缩放", () => {
-  const obs = fs.readFileSync("src/obs/ObsOutputView.tsx", "utf8");
+  const obs = readUiSource("src/obs/ObsOutputView.tsx", "utf8");
   assert.equal(targetDisplayScaleCss("live", 1.25), "");
   assert.equal(targetDisplayScaleCss("windows", 1.5), ".event-area.window .event-list:not(.compatible-event-list), .event-area.window .sticky-area { zoom: 1.5; }");
   assert.doesNotMatch(targetDisplayScaleCss("live", 1.25), /button|empty|resize|drag/);
@@ -212,9 +213,9 @@ test("绑定主题文件缺失时保留身份，仅未绑定时初始化原生�
 });
 
 test("删除目标时同步移除运行时快照和 OBS 快照", () => {
-  const runtime = fs.readFileSync("src/themes/nativeThemeRuntime.ts", "utf8");
-  const workspace = fs.readFileSync("src/components/ThemeWorkspace.tsx", "utf8");
-  const obs = fs.readFileSync("src/obs/nativeObsTheme.ts", "utf8");
+  const runtime = readUiSource("src/themes/nativeThemeRuntime.ts", "utf8");
+  const workspace = readUiSource("src/components/ThemeWorkspace.tsx", "utf8");
+  const obs = readUiSource("src/obs/nativeObsTheme.ts", "utf8");
   assert.match(runtime, /removePublishedNativeThemeTarget/);
   assert.match(runtime, /store\.delete\(targetIdCssKey\(targetId\)\)/);
   assert.match(runtime, /store\.delete\(targetIdProjectionKey\(targetId\)\)/);

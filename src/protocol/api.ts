@@ -1,3 +1,4 @@
+import { uiText } from "../i18n/index.ts";
 /**
  * B站 HTTP API 层（移植自 danmu_tool/webview_verify/src/main.js，已通过风控验证）
  *
@@ -51,12 +52,12 @@ export function encWbi(params: Record<string, string>, imgKey: string, subKey: s
 
 /** 常见业务错误码 -> 用户可读文案（未命中时回退技术信息） */
 const API_ERROR_TEXT: Record<number, string> = {
-  60004: '房间不存在，请检查房间号',
-  [-352]: '请求被风控拦截，请稍后重试',
-  [-412]: '请求被拦截，请稍后重试',
-  [-101]: '登录已失效，请重新扫码登录',
-  [-400]: '请求参数错误',
-  [-1]: '接口暂不可用，请稍后重试',
+  60004: uiText("api.API_ERROR_TEXT.60004"),
+  [-352]: uiText("api.API_ERROR_TEXT.352"),
+  [-412]: uiText("api.API_ERROR_TEXT.412"),
+  [-101]: uiText("api.API_ERROR_TEXT.101"),
+  [-400]: uiText("api.API_ERROR_TEXT.400"),
+  [-1]: uiText("api.API_ERROR_TEXT.1"),
 }
 
 const REQUEST_ERROR_DETAIL_LIMIT = 240
@@ -133,7 +134,7 @@ export class BiliTransportError extends Error {
   readonly originalError: unknown
 
   constructor(url: string, originalError: unknown) {
-    super('网络异常，请检查网络或代理后重试')
+    super(uiText("api.text"))
     this.name = 'BiliTransportError'
     this.endpoint = requestEndpoint(url)
     this.originalError = originalError
@@ -187,11 +188,11 @@ export async function biliGet<T = any>(url: string, cookie?: string, signal?: Ab
     throw new BiliTransportError(url, error)
   }
   const data = await resp.json().catch(() => {
-    const e = new ApiError(`响应非 JSON（HTTP ${resp.status}）：${url}`, resp.status)
-    e.friendly = resp.status === 403 || resp.status === 412 ? '请求被拦截，请稍后重试' : '服务响应异常，请稍后重试'
+    const e = new ApiError(uiText("api.biliGet.data.e", { status: resp.status, url: url }), resp.status)
+    e.friendly = resp.status === 403 || resp.status === 412 ? uiText("api.biliGet.data") : uiText("api.biliGet.data2")
     throw e
   })
-  if (data.code !== 0) throw new ApiError(`接口失败 code=${data.code}：${url}`, data.code, data)
+  if (data.code !== 0) throw new ApiError(uiText("api.biliGet", { code: data.code, url: url }), data.code, data)
   return data.data as T
 }
 
@@ -251,7 +252,7 @@ export async function getRealRoomId(shortId: string | number, cookie?: string): 
   }
   const rooms = await getRoomBaseInfo([shortId], cookie)
   const room = rooms.find(value => value.room_id === Number(shortId) || value.short_id === Number(shortId))
-  if (!room) throw new ApiError('房间不存在，请检查房间号', 60004)
+  if (!room) throw new ApiError(uiText("api.getRealRoomId"), 60004)
   return room
 }
 

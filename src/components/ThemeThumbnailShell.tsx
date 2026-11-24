@@ -1,3 +1,4 @@
+import { uiText } from "../i18n/index.ts";
 import { useEffect, useState, type ReactNode, type RefObject } from "react";
 import type { ThemeDocument } from "../themes/themeTypes.ts";
 
@@ -47,7 +48,7 @@ export function ThemeThumbnailShell({ root, failed, ready, full = false, childre
   children?: ReactNode;
 }) {
   const className = "theme-library-thumbnail" + (ready ? " is-rendered" : failed ? " is-error" : " is-loading") + (full ? " is-full" : "");
-  if (failed) return <div ref={root} className={className} role="status"><span>无法显示预览</span></div>;
-  if (!ready) return <div ref={root} className={className} aria-label="正在准备主题预览"><span /><span /><span /></div>;
-  return <div ref={root} className={className} aria-label={full ? "完整主题预览" : "主题预览"}><div className="theme-library-thumbnail-frame">{children}</div></div>;
+  if (failed) return <div ref={root} className={className} role="status"><span>{uiText("themeThumbnailShell.ThemeThumbnailShell")}</span></div>;
+  if (!ready) return <div ref={root} className={className} aria-label={uiText("themeThumbnailShell.aria_label")}><span /><span /><span /></div>;
+  return <div ref={root} className={className} aria-label={full ? uiText("themeThumbnailShell.aria_label2") : uiText("themeThumbnailShell.aria_label3")}><div className="theme-library-thumbnail-frame">{children}</div></div>;
 }

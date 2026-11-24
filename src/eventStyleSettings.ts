@@ -1,3 +1,4 @@
+import { uiText } from "./i18n/index.ts";
 import { MsgType } from "./protocol/types.ts";
 
 export const EVENT_STYLE_ROLES = ["normal", "captain", "admiral", "viceroy", "admin", "anchor"] as const;
@@ -8,16 +9,16 @@ export const EVENT_STYLE_TYPES = ["danmu", "interact", "gift", "redPocket", "lot
 export type EventStyleType = typeof EVENT_STYLE_TYPES[number];
 
 export const EVENT_STYLE_TYPE_LABELS: Record<EventStyleType, string> = {
-  danmu: "弹幕",
-  interact: "互动",
-  gift: "礼物",
-  redPocket: "红包",
-  lottery: "天选",
-  superChat: "醒目留言",
-  guardCaptain: "舰长",
-  guardAdmiral: "提督",
-  guardViceroy: "总督",
-  system: "系统",
+  danmu: uiText("eventStyleSettings.EVENT_STYLE_TYPE_LABELS.danmu"),
+  interact: uiText("eventStyleSettings.EVENT_STYLE_TYPE_LABELS.interact"),
+  gift: uiText("eventStyleSettings.EVENT_STYLE_TYPE_LABELS.gift"),
+  redPocket: uiText("eventStyleSettings.EVENT_STYLE_TYPE_LABELS.redPocket"),
+  lottery: uiText("eventStyleSettings.EVENT_STYLE_TYPE_LABELS.lottery"),
+  superChat: uiText("eventStyleSettings.EVENT_STYLE_TYPE_LABELS.superChat"),
+  guardCaptain: uiText("eventStyleSettings.EVENT_STYLE_TYPE_LABELS.guardCaptain"),
+  guardAdmiral: uiText("eventStyleSettings.EVENT_STYLE_TYPE_LABELS.guardAdmiral"),
+  guardViceroy: uiText("eventStyleSettings.EVENT_STYLE_TYPE_LABELS.guardViceroy"),
+  system: uiText("eventStyleSettings.EVENT_STYLE_TYPE_LABELS.system"),
 };
 
 export const EVENT_COLOR_PARTS = ["username", "content", "background", "stroke"] as const;

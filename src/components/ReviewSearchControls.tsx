@@ -1,3 +1,4 @@
+import { uiText } from "../i18n/index.ts";
 import { ChevronDown as LucideChevronDown, X as LucideX } from "lucide-react";
 import { useCallback, useContext, useEffect, useLayoutEffect, useMemo, useRef, useState, type FocusEvent, type KeyboardEvent } from "react";
 import { createPortal } from "react-dom";
@@ -55,78 +56,78 @@ export interface ReviewSearchControlsProps {
 }
 
 export const CATEGORY_OPTIONS: readonly { value: string; label: string }[] = [
-  { value: "danmu", label: "弹幕" },
-  { value: "interact", label: "互动" },
-  { value: "gift", label: "礼物" },
-  { value: "lottery", label: "天选" },
-  { value: "redPocket", label: "红包" },
-  { value: "superChat", label: "醒目留言" },
-  { value: "guard", label: "大航海" },
-  { value: "system", label: "系统" },
+  { value: "danmu", label: uiText("reviewSearchControls.CATEGORY_OPTIONS.label") },
+  { value: "interact", label: uiText("reviewSearchControls.CATEGORY_OPTIONS.label2") },
+  { value: "gift", label: uiText("reviewSearchControls.CATEGORY_OPTIONS.label3") },
+  { value: "lottery", label: uiText("reviewSearchControls.CATEGORY_OPTIONS.label4") },
+  { value: "redPocket", label: uiText("reviewSearchControls.CATEGORY_OPTIONS.label5") },
+  { value: "superChat", label: uiText("reviewSearchControls.CATEGORY_OPTIONS.label6") },
+  { value: "guard", label: uiText("reviewSearchControls.CATEGORY_OPTIONS.label7") },
+  { value: "system", label: uiText("reviewSearchControls.CATEGORY_OPTIONS.label8") },
 ];
 
 export const GIFT_TYPE_OPTIONS: readonly { value: string; label: string }[] = [
-  { value: "normal", label: "普通礼物" },
-  { value: "blind", label: "盲盒" },
-  { value: "free", label: "免费礼物" },
+  { value: "normal", label: uiText("reviewSearchControls.GIFT_TYPE_OPTIONS.label") },
+  { value: "blind", label: uiText("reviewSearchControls.GIFT_TYPE_OPTIONS.label2") },
+  { value: "free", label: uiText("reviewSearchControls.GIFT_TYPE_OPTIONS.label3") },
 ];
 
 export const INTERACT_TYPE_OPTIONS: readonly { value: string; label: string }[] = [
-  { value: "entry", label: "进房" },
-  { value: "follow", label: "关注" },
-  { value: "share", label: "分享" },
-  { value: "specialFollow", label: "特别关注" },
-  { value: "mutualFollow", label: "互相关注" },
-  { value: "like", label: "点赞" },
+  { value: "entry", label: uiText("reviewSearchControls.INTERACT_TYPE_OPTIONS.label") },
+  { value: "follow", label: uiText("reviewSearchControls.INTERACT_TYPE_OPTIONS.label2") },
+  { value: "share", label: uiText("reviewSearchControls.INTERACT_TYPE_OPTIONS.label3") },
+  { value: "specialFollow", label: uiText("reviewSearchControls.INTERACT_TYPE_OPTIONS.label4") },
+  { value: "mutualFollow", label: uiText("reviewSearchControls.INTERACT_TYPE_OPTIONS.label5") },
+  { value: "like", label: uiText("reviewSearchControls.INTERACT_TYPE_OPTIONS.label6") },
 ];
 
 export const SECONDARY_OPTIONS = [...GIFT_TYPE_OPTIONS, ...INTERACT_TYPE_OPTIONS] as const;
 
 export const KEYWORD_FIELDS: readonly { value: ArchiveKeywordField; label: string }[] = [
-  { value: "all", label: "全部" },
-  { value: "user", label: "用户" },
-  { value: "fanMedal", label: "粉丝牌" },
-  { value: "gift", label: "礼物" },
-  { value: "content", label: "内容" },
+  { value: "all", label: uiText("reviewSearchControls.KEYWORD_FIELDS.label") },
+  { value: "user", label: uiText("reviewSearchControls.KEYWORD_FIELDS.label2") },
+  { value: "fanMedal", label: uiText("reviewSearchControls.KEYWORD_FIELDS.label3") },
+  { value: "gift", label: uiText("reviewSearchControls.KEYWORD_FIELDS.label4") },
+  { value: "content", label: uiText("reviewSearchControls.KEYWORD_FIELDS.label5") },
 ];
 
 export const USER_IDENTITY_OPTIONS: readonly { value: ArchiveUserIdentity | ""; label: string }[] = [
-  { value: "", label: "全部身份" },
-  { value: "normal", label: "普通用户" },
-  { value: "guard", label: "大航海" },
-  { value: "captain", label: "舰长" },
-  { value: "admiral", label: "提督" },
-  { value: "viceroy", label: "总督" },
-  { value: "admin", label: "房管" },
-  { value: "anchor", label: "主播" },
+  { value: "", label: uiText("reviewSearchControls.USER_IDENTITY_OPTIONS.label") },
+  { value: "normal", label: uiText("reviewSearchControls.USER_IDENTITY_OPTIONS.label2") },
+  { value: "guard", label: uiText("reviewSearchControls.USER_IDENTITY_OPTIONS.label3") },
+  { value: "captain", label: uiText("reviewSearchControls.USER_IDENTITY_OPTIONS.label4") },
+  { value: "admiral", label: uiText("reviewSearchControls.USER_IDENTITY_OPTIONS.label5") },
+  { value: "viceroy", label: uiText("reviewSearchControls.USER_IDENTITY_OPTIONS.label6") },
+  { value: "admin", label: uiText("reviewSearchControls.USER_IDENTITY_OPTIONS.label7") },
+  { value: "anchor", label: uiText("reviewSearchControls.USER_IDENTITY_OPTIONS.label8") },
 ];
 
 export const FAN_MEDAL_OPTIONS: readonly { value: ArchiveFanMedalFilter | ""; label: string }[] = [
-  { value: "", label: "不限" },
-  { value: "current", label: "有主播粉丝牌" },
-  { value: "currentLighted", label: "已点亮主播粉丝牌" },
+  { value: "", label: uiText("reviewSearchControls.FAN_MEDAL_OPTIONS.label") },
+  { value: "current", label: uiText("reviewSearchControls.FAN_MEDAL_OPTIONS.label2") },
+  { value: "currentLighted", label: uiText("reviewSearchControls.FAN_MEDAL_OPTIONS.label3") },
 ];
 
 export const REVIEW_SEARCH_HISTORY_KEY = "danmu-review-search-history";
-export const SEARCH_SUGGESTIONS = ["进入直播间", "关注", "点赞", "分享", "送出", "开通", "续费"] as const;
+export const SEARCH_SUGGESTIONS = [uiText("reviewSearchControls.SEARCH_SUGGESTIONS"), uiText("reviewSearchControls.SEARCH_SUGGESTIONS2"), uiText("reviewSearchControls.SEARCH_SUGGESTIONS3"), uiText("reviewSearchControls.SEARCH_SUGGESTIONS4"), uiText("reviewSearchControls.SEARCH_SUGGESTIONS5"), uiText("reviewSearchControls.SEARCH_SUGGESTIONS6"), uiText("reviewSearchControls.SEARCH_SUGGESTIONS7")] as const;
 const REVIEW_DATE_OPTIONS: readonly { value: DatePreset; label: string }[] = [
-  { value: "all", label: "全部时间" },
-  { value: "2m", label: "过去 2 分钟" },
-  { value: "5m", label: "过去 5 分钟" },
-  { value: "20m", label: "过去 20 分钟" },
-  { value: "1h", label: "过去 1 小时" },
-  { value: "2h", label: "过去 2 小时" },
-  { value: "12h", label: "过去 12 小时" },
-  { value: "1d", label: "过去 1 天" },
-  { value: "1w", label: "过去 1 周" },
-  { value: "1mo", label: "过去 1 个月" },
-  { value: "today", label: "今天" },
-  { value: "yesterday", label: "昨天" },
-  { value: "week", label: "本周" },
-  { value: "lastWeek", label: "上周" },
-  { value: "month", label: "本月" },
-  { value: "lastMonth", label: "上月" },
-  { value: "custom", label: "自定义" },
+  { value: "all", label: uiText("reviewSearchControls.REVIEW_DATE_OPTIONS.label") },
+  { value: "2m", label: uiText("reviewSearchControls.REVIEW_DATE_OPTIONS.label2") },
+  { value: "5m", label: uiText("reviewSearchControls.REVIEW_DATE_OPTIONS.label3") },
+  { value: "20m", label: uiText("reviewSearchControls.REVIEW_DATE_OPTIONS.label4") },
+  { value: "1h", label: uiText("reviewSearchControls.REVIEW_DATE_OPTIONS.label5") },
+  { value: "2h", label: uiText("reviewSearchControls.REVIEW_DATE_OPTIONS.label6") },
+  { value: "12h", label: uiText("reviewSearchControls.REVIEW_DATE_OPTIONS.label7") },
+  { value: "1d", label: uiText("reviewSearchControls.REVIEW_DATE_OPTIONS.label8") },
+  { value: "1w", label: uiText("reviewSearchControls.REVIEW_DATE_OPTIONS.label9") },
+  { value: "1mo", label: uiText("reviewSearchControls.REVIEW_DATE_OPTIONS.label10") },
+  { value: "today", label: uiText("reviewSearchControls.REVIEW_DATE_OPTIONS.label11") },
+  { value: "yesterday", label: uiText("reviewSearchControls.REVIEW_DATE_OPTIONS.label12") },
+  { value: "week", label: uiText("reviewSearchControls.REVIEW_DATE_OPTIONS.label13") },
+  { value: "lastWeek", label: uiText("reviewSearchControls.REVIEW_DATE_OPTIONS.label14") },
+  { value: "month", label: uiText("reviewSearchControls.REVIEW_DATE_OPTIONS.label15") },
+  { value: "lastMonth", label: uiText("reviewSearchControls.REVIEW_DATE_OPTIONS.label16") },
+  { value: "custom", label: uiText("reviewSearchControls.REVIEW_DATE_OPTIONS.label17") },
 ];
 
 const selectClass = "h-8 rounded-md border border-line bg-bg px-2 ui-type-control text-t1 outline-none focus:border-accent focus:ring-2 focus:ring-accent-ring";
@@ -368,7 +369,7 @@ export function ReviewFilterSubmenu({
           }}
           className="ui-motion-enter z-50 pt-1"
         >
-          <div role="menu" aria-label={`${label}类型筛选`} className="min-w-32 overflow-y-auto rounded-md border border-line bg-surface p-1 shadow-lg shadow-black/20" style={{ maxHeight: "var(--radix-popover-content-available-height)" }}>
+          <div role="menu" aria-label={uiText("reviewSearchControls.aria_label", { label: label })} className="min-w-32 overflow-y-auto rounded-md border border-line bg-surface p-1 shadow-lg shadow-black/20" style={{ maxHeight: "var(--radix-popover-content-available-height)" }}>
             {options.map((option) => {
               const checked = isSelected(option.value);
               return (
@@ -454,18 +455,18 @@ export function ReviewAdvancedFilters({
 
   return (
     <>
-      <div className="review-filter-advanced-section review-filter-category-section" aria-label="回看分类条件">
-        <span className="ui-type-meta text-t3">分类</span>
+      <div className="review-filter-advanced-section review-filter-category-section" aria-label={uiText("reviewSearchControls.aria_label2")}>
+        <span className="ui-type-meta text-t3">{uiText("reviewSearchControls.ReviewAdvancedFilters")}</span>
         <button
           type="button"
-          aria-label={areAllReviewCategoriesEnabled(filters) ? "取消全选分类" : "全选分类"}
+          aria-label={areAllReviewCategoriesEnabled(filters) ? uiText("reviewSearchControls.aria_label3") : uiText("reviewSearchControls.aria_label4")}
           className={`${toggleClass} ${areAllReviewCategoriesEnabled(filters) ? "border-accent bg-accent-subtle text-accent-text" : "border-line bg-bg text-t2 hover:border-accent/50 hover:bg-raised hover:text-t1"}`}
           onClick={() => onChangeFilters(setAllReviewCategories(filters, !areAllReviewCategoriesEnabled(filters)))}
-        >{areAllReviewCategoriesEnabled(filters) ? "取消全选" : "全选"}</button>
-        <div className="inline-flex rounded-md border border-line bg-bg p-0.5" aria-label="分类筛选方式">
+        >{areAllReviewCategoriesEnabled(filters) ? uiText("reviewSearchControls.ReviewAdvancedFilters2") : uiText("common.selectAll")}</button>
+        <div className="inline-flex rounded-md border border-line bg-bg p-0.5" aria-label={uiText("reviewSearchControls.aria_label5")}>
           {(["include", "exclude"] as const).map((mode) => (
             <button key={mode} type="button" aria-pressed={filterMode === mode} className={`rounded px-2 py-0.5 ui-type-meta transition-colors ${filterMode === mode ? mode === "include" ? "bg-accent-subtle text-accent-text" : "bg-danger/10 text-danger" : "text-t3 hover:text-t1"}`} onClick={() => changeFilterMode(mode)}>
-              {mode === "include" ? "包含" : "排除"}
+              {mode === "include" ? uiText("reviewSearchControls.ReviewAdvancedFilters3") : uiText("reviewSearchControls.ReviewAdvancedFilters4")}
             </button>
           ))}
         </div>
@@ -492,22 +493,22 @@ export function ReviewAdvancedFilters({
       </div>
 
       <div className="review-filter-advanced-grid">
-        <div className="review-filter-advanced-section review-filter-advanced-group" aria-label="回看用户条件">
-          <h3 className="review-filter-advanced-group-title ui-type-control text-t1">用户</h3>
+        <div className="review-filter-advanced-section review-filter-advanced-group" aria-label={uiText("reviewSearchControls.aria_label6")}>
+          <h3 className="review-filter-advanced-group-title ui-type-control text-t1">{uiText("reviewSearchControls.ReviewAdvancedFilters5")}</h3>
           <div className="review-filter-advanced-controls">
             <label className="flex items-center gap-1 ui-type-meta text-t2">
-              <span>用户身份</span>
+              <span>{uiText("reviewSearchControls.ReviewAdvancedFilters6")}</span>
               <UiSelect
-                ariaLabel="用户身份"
+                ariaLabel={uiText("reviewSearchControls.ariaLabel2")}
                 options={USER_IDENTITY_OPTIONS}
                 value={filters.userIdentity ?? ""}
                 onValueChange={(value) => updateFilters({ userIdentity: (value || undefined) as ArchiveUserIdentity | undefined })}
               />
             </label>
             <label className="flex items-center gap-1 ui-type-meta text-t2">
-              <span>主播粉丝牌</span>
+              <span>{uiText("reviewSearchControls.ReviewAdvancedFilters7")}</span>
               <UiSelect
-                ariaLabel="主播粉丝牌"
+                ariaLabel={uiText("reviewSearchControls.ariaLabel3")}
                 options={FAN_MEDAL_OPTIONS}
                 value={filters.fanMedal ?? ""}
                 onValueChange={(value) => updateFilters({ fanMedal: (value || undefined) as ArchiveFanMedalFilter | undefined })}
@@ -516,32 +517,32 @@ export function ReviewAdvancedFilters({
           </div>
         </div>
 
-        <div className="review-filter-advanced-section review-filter-advanced-group" aria-label="回看礼物金额条件">
-          <h3 className="review-filter-advanced-group-title ui-type-control text-t1">礼物金额</h3>
+        <div className="review-filter-advanced-section review-filter-advanced-group" aria-label={uiText("reviewSearchControls.aria_label7")}>
+          <h3 className="review-filter-advanced-group-title ui-type-control text-t1">{uiText("reviewSearchControls.ReviewAdvancedFilters8")}</h3>
           <div className="review-filter-advanced-controls">
             <UiSelect
-              ariaLabel="礼物价格口径"
-              options={[{ value: "unit", label: "单件价格" }, { value: "cumulative", label: "本条累计" }]}
+              ariaLabel={uiText("reviewSearchControls.ariaLabel4")}
+              options={[{ value: "unit", label: uiText("reviewSearchControls.options.label") }, { value: "cumulative", label: uiText("reviewSearchControls.options.label2") }]}
               value={filters.giftPriceMode ?? "unit"}
               onValueChange={(value) => updateFilters({ giftPriceMode: value as ArchiveGiftPriceMode })}
             />
             <div className="review-filter-price-range">
-              <input type="number" min="0" step="0.01" aria-label="礼物最低价格" placeholder="最低" className={`${inputClass} w-20`} value={filters.giftPriceMinRmb ?? ""} onChange={(event) => setGiftPrice("giftPriceMinRmb", event.target.value)} />
-              <span className="ui-type-meta text-t3">至</span>
-              <input type="number" min="0" step="0.01" aria-label="礼物最高价格" placeholder="最高" className={`${inputClass} w-20`} value={filters.giftPriceMaxRmb ?? ""} onChange={(event) => setGiftPrice("giftPriceMaxRmb", event.target.value)} />
-              <span className="ui-type-meta text-t3">元</span>
+              <input type="number" min="0" step="0.01" aria-label={uiText("reviewSearchControls.aria_label8")} placeholder={uiText("reviewSearchControls.placeholder")} className={`${inputClass} w-20`} value={filters.giftPriceMinRmb ?? ""} onChange={(event) => setGiftPrice("giftPriceMinRmb", event.target.value)} />
+              <span className="ui-type-meta text-t3">{uiText("reviewSearchControls.ReviewAdvancedFilters9")}</span>
+              <input type="number" min="0" step="0.01" aria-label={uiText("reviewSearchControls.aria_label9")} placeholder={uiText("reviewSearchControls.placeholder2")} className={`${inputClass} w-20`} value={filters.giftPriceMaxRmb ?? ""} onChange={(event) => setGiftPrice("giftPriceMaxRmb", event.target.value)} />
+              <span className="ui-type-meta text-t3">{uiText("reviewSearchControls.ReviewAdvancedFilters10")}</span>
             </div>
-            {(filters.giftPriceMinRmb !== undefined || filters.giftPriceMaxRmb !== undefined) && <span className="ui-type-meta text-t3">未知价格仍保留</span>}
+            {(filters.giftPriceMinRmb !== undefined || filters.giftPriceMaxRmb !== undefined) && <span className="ui-type-meta text-t3">{uiText("reviewSearchControls.ReviewAdvancedFilters11")}</span>}
           </div>
         </div>
       </div>
 
       <div className={`review-filter-advanced-grid ${level === "session" ? "review-filter-time-scope-grid" : ""}`}>
-        <div className={`review-filter-advanced-section ${level === "owner" ? "review-filter-time-full" : ""}`} aria-label="回看时间条件">
+        <div className={`review-filter-advanced-section ${level === "owner" ? "review-filter-time-full" : ""}`} aria-label={uiText("reviewSearchControls.aria_label10")}>
           <label className="flex items-center gap-1 ui-type-meta text-t2">
-            <span>时间范围</span>
+            <span>{uiText("reviewSearchControls.ReviewAdvancedFilters12")}</span>
             <UiSelect
-              ariaLabel="回看时间范围"
+              ariaLabel={uiText("reviewSearchControls.ariaLabel5")}
               options={REVIEW_DATE_OPTIONS}
               value={visibleDatePreset}
               onValueChange={(value) => setRange(value as DatePreset)}
@@ -550,23 +551,23 @@ export function ReviewAdvancedFilters({
           {(datePreset === "custom" || filters.fromTs !== undefined || filters.toTs !== undefined) && (
             <>
               <label className="flex items-center gap-1 ui-type-meta text-t2">
-                <span>从</span>
-                <input type="datetime-local" step="60" aria-label="回看开始时间" className={selectClass} value={dateInputValue(filters.fromTs)} onChange={(event) => updateFilters({ fromTs: dateInputTimestamp(event.target.value) })} />
+                <span>{uiText("reviewSearchControls.ReviewAdvancedFilters13")}</span>
+                <input type="datetime-local" step="60" aria-label={uiText("reviewSearchControls.aria_label11")} className={selectClass} value={dateInputValue(filters.fromTs)} onChange={(event) => updateFilters({ fromTs: dateInputTimestamp(event.target.value) })} />
               </label>
               <label className="flex items-center gap-1 ui-type-meta text-t2">
-                <span>到</span>
-                <input type="datetime-local" step="60" aria-label="回看结束时间" className={selectClass} value={dateInputValue(filters.toTs)} onChange={(event) => updateFilters({ toTs: dateInputTimestamp(event.target.value) })} />
+                <span>{uiText("reviewSearchControls.ReviewAdvancedFilters14")}</span>
+                <input type="datetime-local" step="60" aria-label={uiText("reviewSearchControls.aria_label12")} className={selectClass} value={dateInputValue(filters.toTs)} onChange={(event) => updateFilters({ toTs: dateInputTimestamp(event.target.value) })} />
               </label>
             </>
           )}
         </div>
         {level === "session" && (
-          <div className="review-filter-advanced-section" aria-label="回看检索范围">
+          <div className="review-filter-advanced-section" aria-label={uiText("reviewSearchControls.aria_label13")}>
             <label className="flex items-center gap-1 ui-type-meta text-t2">
-              <span>检索范围</span>
+              <span>{uiText("reviewSearchControls.ReviewAdvancedFilters15")}</span>
               <UiSelect
-                ariaLabel="回看检索范围"
-                options={[{ value: "session", label: "本场" }, { value: "owner", label: "全部历史" }]}
+                ariaLabel={uiText("reviewSearchControls.ariaLabel6")}
+                options={[{ value: "session", label: uiText("reviewSearchControls.options.label3") }, { value: "owner", label: uiText("reviewSearchControls.options.label4") }]}
                 value={searchScope === "owner" ? "owner" : "session"}
                 onValueChange={(value) => onChangeSearchScope?.(value as ArchiveSearchScope)}
               />
@@ -592,7 +593,7 @@ export function loadReviewSearchHistory(): string[] {
 
 export function keywordFieldLabel(field: ArchiveKeywordField): string {
   return KEYWORD_FIELDS.find((option) => option.value === field)?.label
-    ?? (field === "nickname" ? "用户" : field);
+    ?? (field === "nickname" ? uiText("reviewSearchControls.keywordFieldLabel") : field);
 }
 
 export function ReviewFilterPresetMenu({
@@ -688,16 +689,16 @@ export function ReviewFilterPresetMenu({
         <div key={preset.id} className={`review-filter-preset-chip inline-flex min-w-0 items-center rounded-md border ${manageOpen ? "border-danger/40 bg-danger/5" : active ? "border-accent bg-accent-subtle" : "border-line bg-bg"}`}>
           {editingId === preset.id ? (
             <>
-              <label className="sr-only" htmlFor={`review-filter-preset-edit-${preset.id}`}>重命名预设</label>
+              <label className="sr-only" htmlFor={`review-filter-preset-edit-${preset.id}`}>{uiText("reviewSearchControls.ReviewFilterPresetMenu")}</label>
               <input id={`review-filter-preset-edit-${preset.id}`} value={editingName} maxLength={40} className={`${inputClass} min-w-0 w-28 border-0 bg-transparent`} onChange={(event) => setEditingName(event.target.value)} onKeyDown={(event) => { if (event.nativeEvent.isComposing || event.nativeEvent.keyCode === 229) return; if (event.key === "Enter") { event.preventDefault(); commitRename(preset.id); } if (event.key === "Escape") { setEditingId(null); setEditingName(""); } }} autoFocus />
-              <button type="button" className="shrink-0 rounded px-1.5 py-1 ui-type-meta text-accent-text hover:bg-accent-subtle" onClick={() => commitRename(preset.id)}>保存</button>
+              <button type="button" className="shrink-0 rounded px-1.5 py-1 ui-type-meta text-accent-text hover:bg-accent-subtle" onClick={() => commitRename(preset.id)}>{uiText("common.save")}</button>
             </>
           ) : (
             <>
-              <button type="button" aria-pressed={active} className={`min-w-0 max-w-32 truncate rounded px-2 py-1 text-left ui-type-control ${active ? "text-accent-text" : "text-t2 hover:text-accent-text"}`} title={`应用预设：${preset.name}`} onClick={() => { onApply(preset); setManageOpen(false); }}>{preset.name}</button>
+              <button type="button" aria-pressed={active} className={`min-w-0 max-w-32 truncate rounded px-2 py-1 text-left ui-type-control ${active ? "text-accent-text" : "text-t2 hover:text-accent-text"}`} title={uiText("reviewSearchControls.title", { name: preset.name })} onClick={() => { onApply(preset); setManageOpen(false); }}>{preset.name}</button>
               {manageOpen && <>
-                <button type="button" className="shrink-0 rounded px-1 py-1 ui-type-meta text-t3 hover:bg-raised hover:text-t1" aria-label={`重命名预设 ${preset.name}`} onClick={() => { setEditingId(preset.id); setEditingName(preset.name); }}>改名</button>
-                <button type="button" className="shrink-0 rounded px-1.5 py-1 text-t2 hover:bg-danger/10 hover:text-danger" aria-label={`删除预设 ${preset.name}`} onClick={() => deleteCurrent(preset.id)}>
+                <button type="button" className="shrink-0 rounded px-1 py-1 ui-type-meta text-t3 hover:bg-raised hover:text-t1" aria-label={uiText("reviewSearchControls.aria_label14", { name: preset.name })} onClick={() => { setEditingId(preset.id); setEditingName(preset.name); }}>{uiText("reviewSearchControls.ReviewFilterPresetMenu2")}</button>
+                <button type="button" className="shrink-0 rounded px-1.5 py-1 text-t2 hover:bg-danger/10 hover:text-danger" aria-label={uiText("reviewSearchControls.aria_label15", { name: preset.name })} onClick={() => deleteCurrent(preset.id)}>
                   <LucideX className="size-3" aria-hidden="true" />
                 </button>
               </>}
@@ -714,19 +715,19 @@ export function ReviewFilterPresetMenu({
         aria-controls="review-filter-add-menu"
         className={`${toggleClass} border-line bg-bg text-t2 hover:border-accent/50 hover:bg-raised hover:text-t1`}
         onClick={() => setAddOpen((value) => !value)}
-      >添加预设</button>
+      >{uiText("reviewSearchControls.ReviewFilterPresetMenu3")}</button>
       <button
         type="button"
         aria-pressed={manageOpen}
         disabled={presets.length === 0}
         className={`${toggleClass} ${manageOpen ? "border-accent bg-accent-subtle text-accent-text enabled:hover:border-accent enabled:hover:bg-accent/15" : "border-line bg-bg text-t2 enabled:hover:border-accent/50 enabled:hover:bg-raised enabled:hover:text-t1"} disabled:cursor-not-allowed disabled:opacity-40`}
         onClick={() => { setManageOpen((value) => !value); setAddOpen(false); }}
-      >{manageOpen ? "退出管理" : "管理预设"}</button>
+      >{manageOpen ? uiText("reviewSearchControls.ReviewFilterPresetMenu4") : uiText("reviewSearchControls.ReviewFilterPresetMenu5")}</button>
       {addOpen && addMenuPosition && createPortal(
-        <div ref={addMenuRef} id="review-filter-add-menu" className="ui-motion-enter review-filter-presets-menu z-50 flex items-center gap-1.5 rounded-lg border border-line bg-surface p-2 shadow-lg shadow-black/25" role="group" aria-label="添加预设" style={{ position: "fixed", top: addMenuPosition.top, left: addMenuPosition.left, width: addMenuPosition.width }}>
-          <label className="sr-only" htmlFor="review-filter-preset-name">预设名称</label>
-          <input id="review-filter-preset-name" value={nameDraft} maxLength={40} placeholder="输入预设名称" className={`${inputClass} min-w-0 flex-1`} onChange={(event) => setNameDraft(event.target.value)} onKeyDown={(event) => { if (event.nativeEvent.isComposing || event.nativeEvent.keyCode === 229) return; if (event.key === "Enter") { event.preventDefault(); saveCurrent(); } }} autoFocus />
-          <button type="button" disabled={!nameDraft.trim()} className={`${toggleClass} shrink-0 border-accent/60 bg-accent-subtle text-accent-text disabled:opacity-50`} onClick={saveCurrent}>保存</button>
+        <div ref={addMenuRef} id="review-filter-add-menu" className="ui-motion-enter review-filter-presets-menu z-50 flex items-center gap-1.5 rounded-lg border border-line bg-surface p-2 shadow-lg shadow-black/25" role="group" aria-label={uiText("reviewSearchControls.aria_label16")} style={{ position: "fixed", top: addMenuPosition.top, left: addMenuPosition.left, width: addMenuPosition.width }}>
+          <label className="sr-only" htmlFor="review-filter-preset-name">{uiText("reviewSearchControls.ReviewFilterPresetMenu6")}</label>
+          <input id="review-filter-preset-name" value={nameDraft} maxLength={40} placeholder={uiText("reviewSearchControls.placeholder3")} className={`${inputClass} min-w-0 flex-1`} onChange={(event) => setNameDraft(event.target.value)} onKeyDown={(event) => { if (event.nativeEvent.isComposing || event.nativeEvent.keyCode === 229) return; if (event.key === "Enter") { event.preventDefault(); saveCurrent(); } }} autoFocus />
+          <button type="button" disabled={!nameDraft.trim()} className={`${toggleClass} shrink-0 border-accent/60 bg-accent-subtle text-accent-text disabled:opacity-50`} onClick={saveCurrent}>{uiText("common.save")}</button>
         </div>,
         document.body,
       )}
@@ -844,7 +845,7 @@ export function ReviewSearchControls({ level, query, onChange, onClearSearch, on
   return (
     <>
     <ReviewFilterShell
-      ariaLabel="回看检索和筛选"
+      ariaLabel={uiText("reviewSearchControls.ariaLabel7")}
       contentId={`review-filter-content-${level}`}
       conditionCount={conditionCount}
       collapsed={filtersCollapsed}
@@ -854,46 +855,46 @@ export function ReviewSearchControls({ level, query, onChange, onClearSearch, on
       dataAttributes={{ "data-review-search-controls": "" }}
       headerActions={activeUserFilter && onClearUserFilter ? (
         <div className="flex min-w-0 items-center gap-1.5" data-review-user-filter>
-          <span className="max-w-48 truncate ui-type-meta text-t2" title={activeUserFilter.name}>筛选用户：{activeUserFilter.name}</span>
-          <button type="button" aria-label="退出用户筛选" className={compactFilterActionButtonClass} onClick={onClearUserFilter}>退出筛选</button>
+          <span className="max-w-48 truncate ui-type-meta text-t2" title={activeUserFilter.name}>{uiText("reviewSearchControls.headerActions")}{activeUserFilter.name}</span>
+          <button type="button" aria-label={uiText("reviewSearchControls.aria_label17")} className={compactFilterActionButtonClass} onClick={onClearUserFilter}>{uiText("reviewSearchControls.headerActions2")}</button>
         </div>
       ) : undefined}
     >
       <div className="flex min-w-0 flex-wrap items-center gap-1.5">
         <UiSelect
           id="review-keyword-field"
-          ariaLabel="关键词字段"
+          ariaLabel={uiText("reviewSearchControls.ariaLabel8")}
           options={KEYWORD_FIELDS}
           value={keywordField}
           onValueChange={(value) => setKeywordField(value as ArchiveKeywordField)}
         />
         <UiCombobox
           id="review-keyword-input"
-          ariaLabel="关键词"
-          placeholder="输入关键词"
+          ariaLabel={uiText("reviewSearchControls.ariaLabel9")}
+          placeholder={uiText("reviewSearchControls.placeholder4")}
           value={keywordDraft}
           options={suggestionOptions}
           onValueChange={setKeywordDraft}
           onKeyDown={onKeywordKeyDown}
           className="w-44 flex-1"
         />
-        <button type="button" className={`${toggleClass} border-line bg-bg text-t2 hover:border-accent/50 hover:bg-raised hover:text-t1`} onClick={addKeyword}>添加</button>
+        <button type="button" className={`${toggleClass} border-line bg-bg text-t2 hover:border-accent/50 hover:bg-raised hover:text-t1`} onClick={addKeyword}>{uiText("common.add")}</button>
         {searchActive && (
-          <button type="button" aria-label="清除关键词" className={compactFilterActionButtonClass} onClick={() => onClearSearch?.()}>清除关键词</button>
+          <button type="button" aria-label={uiText("reviewSearchControls.aria_label18")} className={compactFilterActionButtonClass} onClick={() => onClearSearch?.()}>{uiText("reviewSearchControls.ReviewSearchControls")}</button>
         )}
       </div>
 
       {keywordConditions.length > 0 && (
-        <div role="list" aria-label="已添加的关键词条件" className="flex flex-wrap items-center gap-1.5">
+        <div role="list" aria-label={uiText("reviewSearchControls.aria_label19")} className="flex flex-wrap items-center gap-1.5">
           {keywordConditions.map((condition, index) => (
             <span key={`${condition.field}:${condition.value}:${index}`} className="inline-flex items-center gap-1">
               {index > 0 && (
                 <label className="inline-flex items-center gap-1 ui-type-meta text-t3">
-                  <span className="sr-only">关键词连接</span>
+                  <span className="sr-only">{uiText("reviewSearchControls.ReviewSearchControls2")}</span>
                   <UiSelect
-                    ariaLabel={`关键词连接 ${index + 1}`}
+                    ariaLabel={uiText("reviewSearchControls.ariaLabel", { value: index + 1 })}
                     size="micro"
-                    options={[{ value: "and", label: "且" }, { value: "or", label: "或" }]}
+                    options={[{ value: "and", label: uiText("reviewSearchControls.options.label5") }, { value: "or", label: uiText("reviewSearchControls.options.label6") }]}
                     value={getArchiveKeywordJoin(condition, index, legacyKeywordOperator)}
                     onValueChange={(value) => setKeywordJoin(index, value as ArchiveKeywordOperator)}
                     className="w-12"
@@ -902,23 +903,23 @@ export function ReviewSearchControls({ level, query, onChange, onClearSearch, on
               )}
               <span role="listitem" className="inline-flex items-center gap-1 rounded-full bg-accent-subtle px-2 py-0.5 ui-type-meta text-accent-text">
                 {keywordFieldLabel(condition.field)}：{condition.value}
-                <button type="button" aria-label={`移除关键词 ${condition.value}`} className="rounded-full px-1 text-accent-text hover:bg-accent/15 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent-ring" onClick={() => removeKeyword(index)}>×</button>
+                <button type="button" aria-label={uiText("reviewSearchControls.aria_label20", { value: condition.value })} className="rounded-full px-1 text-accent-text hover:bg-accent/15 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent-ring" onClick={() => removeKeyword(index)}>×</button>
               </span>
             </span>
           ))}
         </div>
       )}
 
-      <div className="flex min-w-0 flex-wrap items-center gap-1.5" aria-label="快捷条件">
-        <span className="ui-type-meta text-t3">快捷筛选</span>
+      <div className="flex min-w-0 flex-wrap items-center gap-1.5" aria-label={uiText("reviewSearchControls.aria_label21")}>
+        <span className="ui-type-meta text-t3">{uiText("reviewSearchControls.ReviewSearchControls3")}</span>
         {REVIEW_QUICK_CONDITIONS.map((condition) => {
           const active = isReviewQuickConditionActive(filters, condition.value);
           return <button key={condition.value} type="button" aria-pressed={active} className={`${toggleClass} ${active ? "border-accent bg-accent-subtle text-accent-text" : "border-line bg-bg text-t2 hover:border-accent/50 hover:bg-raised hover:text-t1"}`} onClick={() => applyQuickCondition(condition.value)}>{condition.label}</button>;
         })}
         <ReviewFilterPresetMenu activePresetId={activePresetId} presets={filterPresets} onApply={applyPreset} onSave={savePreset} onRename={renamePreset} onDelete={deletePreset} />
         <span aria-hidden="true" className="review-filter-inline-divider mx-1 h-4 w-px bg-line" />
-        <div aria-label="快捷收藏条件" className="inline-flex">
-          <button type="button" aria-label="只看收藏" aria-pressed={filters.favoriteOnly === true} className={`${toggleClass} ${filters.favoriteOnly ? "border-accent bg-accent-subtle text-accent-text" : "border-line bg-bg text-t2 hover:border-accent/50 hover:bg-raised hover:text-t1"}`} onClick={() => updateFilters({ favoriteOnly: filters.favoriteOnly ? undefined : true })}>只看收藏</button>
+        <div aria-label={uiText("reviewSearchControls.aria_label22")} className="inline-flex">
+          <button type="button" aria-label={uiText("reviewSearchControls.aria_label23")} aria-pressed={filters.favoriteOnly === true} className={`${toggleClass} ${filters.favoriteOnly ? "border-accent bg-accent-subtle text-accent-text" : "border-line bg-bg text-t2 hover:border-accent/50 hover:bg-raised hover:text-t1"}`} onClick={() => updateFilters({ favoriteOnly: filters.favoriteOnly ? undefined : true })}>{uiText("reviewSearchControls.ReviewSearchControls4")}</button>
         </div>
         <button
           ref={advancedTriggerRef}
@@ -927,7 +928,7 @@ export function ReviewSearchControls({ level, query, onChange, onClearSearch, on
           aria-controls={`review-filter-advanced-${level}`}
           className={`${toggleClass} ml-auto ${advancedOpen ? "border-accent bg-accent-subtle text-accent-text" : "border-line bg-bg text-t2 hover:border-accent/50 hover:bg-raised hover:text-t1"}`}
           onClick={() => setAdvancedOpen((value) => !value)}
-        >更多筛选{advancedFilterConditionCount(filters) > 0 ? ` · ${advancedFilterConditionCount(filters)}` : ""}</button>
+        >{uiText("reviewSearchControls.ReviewSearchControls5")}{advancedFilterConditionCount(filters) > 0 ? ` · ${advancedFilterConditionCount(filters)}` : ""}</button>
       </div>
 
     </ReviewFilterShell>

@@ -14,7 +14,7 @@ mod platform {
 
     fn target_name(target: &str) -> Result<Vec<u16>, String> {
         if !target.starts_with("BB.EventFetcher/") || target.contains('\0') {
-            return Err("凭证名称无效，请重新绑定服务器".into());
+            return Err(ui_text!("backend.cloud_credentials.target_name").into());
         }
         Ok(target.encode_utf16().chain(std::iter::once(0)).collect())
     }
@@ -28,7 +28,7 @@ mod platform {
                     if GetLastError() == ERROR_NOT_FOUND {
                         return Ok(None);
                     }
-                    return Err("无法读取系统凭证，请检查系统凭证管理器后重试".into());
+                    return Err(ui_text!("backend.cloud_credentials.read").into());
                 }
                 let value = &*credential;
                 let bytes = if value.CredentialBlobSize == 0 {
@@ -43,7 +43,7 @@ mod platform {
                 CredFree(credential.cast());
                 String::from_utf8(bytes)
                     .map(Some)
-                    .map_err(|_| "系统凭证无法读取，请重新输入访问令牌".into())
+                    .map_err(|_| ui_text!("backend.cloud_credentials.read3").into())
             }
         }
 
@@ -51,7 +51,7 @@ mod platform {
             let mut name = target_name(target)?;
             let mut bytes = token.as_bytes().to_vec();
             if bytes.is_empty() || bytes.len() > CRED_MAX_CREDENTIAL_BLOB_SIZE as usize {
-                return Err("访问令牌长度无效，请检查后重新输入".into());
+                return Err(ui_text!("backend.cloud_credentials.write").into());
             }
             let credential = CREDENTIALW {
                 Type: CRED_TYPE_GENERIC,
@@ -64,7 +64,7 @@ mod platform {
             let result = unsafe { CredWriteW(&credential, 0) };
             bytes.fill(0);
             if result == 0 {
-                return Err("无法保存系统凭证，请检查系统凭证管理器后重试".into());
+                return Err(ui_text!("backend.cloud_credentials.write2").into());
             }
             Ok(())
         }
@@ -78,7 +78,7 @@ mod platform {
                     return Ok(());
                 }
             }
-            Err("无法移除系统凭证，请检查系统凭证管理器后重试".into())
+            Err(ui_text!("backend.cloud_credentials.delete").into())
         }
     }
 }
@@ -86,12 +86,12 @@ mod platform {
 #[cfg(not(target_os = "windows"))]
 impl CredentialStore for SystemCredentials {
     fn read(&self, _: &str) -> Result<Option<String>, String> {
-        Err("当前系统尚不支持安全保存访问令牌".into())
+        Err(ui_text!("backend.cloud_credentials.read2").into())
     }
     fn write(&self, _: &str, _: &str) -> Result<(), String> {
-        Err("当前系统尚不支持安全保存访问令牌".into())
+        Err(ui_text!("backend.cloud_credentials.write3").into())
     }
     fn delete(&self, _: &str) -> Result<(), String> {
-        Err("当前系统尚不支持安全保存访问令牌".into())
+        Err(ui_text!("backend.cloud_credentials.delete2").into())
     }
 }

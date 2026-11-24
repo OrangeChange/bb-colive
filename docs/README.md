@@ -40,6 +40,8 @@
 
 [前端运行环境与兼容约定](development/frontend-runtime-compatibility.md)规定前端能力准入与验证边界。
 
+[界面文案与翻译](development/interface-localization.md) · [翻译清单](translations/README.md)
+
 [调试与验收](development/debugging-and-testing.md) · [构建与发布](development/build-and-release.md) · [文档维护](development/documentation-maintenance.md)
 
 [原生事件 DOM 与样式契约](development/native-event-style-contract.md)维护公共区域、部件和样式参数；功能行为继续按所属功能文档维护。

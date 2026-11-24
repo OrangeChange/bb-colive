@@ -1,3 +1,4 @@
+import { uiText, UiMessageError } from "../i18n/index.ts";
 import {resolveThemeResourceSource} from './themeRemoteCss.ts';
 import safeParse from "postcss-safe-parser";
 import postcss from 'postcss';
@@ -10,7 +11,7 @@ import {materializeOpenLiveSourceCss} from '../compat/openlive/css.ts';
 
 export interface LoadedThemeDependency {css?:string;finalUrl?:string;asset?:ThemeAssetReference;bytes?:Uint8Array}
 export interface ThemeResourceLoader {load(url:string,css:boolean):Promise<LoadedThemeDependency>;signal?:AbortSignal}
-function checkSignal(signal?:AbortSignal){if(signal?.aborted)throw new Error('素材加载已取消');}
+function checkSignal(signal?:AbortSignal){if(signal?.aborted)throw new UiMessageError("themeResourceDependencies.checkSignal");}
 function cssUrl(node:ValueNode):string|undefined {
  if(node.type==='string')return node.value;
  if(node.type==='function'&&node.value.toLowerCase()==='url')return valueParser.stringify(node.nodes).trim().replace(/^(["'])([\s\S]*)\1$/,'$2');
@@ -34,7 +35,7 @@ export async function localizeThemeResources(document:ThemeDocument,origin:strin
   if(references.has(key))return references.get(key)!+fragment;
   let loaded:LoadedThemeDependency;
   try{loaded=await load(key,false)}catch(error){checkSignal(loader.signal);if(remotePolicy==='apply'&&/^https?:/i.test(key))return resolved;throw error;}
-  checkSignal(loader.signal);if(!loaded.asset)throw new Error(`素材无法读取：${key}`);
+  checkSignal(loader.signal);if(!loaded.asset)throw new UiMessageError("themeResourceDependencies.localizeThemeResources.register", { key: key });
   const previous=known ? next.assets.find(x=>x.path===known.path) : next.assets.find(x=>x.sourceUrl===key);
   const filename=(loaded.asset.name||'resource').replace(/[^a-zA-Z0-9._-]/g,'-');
   let path=previous?.path||`assets/${filename}`;
@@ -58,10 +59,10 @@ export async function localizeThemeResources(document:ThemeDocument,origin:strin
   const imports:postcss.AtRule[]=[];root.walkAtRules('import',n=>{imports.push(n)});
   for(const rule of imports){
    const parsed=valueParser(rule.params),first=parsed.nodes.find(n=>n.type!=='space'&&n.type!=='comment');
-   const raw=first&&cssUrl(first);if(!raw)throw new Error(`CSS 导入地址无效：${rule.params}`);
+   const raw=first&&cssUrl(first);if(!raw)throw new UiMessageError("themeResourceDependencies.localizeThemeResources.process", { params: rule.params });
    const inlineCss=document.mode==="native"&&/^data:/i.test(raw);
    if(/^data:/i.test(raw)&&!inlineCss)continue;
-   const url=inlineCss?raw:resourceUrl(raw,base);if(!url)throw new Error('CSS 导入需要本地文件或 HTTP(S) 地址');
+   const url=inlineCss?raw:resourceUrl(raw,base);if(!url)throw new UiMessageError("themeResourceDependencies.localizeThemeResources.process2");
    if(remotePolicy==="preserve" && /^https?:/i.test(url)){
     continue;
    }
@@ -70,7 +71,7 @@ export async function localizeThemeResources(document:ThemeDocument,origin:strin
    try{loaded=inlineCss?{css:await (await fetch(url)).text(),finalUrl:url}:await load(url,true)}catch(error){checkSignal(loader.signal);if(remotePolicy==='apply'&&document.mode!=="native"&&/^https?:/i.test(url)){
     if(first?.type==='string')first.value=url;else if(first?.type==='function')first.nodes=[quoted(url)];rule.params=parsed.toString();continue;
    }throw error;}
-   checkSignal(loader.signal);if(loaded.css===undefined)throw new Error(`CSS 依赖无法读取：${url}`);
+   checkSignal(loader.signal);if(loaded.css===undefined)throw new UiMessageError("themeResourceDependencies.localizeThemeResources.process3", { url: url });
    const nested=safeParse(await process(loaded.css,loaded.finalUrl||url,new Set([...ancestors,url,loaded.finalUrl||url]))) as postcss.Root;
    let contents:postcss.ChildNode[]=nested.nodes;
    const suffix=parsed.nodes.slice(parsed.nodes.indexOf(first!)+1).filter(n=>n.type!=='comment');
@@ -115,7 +116,7 @@ export function themeDependencyLoader(refresh=false,signal?:AbortSignal,onProgre
  let completed=0;
  return {signal,async load(url,css){
   checkSignal(signal);
-  const value=await invoke<{id:string;name:string;mediaType:string;size:number;finalUrl:string;text?:string;bytes?:number[]}>('load_theme_resource',{url:resolveThemeResourceSource(url),refresh,css}).catch(cause=>{const message=cause instanceof Error?cause.message:String(cause);throw new Error(message.includes(url)?message:`素材读取失败：${url}。${message}`)});
+  const value=await invoke<{id:string;name:string;mediaType:string;size:number;finalUrl:string;text?:string;bytes?:number[]}>('load_theme_resource',{url:resolveThemeResourceSource(url),refresh,css}).catch(cause=>{const message=cause instanceof Error?cause.message:String(cause);throw new Error(message.includes(url)?message:uiText("themeResourceDependencies.themeDependencyLoader.load.value", { url: url, message: message }))});
   checkSignal(signal);onProgress?.(++completed);
   if(css)return {css:value.text,finalUrl:value.finalUrl};
   return {asset:{id:value.id,name:value.name,path:'',mediaType:value.mediaType,size:value.size,...(value.bytes?{}:{cacheResourceId:value.id})},...(value.bytes?{bytes:new Uint8Array(value.bytes)}:{})};

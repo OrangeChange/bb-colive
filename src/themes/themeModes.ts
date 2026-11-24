@@ -1,3 +1,4 @@
+import { uiText } from "../i18n/index.ts";
 import { THEME_MODE_VALUES, type ThemeMode, type ThemeTarget } from "./themeTypes.ts";
 
 export const THEME_MODES = [...THEME_MODE_VALUES];
@@ -10,9 +11,9 @@ export interface ThemeModeDefinition {
 }
 
 const definitions: Record<ThemeMode, ThemeModeDefinition> = {
-  native: { mode: "native", label: "原生样式", editable: true, targets: ["live", "windows", "obs"] },
-  blivechat: { mode: "blivechat", label: "BLC 原版", editable: true, targets: ["live", "windows", "obs"] },
-  "blivechat-open": { mode: "blivechat-open", label: "BLC 开放版", editable: true, targets: ["live", "windows", "obs"] },
+  native: { mode: "native", label: uiText("themeModes.definitions.native.label"), editable: true, targets: ["live", "windows", "obs"] },
+  blivechat: { mode: "blivechat", label: uiText("themeModes.definitions.blivechat.label"), editable: true, targets: ["live", "windows", "obs"] },
+  "blivechat-open": { mode: "blivechat-open", label: uiText("themeModes.definitions.blivechatopen.label"), editable: true, targets: ["live", "windows", "obs"] },
   laplace: { mode: "laplace", label: "LAPLACE", editable: true, targets: ["live", "windows", "obs"] },
 };
 

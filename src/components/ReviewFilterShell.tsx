@@ -1,3 +1,4 @@
+import { uiText } from "../i18n/index.ts";
 import { useEffect, useRef, type ReactNode, type Ref } from "react";
 import { compactFilterActionButtonClass } from "./actionButtonStyles";
 
@@ -50,12 +51,12 @@ export function ReviewFilterShell({
     >
       <header className="flex min-w-0 flex-wrap items-center gap-2">
         <div className="min-w-0 flex-1">
-          <span className="ui-type-control text-t1">筛选</span>
-          <span className="ml-2 ui-type-meta text-t3">{conditionCount > 0 ? `已设置 ${conditionCount} 项` : "未设置条件"}</span>
+          <span className="ui-type-control text-t1">{uiText("reviewFilterShell.ReviewFilterShell")}</span>
+          <span className="ml-2 ui-type-meta text-t3">{conditionCount > 0 ? uiText("reviewFilterShell.ReviewFilterShell2", { conditionCount: conditionCount }) : uiText("reviewFilterShell.ReviewFilterShell3")}</span>
         </div>
         {headerActions}
         {conditionCount > 0 && onClear && (
-          <button type="button" className={compactFilterActionButtonClass} onClick={onClear}>清除条件</button>
+          <button type="button" className={compactFilterActionButtonClass} onClick={onClear}>{uiText("reviewFilterShell.ReviewFilterShell4")}</button>
         )}
         <button
           type="button"
@@ -63,7 +64,7 @@ export function ReviewFilterShell({
           aria-controls={contentId}
           className={`rounded-md border px-2.5 py-1 ui-type-control transition-colors hover:border-accent/50 hover:bg-raised hover:text-t1 ${collapsed ? "border-accent/50 bg-accent-subtle text-accent-text" : "border-line bg-bg text-t2"}`}
           onClick={() => onCollapsedChange(!collapsed)}
-        >{collapsed ? "展开筛选" : "收起筛选"}</button>
+        >{collapsed ? uiText("reviewFilterShell.ReviewFilterShell5") : uiText("reviewFilterShell.ReviewFilterShell6")}</button>
       </header>
 
       <div id={contentId} ref={contentRef} aria-hidden={collapsed} className={`review-filter-content ${collapsed ? "is-collapsed" : ""}`}>

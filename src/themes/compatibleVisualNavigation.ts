@@ -1,3 +1,4 @@
+import { uiText } from "../i18n/index.ts";
 import type {
   CompatiblePlacement,
   CompatibleVisualSelection,
@@ -45,19 +46,19 @@ const commonGroups = (mode: CompatibleThemeMode): GroupSeed[] => {
   const eventChildren: ItemSeed[] =
     mode === "laplace"
       ? [
-          item("all-events", "所有事件", "allEvents", undefined, {
+          item("all-events", uiText("compatibleVisualNavigation.commonGroups.eventChildren"), "allEvents", undefined, {
             global: true,
           }),
           item(
             "main",
-            "普通事件",
+            uiText("compatibleVisualNavigation.commonGroups.eventChildren2"),
             "event",
             [
-              item("content", "内容区域", "contentArea", [
-                item("header", "头部", "header"),
-                item("meta", "元信息区域", "meta", [
-                  item("username-wrap", "用户名区域", "usernameWrap"),
-                  item("timestamp-wrap", "时间区域", "timestampWrap"),
+              item("content", uiText("compatibleVisualNavigation.commonGroups.eventChildren3"), "contentArea", [
+                item("header", uiText("compatibleVisualNavigation.commonGroups.eventChildren4"), "header"),
+                item("meta", uiText("compatibleVisualNavigation.commonGroups.eventChildren5"), "meta", [
+                  item("username-wrap", uiText("compatibleVisualNavigation.commonGroups.eventChildren6"), "usernameWrap"),
+                  item("timestamp-wrap", uiText("compatibleVisualNavigation.commonGroups.eventChildren7"), "timestampWrap"),
                 ]),
               ]),
             ],
@@ -65,26 +66,26 @@ const commonGroups = (mode: CompatibleThemeMode): GroupSeed[] => {
           ),
           item(
             "sticky",
-            "置顶事件",
+            uiText("compatibleVisualNavigation.commonGroups.eventChildren8"),
             "event",
             [
               item(
                 "sticky-content",
-                "内容区域",
+                uiText("compatibleVisualNavigation.commonGroups.eventChildren3"),
                 "contentArea",
-                [item("sticky-header", "头部", "header")],
+                [item("sticky-header", uiText("compatibleVisualNavigation.commonGroups.eventChildren4"), "header")],
                 { placement: "sticky" },
               ),
-              item("sticky-shared", "公共部件", undefined, [
-                item("sticky-avatar-wrap", "头像区域", "avatarWrap", [
-                  item("sticky-avatar-frame", "头像框", "avatarFrame"),
-                  item("sticky-avatar-image-wrap", "头像图片区域", "avatarImageWrap", [item("sticky-avatar", "头像", "avatar")]),
+              item("sticky-shared", uiText("compatibleVisualNavigation.commonGroups.eventChildren9"), undefined, [
+                item("sticky-avatar-wrap", uiText("compatibleVisualNavigation.commonGroups.eventChildren10"), "avatarWrap", [
+                  item("sticky-avatar-frame", uiText("compatibleVisualNavigation.commonGroups.eventChildren11"), "avatarFrame"),
+                  item("sticky-avatar-image-wrap", uiText("compatibleVisualNavigation.commonGroups.eventChildren12"), "avatarImageWrap", [item("sticky-avatar", uiText("compatibleVisualNavigation.commonGroups.eventChildren13"), "avatar")]),
                 ]),
-                item("sticky-action", "动作文字", "action"),
-                item("sticky-event-icon", "事件图标", "eventIcon"),
-                item("sticky-price", "价格", "amount", [item("sticky-currency", "货币符号", "priceCurrency"), item("sticky-figure", "金额数值", "priceFigure")]),
-                item("sticky-gift-image-wrap", "礼物图片区域", "giftImageWrap", [item("sticky-gift-image", "礼物图片", "giftImage")], {event:"gift"}),
-                item("sticky-guard-content", "大航海内容", "guardContent", undefined, {event:"guard"}),
+                item("sticky-action", uiText("compatibleVisualNavigation.commonGroups.eventChildren14"), "action"),
+                item("sticky-event-icon", uiText("compatibleVisualNavigation.commonGroups.eventChildren15"), "eventIcon"),
+                item("sticky-price", uiText("compatibleVisualNavigation.commonGroups.eventChildren16"), "amount", [item("sticky-currency", uiText("compatibleVisualNavigation.commonGroups.eventChildren17"), "priceCurrency"), item("sticky-figure", uiText("compatibleVisualNavigation.commonGroups.eventChildren18"), "priceFigure")]),
+                item("sticky-gift-image-wrap", uiText("compatibleVisualNavigation.commonGroups.eventChildren19"), "giftImageWrap", [item("sticky-gift-image", uiText("compatibleVisualNavigation.commonGroups.eventChildren20"), "giftImage")], {event:"gift"}),
+                item("sticky-guard-content", uiText("compatibleVisualNavigation.commonGroups.eventChildren21"), "guardContent", undefined, {event:"guard"}),
               ]),
             ],
             { placement: "sticky", global: true },
@@ -93,31 +94,31 @@ const commonGroups = (mode: CompatibleThemeMode): GroupSeed[] => {
       : [
           item(
             "main",
-            "普通事件",
+            uiText("compatibleVisualNavigation.commonGroups.eventChildren2"),
             "event",
             [
               ...(mode === "blivechat"
-                ? [item("content", "内容区域", "contentArea")]
+                ? [item("content", uiText("compatibleVisualNavigation.commonGroups.eventChildren3"), "contentArea")]
                 : []),
-              item("card-structure", "卡片结构", undefined, [
-                item("card", "卡片", "card", [
+              item("card-structure", uiText("compatibleVisualNavigation.commonGroups.eventChildren22"), undefined, [
+                item("card", uiText("compatibleVisualNavigation.commonGroups.eventChildren23"), "card", [
                   ...(mode === "blivechat-open"
                     ? [
-                        item("content", "内容区域", "contentArea", [
+                        item("content", uiText("compatibleVisualNavigation.commonGroups.eventChildren3"), "contentArea", [
                           item(
                             "image-and-message",
-                            "图文区域",
+                            uiText("compatibleVisualNavigation.commonGroups.eventChildren24"),
                             "imageAndMessage",
                           ),
                         ]),
                       ]
                     : []),
-                  item("card-header", "头部", "cardHeader", [
-                    item("header-content", "头部信息区", "cardHeaderContent", [
-                      item("primary-column", "主信息列", "cardPrimaryColumn", [
+                  item("card-header", uiText("compatibleVisualNavigation.commonGroups.eventChildren4"), "cardHeader", [
+                    item("header-content", uiText("compatibleVisualNavigation.commonGroups.eventChildren25"), "cardHeaderContent", [
+                      item("primary-column", uiText("compatibleVisualNavigation.commonGroups.eventChildren26"), "cardPrimaryColumn", [
                         item(
                           "membership-row",
-                          "用户信息行",
+                          uiText("compatibleVisualNavigation.commonGroups.eventChildren27"),
                           "membershipInfoRow",
                         ),
                       ]),
@@ -131,17 +132,17 @@ const commonGroups = (mode: CompatibleThemeMode): GroupSeed[] => {
           ),
           item(
             "sticky",
-            "置顶事件",
+            uiText("compatibleVisualNavigation.commonGroups.eventChildren8"),
             "event",
             [
               item(
                 "ticker-item",
-                "单项背景",
+                uiText("compatibleVisualNavigation.commonGroups.eventChildren28"),
                 "tickerItem",
                 [
                   item(
                     "ticker-item-content",
-                    "单项内容",
+                    uiText("compatibleVisualNavigation.commonGroups.eventChildren29"),
                     "tickerItemContent",
                     undefined,
                     { placement: "sticky" },
@@ -149,20 +150,20 @@ const commonGroups = (mode: CompatibleThemeMode): GroupSeed[] => {
                 ],
                 { placement: "sticky", global: true },
               ),
-              item("ticker-summary", "摘要文字", "amount", undefined, {
+              item("ticker-summary", uiText("compatibleVisualNavigation.commonGroups.eventChildren30"), "amount", undefined, {
                 placement: "sticky",
               }),
               item(
                 "ticker-user",
-                "用户信息",
+                uiText("compatibleVisualNavigation.commonGroups.eventChildren31"),
                 undefined,
                 [
                   item(
                     "ticker-avatar-wrap",
-                    "头像区域",
+                    uiText("compatibleVisualNavigation.commonGroups.eventChildren10"),
                     "avatarWrap",
                     [
-                      item("ticker-avatar", "头像", "avatar", undefined, {
+                      item("ticker-avatar", uiText("compatibleVisualNavigation.commonGroups.eventChildren13"), "avatar", undefined, {
                         placement: "sticky",
                       }),
                     ],
@@ -178,20 +179,20 @@ const commonGroups = (mode: CompatibleThemeMode): GroupSeed[] => {
   return [
     {
       id: "display",
-      label: "显示区域",
+      label: uiText("compatibleVisualNavigation.commonGroups.label"),
       defaultExpanded: true,
       items: [
-        item("event-area", "事件区", "eventArea", undefined, { global: true }),
-        item("events", "事件", undefined, eventChildren),
-        item("event-list", "事件列表", "eventList", undefined, {
+        item("event-area", uiText("compatibleVisualNavigation.commonGroups.items"), "eventArea", undefined, { global: true }),
+        item("events", uiText("compatibleVisualNavigation.commonGroups.items2"), undefined, eventChildren),
+        item("event-list", uiText("compatibleVisualNavigation.commonGroups.items3"), "eventList", undefined, {
           global: true,
         }),
         item(
           "ticker",
-          "置顶栏",
+          uiText("compatibleVisualNavigation.commonGroups.items4"),
           "ticker",
           [
-            item("ticker-list", "横向项目列表", "tickerList", undefined, {
+            item("ticker-list", uiText("compatibleVisualNavigation.commonGroups.items5"), "tickerList", undefined, {
               placement: "sticky",
               global: true,
             }),
@@ -199,39 +200,39 @@ const commonGroups = (mode: CompatibleThemeMode): GroupSeed[] => {
               ? [
                   item(
                     "details",
-                    "展开详情",
+                    uiText("compatibleVisualNavigation.commonGroups.items6"),
                     undefined,
                     ["gift", "superchat", "guard"].map((event) =>
                       item(
                         `detail-${event}`,
                         event === "gift"
-                          ? "礼物"
+                          ? uiText("compatibleVisualNavigation.commonGroups.items7")
                           : event === "superchat"
-                            ? "醒目留言"
-                            : "大航海",
+                            ? uiText("compatibleVisualNavigation.commonGroups.items8")
+                            : uiText("compatibleVisualNavigation.commonGroups.items9"),
                         undefined,
                         [
-                          item(`detail-card-${event}`, "卡片结构", undefined, [
-                            item(`detail-card-root-${event}`, "卡片", "card", [
+                          item(`detail-card-${event}`, uiText("compatibleVisualNavigation.commonGroups.items10"), undefined, [
+                            item(`detail-card-root-${event}`, uiText("compatibleVisualNavigation.commonGroups.items11"), "card", [
                               item(
                                 `detail-header-${event}`,
-                                "头部",
+                                uiText("compatibleVisualNavigation.commonGroups.items12"),
                                 "cardHeader",
                                 [
                                   item(
                                     `detail-header-content-${event}`,
-                                    "头部信息区",
+                                    uiText("compatibleVisualNavigation.commonGroups.items13"),
                                     "cardHeaderContent",
                                     [
                                       item(
                                         `detail-column-${event}`,
-                                        "主信息列",
+                                        uiText("compatibleVisualNavigation.commonGroups.items14"),
                                         "cardPrimaryColumn",
                                         event === "guard"
                                           ? [
                                               item(
                                                 `detail-row-${event}`,
-                                                "用户信息行",
+                                                uiText("compatibleVisualNavigation.commonGroups.items15"),
                                                 "membershipInfoRow",
                                               ),
                                             ]
@@ -245,46 +246,46 @@ const commonGroups = (mode: CompatibleThemeMode): GroupSeed[] => {
                                 ? [
                                     item(
                                       `detail-body-${event}`,
-                                      "正文区域",
+                                      uiText("compatibleVisualNavigation.commonGroups.items16"),
                                       "contentArea",
                                     ),
                                   ]
                                 : []),
                             ]),
                           ]),
-                          item(`detail-user-${event}`, "用户信息", undefined, [
+                          item(`detail-user-${event}`, uiText("compatibleVisualNavigation.commonGroups.items17"), undefined, [
                             item(
                               `detail-avatar-wrap-${event}`,
-                              "头像区域",
+                              uiText("compatibleVisualNavigation.commonGroups.items18"),
                               "avatarWrap",
                               [
                                 item(
                                   `detail-avatar-${event}`,
-                                  "头像",
+                                  uiText("compatibleVisualNavigation.commonGroups.items19"),
                                   "avatar",
                                 ),
                               ],
                             ),
                             item(
                               `detail-username-${event}`,
-                              "用户名",
+                              uiText("compatibleVisualNavigation.commonGroups.items20"),
                               "username",
                             ),
                             ...(event === "guard"
                               ? [
                                   item(
                                     `detail-userinfo-${event}`,
-                                    "用户信息块",
+                                    uiText("compatibleVisualNavigation.commonGroups.items21"),
                                     "userInfo",
                                   ),
                                   item(
                                     `detail-badges-${event}`,
-                                    "身份徽章",
+                                    uiText("compatibleVisualNavigation.commonGroups.items22"),
                                     "identity",
                                     [
                                       item(
                                         `detail-guard-${event}`,
-                                        "大航海徽章",
+                                        uiText("compatibleVisualNavigation.commonGroups.items23"),
                                         "guardBadge",
                                       ),
                                     ],
@@ -294,27 +295,27 @@ const commonGroups = (mode: CompatibleThemeMode): GroupSeed[] => {
                           ]),
                           item(
                             `detail-content-${event}`,
-                            "事件内容",
+                            uiText("compatibleVisualNavigation.commonGroups.items24"),
                             undefined,
                             [
-                              item(`detail-time-${event}`, "时间", "timestamp"),
+                              item(`detail-time-${event}`, uiText("compatibleVisualNavigation.commonGroups.items25"), "timestamp"),
                               ...(event === "guard"
                                 ? [
                                     item(
                                       `detail-subtext-${event}`,
-                                      "大航海说明",
+                                      uiText("compatibleVisualNavigation.commonGroups.items26"),
                                       "membershipSubtext",
                                     ),
                                   ]
                                 : [
                                     item(
                                       `detail-message-${event}`,
-                                      "正文",
+                                      uiText("compatibleVisualNavigation.commonGroups.items27"),
                                       "message",
                                     ),
                                     item(
                                       `detail-amount-${event}`,
-                                      "价格",
+                                      uiText("compatibleVisualNavigation.commonGroups.items28"),
                                       "amount",
                                     ),
                                   ]),
@@ -335,99 +336,99 @@ const commonGroups = (mode: CompatibleThemeMode): GroupSeed[] => {
     },
     {
       id: "user",
-      label: "用户信息",
+      label: uiText("compatibleVisualNavigation.commonGroups.label2"),
       defaultExpanded: true,
       items:
         mode === "laplace"
           ? [
-              item("avatar-wrap", "头像区域", "avatarWrap", [
-                item("avatar-frame", "头像框", "avatarFrame"),
-                item("avatar-image-wrap", "头像图片区域", "avatarImageWrap", [
-                  item("avatar", "头像", "avatar"),
+              item("avatar-wrap", uiText("compatibleVisualNavigation.commonGroups.items18"), "avatarWrap", [
+                item("avatar-frame", uiText("compatibleVisualNavigation.commonGroups.items29"), "avatarFrame"),
+                item("avatar-image-wrap", uiText("compatibleVisualNavigation.commonGroups.items30"), "avatarImageWrap", [
+                  item("avatar", uiText("compatibleVisualNavigation.commonGroups.items19"), "avatar"),
                 ]),
               ]),
-              item("username", "用户名", "username"),
-              item("fan-medal", "粉丝牌", "fanMedal", [
-                item("fan-medal-content", "名称内容区", "fanMedalContent", [
-                  item("fan-medal-guard", "牌内大航海徽章", "fanMedalGuard"),
+              item("username", uiText("compatibleVisualNavigation.commonGroups.items20"), "username"),
+              item("fan-medal", uiText("compatibleVisualNavigation.commonGroups.items31"), "fanMedal", [
+                item("fan-medal-content", uiText("compatibleVisualNavigation.commonGroups.items32"), "fanMedalContent", [
+                  item("fan-medal-guard", uiText("compatibleVisualNavigation.commonGroups.items33"), "fanMedalGuard"),
                 ]),
-                item("fan-medal-level", "等级", "fanMedalLevel"),
+                item("fan-medal-level", uiText("compatibleVisualNavigation.commonGroups.items34"), "fanMedalLevel"),
               ]),
-              item("identity-badges", "身份徽章", undefined, [
-              item("guard-badge", "大航海徽章", "guardBadge"),
-              item("streamer-badge-wrap", "主播徽章区域", "streamerBadge", [
-                item("streamer-badge", "主播徽章", "streamerBadgeIcon"),
+              item("identity-badges", uiText("compatibleVisualNavigation.commonGroups.items22"), undefined, [
+              item("guard-badge", uiText("compatibleVisualNavigation.commonGroups.items23"), "guardBadge"),
+              item("streamer-badge-wrap", uiText("compatibleVisualNavigation.commonGroups.items35"), "streamerBadge", [
+                item("streamer-badge", uiText("compatibleVisualNavigation.commonGroups.items36"), "streamerBadgeIcon"),
               ]),
-              item("mod-badge-wrap", "房管徽章区域", "modBadge", [
-                item("mod-badge", "房管徽章", "modBadgeIcon"),
+              item("mod-badge-wrap", uiText("compatibleVisualNavigation.commonGroups.items37"), "modBadge", [
+                item("mod-badge", uiText("compatibleVisualNavigation.commonGroups.items38"), "modBadgeIcon"),
               ]),
               ]),
-              item("wealth-medal", "荣耀勋章", "wealthMedal", [
-                item("wealth-text", "等级文字", "wealthText"),
-                item("wealth-image", "图像", "wealthImage"),
+              item("wealth-medal", uiText("compatibleVisualNavigation.commonGroups.items39"), "wealthMedal", [
+                item("wealth-text", uiText("compatibleVisualNavigation.commonGroups.items40"), "wealthText"),
+                item("wealth-image", uiText("compatibleVisualNavigation.commonGroups.items41"), "wealthImage"),
               ]),
-              item("current-rank", "当前排行", "currentRank"),
+              item("current-rank", uiText("compatibleVisualNavigation.commonGroups.items42"), "currentRank"),
             ]
           : [
-              item("avatar-wrap", "头像区域", "avatarWrap", [
-                item("avatar-frame", "头像框", "avatarFrame"),
-                item("avatar", "头像", "avatar"),
+              item("avatar-wrap", uiText("compatibleVisualNavigation.commonGroups.items18"), "avatarWrap", [
+                item("avatar-frame", uiText("compatibleVisualNavigation.commonGroups.items29"), "avatarFrame"),
+                item("avatar", uiText("compatibleVisualNavigation.commonGroups.items19"), "avatar"),
               ]),
-              item("username", "用户名", "username"),
-              item("user-info", "用户信息块", "userInfo"),
-              item("fan-medal-wrap", "粉丝牌区域", "fanMedalWrap", [
-                item("fan-medal", "粉丝牌", "fanMedal", [
-                  item("fan-medal-name", "名称", "fanMedalName"),
-                  item("fan-medal-level", "等级", "fanMedalLevel"),
+              item("username", uiText("compatibleVisualNavigation.commonGroups.items20"), "username"),
+              item("user-info", uiText("compatibleVisualNavigation.commonGroups.items21"), "userInfo"),
+              item("fan-medal-wrap", uiText("compatibleVisualNavigation.commonGroups.items43"), "fanMedalWrap", [
+                item("fan-medal", uiText("compatibleVisualNavigation.commonGroups.items31"), "fanMedal", [
+                  item("fan-medal-name", uiText("compatibleVisualNavigation.commonGroups.items44"), "fanMedalName"),
+                  item("fan-medal-level", uiText("compatibleVisualNavigation.commonGroups.items34"), "fanMedalLevel"),
                 ]),
               ]),
-              item("identity", "身份徽章", "identity", [
-                item("mod-badge", "房管徽章", "modBadge"),
-                item("guard-badge", "大航海徽章", "guardBadge"),
+              item("identity", uiText("compatibleVisualNavigation.commonGroups.items22"), "identity", [
+                item("mod-badge", uiText("compatibleVisualNavigation.commonGroups.items38"), "modBadge"),
+                item("guard-badge", uiText("compatibleVisualNavigation.commonGroups.items23"), "guardBadge"),
               ]),
-              item("badge", "其他徽章", "badge"),
+              item("badge", uiText("compatibleVisualNavigation.commonGroups.items45"), "badge"),
             ],
     },
     {
       id: "content",
-      label: "事件内容",
+      label: uiText("compatibleVisualNavigation.commonGroups.label3"),
       defaultExpanded: true,
       items: [
-        item("message", "正文", "message"),
-        item("action", "动作文字", "action"),
-        item("timestamp", "时间", "timestamp"),
-        item("event-icon", "事件图标", "eventIcon"),
+        item("message", uiText("compatibleVisualNavigation.commonGroups.items27"), "message"),
+        item("action", uiText("compatibleVisualNavigation.commonGroups.items46"), "action"),
+        item("timestamp", uiText("compatibleVisualNavigation.commonGroups.items25"), "timestamp"),
+        item("event-icon", uiText("compatibleVisualNavigation.commonGroups.items47"), "eventIcon"),
         item(
           "amount",
-          "价格",
+          uiText("compatibleVisualNavigation.commonGroups.items28"),
           "amount",
           mode === "laplace"
             ? [
-                item("price-currency", "货币符号", "priceCurrency"),
-                item("price-figure", "金额数值", "priceFigure"),
+                item("price-currency", uiText("compatibleVisualNavigation.commonGroups.items48"), "priceCurrency"),
+                item("price-figure", uiText("compatibleVisualNavigation.commonGroups.items49"), "priceFigure"),
               ]
             : undefined,
         ),
-        item("translation", "平台译文", "translation"),
+        item("translation", uiText("compatibleVisualNavigation.commonGroups.items50"), "translation"),
       ],
     },
     {
       id: "emote",
-      label: "表情",
+      label: uiText("compatibleVisualNavigation.commonGroups.label4"),
       defaultExpanded: true,
       items:
         mode === "laplace"
           ? [
-              item("small-emote-wrap", "行内表情区域", "smallEmoteWrap", [
-                item("small-emote", "行内表情", "smallEmote"),
+              item("small-emote-wrap", uiText("compatibleVisualNavigation.commonGroups.items51"), "smallEmoteWrap", [
+                item("small-emote", uiText("compatibleVisualNavigation.commonGroups.items52"), "smallEmote"),
               ]),
-              item("large-emote-wrap", "大表情区域", "largeEmoteWrap", [
-                item("large-emote", "大表情", "largeEmote"),
+              item("large-emote-wrap", uiText("compatibleVisualNavigation.commonGroups.items53"), "largeEmoteWrap", [
+                item("large-emote", uiText("compatibleVisualNavigation.commonGroups.items54"), "largeEmote"),
               ]),
             ]
           : [
-              item("small-emote", "行内表情", "smallEmote"),
-              item("large-emote", "大表情", "largeEmote"),
+              item("small-emote", uiText("compatibleVisualNavigation.commonGroups.items52"), "smallEmote"),
+              item("large-emote", uiText("compatibleVisualNavigation.commonGroups.items54"), "largeEmote"),
             ],
     },
   ];
@@ -438,45 +439,45 @@ const eventGroups = (mode: CompatibleThemeMode): GroupSeed[] =>
     ? [
         {
           id: "danmaku",
-          label: "弹幕",
+          label: uiText("compatibleVisualNavigation.eventGroups.label"),
           defaultExpanded: false,
           items: [
-            item("reply", "回复信息", "reply", [
-              item("reply-avatar", "回复头像", "replyAvatar"),
-              item("reply-username", "回复用户名", "replyUsername"),
+            item("reply", uiText("compatibleVisualNavigation.eventGroups.items"), "reply", [
+              item("reply-avatar", uiText("compatibleVisualNavigation.eventGroups.items2"), "replyAvatar"),
+              item("reply-username", uiText("compatibleVisualNavigation.eventGroups.items3"), "replyUsername"),
             ]),
-            item("spoiler", "剧透片段", "spoiler"),
+            item("spoiler", uiText("compatibleVisualNavigation.eventGroups.items4"), "spoiler"),
           ],
         },
         {
           id: "gift",
-          label: "礼物",
+          label: uiText("compatibleVisualNavigation.eventGroups.label2"),
           defaultExpanded: false,
           items: [
-            item("gift-image-wrap", "礼物图片区域", "giftImageWrap", [
-              item("gift-image", "礼物图片", "giftImage"),
+            item("gift-image-wrap", uiText("compatibleVisualNavigation.eventGroups.items5"), "giftImageWrap", [
+              item("gift-image", uiText("compatibleVisualNavigation.eventGroups.items6"), "giftImage"),
             ]),
-            item("gift-name", "礼物名称", "giftName"),
-            item("gift-details", "礼物详情", "giftDetails", [
-              item("gift-symbol", "乘号", "giftSymbol"),
-              item("gift-count", "数量", "giftCount"),
-              item("gift-detail-price", "描述内金额", "giftDetailPrice"),
+            item("gift-name", uiText("compatibleVisualNavigation.eventGroups.items7"), "giftName"),
+            item("gift-details", uiText("compatibleVisualNavigation.eventGroups.items8"), "giftDetails", [
+              item("gift-symbol", uiText("compatibleVisualNavigation.eventGroups.items9"), "giftSymbol"),
+              item("gift-count", uiText("compatibleVisualNavigation.eventGroups.items10"), "giftCount"),
+              item("gift-detail-price", uiText("compatibleVisualNavigation.eventGroups.items11"), "giftDetailPrice"),
             ]),
-            item("gift-blind", "盲盒信息", "giftBlind", [
-              item("gift-blind-name", "盲盒名称", "giftBlindName"),
-              item("gift-blind-action", "动作文字", "giftBlindAction"),
+            item("gift-blind", uiText("compatibleVisualNavigation.eventGroups.items12"), "giftBlind", [
+              item("gift-blind-name", uiText("compatibleVisualNavigation.eventGroups.items13"), "giftBlindName"),
+              item("gift-blind-action", uiText("compatibleVisualNavigation.eventGroups.items14"), "giftBlindAction"),
             ]),
-            item("gift-blind-amount", "盲盒金额", undefined, [
-              item("gift-paid-price", "支付金额", "giftPaidPrice"),
-              item("gift-result-price", "开出价值", "giftResultPrice"),
-              item("gift-trend", "涨跌图标", "giftTrend"),
+            item("gift-blind-amount", uiText("compatibleVisualNavigation.eventGroups.items15"), undefined, [
+              item("gift-paid-price", uiText("compatibleVisualNavigation.eventGroups.items16"), "giftPaidPrice"),
+              item("gift-result-price", uiText("compatibleVisualNavigation.eventGroups.items17"), "giftResultPrice"),
+              item("gift-trend", uiText("compatibleVisualNavigation.eventGroups.items18"), "giftTrend"),
             ]),
-            item("gift-receiver", "收礼对象", "giftReceiver", [
-              item("gift-receiver-action", "动作文字", "giftReceiverAction"),
-              item("gift-receiver-avatar", "收礼者头像", "giftReceiverAvatar"),
+            item("gift-receiver", uiText("compatibleVisualNavigation.eventGroups.items19"), "giftReceiver", [
+              item("gift-receiver-action", uiText("compatibleVisualNavigation.eventGroups.items14"), "giftReceiverAction"),
+              item("gift-receiver-avatar", uiText("compatibleVisualNavigation.eventGroups.items20"), "giftReceiverAvatar"),
               item(
                 "gift-receiver-username",
-                "收礼者用户名",
+                uiText("compatibleVisualNavigation.eventGroups.items21"),
                 "giftReceiverUsername",
               ),
             ]),
@@ -484,51 +485,51 @@ const eventGroups = (mode: CompatibleThemeMode): GroupSeed[] =>
         },
         {
           id: "superchat",
-          label: "醒目留言",
+          label: uiText("compatibleVisualNavigation.eventGroups.label3"),
           defaultExpanded: false,
           items: [
-            item("sc-body", "正文容器", "body", undefined, { event: "superchat" }),
-            item("sc-message", "正文", "message", undefined, {
+            item("sc-body", uiText("compatibleVisualNavigation.eventGroups.items22"), "body", undefined, { event: "superchat" }),
+            item("sc-message", uiText("compatibleVisualNavigation.eventGroups.items23"), "message", undefined, {
               event: "superchat",
             }),
             item(
               "sc-amount",
-              "价格",
+              uiText("compatibleVisualNavigation.eventGroups.items24"),
               "amount",
               [
-                item("sc-currency", "货币符号", "priceCurrency"),
-                item("sc-figure", "金额数值", "priceFigure"),
+                item("sc-currency", uiText("compatibleVisualNavigation.eventGroups.items25"), "priceCurrency"),
+                item("sc-figure", uiText("compatibleVisualNavigation.eventGroups.items26"), "priceFigure"),
               ],
               { event: "superchat" },
             ),
-            item("sc-spoiler", "剧透片段", "spoiler", undefined, {
+            item("sc-spoiler", uiText("compatibleVisualNavigation.eventGroups.items4"), "spoiler", undefined, {
               event: "superchat",
             }),
-            item("sc-deleted", "删除状态", "deleted", undefined, {
+            item("sc-deleted", uiText("compatibleVisualNavigation.eventGroups.items27"), "deleted", undefined, {
               event: "superchat",
             }),
-            item("sc-translation", "平台译文", "translation", undefined, {
+            item("sc-translation", uiText("compatibleVisualNavigation.eventGroups.items28"), "translation", undefined, {
               event: "superchat",
             }),
           ],
         },
         {
           id: "guard",
-          label: "大航海",
+          label: uiText("compatibleVisualNavigation.eventGroups.label4"),
           defaultExpanded: false,
           items: [
-            item("guard-content", "大航海内容", "guardContent", [
-              item("guard-action", "动作文字", "action"),
-              item("guard-type", "大航海类型", "guardType"),
-              item("guard-duration", "时长", undefined, [
-                item("guard-symbol", "乘号", "guardSymbol"),
-                item("guard-figure", "数量", "guardFigure"),
-                item("guard-unit", "单位", "guardUnit"),
+            item("guard-content", uiText("compatibleVisualNavigation.eventGroups.items29"), "guardContent", [
+              item("guard-action", uiText("compatibleVisualNavigation.eventGroups.items14"), "action"),
+              item("guard-type", uiText("compatibleVisualNavigation.eventGroups.items30"), "guardType"),
+              item("guard-duration", uiText("compatibleVisualNavigation.eventGroups.items31"), undefined, [
+                item("guard-symbol", uiText("compatibleVisualNavigation.eventGroups.items9"), "guardSymbol"),
+                item("guard-figure", uiText("compatibleVisualNavigation.eventGroups.items10"), "guardFigure"),
+                item("guard-unit", uiText("compatibleVisualNavigation.eventGroups.items32"), "guardUnit"),
               ]),
-              item("guard-days-group", "陪伴天数", undefined, [
-                item("guard-days-before", "前缀", "guardDaysBefore"),
-                item("guard-days", "天数", "guardDays"),
-                item("guard-days-after", "后缀", "guardDaysAfter"),
+              item("guard-days-group", uiText("compatibleVisualNavigation.eventGroups.items33"), undefined, [
+                item("guard-days-before", uiText("compatibleVisualNavigation.eventGroups.items34"), "guardDaysBefore"),
+                item("guard-days", uiText("compatibleVisualNavigation.eventGroups.items35"), "guardDays"),
+                item("guard-days-after", uiText("compatibleVisualNavigation.eventGroups.items36"), "guardDaysAfter"),
               ]),
             ]),
 
@@ -536,94 +537,94 @@ const eventGroups = (mode: CompatibleThemeMode): GroupSeed[] =>
         },
         {
           id: "activity",
-          label: "红包与天选",
+          label: uiText("compatibleVisualNavigation.eventGroups.label5"),
           defaultExpanded: false,
           items: [
             item(
               "red",
-              "红包",
+              uiText("compatibleVisualNavigation.eventGroups.items37"),
               undefined,
               [
-                item("red-action", "动作文字", "action"),
-                item("red-title", "活动标题", "redTitle"),
-                item("red-rewards", "奖励列表", "rewardList", [
-                  item("red-reward", "奖励项", "rewardItem", [
-                    item("red-count", "数量", "rewardCount"),
-                    item("red-picture", "图片区域", "rewardPicture", [
-                      item("red-image", "图片", "rewardImage"),
+                item("red-action", uiText("compatibleVisualNavigation.eventGroups.items14"), "action"),
+                item("red-title", uiText("compatibleVisualNavigation.eventGroups.items38"), "redTitle"),
+                item("red-rewards", uiText("compatibleVisualNavigation.eventGroups.items39"), "rewardList", [
+                  item("red-reward", uiText("compatibleVisualNavigation.eventGroups.items40"), "rewardItem", [
+                    item("red-count", uiText("compatibleVisualNavigation.eventGroups.items10"), "rewardCount"),
+                    item("red-picture", uiText("compatibleVisualNavigation.eventGroups.items41"), "rewardPicture", [
+                      item("red-image", uiText("compatibleVisualNavigation.eventGroups.items42"), "rewardImage"),
                     ]),
                   ]),
                 ]),
-                item("red-icon", "红包图标", "eventIcon"),
-                item("red-price", "价格", "amount"),
+                item("red-icon", uiText("compatibleVisualNavigation.eventGroups.items43"), "eventIcon"),
+                item("red-price", uiText("compatibleVisualNavigation.eventGroups.items24"), "amount"),
               ],
               { event: "redStart" },
             ),
             item(
               "lottery",
-              "天选",
+              uiText("compatibleVisualNavigation.eventGroups.items44"),
               undefined,
               [
-                item("lottery-message", "标题与奖品", "lotteryMessage", [
-                  item("lottery-prize", "奖品", "lotteryPrize"),
+                item("lottery-message", uiText("compatibleVisualNavigation.eventGroups.items45"), "lotteryMessage", [
+                  item("lottery-prize", uiText("compatibleVisualNavigation.eventGroups.items46"), "lotteryPrize"),
                 ]),
                 item(
                   "lottery-requirements",
-                  "参与条件",
+                  uiText("compatibleVisualNavigation.eventGroups.items47"),
                   "lotteryRequirements",
-                  [item("lottery-condition", "条件值", "lotteryGiftName")],
+                  [item("lottery-condition", uiText("compatibleVisualNavigation.eventGroups.items48"), "lotteryGiftName")],
                 ),
-                item("lottery-gift", "参与礼物", undefined, [
+                item("lottery-gift", uiText("compatibleVisualNavigation.eventGroups.items49"), undefined, [
 
-                  item("lottery-gift-price", "价格", "lotteryGiftPrice"),
+                  item("lottery-gift-price", uiText("compatibleVisualNavigation.eventGroups.items24"), "lotteryGiftPrice"),
                 ]),
-                item("lottery-icon", "天选图标", "eventIcon"),
+                item("lottery-icon", uiText("compatibleVisualNavigation.eventGroups.items50"), "eventIcon"),
               ],
               { event: "lotteryStart" },
             ),
             item(
               "winners",
-              "中奖",
+              uiText("compatibleVisualNavigation.eventGroups.items51"),
               undefined,
               ["winners", "redResult", "lotteryResult"].map((event) =>
                 item(
                   `winners-${event}`,
                   event === "winners"
-                    ? "全部中奖"
+                    ? uiText("compatibleVisualNavigation.eventGroups.items52")
                     : event === "redResult"
-                      ? "红包中奖"
-                      : "天选中奖",
+                      ? uiText("compatibleVisualNavigation.eventGroups.items53")
+                      : uiText("compatibleVisualNavigation.eventGroups.items54"),
                   undefined,
                   [
                     item(
                       `winner-content-${event}`,
-                      "中奖内容",
+                      uiText("compatibleVisualNavigation.eventGroups.items55"),
                       "winnerContent",
                       [
                         item(
                           `winner-title-${event}`,
-                          "名单标题（含人数）",
+                          uiText("compatibleVisualNavigation.eventGroups.items56"),
                           "winnerTitle",
                         ),
                         item(
                           `winner-toggle-${event}`,
-                          "展开按钮",
+                          uiText("compatibleVisualNavigation.eventGroups.items57"),
                           "winnerToggle",
                         ),
-                        item(`winner-mask-${event}`, "名单遮罩", "winnerMask", [
+                        item(`winner-mask-${event}`, uiText("compatibleVisualNavigation.eventGroups.items58"), "winnerMask", [
                           item(
                             `winner-list-${event}`,
-                            "中奖列表",
+                            uiText("compatibleVisualNavigation.eventGroups.items59"),
                             "winnerList",
                             [
                               item(
                                 `winner-item-${event}`,
-                                "中奖项",
+                                uiText("compatibleVisualNavigation.eventGroups.items60"),
                                 "winnerItem",
                                 [
                                   item(
                                     `winner-avatar-${event}`,
-                                    "中奖头像",
+                                    uiText("compatibleVisualNavigation.eventGroups.items61"),
                                     "winnerAvatar",
                                   ),
                                 ],
@@ -642,50 +643,50 @@ const eventGroups = (mode: CompatibleThemeMode): GroupSeed[] =>
         },
         {
           id: "system",
-          label: "系统",
+          label: uiText("compatibleVisualNavigation.eventGroups.label6"),
           defaultExpanded: false,
           items: [
-            item("mute-operator", "禁言操作者", "muteOperator"),
-            item("mute-duration", "禁言时长", "muteDuration"),
+            item("mute-operator", uiText("compatibleVisualNavigation.eventGroups.items62"), "muteOperator"),
+            item("mute-duration", uiText("compatibleVisualNavigation.eventGroups.items63"), "muteDuration"),
           ],
         },
       ]
     : [
         {
           id: "gift",
-          label: "礼物",
+          label: uiText("compatibleVisualNavigation.eventGroups.label2"),
           defaultExpanded: false,
           items: [
-            item("gift-message", "礼物描述", "message", undefined, {
+            item("gift-message", uiText("compatibleVisualNavigation.eventGroups.items64"), "message", undefined, {
               event: "gift",
             }),
-            item("gift-amount", "礼物金额", "amount", undefined, {
+            item("gift-amount", uiText("compatibleVisualNavigation.eventGroups.items65"), "amount", undefined, {
               event: "gift",
             }),
           ],
         },
         {
           id: "superchat",
-          label: "醒目留言",
+          label: uiText("compatibleVisualNavigation.eventGroups.label3"),
           defaultExpanded: false,
           items: [
-            item("sc-body", "正文容器", "body", undefined, { event: "superchat" }),
-            item("sc-message", "正文", "message", undefined, {
+            item("sc-body", uiText("compatibleVisualNavigation.eventGroups.items22"), "body", undefined, { event: "superchat" }),
+            item("sc-message", uiText("compatibleVisualNavigation.eventGroups.items23"), "message", undefined, {
               event: "superchat",
             }),
-            item("sc-amount", "价格", "amount", undefined, {
+            item("sc-amount", uiText("compatibleVisualNavigation.eventGroups.items24"), "amount", undefined, {
               event: "superchat",
             }),
           ],
         },
         {
           id: "guard",
-          label: "大航海",
+          label: uiText("compatibleVisualNavigation.eventGroups.label4"),
           defaultExpanded: false,
           items: [
             item(
               "guard-description",
-              "大航海说明",
+              uiText("compatibleVisualNavigation.eventGroups.items66"),
               "membershipSubtext",
               undefined,
               { event: "guard" },

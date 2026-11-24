@@ -1,3 +1,4 @@
+import { uiText } from "../i18n/index.ts";
 import { NATIVE_EVENT_SCOPES, NATIVE_IDENTITY_SCOPES, NATIVE_SEMANTIC_PARTS } from "../themes/nativeThemeCapabilities.ts";
 
 export const NATIVE_MONACO_OPTIONS = {
@@ -28,8 +29,8 @@ export function createNativeMonacoModelUri(documentKey: string): string {
 }
 
 const labelMap = new Map<string, string>([
-  ["common", "通用配色"], ["light", "浅色配色"], ["dark", "深色配色"],
-  ["all", "全部"],
+  ["common", uiText("nativeMonacoEditorConfig.labelMap")], ["light", uiText("nativeMonacoEditorConfig.labelMap2")], ["dark", uiText("nativeMonacoEditorConfig.labelMap3")],
+  ["all", uiText("nativeMonacoEditorConfig.labelMap4")],
   ...NATIVE_EVENT_SCOPES.flatMap(item => [[item.id, item.label] as const, ...(item.children ?? []).map(child => [child.id, child.label] as const)]),
   ...NATIVE_IDENTITY_SCOPES.map(item => [item.id, item.label] as const),
   ...NATIVE_SEMANTIC_PARTS.map(item => [item.id, item.label] as const),
@@ -39,6 +40,6 @@ export function nativeMonacoHoverDescription(line: string): string | undefined {
   const match = line.match(/\/\*\s*visual:([a-z]+)\|([A-Za-z]+)\|([A-Za-z]+)\|([A-Za-z]+)\s*\*\//);
   if (!match) return undefined;
   const labels = match.slice(1).map(value => labelMap.get(value) ?? value);
-  return `可视化样式：${labels.join(" · ")}`;
+  return uiText("nativeMonacoEditorConfig.nativeMonacoHoverDescription", { value: labels.join(" · ") });
 }
 

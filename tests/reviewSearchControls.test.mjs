@@ -1,3 +1,4 @@
+import { readUiSource } from "./helpers/readUiSource.mjs";
 import { tmpdir as ssrTemporaryDirectory } from 'node:os';
 import test from "node:test";
 import assert from "node:assert/strict";
@@ -93,14 +94,14 @@ test("主播事件检索主区与单场主区使用同一收藏和更多筛选�
 });
 
 test("高级筛选仅取消分类组上方分割线", () => {
-  const css = readFileSync(fileURLToPath(new URL("../src/App.css", import.meta.url)), "utf8");
+  const css = readUiSource(fileURLToPath(new URL("../src/App.css", import.meta.url)), "utf8");
 
   assert.ok(/\.review-filter-category-section\s*\{[^}]*border-top:\s*0;[^}]*padding-top:\s*0;/.test(css), "分类组应单独移除上边线和对应顶部留白");
   assert.ok(/\.review-filter-advanced-section\s*\{[^}]*border-top:\s*1px solid var\(--border\);/.test(css), "其余高级筛选分组仍保留分割线");
 });
 
 test("回看一级分类不再单独展示生命周期", () => {
-  const source = readFileSync(
+  const source = readUiSource(
     fileURLToPath(new URL("../src/components/ReviewSearchControls.tsx", import.meta.url)),
     "utf8",
   );
@@ -116,7 +117,7 @@ test("主播页提供场次和事件检索两个独立模式", () => {
     new URL("../src/components/ReviewOwnerEventFilters.tsx", import.meta.url),
   ];
   assert.ok(paths.every(existsSync), "主播双模式组件尚未创建");
-  const [toolbar, sessions, events] = paths.map((path) => readFileSync(path, "utf8"));
+  const [toolbar, sessions, events] = paths.map((path) => readUiSource(path, "utf8"));
 
   assert.match(toolbar, />场次</);
   assert.match(toolbar, />事件检索</);
@@ -135,20 +136,20 @@ test("主播页提供场次和事件检索两个独立模式", () => {
   assert.match(events, /aria-pressed=/);
   assert.match(events, /focus-visible:ring-2/);
   assert.match(events, /flex-wrap/);
-  assert.match(events, /aria-label="只看收藏"/);
-  assert.match(events, /aria-label="更多筛选"/);
+  assert.match(events, /aria-label=["']只看收藏["']/);
+  assert.match(events, /aria-label=["']更多筛选["']/);
   assert.doesNotMatch(events, /显示大表情/);
 });
 
 test("主播事件筛选复用单场高级筛选，排序与大表情控制归结果工具栏", () => {
-  const toolbar = readFileSync(fileURLToPath(new URL("../src/components/ReviewOwnerToolbar.tsx", import.meta.url)), "utf8");
-  const sessions = readFileSync(fileURLToPath(new URL("../src/components/ReviewOwnerSessionFilters.tsx", import.meta.url)), "utf8");
-  const events = readFileSync(fileURLToPath(new URL("../src/components/ReviewOwnerEventFilters.tsx", import.meta.url)), "utf8");
-  const panel = readFileSync(fileURLToPath(new URL("../src/components/ReviewPanel.tsx", import.meta.url)), "utf8");
-  const results = readFileSync(fileURLToPath(new URL("../src/components/ReviewOwnerEventResults.tsx", import.meta.url)), "utf8");
-  const css = readFileSync(fileURLToPath(new URL("../src/App.css", import.meta.url)), "utf8");
+  const toolbar = readUiSource(fileURLToPath(new URL("../src/components/ReviewOwnerToolbar.tsx", import.meta.url)), "utf8");
+  const sessions = readUiSource(fileURLToPath(new URL("../src/components/ReviewOwnerSessionFilters.tsx", import.meta.url)), "utf8");
+  const events = readUiSource(fileURLToPath(new URL("../src/components/ReviewOwnerEventFilters.tsx", import.meta.url)), "utf8");
+  const panel = readUiSource(fileURLToPath(new URL("../src/components/ReviewPanel.tsx", import.meta.url)), "utf8");
+  const results = readUiSource(fileURLToPath(new URL("../src/components/ReviewOwnerEventResults.tsx", import.meta.url)), "utf8");
+  const css = readUiSource(fileURLToPath(new URL("../src/App.css", import.meta.url)), "utf8");
 
-  assert.match(toolbar, /aria-label="主播档案查看方式"/);
+  assert.match(toolbar, /aria-label=["']主播档案查看方式["']/);
   assert.match(sessions, /搜索直播标题/);
   assert.match(sessions, /场次开播时间/);
   assert.match(sessions, /直播状态/);
@@ -166,9 +167,9 @@ test("主播事件筛选复用单场高级筛选，排序与大表情控制归�
 });
 
 test("主播场次和事件筛选共用单场筛选框架，并支持折叠状态", () => {
-  const panel = readFileSync(fileURLToPath(new URL("../src/components/ReviewPanel.tsx", import.meta.url)), "utf8");
-  const sessions = readFileSync(fileURLToPath(new URL("../src/components/ReviewOwnerSessionFilters.tsx", import.meta.url)), "utf8");
-  const events = readFileSync(fileURLToPath(new URL("../src/components/ReviewOwnerEventFilters.tsx", import.meta.url)), "utf8");
+  const panel = readUiSource(fileURLToPath(new URL("../src/components/ReviewPanel.tsx", import.meta.url)), "utf8");
+  const sessions = readUiSource(fileURLToPath(new URL("../src/components/ReviewOwnerSessionFilters.tsx", import.meta.url)), "utf8");
+  const events = readUiSource(fileURLToPath(new URL("../src/components/ReviewOwnerEventFilters.tsx", import.meta.url)), "utf8");
 
   assert.match(sessions, /<ReviewFilterShell[\s\S]*?collapsed=\{collapsed\}[\s\S]*?onCollapsedChange=\{onCollapsedChange\}/);
   assert.match(events, /<ReviewFilterShell[\s\S]*?collapsed=\{collapsed\}[\s\S]*?onCollapsedChange=\{onCollapsedChange\}/);
@@ -177,7 +178,7 @@ test("主播场次和事件筛选共用单场筛选框架，并支持折叠状�
 });
 
 test("主播页向下滚动收起筛选，回到页面顶部向上滚动时按自动收起状态展开", () => {
-  const panel = readFileSync(fileURLToPath(new URL("../src/components/ReviewPanel.tsx", import.meta.url)), "utf8");
+  const panel = readUiSource(fileURLToPath(new URL("../src/components/ReviewPanel.tsx", import.meta.url)), "utf8");
   const handler = panel.match(/const handleReviewOwnerWheel = useCallback\([\s\S]*?\n  \}, \[[^\n]*\]\);/);
   assert.ok(handler, "主播页需要单独处理自然页面滚动手势");
   assert.match(handler[0], /handleReviewTimelineScrollIntent\(event\.deltaY < 0 \? "up" : "down", page\.scrollTop <= 1\)/);
@@ -186,8 +187,8 @@ test("主播页向下滚动收起筛选，回到页面顶部向上滚动时按�
 });
 
 test("主播页更多条件浮层从筛选框下方展开，并按视口剩余高度限制内部滚动", () => {
-  const events = readFileSync(fileURLToPath(new URL("../src/components/ReviewOwnerEventFilters.tsx", import.meta.url)), "utf8");
-  const popover = readFileSync(fileURLToPath(new URL("../src/components/ReviewFilterPopover.tsx", import.meta.url)), "utf8");
+  const events = readUiSource(fileURLToPath(new URL("../src/components/ReviewOwnerEventFilters.tsx", import.meta.url)), "utf8");
+  const popover = readUiSource(fileURLToPath(new URL("../src/components/ReviewFilterPopover.tsx", import.meta.url)), "utf8");
   assert.match(events, /<ReviewFilterPopover/);
   assert.match(popover, /positionReviewFilterPopover\(/);
   assert.match(popover, /maxHeight: position\?\.maxHeight/);

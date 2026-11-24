@@ -1,3 +1,4 @@
+import { uiText } from "../i18n/index.ts";
 import {
   imageBackgroundCss,
   isImageBackgroundDraft,
@@ -24,35 +25,35 @@ import { NATIVE_PROPERTY_GROUPS } from "../themes/nativeThemeCapabilities.ts";
 export const THEME_NUMBER_FIELDS: Partial<
   Record<NativeVisualProperty, readonly [string, number, number, number]>
 > = {
-  fontWeight: ["字重", 100, 900, 100],
-  fontSize: ["字号", 0, 640, 0.5],
-  lineHeight: ["行高", 0, 640, 0.1],
-  paddingX: ["水平内边距", 0, 640, 0.5],
-  paddingY: ["垂直内边距", 0, 640, 0.5],
-  marginX: ["水平外边距", -640, 640, 0.5],
-  marginY: ["垂直外边距", -640, 640, 0.5],
-  gap: ["元素间距", 0, 640, 0.5],
-  width: ["宽度", 0, 2048, 0.5],
-  height: ["高度", 0, 2048, 0.5],
-  borderWidth: ["边框宽度", 0, 80, 0.5],
-  borderRadius: ["圆角", 0, 640, 0.5],
+  fontWeight: [uiText("themeVisualPropertyField.THEME_NUMBER_FIELDS.fontWeight"), 100, 900, 100],
+  fontSize: [uiText("common.fontSize"), 0, 640, 0.5],
+  lineHeight: [uiText("themeVisualPropertyField.THEME_NUMBER_FIELDS.lineHeight"), 0, 640, 0.1],
+  paddingX: [uiText("themeVisualPropertyField.THEME_NUMBER_FIELDS.paddingX"), 0, 640, 0.5],
+  paddingY: [uiText("themeVisualPropertyField.THEME_NUMBER_FIELDS.paddingY"), 0, 640, 0.5],
+  marginX: [uiText("themeVisualPropertyField.THEME_NUMBER_FIELDS.marginX"), -640, 640, 0.5],
+  marginY: [uiText("themeVisualPropertyField.THEME_NUMBER_FIELDS.marginY"), -640, 640, 0.5],
+  gap: [uiText("themeVisualPropertyField.THEME_NUMBER_FIELDS.gap"), 0, 640, 0.5],
+  width: [uiText("themeVisualPropertyField.THEME_NUMBER_FIELDS.width"), 0, 2048, 0.5],
+  height: [uiText("themeVisualPropertyField.THEME_NUMBER_FIELDS.height"), 0, 2048, 0.5],
+  borderWidth: [uiText("themeVisualPropertyField.THEME_NUMBER_FIELDS.borderWidth"), 0, 80, 0.5],
+  borderRadius: [uiText("themeVisualPropertyField.THEME_NUMBER_FIELDS.borderRadius"), 0, 640, 0.5],
 };
 const labels: Partial<Record<NativeVisualProperty, string>> = {
-  visible: "可见性",
-  fontFamily: "字体",
-  color: "颜色",
-  background: "背景填充",
-  borderImage: "图片边框",
-  borderColor: "边框颜色",
+  visible: uiText("themeVisualPropertyField.labels.visible"),
+  fontFamily: uiText("common.font"),
+  color: uiText("common.color"),
+  background: uiText("themeVisualPropertyField.labels.background"),
+  borderImage: uiText("themeVisualPropertyField.labels.borderImage"),
+  borderColor: uiText("themeVisualPropertyField.labels.borderColor"),
 };
 const groupLabels: Record<string, string> = {
-  display: "可见性",
-  typography: "文字",
-  surface: "颜色与背景",
-  spacing: "间距",
-  border: "边框",
-  layout: "排版",
-  media: "媒体",
+  display: uiText("themeVisualPropertyField.groupLabels.display"),
+  typography: uiText("themeVisualPropertyField.groupLabels.typography"),
+  surface: uiText("themeVisualPropertyField.groupLabels.surface"),
+  spacing: uiText("themeVisualPropertyField.groupLabels.spacing"),
+  border: uiText("themeVisualPropertyField.groupLabels.border"),
+  layout: uiText("themeVisualPropertyField.groupLabels.layout"),
+  media: uiText("themeVisualPropertyField.groupLabels.media"),
 };
 export function themeVisualPropertyGroups(
   properties: readonly NativeVisualProperty[],
@@ -170,16 +171,16 @@ export function ThemeVisualPropertyField({
         onPreviewCancel={onPreviewCancel}
       />
     ) : controlled ? (
-      <strong>由 CSS 控制</strong>
+      <strong>{uiText("themeVisualPropertyField.ThemeVisualPropertyField.input")}</strong>
     ) : missing ? (
-      <span>当前样例没有此部件</span>
+      <span>{uiText("themeVisualPropertyField.ThemeVisualPropertyField.input2")}</span>
     ) : property === "visible" ? (
       <SettingsChoiceControl label={label} value={blank ? undefined : value === false ? "hidden" : "visible"}
-        options={[{ value: "visible", label: "显示" }, { value: "hidden", label: "隐藏" }]}
+        options={[{ value: "visible", label: uiText("common.show") }, { value: "hidden", label: uiText("common.hide") }]}
         onChange={next => onChange(next === "visible")} />
     ) : property === "fontFamily" ? (
       <SettingsFontFamilySelect
-        emptyLabel={mixed ? "混合值" : "继承主题"}
+        emptyLabel={mixed ? uiText("themeVisualPropertyField.emptyLabel") : uiText("themeVisualPropertyField.emptyLabel2")}
         options={fontFamilyOptions}
         value={blank ? "" : String(value ?? "")}
         onChange={onChange}
@@ -206,20 +207,20 @@ export function ThemeVisualPropertyField({
     ) : (
       <><div className="native-number-control">
         <ThemeNumberInput
-          label={`${label}精确值`}
+          label={uiText("themeVisualPropertyField.label", { label: label })}
           min={min}
           max={max}
           step={step}
           value={blank || typeof value !== "number" ? undefined : value}
-          placeholder={mixed ? "混合值" : undefined}
+          placeholder={mixed ? uiText("themeVisualPropertyField.placeholder") : undefined}
           onChange={onChange}
           onPreviewChange={onPreviewChange}
           onPreviewCancel={onPreviewCancel}
         />
         {unit && <span>{unit}</span>}
       </div>
-      {property === "fontWeight" && <SettingsChoiceControl label="常用字重" value={blank || typeof value !== "number" ? undefined : value}
-        options={[{ value: 400, label: "常规" }, { value: 500, label: "中等" }, { value: 700, label: "粗体" }]} onChange={onChange} />}</>
+      {property === "fontWeight" && <SettingsChoiceControl label={uiText("themeVisualPropertyField.label2")} value={blank || typeof value !== "number" ? undefined : value}
+        options={[{ value: 400, label: uiText("themeVisualPropertyField.options.label") }, { value: 500, label: uiText("themeVisualPropertyField.options.label2") }, { value: 700, label: uiText("themeVisualPropertyField.options.label3") }]} onChange={onChange} />}</>
     );
   return (
     <div className={`native-property-group is-${property}`}>
@@ -234,8 +235,8 @@ export function ThemeVisualPropertyField({
             <button
               type="button"
               className="native-property-restore"
-              title="恢复继承"
-              aria-label="恢复继承"
+              title={uiText("themeVisualPropertyField.title")}
+              aria-label={uiText("themeVisualPropertyField.aria_label")}
               onClick={onRestore}
             >
               <RotateCcw size={16} aria-hidden="true" />
@@ -261,9 +262,8 @@ export function ThemeVisualPropertyField({
       )}
       {mixed && (property === "background" || property === "borderImage") && (
         <small>
-          完成后统一此范围的{property === "background" ? "背景" : "图片边框"}
-          设置。
-        </small>
+          {uiText("themeVisualPropertyField.ThemeVisualPropertyField")}{property === "background" ? uiText("themeVisualPropertyField.ThemeVisualPropertyField2") : uiText("themeVisualPropertyField.ThemeVisualPropertyField3")}
+          {uiText("themeVisualPropertyField.ThemeVisualPropertyField4")}</small>
       )}
     </div>
   );

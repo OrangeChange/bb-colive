@@ -1,3 +1,4 @@
+import { uiText } from "../i18n/index.ts";
 export async function commitFormattedCss<TLayer extends string>(
   layer: TLayer,
   source: string,
@@ -21,5 +22,5 @@ function getCssErrorPosition(error: unknown): CssErrorPosition | null {
 export function handleCssFormatError<TLayer extends string>(layer: TLayer, error: unknown, goToPosition: (layer: TLayer, line: number, column: number) => void): string {
   const position = getCssErrorPosition(error);
   if (position) goToPosition(layer, position.line, position.column);
-  return error instanceof Error ? error.message : "格式化失败，请检查 CSS";
+  return error instanceof Error ? error.message : uiText("nativeCssFormatting.handleCssFormatError");
 }

@@ -1,3 +1,4 @@
+import { uiText } from "../i18n/index.ts";
 export type SettingsSectionId = "general" | "display" | "filters" | "live" | "review" | "windows" | "interaction" | "voice" | "other" | "about";
 
 export type SettingsSection = {
@@ -15,16 +16,16 @@ export type SettingsOpenRequest = {
 };
 
 export const SETTINGS_SECTIONS: readonly SettingsSection[] = [
-  { id: "general", label: "通用设置" },
-  { id: "display", label: "事件显示" },
-  { id: "filters", label: "事件筛选" },
-  { id: "live", label: "现场" },
-  { id: "review", label: "回看" },
-  { id: "windows", label: "副窗口" },
-  { id: "interaction", label: "事件交互" },
-  { id: "voice", label: "语音与播报" },
-  { id: "other", label: "其他设置" },
-  { id: "about", label: "关于" },
+  { id: "general", label: uiText("settingsNavigation.SETTINGS_SECTIONS.label") },
+  { id: "display", label: uiText("settingsNavigation.SETTINGS_SECTIONS.label2") },
+  { id: "filters", label: uiText("settingsNavigation.SETTINGS_SECTIONS.label3") },
+  { id: "live", label: uiText("common.live") },
+  { id: "review", label: uiText("common.review") },
+  { id: "windows", label: uiText("settingsNavigation.SETTINGS_SECTIONS.label4") },
+  { id: "interaction", label: uiText("settingsNavigation.SETTINGS_SECTIONS.label5") },
+  { id: "voice", label: uiText("settingsNavigation.SETTINGS_SECTIONS.label6") },
+  { id: "other", label: uiText("settingsNavigation.SETTINGS_SECTIONS.label7") },
+  { id: "about", label: uiText("settingsNavigation.SETTINGS_SECTIONS.label8") },
 ];
 
 /** 归一化后的累计滚轮位移阈值；持续输入可以一次跨越多个分类。 */

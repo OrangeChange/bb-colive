@@ -1,3 +1,4 @@
+import { uiText } from "../../i18n/index.ts";
 import { Search as LucideSearch, Check as LucideCheck, X } from "lucide-react";
 import * as PopoverPrimitive from "@radix-ui/react-popover";
 import { useEffect, useId, useMemo, useRef, useState, type KeyboardEvent, type ReactNode } from "react";
@@ -21,7 +22,7 @@ function joinClassNames(...classNames: Array<string | undefined>): string {
 }
 
 function groupLabel(group: ComboboxOption["group"]): string {
-  return group === "recent" ? "最近搜索" : "关键词建议";
+  return group === "recent" ? uiText("combobox.groupLabel") : uiText("combobox.groupLabel2");
 }
 
 function SearchIcon(): ReactNode {
@@ -124,7 +125,7 @@ export function UiCombobox({
             onKeyDown={handleKeyDown}
             className="ui-combobox-input ui-type-control"
           />
-          {value && <button type="button" className="ui-combobox-clear" aria-label={`清空${ariaLabel}`} title="清空搜索" disabled={disabled} onClick={() => { onValueChange(""); setHighlightedIndex(0); anchorRef.current?.querySelector("input")?.focus(); }}><X size={14} aria-hidden="true" /></button>}
+          {value && <button type="button" className="ui-combobox-clear" aria-label={uiText("combobox.aria_label", { ariaLabel: ariaLabel })} title={uiText("combobox.title")} disabled={disabled} onClick={() => { onValueChange(""); setHighlightedIndex(0); anchorRef.current?.querySelector("input")?.focus(); }}><X size={14} aria-hidden="true" /></button>}
         </div>
       </PopoverPrimitive.Anchor>
       <PopoverPrimitive.Portal>
@@ -141,7 +142,7 @@ export function UiCombobox({
           onCloseAutoFocus={(event) => event.preventDefault()}
           className="ui-combobox-content"
         >
-          <div id={listboxId} role="listbox" aria-label={`${ariaLabel}建议`} className="ui-combobox-list">
+          <div id={listboxId} role="listbox" aria-label={uiText("combobox.aria_label2", { ariaLabel: ariaLabel })} className="ui-combobox-list">
             {filteredOptions.map((option, index) => {
               const previous = filteredOptions[index - 1];
               const showGroupLabel = !previous || previous.group !== option.group;

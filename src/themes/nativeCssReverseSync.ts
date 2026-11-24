@@ -1,3 +1,4 @@
+import { uiText } from "../i18n/index.ts";
 import { NATIVE_PART_SELECTORS, type NativeSemanticPartId } from "./nativeSemanticSelectors.ts";
 import { nativeVisualPropertiesForPart, resolveNativePartShape } from "./nativeThemeCapabilities.ts";
 import postcss, { type Declaration, type Rule } from "postcss";
@@ -98,12 +99,12 @@ export function reverseSyncNativeVisualCss(source: string, previous: NativeVisua
           continue;
         }
         const property = PROPERTY_BY_CSS[child.prop];
-        if (!property) { diagnostics.push(`无法同步 ${child.prop}，已保留在 CSS 中`); continue; }
+        if (!property) { diagnostics.push(uiText("nativeCssReverseSync.reverseSyncNativeVisualCss", { prop: child.prop })); continue; }
         if (!allowed.has(property)) {
-          diagnostics.push(`${child.prop} 不适用于当前部件，已保留在 CSS 中`);
+          diagnostics.push(uiText("nativeCssReverseSync.reverseSyncNativeVisualCss2", { prop: child.prop }));
           continue;
         }
-        if (seen.has(child.prop)) diagnostics.push(`存在多个 ${child.prop}，已使用最后一个有效值`);
+        if (seen.has(child.prop)) diagnostics.push(uiText("nativeCssReverseSync.reverseSyncNativeVisualCss3", { prop: child.prop }));
         seen.add(child.prop);
         let value = valueOf(child, property);
         if (value === undefined) {
@@ -113,8 +114,8 @@ export function reverseSyncNativeVisualCss(source: string, previous: NativeVisua
             delete current[property];
             if (!Object.keys(current).length) delete model[targetScheme][targetKey];
           }
-          const expected = property === "visible" ? "none 或 revert-layer" : property === "lineHeight" ? "无单位数值" : "px 数值或基准比例表达式";
-          diagnostics.push(`${child.prop} 需要使用${expected}，已保留在 CSS 中`);
+          const expected = property === "visible" ? uiText("nativeCssReverseSync.reverseSyncNativeVisualCss.expected") : property === "lineHeight" ? uiText("nativeCssReverseSync.reverseSyncNativeVisualCss.expected2") : uiText("nativeCssReverseSync.reverseSyncNativeVisualCss.expected3");
+          diagnostics.push(uiText("nativeCssReverseSync.reverseSyncNativeVisualCss4", { prop: child.prop, expected: expected }));
           continue;
         }
         const old = normalizeNativeVisualModel(previous)[targetScheme][targetKey]?.[property];
@@ -135,6 +136,6 @@ export function reverseSyncNativeVisualCss(source: string, previous: NativeVisua
     const unmanagedCss = root.toString().trim();
     return { model, unmanagedCss, error: "", diagnostics, cssControlled: [...cssControlled.values()] };
   } catch (error) {
-    return { model: normalizeNativeVisualModel(previous), unmanagedCss: "", error: error instanceof Error ? error.message : "CSS 语法有误", diagnostics: [], cssControlled: [] };
+    return { model: normalizeNativeVisualModel(previous), unmanagedCss: "", error: error instanceof Error ? error.message : uiText("nativeCssReverseSync.reverseSyncNativeVisualCss.error"), diagnostics: [], cssControlled: [] };
   }
 }

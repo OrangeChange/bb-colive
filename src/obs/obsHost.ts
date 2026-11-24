@@ -1,3 +1,4 @@
+import { uiText } from "../i18n/index.ts";
 import { resolveOutputScheme } from "./obsConfigurationIdentity.ts";
 import { getEventEffect } from "../protocol/giftEffects.ts";
 import { createNativeEventVisibilityPredicate } from '../events/outputEventPolicy.ts';
@@ -201,17 +202,17 @@ async function attach(clientId: string, query: ObsQuery) {
       (c) => c.id === query.config,
     );
     if (!configuration)
-      throw new Error("OBS 配置不存在，请在软件中保存配置后重新复制地址");
-    if (query.mode && query.mode !== "light" && query.mode !== "dark") throw new Error("明暗参数无效，请使用 mode=light 或 mode=dark");
+      throw new Error(uiText("obsHost.attach"));
+    if (query.mode && query.mode !== "light" && query.mode !== "dark") throw new Error(uiText("obsHost.attach2"));
     const room = query.room || configuration.roomId;
     if (!room || !/^\d+$/.test(room) || Number(room) <= 0)
-      throw new Error("房间号无效，请检查地址中的 room");
+      throw new Error(uiText("obsHost.attach3"));
     let snapshot = await loadObsThemeSnapshot(configuration.id);
-    if (!snapshot) throw new Error("配置尚未发布，请在软件中保存 OBS 配置");
+    if (!snapshot) throw new Error(uiText("obsHost.attach4"));
     const sample = query.preview === "sample";
     const session = useSession.getState();
     if (!sample && (!session.session || session.phase !== "loggedIn"))
-      throw new Error("软件尚未登录，请在软件中登录后重试");
+      throw new Error(uiText("obsHost.attach5"));
     let pendingEvents: Parameters<
       ReturnType<typeof createObsOutputState>["accept"]
     >[0][] = [];
@@ -259,7 +260,7 @@ async function attach(clientId: string, query: ObsQuery) {
     }
     const roomId = lease?.roomId ?? Number(room);
     snapshot = { ...snapshot, roomId };
-    const identity = `${configuration.id}:${roomId}:${configuration.themeId}:${sample ? `sample:${query.kind ?? "混合流"}` : "live"}:${query.mode ?? configuration.scheme ?? "follow"}`;
+    const identity = `${configuration.id}:${roomId}:${configuration.themeId}:${sample ? `sample:${query.kind ?? uiText("obsHost.attach.identity")}` : "live"}:${query.mode ?? configuration.scheme ?? "follow"}`;
     output = outputs.get(identity);
     if (output) {
       if (output.lease) lease?.release();
@@ -330,7 +331,7 @@ async function attach(clientId: string, query: ObsQuery) {
       if (renderFailures.delete(clientId)) void publishRenderFailures();
       await send(clientId, {
         type: "status",
-        message: error instanceof Error ? error.message : "无法读取 OBS 配置",
+        message: error instanceof Error ? error.message : uiText("obsHost.attach.message"),
       });
     }
   }
@@ -353,7 +354,7 @@ export async function startObsHost() {
             configurationId: current?.query.config,
             message:
               message.message ||
-              "主题更新失败，仍在使用旧版本，请刷新浏览器输出重试",
+              uiText("obsHost.startObsHost.stops.message"),
           });
           void publishRenderFailures();
         } else if (message.type === "ready" && renderFailures.delete(clientId))
@@ -444,7 +445,7 @@ export async function startObsHost() {
           output.lease = undefined;
           output.connection = {
             status: "error",
-            message: "登录已失效，请在软件中重新登录",
+            message: uiText("obsHost.startObsHost.stopSession.message"),
           };
           publish(output);
         }

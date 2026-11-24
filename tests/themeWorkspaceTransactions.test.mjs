@@ -1,3 +1,4 @@
+import { UiMessageError, uiText } from "../src/i18n/index.ts";
 import assert from "node:assert/strict";
 import test from "node:test";
 
@@ -25,7 +26,7 @@ test("OBS 发布失败时移除新建配置", async () => {
 });
 
 test("主题保存保留可操作的目录权限错误", () => {
-  assert.equal(themeSaveErrorMessage(new Error("无法写入程序目录中的 style 文件夹，请将程序移到可写位置"), "主题保存失败"), "无法写入程序目录中的 style 文件夹，请将程序移到可写位置");
+  assert.equal(themeSaveErrorMessage(new UiMessageError("backend.theme_store.program_style_write_error", {error: "拒绝访问"}), "主题保存失败"), uiText("backend.theme_store.program_style_write_error", {error: "拒绝访问"}));
   assert.equal(themeSaveErrorMessage(new Error("未知错误"), "主题保存失败"), "主题保存失败");
 });
 

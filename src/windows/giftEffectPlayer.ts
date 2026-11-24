@@ -1,3 +1,4 @@
+import { uiText } from "../i18n/index.ts";
 import Vap from "video-animation-player";
 import type { GiftEffectResource } from "../protocol/giftEffects";
 import { getDiagnosticContext } from "../diagnostics/diagnosticLogger.ts";
@@ -138,7 +139,7 @@ export function createGiftEffectPlayer(): GiftEffectPlayer {
       configurationRequest = new AbortController();
       void fetch(resource.webMp4Json, { signal: configurationRequest.signal })
         .then(response => {
-          if (!response.ok) throw new Error("礼物特效配置无法读取");
+          if (!response.ok) throw new Error(uiText("giftEffectPlayer.createGiftEffectPlayer.play"));
           return response.json();
         })
         .then(start, () => {

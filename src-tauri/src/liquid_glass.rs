@@ -10,6 +10,6 @@ pub fn set(hwnd: *mut c_void, enabled: bool, dark: bool, radius: f32, tint: f32,
     let result = unsafe { danmu_glass_set(hwnd, enabled as i32, dark as i32, radius,
         tint, color.as_ref().map_or(std::ptr::null(), |value| value.as_ptr()), error.as_mut_ptr(), error.len()) };
     if result == 0 {
-        Err(format!("无法更新玻璃效果：{}", unsafe { CStr::from_ptr(error.as_ptr()) }.to_string_lossy()))
+        Err(ui_format!("backend.liquid_glass.set", unsafe { CStr::from_ptr(error.as_ptr()) }.to_string_lossy()))
     } else { Ok(()) }
 }

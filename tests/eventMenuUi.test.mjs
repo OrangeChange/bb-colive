@@ -1,19 +1,20 @@
+import { readUiSource } from "./helpers/readUiSource.mjs";
 import postcss from 'postcss';
 import test from "node:test";
 import assert from "node:assert/strict";
 import { readFileSync } from "node:fs";
 import { fileURLToPath } from "node:url";
 
-const source = readFileSync(fileURLToPath(new URL("../src/components/EventContextMenu.tsx", import.meta.url)), "utf8");
-const previewSource = readFileSync(fileURLToPath(new URL("../src/components/ImagePreviewOverlay.tsx", import.meta.url)), "utf8");
-const eventRow = readFileSync(fileURLToPath(new URL("../src/components/EventRow.tsx", import.meta.url)), "utf8");
-const eventList = readFileSync(fileURLToPath(new URL("../src/components/EventList.tsx", import.meta.url)), "utf8");
-const eventPane = readFileSync(fileURLToPath(new URL("../src/components/EventPane.tsx", import.meta.url)), "utf8");
-const partitionColumn = readFileSync(fileURLToPath(new URL("../src/components/PartitionColumn.tsx", import.meta.url)), "utf8");
-const app = readFileSync(fileURLToPath(new URL("../src/App.tsx", import.meta.url)), "utf8");
-const reviewPanel = readFileSync(fileURLToPath(new URL("../src/components/ReviewPanel.tsx", import.meta.url)), "utf8");
-const cssSource = readFileSync(fileURLToPath(new URL("../src/App.css", import.meta.url)), "utf8");
-const settings = readFileSync(fileURLToPath(new URL("../src/components/SettingsPanel.tsx", import.meta.url)), "utf8");
+const source = readUiSource(fileURLToPath(new URL("../src/components/EventContextMenu.tsx", import.meta.url)), "utf8");
+const previewSource = readUiSource(fileURLToPath(new URL("../src/components/ImagePreviewOverlay.tsx", import.meta.url)), "utf8");
+const eventRow = readUiSource(fileURLToPath(new URL("../src/components/EventRow.tsx", import.meta.url)), "utf8");
+const eventList = readUiSource(fileURLToPath(new URL("../src/components/EventList.tsx", import.meta.url)), "utf8");
+const eventPane = readUiSource(fileURLToPath(new URL("../src/components/EventPane.tsx", import.meta.url)), "utf8");
+const partitionColumn = readUiSource(fileURLToPath(new URL("../src/components/PartitionColumn.tsx", import.meta.url)), "utf8");
+const app = readUiSource(fileURLToPath(new URL("../src/App.tsx", import.meta.url)), "utf8");
+const reviewPanel = readUiSource(fileURLToPath(new URL("../src/components/ReviewPanel.tsx", import.meta.url)), "utf8");
+const cssSource = readUiSource(fileURLToPath(new URL("../src/App.css", import.meta.url)), "utf8");
+const settings = readUiSource(fileURLToPath(new URL("../src/components/SettingsPanel.tsx", import.meta.url)), "utf8");
 
 
 const scaledEventSize = "var(--event-font-size, calc(var(--review-main, 14px) * 16 / 14))";
@@ -117,7 +118,7 @@ test("事件快捷菜单设置将显示按钮改为全宽分区，并分离可�
   assert.match(settings, /settings-shortcut-picker-header/);
   assert.match(settings, /<span className="ui-type-control text-t2">显示按钮<\/span>/);
   assert.match(settings, /已选 \{selectedCount\}\/3/);
-  assert.match(settings, /settings-shortcut-selected-list[^>]*title="拖动或使用方向键调整顺序"/);
+  assert.match(settings, /settings-shortcut-selected-list[^>]*title=["']拖动或使用方向键调整顺序["']/);
   assert.match(settings, /<div className="settings-shortcut-add-label ui-type-meta text-t3">可添加<\/div>/);
   assert.doesNotMatch(settings, /settings-control-row settings-shortcut-row/);
 });
@@ -135,14 +136,14 @@ test("事件菜单会根据当前筛选状态切换筛选动作，并支持退�
   assert.match(source, /isUserFiltered\?: \(user: DanmakuUser\) => boolean/);
   assert.match(source, /onClearUserFilter\?: \(\) => void/);
   assert.match(source, /const userFiltered = Boolean\(user && handlers\.isUserFiltered\?\.\(user\)\)/);
-  assert.match(source, /label: userFiltered \? "退出筛选" : "筛选该用户"/);
+  assert.match(source, /label: userFiltered \? ["']退出筛选["'] : ["']筛选该用户["']/);
   assert.match(source, /userFiltered \? handlers\.onClearUserFilter\?\.\(\) : handlers\.onUserFilter\?\.\(user\)/);
   assert.match(source, /const actionDisabled = userFiltered \? !handlers\.onClearUserFilter : !handlers\.onUserFilter/);
 });
 
 test("筛选中的现场和回看事件菜单提供查看上下文，并由各自列表定位原事件", () => {
   assert.match(source, /onViewContext\?: \(event: DanmakuEvent, regionKey: string\) => void/);
-  assert.match(source, /label: "查看上下文"/);
+  assert.match(source, /label: ["']查看上下文["']/);
   assert.match(source, /handlers\.onViewContext\?\.\(event, handlers\.regionKey\)/);
   assert.match(app, /onViewContext/);
   assert.match(app, /setQuery\(\{\}\)/);
@@ -168,7 +169,7 @@ test("昵称说明使用通用用户名表述，并保持单行显示", () => {
   assert.match(source, /whitespace-nowrap/);
   assert.doesNotMatch(source, /替换现场显示的用户名/);
   assert.match(settings, /昵称作为通用用户名/);
-  assert.match(settings, /title="昵称作为通用用户名，影响界面显示和语音播报。"/);
+  assert.match(settings, /title=["']昵称作为通用用户名，影响界面显示和语音播报。["']/);
   assert.doesNotMatch(settings, /昵称会替换现场事件中的用户名/);
 });
 
@@ -210,7 +211,7 @@ test("昵称说明完整显示，弹窗为完整文案预留宽度且不显示�
   const settingsPopupStart = settings.indexOf("settings-user-nickname-popover");
   const settingsPopup = settings.slice(settingsPopupStart, settingsPopupStart + 9000);
   assert.match(settings, /const width = Math\.min\(460, /);
-  assert.match(settingsPopup, /title="昵称作为通用用户名，影响界面显示和语音播报。"/);
+  assert.match(settingsPopup, /title=["']昵称作为通用用户名，影响界面显示和语音播报。["']/);
   assert.doesNotMatch(settingsPopup, /昵称作为通用用户名，影响界面显示和语音播报。<\/p>/);
   assert.doesNotMatch(settingsPopup, /新增请从事件菜单操作/);
 });
@@ -244,7 +245,7 @@ test("点击事件菜单头像在整个事件区域显示方形预览，并提�
   assert.match(previewSource, /aria-modal="true"/);
   assert.match(previewSource, /bg-bg\/80/);
   assert.match(previewSource, /size-60[^\n]*rounded-full[^\n]*object-cover/);
-  assert.match(source, /closeLabel="关闭头像预览"/);
+  assert.match(source, /closeLabel=["']关闭头像预览["']/);
   assert.match(previewSource, /onPointerDown/);
 });
 

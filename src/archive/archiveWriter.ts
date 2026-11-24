@@ -1,3 +1,4 @@
+import { uiText } from "../i18n/index.ts";
 import { recordArchiveDiagnostic } from "./archiveDiagnostics.ts";
 import { registerDiagnosticLogger } from "../diagnostics/diagnosticLogger.ts";
 import type {
@@ -150,7 +151,7 @@ export class ArchiveWriter {
     const transfer = this.queueTail.then(async () => {
       const result = await this.drainPendingBatches();
       if (result.pending > 0 || result.failed > 0) {
-        throw new Error("档案仍有待写入或失败写入，当前操作不能继续");
+        throw new Error(uiText("archiveWriter.runTransferExclusive.transfer"));
       }
       const value = await operation({
         blockSessions: (sessionIds, requestId) => this.blockSessions(sessionIds, requestId),

@@ -1,3 +1,4 @@
+import { uiText } from "../i18n/index.ts";
 import { useId, useState } from "react";
 import { Play } from "lucide-react";
 import { controlClass } from "./voicePanelPrimitives";
@@ -10,7 +11,7 @@ export function VoiceTestPanel({ onTest, onBusyChange }: { onTest: (text: string
   const runTest = async () => {
     if (status === "busy") return;
     if (!text.trim()) {
-      setError("请输入试听内容");
+      setError(uiText("voiceTestPanel.VoiceTestPanel.runTest"));
       setStatus("error");
       return;
     }
@@ -21,20 +22,20 @@ export function VoiceTestPanel({ onTest, onBusyChange }: { onTest: (text: string
       await onTest(text.trim());
       setStatus("ended");
     } catch (cause) {
-      setError(`试听失败：${cause instanceof Error ? cause.message : String(cause)}。请检查网络及引擎配置后重试。`);
+      setError(uiText("voiceTestPanel.VoiceTestPanel.runTest2", { value: cause instanceof Error ? cause.message : String(cause) }));
       setStatus("error");
     } finally {
       onBusyChange(false);
     }
   };
 
-  return <section className="voice-test-panel" aria-label="试听">
-    <input id={id} aria-label="试听内容" className={`${controlClass} voice-test-input`} value={text} disabled={status === "busy"}
+  return <section className="voice-test-panel" aria-label={uiText("voiceTestPanel.aria_label")}>
+    <input id={id} aria-label={uiText("voiceTestPanel.aria_label2")} className={`${controlClass} voice-test-input`} value={text} disabled={status === "busy"}
       aria-invalid={status === "error" && !text.trim() || undefined} aria-describedby={`${id}-status`}
       onChange={event => { setText(event.target.value); setStatus("idle"); setError(""); }} />
-      <button type="button" className={`${controlClass} voice-test-button`} aria-label="试听" disabled={status === "busy"} onClick={() => void runTest()}>
-        <Play size={15} aria-hidden="true" />{status === "busy" ? "试听中…" : "试听"}
+      <button type="button" className={`${controlClass} voice-test-button`} aria-label={uiText("voiceTestPanel.aria_label")} disabled={status === "busy"} onClick={() => void runTest()}>
+        <Play size={15} aria-hidden="true" />{status === "busy" ? uiText("voiceTestPanel.VoiceTestPanel") : uiText("voiceTestPanel.VoiceTestPanel2")}
       </button>
-    <p id={`${id}-status`} role="status" className={`voice-test-status ui-type-meta ${status === "error" ? "text-danger" : "text-t3"}`}>{status === "ended" ? "试听已结束" : status === "error" ? error : ""}</p>
+    <p id={`${id}-status`} role="status" className={`voice-test-status ui-type-meta ${status === "error" ? "text-danger" : "text-t3"}`}>{status === "ended" ? uiText("voiceTestPanel.VoiceTestPanel3") : status === "error" ? error : ""}</p>
   </section>;
 }

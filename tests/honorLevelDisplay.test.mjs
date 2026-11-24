@@ -1,3 +1,4 @@
+import { readUiSource } from "./helpers/readUiSource.mjs";
 import { tmpdir as ssrTemporaryDirectory } from 'node:os';
 import test, { before, after } from "node:test";
 import assert from "node:assert/strict";
@@ -8,7 +9,7 @@ import { fileURLToPath } from "node:url";
 import { readFileSync } from "node:fs";
 
 const root = fileURLToPath(new URL("..", import.meta.url));
-const styleEditorSource = readFileSync(new URL("../src/components/NativeThemeBasicSettings.tsx", import.meta.url), "utf8");
+const styleEditorSource = readUiSource(new URL("../src/components/NativeThemeBasicSettings.tsx", import.meta.url), "utf8");
 let vite;
 let EventRow;
 let MsgType;
@@ -68,8 +69,8 @@ test("荣耀等级样式默认图标，旧设置和无效值也归一为图标",
 test("大航海与荣耀等级设置位于主题元素显示组，样式选项命名为图标和文字", () => {
   assert.match(styleEditorSource, /大航海身份/);
   assert.match(styleEditorSource, /荣耀勋章/);
-  assert.match(styleEditorSource, /value: "icon", label: "图标"/);
-  assert.match(styleEditorSource, /value: "text", label: "文字"/);
+  assert.match(styleEditorSource, /value: "icon", label: ["']图标["']/);
+  assert.match(styleEditorSource, /value: "text", label: ["']文字["']/);
 });
 
 test("图标模式显示本地徽章，超出本地图片范围时保留数字回退", () => {

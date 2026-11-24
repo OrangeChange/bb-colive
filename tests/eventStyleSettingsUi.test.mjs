@@ -1,3 +1,4 @@
+import { readUiSource } from "./helpers/readUiSource.mjs";
 import { tmpdir as ssrTemporaryDirectory } from 'node:os';
 import test from "node:test";
 import assert from "node:assert/strict";
@@ -10,17 +11,17 @@ import { createDefaultEventStyleSettings } from "../src/eventStyleSettings.ts";
 import { getNativeEventSample } from "./fixtures/nativeEventSamples.ts";
 
 const root = fileURLToPath(new URL("..", import.meta.url));
-const source = readFileSync(`${root}/src/components/ThemeWorkspace.tsx`, "utf8");
-const styleSource = readFileSync(`${root}/src/eventStyleSettings.ts`, "utf8");
+const source = readUiSource(`${root}/src/components/ThemeWorkspace.tsx`, "utf8");
+const styleSource = readUiSource(`${root}/src/eventStyleSettings.ts`, "utf8");
 
 test("颜色设置使用完整身份范围和原生主题编辑器", () => {
-  const editorSource = readFileSync(`${root}/src/components/NativeThemeEditor.tsx`, "utf8");
-  const visualSource = readFileSync(`${root}/src/components/NativeThemeVisualEditor.tsx`, "utf8");
-  const capabilitySource = readFileSync(`${root}/src/themes/nativeThemeCapabilities.ts`, "utf8");
+  const editorSource = readUiSource(`${root}/src/components/NativeThemeEditor.tsx`, "utf8");
+  const visualSource = readUiSource(`${root}/src/components/NativeThemeVisualEditor.tsx`, "utf8");
+  const capabilitySource = readUiSource(`${root}/src/themes/nativeThemeCapabilities.ts`, "utf8");
   for (const label of ["所有用户", "普通用户", "舰长", "提督", "总督", "房管", "主播"]) assert.match(capabilitySource, new RegExp(label));
   assert.match(source, /NativeThemeEditor/);
   assert.match(visualSource, /ThemeVisualPropertyField/);
-  assert.match(readFileSync(`${root}/src/components/ThemeVisualPropertyField.tsx`, "utf8"), /ThemeColorField/);
+  assert.match(readUiSource(`${root}/src/components/ThemeVisualPropertyField.tsx`, "utf8"), /ThemeColorField/);
   assert.match(visualSource, /clearNativeVisualTarget/);
   assert.match(visualSource, /hasLocalOverrides/);
   assert.match(styleSource, /fontFamily/);

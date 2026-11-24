@@ -1,3 +1,4 @@
+import { uiText } from "../i18n/index.ts";
 export const RIGHT_WORKBENCH_COLLAPSED_WIDTH = 64;
 /** 展开宽度包含面板内外留白；收起轨道与展开面板的几何增量为336px。 */
 export const RIGHT_WORKBENCH_DEFAULT_WIDTH = 400;
@@ -22,5 +23,5 @@ export function rightWorkbenchWidth(expanded: boolean, expandedWidth = RIGHT_WOR
 }
 
 export function rightWorkbenchToggleLabel(expanded: boolean): string {
-  return expanded ? "收起功能面板" : "展开功能面板";
+  return expanded ? uiText("rightWorkbenchState.rightWorkbenchToggleLabel") : uiText("rightWorkbenchState.rightWorkbenchToggleLabel2");
 }

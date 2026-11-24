@@ -1,3 +1,4 @@
+import { readUiSource } from "./helpers/readUiSource.mjs";
 import { readApplicationSources } from "./helpers/applicationSources.mjs";
 import test from "node:test";
 import assert from "node:assert/strict";
@@ -5,7 +6,7 @@ import { existsSync, readFileSync } from "node:fs";
 import { fileURLToPath } from "node:url";
 
 const root = fileURLToPath(new URL("..", import.meta.url));
-const read = (relativePath) => readFileSync(`${root}/${relativePath}`, "utf8");
+const read = (relativePath) => readUiSource(`${root}/${relativePath}`, "utf8");
 
 test("副窗口只依赖无副作用的事件通道定义，不加载主窗口桥接生命周期", () => {
   const channelsPath = `${root}/src/windows/eventWindowChannels.ts`;

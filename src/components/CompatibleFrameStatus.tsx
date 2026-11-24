@@ -1,3 +1,4 @@
+import { uiText } from "../i18n/index.ts";
 import { useCallback, useEffect, useState } from "react";
 
 export function useCompatibleFrameLoad() {
@@ -6,7 +7,7 @@ export function useCompatibleFrameLoad() {
   const [attempt, setAttempt] = useState(0);
   useEffect(() => {
     if (ready) return;
-    const timer = window.setTimeout(() => setError("样式预览加载失败，请重试"), 8000);
+    const timer = window.setTimeout(() => setError(uiText("compatibleFrameStatus.useCompatibleFrameLoad.timer")), 8000);
     return () => window.clearTimeout(timer);
   }, [ready, attempt]);
   const retry = useCallback(() => {
@@ -19,7 +20,7 @@ export function useCompatibleFrameLoad() {
 export function CompatibleFrameStatus({ ready, error, onRetry }: { ready: boolean; error: string | null; onRetry(): void }) {
   if (ready && !error) return null;
   return <div className="compatible-frame-status" role={error ? "alert" : "status"}>
-    <span>{error || "正在加载样式预览…"}</span>
-    {error && <button type="button" className="native-preview-open-button" onClick={onRetry}>重试</button>}
+    <span>{error || uiText("compatibleFrameStatus.CompatibleFrameStatus")}</span>
+    {error && <button type="button" className="native-preview-open-button" onClick={onRetry}>{uiText("common.retry")}</button>}
   </div>;
 }

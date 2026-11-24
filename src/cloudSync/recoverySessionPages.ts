@@ -1,3 +1,4 @@
+import { uiText } from "../i18n/index.ts";
 import type { CloudRecoverySessionItem, CloudRecoverySessionPage } from './recoveryTransport.ts';
 
 export async function readRecoverySessionPages(
@@ -14,7 +15,7 @@ export async function readRecoverySessionPages(
     if (!active()) return [];
     for (const item of page.items) items.set(item.session_id, item);
     if (page.hasMore && (!page.nextCursor || page.nextCursor === cursor || cursors.has(page.nextCursor))) {
-      throw new Error('云端场次分页无法继续，请重新读取');
+      throw new Error(uiText("recoverySessionPages.readRecoverySessionPages"));
     }
     onPage?.(page);
     if (!page.hasMore) return [...items.values()];

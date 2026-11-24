@@ -1,3 +1,4 @@
+import { readUiSource } from "./helpers/readUiSource.mjs";
 import test from "node:test";
 import assert from "node:assert/strict";
 import fs from "node:fs";
@@ -357,17 +358,17 @@ test("回看游标在同一时间戳下按 ordinal 和 eventKey 稳定续页，�
 });
 
 test("回看搜索控件提供字段、逻辑、范围和可移除条件，不创建事件 marker", () => {
-  const controls = fs.readFileSync(new URL("src/components/ReviewSearchControls.tsx", root), "utf8");
-  const presets = fs.readFileSync(new URL("src/archive/reviewFilterPresets.ts", root), "utf8");
-  const timeline = fs.readFileSync(new URL("src/components/ReviewSessionTimeline.tsx", root), "utf8");
+  const controls = readUiSource(new URL("src/components/ReviewSearchControls.tsx", root), "utf8");
+  const presets = readUiSource(new URL("src/archive/reviewFilterPresets.ts", root), "utf8");
+  const timeline = readUiSource(new URL("src/components/ReviewSessionTimeline.tsx", root), "utf8");
   assert.match(controls, /用户/);
-  assert.doesNotMatch(controls, /label: "昵称"/);
-  assert.match(controls, /value: "all", label: "全部"/);
-  assert.match(controls, /value: "fanMedal", label: "粉丝牌"/);
-  assert.match(controls, /value: "gift", label: "礼物"/);
+  assert.doesNotMatch(controls, /label: ["']昵称["']/);
+  assert.match(controls, /value: "all", label: ["']全部["']/);
+  assert.match(controls, /value: "fanMedal", label: ["']粉丝牌["']/);
+  assert.match(controls, /value: "gift", label: ["']礼物["']/);
   assert.match(controls, /内容/);
   assert.match(controls, /<UiSelect/);
-  assert.match(controls, /options=\{\[\{ value: "and", label: "且" \}, \{ value: "or", label: "或" \}\]\}/);
+  assert.match(controls, /options=\{\[\{ value: "and", label: ["']且["'] \}, \{ value: "or", label: ["']或["'] \}\]\}/);
   assert.doesNotMatch(controls, /<select|<option/);
   assert.match(controls, /全部历史/);
   assert.match(controls, /只看收藏/);
@@ -380,9 +381,9 @@ test("回看搜索控件提供字段、逻辑、范围和可移除条件，不�
   assert.match(controls, /删除预设/);
   assert.match(controls, /重命名/);
   assert.match(controls, /review-filter-preset/);
-  assert.match(controls, /label: "大航海"/);
+  assert.match(controls, /label: ["']大航海["']/);
   assert.match(controls, /主播粉丝牌/);
-  assert.match(controls, /aria-label="只看收藏"/);
+  assert.match(controls, /aria-label=["']只看收藏["']/);
   assert.doesNotMatch(controls, /<input type="checkbox"[^>]*favoriteOnly/);
   assert.match(controls, /review-filter-preset-divider/);
   assert.ok(controls.indexOf("presets.map") < controls.indexOf(">添加预设</button>"));
@@ -392,7 +393,7 @@ test("回看搜索控件提供字段、逻辑、范围和可移除条件，不�
   assert.ok(quickConditionsStart >= 0 && quickConditionsStart < presetMenuStart && presetMenuStart < favoriteStart);
   assert.match(controls, /activePresetId/);
   assert.match(controls, /aria-pressed=\{active\}/);
-  assert.match(controls, /manageOpen \? "退出管理" : "管理预设"/);
+  assert.match(controls, /manageOpen \? ["']退出管理["'] : ["']管理预设["']/);
   assert.match(controls, /const deleteCurrent = \(id: string\)/);
   assert.match(controls, /if \(presets\.length <= 1\) \{\s*setManageOpen\(false\);/);
   assert.match(controls, /setAddOpen\(false\);\s*setManageOpen\(false\);/);
@@ -453,41 +454,41 @@ test("回看快捷预设可以规范化、重命名和删除", async () => {
 });
 
 test("回看筛选按现场栏提供包含排除切换，并按互动和礼物拆分细分类型", () => {
-  const controls = fs.readFileSync(new URL("src/components/ReviewSearchControls.tsx", root), "utf8");
+  const controls = readUiSource(new URL("src/components/ReviewSearchControls.tsx", root), "utf8");
   assert.match(controls, /包含/);
   assert.match(controls, /排除/);
-  assert.match(controls, /label: "互动"/);
-  assert.match(controls, /label: "礼物"/);
+  assert.match(controls, /label: ["']互动["']/);
+  assert.match(controls, /label: ["']礼物["']/);
   assert.doesNotMatch(controls, /选择类型/);
   assert.match(controls, /switchReviewFilterMode/);
 });
 
 test("回看分类栏复用现场分割线和互动/礼物下拉菜单", () => {
-  const controls = fs.readFileSync(new URL("src/components/ReviewSearchControls.tsx", root), "utf8");
+  const controls = readUiSource(new URL("src/components/ReviewSearchControls.tsx", root), "utf8");
   assert.doesNotMatch(controls, /选中项表示/);
   assert.match(controls, /className="mx-1 h-4 w-px bg-line"/);
   assert.match(controls, /aria-haspopup="menu"/);
   assert.match(controls, /aria-label=\{`\$\{label\}类型筛选`\}/);
   assert.match(controls, /label=\{option\.label\}/);
-  assert.doesNotMatch(controls, /aria-label="互动类型条件"/);
-  assert.doesNotMatch(controls, /aria-label="礼物类型条件"/);
+  assert.doesNotMatch(controls, /aria-label=["']互动类型条件["']/);
+  assert.doesNotMatch(controls, /aria-label=["']礼物类型条件["']/);
 });
 
 test("回看筛选默认只展示核心搜索区，详细条件收进更多筛选面板", () => {
-  const controls = fs.readFileSync(new URL("src/components/ReviewSearchControls.tsx", root), "utf8");
+  const controls = readUiSource(new URL("src/components/ReviewSearchControls.tsx", root), "utf8");
   assert.match(controls, /更多筛选/);
-  const popover = fs.readFileSync(new URL("src/components/ReviewFilterPopover.tsx", root), "utf8");
+  const popover = readUiSource(new URL("src/components/ReviewFilterPopover.tsx", root), "utf8");
   assert.match(controls, /<ReviewFilterPopover/);
   assert.match(popover, /review-filter-advanced-panel/);
   assert.match(controls, /aria-controls=\{`review-filter-advanced-\$\{level\}`\}/);
   assert.doesNotMatch(controls, /<span>事件排序<\/span>/);
-  assert.doesNotMatch(controls, /aria-label="显示大表情"/);
+  assert.doesNotMatch(controls, /aria-label=["']显示大表情["']/);
 });
 
 test("回看筛选的添加按钮和高级面板保持在可点击层，时间输入精确到分钟", () => {
-  const controls = fs.readFileSync(new URL("src/components/ReviewSearchControls.tsx", root), "utf8");
-  const css = fs.readFileSync(new URL("src/App.css", root), "utf8");
-  const presets = fs.readFileSync(new URL("src/archive/reviewFilterPresets.ts", root), "utf8");
+  const controls = readUiSource(new URL("src/components/ReviewSearchControls.tsx", root), "utf8");
+  const css = readUiSource(new URL("src/App.css", root), "utf8");
+  const presets = readUiSource(new URL("src/archive/reviewFilterPresets.ts", root), "utf8");
   const presetMenuStart = controls.indexOf("function ReviewFilterPresetMenu");
   const presetMenuEnd = controls.indexOf("export function ReviewSearchControls");
   const presetMenu = controls.slice(presetMenuStart, presetMenuEnd);
@@ -507,34 +508,34 @@ test("回看筛选的添加按钮和高级面板保持在可点击层，时间�
   assert.match(controls, /过去 1 天/);
   assert.match(controls, /过去 1 周/);
   assert.match(controls, /过去 1 个月/);
-  assert.match(controls, /value: "today", label: "今天"/);
-  assert.match(controls, /value: "yesterday", label: "昨天"/);
-  assert.match(controls, /value: "week", label: "本周"/);
-  assert.match(controls, /value: "lastWeek", label: "上周"/);
-  assert.match(controls, /value: "month", label: "本月"/);
-  assert.match(controls, /value: "lastMonth", label: "上月"/);
-  assert.match(controls, /value: "custom", label: "自定义"/);
+  assert.match(controls, /value: "today", label: ["']今天["']/);
+  assert.match(controls, /value: "yesterday", label: ["']昨天["']/);
+  assert.match(controls, /value: "week", label: ["']本周["']/);
+  assert.match(controls, /value: "lastWeek", label: ["']上周["']/);
+  assert.match(controls, /value: "month", label: ["']本月["']/);
+  assert.match(controls, /value: "lastMonth", label: ["']上月["']/);
+  assert.match(controls, /value: "custom", label: ["']自定义["']/);
   assert.match(controls, /const visibleDatePreset:\s*DatePreset\s*=/);
   assert.match(controls, /value=\{visibleDatePreset\}/);
   assert.doesNotMatch(controls, /今年|去年/);
 });
 
 test("回看筛选将收藏快捷条件独立于分类，并拆分用户与礼物条件", () => {
-  const controls = fs.readFileSync(new URL("src/components/ReviewSearchControls.tsx", root), "utf8");
+  const controls = readUiSource(new URL("src/components/ReviewSearchControls.tsx", root), "utf8");
   const categoryStart = controls.indexOf('aria-label="回看分类条件"');
   const userStart = controls.indexOf('aria-label="回看用户条件"');
   assert.ok(categoryStart >= 0 && userStart > categoryStart);
   const categorySection = controls.slice(categoryStart, userStart);
-  assert.doesNotMatch(categorySection, /aria-label="只看收藏"/);
-  assert.match(controls, /aria-label="快捷收藏条件"/);
-  assert.match(controls, /aria-label="回看用户条件"/);
-  assert.match(controls, /aria-label="回看礼物金额条件"/);
+  assert.doesNotMatch(categorySection, /aria-label=["']只看收藏["']/);
+  assert.match(controls, /aria-label=["']快捷收藏条件["']/);
+  assert.match(controls, /aria-label=["']回看用户条件["']/);
+  assert.match(controls, /aria-label=["']回看礼物金额条件["']/);
   assert.match(controls, /review-filter-advanced-grid/);
 });
 
 test("回看关键词输入提供最近搜索和关键词建议下拉", () => {
-  const controls = fs.readFileSync(new URL("src/components/ReviewSearchControls.tsx", root), "utf8");
-  const combobox = fs.readFileSync(new URL("src/components/ui/Combobox.tsx", root), "utf8");
+  const controls = readUiSource(new URL("src/components/ReviewSearchControls.tsx", root), "utf8");
+  const combobox = readUiSource(new URL("src/components/ui/Combobox.tsx", root), "utf8");
   assert.match(controls, /<UiCombobox/);
   assert.match(controls, /mergeComboboxOptions/);
   assert.doesNotMatch(controls, /<datalist|list=\{/);

@@ -1,3 +1,4 @@
+import { uiText } from "../i18n/index.ts";
 import { ThemeImagePicker } from "./ThemeImagePicker.tsx";
 import { ThemeImageDialog } from "./ThemeImageDialog.tsx";
 import { UiSelect } from "./ui/Select.tsx";
@@ -141,7 +142,7 @@ export function ThemeImageField({
     const expanded = expand(imageBackgroundCss(value));
     style.background = expanded;
     if (!style.background || /var\(/.test(expanded)) {
-      setError("背景由 CSS 控制，请在高级编辑中调整。");
+      setError(uiText("themeImageField.ThemeImageField.start"));
       return;
     }
     const parsed = readImageBackground(style);
@@ -206,7 +207,7 @@ export function ThemeImageField({
       );
       if (!replace) setSelected(0);
     };
-    image.onerror = () => setError("图片未能载入，请重新选择素材。");
+    image.onerror = () => setError(uiText("themeImageField.ThemeImageField.choose"));
     image.src = asset.url;
   };
   const size = /^([\d.]+)px\s+([\d.]+)px$/.exec(layer?.size ?? "");
@@ -297,18 +298,16 @@ export function ThemeImageField({
     <div className="theme-image-field">
       <button type="button" onClick={start} disabled={disabled}>
         <ImagePlus size={18} />
-        图片背景
-      </button>
+        {uiText("themeImageField.ThemeImageField")}</button>
       {error && <p role="status">{error}</p>}
       {draft && (
         <ThemeImageDialog
-          title="图片背景"
+          title={uiText("themeImageField.title")}
           onClose={() => setDraft(null)}
           actions={
             <>
               <button type="button" onClick={() => setDraft(null)}>
-                取消
-              </button>
+                {uiText("common.cancel")}</button>
               <button
                 type="button"
                 className="is-primary"
@@ -365,17 +364,16 @@ export function ThemeImageField({
                   setDraft(null);
                 }}
               >
-                完成设置
-              </button>
+                {uiText("themeImageField.actions")}</button>
             </>
           }
         >
           <ThemeImagePicker
-            label="图片素材"
+            label={uiText("themeImageField.label")}
             onChoose={(asset) => choose(asset, false)}
             onReplace={editable ? (asset) => choose(asset, true) : undefined}
           />
-          <p className="theme-image-hint">上面的图层覆盖下面的图层。</p>
+          <p className="theme-image-hint">{uiText("themeImageField.ThemeImageField2")}</p>
           <div className="theme-image-layers">
             {draft.layers.map((item, index) => (
               <div
@@ -408,7 +406,7 @@ export function ThemeImageField({
                 }}
                 className={index === selected ? "is-selected" : ""}
               >
-                <span className="theme-image-grip" title="拖动排序">
+                <span className="theme-image-grip" title={uiText("themeImageField.title2")}>
                   <GripVertical size={18} />
                 </span>
                 <span
@@ -471,16 +469,16 @@ export function ThemeImageField({
                         (asset) =>
                           item.image === `url(${JSON.stringify(asset.path)})` ||
                           item.image === `url(${JSON.stringify(asset.url)})`,
-                      )?.name ?? "图片")
+                      )?.name ?? uiText("themeImageField.ThemeImageField3"))
                     : /gradient\(/i.test(item.image)
-                      ? "渐变"
-                      : "背景"}{" "}
+                      ? uiText("themeImageField.ThemeImageField4")
+                      : uiText("themeImageField.ThemeImageField5")}{" "}
                   {index + 1}
                 </button>
                 {/\burl\(/i.test(item.image) && (
                   <button
                     type="button"
-                    aria-label={`显示或隐藏图层 ${index + 1}`}
+                    aria-label={uiText("themeImageField.aria_label", { value: index + 1 })}
                     onClick={() =>
                       setDraft({
                         ...draft,
@@ -501,8 +499,8 @@ export function ThemeImageField({
                 )}
                 <button
                   type="button"
-                  title="上移"
-                  aria-label={`上移图层 ${index + 1}`}
+                  title={uiText("themeImageField.title3")}
+                  aria-label={uiText("themeImageField.aria_label2", { value: index + 1 })}
                   disabled={index === 0}
                   onClick={() => {
                     setDraft(moveImageLayer(draft, index, index - 1));
@@ -513,8 +511,8 @@ export function ThemeImageField({
                 </button>
                 <button
                   type="button"
-                  title="下移"
-                  aria-label={`下移图层 ${index + 1}`}
+                  title={uiText("themeImageField.title4")}
+                  aria-label={uiText("themeImageField.aria_label3", { value: index + 1 })}
                   disabled={index === draft.layers.length - 1}
                   onClick={() => {
                     setDraft(moveImageLayer(draft, index, index + 1));
@@ -525,8 +523,8 @@ export function ThemeImageField({
                 </button>
                 <button
                   type="button"
-                  title="移除图片"
-                  aria-label={`移除图片 ${index + 1}`}
+                  title={uiText("themeImageField.title5")}
+                  aria-label={uiText("themeImageField.aria_label4", { value: index + 1 })}
                   disabled={!/^url\(/i.test(item.image)}
                   onClick={() => {
                     setDraft({
@@ -568,15 +566,14 @@ export function ThemeImageField({
                         setSelected(index);
                       }}
                     >
-                      {front ? "置于填充前" : "置于填充后"}
+                      {front ? uiText("themeImageField.ThemeImageField6") : uiText("themeImageField.ThemeImageField7")}
                     </button>
                   ))}
                 </div>
               )}
               <label>
-                显示方式
-                <UiSelect
-                  ariaLabel="显示方式"
+                {uiText("themeImageField.ThemeImageField8")}<UiSelect
+                  ariaLabel={uiText("themeImageField.ariaLabel3")}
                   value={
                     layer.repeat !== "no-repeat"
                       ? "tile"
@@ -617,24 +614,23 @@ export function ThemeImageField({
                       ? [
                           {
                             value: "existing",
-                            label: "现有设置：" + layer.size,
+                            label: uiText("themeImageField.options.label") + layer.size,
                           },
                         ]
                       : []),
-                    { value: "auto", label: "原始大小" },
-                    { value: "contain", label: "完整显示" },
-                    { value: "cover", label: "铺满" },
-                    { value: "tile", label: "平铺" },
-                    { value: "custom", label: "自定义尺寸" },
+                    { value: "auto", label: uiText("themeImageField.options.label2") },
+                    { value: "contain", label: uiText("themeImageField.options.label3") },
+                    { value: "cover", label: uiText("themeImageField.options.label4") },
+                    { value: "tile", label: uiText("themeImageField.options.label5") },
+                    { value: "custom", label: uiText("themeImageField.options.label6") },
                   ]}
                 />
               </label>
               {size && (
                 <div className="theme-image-dimensions">
                   <label>
-                    宽
-                    <ThemeNumberInput
-                      label={"图片宽度"}
+                    {uiText("themeImageField.ThemeImageField9")}<ThemeNumberInput
+                      label={uiText("themeImageField.label2")}
                       value={Number(size[1])}
                       onChange={(next) => {
                         if (next > 0) dimensions(0, next);
@@ -648,8 +644,8 @@ export function ThemeImageField({
                   </label>
                   <button
                     type="button"
-                    title={locked ? "解除比例" : "锁定比例"}
-                    aria-label={locked ? "解除比例" : "锁定比例"}
+                    title={locked ? uiText("themeImageField.title6") : uiText("themeImageField.title7")}
+                    aria-label={locked ? uiText("themeImageField.aria_label5") : uiText("themeImageField.aria_label6")}
                     onClick={() => {
                       setRatio(+size[1] / +size[2]);
                       setLocked(!locked);
@@ -658,9 +654,8 @@ export function ThemeImageField({
                     {locked ? <Link size={18} /> : <Link2Off size={18} />}
                   </button>
                   <label>
-                    高
-                    <ThemeNumberInput
-                      label={"图片高度"}
+                    {uiText("themeImageField.ThemeImageField10")}<ThemeNumberInput
+                      label={uiText("themeImageField.label3")}
                       value={Number(size[2])}
                       onChange={(next) => {
                         if (next > 0) dimensions(1, next);
@@ -696,30 +691,28 @@ export function ThemeImageField({
                       });
                     };
                     image.onerror = () =>
-                      setError("图片未能载入，请重新选择素材。");
+                      setError(uiText("themeImageField.onClick"));
                     image.src = asset.url;
                   }}
                 >
                   <RotateCcw size={18} />
-                  恢复原图比例
-                </button>
+                  {uiText("themeImageField.ThemeImageField11")}</button>
               )}
               <label>
-                图片位置
-                <div className="theme-image-grid">
+                {uiText("themeImageField.ThemeImageField12")}<div className="theme-image-grid">
                   {["left", "center", "right"].flatMap((_, y) =>
                     ["left", "center", "right"].map((x, i) => {
                       const position = `${x} ${["top", "center", "bottom"][y]}`;
                       const label = [
-                        "左上",
-                        "上中",
-                        "右上",
-                        "左中",
-                        "居中",
-                        "右中",
-                        "左下",
-                        "下中",
-                        "右下",
+                        uiText("themeImageField.ThemeImageField.label"),
+                        uiText("themeImageField.ThemeImageField.label2"),
+                        uiText("themeImageField.ThemeImageField.label3"),
+                        uiText("themeImageField.ThemeImageField.label4"),
+                        uiText("themeImageField.ThemeImageField.label5"),
+                        uiText("themeImageField.ThemeImageField.label6"),
+                        uiText("themeImageField.ThemeImageField.label7"),
+                        uiText("themeImageField.ThemeImageField.label8"),
+                        uiText("themeImageField.ThemeImageField.label9"),
                       ][y * 3 + i];
                       return (
                         <button
@@ -756,18 +749,18 @@ export function ThemeImageField({
               </label>
               {size && (
                 <section className="theme-image-coordinate">
-                  <h4>移动</h4>
-                  {(["左右", "上下"] as const).map((label, axis) => (
+                  <h4>{uiText("themeImageField.ThemeImageField13")}</h4>
+                  {([uiText("themeImageField.ThemeImageField14"), uiText("themeImageField.ThemeImageField15")] as const).map((label, axis) => (
                     <label key={label}>
                       {label}
                       <ThemeNumberInput
-                        label={`图片${label}移动`}
+                        label={uiText("themeImageField.label4", { label: label })}
                         value={Number(move[axis])}
                         onChange={(value) => changeMove(axis, value)}
                         onPreviewChange={(value) => changeMove(axis, value)}
                       />
                       <UiSelect
-                        ariaLabel={`${label}移动单位`}
+                        ariaLabel={uiText("themeImageField.ariaLabel", { label: label })}
                         value={units[axis]}
                         onValueChange={(selectedValue) =>
                           changeMoveUnit(axis, selectedValue as "px" | "%")
@@ -779,23 +772,23 @@ export function ThemeImageField({
                       />
                     </label>
                   ))}
-                  <small>百分比相对参照区域。</small>
+                  <small>{uiText("themeImageField.ThemeImageField16")}</small>
                 </section>
               )}
               {size && (
                 <section className="theme-image-coordinate">
-                  <h4>图片锚点</h4>
-                  {(["横向", "纵向"] as const).map((label, axis) => (
+                  <h4>{uiText("themeImageField.ThemeImageField17")}</h4>
+                  {([uiText("themeImageField.ThemeImageField18"), uiText("themeImageField.ThemeImageField19")] as const).map((label, axis) => (
                     <label key={label}>
                       {label}
                       <ThemeNumberInput
-                        label={`图片锚点${label}`}
+                        label={uiText("themeImageField.label5", { label: label })}
                         value={Number(anchor[axis])}
                         onChange={(value) => changeAnchor(axis, value)}
                         onPreviewChange={(value) => changeAnchor(axis, value)}
                       />
                       <UiSelect
-                        ariaLabel={`${label}锚点单位`}
+                        ariaLabel={uiText("themeImageField.ariaLabel2", { label: label })}
                         value={anchorUnits[axis]}
                         onValueChange={(selectedValue) =>
                           changeAnchor(
@@ -814,9 +807,8 @@ export function ThemeImageField({
                 </section>
               )}
               <label>
-                平铺
-                <UiSelect
-                  ariaLabel="平铺"
+                {uiText("themeImageField.ThemeImageField20")}<UiSelect
+                  ariaLabel={uiText("themeImageField.ariaLabel4")}
                   value={layer.repeat}
                   onValueChange={(selectedValue) =>
                     update({ repeat: selectedValue })
@@ -824,7 +816,7 @@ export function ThemeImageField({
                   options={["no-repeat", "repeat", "repeat-x", "repeat-y"].map(
                     (value, i) => ({
                       value,
-                      label: ["不平铺", "全部", "横向", "纵向"][i],
+                      label: [uiText("themeImageField.options.label7"), uiText("themeImageField.options.label8"), uiText("themeImageField.options.label9"), uiText("themeImageField.options.label10")][i],
                     }),
                   )}
                 />
@@ -832,7 +824,7 @@ export function ThemeImageField({
             </div>
           )}
           {!editable && layer && (
-            <p className="theme-image-hint">渐变与底色在背景填充中调整。</p>
+            <p className="theme-image-hint">{uiText("themeImageField.ThemeImageField21")}</p>
           )}
         </ThemeImageDialog>
       )}

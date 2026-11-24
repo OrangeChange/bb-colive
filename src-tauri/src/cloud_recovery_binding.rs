@@ -87,27 +87,27 @@ fn valid_uuid(value: &str) -> bool {
 
 fn parse_recovery_info(bytes: &[u8]) -> Result<RecoveryInfo, String> {
     if bytes.len() > 16 * 1024 {
-        return Err("服务器信息过大，无法确认兼容性".into());
+        return Err(ui_text!("backend.cloud_recovery_binding.parse_recovery_info").into());
     }
     let info: RecoveryInfo =
-        serde_json::from_slice(bytes).map_err(|_| "服务器信息格式无效，无法确认兼容性")?;
+        serde_json::from_slice(bytes).map_err(|_| ui_text!("backend.cloud_recovery_binding.parse_recovery_info5"))?;
     if !valid_uuid(&info.server_id) || info.service_version.is_empty() || !info.limits.is_object() {
-        return Err("服务器信息不完整，无法确认兼容性".into());
+        return Err(ui_text!("backend.cloud_recovery_binding.parse_recovery_info2").into());
     }
     if info.protocol_version != PROTOCOL_VERSION {
-        return Err("服务器直播协议版本不兼容".into());
+        return Err(ui_text!("backend.cloud_recovery_binding.parse_recovery_info3").into());
     }
     if info.recovery_contract_version != RECOVERY_CONTRACT_VERSION {
-        return Err("服务器恢复格式版本不兼容".into());
+        return Err(ui_text!("backend.cloud_recovery_binding.parse_recovery_info4").into());
     }
     Ok(info)
 }
 
 fn normalize_base_url(value: &str) -> Result<String, String> {
     if value.contains('\\') || value.split('/').any(|part| part == "." || part == "..") {
-        return Err("服务器地址无效，请填写完整地址".into());
+        return Err(ui_text!("backend.cloud_recovery_binding.normalize_base_url").into());
     }
-    let url = Url::parse(value).map_err(|_| "服务器地址无效，请填写完整地址")?;
+    let url = Url::parse(value).map_err(|_| ui_text!("backend.cloud_recovery_binding.normalize_base_url"))?;
     let local = matches!(url.host_str(), Some("localhost" | "127.0.0.1" | "::1"));
     if !(url.scheme() == "https" || url.scheme() == "http" && local)
         || !url.username().is_empty()
@@ -115,68 +115,68 @@ fn normalize_base_url(value: &str) -> Result<String, String> {
         || url.query().is_some()
         || url.fragment().is_some()
     {
-        return Err("服务器地址需使用 HTTPS，本机可使用 HTTP；地址不能包含凭证或查询参数".into());
+        return Err(ui_text!("backend.cloud_recovery_binding.normalize_base_url2").into());
     }
     Ok(url.as_str().trim_end_matches('/').to_owned())
 }
 
 fn info_url(base_url: &str) -> Result<Url, String> {
     let base = Url::parse(&format!("{}/", base_url.trim_end_matches('/')))
-        .map_err(|_| "服务器地址无效，请填写完整地址")?;
+        .map_err(|_| ui_text!("backend.cloud_recovery_binding.info_url"))?;
     base.join("api/v2/info")
-        .map_err(|_| "服务器地址无效，请填写完整地址".into())
+        .map_err(|_| ui_text!("backend.cloud_recovery_binding.info_url").into())
 }
 
 async fn request_recovery_info(base_url: &str, token: &str) -> Result<RecoveryInfo, String> {
     if token.is_empty() {
-        return Err("请输入访问令牌".into());
+        return Err(ui_text!("backend.cloud_recovery_binding.request_recovery_info").into());
     }
     let client = Client::builder()
         .redirect(Policy::none())
         .timeout(Duration::from_secs(15))
         .build()
-        .map_err(|_| "无法准备服务器连接，请重试")?;
+        .map_err(|_| ui_text!("backend.cloud_recovery_binding.request_recovery_info6"))?;
     let response = client
         .get(info_url(base_url)?)
         .bearer_auth(token)
         .header("Accept-Encoding", "identity")
         .send()
         .await
-        .map_err(|_| "无法连接服务器，请检查地址和网络")?;
+        .map_err(|_| ui_text!("backend.cloud_recovery_binding.request_recovery_info7"))?;
     match response.status().as_u16() {
         200..=299 => {}
-        401 | 403 => return Err("访问令牌无效，请重新输入".into()),
-        300..=399 => return Err("服务器返回了重定向，请填写最终服务器地址".into()),
-        _ => return Err("服务器暂时无法提供恢复信息，请稍后重试".into()),
+        401 | 403 => return Err(ui_text!("backend.cloud_recovery_binding.request_recovery_info2").into()),
+        300..=399 => return Err(ui_text!("backend.cloud_recovery_binding.request_recovery_info3").into()),
+        _ => return Err(ui_text!("backend.cloud_recovery_binding.request_recovery_info4").into()),
     }
     if response
         .content_length()
         .is_some_and(|length| length > 16 * 1024)
     {
-        return Err("服务器信息过大，无法确认兼容性".into());
+        return Err(ui_text!("backend.cloud_recovery_binding.request_recovery_info5").into());
     }
     let bytes = response
         .bytes()
         .await
-        .map_err(|_| "服务器信息读取失败，请重试")?;
+        .map_err(|_| ui_text!("backend.cloud_recovery_binding.request_recovery_info8"))?;
     parse_recovery_info(&bytes)
 }
 
 fn binding_path(app: &AppHandle) -> Result<PathBuf, String> {
     crate::data_paths::root()
         .map(|directory| directory.join("cloud-recovery").join("binding.json"))
-        .map_err(|_| "无法访问应用数据目录".into())
+        .map_err(|_| ui_text!("backend.cloud_recovery_binding.binding_path").into())
 }
 
 fn read_binding(path: &Path) -> Result<Option<StoredBinding>, String> {
     let bytes = match fs::read(path) {
         Ok(bytes) => bytes,
         Err(error) if error.kind() == std::io::ErrorKind::NotFound => return Ok(None),
-        Err(_) => return Err("无法读取服务器绑定，请重试".into()),
+        Err(_) => return Err(ui_text!("backend.cloud_recovery_binding.read_binding").into()),
     };
     serde_json::from_slice(&bytes)
         .map(Some)
-        .map_err(|_| "服务器绑定已损坏，请重新绑定".into())
+        .map_err(|_| ui_text!("backend.cloud_recovery_binding.read_binding2").into())
 }
 
 pub(crate) fn load_recovery_access(app: &AppHandle) -> Result<RecoveryAccess, String> {
@@ -202,17 +202,17 @@ pub(crate) fn load_recovery_access(app: &AppHandle) -> Result<RecoveryAccess, St
 }
 
 fn write_binding(path: &Path, binding: &StoredBinding) -> Result<(), String> {
-    let parent = path.parent().ok_or("无法保存服务器绑定")?;
-    fs::create_dir_all(parent).map_err(|_| "无法创建服务器绑定目录")?;
-    let bytes = serde_json::to_vec(binding).map_err(|_| "无法保存服务器绑定")?;
-    fs::write(path, bytes).map_err(|_| "无法保存服务器绑定".into())
+    let parent = path.parent().ok_or(ui_text!("backend.cloud_recovery_binding.write_binding"))?;
+    fs::create_dir_all(parent).map_err(|_| ui_text!("backend.cloud_recovery_binding.write_binding2"))?;
+    let bytes = serde_json::to_vec(binding).map_err(|_| ui_text!("backend.cloud_recovery_binding.write_binding"))?;
+    fs::write(path, bytes).map_err(|_| ui_text!("backend.cloud_recovery_binding.write_binding").into())
 }
 
 fn current_millis() -> Result<u64, String> {
     SystemTime::now()
         .duration_since(UNIX_EPOCH)
         .map(|duration| duration.as_millis() as u64)
-        .map_err(|_| "系统时间无效，无法保存服务器绑定".into())
+        .map_err(|_| ui_text!("backend.cloud_recovery_binding.current_millis").into())
 }
 
 fn binding_state(
@@ -291,7 +291,7 @@ pub fn remove_cloud_recovery_binding(app: AppHandle) -> Result<(), String> {
     match fs::remove_file(path) {
         Ok(()) => Ok(()),
         Err(error) if error.kind() == std::io::ErrorKind::NotFound => Ok(()),
-        Err(_) => Err("无法移除服务器绑定，请重试".into()),
+        Err(_) => Err(ui_text!("backend.cloud_recovery_binding.remove_cloud_recovery_binding").into()),
     }
 }
 

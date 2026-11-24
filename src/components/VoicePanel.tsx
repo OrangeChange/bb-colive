@@ -1,3 +1,4 @@
+import { uiText } from "../i18n/index.ts";
 import { ChevronDown as LucideChevronDown, Mic, SlidersHorizontal, RotateCcw } from "lucide-react";
 import { useEffect, useMemo, useRef, useState, useSyncExternalStore, type DragEvent } from "react";
 import { openUrl } from "@tauri-apps/plugin-opener";
@@ -20,64 +21,64 @@ import { VoiceTestPanel } from "./VoiceTestPanel";
 import { SettingsChoiceControl } from "./SettingsChoiceControl";
 
 const CATEGORY_LABELS: Record<VoiceEventCategory, string> = {
-  danmu: "弹幕",
-  interact: "互动",
-  gift: "礼物",
-  blindBox: "盲盒",
-  redPocket: "红包",
-  anchorLottery: "天选",
-  superChat: "醒目留言",
-  guard: "大航海",
-  system: "系统",
+  danmu: uiText("voicePanel.CATEGORY_LABELS.danmu"),
+  interact: uiText("voicePanel.CATEGORY_LABELS.interact"),
+  gift: uiText("voicePanel.CATEGORY_LABELS.gift"),
+  blindBox: uiText("voicePanel.CATEGORY_LABELS.blindBox"),
+  redPocket: uiText("voicePanel.CATEGORY_LABELS.redPocket"),
+  anchorLottery: uiText("voicePanel.CATEGORY_LABELS.anchorLottery"),
+  superChat: uiText("voicePanel.CATEGORY_LABELS.superChat"),
+  guard: uiText("voicePanel.CATEGORY_LABELS.guard"),
+  system: uiText("voicePanel.CATEGORY_LABELS.system"),
 };
 
 const FIELD_LABELS: Record<VoiceTemplateField, string> = {
-  username: "用户名",
-  content: "内容",
-  giftName: "礼物名称",
-  blindGiftName: "盲盒名称",
-  quantity: "数量",
-  amount: "金额",
-  guardName: "大航海类型",
-  duration: "开通时长",
-  months: "开通时长",
-  companionDays: "陪伴天数",
-  emoteName: "表情名称",
+  username: uiText("voicePanel.FIELD_LABELS.username"),
+  content: uiText("voicePanel.statusText"),
+  giftName: uiText("voicePanel.FIELD_LABELS.giftName"),
+  blindGiftName: uiText("voicePanel.FIELD_LABELS.blindGiftName"),
+  quantity: uiText("voicePanel.FIELD_LABELS.quantity"),
+  amount: uiText("voicePanel.FIELD_LABELS.amount"),
+  guardName: uiText("voicePanel.FIELD_LABELS.guardName"),
+  duration: uiText("voicePanel.FIELD_LABELS.duration"),
+  months: uiText("voicePanel.FIELD_LABELS.months"),
+  companionDays: uiText("voicePanel.FIELD_LABELS.companionDays"),
+  emoteName: uiText("voicePanel.FIELD_LABELS.emoteName"),
 };
 
 const PRIORITY_OPTIONS: { value: VoicePriority; label: string }[] = [
-  { value: "high", label: "高" },
-  { value: "medium", label: "中" },
-  { value: "normal", label: "普通" },
+  { value: "high", label: uiText("voicePanel.PRIORITY_OPTIONS.label") },
+  { value: "medium", label: uiText("voicePanel.PRIORITY_OPTIONS.label2") },
+  { value: "normal", label: uiText("voicePanel.PRIORITY_OPTIONS.label3") },
 ];
 
 const VOICE_ENGINE_OPTIONS = [
-  { value: "edge-online", label: "Edge 在线" },
-  { value: "windows-system", label: "Windows 系统" },
+  { value: "edge-online", label: uiText("voicePanel.VOICE_ENGINE_OPTIONS.label") },
+  { value: "windows-system", label: uiText("voicePanel.VOICE_ENGINE_OPTIONS.label2") },
   { value: "fish-audio", label: "Fish Audio" },
-  { value: "custom-http", label: "自定义 API" },
+  { value: "custom-http", label: uiText("voicePanel.VOICE_ENGINE_OPTIONS.label3") },
 ] as const;
 const FISH_AUDIO_FORMAT_OPTIONS = [
   { value: "mp3", label: "MP3" },
   { value: "wav", label: "WAV" },
 ] as const;
 const CUSTOM_HTTP_AUTH_OPTIONS = [
-  { value: "none", label: "无" },
+  { value: "none", label: uiText("common.noneOption") },
   { value: "bearer", label: "Bearer" },
   { value: "api-key", label: "API Key Header" },
 ] as const;
 const CUSTOM_HTTP_RESPONSE_OPTIONS = [
-  { value: "audio", label: "原始音频" },
+  { value: "audio", label: uiText("voicePanel.CUSTOM_HTTP_RESPONSE_OPTIONS.label") },
   { value: "json-base64", label: "JSON Base64" },
 ] as const;
 const VOICE_QUEUE_MODE_OPTIONS = [
-  { value: "original", label: "原始顺序" },
-  { value: "priority", label: "优先级顺序" },
+  { value: "original", label: uiText("voicePanel.VOICE_QUEUE_MODE_OPTIONS.label") },
+  { value: "priority", label: uiText("voicePanel.VOICE_QUEUE_MODE_OPTIONS.label2") },
 ] as const;
 const VOICE_OVERFLOW_OPTIONS = [
-  { value: "drop-oldest", label: "丢弃最旧" },
-  { value: "drop-newest", label: "丢弃最新" },
-  { value: "drop-normal-first", label: "优先丢弃普通" },
+  { value: "drop-oldest", label: uiText("voicePanel.VOICE_OVERFLOW_OPTIONS.label") },
+  { value: "drop-newest", label: uiText("voicePanel.VOICE_OVERFLOW_OPTIONS.label2") },
+  { value: "drop-normal-first", label: uiText("voicePanel.VOICE_OVERFLOW_OPTIONS.label3") },
 ] as const;
 const CUSTOM_HTTP_PRESET_OPTIONS = [
   { value: "openai-compatible", label: CUSTOM_HTTP_PRESET_LABELS["openai-compatible"] },
@@ -88,7 +89,7 @@ const CUSTOM_HTTP_PRESET_OPTIONS = [
 
 const DEFAULT_EDGE_VOICE = "zh-CN-XiaoxiaoNeural";
 const DEFAULT_WINDOWS_VOICE = "Huihui";
-const EDGE_VOICE_GROUPS = ["中文（普通话）", "中文（粤语）", "中文（方言）", "中文（台湾）", "English（美国）", "English（英国）", "日本語", "多语言音色"];
+const EDGE_VOICE_GROUPS = [uiText("voicePanel.EDGE_VOICE_GROUPS"), uiText("voicePanel.EDGE_VOICE_GROUPS2"), uiText("voicePanel.EDGE_VOICE_GROUPS3"), uiText("voicePanel.EDGE_VOICE_GROUPS4"), uiText("voicePanel.EDGE_VOICE_GROUPS5"), uiText("voicePanel.EDGE_VOICE_GROUPS6"), uiText("voicePanel.EDGE_VOICE_GROUPS7"), uiText("voicePanel.EDGE_VOICE_GROUPS8")];
 const FISH_API_KEY_URL = "https://fish.audio/app/api-keys/";
 const FISH_VOICE_LIBRARY_URL = "https://fish.audio/zh-CN/app/discovery/";
 
@@ -207,32 +208,32 @@ function VoicePronunciationEditor({ rules, onChange }: { rules: VoicePronunciati
         {draftRules.map((rule) => (
           <div key={rule.id} className="voice-pronunciation-row">
             <input
-              aria-label={`发音原词 ${rule.id}`}
+              aria-label={uiText("voicePanel.aria_label", { id: rule.id })}
               className={`${controlClass} min-w-0 w-full`}
               value={rule.source}
-              placeholder="关键词"
+              placeholder={uiText("voicePanel.placeholder")}
               onChange={(event) => updateDraft(rule.id, { source: event.target.value })}
               onBlur={() => commitRule(draftRules.find((candidate) => candidate.id === rule.id) ?? rule)}
             />
-            <span className="voice-pronunciation-arrow ui-type-meta text-t3" aria-hidden="true">读作</span>
+            <span className="voice-pronunciation-arrow ui-type-meta text-t3" aria-hidden="true">{uiText("voicePanel.VoicePronunciationEditor")}</span>
             <input
-              aria-label={`发音读作 ${rule.id}`}
+              aria-label={uiText("voicePanel.aria_label2", { id: rule.id })}
               className={`${controlClass} min-w-0 w-full`}
               value={rule.replacement}
-              placeholder="发音"
+              placeholder={uiText("voicePanel.placeholder2")}
               onChange={(event) => updateDraft(rule.id, { replacement: event.target.value })}
               onBlur={() => commitRule(draftRules.find((candidate) => candidate.id === rule.id) ?? rule)}
             />
             <div className="voice-pronunciation-actions flex shrink-0 items-center gap-2">
-              <PanelSwitch label={`启用发音修正规则 ${rule.source || "新规则"}`} checked={rule.enabled} onChange={() => toggleRule(rule)} />
-              <button type="button" aria-label={`删除发音修正规则 ${rule.source || "新规则"}`} className="voice-pronunciation-delete rounded px-1.5 ui-type-control text-t3 transition-colors hover:bg-danger/10 hover:text-danger focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-danger" onClick={() => removeRule(rule.id)}>×</button>
+              <PanelSwitch label={uiText("voicePanel.label", { value: rule.source || uiText("voicePanel.label.value") })} checked={rule.enabled} onChange={() => toggleRule(rule)} />
+              <button type="button" aria-label={uiText("voicePanel.aria_label3", { value: rule.source || uiText("voicePanel.aria_label.value") })} className="voice-pronunciation-delete rounded px-1.5 ui-type-control text-t3 transition-colors hover:bg-danger/10 hover:text-danger focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-danger" onClick={() => removeRule(rule.id)}>×</button>
             </div>
           </div>
         ))}
       </div>
       <div className="flex flex-wrap items-center gap-2">
-        <button type="button" className={`${controlClass} border-accent/50 text-accent-text`} onClick={addRule}>添加发音修正</button>
-        <span className="ui-type-meta text-t3">只处理用户名、正文和互动文案</span>
+        <button type="button" className={`${controlClass} border-accent/50 text-accent-text`} onClick={addRule}>{uiText("voicePanel.VoicePronunciationEditor2")}</button>
+        <span className="ui-type-meta text-t3">{uiText("voicePanel.VoicePronunciationEditor3")}</span>
       </div>
     </div>
   );
@@ -244,6 +245,7 @@ function FishReferenceVoiceManager({ fishAudio, updateFishAudio, openFishResourc
   const [draftId, setDraftId] = useState("");
   const [busy, setBusy] = useState(false);
   const [feedback, setFeedback] = useState<string | null>(null);
+  const [feedbackKind, setFeedbackKind] = useState<"success" | "error">("error");
   const lookupSequence = useRef(0);
   const currentId = fishAudio.referenceId.trim();
   const currentPreset = fishAudio.referenceVoices.find((voice) => voice.id === currentId);
@@ -260,6 +262,7 @@ function FishReferenceVoiceManager({ fishAudio, updateFishAudio, openFishResourc
   const saveVoice = (voice: FishReferenceVoice, message: string) => {
     updateFishAudio({ referenceVoices: upsertFishReferenceVoice(fishAudio.referenceVoices, voice), referenceId: voice.id });
     setDraftId("");
+    setFeedbackKind("success");
     setFeedback(message);
   };
 
@@ -270,16 +273,17 @@ function FishReferenceVoiceManager({ fishAudio, updateFishAudio, openFishResourc
     try {
       const voice = await lookupFishAudioModel({ baseUrl: fishAudio.baseUrl, apiKey: fishAudio.apiKey, modelId });
       if (requestId !== lookupSequence.current) return;
-      saveVoice(voice, `已识别：${voice.name}`);
+      saveVoice(voice, uiText("voicePanel.FishReferenceVoiceManager.lookupAndSaveVoice", { name: voice.name }));
     } catch (error) {
       if (requestId !== lookupSequence.current) return;
       if (saveFallback) {
         const fallback = normalizeFishReferenceVoice({ id: modelId });
         if (fallback) {
-          saveVoice(fallback, "已保存 ID，填写 API Key 后可识别模型名");
+          saveVoice(fallback, uiText("voicePanel.FishReferenceVoiceManager.lookupAndSaveVoice2"));
           return;
         }
       }
+      setFeedbackKind("error");
       setFeedback(error instanceof Error ? error.message : String(error));
     } finally {
       if (requestId === lookupSequence.current) setBusy(false);
@@ -289,7 +293,8 @@ function FishReferenceVoiceManager({ fishAudio, updateFishAudio, openFishResourc
   const submitInput = () => {
     const modelId = draftId.trim();
     if (!/^[a-z0-9]{32}$/i.test(modelId)) {
-      setFeedback("请输入 32 位参考音色 ID");
+      setFeedbackKind("error");
+      setFeedback(uiText("voicePanel.FishReferenceVoiceManager.submitInput"));
       return;
     }
     void lookupAndSaveVoice(modelId, true);
@@ -325,42 +330,43 @@ function FishReferenceVoiceManager({ fishAudio, updateFishAudio, openFishResourc
 
   const deleteVoice = (voice: FishReferenceVoice) => {
     updateFishAudio({ referenceVoices: removeFishReferenceVoice(fishAudio.referenceVoices, voice.id) });
-    setFeedback(`已移除预设：${voice.name}${voice.id === currentId ? "，当前音色仍在使用" : ""}`);
+    setFeedbackKind("success");
+    setFeedback(uiText("voicePanel.FishReferenceVoiceManager.deleteVoice", { name: voice.name, value: voice.id === currentId ? uiText("voicePanel.FishReferenceVoiceManager.deleteVoice.value") : "" }));
   };
 
   return (
     <div ref={pickerRef} className="fish-reference-picker relative flex min-w-0 w-full items-center gap-2">
       <div className="relative min-w-0 flex-1">
-        <button type="button" aria-label="参考音色" aria-haspopup="listbox" aria-expanded={isOpen} className={`${controlClass} ${selectClass} fish-reference-picker-trigger flex items-center justify-between gap-2 text-left`} onClick={() => setIsOpen((open) => !open)}>
-          <span className="min-w-0 overflow-hidden text-ellipsis whitespace-nowrap">{currentPreset ? optionLabel(currentPreset) : currentId ? `当前音色 · ${currentId.slice(0, 8)}（未保存）` : "未选择"}</span>
+        <button type="button" aria-label={uiText("voicePanel.aria_label4")} aria-haspopup="listbox" aria-expanded={isOpen} className={`${controlClass} ${selectClass} fish-reference-picker-trigger flex items-center justify-between gap-2 text-left`} onClick={() => setIsOpen((open) => !open)}>
+          <span className="min-w-0 overflow-hidden text-ellipsis whitespace-nowrap">{currentPreset ? optionLabel(currentPreset) : currentId ? uiText("voicePanel.FishReferenceVoiceManager", { value: currentId.slice(0, 8) }) : uiText("voicePanel.FishReferenceVoiceManager2")}</span>
           <LucideChevronDown className={`size-4 shrink-0 transition-transform ${isOpen ? "rotate-180" : ""}`} aria-hidden="true" />
         </button>
         {isOpen && (
           <div data-ui-overlay="true" onPointerDown={(event) => event.stopPropagation()} className="ui-overlay-surface fish-reference-picker-popover absolute left-0 right-0 top-full z-30 mt-1 p-2">
             <div className="flex min-w-0 items-center gap-2">
-              <input aria-label="参考音色 ID" className={`${controlClass} min-w-0 flex-1`} value={draftId} onChange={(event) => setDraftId(event.target.value)} onKeyDown={handleInputKeyDown} placeholder="输入 ID，回车识别" autoFocus />
-              <button type="button" className={`${controlClass} shrink-0 border-accent/50 text-accent-text`} disabled={busy} aria-busy={busy} onClick={submitInput}>识别</button>
-              {busy && <span className="shrink-0 ui-type-meta text-accent-text" aria-live="polite">识别中</span>}
+              <input aria-label={uiText("voicePanel.aria_label5")} className={`${controlClass} min-w-0 flex-1`} value={draftId} onChange={(event) => setDraftId(event.target.value)} onKeyDown={handleInputKeyDown} placeholder={uiText("voicePanel.placeholder3")} autoFocus />
+              <button type="button" className={`${controlClass} shrink-0 border-accent/50 text-accent-text`} disabled={busy} aria-busy={busy} onClick={submitInput}>{uiText("voicePanel.FishReferenceVoiceManager3")}</button>
+              {busy && <span className="shrink-0 ui-type-meta text-accent-text" aria-live="polite">{uiText("voicePanel.FishReferenceVoiceManager4")}</span>}
             </div>
-            {feedback && <div role="status" aria-live="polite" className={`mt-2 ui-type-meta ${feedback.startsWith("已") ? "text-accent-text" : "text-danger"}`}>{feedback}</div>}
-            <div role="listbox" aria-label="已保存参考音色" className="mt-2 max-h-48 overflow-y-auto">
+            {feedback && <div role="status" aria-live="polite" className={`mt-2 ui-type-meta ${feedbackKind === "success" ? "text-accent-text" : "text-danger"}`}>{feedback}</div>}
+            <div role="listbox" aria-label={uiText("voicePanel.aria_label6")} className="mt-2 max-h-48 overflow-y-auto">
               {currentId && !currentPreset && (
                 <div role="option" aria-selected="true" className="ui-select-item flex items-center gap-1">
-                  <button type="button" className="ui-select-item-text min-w-0 flex-1 text-left" onClick={() => selectVoice(currentId)}>当前音色 · {currentId.slice(0, 8)}（未保存）</button>
+                  <button type="button" className="ui-select-item-text min-w-0 flex-1 text-left" onClick={() => selectVoice(currentId)}>{uiText("voicePanel.FishReferenceVoiceManager5")}{currentId.slice(0, 8)}{uiText("voicePanel.FishReferenceVoiceManager6")}</button>
                 </div>
               )}
               {fishAudio.referenceVoices.map((voice) => (
                 <div key={voice.id} role="option" aria-selected={voice.id === currentId} className={`ui-select-item flex items-center gap-1 ${voice.id === currentId ? "bg-bg text-accent-text" : "text-t2"}`}>
                   <button type="button" className="ui-select-item-text min-w-0 flex-1 px-1 text-left" onClick={() => selectVoice(voice.id)}>{optionLabel(voice)}</button>
-                  <button type="button" aria-label={`删除预设 ${voice.name}`} className="size-6 shrink-0 rounded text-t3 transition-colors hover:bg-danger/10 hover:text-danger focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-danger" onClick={() => deleteVoice(voice)}><span aria-hidden="true">×</span></button>
+                  <button type="button" aria-label={uiText("voicePanel.aria_label7", { name: voice.name })} className="size-6 shrink-0 rounded text-t3 transition-colors hover:bg-danger/10 hover:text-danger focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-danger" onClick={() => deleteVoice(voice)}><span aria-hidden="true">×</span></button>
                 </div>
               ))}
-              {fishAudio.referenceVoices.length === 0 && !currentId && <div className="px-2 py-1 ui-type-meta text-t3">暂无预设</div>}
+              {fishAudio.referenceVoices.length === 0 && !currentId && <div className="px-2 py-1 ui-type-meta text-t3">{uiText("voicePanel.FishReferenceVoiceManager7")}</div>}
             </div>
           </div>
         )}
       </div>
-      <button type="button" className={`${controlClass} shrink-0 border-accent/50 text-accent-text`} onClick={() => void openFishResource(FISH_VOICE_LIBRARY_URL)}>查找音色</button>
+      <button type="button" className={`${controlClass} shrink-0 border-accent/50 text-accent-text`} onClick={() => void openFishResource(FISH_VOICE_LIBRARY_URL)}>{uiText("voicePanel.FishReferenceVoiceManager8")}</button>
     </div>
   );
 }
@@ -434,9 +440,9 @@ function VoiceTemplateComposer({ category, segments, onChange }: { category: Voi
                 tabIndex={0}
                 draggable={true}
                 aria-grabbed={dragIndex === index}
-                aria-label={`拖动${FIELD_LABELS[segment.field]}模块`}
+                aria-label={uiText("voicePanel.aria_label8", { value: FIELD_LABELS[segment.field] })}
                 aria-keyshortcuts="ArrowLeft ArrowRight ArrowUp ArrowDown"
-                title="拖动模块调整顺序，也可使用方向键"
+                title={uiText("voicePanel.title")}
                 onDragStart={(event) => handleDragStart(event, index)}
                 onDragEnd={() => setDragIndex(null)}
                 onKeyDown={(event) => handleModuleKeyDown(event, index)}
@@ -446,8 +452,8 @@ function VoiceTemplateComposer({ category, segments, onChange }: { category: Voi
               </span>
               <button
                 type="button"
-                aria-label={`删除${FIELD_LABELS[segment.field]}模块`}
-                title="删除动态字段"
+                aria-label={uiText("voicePanel.aria_label9", { value: FIELD_LABELS[segment.field] })}
+                title={uiText("voicePanel.title2")}
                 onClick={() => onChange(normalizeSegments(editableSegments.filter((_, itemIndex) => itemIndex !== index)))}
                 className="voice-template-delete shrink-0 px-1.5 ui-type-meta text-t3 text-accent-text/75 transition-colors hover:bg-accent/15 hover:text-accent-text focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent-ring"
               >
@@ -457,8 +463,8 @@ function VoiceTemplateComposer({ category, segments, onChange }: { category: Voi
           ) : (
             <span key={`${segment.kind}-${index}`} className="voice-template-text-slot inline-flex shrink-0 items-center">
               <input
-                aria-label={`模板文字 ${index + 1}`}
-                title="输入固定文字"
+                aria-label={uiText("voicePanel.aria_label10", { value: index + 1 })}
+                title={uiText("voicePanel.title3")}
                 value={segment.value}
                 style={{ width: segment.value ? `calc(${Math.min(32, Math.max(1, segment.value.length))}em + 0.5rem)` : "0.75rem" }}
                 onChange={(event) => update(index, { kind: "text", value: event.target.value })}
@@ -528,7 +534,7 @@ export function VoicePanel() {
       ? Boolean(settings.customHttp.endpoint.trim() && settings.customHttp.textField.trim() && (!settings.customHttp.voiceField.trim() || customVoiceName.trim()))
       : true;
   const voiceReady = !voiceLoading && !voiceError && (usesVoiceList ? voices.length > 0 && !voiceNeedsSelection : externalConfigReady);
-  const statusText = snapshot.status === "playing" ? "正在播报" : snapshot.status === "paused" ? "已暂停" : snapshot.status === "error" ? "需要处理" : settings.enabled ? "等待播报" : "未开启";
+  const statusText = snapshot.status === "playing" ? uiText("voicePanel.VoicePanel.statusText") : snapshot.status === "paused" ? uiText("voicePanel.VoicePanel.statusText2") : snapshot.status === "error" ? uiText("voicePanel.VoicePanel.statusText3") : settings.enabled ? uiText("voicePanel.VoicePanel.statusText4") : uiText("voicePanel.VoicePanel.statusText5");
   const { canControlPlayback, playbackPaused } = getVoicePanelPlaybackState(
     snapshot,
     personalSnapshot,
@@ -540,7 +546,7 @@ export function VoicePanel() {
   const engineVoiceOptions = useMemo(() => {
     const current = {
       value: engineVoiceName,
-      label: voiceNeedsSelection ? "需要选择音色" : activeVoice?.label ?? engineVoiceName,
+      label: voiceNeedsSelection ? uiText("voicePanel.engineVoiceOptions.current.label") : activeVoice?.label ?? engineVoiceName,
     };
     const available = settings.engine === "edge-online"
       ? EDGE_VOICE_GROUPS.flatMap((group) => voices
@@ -591,19 +597,19 @@ export function VoicePanel() {
     try {
       await openUrl(url);
     } catch (error) {
-      setFishLinkError(`打开 Fish Audio 页面失败：${error instanceof Error ? error.message : String(error)}`);
+      setFishLinkError(uiText("voicePanel.VoicePanel.openFishResource", { value: error instanceof Error ? error.message : String(error) }));
     }
   };
 
   const applyCustomJson = (value: string, field: "fixedBody" | "extraHeaders") => {
     try {
       const parsed = JSON.parse(value);
-      if (!parsed || typeof parsed !== "object" || Array.isArray(parsed)) throw new Error("必须是 JSON 对象");
+      if (!parsed || typeof parsed !== "object" || Array.isArray(parsed)) throw new Error(uiText("voicePanel.VoicePanel.applyCustomJson"));
       if (field === "fixedBody") updateCustomHttp({ fixedBody: parsed });
       else updateCustomHttp({ extraHeaders: parsed });
       setTestError(null);
     } catch {
-      setTestError(field === "fixedBody" ? "固定请求字段必须是有效 JSON 对象" : "额外请求头必须是有效 JSON 对象");
+      setTestError(field === "fixedBody" ? uiText("voicePanel.VoicePanel.applyCustomJson2") : uiText("voicePanel.VoicePanel.applyCustomJson3"));
     }
   };
 
@@ -683,7 +689,7 @@ export function VoicePanel() {
     setTestError(null);
     const rendered = renderVoiceEventTemplate(createTemplatePreviewEvent(templateSelection), settings);
     if (!rendered.text) {
-      setTestError("当前模板没有可试听内容");
+      setTestError(uiText("voicePanel.VoicePanel.runTemplateTest"));
       return;
     }
     void voiceController.test(rendered.text).catch((error) => setTestError(error instanceof Error ? error.message : String(error)));
@@ -696,25 +702,25 @@ export function VoicePanel() {
         <section className="voice-panel-frame flex h-full min-h-0 flex-col overflow-hidden rounded-lg border border-line bg-surface">
           <header className="flex shrink-0 items-center justify-between border-b border-line px-4 py-3">
             <div>
-              <h1 className="ui-type-section-title font-medium text-t1">语音</h1>
-              <p className="mt-0.5 ui-type-meta text-t3">直播事件语音播报</p>
+              <h1 className="ui-type-section-title font-medium text-t1">{uiText("common.voice")}</h1>
+              <p className="mt-0.5 ui-type-meta text-t3">{uiText("voicePanel.VoicePanel")}</p>
             </div>
             <div className="flex items-center gap-3">
-              <PanelSwitch label="开启语音" checked={settings.enabled} disabled={!settings.enabled && !voiceReady} onChange={toggleEnabled} />
+              <PanelSwitch label={uiText("voicePanel.label2")} checked={settings.enabled} disabled={!settings.enabled && !voiceReady} onChange={toggleEnabled} />
             </div>
           </header>
 
           <div className="voice-panel-scroll min-h-0 flex-1 overflow-y-auto">
             <section className={sectionClass}>
-              <SectionToolbar title="播报状态" actionsClassName="voice-runtime-actions" status={<RuntimeQueueStatus text={statusText} state={snapshot.status} />}>
-                <button type="button" aria-label={playbackPaused ? "继续播报" : "暂停播报"} className={controlClass} onClick={togglePlayback} disabled={!canControlPlayback}>{playbackPaused ? "继续" : "暂停"}</button>
-                <button type="button" className={controlClass} onClick={() => voiceController.skip()} disabled={!canControlPlayback}>跳过当前</button>
-                <button type="button" className={controlClass} onClick={() => voiceController.clear()}>清空队列</button>
+              <SectionToolbar iconName="runtime" title={uiText("voicePanel.title4")} actionsClassName="voice-runtime-actions" status={<RuntimeQueueStatus text={statusText} state={snapshot.status} />}>
+                <button type="button" aria-label={playbackPaused ? uiText("voicePanel.aria_label11") : uiText("voicePanel.aria_label12")} className={controlClass} onClick={togglePlayback} disabled={!canControlPlayback}>{playbackPaused ? uiText("voicePanel.VoicePanel2") : uiText("voicePanel.VoicePanel3")}</button>
+                <button type="button" className={controlClass} onClick={() => voiceController.skip()} disabled={!canControlPlayback}>{uiText("voicePanel.VoicePanel4")}</button>
+                <button type="button" className={controlClass} onClick={() => voiceController.clear()}>{uiText("voicePanel.VoicePanel5")}</button>
               </SectionToolbar>
               {(snapshot.error || voiceError || testError || voiceNeedsSelection) && (
                 <div className="mt-3 rounded-md border border-danger/40 bg-danger/10 px-3 py-2 ui-type-meta text-danger">
-                  <div>{snapshot.error || voiceError || testError || "当前音色不可用，请手动选择音色后再开启语音"}</div>
-                  {snapshot.status === "error" && <button type="button" className="mt-1 rounded border border-danger/40 px-2 py-0.5 text-danger hover:bg-danger/10" onClick={() => voiceController.start()}>重试</button>}
+                  <div>{snapshot.error || voiceError || testError || uiText("voicePanel.VoicePanel6")}</div>
+                  {snapshot.status === "error" && <button type="button" className="mt-1 rounded border border-danger/40 px-2 py-0.5 text-danger hover:bg-danger/10" onClick={() => voiceController.start()}>{uiText("common.retry")}</button>}
                 </div>
               )}
               <RuntimeQueueSummary
@@ -726,58 +732,58 @@ export function VoicePanel() {
             </section>
 
             <section className={sectionClass}>
-              <h2 className="settings-experience-heading mb-3 ui-type-section-title font-medium text-t1"><Mic size={17} aria-hidden="true" />语音引擎</h2>
+              <h2 className="settings-experience-heading mb-3 ui-type-section-title font-medium text-t1"><Mic size={17} aria-hidden="true" />{uiText("voicePanel.VoicePanel7")}</h2>
               <div className="voice-setting-grid voice-engine-settings grid min-w-0 gap-x-6 gap-y-1">
-                <SettingRow label="引擎">
-                  <UiSelect ariaLabel="语音引擎" size="standard" className="voice-select-control voice-select-compact" options={VOICE_ENGINE_OPTIONS} value={settings.engine} disabled={testBusy} onValueChange={(value) => changeEngine(value as VoiceEngine)} />
+                <SettingRow label={uiText("voicePanel.label3")}>
+                  <UiSelect ariaLabel={uiText("voicePanel.ariaLabel")} size="standard" className="voice-select-control voice-select-compact" options={VOICE_ENGINE_OPTIONS} value={settings.engine} disabled={testBusy} onValueChange={(value) => changeEngine(value as VoiceEngine)} />
                 </SettingRow>
                 {settings.engine === "custom-http" || settings.engine === "fish-audio" ? null : (
-                  <SettingRow label="音色" hint={activeVoice?.local ? "本机已安装" : undefined}>
-                    <UiSelect ariaLabel="语音音色" size="standard" className={selectClass} options={engineVoiceOptions} value={engineVoiceName} onValueChange={changeVoice} />
+                  <SettingRow label={uiText("voicePanel.label4")} hint={activeVoice?.local ? uiText("voicePanel.hint") : undefined}>
+                    <UiSelect ariaLabel={uiText("voicePanel.ariaLabel2")} size="standard" className={selectClass} options={engineVoiceOptions} value={engineVoiceName} onValueChange={changeVoice} />
                   </SettingRow>
                 )}
               </div>
               {settings.engine === "fish-audio" && (
                 <div className="voice-setting-grid mt-3 grid min-w-0 gap-x-6 gap-y-1">
-                  <SettingRow label="API 地址"><input aria-label="Fish Audio API 地址" className={controlClass} value={settings.fishAudio.baseUrl} onChange={(event) => updateFishAudio({ baseUrl: event.target.value })} /></SettingRow>
+                  <SettingRow label={uiText("voicePanel.label5")}><input aria-label={uiText("voicePanel.aria_label13")} className={controlClass} value={settings.fishAudio.baseUrl} onChange={(event) => updateFishAudio({ baseUrl: event.target.value })} /></SettingRow>
                   <SettingRow label="API Key">
                     <div className="flex min-w-0 items-center gap-2">
                       <input aria-label="Fish Audio API Key" type="password" autoComplete="off" className={`${controlClass} min-w-0 flex-1`} value={settings.fishAudio.apiKey} onChange={(event) => updateFishAudio({ apiKey: event.target.value })} />
-                      <button type="button" className={`${controlClass} shrink-0 border-accent/50 text-accent-text`} onClick={() => void openFishResource(FISH_API_KEY_URL)}>获取 API Key</button>
+                      <button type="button" className={`${controlClass} shrink-0 border-accent/50 text-accent-text`} onClick={() => void openFishResource(FISH_API_KEY_URL)}>{uiText("voicePanel.VoicePanel8")}</button>
                     </div>
                   </SettingRow>
-                  <SettingRow label="参考音色">
+                  <SettingRow label={uiText("voicePanel.label6")}>
                     <FishReferenceVoiceManager fishAudio={settings.fishAudio} updateFishAudio={updateFishAudio} openFishResource={openFishResource} />
                   </SettingRow>
-                  <SettingRow label="模型"><input aria-label="Fish Audio 模型" className={controlClass} value={settings.fishAudio.model} onChange={(event) => updateFishAudio({ model: event.target.value })} /></SettingRow>
-                  <SettingRow label="音频格式"><SettingsChoiceControl label="Fish Audio 音频格式" options={FISH_AUDIO_FORMAT_OPTIONS} value={settings.fishAudio.format} onChange={(value) => updateFishAudio({ format: value as FishAudioSettings["format"] })} /></SettingRow>
+                  <SettingRow label={uiText("voicePanel.label7")}><input aria-label={uiText("voicePanel.aria_label14")} className={controlClass} value={settings.fishAudio.model} onChange={(event) => updateFishAudio({ model: event.target.value })} /></SettingRow>
+                  <SettingRow label={uiText("voicePanel.label8")}><SettingsChoiceControl label={uiText("voicePanel.label9")} options={FISH_AUDIO_FORMAT_OPTIONS} value={settings.fishAudio.format} onChange={(value) => updateFishAudio({ format: value as FishAudioSettings["format"] })} /></SettingRow>
                   {fishLinkError && <div role="status" aria-live="polite" className="col-span-full ui-type-meta text-danger">{fishLinkError}</div>}
                 </div>
               )}
               {settings.engine === "custom-http" && (
                 <div className="mt-3 space-y-3">
                   <div className="voice-setting-grid grid min-w-0 gap-x-6 gap-y-1">
-                    <SettingRow label="接口预设" hint="选择请求格式"><SettingsChoiceControl label="自定义 API 接口预设" options={CUSTOM_HTTP_PRESET_OPTIONS} value={settings.customHttp.preset} onChange={(value) => applyCustomHttpPreset(value as CustomHttpPreset)} /></SettingRow>
-                    <SettingRow label="API 地址"><input aria-label="自定义 API 地址" className={controlClass} value={settings.customHttp.endpoint} onChange={(event) => updateCustomHttp({ endpoint: event.target.value })} /></SettingRow>
-                    <SettingRow label="鉴权"><SettingsChoiceControl label="自定义 API 鉴权" options={CUSTOM_HTTP_AUTH_OPTIONS} value={settings.customHttp.authType} onChange={(value) => updateCustomHttp({ authType: value as CustomHttpVoiceSettings["authType"] })} /></SettingRow>
-                    {settings.customHttp.authType !== "none" && <SettingRow label="API Key"><input aria-label="自定义 API Key" type="password" autoComplete="off" className={controlClass} value={settings.customHttp.apiKey} onChange={(event) => updateCustomHttp({ apiKey: event.target.value })} /></SettingRow>}
-                    <SettingRow label="模型"><input aria-label="自定义 API 模型值" className={controlClass} value={settings.customHttp.model} onChange={(event) => updateCustomHttp({ model: event.target.value })} /></SettingRow>
-                    <SettingRow label="音色/参考音频"><input aria-label="自定义 API 音色或参考音频" className={controlClass} value={customVoiceName} onChange={(event) => changeCustomVoice(event.target.value)} /></SettingRow>
-                    <SettingRow label="文本字段" hint="支持 input.text"><input aria-label="自定义 API 文本字段" className={controlClass} value={settings.customHttp.textField} onChange={(event) => updateCustomHttp({ textField: event.target.value })} /></SettingRow>
-                    <SettingRow label="音色字段" hint="可留空"><input aria-label="自定义 API 音色字段" className={controlClass} value={settings.customHttp.voiceField} onChange={(event) => updateCustomHttp({ voiceField: event.target.value })} /></SettingRow>
-                    <SettingRow label="模型字段" hint="可留空"><input aria-label="自定义 API 模型字段" className={controlClass} value={settings.customHttp.modelField} onChange={(event) => updateCustomHttp({ modelField: event.target.value })} /></SettingRow>
-                    <SettingRow label="响应类型"><SettingsChoiceControl label="自定义 API 响应格式" options={CUSTOM_HTTP_RESPONSE_OPTIONS} value={settings.customHttp.responseFormat} onChange={(value) => updateCustomHttp({ responseFormat: value as CustomHttpVoiceSettings["responseFormat"] })} /></SettingRow>
-                    {settings.customHttp.responseFormat === "json-base64" && <SettingRow label="音频字段" hint="支持 data.audio"><input aria-label="自定义 API 音频字段" className={controlClass} value={settings.customHttp.audioField} onChange={(event) => updateCustomHttp({ audioField: event.target.value })} /></SettingRow>}
+                    <SettingRow label={uiText("voicePanel.label10")} hint={uiText("voicePanel.hint2")}><SettingsChoiceControl label={uiText("voicePanel.label11")} options={CUSTOM_HTTP_PRESET_OPTIONS} value={settings.customHttp.preset} onChange={(value) => applyCustomHttpPreset(value as CustomHttpPreset)} /></SettingRow>
+                    <SettingRow label={uiText("voicePanel.label5")}><input aria-label={uiText("voicePanel.aria_label15")} className={controlClass} value={settings.customHttp.endpoint} onChange={(event) => updateCustomHttp({ endpoint: event.target.value })} /></SettingRow>
+                    <SettingRow label={uiText("voicePanel.label12")}><SettingsChoiceControl label={uiText("voicePanel.label13")} options={CUSTOM_HTTP_AUTH_OPTIONS} value={settings.customHttp.authType} onChange={(value) => updateCustomHttp({ authType: value as CustomHttpVoiceSettings["authType"] })} /></SettingRow>
+                    {settings.customHttp.authType !== "none" && <SettingRow label="API Key"><input aria-label={uiText("voicePanel.aria_label16")} type="password" autoComplete="off" className={controlClass} value={settings.customHttp.apiKey} onChange={(event) => updateCustomHttp({ apiKey: event.target.value })} /></SettingRow>}
+                    <SettingRow label={uiText("voicePanel.label7")}><input aria-label={uiText("voicePanel.aria_label17")} className={controlClass} value={settings.customHttp.model} onChange={(event) => updateCustomHttp({ model: event.target.value })} /></SettingRow>
+                    <SettingRow label={uiText("voicePanel.label14")}><input aria-label={uiText("voicePanel.aria_label18")} className={controlClass} value={customVoiceName} onChange={(event) => changeCustomVoice(event.target.value)} /></SettingRow>
+                    <SettingRow label={uiText("voicePanel.label15")} hint={uiText("voicePanel.hint3")}><input aria-label={uiText("voicePanel.aria_label19")} className={controlClass} value={settings.customHttp.textField} onChange={(event) => updateCustomHttp({ textField: event.target.value })} /></SettingRow>
+                    <SettingRow label={uiText("voicePanel.label16")} hint={uiText("voicePanel.hint4")}><input aria-label={uiText("voicePanel.aria_label20")} className={controlClass} value={settings.customHttp.voiceField} onChange={(event) => updateCustomHttp({ voiceField: event.target.value })} /></SettingRow>
+                    <SettingRow label={uiText("voicePanel.label17")} hint={uiText("voicePanel.hint4")}><input aria-label={uiText("voicePanel.aria_label21")} className={controlClass} value={settings.customHttp.modelField} onChange={(event) => updateCustomHttp({ modelField: event.target.value })} /></SettingRow>
+                    <SettingRow label={uiText("voicePanel.label18")}><SettingsChoiceControl label={uiText("voicePanel.label19")} options={CUSTOM_HTTP_RESPONSE_OPTIONS} value={settings.customHttp.responseFormat} onChange={(value) => updateCustomHttp({ responseFormat: value as CustomHttpVoiceSettings["responseFormat"] })} /></SettingRow>
+                    {settings.customHttp.responseFormat === "json-base64" && <SettingRow label={uiText("voicePanel.label20")} hint={uiText("voicePanel.hint5")}><input aria-label={uiText("voicePanel.aria_label22")} className={controlClass} value={settings.customHttp.audioField} onChange={(event) => updateCustomHttp({ audioField: event.target.value })} /></SettingRow>}
                   </div>
                   <details className="voice-advanced-settings">
-                    <summary className="voice-advanced-summary"><span>高级请求设置</span><span className="voice-advanced-hint">单位按接口要求填写</span><span aria-hidden="true" className="voice-advanced-chevron" /></summary>
+                    <summary className="voice-advanced-summary"><span>{uiText("voicePanel.VoicePanel9")}</span><span className="voice-advanced-hint">{uiText("voicePanel.VoicePanel10")}</span><span aria-hidden="true" className="voice-advanced-chevron" /></summary>
                     <div className="voice-setting-grid mt-2 grid min-w-0 gap-x-6 gap-y-1">
-                      {settings.customHttp.authType === "api-key" && <SettingRow label="Key Header"><input aria-label="自定义 API Key Header" className={controlClass} value={settings.customHttp.apiKeyHeader} onChange={(event) => updateCustomHttp({ apiKeyHeader: event.target.value })} /></SettingRow>}
-                      <SettingRow label="速度字段" hint="可留空"><input aria-label="自定义 API 速度字段" className={controlClass} value={settings.customHttp.rateField} onChange={(event) => updateCustomHttp({ rateField: event.target.value })} /></SettingRow>
-                      <SettingRow label="音调字段" hint="可留空"><input aria-label="自定义 API 音调字段" className={controlClass} value={settings.customHttp.pitchField} onChange={(event) => updateCustomHttp({ pitchField: event.target.value })} /></SettingRow>
-                      <SettingRow label="音量字段" hint="可留空"><input aria-label="自定义 API 音量字段" className={controlClass} value={settings.customHttp.volumeField} onChange={(event) => updateCustomHttp({ volumeField: event.target.value })} /></SettingRow>
-                      <SettingRow label="固定请求字段" hint="支持嵌套 JSON"><textarea aria-label="固定请求字段" className={`${controlClass} min-h-20 resize-none whitespace-pre-wrap`} value={customFixedBodyText} onChange={(event) => setCustomFixedBodyText(event.target.value)} onBlur={(event) => applyCustomJson(event.target.value, "fixedBody")} /></SettingRow>
-                      <SettingRow label="额外请求头" hint="JSON 对象"><textarea aria-label="额外请求头" className={`${controlClass} min-h-20 resize-none whitespace-pre-wrap`} value={customHeadersText} onChange={(event) => setCustomHeadersText(event.target.value)} onBlur={(event) => applyCustomJson(event.target.value, "extraHeaders")} /></SettingRow>
+                      {settings.customHttp.authType === "api-key" && <SettingRow label="Key Header"><input aria-label={uiText("voicePanel.aria_label23")} className={controlClass} value={settings.customHttp.apiKeyHeader} onChange={(event) => updateCustomHttp({ apiKeyHeader: event.target.value })} /></SettingRow>}
+                      <SettingRow label={uiText("voicePanel.label21")} hint={uiText("voicePanel.hint4")}><input aria-label={uiText("voicePanel.aria_label24")} className={controlClass} value={settings.customHttp.rateField} onChange={(event) => updateCustomHttp({ rateField: event.target.value })} /></SettingRow>
+                      <SettingRow label={uiText("voicePanel.label22")} hint={uiText("voicePanel.hint4")}><input aria-label={uiText("voicePanel.aria_label25")} className={controlClass} value={settings.customHttp.pitchField} onChange={(event) => updateCustomHttp({ pitchField: event.target.value })} /></SettingRow>
+                      <SettingRow label={uiText("voicePanel.label23")} hint={uiText("voicePanel.hint4")}><input aria-label={uiText("voicePanel.aria_label26")} className={controlClass} value={settings.customHttp.volumeField} onChange={(event) => updateCustomHttp({ volumeField: event.target.value })} /></SettingRow>
+                      <SettingRow label={uiText("voicePanel.label24")} hint={uiText("voicePanel.hint6")}><textarea aria-label={uiText("voicePanel.aria_label27")} className={`${controlClass} min-h-20 resize-none whitespace-pre-wrap`} value={customFixedBodyText} onChange={(event) => setCustomFixedBodyText(event.target.value)} onBlur={(event) => applyCustomJson(event.target.value, "fixedBody")} /></SettingRow>
+                      <SettingRow label={uiText("voicePanel.label25")} hint={uiText("voicePanel.hint7")}><textarea aria-label={uiText("voicePanel.aria_label28")} className={`${controlClass} min-h-20 resize-none whitespace-pre-wrap`} value={customHeadersText} onChange={(event) => setCustomHeadersText(event.target.value)} onBlur={(event) => applyCustomJson(event.target.value, "extraHeaders")} /></SettingRow>
                     </div>
                   </details>
                 </div>
@@ -785,49 +791,49 @@ export function VoicePanel() {
             </section>
 
             <section className={sectionClass}>
-              <h2 className="settings-experience-heading mb-3 ui-type-section-title font-medium text-t1"><SlidersHorizontal size={17} aria-hidden="true" />声音参数</h2>
+              <h2 className="settings-experience-heading mb-3 ui-type-section-title font-medium text-t1"><SlidersHorizontal size={17} aria-hidden="true" />{uiText("voicePanel.VoicePanel11")}</h2>
               <div className="voice-setting-grid grid min-w-0 gap-x-6 gap-y-1">
-                <SettingRow label="语速"><VoiceRange label="语速" value={settings.speechRate} min={0.5} max={2} step={0.1} display={`${settings.speechRate.toFixed(1)}×`} onChange={(speechRate) => settings.setVoiceSettings({ speechRate })} /></SettingRow>
-                <SettingRow label="音调"><VoiceRange label="音调" value={settings.pitch} min={-50} max={50} step={1} display={String(settings.pitch)} onChange={(pitch) => settings.setVoiceSettings({ pitch })} /></SettingRow>
-                <SettingRow label="音量"><VoiceRange label="音量" value={settings.volume} min={0} max={1} step={0.05} display={`${Math.round(settings.volume * 100)}%`} onChange={(volume) => settings.setVoiceSettings({ volume })} /></SettingRow>
-                <SettingRow label="播放增益"><VoiceRange label="播放增益" value={settings.playbackGain} min={1} max={2} step={0.05} display={`${Math.round(settings.playbackGain * 100)}%`} onChange={(playbackGain) => settings.setVoiceSettings({ playbackGain })} /></SettingRow>
+                <SettingRow label={uiText("voicePanel.label26")}><VoiceRange label={uiText("voicePanel.label26")} value={settings.speechRate} min={0.5} max={2} step={0.1} display={`${settings.speechRate.toFixed(1)}×`} onChange={(speechRate) => settings.setVoiceSettings({ speechRate })} /></SettingRow>
+                <SettingRow label={uiText("voicePanel.label27")}><VoiceRange label={uiText("voicePanel.label27")} value={settings.pitch} min={-50} max={50} step={1} display={String(settings.pitch)} onChange={(pitch) => settings.setVoiceSettings({ pitch })} /></SettingRow>
+                <SettingRow label={uiText("voicePanel.label28")}><VoiceRange label={uiText("voicePanel.label28")} value={settings.volume} min={0} max={1} step={0.05} display={`${Math.round(settings.volume * 100)}%`} onChange={(volume) => settings.setVoiceSettings({ volume })} /></SettingRow>
+                <SettingRow label={uiText("voicePanel.label29")}><VoiceRange label={uiText("voicePanel.label29")} value={settings.playbackGain} min={1} max={2} step={0.05} display={`${Math.round(settings.playbackGain * 100)}%`} onChange={(playbackGain) => settings.setVoiceSettings({ playbackGain })} /></SettingRow>
               </div>
               <VoiceTestPanel key={settings.engine} onTest={text => voiceController.test(text)} onBusyChange={setTestBusy} />
             </section>
 
             <section className={sectionClass}>
-              <SectionHeading>队列规则</SectionHeading>
+              <SectionHeading iconName="queue">{uiText("voicePanel.VoicePanel12")}</SectionHeading>
               <div className="voice-setting-grid grid min-w-0 gap-x-6 gap-y-2">
-                <SettingRow label="排序方式"><SettingsChoiceControl label="队列排序方式" options={VOICE_QUEUE_MODE_OPTIONS} value={settings.queueMode} onChange={queueMode => settings.setVoiceSettings({ queueMode })} /></SettingRow>
-                <SettingRow label="播报间隔"><div className="flex items-center gap-2"><input className={`${controlClass} w-24 font-mono`} type="number" min={0} max={30} step={0.5} value={settings.eventIntervalSeconds} onChange={(event) => settings.setVoiceSettings({ eventIntervalSeconds: Number(event.target.value) })} /><span className="ui-type-meta text-t3">秒</span></div></SettingRow>
-                <SettingRow label="排队上限"><input className={`${controlClass} w-24 font-mono`} type="number" min={10} max={500} value={settings.queueLimit} onChange={(event) => settings.setVoiceSettings({ queueLimit: Number(event.target.value) })} /></SettingRow>
-                <SettingRow label="溢出处理"><UiSelect ariaLabel="队列溢出处理" size="standard" className="voice-select-control voice-select-compact" options={VOICE_OVERFLOW_OPTIONS} value={settings.overflowPolicy} onValueChange={(value) => settings.setVoiceSettings({ overflowPolicy: value as "drop-oldest" | "drop-newest" | "drop-normal-first" })} /></SettingRow>
-                <SettingRow label="过期事件不再播报"><PanelSwitch label="过期事件不再播报" checked={settings.expiryEnabled} onChange={() => settings.setVoiceSettings({ expiryEnabled: !settings.expiryEnabled })} /></SettingRow>
-                {settings.expiryEnabled && <SettingRow label="过期时间"><input className={`${controlClass} w-24 font-mono`} type="number" min={5} max={600} value={settings.expirySeconds} onChange={(event) => settings.setVoiceSettings({ expirySeconds: Number(event.target.value) })} /></SettingRow>}
+                <SettingRow label={uiText("voicePanel.label30")}><SettingsChoiceControl label={uiText("voicePanel.label31")} options={VOICE_QUEUE_MODE_OPTIONS} value={settings.queueMode} onChange={queueMode => settings.setVoiceSettings({ queueMode })} /></SettingRow>
+                <SettingRow label={uiText("voicePanel.label32")}><div className="flex items-center gap-2"><input className={`${controlClass} w-24 font-mono`} type="number" min={0} max={30} step={0.5} value={settings.eventIntervalSeconds} onChange={(event) => settings.setVoiceSettings({ eventIntervalSeconds: Number(event.target.value) })} /><span className="ui-type-meta text-t3">{uiText("voicePanel.VoicePanel13")}</span></div></SettingRow>
+                <SettingRow label={uiText("voicePanel.label33")}><input className={`${controlClass} w-24 font-mono`} type="number" min={10} max={500} value={settings.queueLimit} onChange={(event) => settings.setVoiceSettings({ queueLimit: Number(event.target.value) })} /></SettingRow>
+                <SettingRow label={uiText("voicePanel.label34")}><UiSelect ariaLabel={uiText("voicePanel.ariaLabel3")} size="standard" className="voice-select-control voice-select-compact" options={VOICE_OVERFLOW_OPTIONS} value={settings.overflowPolicy} onValueChange={(value) => settings.setVoiceSettings({ overflowPolicy: value as "drop-oldest" | "drop-newest" | "drop-normal-first" })} /></SettingRow>
+                <SettingRow label={uiText("voicePanel.label35")}><PanelSwitch label={uiText("voicePanel.label35")} checked={settings.expiryEnabled} onChange={() => settings.setVoiceSettings({ expiryEnabled: !settings.expiryEnabled })} /></SettingRow>
+                {settings.expiryEnabled && <SettingRow label={uiText("voicePanel.label36")}><input className={`${controlClass} w-24 font-mono`} type="number" min={5} max={600} value={settings.expirySeconds} onChange={(event) => settings.setVoiceSettings({ expirySeconds: Number(event.target.value) })} /></SettingRow>}
               </div>
               <div className="voice-setting-grid mt-3 grid min-w-0 gap-x-6 gap-y-1">
-                {VOICE_EVENT_CATEGORIES.map((category) => <SettingRow key={category} label={`${CATEGORY_LABELS[category]}优先级`}><SettingsChoiceControl label={`${CATEGORY_LABELS[category]}优先级`} options={PRIORITY_OPTIONS} value={settings.priorities[category]} onChange={value => settings.setVoiceSettings({ priorities: { ...settings.priorities, [category]: value } })} /></SettingRow>)}
+                {VOICE_EVENT_CATEGORIES.map((category) => <SettingRow key={category} label={uiText("voicePanel.label37", { value: CATEGORY_LABELS[category] })}><SettingsChoiceControl label={uiText("voicePanel.label37", { value: CATEGORY_LABELS[category] })} options={PRIORITY_OPTIONS} value={settings.priorities[category]} onChange={value => settings.setVoiceSettings({ priorities: { ...settings.priorities, [category]: value } })} /></SettingRow>)}
               </div>
             </section>
 
             <section className={sectionClass}>
-              <SectionHeading>事件播报</SectionHeading>
+              <SectionHeading iconName="eventSpeech">{uiText("voicePanel.VoicePanel14")}</SectionHeading>
               <div className="voice-setting-grid grid min-w-0 gap-x-6 gap-y-1">
-                {VOICE_EVENT_CATEGORIES.map((category) => <SettingRow key={category} label={CATEGORY_LABELS[category]}><PanelSwitch label={`播报${CATEGORY_LABELS[category]}`} checked={settings.eventEnabled[category]} onChange={() => settings.setVoiceSettings({ eventEnabled: { ...settings.eventEnabled, [category]: !settings.eventEnabled[category] } })} /></SettingRow>)}
-                <SettingRow label="屏蔽大表情弹幕"><PanelSwitch label="屏蔽大表情弹幕" checked={settings.blockBigEmoteDanmu} onChange={() => settings.setVoiceSettings({ blockBigEmoteDanmu: !settings.blockBigEmoteDanmu })} /></SettingRow>
-                <SettingRow label="屏蔽低价醒目留言"><PanelSwitch label="屏蔽低价醒目留言" checked={settings.blockLowPriceSuperChat} onChange={() => settings.setVoiceSettings({ blockLowPriceSuperChat: !settings.blockLowPriceSuperChat })} /></SettingRow>
-                <SettingRow label="屏蔽低价大航海"><PanelSwitch label="屏蔽低价大航海" checked={settings.blockLowPriceGuard} onChange={() => settings.setVoiceSettings({ blockLowPriceGuard: !settings.blockLowPriceGuard })} /></SettingRow>
+                {VOICE_EVENT_CATEGORIES.map((category) => <SettingRow key={category} label={CATEGORY_LABELS[category]}><PanelSwitch label={uiText("voicePanel.label38", { value: CATEGORY_LABELS[category] })} checked={settings.eventEnabled[category]} onChange={() => settings.setVoiceSettings({ eventEnabled: { ...settings.eventEnabled, [category]: !settings.eventEnabled[category] } })} /></SettingRow>)}
+                <SettingRow label={uiText("voicePanel.label39")}><PanelSwitch label={uiText("voicePanel.label39")} checked={settings.blockBigEmoteDanmu} onChange={() => settings.setVoiceSettings({ blockBigEmoteDanmu: !settings.blockBigEmoteDanmu })} /></SettingRow>
+                <SettingRow label={uiText("voicePanel.label40")}><PanelSwitch label={uiText("voicePanel.label40")} checked={settings.blockLowPriceSuperChat} onChange={() => settings.setVoiceSettings({ blockLowPriceSuperChat: !settings.blockLowPriceSuperChat })} /></SettingRow>
+                <SettingRow label={uiText("voicePanel.label41")}><PanelSwitch label={uiText("voicePanel.label41")} checked={settings.blockLowPriceGuard} onChange={() => settings.setVoiceSettings({ blockLowPriceGuard: !settings.blockLowPriceGuard })} /></SettingRow>
               </div>
-              <p className="mt-2 ui-type-meta text-t3">“只显示大航海进房”沿用通用设置，并同时作用于语音。</p>
+              <p className="mt-2 ui-type-meta text-t3">{uiText("voicePanel.VoicePanel15")}</p>
             </section>
 
             <section className={sectionClass}>
-              <SectionHeading>发音修正</SectionHeading>
+              <SectionHeading iconName="pronunciation">{uiText("voicePanel.VoicePanel16")}</SectionHeading>
               <VoicePronunciationEditor rules={settings.pronunciationRules} onChange={(pronunciationRules) => settings.setVoiceSettings({ pronunciationRules })} />
             </section>
 
             <section className={sectionClass}>
-              <SectionHeading>播报模板</SectionHeading>
+              <SectionHeading iconName="templates">{uiText("voicePanel.VoicePanel17")}</SectionHeading>
               <div className="mb-3 flex flex-wrap gap-1.5">
                 {VOICE_EVENT_CATEGORIES.map((category) => <button type="button" key={category} className={`whitespace-nowrap rounded-md border px-2.5 py-1 ui-type-control ${currentTemplateCategory === category ? "border-accent bg-accent-subtle text-accent-text" : "border-line text-t3 hover:text-t1"}`} onClick={() => setTemplateSelection(category === "interact" ? { kind: "interact", interactKind: "entry" } : { kind: "category", category })}>{CATEGORY_LABELS[category]}</button>)}
               </div>
@@ -838,19 +844,19 @@ export function VoicePanel() {
               )}
               {(currentTemplateCategory === "redPocket" || currentTemplateCategory === "anchorLottery") && (
                 <div className="mb-3 flex flex-wrap gap-1.5">
-                  <button type="button" className={`whitespace-nowrap rounded-md border px-2.5 py-1 ui-type-control ${templateSelection.kind === "category" ? "border-accent bg-accent-subtle text-accent-text" : "border-line text-t3 hover:text-t1"}`} onClick={() => setTemplateSelection({ kind: "category", category: currentTemplateCategory })}>{CATEGORY_LABELS[currentTemplateCategory]}开始</button>
-                  <button type="button" className={`whitespace-nowrap rounded-md border px-2.5 py-1 ui-type-control ${templateSelection.kind === "result" ? "border-accent bg-accent-subtle text-accent-text" : "border-line text-t3 hover:text-t1"}`} onClick={() => setTemplateSelection({ kind: "result", category: currentTemplateCategory as "redPocket" | "anchorLottery" })}>{CATEGORY_LABELS[currentTemplateCategory]}结果</button>
+                  <button type="button" className={`whitespace-nowrap rounded-md border px-2.5 py-1 ui-type-control ${templateSelection.kind === "category" ? "border-accent bg-accent-subtle text-accent-text" : "border-line text-t3 hover:text-t1"}`} onClick={() => setTemplateSelection({ kind: "category", category: currentTemplateCategory })}>{CATEGORY_LABELS[currentTemplateCategory]}{uiText("voicePanel.VoicePanel18")}</button>
+                  <button type="button" className={`whitespace-nowrap rounded-md border px-2.5 py-1 ui-type-control ${templateSelection.kind === "result" ? "border-accent bg-accent-subtle text-accent-text" : "border-line text-t3 hover:text-t1"}`} onClick={() => setTemplateSelection({ kind: "result", category: currentTemplateCategory as "redPocket" | "anchorLottery" })}>{CATEGORY_LABELS[currentTemplateCategory]}{uiText("voicePanel.VoicePanel19")}</button>
                 </div>
               )}
               <VoiceTemplateComposer category={currentTemplateCategory} segments={currentTemplate} onChange={updateTemplate} />
               <div className="mt-3 flex flex-wrap justify-end gap-2">
-                <button type="button" aria-label="试听当前模板" className={`voice-template-audition ${controlClass} border-accent/50 text-accent-text`} onClick={runTemplateTest}>试听</button>
-                <button type="button" className={`${controlClass} text-t3`} onClick={resetTemplate}>恢复本模板默认</button>
+                <button type="button" aria-label={uiText("voicePanel.aria_label29")} className={`voice-template-audition ${controlClass} border-accent/50 text-accent-text`} onClick={runTemplateTest}>{uiText("voicePanel.VoicePanel20")}</button>
+                <button type="button" className={`${controlClass} text-t3`} onClick={resetTemplate}>{uiText("voicePanel.VoicePanel21")}</button>
               </div>
             </section>
 
             <section className={`${sectionClass} flex justify-end`}>
-              <button type="button" className={`${controlClass} border-danger/40 text-danger`} disabled={testBusy} title="恢复默认" aria-label="恢复默认" onClick={reset}><RotateCcw size={16} aria-hidden="true" /></button>
+              <button type="button" className={`${controlClass} border-danger/40 text-danger`} disabled={testBusy} title={uiText("common.restoreDefaults")} aria-label={uiText("common.restoreDefaults")} onClick={reset}><RotateCcw size={16} aria-hidden="true" /></button>
             </section>
           </div>
         </section>

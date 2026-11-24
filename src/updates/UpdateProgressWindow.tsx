@@ -1,3 +1,4 @@
+import { uiText } from "../i18n/index.ts";
 import { useTheme, type Palette } from '../theme';
 import { useEffect,useState,useRef,useLayoutEffect } from 'react';
 import { invoke } from '@tauri-apps/api/core';
@@ -24,10 +25,10 @@ export function UpdateProgressWindow(){
     const observer=new ResizeObserver(resize);observer.observe(element);resize();
     return()=>{observer.disconnect();cancelAnimationFrame(frame);};
   },[]);
-  const title=status.phase==='complete'?'更新完成':status.phase==='launchFailed'?'软件未能启动':failed?'更新未完成':status.phase==='launching'?'正在启动软件':'正在更新 BB CoLive';
-  return <main ref={content} className="update-progress-window"><button className="update-minimize" aria-label="最小化" onClick={()=>void getCurrentWindow().minimize()}><Minus size={18}/></button><div className="software-update-heading" data-tauri-drag-region><CoLiveLogo state={failed?'error':status.phase==='complete'?'live':'connecting'} transition/><div><h1 role="status">{title}</h1><p className="software-update-meta">{status.version&&`版本 ${status.version}`}</p></div></div>
-    {!failed&&<progress aria-label="安装更新进度" max={status.total||1} value={status.total?status.completed:undefined}/>}
-    {failed?<div className="software-update-error"><p>{status.phase==='launchFailed'?'更新已安装，请重试启动软件。':'请重试更新，或前往下载页下载安装。'}</p><details><summary>错误详情</summary><p>{status.error}</p></details></div>:<p className="software-update-meta">{status.phase==='complete'?'软件即将打开':status.phase==='launching'?'正在打开更新后的软件':'请稍候，完成后将重新打开软件。'}</p>}
-    {failed&&<div className="software-update-actions"><a href={status.releaseUrl} onClick={event=>{event.preventDefault();void openUrl(status.releaseUrl);}}>前往下载页</a><button onClick={()=>void getCurrentWindow().close()}>关闭</button><button className="software-update-primary" onClick={()=>void invoke('run_update_helper')}>{status.phase==='launchFailed'?'重试启动':'重试更新'}</button></div>}
+  const title=status.phase==='complete'?uiText("updateProgressWindow.UpdateProgressWindow.title"):status.phase==='launchFailed'?uiText("updateProgressWindow.UpdateProgressWindow.title2"):failed?uiText("updateProgressWindow.UpdateProgressWindow.title3"):status.phase==='launching'?uiText("updateProgressWindow.UpdateProgressWindow.title4"):uiText("updateProgressWindow.UpdateProgressWindow.title5");
+  return <main ref={content} className="update-progress-window"><button className="update-minimize" aria-label={uiText("updateProgressWindow.aria_label")} onClick={()=>void getCurrentWindow().minimize()}><Minus size={18}/></button><div className="software-update-heading" data-tauri-drag-region><CoLiveLogo state={failed?'error':status.phase==='complete'?'live':'connecting'} transition/><div><h1 role="status">{title}</h1><p className="software-update-meta">{status.version&&uiText("updateProgressWindow.UpdateProgressWindow", { version: status.version })}</p></div></div>
+    {!failed&&<progress aria-label={uiText("updateProgressWindow.aria_label2")} max={status.total||1} value={status.total?status.completed:undefined}/>}
+    {failed?<div className="software-update-error"><p>{status.phase==='launchFailed'?uiText("updateProgressWindow.UpdateProgressWindow2"):uiText("updateProgressWindow.UpdateProgressWindow3")}</p><details><summary>{uiText("updateProgressWindow.UpdateProgressWindow4")}</summary><p>{status.error}</p></details></div>:<p className="software-update-meta">{status.phase==='complete'?uiText("updateProgressWindow.UpdateProgressWindow5"):status.phase==='launching'?uiText("updateProgressWindow.UpdateProgressWindow6"):uiText("updateProgressWindow.UpdateProgressWindow7")}</p>}
+    {failed&&<div className="software-update-actions"><a href={status.releaseUrl} onClick={event=>{event.preventDefault();void openUrl(status.releaseUrl);}}>{uiText("updateProgressWindow.UpdateProgressWindow8")}</a><button onClick={()=>void getCurrentWindow().close()}>{uiText("common.close")}</button><button className="software-update-primary" onClick={()=>void invoke('run_update_helper')}>{status.phase==='launchFailed'?uiText("updateProgressWindow.UpdateProgressWindow9"):uiText("updateProgressWindow.UpdateProgressWindow10")}</button></div>}
   </main>;
 }

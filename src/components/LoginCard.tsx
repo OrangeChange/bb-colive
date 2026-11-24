@@ -1,3 +1,4 @@
+import { uiText } from "../i18n/index.ts";
 /**
  * 扫码登录卡片：二维码 + 状态反馈（待扫码/已扫码/过期自动刷新/成功过渡，ui-design §七）
  * 挂载即启动登录循环（过期自动重扫在 session store 内处理）。
@@ -22,7 +23,7 @@ function QrCanvas({ url, dimmed }: { url: string | null; dimmed?: boolean }) {
 
   return (
     <div className={`rounded-lg border border-line bg-white p-2 transition-opacity ${dimmed ? "opacity-30" : ""}`}>
-      <canvas ref={ref} width={184} height={184} className="block" role="img" aria-label={url ? "B 站登录二维码" : "二维码尚未生成"} />
+      <canvas ref={ref} width={184} height={184} className="block" role="img" aria-label={url ? uiText("loginCard.aria_label") : uiText("loginCard.aria_label2")} />
     </div>
   );
 }
@@ -34,11 +35,11 @@ export function SessionUnavailablePanel({ message, onRetry, onRelogin }: {
 }) {
   return <>
     <h1 className="ui-type-display font-display font-medium tracking-tight text-t1">BB CoLive</h1>
-    <p className="ui-type-control text-t3">本地登录信息仍然保留</p>
+    <p className="ui-type-control text-t3">{uiText("loginCard.SessionUnavailablePanel")}</p>
     <p className="ui-type-control text-danger">{message}</p>
     <div className="flex items-center gap-2">
-      <button type="button" className="rounded-lg bg-accent-solid px-4 py-2 ui-type-control font-medium text-accent-fg" onClick={onRetry}>重试</button>
-      <button type="button" className="rounded-lg border border-line bg-bg px-4 py-2 ui-type-control text-t2" onClick={onRelogin}>重新登录</button>
+      <button type="button" className="rounded-lg bg-accent-solid px-4 py-2 ui-type-control font-medium text-accent-fg" onClick={onRetry}>{uiText("common.retry")}</button>
+      <button type="button" className="rounded-lg border border-line bg-bg px-4 py-2 ui-type-control text-t2" onClick={onRelogin}>{uiText("loginCard.SessionUnavailablePanel2")}</button>
     </div>
   </>;
 }
@@ -59,22 +60,22 @@ export function LoginScreen() {
   const restoreUnavailable = phase === "restoreUnavailable";
   const statusText =
     success
-      ? "登录成功，正在进入…"
+      ? uiText("loginCard.LoginScreen.statusText")
       : error ??
         (qrStatus?.kind === "scanned"
-          ? "已扫码，请在手机上确认"
+          ? uiText("loginCard.LoginScreen.statusText2")
           : qrStatus?.kind === "expired"
-            ? "二维码已过期，正在自动刷新…"
-            : !qrUrl ? "正在生成二维码…" : "打开 B 站 App 扫码登录");
+            ? uiText("loginCard.LoginScreen.statusText3")
+            : !qrUrl ? uiText("loginCard.LoginScreen.statusText4") : uiText("loginCard.LoginScreen.statusText5"));
 
   return (
     <div className="relative flex min-h-0 flex-1 items-center justify-center bg-bg">
       <DriftBackground />
       <div className="relative flex flex-col items-center gap-4 rounded-2xl border border-line bg-surface px-10 py-8 shadow-sm">
-        {restoreUnavailable ? <SessionUnavailablePanel message={error ?? "登录状态暂时无法确认，请检查网络后重试"} onRetry={() => void restore()} onRelogin={startLogin} /> : <>
+        {restoreUnavailable ? <SessionUnavailablePanel message={error ?? uiText("loginCard.message")} onRetry={() => void restore()} onRelogin={startLogin} /> : <>
           <h1 className="ui-type-display font-display font-medium tracking-tight text-t1">BB CoLive</h1>
-          <p className="ui-type-control text-t3">扫码登录后开始记录直播事件</p>
-          {qrUrl ? <QrCanvas url={qrUrl} dimmed={success} /> : <div className="flex size-[202px] items-center justify-center rounded-lg border border-line bg-bg ui-type-control text-t3" aria-busy={!error}>二维码{error ? "暂不可用" : "生成中"}</div>}
+          <p className="ui-type-control text-t3">{uiText("loginCard.LoginScreen")}</p>
+          {qrUrl ? <QrCanvas url={qrUrl} dimmed={success} /> : <div className="flex size-[202px] items-center justify-center rounded-lg border border-line bg-bg ui-type-control text-t3" aria-busy={!error}>{uiText("loginCard.LoginScreen2")}{error ? uiText("loginCard.LoginScreen3") : uiText("loginCard.LoginScreen4")}</div>}
           <p role="status" className={`ui-type-control ${success ? "font-medium text-success" : error ? "text-danger" : qrStatus?.kind === "scanned" ? "text-success" : "text-t2"}`}>{statusText}</p>
         </>}
       </div>

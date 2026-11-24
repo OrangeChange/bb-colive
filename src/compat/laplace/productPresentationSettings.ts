@@ -1,3 +1,4 @@
+import { uiText } from "../../i18n/index.ts";
 import { LAPLACE_SETTINGS_STORAGE_KEY } from './settings.ts';
 import { validProductHighlightThreshold } from './productPresentationPolicy.ts';
 export const LAPLACE_PRODUCT_PRESENTATION_KEY = 'bb.laplace.product-presentation.v1';
@@ -43,9 +44,9 @@ function decode(raw: string): LaplaceProductPresentationSettings | LegacyPresent
     return freeze({ version: 2, showCurrentRank: value.showCurrentRank, showGiftHighlightAbove: value.showGiftHighlightAbove, showAvatar: value.showAvatar, showUsername: value.showUsername, classicElementScope: value.classicElementScope });
   } catch { return null; }
 }
-const FUTURE = '呈现设置由较新版本保存，当前只读。请使用较新版本编辑，现有保存内容不会被覆盖。';
-const CORRUPT = '呈现设置无法读取，已保留可用选择。修改开关后可重新保存。';
-const MEMORY = '呈现设置无法保存或读取，当前选择仅在此页面有效。';
+const FUTURE = uiText("productPresentationSettings.FUTURE");
+const CORRUPT = uiText("productPresentationSettings.CORRUPT");
+const MEMORY = uiText("productPresentationSettings.MEMORY");
 /** One authority per realm. Reads/migration/storage notifications never write;
  * only an explicit setter persists, and future schemas lock setters entirely. */
 export function createLaplaceProductPresentationStore(getStorage: () => StorageAdapter) {
@@ -97,7 +98,7 @@ export function createLaplaceProductPresentationStore(getStorage: () => StorageA
       }
       if (event.newValue === null || event.key === null) {
         diagnostic = ''; const settings = legacy();
-        publish(settings, false, diagnostic || '呈现设置已移除，已按原显示设置重置。当前选择尚未保存。', true); return;
+        publish(settings, false, diagnostic || uiText("productPresentationSettings.createLaplaceProductPresentationStore.handleStorageEvent"), true); return;
       }
       const parsed = decode(event.newValue);
       if (parsed === 'future') publish(snapshot.settings, true, FUTURE);

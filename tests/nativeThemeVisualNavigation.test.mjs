@@ -1,3 +1,4 @@
+import { readUiSource } from "./helpers/readUiSource.mjs";
 import { tmpdir as ssrTemporaryDirectory } from 'node:os';
 import test from "node:test";
 import assert from "node:assert/strict";
@@ -148,7 +149,7 @@ test("属性面板显示完整编辑上下文、分组和简化继承状态", as
   assert.match(html, /class="native-edit-context"/);
   assert.match(html, /<span>事件<\/span><strong>醒目留言<\/strong>/);
   assert.match(html, /<span>身份<\/span><strong>舰长<\/strong>/);
-  assert.match(html, /<span>部件<\/span><strong title="醒目留言 \/ 正文">醒目留言 \/ 正文<\/strong>/);
+  assert.match(html, /<span>部件<\/span><strong title=["']醒目留言 \/ 正文["']>醒目留言 \/ 正文<\/strong>/);
   assert.match(html, /<span>配色<\/span><strong>通用<\/strong>/);
   for (const label of ["显示", "文字", "颜色与背景", "间距", "边框"]) assert.match(html, new RegExp(label));
   assert.match(html, /继承自通用|继承主题/);
@@ -170,7 +171,7 @@ test("全局部件隐藏不可用范围按钮并明确显示全局范围", async
   assert.doesNotMatch(html, /class="native-event-scope-primary"/);
   assert.doesNotMatch(html, /class="native-identity-scope"/);
   assert.match(html, /<span>范围<\/span><strong>全局<\/strong>/);
-  assert.match(html, /<span>部件<\/span><strong title="显示区域 \/ 事件区">显示区域 \/ 事件区<\/strong>/);
+  assert.match(html, /<span>部件<\/span><strong title=["']显示区域 \/ 事件区["']>显示区域 \/ 事件区<\/strong>/);
 });
 
 test("价格导航渲染为默认折叠子树且不重复价格整体", async () => {
@@ -191,7 +192,7 @@ test("价格导航渲染为默认折叠子树且不重复价格整体", async ()
 });
 
 test("浏览器验收页提供编辑器挂载节点", () => {
-  const source = fs.readFileSync("tests/nativeThemeVisualEditor.browser.html", "utf8");
+  const source = readUiSource("tests/nativeThemeVisualEditor.browser.html", "utf8");
   assert.match(source, /<div id="root"><\/div>/);
 });
 
@@ -213,11 +214,11 @@ test("画布工具栏左侧显示背景并在右侧显示内嵌单位的宽度",
     logLevel: "silent",
   });
   await vite.ssrLoadModule("/src/components/StylePreviewToolbar.tsx");
-  const html = fs.readFileSync("src/components/StylePreviewToolbar.tsx", "utf8");
+  const html = readUiSource("src/components/StylePreviewToolbar.tsx", "utf8");
   assert.match(html, /native-preview-canvas-color[\s\S]*native-preview-width/);
-  assert.match(html, /ThemeColorField\s+label="画布背景"/);
-  assert.match(html, /aria-label="窗口宽度"/);
-  assert.match(html, /title="窗口宽度"/);
+  assert.match(html, /ThemeColorField\s+label=["']画布背景["']/);
+  assert.match(html, /aria-label=["']窗口宽度["']/);
+  assert.match(html, /title=["']窗口宽度["']/);
   assert.match(html, /<span className="native-preview-width-unit">px<\/span>/);
   assert.doesNotMatch(html, /<span>画布宽度<\/span>|<span>背景<\/span>/);
   assert.doesNotMatch(html, /native-preview-canvas-popover/);

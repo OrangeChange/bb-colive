@@ -1,3 +1,4 @@
+import { uiText } from "../i18n/index.ts";
 import { createPreviewResourceReceiver } from "../preview/stylePreviewResources.ts";
 import { useEffect, useState } from "react";
 import { flushSync } from 'react-dom';
@@ -37,6 +38,6 @@ export function NativeStylePreviewWindow() {
       <StylePreviewContent state={state} />
     </div>
   ) : (
-    <div role="status">请在软件中打开样式预览</div>
+    <div role="status">{uiText("nativeStylePreviewWindow.NativeStylePreviewWindow")}</div>
   );
 }

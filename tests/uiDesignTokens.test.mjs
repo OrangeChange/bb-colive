@@ -1,10 +1,11 @@
+import { readUiSource } from "./helpers/readUiSource.mjs";
 import test from "node:test";
 import assert from "node:assert/strict";
 import { readFileSync } from "node:fs";
 import { fileURLToPath } from "node:url";
 
 const root = fileURLToPath(new URL("..", import.meta.url));
-const read = (relativePath) => readFileSync(`${root}/${relativePath}`, "utf8");
+const read = (relativePath) => readUiSource(`${root}/${relativePath}`, "utf8");
 
 test("界面字号角色集中定义并禁止9px文字", () => {
   const css = read("src/App.css");
@@ -27,7 +28,7 @@ test("界面字号角色集中定义并禁止9px文字", () => {
 test("现场工具栏的筛选按钮和输入控件统一为32px", () => {
   const source = read("src/components/LiveFilterBar.tsx");
   assert.match(source, /filterButtonBase\s*=\s*["'][^"']*h-8/);
-  assert.match(source, /<UiSearchInput\b[^>]*aria-label="搜索现场事件内容"/);
+  assert.match(source, /<UiSearchInput\b[^>]*aria-label=["']搜索现场事件内容["']/);
   assert.match(read("src/components/ui/SearchInput.tsx"), /ui-search-field[^`]*\bh-8\b/);
   assert.match(source, /GiftThresholdInput/);
 });

@@ -1,3 +1,4 @@
+import { uiText, UiMessageError } from "../i18n/index.ts";
 /**
  * 登录会话状态：启动恢复 -> 未登录时扫码（过期自动重扫，ui-design §七）-> 登录态
  */
@@ -50,7 +51,7 @@ export const useSession = create<SessionState>((set, get) => ({
       set({
         phase: "restoreUnavailable",
         session: result.session,
-        error: "登录状态暂时无法确认，请检查网络后重试",
+        error: uiText("session.useSession.restore.error"),
       });
       recordFeatureDiagnostic({ featureId: "session", stage: "failure", action: "session-state", outcome: "restore-unavailable" });
     } else {
@@ -91,7 +92,7 @@ export const useSession = create<SessionState>((set, get) => ({
             return;
           }
           const msg = e instanceof Error ? e.message : String(e);
-          if (msg.includes("过期")) {
+          if (e instanceof UiMessageError && e.messageKey === "login.qrLogin5") {
             // 二维码过期不打断：重新生成（qrLogin 内部会再次 qrGenerate）
             continue;
           }
@@ -115,7 +116,7 @@ export const useSession = create<SessionState>((set, get) => ({
       recordFeatureDiagnostic({ featureId: "session", stage: "success", action: "logout", outcome: "logged-out" });
     } catch {
       recordFeatureDiagnostic({ featureId: "session", stage: "failure", action: "logout", outcome: "failed" });
-      throw new Error("退出登录失败，请重试");
+      throw new Error(uiText("session.useSession.logout"));
     }
   },
 }));

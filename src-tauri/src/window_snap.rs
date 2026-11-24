@@ -679,7 +679,7 @@ mod native {
     pub fn install(hwnd: HWND) -> Result<(), String> {
         registry()
             .lock()
-            .map_err(|_| "窗口吸附状态不可用".to_string())?
+            .map_err(|_| ui_text!("backend.window_snap.install2").to_string())?
             .entry(hwnd as isize)
             .or_default();
         let installed =
@@ -689,7 +689,7 @@ mod native {
                 .lock()
                 .ok()
                 .map(|mut windows| windows.remove(&(hwnd as isize)));
-            return Err("无法注册窗口吸附处理器".to_string());
+            return Err(ui_text!("backend.window_snap.install").to_string());
         }
         Ok(())
     }
@@ -698,13 +698,13 @@ mod native {
         unsafe {
             let region = if let Some(radius) = radius.filter(|radius| *radius > 0) {
                 let mut rect: RECT = std::mem::zeroed();
-                if GetWindowRect(hwnd, &mut rect) == 0 { return Err("无法读取窗口圆角范围".into()); }
+                if GetWindowRect(hwnd, &mut rect) == 0 { return Err(ui_text!("backend.window_snap.apply_corner_radius").into()); }
                 CreateRoundRectRgn(0, 0, rect.right - rect.left, rect.bottom - rect.top, radius * 2, radius * 2)
             } else { std::ptr::null_mut() };
-            if radius.is_some_and(|value| value > 0) && region.is_null() { return Err("无法创建窗口圆角".into()); }
+            if radius.is_some_and(|value| value > 0) && region.is_null() { return Err(ui_text!("backend.window_snap.apply_corner_radius2").into()); }
             if SetWindowRgn(hwnd, region, 1) == 0 {
                 if !region.is_null() { DeleteObject(region); }
-                return Err("无法更新窗口圆角".into());
+                return Err(ui_text!("backend.window_snap.apply_corner_radius3").into());
             }
         }
         Ok(())
@@ -722,11 +722,11 @@ mod native {
             let _ = DwmSetWindowAttribute(hwnd, 38, &disabled as *const _ as _, 4);
             let library = GetModuleHandleW(windows_sys::core::w!("user32.dll"));
             let address = GetProcAddress(library, b"SetWindowCompositionAttribute\0".as_ptr())
-                .ok_or_else(|| "系统不支持窗口背景合成".to_string())?;
+                .ok_or_else(|| ui_text!("backend.window_snap.set_material2").to_string())?;
             let apply: unsafe extern "system" fn(HWND, *mut CompositionData) -> i32 = std::mem::transmute(address);
             let mut policy = AccentPolicy { state: if glass { 4 } else { 0 }, flags: 0, color: if glass { if dark { 0x40181414 } else { 0x60ffffff } } else { 0 }, animation: 0 };
             let mut data = CompositionData { attribute: 19, data: &mut policy as *mut _ as _, size: std::mem::size_of::<AccentPolicy>() };
-            if apply(hwnd, &mut data) == 0 { return Err("无法更新窗口背景合成".into()); }
+            if apply(hwnd, &mut data) == 0 { return Err(ui_text!("backend.window_snap.set_material").into()); }
         }
         unsafe {
             let style = GetWindowLongPtrW(hwnd, GWL_STYLE);
@@ -734,7 +734,7 @@ mod native {
             SetWindowPos(hwnd, std::ptr::null_mut(), 0, 0, 0, 0, SWP_FRAMECHANGED | SWP_NOACTIVATE | SWP_NOMOVE | SWP_NOSIZE | SWP_NOZORDER);
         }
         apply_corner_radius(hwnd, radius)?;
-        registry().lock().map_err(|_| "窗口圆角状态不可用".to_string())?
+        registry().lock().map_err(|_| ui_text!("backend.window_snap.set_material3").to_string())?
             .entry(hwnd as isize).or_default().corner_radius = radius;
         Ok(())
     }

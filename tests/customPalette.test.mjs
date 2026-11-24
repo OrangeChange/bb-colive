@@ -1,3 +1,4 @@
+import { readUiSource } from "./helpers/readUiSource.mjs";
 import test from 'node:test';
 import assert from 'node:assert/strict';
 let generateCustomPalette, contrastRatio;
@@ -72,7 +73,7 @@ test('自定义主色的浅底保持透明混色，不变成实心种子色',()=
 import {readFileSync} from 'node:fs';
 import postcss from 'postcss';
 test('预设配色采用候选 A，亮绿指示与状态文字分开',()=>{
- const root=postcss.parse(readFileSync('src/App.css','utf8'));
+ const root=postcss.parse(readUiSource('src/App.css','utf8'));
  const tokens=selector=>Object.fromEntries(root.nodes.find(n=>n.selector?.replace(/\s/g,'')===selector.replace(/\s/g,'')).nodes.filter(n=>n.type==='decl').map(n=>[n.prop,n.value]));
  const pink=tokens(':root,\n:root[data-theme="sakura"]'),green=tokens(':root[data-theme="pine"]');
  assert.equal(pink['--accent'],'#fb7299');assert.equal(pink['--accent-solid'],'#d43870');

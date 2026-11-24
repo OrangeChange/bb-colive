@@ -1,7 +1,8 @@
+import { readUiSource } from "./helpers/readUiSource.mjs";
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import fs from 'node:fs';
-const read = file => fs.readFileSync(file, 'utf8');
+const read = file => readUiSource(file, 'utf8');
 test('BB CoLive 发行身份与作者一致', () => {
   const config = JSON.parse(read('src-tauri/tauri.conf.json'));
   assert.equal(config.identifier, 'orange.bbcolive');

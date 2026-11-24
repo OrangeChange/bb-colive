@@ -1,3 +1,4 @@
+import { uiText } from "../i18n/index.ts";
 import { useEffect, useId, useRef, useState } from 'react';
 import { createPortal } from 'react-dom';
 import {
@@ -17,29 +18,29 @@ import { readRecoverySessionPages } from '../cloudSync/recoverySessionPages.ts';
 import { ArchiveCoverThumbnail } from './ArchiveCoverThumbnail';
 
 const scopeOptions: Array<{ value: CloudRecoveryScope; label: string; description: string }> = [
-  { value: 'all', label: '全部场次', description: '恢复云端保存的全部记录' },
-  { value: 'sessions', label: '选择场次', description: '只恢复勾选的直播场次' },
-  { value: 'time', label: '指定时间', description: '恢复与时间范围有交集的场次' },
+  { value: 'all', label: uiText("cloudRecoveryDialog.scopeOptions.label"), description: uiText("cloudRecoveryDialog.scopeOptions.description") },
+  { value: 'sessions', label: uiText("cloudRecoveryDialog.scopeOptions.label2"), description: uiText("cloudRecoveryDialog.scopeOptions.description2") },
+  { value: 'time', label: uiText("cloudRecoveryDialog.scopeOptions.label3"), description: uiText("cloudRecoveryDialog.scopeOptions.description3") },
 ];
 
 const dateLabel = (value?: string | null) => {
-  if (!value) return '时间未知';
+  if (!value) return uiText("cloudRecoveryDialog.dateLabel");
   const time = new Date(recoveryTimestamp(value) ?? NaN);
   return Number.isFinite(time.getTime())
     ? time.toLocaleString('zh-CN', { hour12: false, year: 'numeric', month: '2-digit', day: '2-digit', hour: '2-digit', minute: '2-digit' })
-    : '时间未知';
+    : uiText("cloudRecoveryDialog.dateLabel");
 };
 
 const sessionStatus = (session: CloudRecoverySessionItem) => {
-  if (session.live_status === 'ongoing') return '直播中';
-  if (session.live_status === 'ended') return '已结束';
-  return '状态未知';
+  if (session.live_status === 'ongoing') return uiText("cloudRecoveryDialog.sessionStatus");
+  if (session.live_status === 'ended') return uiText("cloudRecoveryDialog.sessionStatus2");
+  return uiText("cloudRecoveryDialog.sessionStatus3");
 };
 
 const qualityLabel = (quality?: CloudRecoverySessionItem['quality']) => {
-  if (quality === 'complete') return '完整';
-  if (quality === 'incomplete') return '不完整';
-  return '待确认';
+  if (quality === 'complete') return uiText("cloudRecoveryDialog.qualityLabel");
+  if (quality === 'incomplete') return uiText("cloudRecoveryDialog.qualityLabel2");
+  return uiText("cloudRecoveryDialog.qualityLabel3");
 };
 
 export function CloudRecoveryDialog({
@@ -80,7 +81,7 @@ export function CloudRecoveryDialog({
         setNextCursor(page.hasMore ? page.nextCursor : null);
       }, active, cursor);
     } catch {
-      if (active()) setLoadError('无法读取全部云端场次，请检查服务器连接后重试');
+      if (active()) setLoadError(uiText("cloudRecoveryDialog.CloudRecoveryDialog.load"));
     } finally {
       if (active()) setLoading(false);
     }
@@ -133,7 +134,7 @@ export function CloudRecoveryDialog({
     if (submitting || loading || loadError || nextCursor) return;
     const built = buildCloudRecoverySelection(draft);
     if (!built.selection) {
-      setValidationError(built.error ?? '请检查恢复范围');
+      setValidationError(built.error ?? uiText("cloudRecoveryDialog.CloudRecoveryDialog.submit"));
       return;
     }
     setSubmitting(true);
@@ -146,12 +147,12 @@ export function CloudRecoveryDialog({
         return;
       }
       if (result === 'busy') {
-        setValidationError('已有恢复任务正在运行');
+        setValidationError(uiText("cloudRecoveryDialog.CloudRecoveryDialog.submit2"));
         return;
       }
       onClose();
     } catch {
-      setValidationError('恢复任务未能开始，请检查服务器连接后重试');
+      setValidationError(uiText("cloudRecoveryDialog.CloudRecoveryDialog.submit3"));
     } finally {
       setSubmitting(false);
     }
@@ -159,7 +160,7 @@ export function CloudRecoveryDialog({
 
   return createPortal(
     <div className="ui-modal-overlay fixed inset-0 z-[100] flex items-center justify-center p-3" role="presentation">
-      <button type="button" aria-label="关闭恢复窗口" disabled={submitting}
+      <button type="button" aria-label={uiText("cloudRecoveryDialog.aria_label")} disabled={submitting}
         className="absolute inset-0 h-full w-full border-0 bg-black/45"
         onClick={onClose} />
       <div ref={dialogRef} role="dialog" aria-modal="true" aria-labelledby={titleId} aria-describedby={descriptionId}
@@ -167,23 +168,23 @@ export function CloudRecoveryDialog({
         <header className="shrink-0 border-b border-line px-4 py-3">
           <div className="flex items-start justify-between gap-4">
             <div className="min-w-0">
-              <h2 id={titleId} className="ui-type-page-title truncate text-t1">从云端恢复 · {ownerName}</h2>
-              <p id={descriptionId} className="mt-1 ui-type-control text-t3">选择恢复范围和内容，开始后可在右下角查看进度。</p>
+              <h2 id={titleId} className="ui-type-page-title truncate text-t1">{uiText("cloudRecoveryDialog.CloudRecoveryDialog")}{ownerName}</h2>
+              <p id={descriptionId} className="mt-1 ui-type-control text-t3">{uiText("cloudRecoveryDialog.CloudRecoveryDialog2")}</p>
             </div>
             <button ref={closeRef} type="button" disabled={submitting} onClick={onClose}
               className="grid h-8 w-8 shrink-0 place-items-center rounded-md border border-line text-t2 transition-colors enabled:hover:bg-raised enabled:hover:text-t1 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent-ring disabled:cursor-not-allowed disabled:opacity-50"
-              aria-label="关闭恢复窗口">×</button>
+              aria-label={uiText("cloudRecoveryDialog.aria_label")}>×</button>
           </div>
         </header>
 
         <div className="min-h-0 flex-1 overflow-y-auto px-4 py-3">
-          {loading && <div className="mb-3 min-h-9 rounded-md border border-line bg-bg px-3 py-2 ui-type-control text-t3">正在读取云端场次…</div>}
+          {loading && <div className="mb-3 min-h-9 rounded-md border border-line bg-bg px-3 py-2 ui-type-control text-t3">{uiText("cloudRecoveryDialog.CloudRecoveryDialog3")}</div>}
           {!loading && loadError && <div className="mb-3 flex min-h-9 flex-wrap items-center justify-between gap-2 rounded-md border border-danger/40 bg-bg px-3 py-2">
             <p role="alert" className="ui-type-control text-danger">{loadError}</p>
-            <button type="button" className="h-8 rounded-md border border-line px-3 ui-type-control text-t2 hover:bg-raised" onClick={() => void load(nextCursor ?? undefined)}>重试</button>
+            <button type="button" className="h-8 rounded-md border border-line px-3 ui-type-control text-t2 hover:bg-raised" onClick={() => void load(nextCursor ?? undefined)}>{uiText("common.retry")}</button>
           </div>}
           <fieldset>
-            <legend className="ui-type-section-title text-t1">恢复范围</legend>
+            <legend className="ui-type-section-title text-t1">{uiText("cloudRecoveryDialog.CloudRecoveryDialog4")}</legend>
             <div className="mt-2 grid gap-2 sm:grid-cols-3">
               {scopeOptions.map(option => <label key={option.value}
                 className={`cursor-pointer rounded-md border px-3 py-2 transition-colors ${draft.scope === option.value ? 'border-accent bg-accent-subtle' : 'border-line bg-bg hover:border-accent/50 hover:bg-raised'}`}>
@@ -200,24 +201,24 @@ export function CloudRecoveryDialog({
 
           {draft.scope === 'sessions' && <section className="mt-4" aria-labelledby="cloud-session-heading">
             <div className="flex items-center justify-between gap-3">
-              <h3 id="cloud-session-heading" className="ui-type-section-title text-t1">云端场次</h3>
-              <span className="ui-type-meta text-t3">已选 {draft.sessionIds.length} 场</span>
+              <h3 id="cloud-session-heading" className="ui-type-section-title text-t1">{uiText("cloudRecoveryDialog.CloudRecoveryDialog5")}</h3>
+              <span className="ui-type-meta text-t3">{uiText("cloudRecoveryDialog.CloudRecoveryDialog6")}{draft.sessionIds.length} {uiText("cloudRecoveryDialog.CloudRecoveryDialog7")}</span>
             </div>
             <div className="mt-2 max-h-64 overflow-y-auto rounded-md border border-line bg-bg">
-              {!loading && !loadError && sessions.length === 0 && <div className="grid min-h-24 place-items-center ui-type-control text-t3">云端没有可恢复的场次</div>}
+              {!loading && !loadError && sessions.length === 0 && <div className="grid min-h-24 place-items-center ui-type-control text-t3">{uiText("cloudRecoveryDialog.CloudRecoveryDialog8")}</div>}
               {sessions.map(session => <div key={session.session_id}
                 className="flex items-start gap-3 border-b border-line px-3 py-2 last:border-b-0 hover:bg-raised">
-                <ArchiveCoverThumbnail cloudSessionId={session.session_id} alt={`${session.title || '场次'}封面`} size="session-list" previewEnabled={false} />
+                <ArchiveCoverThumbnail cloudSessionId={session.session_id} alt={uiText("cloudRecoveryDialog.alt", { value: session.title || uiText("cloudRecoveryDialog.alt.value") })} size="session-list" previewEnabled={false} />
                 <label className="flex min-w-0 flex-1 cursor-pointer items-start gap-2">
                 <input className="mt-1" type="checkbox" checked={draft.sessionIds.includes(session.session_id)}
                   onChange={() => toggleSession(session.session_id)} />
                 <span className="min-w-0 flex-1">
-                  <span className="block truncate ui-type-control text-t1">{session.title || '未命名场次'}</span>
+                  <span className="block truncate ui-type-control text-t1">{session.title || uiText("cloudRecoveryDialog.CloudRecoveryDialog9")}</span>
                   <span className="mt-0.5 flex flex-wrap gap-x-3 ui-type-micro text-t3">
                     <span>{dateLabel(recoveryTimestamp(session.source_live_started_at) ? session.source_live_started_at : session.capture_started_at)}</span>
                     <span>{sessionStatus(session)}</span>
                     <span>{qualityLabel(session.quality)}</span>
-                    <span>{session.event_count ?? '0'} 个事件</span>
+                    <span>{session.event_count ?? '0'} {uiText("cloudRecoveryDialog.CloudRecoveryDialog10")}</span>
                   </span>
                 </span>
                 </label>
@@ -226,15 +227,13 @@ export function CloudRecoveryDialog({
           </section>}
 
           {draft.scope === 'time' && <fieldset className="mt-4">
-            <legend className="ui-type-section-title text-t1">时间范围</legend>
+            <legend className="ui-type-section-title text-t1">{uiText("cloudRecoveryDialog.CloudRecoveryDialog11")}</legend>
             <div className="mt-2 grid gap-3 sm:grid-cols-2">
-              <label className="grid gap-1 ui-type-control text-t2">开始时间
-                <input type="datetime-local" value={draft.startedAt}
+              <label className="grid gap-1 ui-type-control text-t2">{uiText("cloudRecoveryDialog.CloudRecoveryDialog12")}<input type="datetime-local" value={draft.startedAt}
                   onChange={event => { setValidationError(''); setDraft(current => ({ ...current, startedAt: event.target.value })); }}
                   className="h-9 rounded-md border border-line bg-bg px-2 text-t1 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent-ring" />
               </label>
-              <label className="grid gap-1 ui-type-control text-t2">结束时间
-                <input type="datetime-local" value={draft.endedAt}
+              <label className="grid gap-1 ui-type-control text-t2">{uiText("cloudRecoveryDialog.CloudRecoveryDialog13")}<input type="datetime-local" value={draft.endedAt}
                   onChange={event => { setValidationError(''); setDraft(current => ({ ...current, endedAt: event.target.value })); }}
                   className="h-9 rounded-md border border-line bg-bg px-2 text-t1 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent-ring" />
               </label>
@@ -242,29 +241,29 @@ export function CloudRecoveryDialog({
           </fieldset>}
 
           <fieldset className="mt-4">
-            <legend className="ui-type-section-title text-t1">恢复内容</legend>
+            <legend className="ui-type-section-title text-t1">{uiText("cloudRecoveryDialog.CloudRecoveryDialog14")}</legend>
             <div className="mt-2 flex flex-wrap gap-2">
               {([
-                ['includeDanmaku', '弹幕'],
-                ['includeInteractions', '互动事件'],
+                ['includeDanmaku', uiText("cloudRecoveryDialog.CloudRecoveryDialog15")],
+                ['includeInteractions', uiText("cloudRecoveryDialog.CloudRecoveryDialog16")],
               ] as const).map(([key, label]) => <label key={key} className="inline-flex cursor-pointer items-center gap-2 rounded-md border border-line bg-bg px-3 py-2 ui-type-control text-t1 hover:bg-raised">
                 <input type="checkbox" checked={draft[key]} onChange={event => setDraft(current => ({ ...current, [key]: event.target.checked }))} />
                 {label}
               </label>)}
             </div>
-            <p className="mt-2 ui-type-micro text-t3">礼物、醒目留言、大航海、场次资料和记录质量始终恢复。</p>
+            <p className="mt-2 ui-type-micro text-t3">{uiText("cloudRecoveryDialog.CloudRecoveryDialog17")}</p>
           </fieldset>
 
           {validationError && <p role="alert" className="mt-3 ui-type-control text-danger">{validationError}</p>}
         </div>
 
         <footer className="flex shrink-0 items-center justify-between gap-3 border-t border-line px-4 py-3">
-          <button type="button" onClick={onOpenSettings} className="h-8 rounded-md border border-line bg-bg px-3 ui-type-control text-t2 hover:bg-raised hover:text-t1 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent-ring">服务器设置</button>
+          <button type="button" onClick={onOpenSettings} className="h-8 rounded-md border border-line bg-bg px-3 ui-type-control text-t2 hover:bg-raised hover:text-t1 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent-ring">{uiText("cloudRecoveryDialog.CloudRecoveryDialog18")}</button>
           <div className="flex gap-2">
             <button type="button" disabled={submitting} onClick={onClose}
-              className="h-8 rounded-md border border-line bg-bg px-3 ui-type-control text-t2 enabled:hover:bg-raised enabled:hover:text-t1 disabled:cursor-not-allowed disabled:opacity-50">取消</button>
+              className="h-8 rounded-md border border-line bg-bg px-3 ui-type-control text-t2 enabled:hover:bg-raised enabled:hover:text-t1 disabled:cursor-not-allowed disabled:opacity-50">{uiText("common.cancel")}</button>
             <button type="button" disabled={submitting || loading || Boolean(loadError) || Boolean(nextCursor)} onClick={() => void submit()}
-              className={accentSolidButtonClass}>{submitting ? '正在开始…' : '开始恢复'}</button>
+              className={accentSolidButtonClass}>{submitting ? uiText("cloudRecoveryDialog.CloudRecoveryDialog19") : uiText("cloudRecoveryDialog.CloudRecoveryDialog20")}</button>
           </div>
         </footer>
       </div>

@@ -1,9 +1,10 @@
+import { readUiSource } from "./helpers/readUiSource.mjs";
 import { readApplicationSources } from "./helpers/applicationSources.mjs";
 import test from "node:test";
 import assert from "node:assert/strict";
 import fs from "node:fs";
 
-const read = (path) => fs.readFileSync(new URL(`../${path}`, import.meta.url), "utf8");
+const read = (path) => readUiSource(new URL(`../${path}`, import.meta.url), "utf8");
 
 test("主视图包含独立的个性播报入口", () => {
   const source = read("src/components/mainView.ts");
@@ -21,7 +22,7 @@ test("个性播报一级入口复用语音相同的悬停快捷开关契约", ()
   const source = read("src/components/Sidebar.tsx");
   assert.match(source, /SidebarQuickToggle/);
   assert.match(source, /mainView="personal"/);
-  assert.match(source, /toggleLabel=\{personalBroadcastEnabled \? "关闭个性播报" : "开启个性播报"\}/);
+  assert.match(source, /toggleLabel=\{personalBroadcastEnabled \? ["']关闭个性播报["'] : ["']开启个性播报["']\}/);
   assert.match(source, /sidebar-feature-controls/);
   assert.match(source, /sidebar-feature-toggle/);
 });

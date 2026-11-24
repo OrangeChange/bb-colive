@@ -1,3 +1,4 @@
+import { uiText } from "../i18n/index.ts";
 import { createAppWindow } from "../appData.ts";
 import { resolveOutputEventNeeds } from "../events/outputEventPolicy.ts";
 import { emitTo, listen, type UnlistenFn } from "@tauri-apps/api/event";
@@ -274,7 +275,7 @@ export async function openDisplayWindow(): Promise<void> {
     const placement = createDefaultWindowPair(await readCurrentMonitorWorkArea()).display;
     const created = await createAppWindow(DISPLAY_WINDOW_LABEL, {
       url: DISPLAY_URL,
-      title: "弹幕窗 · BB CoLive",
+      title: uiText("displayBridge.openDisplayWindow.created.title"),
       visible: false,
       width: placement.width,
       height: placement.height,
@@ -443,7 +444,7 @@ import.meta.hot?.dispose(() => {
 
 export async function locateDisplayWindow(): Promise<void> {
   if (!displayWindow || !session.open) return;
-  if (!session.ready) throw new Error('弹幕窗正在打开，请稍后重试。');
+  if (!session.ready) throw new Error(uiText("displayBridge.locateDisplayWindow"));
   if (await displayWindow.isMinimized()) await displayWindow.unminimize();
   await displayWindow.show();
   await emitTo(DISPLAY_WINDOW_LABEL, 'display:locate');

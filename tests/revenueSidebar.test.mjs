@@ -54,12 +54,12 @@ test('真实设置将子窗放进分窗组，总开名称保留，显示方式�
   }));
   assert.match(html, /data-settings-search="gift-window-mode"[^>]*><span class="settings-control-label ui-type-control text-t2">显示方式<\/span>/);
   const giftSection = html.slice(html.indexOf('data-settings-anchor="gift"'),html.indexOf('data-settings-section="interaction"'));
-  assert.equal((giftSection.match(/aria-label="开启收益窗"/g) ?? []).length,1);
+  assert.equal((giftSection.match(/aria-label=["']开启收益窗["']/g) ?? []).length,1);
   assert.match(giftSection, /class="settings-subsection-title" data-settings-level="2">[\s\S]*?收益窗<\/div>/);
   const group = giftSection.slice(giftSection.indexOf('aria-label="分窗"'));
   assert.ok(group.length > 0, '子开关归属分窗组');
   for (const label of ['礼物窗','醒目留言窗','大航海窗']) assert.match(group,new RegExp(`aria-label="${label}"`));
-  assert.match(giftSection, /role="radiogroup" aria-label="显示方式"/);
+  assert.match(giftSection, /role="radiogroup" aria-label=["']显示方式["']/);
   assert.match(giftSection, /checked="" value="split"[\s\S]*?分窗显示<\/span>/);
 });
 
@@ -79,11 +79,11 @@ test('真实Sidebar总入口使用组合窗口，子窗使用礼盒、气泡金�
 test('真实Sidebar SSR将SVG子按钮和共享锁定放在礼物展开栏内，总关仍可达', () => {
   const selection = {...createRevenueWindowSelection(), mode:'split'};
   const html = renderToStaticMarkup(React.createElement(Sidebar, {revenueSelection:selection, onToggleGift(){}, onToggleGiftLock(){}, onToggleRevenueChild(){}}));
-  const group = html.match(/<div[^>]*aria-label="收益分窗"[^>]*>([\s\S]*?)<\/div>/)?.[1];
+  const group = html.match(/<div[^>]*aria-label=["']收益分窗["'][^>]*>([\s\S]*?)<\/div>/)?.[1];
   assert.ok(group, '礼物入口内需要收益展开栏');
   for (const name of ['礼物','醒目留言','大航海']) assert.match(group, new RegExp(`aria-label="${name}窗：已关闭"[^>]*>[\\s\\S]*?<svg`));
-  assert.match(group, /aria-label="锁定收益窗（鼠标穿透）"/);
-  const lock = group.match(/<button[^>]*aria-label="锁定收益窗（鼠标穿透）"[^>]*>/)?.[0];
+  assert.match(group, /aria-label=["']锁定收益窗（鼠标穿透）["']/);
+  const lock = group.match(/<button[^>]*aria-label=["']锁定收益窗（鼠标穿透）["'][^>]*>/)?.[0];
   assert.match(lock, /disabled=""/);
   assert.match(html, /sidebar-gift-controls[^" >]*[^">]*has-lock[^">]*has-revenue/);
   assert.doesNotMatch(group, /<span[^>]*>SC<\/span>|>航海<|>礼物</);

@@ -38,7 +38,7 @@ pub async fn obs_start_service(app: tauri::AppHandle) -> Result<ServiceStatus, S
     { let state = app.state::<ObsServerState>(); let inner = state.inner.lock().unwrap(); if inner.status.running { return Ok(inner.status.clone()); } }
     let listener = match bind_listener(port).await {
         Ok(listener) => listener,
-        Err(error) => { let message = format!("无法启动 OBS 服务，端口 {port} 不可用。请关闭占用程序，或在 OBS 设置中修改端口。{error}"); app.state::<ObsServerState>().inner.lock().unwrap().status = ServiceStatus { port, running:false, error:Some(message.clone()), clients:0 }; return Err(message); }
+        Err(error) => { let message = ui_format!("backend.obs_server.obs_start_service", port = port, error = error); app.state::<ObsServerState>().inner.lock().unwrap().status = ServiceStatus { port, running:false, error:Some(message.clone()), clients:0 }; return Err(message); }
     };
     let reader_app = app.clone();
     let assets: AssetReader = Arc::new(move |path| {
@@ -58,12 +58,12 @@ pub async fn obs_start_service(app: tauri::AppHandle) -> Result<ServiceStatus, S
 }
 #[tauri::command]
 pub async fn obs_set_service_port(app: tauri::AppHandle, port: u16) -> Result<ServiceStatus, String> {
-    if port == 0 { return Err("请输入 1 至 65535 之间的端口".into()); }
+    if port == 0 { return Err(ui_text!("backend.obs_server.obs_set_service_port").into()); }
     if port == configured_port(&app) {
         let status = obs_service_status(app.clone(), app.state::<ObsServerState>());
         return if status.running { Ok(status) } else { obs_start_service(app).await };
     }
-    let probe = bind_listener(port).await.map_err(|_| "端口已被占用，请选择其他端口")?; drop(probe);
+    let probe = bind_listener(port).await.map_err(|_| ui_text!("backend.obs_server.obs_set_service_port2"))?; drop(probe);
     let directory = crate::data_paths::root().map_err(|e| e.to_string())?;
     std::fs::create_dir_all(&directory).map_err(|e| e.to_string())?;
     std::fs::write(directory.join("obs-service.json"), serde_json::to_vec(&serde_json::json!({"port":port})).unwrap()).map_err(|e| e.to_string())?;

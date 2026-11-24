@@ -1,3 +1,4 @@
+import { uiText } from "../i18n/index.ts";
 import { invoke } from "@tauri-apps/api/core";
 import type { CustomHttpVoiceSettings, VoiceInfo, VoiceSynthesisRequest } from "./voiceTypes.ts";
 import { VoiceProviderError, type VoiceProvider } from "./voiceProvider.ts";
@@ -29,9 +30,9 @@ export function createCustomHttpProvider(dependencies: CustomHttpProviderDepende
       const startedAt = Date.now();
       let settings: CustomHttpVoiceSettings | null = null;
       try {
-        if (!request.text.trim()) throw new VoiceProviderError(PROVIDER_NAME, "invalid", "没有可播报的文字", false);
+        if (!request.text.trim()) throw new VoiceProviderError(PROVIDER_NAME, "invalid", uiText("customHttpProvider.createCustomHttpProvider.synthesize"), false);
         settings = dependencies.getSettings();
-        if (!settings.endpoint.trim()) throw new VoiceProviderError(PROVIDER_NAME, "invalid", "请先填写自定义 API 地址", false);
+        if (!settings.endpoint.trim()) throw new VoiceProviderError(PROVIDER_NAME, "invalid", uiText("customHttpProvider.createCustomHttpProvider.synthesize2"), false);
         activeRequestIds.add(requestId);
         const bytes = await invokeImpl<number[]>("synthesize_custom_http", {
           text: request.text,
@@ -71,7 +72,7 @@ export function createCustomHttpProvider(dependencies: CustomHttpProviderDepende
         });
         if (error instanceof VoiceProviderError) throw error;
         const detail = error instanceof Error ? error.message : String(error);
-        throw new VoiceProviderError(PROVIDER_NAME, "protocol", `自定义 API 语音合成失败：${detail}`, true);
+        throw new VoiceProviderError(PROVIDER_NAME, "protocol", uiText("customHttpProvider.createCustomHttpProvider.synthesize3", { detail: detail }), true);
       } finally {
         activeRequestIds.delete(requestId);
         cancelledRequestIds.delete(requestId);

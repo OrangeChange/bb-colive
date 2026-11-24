@@ -33,15 +33,15 @@ export function SettingRow({ label, children, hint }: { label: string; children:
   );
 }
 
-export function SectionHeading({ children }: { children: ReactNode }) {
-  return <h2 className="settings-experience-heading mb-3 ui-type-section-title font-medium text-t1">{typeof children === "string" && <SettingsIcon name={children} />}{children}</h2>;
+export function SectionHeading({ children, iconName }: { children: ReactNode; iconName?: string }) {
+  return <h2 className="settings-experience-heading mb-3 ui-type-section-title font-medium text-t1">{iconName && <SettingsIcon name={iconName} />}{children}</h2>;
 }
 
-export function SectionToolbar({ title, actionsClassName, children, status }: { title: string; actionsClassName: string; children: ReactNode; status?: ReactNode }) {
+export function SectionToolbar({ title, actionsClassName, children, status, iconName }: { title: string; iconName?: string; actionsClassName: string; children: ReactNode; status?: ReactNode }) {
   return (
     <div className="voice-section-toolbar mb-3">
       <div className="voice-section-heading">
-        <h2 className="settings-experience-heading voice-section-title ui-type-section-title font-medium text-t1"><SettingsIcon name={title} />{title}</h2>
+        <h2 className="settings-experience-heading voice-section-title ui-type-section-title font-medium text-t1"><SettingsIcon name={iconName ?? ""} />{title}</h2>
         {status}
       </div>
       <div className={`voice-section-actions ${actionsClassName}`}>{children}</div>

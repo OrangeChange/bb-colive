@@ -1,3 +1,4 @@
+import { readUiSource } from "./helpers/readUiSource.mjs";
 import { tmpdir as ssrTemporaryDirectory } from 'node:os';
 import test from "node:test";
 import assert from "node:assert/strict";
@@ -24,7 +25,7 @@ test("连续编辑不复制素材清单也不写入仓库", async () => {
 });
 
 test("同一进程只在首次访问主题目录时执行旧目录迁移", () => {
-  const source = fs.readFileSync("src-tauri/src/theme_store.rs", "utf8");
+  const source = readUiSource("src-tauri/src/theme_store.rs", "utf8");
   assert.match(source, /PREPARED_THEME_ROOT/);
   assert.match(source, /Mutex<Option<PathBuf>>/);
 });

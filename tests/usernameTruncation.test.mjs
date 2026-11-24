@@ -1,3 +1,4 @@
+import { readUiSource } from "./helpers/readUiSource.mjs";
 import test from "node:test";
 import assert from "node:assert/strict";
 import fs from "node:fs";
@@ -18,7 +19,7 @@ test("昵称保留完整表情，缩放后恢复全文", () => {
 });
 
 test("原生昵称保留全文供主题换行，文本节点不裁掉数据", () => {
-  const source = fs.readFileSync("src/components/EventRow.tsx", "utf8");
+  const source = readUiSource("src/components/EventRow.tsx", "utf8");
   const usernameText = source.slice(source.indexOf("function UsernameText"), source.indexOf("function Uname"));
   assert.match(usernameText,/className="username-text">\{name\}/);
   assert.doesNotMatch(usernameText,/fitUsername|canvas|setFitted/);

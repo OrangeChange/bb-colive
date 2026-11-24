@@ -1,3 +1,4 @@
+import { uiText } from "../i18n/index.ts";
 import * as Popover from "@radix-ui/react-popover";
 import { Filter, Sun, Moon, Pause, Play, RotateCcw, Check } from "lucide-react";
 import "./stylePreviewToolbar.css";
@@ -46,13 +47,13 @@ export function StylePreviewToolbar(props: StylePreviewToolbarProps) {
         <div
           className="native-preview-control-group native-preview-motion-group"
           role="group"
-          aria-label="预览状态"
+          aria-label={uiText("stylePreviewToolbar.aria_label")}
         >
           {(
             [
-              ["static", "静态"],
-              ["design", "点选"],
-              ["dynamic", "动态"],
+              ["static", uiText("stylePreviewToolbar.StylePreviewToolbar")],
+              ["design", uiText("stylePreviewToolbar.StylePreviewToolbar2")],
+              ["dynamic", uiText("stylePreviewToolbar.StylePreviewToolbar3")],
             ] as const
           ).map(([value, label]) => (
             <button
@@ -71,13 +72,13 @@ export function StylePreviewToolbar(props: StylePreviewToolbarProps) {
           <div
             className="preview-playback-controls"
             role="group"
-            aria-label="动态播放"
+            aria-label={uiText("stylePreviewToolbar.aria_label2")}
           >
             <button
               type="button"
               className="preview-icon-button"
-              title={props.playing ? "暂停" : "播放"}
-              aria-label={props.playing ? "暂停" : "播放"}
+              title={props.playing ? uiText("stylePreviewToolbar.title") : uiText("stylePreviewToolbar.title2")}
+              aria-label={props.playing ? uiText("stylePreviewToolbar.aria_label3") : uiText("stylePreviewToolbar.aria_label4")}
               onClick={props.onPlayingChange}
             >
               {props.playing ? <Pause size={16} /> : <Play size={16} />}
@@ -85,14 +86,14 @@ export function StylePreviewToolbar(props: StylePreviewToolbarProps) {
             <button
               type="button"
               className="preview-icon-button"
-              title="重新开始"
-              aria-label="重新开始"
+              title={uiText("stylePreviewToolbar.title3")}
+              aria-label={uiText("stylePreviewToolbar.aria_label5")}
               onClick={props.onRestart}
             >
               <RotateCcw size={16} />
             </button>
             <UiSelect
-              ariaLabel="动态速度"
+              ariaLabel={uiText("stylePreviewToolbar.ariaLabel")}
               size="compact"
               value={String(props.speed ?? 1)}
               onValueChange={(value) => props.onSpeedChange?.(Number(value))}
@@ -110,10 +111,10 @@ export function StylePreviewToolbar(props: StylePreviewToolbarProps) {
               className={`preview-icon-button preview-event-filter${selected.length ? " is-active" : ""}`}
               title={
                 selected.length
-                  ? `事件筛选：${selected.join("、")}`
-                  : "事件筛选：全部事件"
+                  ? uiText("stylePreviewToolbar.title4", { value: selected.join("、") })
+                  : uiText("stylePreviewToolbar.title5")
               }
-              aria-label="事件筛选"
+              aria-label={uiText("stylePreviewToolbar.aria_label6")}
               disabled={props.eventDisabled}
             >
               <Filter size={16} />
@@ -125,10 +126,10 @@ export function StylePreviewToolbar(props: StylePreviewToolbarProps) {
               className="preview-event-popover"
               sideOffset={6}
               align="end"
-              aria-label="事件筛选"
+              aria-label={uiText("stylePreviewToolbar.aria_label6")}
             >
               <div className="preview-event-filter-heading">
-                <span>事件筛选</span>
+                <span>{uiText("stylePreviewToolbar.StylePreviewToolbar4")}</span>
                 <button
                   type="button"
                   aria-pressed={!selected.length}
@@ -136,8 +137,7 @@ export function StylePreviewToolbar(props: StylePreviewToolbarProps) {
                   onClick={() => changeEvents([])}
                 >
                   {!selected.length && <Check size={14} aria-hidden="true" />}
-                  全部事件
-                </button>
+                  {uiText("stylePreviewToolbar.StylePreviewToolbar5")}</button>
               </div>
               {choices.map((option) => (
                 <label key={option.value}>
@@ -161,9 +161,9 @@ export function StylePreviewToolbar(props: StylePreviewToolbarProps) {
         </Popover.Root>
       </div>
       <div className="native-preview-toolbar-row is-canvas">
-        <div className="native-preview-canvas-color" title="画布背景">
+        <div className="native-preview-canvas-color" title={uiText("stylePreviewToolbar.title6")}>
           <ThemeColorField
-            label="画布背景"
+            label={uiText("stylePreviewToolbar.label")}
             value={props.background}
             onChange={props.onBackgroundChange}
           />
@@ -173,10 +173,10 @@ export function StylePreviewToolbar(props: StylePreviewToolbarProps) {
           className="preview-icon-button preview-scheme-toggle"
           title={
             props.scheme === "dark"
-              ? "当前深色，切换为浅色"
-              : "当前浅色，切换为深色"
+              ? uiText("stylePreviewToolbar.title7")
+              : uiText("stylePreviewToolbar.title8")
           }
-          aria-label={props.scheme === "dark" ? "切换为浅色" : "切换为深色"}
+          aria-label={props.scheme === "dark" ? uiText("stylePreviewToolbar.aria_label7") : uiText("stylePreviewToolbar.aria_label8")}
           aria-pressed={props.scheme === "dark"}
           onClick={() =>
             props.onSchemeChange(props.scheme === "dark" ? "light" : "dark")
@@ -184,9 +184,9 @@ export function StylePreviewToolbar(props: StylePreviewToolbarProps) {
         >
           {props.scheme === "dark" ? <Moon size={16} /> : <Sun size={16} />}
         </button>
-        <label className="native-preview-width" title="窗口宽度">
+        <label className="native-preview-width" title={uiText("stylePreviewToolbar.title9")}>
           <input
-            aria-label="窗口宽度"
+            aria-label={uiText("stylePreviewToolbar.aria_label9")}
             type="number"
             min="160"
             max="1920"
@@ -199,7 +199,7 @@ export function StylePreviewToolbar(props: StylePreviewToolbarProps) {
         </label>
       </div>
       {props.error && (
-        <span className="native-preview-status is-error">样式存在错误</span>
+        <span className="native-preview-status is-error">{uiText("stylePreviewToolbar.StylePreviewToolbar6")}</span>
       )}
     </div>
   );

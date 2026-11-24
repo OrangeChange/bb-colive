@@ -1,3 +1,4 @@
+import { uiText } from "../i18n/index.ts";
 import { ARCHIVE_SCHEMA_VERSION } from "./archiveSchema.ts";
 import { readArchiveCloudMetadata } from './archiveCloudMetadata.ts';
 import { normalizeArchiveSessionState } from './archiveSessionState.ts';
@@ -84,14 +85,14 @@ function isRecord(value: unknown): value is UnknownRecord {
 
 function requireString(value: unknown, label: string): string {
   if (typeof value !== "string" || value.trim() === "") {
-    throw new Error(`档案包 ${label} 必须是非空字符串`);
+    throw new Error(uiText("archiveTransfer.requireString", { label: label }));
   }
   return value;
 }
 
 function requireFiniteNumber(value: unknown, label: string): number {
   if (typeof value !== "number" || !Number.isFinite(value)) {
-    throw new Error(`档案包 ${label} 必须是有限数字`);
+    throw new Error(uiText("archiveTransfer.requireFiniteNumber", { label: label }));
   }
   return value;
 }
@@ -99,7 +100,7 @@ function requireFiniteNumber(value: unknown, label: string): number {
 function requireCount(value: unknown, label: string): number {
   const count = requireFiniteNumber(value, label);
   if (!Number.isInteger(count) || count < 0) {
-    throw new Error(`档案包 ${label} 必须是非负整数`);
+    throw new Error(uiText("archiveTransfer.requireCount", { label: label }));
   }
   return count;
 }
@@ -111,7 +112,7 @@ function asNullableString(value: unknown, label: string): string | null {
 
 function normalizeTagNames(value: unknown, label: string): string[] {
   if (value === undefined || value === null) return [];
-  if (!Array.isArray(value)) throw new Error(`档案包 ${label} 必须是数组`);
+  if (!Array.isArray(value)) throw new Error(uiText("archiveTransfer.normalizeTagNames", { label: label }));
   const names = value.map((item, index) => requireString(item, `${label}[${index}]`).trim()).filter(Boolean);
   return [...new Set(names)];
 }
@@ -154,14 +155,14 @@ function decodeBundleInput(input: unknown): UnknownRecord {
   } else if (typeof input === "string") {
     value = JSON.parse(input);
   }
-  if (!isRecord(value)) throw new Error("档案包必须是 JSON 对象");
+  if (!isRecord(value)) throw new Error(uiText("archiveTransfer.decodeBundleInput"));
   return value;
 }
 
 function normalizeStatus(value: unknown, label: string): ArchiveExportSession["session"]["status"] {
   const status = requireString(value, label);
   if (status !== "active" && status !== "ended" && status !== "unclean") {
-    throw new Error(`档案包 ${label} 无效`);
+    throw new Error(uiText("archiveTransfer.normalizeStatus", { label: label }));
   }
   return status;
 }
@@ -169,7 +170,7 @@ function normalizeStatus(value: unknown, label: string): ArchiveExportSession["s
 function normalizeQuality(value: unknown, label: string): ArchiveExportSession["session"]["quality"] {
   const quality = requireString(value, label);
   if (quality !== "in-progress" && quality !== "complete" && quality !== "incomplete") {
-    throw new Error(`档案包 ${label} 无效`);
+    throw new Error(uiText("archiveTransfer.normalizeQuality", { label: label }));
   }
   return quality;
 }
@@ -177,13 +178,13 @@ function normalizeQuality(value: unknown, label: string): ArchiveExportSession["
 function normalizeRecordingStatus(value: unknown): ArchiveExportSession['session']['recordingStatus'] {
   if (value === undefined) return undefined;
   if (value === 'recording' || value === 'reconnecting' || value === 'stopped') return value;
-  throw new Error('档案包 recordingStatus 无效');
+  throw new Error(uiText("archiveTransfer.normalizeRecordingStatus"));
 }
 
 function normalizeQualityReasons(value: unknown): string[] | undefined {
   if (value === undefined) return undefined;
   if (!Array.isArray(value) || value.some(reason => typeof reason !== 'string')) {
-    throw new Error('档案包 qualityReasons 必须是字符串数组');
+    throw new Error(uiText("archiveTransfer.normalizeQualityReasons"));
   }
   return value as string[];
 }
@@ -195,24 +196,24 @@ function normalizeReadingState(
 ): ArchiveReadingState | null {
   if (value === null || value === undefined) return null;
   if (!isRecord(value) || value.sessionId !== sessionId) {
-    throw new Error(`session ${sessionId} 的阅读状态关联不一致`);
+    throw new Error(uiText("archiveTransfer.normalizeReadingState", { sessionId: sessionId }));
   }
   const eventKey = value.eventKey === null || value.eventKey === undefined
     ? null
     : requireString(value.eventKey, `readingState(${sessionId}).eventKey`);
   if (eventKey !== null && !eventKeys.has(eventKey)) {
-    throw new Error(`阅读状态 ${sessionId} 未关联到所属 event`);
+    throw new Error(uiText("archiveTransfer.normalizeReadingState2", { sessionId: sessionId }));
   }
   const fallbackEventTs = value.fallbackEventTs === null || value.fallbackEventTs === undefined
     ? null
     : requireFiniteNumber(value.fallbackEventTs, `readingState(${sessionId}).fallbackEventTs`);
   const sortDirection = requireString(value.sortDirection, `readingState(${sessionId}).sortDirection`);
-  if (sortDirection !== "asc" && sortDirection !== "desc") throw new Error(`阅读状态 ${sessionId} 的排序无效`);
+  if (sortDirection !== "asc" && sortDirection !== "desc") throw new Error(uiText("archiveTransfer.normalizeReadingState3", { sessionId: sessionId }));
   const searchScope = requireString(value.searchScope, `readingState(${sessionId}).searchScope`);
   if (searchScope !== "session" && searchScope !== "owner" && searchScope !== "all") {
-    throw new Error(`阅读状态 ${sessionId} 的搜索范围无效`);
+    throw new Error(uiText("archiveTransfer.normalizeReadingState4", { sessionId: sessionId }));
   }
-  if (!isRecord(value.filters)) throw new Error(`阅读状态 ${sessionId} 的筛选无效`);
+  if (!isRecord(value.filters)) throw new Error(uiText("archiveTransfer.normalizeReadingState5", { sessionId: sessionId }));
   return {
     sessionId,
     eventKey,
@@ -226,18 +227,18 @@ function normalizeReadingState(
 
 function validateEvent(event: UnknownRecord, session: UnknownRecord, seenKeys: Set<string>): ArchiveExportEvent {
   const eventKey = requireString(event.eventKey, "event.eventKey");
-  if (seenKeys.has(eventKey)) throw new Error(`档案包存在重复 eventKey：${eventKey}`);
+  if (seenKeys.has(eventKey)) throw new Error(uiText("archiveTransfer.validateEvent", { eventKey: eventKey }));
   seenKeys.add(eventKey);
   const sessionId = requireString(event.sessionId, `event(${eventKey}).sessionId`);
-  if (sessionId !== session.sessionId) throw new Error(`eventKey ${eventKey} 未关联到所属 session`);
+  if (sessionId !== session.sessionId) throw new Error(uiText("archiveTransfer.validateEvent2", { eventKey: eventKey }));
   const roomId = requireFiniteNumber(event.roomId, `event(${eventKey}).roomId`);
-  if (roomId !== session.roomId) throw new Error(`eventKey ${eventKey} 的 roomId 与 session 不一致`);
+  if (roomId !== session.roomId) throw new Error(uiText("archiveTransfer.validateEvent3", { eventKey: eventKey }));
   const payloadJson = requireString(event.payloadJson, `event(${eventKey}).payloadJson`);
   try {
     const payload = JSON.parse(payloadJson) as unknown;
-    if (!isRecord(payload)) throw new Error("payload 必须是对象");
+    if (!isRecord(payload)) throw new Error(uiText("archiveTransfer.validateEvent4"));
   } catch (error) {
-    throw new Error(`eventKey ${eventKey} 的 raw payload 无效：${error instanceof Error ? error.message : String(error)}`);
+    throw new Error(uiText("archiveTransfer.validateEvent5", { eventKey: eventKey, value: error instanceof Error ? error.message : String(error) }));
   }
   return {
     eventKey,
@@ -257,26 +258,26 @@ function validateEvent(event: UnknownRecord, session: UnknownRecord, seenKeys: S
 
 function normalizeBundle(input: unknown): ArchiveArchiveBundle {
   const root = decodeBundleInput(input);
-  if (root.format !== ARCHIVE_TRANSFER_FORMAT) throw new Error("不支持的档案包格式");
-  if (root.formatVersion !== ARCHIVE_TRANSFER_FORMAT_VERSION) throw new Error("不支持的档案包 format version");
+  if (root.format !== ARCHIVE_TRANSFER_FORMAT) throw new Error(uiText("archiveTransfer.normalizeBundle"));
+  if (root.formatVersion !== ARCHIVE_TRANSFER_FORMAT_VERSION) throw new Error(uiText("archiveTransfer.normalizeBundle2"));
   const sourceSchemaVersion = root.schemaVersion;
-  if (!isSupportedArchiveSchemaVersion(sourceSchemaVersion)) throw new Error("不支持的档案库 schema version");
-  if (root.manifest === undefined || !isRecord(root.manifest)) throw new Error("档案包缺少 manifest");
+  if (!isSupportedArchiveSchemaVersion(sourceSchemaVersion)) throw new Error(uiText("archiveTransfer.normalizeBundle3"));
+  if (root.manifest === undefined || !isRecord(root.manifest)) throw new Error(uiText("archiveTransfer.normalizeBundle4"));
   if (root.manifest.format !== ARCHIVE_TRANSFER_FORMAT || root.manifest.formatVersion !== ARCHIVE_TRANSFER_FORMAT_VERSION) {
-    throw new Error("档案包 manifest 版本不一致");
+    throw new Error(uiText("archiveTransfer.normalizeBundle5"));
   }
-  if (root.manifest.schemaVersion !== sourceSchemaVersion) throw new Error("档案包 manifest schema version 不一致");
-  if (!isSupportedArchiveSchemaVersion(sourceSchemaVersion)) throw new Error("不支持的档案包 schema version");
+  if (root.manifest.schemaVersion !== sourceSchemaVersion) throw new Error(uiText("archiveTransfer.normalizeBundle6"));
+  if (!isSupportedArchiveSchemaVersion(sourceSchemaVersion)) throw new Error(uiText("archiveTransfer.normalizeBundle7"));
   if (root.manifest.featureId !== "review-archive" || root.manifest.featureVersion !== 1) {
-    throw new Error("档案包 manifest feature version 不一致");
+    throw new Error(uiText("archiveTransfer.normalizeBundle8"));
   }
   const exportedAt = requireFiniteNumber(root.manifest.exportedAt, "manifest.exportedAt");
   const scope = requireString(root.manifest.scope, "manifest.scope");
   if (scope !== "all" && scope !== "owner" && scope !== "session" && scope !== "date" && scope !== "result") {
-    throw new Error("档案包 manifest.scope 无效");
+    throw new Error(uiText("archiveTransfer.normalizeBundle9"));
   }
   if (scope === "result" || root.manifest.restorable !== true) {
-    throw new Error("档案包 manifest.scope/restorable 不允许导入结果导出");
+    throw new Error(uiText("archiveTransfer.normalizeBundle10"));
   }
   if (!isRecord(root.manifest.resourcePolicy)
     || typeof root.manifest.resourcePolicy.binariesIncluded !== "boolean"
@@ -285,38 +286,38 @@ function normalizeBundle(input: unknown): ArchiveArchiveBundle {
     || root.manifest.resourcePolicy.binariesIncluded !== false
     || root.manifest.resourcePolicy.urlsIncluded !== true
     || root.manifest.resourcePolicy.cacheStrategy !== "cache-first-network-fallback") {
-    throw new Error("档案包资源策略必须是 URL-only");
+    throw new Error(uiText("archiveTransfer.normalizeBundle11"));
   }
   if (!Array.isArray(root.manifest.resourceUrls)) {
-    throw new Error("档案包 resource URL manifest 无效");
+    throw new Error(uiText("archiveTransfer.normalizeBundle12"));
   }
   const manifestResourceUrls = root.manifest.resourceUrls.map((url, index) => {
     const normalized = requireString(url, `manifest.resourceUrls[${index}]`).trim();
-    if (!isArchiveResourceUrl(normalized)) throw new Error(`档案包 manifest.resourceUrls[${index}] 无效`);
+    if (!isArchiveResourceUrl(normalized)) throw new Error(uiText("archiveTransfer.normalizeBundle.manifestResourceUrls", { index: index }));
     return normalized;
   });
   if (new Set(manifestResourceUrls).size !== manifestResourceUrls.length) {
-    throw new Error("档案包 manifest.resourceUrls 不能重复");
+    throw new Error(uiText("archiveTransfer.normalizeBundle13"));
   }
-  if (!isRecord(root.manifest.sourceSummary)) throw new Error("档案包缺少 manifest source summary");
+  if (!isRecord(root.manifest.sourceSummary)) throw new Error(uiText("archiveTransfer.normalizeBundle14"));
   for (const key of ["sourceCount", "missingCount", "conflictCount"] as const) {
     requireCount(root.manifest.sourceSummary[key], `manifest sourceSummary.${key}`);
   }
-  if (!isRecord(root.manifest.counts)) throw new Error("档案包缺少 manifest counts");
+  if (!isRecord(root.manifest.counts)) throw new Error(uiText("archiveTransfer.normalizeBundle15"));
   for (const key of ["ownerCount", "sessionCount", "eventCount", "favoriteCount", "nicknameCount", "readingStateCount"] as const) {
     requireCount(root.manifest.counts[key], `manifest counts.${key}`);
   }
   if (!Array.isArray(root.owners) || !Array.isArray(root.sessions) || !Array.isArray(root.nicknames) || !Array.isArray(root.historicalFavorites)) {
-    throw new Error("档案包缺少完整档案数组");
+    throw new Error(uiText("archiveTransfer.normalizeBundle16"));
   }
 
   const ownerIds = new Set<string>();
   const ownerRooms = new Set<number>();
   const owners = root.owners.map((value, index) => {
-    if (!isRecord(value)) throw new Error(`档案包 owners[${index}] 无效`);
+    if (!isRecord(value)) throw new Error(uiText("archiveTransfer.normalizeBundle.owners", { index: index }));
     const ownerId = requireString(value.ownerId, `owners[${index}].ownerId`);
     const roomId = requireFiniteNumber(value.roomId, `owners[${index}].roomId`);
-    if (ownerIds.has(ownerId) || ownerRooms.has(roomId)) throw new Error(`档案包存在重复 owner：${ownerId}`);
+    if (ownerIds.has(ownerId) || ownerRooms.has(roomId)) throw new Error(uiText("archiveTransfer.normalizeBundle.owners2", { ownerId: ownerId }));
     ownerIds.add(ownerId);
     ownerRooms.add(roomId);
     return {
@@ -334,17 +335,17 @@ function normalizeBundle(input: unknown): ArchiveArchiveBundle {
   const seenEventKeys = new Set<string>();
   const sessions: ArchiveExportSession[] = root.sessions.map((value, index) => {
     if (!isRecord(value) || !isRecord(value.session) || !Array.isArray(value.events) || !Array.isArray(value.favorites)) {
-      throw new Error(`档案包 sessions[${index}] 结构无效`);
+      throw new Error(uiText("archiveTransfer.normalizeBundle.sessions", { index: index }));
     }
     const rawSession = value.session;
     const sessionId = requireString(rawSession.sessionId, `sessions[${index}].session.sessionId`);
-    if (sessionIds.has(sessionId)) throw new Error(`档案包存在重复 session：${sessionId}`);
+    if (sessionIds.has(sessionId)) throw new Error(uiText("archiveTransfer.normalizeBundle.sessions2", { sessionId: sessionId }));
     sessionIds.add(sessionId);
     const ownerId = requireString(rawSession.ownerId, `sessions[${index}].session.ownerId`);
     const ownerForSession = owners.find((item) => item.ownerId === ownerId);
-    if (!ownerForSession) throw new Error(`session ${sessionId} 未关联到档案 owner`);
+    if (!ownerForSession) throw new Error(uiText("archiveTransfer.normalizeBundle.sessions3", { sessionId: sessionId }));
     const roomId = requireFiniteNumber(rawSession.roomId, `sessions[${index}].session.roomId`);
-    if (roomId !== ownerForSession.roomId) throw new Error(`session ${sessionId} 的 roomId 与 owner 不一致`);
+    if (roomId !== ownerForSession.roomId) throw new Error(uiText("archiveTransfer.normalizeBundle.sessions4", { sessionId: sessionId }));
     const session = normalizeArchiveSessionState({
       sessionId,
       ownerId,
@@ -374,19 +375,19 @@ function normalizeBundle(input: unknown): ArchiveArchiveBundle {
     });
     const ordinals = new Set<number>();
     const events = value.events.map((item, eventIndex) => {
-      if (!isRecord(item)) throw new Error(`sessions[${index}].events[${eventIndex}] 无效`);
+      if (!isRecord(item)) throw new Error(uiText("archiveTransfer.normalizeBundle.sessions.events", { index: index, eventIndex: eventIndex }));
       const normalized = validateEvent(item, rawSession, seenEventKeys);
-      if (ordinals.has(normalized.ordinal)) throw new Error(`session ${sessionId} 存在重复 ordinal`);
+      if (ordinals.has(normalized.ordinal)) throw new Error(uiText("archiveTransfer.normalizeBundle.sessions.events2", { sessionId: sessionId }));
       ordinals.add(normalized.ordinal);
       return normalized;
     });
     const eventKeys = new Set(events.map((item) => item.eventKey));
     const favoriteKeys = new Set<string>();
     const favorites: ArchiveFavoriteExport[] = value.favorites.map((item, favoriteIndex) => {
-      if (!isRecord(item)) throw new Error(`sessions[${index}].favorites[${favoriteIndex}] 无效`);
+      if (!isRecord(item)) throw new Error(uiText("archiveTransfer.normalizeBundle.sessions.favorites", { index: index, favoriteIndex: favoriteIndex }));
       const eventKey = requireString(item.eventKey, `favorites[${favoriteIndex}].eventKey`);
-      if (!eventKeys.has(eventKey)) throw new Error(`收藏 ${eventKey} 未关联到所属 session 的 event`);
-      if (favoriteKeys.has(eventKey)) throw new Error(`session ${sessionId} 存在重复收藏 ${eventKey}`);
+      if (!eventKeys.has(eventKey)) throw new Error(uiText("archiveTransfer.normalizeBundle.sessions.favorites2", { eventKey: eventKey }));
+      if (favoriteKeys.has(eventKey)) throw new Error(uiText("archiveTransfer.normalizeBundle.sessions.favorites3", { sessionId: sessionId, eventKey: eventKey }));
       favoriteKeys.add(eventKey);
       return {
         eventKey,
@@ -397,19 +398,19 @@ function normalizeBundle(input: unknown): ArchiveArchiveBundle {
       };
     });
     for (const favorite of favorites) {
-      if (favorite.sessionId !== sessionId) throw new Error(`收藏 ${favorite.eventKey} 的 session 关联不一致`);
+      if (favorite.sessionId !== sessionId) throw new Error(uiText("archiveTransfer.normalizeBundle.sessions5", { eventKey: favorite.eventKey }));
     }
-    if (session.eventCount !== events.length) throw new Error(`session ${sessionId} 的 eventCount 与内容不一致`);
-    if (session.favoriteCount !== favorites.length) throw new Error(`session ${sessionId} 的 favoriteCount 与内容不一致`);
+    if (session.eventCount !== events.length) throw new Error(uiText("archiveTransfer.normalizeBundle.sessions6", { sessionId: sessionId }));
+    if (session.favoriteCount !== favorites.length) throw new Error(uiText("archiveTransfer.normalizeBundle.sessions7", { sessionId: sessionId }));
     const readingState = normalizeReadingState(value.readingState, sessionId, eventKeys);
     return { session, events, favorites, readingState };
   });
 
   const nicknameUids = new Set<string>();
   const nicknames: ArchiveNicknameExport[] = root.nicknames.map((value, index) => {
-    if (!isRecord(value)) throw new Error(`档案包 nicknames[${index}] 无效`);
+    if (!isRecord(value)) throw new Error(uiText("archiveTransfer.normalizeBundle.nicknames", { index: index }));
     const userUid = requireString(value.userUid, `nicknames[${index}].userUid`);
-    if (nicknameUids.has(userUid)) throw new Error(`档案包存在重复 nickname：${userUid}`);
+    if (nicknameUids.has(userUid)) throw new Error(uiText("archiveTransfer.normalizeBundle.nicknames2", { userUid: userUid }));
     nicknameUids.add(userUid);
     return {
       userUid,
@@ -419,13 +420,13 @@ function normalizeBundle(input: unknown): ArchiveArchiveBundle {
   });
 
   const historicalFavorites = root.historicalFavorites.map((value, index) => {
-    if (!isRecord(value)) throw new Error(`档案包 historicalFavorites[${index}] 无效`);
+    if (!isRecord(value)) throw new Error(uiText("archiveTransfer.normalizeBundle.historicalFavorites", { index: index }));
     return {
       legacyKey: requireString(value.legacyKey, `historicalFavorites[${index}].legacyKey`),
       roomId: requireFiniteNumber(value.roomId, `historicalFavorites[${index}].roomId`),
       eventId: requireString(value.eventId, `historicalFavorites[${index}].eventId`),
       event: (() => {
-        if (!isRecord(value.event)) throw new Error(`historicalFavorites[${index}].event 无效`);
+        if (!isRecord(value.event)) throw new Error(uiText("archiveTransfer.normalizeBundle.historicalFavorites.event", { index: index }));
         return value.event as unknown as ArchiveArchiveBundle["historicalFavorites"][number]["event"];
       })(),
       favoritedAt: requireFiniteNumber(value.favoritedAt, `historicalFavorites[${index}].favoritedAt`),
@@ -436,7 +437,7 @@ function normalizeBundle(input: unknown): ArchiveArchiveBundle {
   });
   const resourceUrls = resourceUrlsForSnapshot({ owners, sessions, nicknames, historicalFavorites });
   if (!sameStringSet(manifestResourceUrls, resourceUrls)) {
-    throw new Error("档案包 manifest.resourceUrls 与内容不一致");
+    throw new Error(uiText("archiveTransfer.normalizeBundle17"));
   }
   const actualCounts = {
     ownerCount: owners.length,
@@ -449,11 +450,11 @@ function normalizeBundle(input: unknown): ArchiveArchiveBundle {
   const actualSourceSummary = sourceSummaryForSnapshot({ owners, sessions, nicknames, historicalFavorites });
   if (root.manifest.sourceSummary.sourceCount !== actualSourceSummary.sourceCount
     || root.manifest.sourceSummary.missingCount !== actualSourceSummary.missingCount) {
-    throw new Error("档案包 manifest source summary 与内容不一致");
+    throw new Error(uiText("archiveTransfer.normalizeBundle18"));
   }
   for (const key of Object.keys(actualCounts) as Array<keyof typeof actualCounts>) {
     if (root.manifest.counts[key] !== actualCounts[key]) {
-      throw new Error(`档案包 manifest counts.${key} 与内容不一致`);
+      throw new Error(uiText("archiveTransfer.normalizeBundle19", { key: key }));
     }
   }
   return {
@@ -496,7 +497,7 @@ function newPreviewId(prefix: string, now: number, sequence: number): string {
 }
 
 function normalizeDeleteScope(scope: ArchiveDeleteScope): ArchiveDeleteScope {
-  if (!scope || typeof scope !== "object") throw new Error("删除范围无效");
+  if (!scope || typeof scope !== "object") throw new Error(uiText("archiveTransfer.normalizeDeleteScope"));
   const hasAll = scope.all === true;
   const hasOwnerAll = scope.ownerAll === true;
   const hasKeepOnlyOwner = typeof scope.keepOnlyOwnerId === "string" && scope.keepOnlyOwnerId.trim() !== "";
@@ -508,40 +509,40 @@ function normalizeDeleteScope(scope: ArchiveDeleteScope): ArchiveDeleteScope {
   const normalizedSessionIds = hasSessionIds
     ? [...new Set(scope.sessionIds?.filter((sessionId) => typeof sessionId === "string" && sessionId.trim() !== "") ?? [])]
     : undefined;
-  if (hasSessionIds && normalizedSessionIds?.length === 0) throw new Error("删除范围至少需要一个场次");
+  if (hasSessionIds && normalizedSessionIds?.length === 0) throw new Error(uiText("archiveTransfer.normalizeDeleteScope2"));
   if (hasAll) {
     if (hasOwnerAll || hasKeepOnlyOwner || hasSession || hasSessionIds || hasBefore || hasFrom || hasTo || scope.ownerId !== undefined || scope.ownerUid !== undefined) {
-      throw new Error("全部档案不能同时指定其他范围");
+      throw new Error(uiText("archiveTransfer.normalizeDeleteScope3"));
     }
   } else if (hasOwnerAll) {
-    if (!scope.ownerId && !scope.ownerUid) throw new Error("删除主播档案必须提供主播范围");
-    if (hasKeepOnlyOwner || hasSession || hasSessionIds || hasBefore || hasFrom || hasTo) throw new Error("删除主播全部档案不能同时指定其他范围");
+    if (!scope.ownerId && !scope.ownerUid) throw new Error(uiText("archiveTransfer.normalizeDeleteScope4"));
+    if (hasKeepOnlyOwner || hasSession || hasSessionIds || hasBefore || hasFrom || hasTo) throw new Error(uiText("archiveTransfer.normalizeDeleteScope5"));
   } else if (hasKeepOnlyOwner) {
     if (hasSession || hasSessionIds || hasBefore || hasFrom || hasTo || scope.ownerId !== undefined || scope.ownerUid !== undefined) {
-      throw new Error("仅保留指定主播不能同时指定其他范围");
+      throw new Error(uiText("archiveTransfer.normalizeDeleteScope6"));
     }
-  } else if (!hasSession && !hasSessionIds && !hasBefore && !hasFrom && !hasTo) throw new Error("删除范围必须提供明确边界");
-  if ((hasSession || hasSessionIds) && (hasBefore || hasFrom || hasTo)) throw new Error("指定场次不能同时指定日期范围");
-  if (hasSession && hasSessionIds) throw new Error("单场范围不能同时指定多个场次");
-  if (hasFrom !== hasTo) throw new Error("日期范围必须同时提供 fromTs 和 toTs");
+  } else if (!hasSession && !hasSessionIds && !hasBefore && !hasFrom && !hasTo) throw new Error(uiText("archiveTransfer.normalizeDeleteScope7"));
+  if ((hasSession || hasSessionIds) && (hasBefore || hasFrom || hasTo)) throw new Error(uiText("archiveTransfer.normalizeDeleteScope8"));
+  if (hasSession && hasSessionIds) throw new Error(uiText("archiveTransfer.normalizeDeleteScope9"));
+  if (hasFrom !== hasTo) throw new Error(uiText("archiveTransfer.normalizeDeleteScope10"));
   if (hasFrom && (typeof scope.fromTs !== "number" || typeof scope.toTs !== "number" || scope.fromTs >= scope.toTs)) {
-    throw new Error("删除日期范围必须满足 fromTs < toTs");
+    throw new Error(uiText("archiveTransfer.normalizeDeleteScope11"));
   }
   for (const [label, value] of [["beforeTs", scope.beforeTs], ["fromTs", scope.fromTs], ["toTs", scope.toTs]] as const) {
-    if (value !== undefined && (!Number.isFinite(value) || value < 0)) throw new Error(`${label} 必须是有效时间`);
+    if (value !== undefined && (!Number.isFinite(value) || value < 0)) throw new Error(uiText("archiveTransfer.normalizeDeleteScope12", { label: label }));
   }
   return { ...scope, ...(normalizedSessionIds ? { sessionIds: normalizedSessionIds } : {}) };
 }
 
 function normalizeTransferScope(scope: ArchiveTransferScope): ArchiveTransferScope {
-  if (!scope || typeof scope !== "object" || typeof scope.kind !== "string") throw new Error("导出范围无效");
+  if (!scope || typeof scope !== "object" || typeof scope.kind !== "string") throw new Error(uiText("archiveTransfer.normalizeTransferScope"));
   if (scope.kind === "date") {
     if (!Number.isFinite(scope.fromTs) || !Number.isFinite(scope.toTs) || scope.fromTs >= scope.toTs) {
-      throw new Error("导出日期范围必须满足 fromTs < toTs");
+      throw new Error(uiText("archiveTransfer.normalizeTransferScope2"));
     }
   }
-  if (scope.kind === "session" && (!scope.sessionId || scope.sessionId.trim() === "")) throw new Error("场次导出范围需要 sessionId");
-  if (scope.kind === "result" && scope.eventKeys.length === 0) throw new Error("结果导出范围需要至少一个事件");
+  if (scope.kind === "session" && (!scope.sessionId || scope.sessionId.trim() === "")) throw new Error(uiText("archiveTransfer.normalizeTransferScope3"));
+  if (scope.kind === "result" && scope.eventKeys.length === 0) throw new Error(uiText("archiveTransfer.normalizeTransferScope4"));
   return scope;
 }
 
@@ -603,7 +604,7 @@ export class ArchiveTransferService {
   private async ensureWriterIdle(): Promise<void> {
     const result = await this.flushArchiveWriter?.();
     if (result && ((result.pending ?? 0) > 0 || (result.failed ?? 0) > 0)) {
-      throw new Error("档案仍有待写入或失败写入，当前操作不能继续");
+      throw new Error(uiText("archiveTransfer.ensureWriterIdle"));
     }
   }
 
@@ -821,9 +822,9 @@ export class ArchiveTransferService {
       data: { phase: "commit" },
     });
     try {
-      if (confirmationToken !== previewId) throw new Error("档案导入需要匹配的 confirmation token");
+      if (confirmationToken !== previewId) throw new Error(uiText("archiveTransfer.commitImportArchive"));
       const pending = this.pendingImports.get(previewId);
-      if (!pending) throw new Error("档案导入预览已过期");
+      if (!pending) throw new Error(uiText("archiveTransfer.commitImportArchive2"));
       const result = await this.withTransferLock(() => this.repository.commitArchiveImport(pending.plan));
       this.pendingImports.delete(previewId);
       recordArchiveDiagnostic("success", "archive-import", "committed", {
@@ -915,9 +916,9 @@ export class ArchiveTransferService {
       data: { phase: "commit" },
     });
     try {
-      if (confirmationToken !== previewId) throw new Error("档案删除需要匹配的 confirmation token");
+      if (confirmationToken !== previewId) throw new Error(uiText("archiveTransfer.deleteArchive"));
       const pending = this.pendingDeletes.get(previewId);
-      if (!pending) throw new Error("档案删除预览已过期");
+      if (!pending) throw new Error(uiText("archiveTransfer.deleteArchive2"));
       await this.withTransferLock(async (controls) => {
         const current = await this.repository.getDeletePreview(pending.scope);
         if (!sameStringSet(current.sessionIds, pending.sessionIds)
@@ -925,10 +926,10 @@ export class ArchiveTransferService {
           || current.blockedSessionCount !== pending.blockedSessionCount
           || !sameStringSet(current.blockedSessionIds, pending.blockedSessionIds)
           || !sameBlockedSessionStates(current.blockedSessionStates, pending.blockedSessionStates)) {
-          throw new Error("删除预览已变化，请重新预览");
+          throw new Error(uiText("archiveTransfer.deleteArchive3"));
         }
         if (current.blockedSessionCount > 0) {
-          throw new Error("进行中的场次不能删除");
+          throw new Error(uiText("archiveTransfer.deleteArchive4"));
         }
         await this.repository.deleteArchive(pending.scope, pending.sessionIds);
         controls.blockSessions(pending.sessionIds, options.requestId);

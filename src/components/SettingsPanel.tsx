@@ -1,3 +1,4 @@
+import { uiText } from "../i18n/index.ts";
 import { useUpdatePreferences } from "../updates/store";
 import { SwitchButton } from "./SettingsSwitch";
 import { SoftwareUpdateSettings } from "../updates/SoftwareUpdateSettings";
@@ -177,55 +178,55 @@ type SettingsSearchEntry = {
 };
 
 const SETTINGS_SEARCH_ENTRIES: readonly SettingsSearchEntry[] = [
-  { id: "palette", label: "配色主题", keywords: "颜色 外观 樱花粉 青瓷绿 自定义 主题色", sectionId: "general" },
-  { id: "mode", label: "深浅模式", keywords: "深色 浅色 系统", sectionId: "general" },
-  { id: "ui-scale", label: "界面比例", keywords: "缩放 大小 字体", sectionId: "general" },
-  { id: "start-on-boot", label: "开机随系统自启", keywords: "启动 托盘 开机", sectionId: "general" },
-  { id: "auto-connect", label: "启动后自动连接", keywords: "连接 主播 启动", sectionId: "general" },
-  { id: "close-behavior", label: "关闭窗口时", keywords: "退出 托盘", sectionId: "general" },
-  { id: "minimize-behavior", label: "最小化时", keywords: "任务栏 托盘", sectionId: "general" },
-  { id: "favorite-edit", label: "收藏时编辑备注和标签", keywords: "收藏 备注 标签", sectionId: "display" },
-  { id: "content-alignment", label: "内容对齐", keywords: "对齐 顶部 底部 现场 副窗口 OBS", sectionId: "display" },
-  { id: "feed-direction", label: "最新事件位置", keywords: "信息流方向 顶部追加 底部追加 上方 下方 排序 滚动", sectionId: "display" },
-  { id: "event-animation", label: "事件动画", keywords: "动画 进入 退出 时长", sectionId: "display" },
-  { id: "auto-danmaku", label: "显示自动弹幕", keywords: "自动弹幕 天选口令", sectionId: "filters" },
-  { id: "phone-not-verified", label: "显示未验证手机号用户弹幕", keywords: "手机号 验证 弹幕", sectionId: "filters" },
-  { id: "guard-entry", label: "只显示大航海进房", keywords: "进房 舰长 提督 总督", sectionId: "filters" },
-  { id: "gift-threshold", label: "最低显示金额", keywords: "礼物 醒目留言 大航海 金额 阈值 价格", sectionId: "filters" },
-  { id: "gift-threshold-mode", label: "金额计算", keywords: "礼物筛选方式 单件价格 累计金额", sectionId: "filters" },
-  { id: "layout-mode", label: "区域布局", keywords: "双区 多区 现场", sectionId: "live" },
-  { id: "live-guard-effect", label: "现场：显示大航海特效", keywords: "大航海 舰长 提督 总督 特效", sectionId: "live" },
-  { id: "live-gift-effect", label: "现场：显示礼物特效", keywords: "礼物 特效 现场", sectionId: "live" },
-  { id: "review-owner", label: "进入回看时打开当前主播", keywords: "回看 主播 档案", sectionId: "review" },
-  { id: "archive-settings", label: "回看档案", keywords: "保留 导入 导出 清理", sectionId: "review" },
-  { id: "cloud-recovery", label: "云端记录服务", keywords: "服务器 采集 登录态 数据保留 下载 恢复 历史记录", sectionId: "review" },
-  { id: "window-opacity", label: "玻璃着色与不透明度", keywords: "玻璃 着色 不透明度 透明度 副窗口", sectionId: "windows" },
-  { id: "window-surface", label: "表面颜色", keywords: "背景颜色 副窗口", sectionId: "windows" },
-  { id: "window-radius", label: "圆角", keywords: "圆角 副窗口", sectionId: "windows" },
-  { id: "event-window-capacity", label: "输出保留条数", keywords: "容量 上限 条数 副窗口 OBS 输出", sectionId: "display" },
-  { id: "event-expiry", label: "事件定时消失", keywords: "定时 消失 过期 事件 副窗口 OBS 输出", sectionId: "display" },
-  { id: "sticky-events", label: "置顶栏", keywords: "置顶 礼物 门槛 排序 顶部 底部 OBS", sectionId: "display" },
-  { id: "event-expiry-seconds", label: "消失时间", keywords: "定时 过期 秒数 副窗口 OBS 输出", sectionId: "display" },
-  { id: "merge-danmu", label: "合并相同弹幕", keywords: "合并 弹幕 连击 副窗口 OBS 输出", sectionId: "display" },
-  { id: "merge-danmu-seconds", label: "合并时间", keywords: "合并 秒数 弹幕 副窗口 OBS 输出", sectionId: "display" },
-  { id: "display-window", label: "弹幕窗", keywords: "弹幕窗 筛选 互动", sectionId: "windows" },
-  { id: "display-window-open", label: "弹幕窗：开启", keywords: "弹幕窗 开启", sectionId: "windows" },
-  { id: "display-window-lock", label: "弹幕窗：锁定并穿透鼠标", keywords: "弹幕窗 穿透 锁定", sectionId: "windows" },
-  { id: "gift-window", label: "收益窗", keywords: "收益窗 特效", sectionId: "windows" },
-  { id: "guard-window-effect", label: "收益窗：显示大航海特效", keywords: "收益窗 大航海 特效", sectionId: "windows" },
-  { id: "gift-window-effect", label: "收益窗：显示礼物特效", keywords: "收益窗 特效", sectionId: "windows" },
-  { id: "gift-window-mode", label: "显示方式", keywords: "收益窗 组合窗口 分窗显示 醒目留言 大航海", sectionId: "windows" },
-  { id: "gift-window-open", label: "收益窗：开启", keywords: "收益窗 开启", sectionId: "windows" },
-  { id: "gift-window-lock", label: "收益窗：锁定并穿透鼠标", keywords: "收益窗 穿透 锁定", sectionId: "windows" },
-  { id: "shortcut-menu", label: "事件快捷菜单", keywords: "快捷按钮 播报 筛选 收藏 标记", sectionId: "interaction" },
-  { id: "nickname", label: "用户昵称", keywords: "昵称 用户名 播报", sectionId: "interaction" },
-  { id: "speak-username", label: "朗读昵称/用户名", keywords: "昵称 用户名 播报", sectionId: "interaction" },
-  { id: "voice-scope", label: "收听范围", keywords: "声音 主播 观众", sectionId: "voice" },
-  { id: "voice-host-device", label: "主播设备", keywords: "声音 输出 音频", sectionId: "voice" },
-  { id: "voice-audience-device", label: "观众设备", keywords: "声音 输出 音频", sectionId: "voice" },
-  { id: "window-layout", label: "窗口布局", keywords: "恢复 主窗口 弹幕窗 收益窗", sectionId: "other" },
-  { id: "diagnostics", label: "诊断", keywords: "问题 日志 导出", sectionId: "other" },
-  { id: "about", label: "关于", keywords: "版本 更新 检查 下载 国内 国外 线路 BB CoLive", sectionId: "about" },
+  { id: "palette", label: uiText("settingsPanel.SETTINGS_SEARCH_ENTRIES.label"), keywords: uiText("settingsPanel.SETTINGS_SEARCH_ENTRIES.keywords"), sectionId: "general" },
+  { id: "mode", label: uiText("settingsPanel.SETTINGS_SEARCH_ENTRIES.label2"), keywords: uiText("settingsPanel.SETTINGS_SEARCH_ENTRIES.keywords2"), sectionId: "general" },
+  { id: "ui-scale", label: uiText("settingsPanel.SETTINGS_SEARCH_ENTRIES.label3"), keywords: uiText("settingsPanel.SETTINGS_SEARCH_ENTRIES.keywords3"), sectionId: "general" },
+  { id: "start-on-boot", label: uiText("settingsPanel.SETTINGS_SEARCH_ENTRIES.label4"), keywords: uiText("settingsPanel.SETTINGS_SEARCH_ENTRIES.keywords4"), sectionId: "general" },
+  { id: "auto-connect", label: uiText("settingsPanel.SETTINGS_SEARCH_ENTRIES.label5"), keywords: uiText("settingsPanel.SETTINGS_SEARCH_ENTRIES.keywords5"), sectionId: "general" },
+  { id: "close-behavior", label: uiText("settingsPanel.SETTINGS_SEARCH_ENTRIES.label6"), keywords: uiText("settingsPanel.SETTINGS_SEARCH_ENTRIES.keywords6"), sectionId: "general" },
+  { id: "minimize-behavior", label: uiText("settingsPanel.SETTINGS_SEARCH_ENTRIES.label7"), keywords: uiText("settingsPanel.SETTINGS_SEARCH_ENTRIES.keywords7"), sectionId: "general" },
+  { id: "favorite-edit", label: uiText("settingsPanel.SETTINGS_SEARCH_ENTRIES.label8"), keywords: uiText("settingsPanel.SETTINGS_SEARCH_ENTRIES.keywords8"), sectionId: "display" },
+  { id: "content-alignment", label: uiText("settingsPanel.SETTINGS_SEARCH_ENTRIES.label9"), keywords: uiText("settingsPanel.SETTINGS_SEARCH_ENTRIES.keywords9"), sectionId: "display" },
+  { id: "feed-direction", label: uiText("settingsPanel.SETTINGS_SEARCH_ENTRIES.label10"), keywords: uiText("settingsPanel.SETTINGS_SEARCH_ENTRIES.keywords10"), sectionId: "display" },
+  { id: "event-animation", label: uiText("settingsPanel.SETTINGS_SEARCH_ENTRIES.label11"), keywords: uiText("settingsPanel.SETTINGS_SEARCH_ENTRIES.keywords11"), sectionId: "display" },
+  { id: "auto-danmaku", label: uiText("settingsPanel.SETTINGS_SEARCH_ENTRIES.label12"), keywords: uiText("settingsPanel.SETTINGS_SEARCH_ENTRIES.keywords12"), sectionId: "filters" },
+  { id: "phone-not-verified", label: uiText("settingsPanel.SETTINGS_SEARCH_ENTRIES.label13"), keywords: uiText("settingsPanel.SETTINGS_SEARCH_ENTRIES.keywords13"), sectionId: "filters" },
+  { id: "guard-entry", label: uiText("settingsPanel.SETTINGS_SEARCH_ENTRIES.label14"), keywords: uiText("settingsPanel.SETTINGS_SEARCH_ENTRIES.keywords14"), sectionId: "filters" },
+  { id: "gift-threshold", label: uiText("settingsPanel.SETTINGS_SEARCH_ENTRIES.label15"), keywords: uiText("settingsPanel.SETTINGS_SEARCH_ENTRIES.keywords15"), sectionId: "filters" },
+  { id: "gift-threshold-mode", label: uiText("settingsPanel.SETTINGS_SEARCH_ENTRIES.label16"), keywords: uiText("settingsPanel.SETTINGS_SEARCH_ENTRIES.keywords16"), sectionId: "filters" },
+  { id: "layout-mode", label: uiText("settingsPanel.SETTINGS_SEARCH_ENTRIES.label17"), keywords: uiText("settingsPanel.SETTINGS_SEARCH_ENTRIES.keywords17"), sectionId: "live" },
+  { id: "live-guard-effect", label: uiText("settingsPanel.SETTINGS_SEARCH_ENTRIES.label18"), keywords: uiText("settingsPanel.SETTINGS_SEARCH_ENTRIES.keywords18"), sectionId: "live" },
+  { id: "live-gift-effect", label: uiText("settingsPanel.SETTINGS_SEARCH_ENTRIES.label19"), keywords: uiText("settingsPanel.SETTINGS_SEARCH_ENTRIES.keywords19"), sectionId: "live" },
+  { id: "review-owner", label: uiText("settingsPanel.SETTINGS_SEARCH_ENTRIES.label20"), keywords: uiText("settingsPanel.SETTINGS_SEARCH_ENTRIES.keywords20"), sectionId: "review" },
+  { id: "archive-settings", label: uiText("settingsPanel.SETTINGS_SEARCH_ENTRIES.label21"), keywords: uiText("settingsPanel.SETTINGS_SEARCH_ENTRIES.keywords21"), sectionId: "review" },
+  { id: "cloud-recovery", label: uiText("settingsPanel.SETTINGS_SEARCH_ENTRIES.label22"), keywords: uiText("settingsPanel.SETTINGS_SEARCH_ENTRIES.keywords22"), sectionId: "review" },
+  { id: "window-opacity", label: uiText("settingsPanel.SETTINGS_SEARCH_ENTRIES.label23"), keywords: uiText("settingsPanel.SETTINGS_SEARCH_ENTRIES.keywords23"), sectionId: "windows" },
+  { id: "window-surface", label: uiText("settingsPanel.SETTINGS_SEARCH_ENTRIES.label24"), keywords: uiText("settingsPanel.SETTINGS_SEARCH_ENTRIES.keywords24"), sectionId: "windows" },
+  { id: "window-radius", label: uiText("settingsPanel.SETTINGS_SEARCH_ENTRIES.label25"), keywords: uiText("settingsPanel.SETTINGS_SEARCH_ENTRIES.keywords25"), sectionId: "windows" },
+  { id: "event-window-capacity", label: uiText("settingsPanel.SETTINGS_SEARCH_ENTRIES.label26"), keywords: uiText("settingsPanel.SETTINGS_SEARCH_ENTRIES.keywords26"), sectionId: "display" },
+  { id: "event-expiry", label: uiText("settingsPanel.SETTINGS_SEARCH_ENTRIES.label27"), keywords: uiText("settingsPanel.SETTINGS_SEARCH_ENTRIES.keywords27"), sectionId: "display" },
+  { id: "sticky-events", label: uiText("settingsPanel.SETTINGS_SEARCH_ENTRIES.label28"), keywords: uiText("settingsPanel.SETTINGS_SEARCH_ENTRIES.keywords28"), sectionId: "display" },
+  { id: "event-expiry-seconds", label: uiText("settingsPanel.SETTINGS_SEARCH_ENTRIES.label29"), keywords: uiText("settingsPanel.SETTINGS_SEARCH_ENTRIES.keywords29"), sectionId: "display" },
+  { id: "merge-danmu", label: uiText("settingsPanel.SETTINGS_SEARCH_ENTRIES.label30"), keywords: uiText("settingsPanel.SETTINGS_SEARCH_ENTRIES.keywords30"), sectionId: "display" },
+  { id: "merge-danmu-seconds", label: uiText("settingsPanel.SETTINGS_SEARCH_ENTRIES.label31"), keywords: uiText("settingsPanel.SETTINGS_SEARCH_ENTRIES.keywords31"), sectionId: "display" },
+  { id: "display-window", label: uiText("common.chatWindow"), keywords: uiText("settingsPanel.SETTINGS_SEARCH_ENTRIES.keywords32"), sectionId: "windows" },
+  { id: "display-window-open", label: uiText("settingsPanel.SETTINGS_SEARCH_ENTRIES.label32"), keywords: uiText("settingsPanel.SETTINGS_SEARCH_ENTRIES.keywords33"), sectionId: "windows" },
+  { id: "display-window-lock", label: uiText("settingsPanel.SETTINGS_SEARCH_ENTRIES.label33"), keywords: uiText("settingsPanel.SETTINGS_SEARCH_ENTRIES.keywords34"), sectionId: "windows" },
+  { id: "gift-window", label: uiText("common.revenueWindow"), keywords: uiText("settingsPanel.SETTINGS_SEARCH_ENTRIES.keywords35"), sectionId: "windows" },
+  { id: "guard-window-effect", label: uiText("settingsPanel.SETTINGS_SEARCH_ENTRIES.label34"), keywords: uiText("settingsPanel.SETTINGS_SEARCH_ENTRIES.keywords36"), sectionId: "windows" },
+  { id: "gift-window-effect", label: uiText("settingsPanel.SETTINGS_SEARCH_ENTRIES.label35"), keywords: uiText("settingsPanel.SETTINGS_SEARCH_ENTRIES.keywords35"), sectionId: "windows" },
+  { id: "gift-window-mode", label: uiText("settingsPanel.SETTINGS_SEARCH_ENTRIES.label36"), keywords: uiText("settingsPanel.SETTINGS_SEARCH_ENTRIES.keywords37"), sectionId: "windows" },
+  { id: "gift-window-open", label: uiText("settingsPanel.SETTINGS_SEARCH_ENTRIES.label37"), keywords: uiText("settingsPanel.SETTINGS_SEARCH_ENTRIES.keywords38"), sectionId: "windows" },
+  { id: "gift-window-lock", label: uiText("settingsPanel.SETTINGS_SEARCH_ENTRIES.label38"), keywords: uiText("settingsPanel.SETTINGS_SEARCH_ENTRIES.keywords39"), sectionId: "windows" },
+  { id: "shortcut-menu", label: uiText("settingsPanel.SETTINGS_SEARCH_ENTRIES.label39"), keywords: uiText("settingsPanel.SETTINGS_SEARCH_ENTRIES.keywords40"), sectionId: "interaction" },
+  { id: "nickname", label: uiText("settingsPanel.SETTINGS_SEARCH_ENTRIES.label40"), keywords: uiText("settingsPanel.SETTINGS_SEARCH_ENTRIES.keywords41"), sectionId: "interaction" },
+  { id: "speak-username", label: uiText("settingsPanel.SETTINGS_SEARCH_ENTRIES.label41"), keywords: uiText("settingsPanel.SETTINGS_SEARCH_ENTRIES.keywords41"), sectionId: "interaction" },
+  { id: "voice-scope", label: uiText("settingsPanel.SETTINGS_SEARCH_ENTRIES.label42"), keywords: uiText("settingsPanel.SETTINGS_SEARCH_ENTRIES.keywords42"), sectionId: "voice" },
+  { id: "voice-host-device", label: uiText("settingsPanel.SETTINGS_SEARCH_ENTRIES.label43"), keywords: uiText("settingsPanel.SETTINGS_SEARCH_ENTRIES.keywords43"), sectionId: "voice" },
+  { id: "voice-audience-device", label: uiText("settingsPanel.SETTINGS_SEARCH_ENTRIES.label44"), keywords: uiText("settingsPanel.SETTINGS_SEARCH_ENTRIES.keywords43"), sectionId: "voice" },
+  { id: "window-layout", label: uiText("settingsPanel.SETTINGS_SEARCH_ENTRIES.label45"), keywords: uiText("settingsPanel.SETTINGS_SEARCH_ENTRIES.keywords44"), sectionId: "other" },
+  { id: "diagnostics", label: uiText("settingsPanel.SETTINGS_SEARCH_ENTRIES.label46"), keywords: uiText("settingsPanel.SETTINGS_SEARCH_ENTRIES.keywords45"), sectionId: "other" },
+  { id: "about", label: uiText("settingsPanel.SETTINGS_SEARCH_ENTRIES.label47"), keywords: uiText("settingsPanel.SETTINGS_SEARCH_ENTRIES.keywords46"), sectionId: "about" },
 ];
 
 function Segmented<T extends string | number>({
@@ -270,10 +271,10 @@ function SettingSwitch({ label, checked, onChange, searchId, disabled = false, h
 }
 
 const VOICE_SHORTCUT_ACTION_OPTIONS: readonly { value: VoiceShortcutAction; label: string; icon: MenuIconName }[] = [
-  { value: "speak", label: "播报", icon: "voice" },
-  { value: "filter", label: "筛选", icon: "filter" },
-  { value: "favorite", label: "收藏", icon: "favorite" },
-  { value: "mark", label: "标记", icon: "mark" },
+  { value: "speak", label: uiText("settingsPanel.VOICE_SHORTCUT_ACTION_OPTIONS.label"), icon: "voice" },
+  { value: "filter", label: uiText("settingsPanel.VOICE_SHORTCUT_ACTION_OPTIONS.label2"), icon: "filter" },
+  { value: "favorite", label: uiText("settingsPanel.VOICE_SHORTCUT_ACTION_OPTIONS.label3"), icon: "favorite" },
+  { value: "mark", label: uiText("settingsPanel.VOICE_SHORTCUT_ACTION_OPTIONS.label4"), icon: "mark" },
 ];
 
 function ShortcutMenuPicker({ value, onChange }: { value: readonly VoiceShortcutAction[]; onChange: (value: VoiceShortcutAction[]) => void }) {
@@ -411,17 +412,17 @@ function ShortcutMenuPicker({ value, onChange }: { value: readonly VoiceShortcut
   return (
     <div className="settings-shortcut-picker min-w-0">
       <div className="settings-shortcut-picker-header flex min-h-6 items-baseline justify-between gap-2">
-        <span className="ui-type-control text-t2">显示按钮</span>
-        <span className="ui-type-meta text-t3">已选 {selectedCount}/3</span>
+        <span className="ui-type-control text-t2">{uiText("settingsPanel.ShortcutMenuPicker")}</span>
+        <span className="ui-type-meta text-t3">{uiText("settingsPanel.ShortcutMenuPicker2")}{selectedCount}/3</span>
       </div>
-      <div className="settings-shortcut-selected-list mt-1.5 space-y-1.5" role="list" aria-label="当前快捷按钮顺序" title="拖动或使用方向键调整顺序">
-        {selectedOptions.length === 0 && <div className="rounded-md border border-dashed border-line px-2 py-1.5 ui-type-meta text-t3">未显示快捷按钮</div>}
+      <div className="settings-shortcut-selected-list mt-1.5 space-y-1.5" role="list" aria-label={uiText("settingsPanel.aria_label")} title={uiText("settingsPanel.title")}>
+        {selectedOptions.length === 0 && <div className="rounded-md border border-dashed border-line px-2 py-1.5 ui-type-meta text-t3">{uiText("settingsPanel.ShortcutMenuPicker3")}</div>}
         {selectedOptions.map((option) => (
           <div
             key={option.value}
             role="listitem"
             tabIndex={0}
-            aria-label={`${option.label}，使用上下方向键排序`}
+            aria-label={uiText("settingsPanel.aria_label2", { label: option.label })}
             onKeyDown={event=>{if(event.key!=="ArrowUp"&&event.key!=="ArrowDown")return;event.preventDefault();const next=value[value.indexOf(option.value)+(event.key==="ArrowUp"?-1:1)];if(next)reorderShortcuts(option.value,next);}}
             aria-grabbed={draggingAction === option.value}
             data-shortcut-action={option.value}
@@ -441,8 +442,8 @@ function ShortcutMenuPicker({ value, onChange }: { value: readonly VoiceShortcut
             <button
               type="button"
               data-shortcut-delete
-              aria-label={`删除快捷${option.label}`}
-              title={`删除${option.label}`}
+              aria-label={uiText("settingsPanel.aria_label3", { label: option.label })}
+              title={uiText("settingsPanel.title2", { label: option.label })}
               onPointerDown={(event) => event.stopPropagation()}
               onClick={() => onChange(value.filter((item) => item !== option.value))}
               className="size-6 rounded text-t3 hover:bg-surface hover:text-danger focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent-ring"
@@ -452,8 +453,8 @@ function ShortcutMenuPicker({ value, onChange }: { value: readonly VoiceShortcut
           </div>
         ))}
       </div>
-      <div className="settings-shortcut-add-group mt-3 min-w-0" role="group" aria-label="添加事件快捷菜单按钮">
-        <div className="settings-shortcut-add-label ui-type-meta text-t3">可添加</div>
+      <div className="settings-shortcut-add-group mt-3 min-w-0" role="group" aria-label={uiText("settingsPanel.aria_label4")}>
+        <div className="settings-shortcut-add-label ui-type-meta text-t3">{uiText("settingsPanel.ShortcutMenuPicker4")}</div>
         <div className="mt-1.5 flex flex-wrap gap-1.5">
           {availableOptions.map((option) => {
             const disabled = selectedCount >= MAX_VOICE_SHORTCUT_ACTIONS;
@@ -462,8 +463,8 @@ function ShortcutMenuPicker({ value, onChange }: { value: readonly VoiceShortcut
                 key={option.value}
                 type="button"
                 aria-pressed={false}
-                aria-label={`添加快捷${option.label}`}
-                title={disabled ? "最多选择 3 个" : `添加${option.label}`}
+                aria-label={uiText("settingsPanel.aria_label5", { label: option.label })}
+                title={disabled ? uiText("settingsPanel.title3") : uiText("settingsPanel.title4", { label: option.label })}
                 disabled={disabled}
                 onClick={() => {
                   if (!disabled) onChange([...value, option.value]);
@@ -471,7 +472,7 @@ function ShortcutMenuPicker({ value, onChange }: { value: readonly VoiceShortcut
                 className="inline-flex min-h-7 min-w-[72px] flex-1 items-center justify-center gap-1.5 rounded-md border border-dashed border-line px-2 ui-type-control text-t3 transition-colors enabled:hover:border-accent/50 enabled:hover:bg-surface enabled:hover:text-t1 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent-ring disabled:cursor-not-allowed disabled:opacity-40"
               >
                 <MenuActionIcon name={option.icon} />
-                <span>添加{option.label}</span>
+                <span>{uiText("common.add")}{option.label}</span>
               </button>
             );
           })}
@@ -581,13 +582,13 @@ function SurfaceColorInput({ value, onChange, searchId, automatic = false, onRes
 
   return (
     <div className="settings-control-row settings-number-row" data-settings-search={searchId}>
-      <span className="settings-control-label ui-type-control text-t2">表面颜色</span>
+      <span className="settings-control-label ui-type-control text-t2">{uiText("settingsPanel.SurfaceColorInput")}</span>
       <div className="settings-control-field relative flex min-w-0 flex-1 items-center gap-2">
         <button
           type="button"
           ref={triggerRef}
           aria-expanded={open}
-          aria-label="表面颜色"
+          aria-label={uiText("settingsPanel.aria_label6")}
           onClick={() => {
             setPosition((current) => ({ ...current, ready: false }));
             setOpen((current) => !current);
@@ -595,15 +596,15 @@ function SurfaceColorInput({ value, onChange, searchId, automatic = false, onRes
           className="settings-surface-color-trigger settings-control-surface flex h-8 flex-1 min-w-0 items-center gap-2 px-2 ui-type-control text-t1"
         >
           <span className="size-4 shrink-0 rounded border border-line" style={{ backgroundColor: rgbaToCss(value) }} aria-hidden="true" />
-          <span className="truncate font-mono text-t2">{automatic ? "跟随明暗" : `${rgbaToHex(value)} · ${Math.round(value.a * 100)}%`}</span>
+          <span className="truncate font-mono text-t2">{automatic ? uiText("settingsPanel.SurfaceColorInput2") : `${rgbaToHex(value)} · ${Math.round(value.a * 100)}%`}</span>
         </button>
-        {onReset && <button type="button" className="settings-surface-auto" disabled={automatic} onClick={onReset} title="恢复跟随明暗" aria-label="表面颜色恢复跟随明暗"><RotateCcw size={14} /></button>}
+        {onReset && <button type="button" className="settings-surface-auto" disabled={automatic} onClick={onReset} title={uiText("settingsPanel.title5")} aria-label={uiText("settingsPanel.aria_label7")}><RotateCcw size={14} /></button>}
         {open && createPortal(
           <div
             ref={popoverRef}
             data-ui-overlay="true"
             role="dialog"
-            aria-label="表面颜色"
+            aria-label={uiText("settingsPanel.aria_label6")}
             data-placement={placement}
             className="settings-surface-color-popover fixed z-50 w-[260px] rounded-lg border border-line bg-surface p-2 shadow-xl shadow-black/20"
             style={{ left: position.left, top: position.top, visibility: position.ready ? "visible" : "hidden" }}
@@ -635,7 +636,7 @@ function SecondsInput({ label, value, onChange, min = MIN_EVENT_EXPIRY_SECONDS, 
           aria-label={label}
           className="settings-font-size-input font-mono ui-type-control text-t1"
         />
-        <span className="settings-font-size-unit ui-type-control text-t3">秒</span>
+        <span className="settings-font-size-unit ui-type-control text-t3">{uiText("settingsPanel.SecondsInput")}</span>
       </label>
     </div>
   );
@@ -643,9 +644,9 @@ function SecondsInput({ label, value, onChange, min = MIN_EVENT_EXPIRY_SECONDS, 
 
 function DurationInput({ value, onChange }: { value: number; onChange: (value: number) => void }) {
   return <div className="settings-control-row settings-number-row" data-settings-search="event-animation">
-    <span className="settings-control-label ui-type-control text-t2">动画持续时长</span>
+    <span className="settings-control-label ui-type-control text-t2">{uiText("settingsPanel.DurationInput")}</span>
     <label className="settings-font-size-control">
-      <input type="number" min={0} step={EVENT_ANIMATION_DURATION_STEP_MS} value={value} aria-label="动画持续时长"
+      <input type="number" min={0} step={EVENT_ANIMATION_DURATION_STEP_MS} value={value} aria-label={uiText("settingsPanel.aria_label8")}
         className="settings-font-size-input font-mono ui-type-control text-t1"
         onChange={event => { const next = Number(event.target.value); if (Number.isFinite(next)) onChange(next); }} />
       <span className="settings-font-size-unit ui-type-control text-t3">ms</span>
@@ -653,23 +654,23 @@ function DurationInput({ value, onChange }: { value: number; onChange: (value: n
   </div>;
 }
 
-function SectionTitle({ title, onReset }: { title: string; onReset?: () => void }) {
+function SectionTitle({ title, onReset, iconName }: { title: string; iconName?: string; onReset?: () => void }) {
   return (
     <header className="settings-section-title" data-settings-level="1">
-      <h3 className="settings-experience-heading ui-type-section-title font-medium text-t1"><SettingsIcon name={title} />{title}</h3>
-      {onReset && <button type="button" className={`${resetButtonClass} settings-reset-button settings-icon-action`} title="恢复本分类默认" aria-label="恢复本分类默认" onClick={onReset}><RotateCcw size={16} aria-hidden="true" /></button>}
+      <h3 className="settings-experience-heading ui-type-section-title font-medium text-t1"><SettingsIcon name={iconName ?? ""} />{title}</h3>
+      {onReset && <button type="button" className={`${resetButtonClass} settings-reset-button settings-icon-action`} title={uiText("settingsPanel.title6")} aria-label={uiText("settingsPanel.aria_label9")} onClick={onReset}><RotateCcw size={16} aria-hidden="true" /></button>}
     </header>
   );
 }
 
-function SettingsSubsectionTitle({ title, level = 2, hint, icon }: { title: string; level?: 2 | 3; hint?: string; icon?: ReactNode }) {
+function SettingsSubsectionTitle({ title, level = 2, hint, icon, iconName }: { title: string; iconName?: string; level?: 2 | 3; hint?: string; icon?: ReactNode }) {
   return (
     <div
       className={level === 3 ? "settings-tertiary-title" : "settings-subsection-title"}
       data-settings-level={level}
       title={hint}
     >
-      {icon ? <span className="settings-heading-icon" aria-hidden="true">{icon}</span> : <SettingsIcon name={title} />}{title}
+      {icon ? <span className="settings-heading-icon" aria-hidden="true">{icon}</span> : <SettingsIcon name={iconName ?? ""} />}{title}
     </div>
   );
 }
@@ -704,18 +705,18 @@ function SettingsFilterRow({
         <button
           type="button"
           aria-pressed={active}
-          aria-label={`${label}${active ? "已显示" : "已隐藏"}`}
+          aria-label={`${label}${active ? uiText("settingsPanel.aria_label10") : uiText("settingsPanel.aria_label11")}`}
           className={`settings-filter-row-toggle ui-type-control ${active ? "is-active" : ""}`}
           onClick={onPrimaryToggle}
         >
           <span className="settings-filter-row-label">{label}</span>
-          <span className="settings-filter-row-state">{active ? "显示" : "隐藏"}</span>
+          <span className="settings-filter-row-state">{active ? uiText("common.show") : uiText("common.hide")}</span>
         </button>
         {hasSubmenu && (
           <button
             type="button"
             className="settings-filter-row-disclosure"
-            aria-label={`展开${label}二级筛选`}
+            aria-label={uiText("settingsPanel.aria_label12", { label: label })}
             aria-expanded={open}
             onClick={() => setOpen((current) => !current)}
           >
@@ -724,7 +725,7 @@ function SettingsFilterRow({
         )}
       </div>
       {open && selected && onToggle && (
-        <div className="settings-control-menu settings-filter-menu" role="menu" aria-label={`${label}类型筛选`}>
+        <div className="settings-control-menu settings-filter-menu" role="menu" aria-label={uiText("settingsPanel.aria_label13", { label: label })}>
           {INTERACT_KIND_OPTIONS.map((option) => {
             const checked = selected[option.key] !== false;
             return (
@@ -1070,22 +1071,22 @@ export function SettingsPanel({
   const saveNicknameEntry = (uid: string) => {
     const nickname = editingNicknameValue.trim();
     if (!nickname) {
-      setNicknameNotice("昵称不能为空");
+      setNicknameNotice(uiText("settingsPanel.SettingsPanel.saveNicknameEntry"));
       return;
     }
     if (!onSaveNickname) {
-      setNicknameNotice("昵称服务暂不可用，请稍后再试");
+      setNicknameNotice(uiText("settingsPanel.SettingsPanel.saveNicknameEntry2"));
       return;
     }
     onSaveNickname(uid, nickname);
     setEditingNicknameUid(null);
     setEditingNicknameValue("");
-    setNicknameNotice("昵称已保存，并已应用到现场显示和语音播报");
+    setNicknameNotice(uiText("settingsPanel.SettingsPanel.saveNicknameEntry3"));
   };
 
   const deleteNickname = (uid: string) => {
     if (!onDeleteNickname) {
-      setNicknameNotice("昵称服务暂不可用，请稍后再试");
+      setNicknameNotice(uiText("settingsPanel.SettingsPanel.deleteNickname"));
       return;
     }
     onDeleteNickname(uid);
@@ -1093,7 +1094,7 @@ export function SettingsPanel({
       setEditingNicknameUid(null);
       setEditingNicknameValue("");
     }
-    setNicknameNotice("昵称已删除");
+    setNicknameNotice(uiText("settingsPanel.SettingsPanel.deleteNickname2"));
   };
 
   const nicknameEntries = Object.entries(voiceSettings.userNicknames);
@@ -1213,23 +1214,23 @@ export function SettingsPanel({
   };
 
   const requestSectionReset = (section: string, action: () => void | Promise<void>) => {
-    requestReset(`恢复“${section}”默认设置？`, `这会恢复“${section}”中的全部设置，但不会清除主播记录、用户数据或登录凭证。`, action);
+    requestReset(uiText("settingsPanel.SettingsPanel.requestSectionReset", { section: section }), uiText("settingsPanel.SettingsPanel.requestSectionReset2", { section: section }), action);
   };
 
   const getVoiceOutputDeviceTitle = (deviceId: string | null) => {
     if (deviceId === null) {
       const systemDefault = voiceOutputDevices.find((candidate) => candidate.isDefault);
-      return systemDefault ? `跟随系统默认设备（当前：${systemDefault.name}）` : "跟随系统默认设备";
+      return systemDefault ? uiText("settingsPanel.SettingsPanel.getVoiceOutputDeviceTitle", { name: systemDefault.name }) : uiText("settingsPanel.SettingsPanel.getVoiceOutputDeviceTitle2");
     }
     const device = voiceOutputDevices.find((candidate) => candidate.id === deviceId);
-    return device ? `${device.name}${device.isDefault ? "（系统默认）" : ""}` : undefined;
+    return device ? `${device.name}${device.isDefault ? uiText("settingsPanel.SettingsPanel.getVoiceOutputDeviceTitle3") : ""}` : undefined;
   };
 
   const voiceOutputOptions: SharedSettingsListOption[] = [
-    { value: "", label: "跟随系统默认设备", title: getVoiceOutputDeviceTitle(null) },
+    { value: "", label: uiText("settingsPanel.SettingsPanel.voiceOutputOptions.label"), title: getVoiceOutputDeviceTitle(null) },
     ...voiceOutputDevices.map((device) => ({
       value: device.id,
-      label: `${device.name}${device.isDefault ? "（系统默认）" : ""}`,
+      label: `${device.name}${device.isDefault ? uiText("settingsPanel.SettingsPanel.voiceOutputOptions.label2") : ""}`,
       title: device.name,
     })),
   ];
@@ -1256,7 +1257,7 @@ export function SettingsPanel({
     }));
   };
 
-  const currentLabel = SETTINGS_SECTIONS.find((section) => section.id === currentSection)?.label ?? "通用设置";
+  const currentLabel = SETTINGS_SECTIONS.find((section) => section.id === currentSection)?.label ?? uiText("settingsPanel.SettingsPanel.currentLabel");
   const openSettingsSearch = () => {
     setDirectoryOpen(false);
     setSettingsSearchPosition((current) => ({ ...current, ready: false }));
@@ -1280,15 +1281,15 @@ export function SettingsPanel({
   return (
     <div ref={frameRef} className="settings-panel-frame absolute inset-3 flex min-h-0 flex-col overflow-hidden rounded-lg border border-line bg-bg">
       <div ref={directoryRef} className="settings-panel-header relative z-20 flex h-11 shrink-0 items-center gap-2 border-b border-line px-4 pr-11">
-        <h2 className="ui-type-section-title font-medium text-t1">设置</h2>
+        <h2 className="ui-type-section-title font-medium text-t1">{uiText("common.settings")}</h2>
         <div ref={settingsSearchShellRef} className="settings-search-shell relative ml-auto">
           <button
             ref={settingsSearchTriggerRef}
             type="button"
-            aria-label="查找设置"
+            aria-label={uiText("settingsPanel.aria_label14")}
             aria-expanded={settingsSearchOpen}
             aria-haspopup="dialog"
-            title="查找设置"
+            title={uiText("settingsPanel.title7")}
             className="settings-search-trigger settings-control-surface flex size-8 items-center justify-center ui-type-control text-t2"
             onClick={() => settingsSearchOpen ? closeSettingsSearch() : openSettingsSearch()}
           >
@@ -1300,7 +1301,7 @@ export function SettingsPanel({
                 ref={settingsSearchPopoverRef}
                 className="settings-search-popover fixed z-50 rounded-lg border border-line bg-surface p-2 shadow-xl shadow-black/20"
                 role="dialog"
-                aria-label="查找设置"
+                aria-label={uiText("settingsPanel.aria_label14")}
                 style={{
                   left: settingsSearchPosition.left,
                   top: settingsSearchPosition.top,
@@ -1315,19 +1316,19 @@ export function SettingsPanel({
                   value={settingsSearchQuery}
                   onChange={(event) => setSettingsSearchQuery(event.target.value)}
                   onKeyDown={handleSettingsSearchKeyDown}
-                  placeholder="查找设置"
-                  aria-label="查找设置"
+                  placeholder={uiText("settingsPanel.placeholder")}
+                  aria-label={uiText("settingsPanel.aria_label14")}
                   className="min-w-0 flex-1 bg-transparent py-1.5 ui-type-control text-t1 outline-none placeholder:text-t3"
                 />
                 {settingsSearchQuery && (
-                  <button type="button" aria-label="清空设置搜索" className="rounded p-0.5 ui-type-control text-t3 hover:bg-raised hover:text-t1" onClick={() => { setSettingsSearchQuery(""); settingsSearchInputRef.current?.focus(); }}><X size={14} aria-hidden="true" /></button>
+                  <button type="button" aria-label={uiText("settingsPanel.aria_label15")} className="rounded p-0.5 ui-type-control text-t3 hover:bg-raised hover:text-t1" onClick={() => { setSettingsSearchQuery(""); settingsSearchInputRef.current?.focus(); }}><X size={14} aria-hidden="true" /></button>
                 )}
               </div>
               <div className="settings-search-results mt-2" aria-live="polite">
                 {!settingsSearchQuery.trim() ? (
-                  <div className="px-2 py-2 ui-type-meta text-t3">输入名称或关键词，定位到对应设置。</div>
+                  <div className="px-2 py-2 ui-type-meta text-t3">{uiText("settingsPanel.SettingsPanel")}</div>
                 ) : settingsSearchResults.length === 0 ? (
-                  <div className="px-2 py-2 ui-type-meta text-t3">没有找到匹配的设置。</div>
+                  <div className="px-2 py-2 ui-type-meta text-t3">{uiText("settingsPanel.SettingsPanel2")}</div>
                 ) : (
                   settingsSearchResults.map((entry) => (
                     <button
@@ -1351,7 +1352,7 @@ export function SettingsPanel({
           <button
             type="button"
             className="settings-section-navigator settings-control-surface ml-0 flex h-8 min-w-0 items-center justify-start gap-1 px-2 text-left ui-type-control text-t2"
-            aria-label={`${currentLabel}，滚轮切换分类，展开设置分类`}
+            aria-label={uiText("settingsPanel.aria_label16", { currentLabel: currentLabel })}
             aria-haspopup="listbox"
             aria-expanded={directoryOpen}
             onClick={() => setDirectoryOpen((open) => !open)}
@@ -1362,7 +1363,7 @@ export function SettingsPanel({
             <LucideChevronDown className={`size-4 shrink-0 transition-transform ${directoryOpen ? "rotate-180" : ""}`} aria-hidden="true" />
           </button>
           {directoryOpen && (
-            <div role="listbox" aria-label="设置分类" className="settings-control-menu settings-section-navigator-menu absolute">
+            <div role="listbox" aria-label={uiText("settingsPanel.aria_label17")} className="settings-control-menu settings-section-navigator-menu absolute">
             {SETTINGS_SECTIONS.map((section) => (
               <button
                 key={section.id}
@@ -1372,7 +1373,7 @@ export function SettingsPanel({
                 onClick={() => { jumpTo(section.id); setDirectoryOpen(false); }}
                 className={`flex h-8 w-full items-center rounded-md px-2 text-left ui-type-control transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent-ring ${section.id === currentSection ? "bg-accent-subtle font-medium text-accent-text" : "text-t2 hover:bg-raised hover:text-t1"}`}
               >
-                <SettingsIcon name={section.label} />{section.label}
+                <SettingsIcon name={section.id} />{section.label}
               </button>
             ))}
             </div>
@@ -1392,10 +1393,10 @@ export function SettingsPanel({
         }}
       >
         <section ref={(node) => { if (node) sectionRefs.current.set("general", node); }} className="settings-section" data-settings-section="general">
-          <SectionTitle title="通用设置" onReset={() => requestSectionReset("通用设置", resetGeneral)} />
-          <SettingsSubsectionTitle title="界面外观" icon={<PaletteIcon size={16} />} />
+          <SectionTitle iconName="general" title={uiText("settingsPanel.title8")} onReset={() => requestSectionReset(uiText("settingsPanel.onReset"), resetGeneral)} />
+          <SettingsSubsectionTitle title={uiText("settingsPanel.title9")} icon={<PaletteIcon size={16} />} />
           <Segmented<Palette>
-            label="配色主题"
+            label={uiText("settingsPanel.label")}
             value={palette}
             options={PALETTE_OPTIONS}
             onChange={setPalette}
@@ -1404,22 +1405,22 @@ export function SettingsPanel({
             decoration={value => <span className="settings-palette-swatch" style={{ background: value === "sakura" ? "#FB7299" : value === "pine" ? "#4C9A8D" : customColor }} />}
           />
           {palette === "custom" && <div className="settings-control-row" data-settings-search="palette">
-            <span className="settings-control-label ui-type-control text-t2">主题色</span>
-            <ThemeColorField label="主题色" value={customColor} opaque onChange={setCustomColor}
+            <span className="settings-control-label ui-type-control text-t2">{uiText("settingsPanel.SettingsPanel3")}</span>
+            <ThemeColorField label={uiText("settingsPanel.label2")} value={customColor} opaque onChange={setCustomColor}
               onPreviewChange={color => applyCustomPalette(document, color)}
               onPreviewCancel={() => applyCustomPalette(document, useTheme.getState().customColor)} />
           </div>}
           <Segmented<Mode>
-            label="深浅模式"
+            label={uiText("settingsPanel.label3")}
             value={mode}
-            options={[{ value: "system", label: "系统" }, { value: "light", label: "浅色" }, { value: "dark", label: "深色" }]}
+            options={[{ value: "system", label: uiText("settingsPanel.options.label") }, { value: "light", label: uiText("common.light") }, { value: "dark", label: uiText("common.dark") }]}
             onChange={setMode}
             searchId="mode"
             decoration={value => value === "system" ? <Monitor size={16} /> : value === "light" ? <Sun size={16} /> : <Moon size={16} />}
           />
           <label className="settings-slider-row" data-settings-search="ui-scale">
             <span className="flex items-center justify-between ui-type-control text-t2">
-              <span>界面比例</span>
+              <span>{uiText("settingsPanel.SettingsPanel4")}</span>
               <span className="font-mono text-t1">{Math.round(uiScale * 100)}%</span>
             </span>
             <input
@@ -1429,109 +1430,109 @@ export function SettingsPanel({
               step="5"
               value={Math.round(uiScale * 100)}
               onChange={(event) => setUiScale(Number(event.target.value) / 100)}
-              aria-label="界面比例"
+              aria-label={uiText("settingsPanel.aria_label18")}
               className="settings-range"
               style={{ "--settings-range-progress": `${((uiScale - MIN_UI_SCALE) / (MAX_UI_SCALE - MIN_UI_SCALE)) * 100}%` } as CSSProperties}
             />
           </label>
-          <SettingsSubsectionTitle title="启动行为" icon={<Power size={16} />} />
+          <SettingsSubsectionTitle title={uiText("settingsPanel.title10")} icon={<Power size={16} />} />
           <SettingSwitch
-            label="开机随系统自启"
+            label={uiText("settingsPanel.label4")}
             checked={startOnBoot}
             onChange={() => setStartOnBoot(!startOnBoot)}
             searchId="start-on-boot"
-            hint="仅在托盘运行；若同时开启启动后自动连接，会连接最近使用的主播；没有凭证或主播记录时跳过。"
+            hint={uiText("settingsPanel.hint")}
           />
-          <SettingSwitch label="启动后自动连接" checked={autoConnectOnStartup} onChange={() => setAutoConnectOnStartup(!autoConnectOnStartup)} searchId="auto-connect" />
-          <SettingsSubsectionTitle title="窗口行为" icon={<Monitor size={16} />} />
+          <SettingSwitch label={uiText("settingsPanel.label5")} checked={autoConnectOnStartup} onChange={() => setAutoConnectOnStartup(!autoConnectOnStartup)} searchId="auto-connect" />
+          <SettingsSubsectionTitle title={uiText("settingsPanel.title11")} icon={<Monitor size={16} />} />
           <Segmented<CloseBehavior>
-            label="关闭窗口时"
+            label={uiText("settingsPanel.label6")}
             value={closeBehavior}
-            options={[{ value: "exit", label: "退出程序" }, { value: "tray", label: "隐藏到托盘" }]}
+            options={[{ value: "exit", label: uiText("settingsPanel.options.label2") }, { value: "tray", label: uiText("settingsPanel.options.label3") }]}
             onChange={setCloseBehavior}
             searchId="close-behavior"
           />
           <Segmented<MinimizeBehavior>
-            label="最小化时"
+            label={uiText("settingsPanel.label7")}
             value={minimizeBehavior}
-            options={[{ value: "taskbar", label: "任务栏" }, { value: "tray", label: "隐藏到托盘" }]}
+            options={[{ value: "taskbar", label: uiText("settingsPanel.options.label4") }, { value: "tray", label: uiText("settingsPanel.options.label3") }]}
             onChange={setMinimizeBehavior}
             searchId="minimize-behavior"
           />
         </section>
 
         <section ref={(node) => { if (node) sectionRefs.current.set("display", node); }} className="settings-section" data-settings-section="display">
-          <SectionTitle title="事件显示" onReset={() => requestSectionReset("事件显示", resetDisplay)} />
-          <SettingsSubsectionTitle title="收藏行为" />
+          <SectionTitle iconName="display" title={uiText("settingsPanel.title12")} onReset={() => requestSectionReset(uiText("settingsPanel.onReset2"), resetDisplay)} />
+          <SettingsSubsectionTitle iconName="favoriteBehavior" title={uiText("settingsPanel.title13")} />
           <SettingSwitch
-            label="收藏时编辑备注和标签"
+            label={uiText("settingsPanel.label8")}
             checked={favoriteEditOnAdd}
             onChange={() => setFavoriteEditOnAdd(!favoriteEditOnAdd)}
             searchId="favorite-edit"
-            hint="开启后，收藏事件会立即打开备注和标签编辑；关闭时可长按收藏图标编辑。"
+            hint={uiText("settingsPanel.hint2")}
           />
-          <SettingsSubsectionTitle title="信息流行为" icon={<AlignStartVertical size={16} />} />
+          <SettingsSubsectionTitle title={uiText("settingsPanel.title14")} icon={<AlignStartVertical size={16} />} />
           <Segmented<"top" | "bottom">
-            label="内容对齐"
+            label={uiText("settingsPanel.label9")}
             value={liveContentAlignment}
-            options={[{ value: "top", label: "顶部" }, { value: "bottom", label: "底部" }]}
+            options={[{ value: "top", label: uiText("common.top") }, { value: "bottom", label: uiText("common.bottom") }]}
             onChange={setLiveContentAlignment}
             searchId="content-alignment"
             tiles
             decoration={value => <span className={`settings-alignment-diagram${value === "bottom" ? " is-bottom" : ""}`}><i /><i /><i /></span>}
           />
-          {liveContentAlignment === undefined && <p className="settings-hint">保持原布局；选择顶部或底部后统一应用。</p>}
+          {liveContentAlignment === undefined && <p className="settings-hint">{uiText("settingsPanel.SettingsPanel5")}</p>}
           <Segmented<LiveScrollDirection>
-            label="最新事件位置"
+            label={uiText("settingsPanel.label10")}
             value={liveScrollDirection}
-            options={[{ value: "top", label: "上方" }, { value: "bottom", label: "下方" }]}
+            options={[{ value: "top", label: uiText("settingsPanel.options.label5") }, { value: "bottom", label: uiText("settingsPanel.options.label6") }]}
             onChange={setLiveScrollDirection}
             searchId="feed-direction"
             decoration={value => value === "top" ? <ArrowUp size={16} /> : <ArrowDown size={16} />}
           />
-          <SettingsSubsectionTitle title="事件动画" icon={<SlidersHorizontal size={16} />} />
+          <SettingsSubsectionTitle title={uiText("settingsPanel.title15")} icon={<SlidersHorizontal size={16} />} />
           <DurationInput value={eventDisplayPreferences.eventAnimationDurationMs} onChange={setEventAnimationDuration} />
           <Segmented
-            label="动画效果"
+            label={uiText("settingsPanel.label11")}
             value={eventDisplayPreferences.eventAnimationPreset}
             options={[...EVENT_ANIMATION_PRESET_OPTIONS]}
             onChange={setEventAnimationPreset}
             searchId="event-animation"
           />
           <SettingsFlowPreview alignment={liveContentAlignment} direction={liveScrollDirection} preset={eventDisplayPreferences.eventAnimationPreset} duration={eventDisplayPreferences.eventAnimationDurationMs} />
-          <SettingsSubsectionTitle title="置顶栏" />
-          <SettingSwitch label="副窗口置顶栏" checked={stickyEvents.enabled} onChange={() => setStickyEvents(current => ({...current,enabled:!current.enabled}))} searchId="sticky-events" />
-          <SettingSwitch label="OBS置顶栏" checked={stickyEvents.obsEnabled} onChange={() => setStickyEvents(current => ({...current,obsEnabled:!current.obsEnabled}))} searchId="obs-sticky-events" />
+          <SettingsSubsectionTitle iconName="sticky" title={uiText("settingsPanel.title16")} />
+          <SettingSwitch label={uiText("settingsPanel.label12")} checked={stickyEvents.enabled} onChange={() => setStickyEvents(current => ({...current,enabled:!current.enabled}))} searchId="sticky-events" />
+          <SettingSwitch label={uiText("settingsPanel.label13")} checked={stickyEvents.obsEnabled} onChange={() => setStickyEvents(current => ({...current,obsEnabled:!current.obsEnabled}))} searchId="obs-sticky-events" />
           {(stickyEvents.enabled || stickyEvents.obsEnabled) && <>
-            <div className="settings-control-row" data-settings-search="sticky-position"><span className="settings-control-label ui-type-control text-t2">显示位置</span>
-              <SettingsChoiceControl label="置顶栏位置" value={stickyEvents.position} options={[{value:'top',label:'顶部'},{value:'bottom',label:'底部'}]} onChange={position => setStickyEvents(current => ({...current,position:position === 'bottom' ? 'bottom' : 'top'}))} />
+            <div className="settings-control-row" data-settings-search="sticky-position"><span className="settings-control-label ui-type-control text-t2">{uiText("settingsPanel.SettingsPanel6")}</span>
+              <SettingsChoiceControl label={uiText("settingsPanel.label14")} value={stickyEvents.position} options={[{value:'top',label:uiText("common.top")},{value:'bottom',label:uiText("common.bottom")}]} onChange={position => setStickyEvents(current => ({...current,position:position === 'bottom' ? 'bottom' : 'top'}))} />
             </div>
-            <PixelInput label="置顶最低金额" value={stickyEvents.giftThreshold} min={0} max={Number.MAX_SAFE_INTEGER} step={0.01} unit="元" searchId="sticky-threshold" onChange={giftThreshold => setStickyEvents(current => ({...current,giftThreshold}))} />
-            <PixelInput label="最大显示条数" value={stickyEvents.maxCount} min={1} max={100} step={1} unit="条" searchId="sticky-count" onChange={maxCount => setStickyEvents(current => ({...current,maxCount}))} />
-            <div className="settings-control-row" data-settings-search="sticky-sort"><span className="settings-control-label ui-type-control text-t2">排序方式</span>
-              <SettingsChoiceControl label="置顶栏排序" value={stickyEvents.sort} options={[{value:'amount',label:'按金额降序'},{value:'time',label:'按时间倒序'}]} onChange={sort => setStickyEvents(current => ({...current,sort:sort === 'time' ? 'time' : 'amount'}))} />
+            <PixelInput label={uiText("settingsPanel.label15")} value={stickyEvents.giftThreshold} min={0} max={Number.MAX_SAFE_INTEGER} step={0.01} unit={uiText("settingsPanel.unit")} searchId="sticky-threshold" onChange={giftThreshold => setStickyEvents(current => ({...current,giftThreshold}))} />
+            <PixelInput label={uiText("settingsPanel.label16")} value={stickyEvents.maxCount} min={1} max={100} step={1} unit={uiText("settingsPanel.unit2")} searchId="sticky-count" onChange={maxCount => setStickyEvents(current => ({...current,maxCount}))} />
+            <div className="settings-control-row" data-settings-search="sticky-sort"><span className="settings-control-label ui-type-control text-t2">{uiText("settingsPanel.SettingsPanel7")}</span>
+              <SettingsChoiceControl label={uiText("settingsPanel.label17")} value={stickyEvents.sort} options={[{value:'amount',label:uiText("settingsPanel.options.label7")},{value:'time',label:uiText("settingsPanel.options.label8")}]} onChange={sort => setStickyEvents(current => ({...current,sort:sort === 'time' ? 'time' : 'amount'}))} />
             </div>
           </>}
-          <SettingsSubsectionTitle title="副窗口与 OBS" hint="仅影响副窗口与 OBS，不影响现场历史和回看。" />
-          <PixelInput label="输出保留条数" value={eventWindowCapacity} min={1} max={100} step={1} unit="条" searchId="event-window-capacity" onChange={setEventWindowCapacity} />
+          <SettingsSubsectionTitle iconName="windowOutputs" title={uiText("settingsPanel.title17")} hint={uiText("settingsPanel.hint3")} />
+          <PixelInput label={uiText("settingsPanel.label18")} value={eventWindowCapacity} min={1} max={100} step={1} unit={uiText("settingsPanel.unit2")} searchId="event-window-capacity" onChange={setEventWindowCapacity} />
           <SettingSwitch
-            label="事件定时消失"
+            label={uiText("settingsPanel.label19")}
             checked={eventExpiry.enabled}
             onChange={() => setEventExpiry((current) => ({ ...current, enabled: !current.enabled }))}
             searchId="event-expiry"
           />
           {eventExpiry.enabled && (
             <SecondsInput
-              label="消失时间"
+              label={uiText("settingsPanel.label20")}
               value={eventExpiry.seconds}
               onChange={(seconds) => setEventExpiry((current) => ({ ...current, seconds }))}
               searchId="event-expiry-seconds"
             />
           )}
-          <SettingSwitch label="合并相同弹幕" checked={mergeSameDanmu} onChange={() => setMergeSameDanmu(!mergeSameDanmu)} searchId="merge-danmu" />
+          <SettingSwitch label={uiText("settingsPanel.label21")} checked={mergeSameDanmu} onChange={() => setMergeSameDanmu(!mergeSameDanmu)} searchId="merge-danmu" />
           {mergeSameDanmu && (
             <SecondsInput
-              label="合并时间"
+              label={uiText("settingsPanel.label22")}
               value={sameDanmuWindowSeconds}
               min={MIN_SAME_DANMU_WINDOW_SECONDS}
               max={MAX_SAME_DANMU_WINDOW_SECONDS}
@@ -1542,24 +1543,24 @@ export function SettingsPanel({
         </section>
 
         <section ref={(node) => { if (node) sectionRefs.current.set("filters", node); }} className="settings-section" data-settings-section="filters">
-          <SectionTitle title="事件筛选" onReset={() => requestSectionReset("事件筛选", resetFilters)} />
-          <SettingsSubsectionTitle title="事件显示策略" />
-          <SettingSwitch label="显示自动弹幕" checked={eventDisplayPreferences.showAutoDanmaku} onChange={() => setEventDisplayPreference("showAutoDanmaku", !eventDisplayPreferences.showAutoDanmaku)} searchId="auto-danmaku" />
-          <SettingSwitch label="显示未验证手机号用户弹幕" checked={eventDisplayPreferences.showPhoneNotVerified} onChange={() => setEventDisplayPreference("showPhoneNotVerified", !eventDisplayPreferences.showPhoneNotVerified)} searchId="phone-not-verified" />
+          <SectionTitle iconName="filters" title={uiText("settingsPanel.title18")} onReset={() => requestSectionReset(uiText("settingsPanel.onReset3"), resetFilters)} />
+          <SettingsSubsectionTitle iconName="eventPolicy" title={uiText("settingsPanel.title19")} />
+          <SettingSwitch label={uiText("settingsPanel.label23")} checked={eventDisplayPreferences.showAutoDanmaku} onChange={() => setEventDisplayPreference("showAutoDanmaku", !eventDisplayPreferences.showAutoDanmaku)} searchId="auto-danmaku" />
+          <SettingSwitch label={uiText("settingsPanel.label24")} checked={eventDisplayPreferences.showPhoneNotVerified} onChange={() => setEventDisplayPreference("showPhoneNotVerified", !eventDisplayPreferences.showPhoneNotVerified)} searchId="phone-not-verified" />
           <SettingSwitch
-            label="只显示大航海进房"
+            label={uiText("settingsPanel.label25")}
             checked={eventDisplayPreferences.onlyGuardEntry}
             onChange={() => setEventDisplayPreference("onlyGuardEntry", !eventDisplayPreferences.onlyGuardEntry)}
             searchId="guard-entry"
           />
           <SettingSwitch
-            label="显示跨房事件"
+            label={uiText("settingsPanel.label26")}
             checked={sceneSettings.audienceFilters.showCrossRoomEvents}
             onChange={() => updateScene("audienceFilters", { ...sceneSettings.audienceFilters, showCrossRoomEvents: !sceneSettings.audienceFilters.showCrossRoomEvents })}
             searchId="cross-room-events"
           />
-          <PixelInput label="最低荣耀等级" unit="级" value={sceneSettings.audienceFilters.minimumWealthLevel} min={0} max={Number.MAX_SAFE_INTEGER} step={1} searchId="minimum-wealth-level" onChange={(minimumWealthLevel) => updateScene("audienceFilters", { ...sceneSettings.audienceFilters, minimumWealthLevel })} />
-          <PixelInput label="最低当前主播粉丝牌等级" unit="级" value={sceneSettings.audienceFilters.minimumCurrentRoomMedalLevel} min={0} max={Number.MAX_SAFE_INTEGER} step={1} searchId="minimum-current-room-medal-level" onChange={(minimumCurrentRoomMedalLevel) => updateScene("audienceFilters", { ...sceneSettings.audienceFilters, minimumCurrentRoomMedalLevel })} />
+          <PixelInput label={uiText("settingsPanel.label27")} unit={uiText("settingsPanel.unit3")} value={sceneSettings.audienceFilters.minimumWealthLevel} min={0} max={Number.MAX_SAFE_INTEGER} step={1} searchId="minimum-wealth-level" onChange={(minimumWealthLevel) => updateScene("audienceFilters", { ...sceneSettings.audienceFilters, minimumWealthLevel })} />
+          <PixelInput label={uiText("settingsPanel.label28")} unit={uiText("settingsPanel.unit3")} value={sceneSettings.audienceFilters.minimumCurrentRoomMedalLevel} min={0} max={Number.MAX_SAFE_INTEGER} step={1} searchId="minimum-current-room-medal-level" onChange={(minimumCurrentRoomMedalLevel) => updateScene("audienceFilters", { ...sceneSettings.audienceFilters, minimumCurrentRoomMedalLevel })} />
           <GiftThresholdInput
             value={sceneSettings.giftThreshold}
             mode={sceneSettings.giftThresholdMode}
@@ -1567,36 +1568,36 @@ export function SettingsPanel({
             searchId="gift-threshold"
           />
           <Segmented<GiftThresholdMode>
-            label="金额计算"
+            label={uiText("settingsPanel.label29")}
             value={sceneSettings.giftThresholdMode}
-            options={[{ value: "unit", label: "按单件价格" }, { value: "cumulative", label: "按累计金额" }]}
+            options={[{ value: "unit", label: uiText("settingsPanel.options.label9") }, { value: "cumulative", label: uiText("settingsPanel.options.label10") }]}
             onChange={(value) => updateScene("giftThresholdMode", value)}
             searchId="gift-threshold-mode"
           />
         </section>
 
         <section ref={(node) => { if (node) sectionRefs.current.set("live", node); }} className="settings-section" data-settings-section="live">
-          <SectionTitle title="现场" onReset={() => requestSectionReset("现场", resetLive)} />
+          <SectionTitle iconName="live" title={uiText("common.live")} onReset={() => requestSectionReset(uiText("common.live"), resetLive)} />
           <Segmented
-            label="区域布局"
+            label={uiText("settingsPanel.label30")}
             value={sceneSettings.layoutMode}
-            options={[{ value: "dual", label: "双区" }, { value: "partition", label: "多区" }]}
+            options={[{ value: "dual", label: uiText("settingsPanel.options.label11") }, { value: "partition", label: uiText("settingsPanel.options.label12") }]}
             onChange={(value) => updateScene("layoutMode", value)}
             searchId="layout-mode"
             decoration={value => <SceneLayoutIcon mode={value} />}
           />
-          <SettingSwitch label="显示礼物特效" checked={showLiveGiftEffect} onChange={() => setShowLiveGiftEffect(!showLiveGiftEffect)} searchId="live-gift-effect" />
-          <SettingSwitch label="显示大航海特效" checked={showLiveGuardEffect} onChange={() => setShowLiveGuardEffect(!showLiveGuardEffect)} searchId="live-guard-effect" />
+          <SettingSwitch label={uiText("settingsPanel.label31")} checked={showLiveGiftEffect} onChange={() => setShowLiveGiftEffect(!showLiveGiftEffect)} searchId="live-gift-effect" />
+          <SettingSwitch label={uiText("settingsPanel.label32")} checked={showLiveGuardEffect} onChange={() => setShowLiveGuardEffect(!showLiveGuardEffect)} searchId="live-guard-effect" />
         </section>
 
         <section ref={(node) => { if (node) sectionRefs.current.set("review", node); }} className="settings-section" data-settings-section="review">
-          <SectionTitle title="回看" onReset={() => requestSectionReset("回看", resetReviewSettings)} />
+          <SectionTitle iconName="review" title={uiText("common.review")} onReset={() => requestSectionReset(uiText("common.review"), resetReviewSettings)} />
           <div className="settings-control-row settings-switch-row" data-settings-search="review-owner">
             <div className="min-w-0">
-            <div className="settings-control-label ui-type-control text-t2" title="开启后优先进入当前连接栏主播的档案；关闭后进入所有主播档案馆。快捷入口仍可直接查看当前主播和当前场次。">进入回看时打开当前主播</div>
+            <div className="settings-control-label ui-type-control text-t2" title={uiText("settingsPanel.title20")}>{uiText("settingsPanel.SettingsPanel8")}</div>
             </div>
             <SwitchButton
-              label="进入回看时打开当前主播"
+              label={uiText("settingsPanel.label33")}
               checked={reviewOpenCurrentOwner}
               onChange={() => {
                 const next = !reviewOpenCurrentOwner;
@@ -1626,14 +1627,14 @@ export function SettingsPanel({
         </section>
 
         <section ref={(node) => { if (node) sectionRefs.current.set("windows", node); }} className="settings-section" data-settings-section="windows">
-          <SectionTitle title="副窗口" onReset={() => requestSectionReset("副窗口", resetWindows)} />
-          <SettingsSubsectionTitle title="窗口外观" />
-          <Segmented label="材质" value={windowAppearance.material} onChange={material => { setWindowAppearance(current => ({...current, material})); }} options={[{value:'glass',label:'玻璃'},{value:'solid',label:'纯色'},{value:'transparent',label:'透明'}]} />
-          {windowAppearance.material !== 'transparent' && <Segmented label="窗口明暗" value={windowAppearance.scheme} onChange={scheme => setWindowAppearance(current => ({...current, scheme}))} options={[{value:"follow",label:"跟随软件"},{value:"light",label:"浅色"},{value:"dark",label:"深色"}]} decoration={value => value === "follow" ? <Monitor size={15} /> : value === "light" ? <Sun size={15} /> : <Moon size={15} />} />}
+          <SectionTitle iconName="windows" title={uiText("settingsPanel.title21")} onReset={() => requestSectionReset(uiText("settingsPanel.onReset4"), resetWindows)} />
+          <SettingsSubsectionTitle title={uiText("settingsPanel.title22")} />
+          <Segmented label={uiText("settingsPanel.label34")} value={windowAppearance.material} onChange={material => { setWindowAppearance(current => ({...current, material})); }} options={[{value:'glass',label:uiText("settingsPanel.options.label13")},{value:'solid',label:uiText("settingsPanel.options.label14")},{value:'transparent',label:uiText("settingsPanel.options.label15")}]} />
+          {windowAppearance.material !== 'transparent' && <Segmented label={uiText("settingsPanel.label35")} value={windowAppearance.scheme} onChange={scheme => setWindowAppearance(current => ({...current, scheme}))} options={[{value:"follow",label:uiText("settingsPanel.options.label16")},{value:"light",label:uiText("common.light")},{value:"dark",label:uiText("common.dark")}]} decoration={value => value === "follow" ? <Monitor size={15} /> : value === "light" ? <Sun size={15} /> : <Moon size={15} />} />}
           {windowAppearance.material !== 'transparent' && <>
           <label className="settings-slider-row" data-settings-search="window-opacity">
             <span className="flex items-center justify-between ui-type-control text-t2">
-              <span>{windowAppearance.material === 'glass' ? "玻璃着色" : "不透明度"}</span>
+              <span>{windowAppearance.material === 'glass' ? uiText("settingsPanel.SettingsPanel9") : uiText("settingsPanel.SettingsPanel10")}</span>
               <span className="font-mono text-t1">{Math.round((windowAppearance.material === 'glass' ? windowAppearance.glassTint : windowAppearance.solidOpacity) * 100)}%</span>
             </span>
             <input
@@ -1643,7 +1644,7 @@ export function SettingsPanel({
               step="1"
               value={Math.round((windowAppearance.material === 'glass' ? windowAppearance.glassTint : windowAppearance.solidOpacity) * 100)}
               onChange={(event) => setWindowAppearance((current) => ({ ...current, [current.material === 'glass' ? 'glassTint' : 'solidOpacity']: Number(event.target.value) / 100 }))}
-              aria-label={windowAppearance.material === 'glass' ? "玻璃着色" : "不透明度"}
+              aria-label={windowAppearance.material === 'glass' ? uiText("settingsPanel.aria_label19") : uiText("settingsPanel.aria_label20")}
               className="settings-range"
               style={{ "--settings-range-progress": `${(((windowAppearance.material === 'glass' ? windowAppearance.glassTint : windowAppearance.solidOpacity) - MIN_WINDOW_OPACITY) / (MAX_WINDOW_OPACITY - MIN_WINDOW_OPACITY)) * 100}%` } as CSSProperties}
             />
@@ -1656,7 +1657,7 @@ export function SettingsPanel({
             searchId="window-surface"
           />
           <PixelInput
-            label="圆角"
+            label={uiText("settingsPanel.label36")}
             value={windowAppearance.radius}
             onChange={(radius) => setWindowAppearance((current) => ({ ...current, radius }))}
             min={MIN_WINDOW_RADIUS}
@@ -1665,22 +1666,22 @@ export function SettingsPanel({
             searchId="window-radius"
           />
           </>}
-          <SettingsSubsectionTitle title="弹幕内容" />
-          <Segmented label="内容明暗" value={windowScheme} onChange={setWindowScheme} options={[{value:"follow",label:"跟随软件"},{value:"light",label:"浅色"},{value:"dark",label:"深色"}]} decoration={value => value === "follow" ? <Monitor size={15} /> : value === "light" ? <Sun size={15} /> : <Moon size={15} />} />
+          <SettingsSubsectionTitle title={uiText("settingsPanel.title23")} />
+          <Segmented label={uiText("settingsPanel.label37")} value={windowScheme} onChange={setWindowScheme} options={[{value:"follow",label:uiText("settingsPanel.options.label16")},{value:"light",label:uiText("common.light")},{value:"dark",label:uiText("common.dark")}]} decoration={value => value === "follow" ? <Monitor size={15} /> : value === "light" ? <Sun size={15} /> : <Moon size={15} />} />
           <div ref={(node) => { if (node) anchorRefs.current.set("display", node); }} data-settings-anchor="display" data-settings-search="display-window" className="settings-window-group">
-            <SettingsSubsectionTitle title="弹幕窗" />
-            <div className="settings-window-toggle"><SettingSwitch label="开启弹幕窗" checked={displayOpen} onChange={onToggleDisplay} searchId="display-window-open" /><button type="button" disabled={!displayOpen} onClick={onLocateDisplay} title="定位弹幕窗" aria-label="定位弹幕窗" className="settings-locate-button"><MapPin size={16} /></button></div>
-            <SettingSwitch label="锁定并穿透鼠标" checked={displayLocked} onChange={onToggleDisplayLock} searchId="display-window-lock" />
-            <SettingsSubsectionTitle title="事件筛选" level={3} />
+            <SettingsSubsectionTitle iconName="chatWindow" title={uiText("common.chatWindow")} />
+            <div className="settings-window-toggle"><SettingSwitch label={uiText("settingsPanel.label38")} checked={displayOpen} onChange={onToggleDisplay} searchId="display-window-open" /><button type="button" disabled={!displayOpen} onClick={onLocateDisplay} title={uiText("settingsPanel.title24")} aria-label={uiText("settingsPanel.aria_label21")} className="settings-locate-button"><MapPin size={16} /></button></div>
+            <SettingSwitch label={uiText("settingsPanel.label39")} checked={displayLocked} onChange={onToggleDisplayLock} searchId="display-window-lock" />
+            <SettingsSubsectionTitle iconName="filters" title={uiText("settingsPanel.title18")} level={3} />
             <div className="settings-tertiary-content">
               <div className="settings-filter-grid">
                 <SettingsFilterRow
-                  label="弹幕"
+                  label={uiText("settingsPanel.label40")}
                   active={displayWindowFilters.danmu}
                   onPrimaryToggle={() => toggleDisplayWindowFilter("danmu")}
                 />
                 <SettingsFilterRow
-                  label="互动"
+                  label={uiText("settingsPanel.label41")}
                   active={displayWindowFilters.interact}
                   onPrimaryToggle={() => toggleDisplayWindowFilter("interact")}
                   selected={displayWindowFilters.interactKinds}
@@ -1690,19 +1691,19 @@ export function SettingsPanel({
             </div>
           </div>
           <div ref={(node) => { if (node) anchorRefs.current.set("gift", node); }} data-settings-anchor="gift" data-settings-search="gift-window" className="settings-window-group">
-            <SettingsSubsectionTitle title="收益窗" />
-            <div className="settings-window-toggle"><SettingSwitch label="开启收益窗" checked={giftOpen} onChange={onToggleGift} searchId="gift-window-open" /><button type="button" disabled={!giftOpen} onClick={onLocateGift} title="定位收益窗" aria-label="定位收益窗" className="settings-locate-button"><MapPin size={16} /></button></div>
-            <SettingSwitch label="锁定并穿透鼠标" checked={giftLocked} onChange={onToggleGiftLock} disabled={!giftOpen} searchId="gift-window-lock" />
-            <Segmented<RevenueWindowMode> label="显示方式" searchId="gift-window-mode" value={revenueSelection?.mode ?? 'combined'}
-              options={[{ value: 'combined', label: '组合窗口' }, { value: 'split', label: '分窗显示' }]}
+            <SettingsSubsectionTitle iconName="revenueWindow" title={uiText("common.revenueWindow")} />
+            <div className="settings-window-toggle"><SettingSwitch label={uiText("settingsPanel.label42")} checked={giftOpen} onChange={onToggleGift} searchId="gift-window-open" /><button type="button" disabled={!giftOpen} onClick={onLocateGift} title={uiText("settingsPanel.title25")} aria-label={uiText("settingsPanel.aria_label22")} className="settings-locate-button"><MapPin size={16} /></button></div>
+            <SettingSwitch label={uiText("settingsPanel.label39")} checked={giftLocked} onChange={onToggleGiftLock} disabled={!giftOpen} searchId="gift-window-lock" />
+            <Segmented<RevenueWindowMode> label={uiText("settingsPanel.label43")} searchId="gift-window-mode" value={revenueSelection?.mode ?? 'combined'}
+              options={[{ value: 'combined', label: uiText("settingsPanel.options.label17") }, { value: 'split', label: uiText("settingsPanel.options.label18") }]}
               onChange={value => onRevenueWindowMode?.(value)} decoration={value => value === 'combined' ? <Wallet size={15} /> : <Layers size={15} />} />
-            <SettingSwitch label="显示礼物特效" checked={showGiftWindowEffect} onChange={() => setShowGiftWindowEffect(!showGiftWindowEffect)} searchId="gift-window-effect" />
-          <SettingSwitch label="显示大航海特效" checked={showGuardWindowEffect} onChange={() => setShowGuardWindowEffect(!showGuardWindowEffect)} searchId="guard-window-effect" />
+            <SettingSwitch label={uiText("settingsPanel.label31")} checked={showGiftWindowEffect} onChange={() => setShowGiftWindowEffect(!showGiftWindowEffect)} searchId="gift-window-effect" />
+          <SettingSwitch label={uiText("settingsPanel.label32")} checked={showGuardWindowEffect} onChange={() => setShowGuardWindowEffect(!showGuardWindowEffect)} searchId="guard-window-effect" />
             {revenueSelection?.mode === 'split' && <>
-              <SettingsSubsectionTitle title="分窗" level={3} />
-              <div className="settings-tertiary-content" role="group" aria-label="分窗">
-                {([['gift', '礼物窗'], ['superchat', '醒目留言窗'], ['guard', '大航海窗']] as const).map(([kind, label]) => <SettingSwitch key={kind}
-                  label={label} icon={<SettingsIcon name={label} />}
+              <SettingsSubsectionTitle iconName="splitWindows" title={uiText("settingsPanel.title26")} level={3} />
+              <div className="settings-tertiary-content" role="group" aria-label={uiText("settingsPanel.aria_label23")}>
+                {([['gift', uiText("settingsPanel.SettingsPanel11")], ['superchat', uiText("settingsPanel.SettingsPanel12")], ['guard', uiText("settingsPanel.SettingsPanel13")]] as const).map(([kind, label]) => <SettingSwitch key={kind}
+                  label={label} icon={<SettingsIcon name={kind} />}
                   checked={revenueSelection.selected.includes(kind)} onChange={() => onToggleRevenueChild?.(kind)}
                   searchId={`revenue-${kind}-open`} />)}
               </div>
@@ -1711,25 +1712,25 @@ export function SettingsPanel({
         </section>
 
         <section ref={(node) => { if (node) sectionRefs.current.set("interaction", node); }} className="settings-section" data-settings-section="interaction">
-          <SectionTitle title="事件交互" onReset={() => requestSectionReset("事件交互", resetEventInteractionSettings)} />
-          <SettingsSubsectionTitle title="事件快捷菜单" hint="事件行的更多菜单左侧可显示快捷按钮；收藏和标记状态会单独常驻。" />
+          <SectionTitle iconName="interaction" title={uiText("settingsPanel.title27")} onReset={() => requestSectionReset(uiText("settingsPanel.onReset5"), resetEventInteractionSettings)} />
+          <SettingsSubsectionTitle iconName="eventMenu" title={uiText("settingsPanel.title28")} hint={uiText("settingsPanel.hint4")} />
           <div data-settings-search="shortcut-menu">
             <ShortcutMenuPicker
               value={voiceSettings.shortcutActions}
               onChange={(shortcutActions) => voiceSettings.setVoiceSettings({ shortcutActions })}
             />
           </div>
-          <SettingsSubsectionTitle title="用户昵称" hint="昵称作为通用用户名，影响界面显示和语音播报。" />
+          <SettingsSubsectionTitle iconName="nicknames" title={uiText("settingsPanel.title29")} hint={uiText("settingsPanel.hint5")} />
           <SettingSwitch
-            label="朗读昵称/用户名"
+            label={uiText("settingsPanel.label44")}
             checked={voiceSettings.speakUsername}
             onChange={() => voiceSettings.setVoiceSettings({ speakUsername: !voiceSettings.speakUsername })}
             searchId="speak-username"
           />
           <div className="settings-style-editor-summary settings-user-nickname-summary" data-settings-search="nickname">
             <div className="settings-style-editor-copy">
-              <div className="ui-type-control text-t2">用户昵称</div>
-              <div className="ui-type-meta text-t3">已设置 {nicknameEntries.length} 个</div>
+              <div className="ui-type-control text-t2">{uiText("settingsPanel.SettingsPanel14")}</div>
+              <div className="ui-type-meta text-t3">{uiText("settingsPanel.SettingsPanel15")}{nicknameEntries.length} {uiText("settingsPanel.SettingsPanel16")}</div>
             </div>
             <button
               ref={nicknameManagerTriggerRef}
@@ -1745,14 +1746,13 @@ export function SettingsPanel({
                 setNicknameManagerOpen((current) => !current);
               }}
             >
-              管理昵称
-            </button>
+              {uiText("settingsPanel.SettingsPanel17")}</button>
           </div>
           {nicknameManagerOpen && createPortal(
             <div
               ref={nicknameManagerRef}
               role="dialog"
-              aria-label="用户昵称管理"
+              aria-label={uiText("settingsPanel.aria_label24")}
               className="settings-user-nickname-popover fixed z-50 w-[min(460px,calc(100vw-16px))] overflow-y-auto rounded-lg border border-line bg-surface p-3 shadow-xl shadow-black/20"
               style={{
                 left: nicknameManagerPosition.left,
@@ -1763,10 +1763,10 @@ export function SettingsPanel({
               }}
             >
               <div className="flex items-center justify-between gap-3">
-                <div className="ui-type-control font-medium text-t1" title="昵称作为通用用户名，影响界面显示和语音播报。">用户昵称</div>
+                <div className="ui-type-control font-medium text-t1" title={uiText("settingsPanel.title30")}>{uiText("settingsPanel.SettingsPanel14")}</div>
                 <button
                   type="button"
-                  aria-label="关闭用户昵称管理"
+                  aria-label={uiText("settingsPanel.aria_label25")}
                   className="rounded px-1.5 py-0.5 ui-type-control text-t3 transition-colors hover:bg-raised hover:text-t1 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent-ring"
                   onClick={() => {
                     setNicknameManagerOpen(false);
@@ -1780,9 +1780,9 @@ export function SettingsPanel({
               </div>
               {nicknameNotice && <div className="mt-2 ui-type-meta text-t3" role="status">{nicknameNotice}</div>}
               {nicknameEntries.length === 0 ? (
-                <div className="mt-3 rounded-md border border-line/70 bg-bg px-2.5 py-2 ui-type-meta text-t3">暂无已保存昵称，请在事件菜单中添加。</div>
+                <div className="mt-3 rounded-md border border-line/70 bg-bg px-2.5 py-2 ui-type-meta text-t3">{uiText("settingsPanel.SettingsPanel18")}</div>
               ) : (
-                <div className="settings-user-nickname-list mt-3 flex max-h-64 flex-col gap-1 overflow-y-auto" aria-label="已保存的用户昵称">
+                <div className="settings-user-nickname-list mt-3 flex max-h-64 flex-col gap-1 overflow-y-auto" aria-label={uiText("settingsPanel.aria_label26")}>
                   {nicknameEntries.map(([uid, nickname]) => (
                     <div key={uid} className="rounded-md border border-line/70 bg-bg px-2 py-1.5">
                       {editingNicknameUid === uid ? (
@@ -1793,7 +1793,7 @@ export function SettingsPanel({
                             value={editingNicknameValue}
                             onChange={(event) => setEditingNicknameValue(event.target.value)}
                             className="settings-control-surface mt-1 h-8 w-full px-2 ui-type-control text-t1"
-                            aria-label={`编辑昵称 ${uid}`}
+                            aria-label={uiText("settingsPanel.aria_label27", { uid: uid })}
                           />
                           <div className="mt-1.5 flex justify-end gap-1.5">
                             <button
@@ -1801,15 +1801,13 @@ export function SettingsPanel({
                               className="rounded px-1.5 py-1 ui-type-micro text-t3 transition-colors hover:bg-raised hover:text-t1 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent-ring"
                               onClick={() => { setEditingNicknameUid(null); setEditingNicknameValue(""); setNicknameNotice(""); }}
                             >
-                              取消
-                            </button>
+                              {uiText("common.cancel")}</button>
                             <button
                               type="button"
                               className="rounded border border-accent/60 bg-accent-subtle px-2 py-1 ui-type-micro font-medium text-accent-text transition-colors hover:border-accent hover:bg-accent-solid hover:text-accent-fg focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent-ring"
                               onClick={() => saveNicknameEntry(uid)}
                             >
-                              保存
-                            </button>
+                              {uiText("common.save")}</button>
                           </div>
                         </div>
                       ) : (
@@ -1823,16 +1821,14 @@ export function SettingsPanel({
                             className="shrink-0 rounded px-1.5 py-1 ui-type-micro text-t3 transition-colors hover:bg-raised hover:text-t1 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent-ring"
                             onClick={() => { setEditingNicknameUid(uid); setEditingNicknameValue(nickname); setNicknameNotice(""); }}
                           >
-                            编辑
-                          </button>
+                            {uiText("common.edit")}</button>
                           <button
                             type="button"
-                            aria-label={`删除昵称 ${nickname}`}
+                            aria-label={uiText("settingsPanel.aria_label28", { nickname: nickname })}
                             className="shrink-0 rounded px-1.5 py-1 ui-type-micro text-t3 transition-colors hover:bg-danger/10 hover:text-danger focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent-ring"
                             onClick={() => deleteNickname(uid)}
                           >
-                            删除
-                          </button>
+                            {uiText("common.delete")}</button>
                         </div>
                       )}
                     </div>
@@ -1845,22 +1841,22 @@ export function SettingsPanel({
         </section>
 
         <section ref={(node) => { if (node) sectionRefs.current.set("voice", node); }} className="settings-section" data-settings-section="voice">
-          <SectionTitle title="语音与播报" onReset={() => requestSectionReset("语音与播报", resetVoiceOutputSettings)} />
-          <SettingsSubsectionTitle title="声音输出" />
+          <SectionTitle iconName="voice" title={uiText("settingsPanel.title31")} onReset={() => requestSectionReset(uiText("settingsPanel.onReset6"), resetVoiceOutputSettings)} />
+          <SettingsSubsectionTitle title={uiText("settingsPanel.title32")} />
           <div data-settings-search="voice-scope">
             <Segmented
-              label="收听范围"
+              label={uiText("settingsPanel.label45")}
               value={voiceSettings.outputScope}
-              options={[{ value: "host", label: "仅主播" }, { value: "audience", label: "仅观众" }, { value: "both", label: "主播与观众" }]}
+              options={[{ value: "host", label: uiText("settingsPanel.options.label19") }, { value: "audience", label: uiText("settingsPanel.options.label20") }, { value: "both", label: uiText("settingsPanel.options.label21") }]}
               onChange={(outputScope) => voiceSettings.setVoiceSettings({ outputScope })}
             />
           </div>
           {(voiceSettings.outputScope === "host" || voiceSettings.outputScope === "both") && (
             <div ref={hostDeviceRowRef} className="settings-control-row" data-settings-search="voice-host-device" data-settings-layout={hostDeviceLayout}>
-              <span className="settings-control-label ui-type-control text-t2">主播设备</span>
+              <span className="settings-control-label ui-type-control text-t2">{uiText("settingsPanel.SettingsPanel19")}</span>
               <div className="settings-control-value">
                 <SharedSettingsListSelect
-                  ariaLabel="主播输出设备"
+                  ariaLabel={uiText("settingsPanel.ariaLabel")}
                   options={voiceOutputOptions}
                   value={voiceSettings.monitorDeviceId ?? ""}
                   onChange={(value) => voiceSettings.setVoiceSettings({ monitorDeviceId: value || null })}
@@ -1871,10 +1867,10 @@ export function SettingsPanel({
           )}
           {(voiceSettings.outputScope === "audience" || voiceSettings.outputScope === "both") && (
             <div ref={audienceDeviceRowRef} className="settings-control-row" data-settings-search="voice-audience-device" data-settings-layout={audienceDeviceLayout}>
-              <span className="settings-control-label ui-type-control text-t2">观众设备</span>
+              <span className="settings-control-label ui-type-control text-t2">{uiText("settingsPanel.SettingsPanel20")}</span>
               <div className="settings-control-value">
                 <SharedSettingsListSelect
-                  ariaLabel="观众输出设备"
+                  ariaLabel={uiText("settingsPanel.ariaLabel2")}
                   options={voiceOutputOptions}
                   value={voiceSettings.streamDeviceId ?? ""}
                   onChange={(value) => voiceSettings.setVoiceSettings({ streamDeviceId: value || null })}
@@ -1886,26 +1882,26 @@ export function SettingsPanel({
         </section>
 
         <section ref={(node) => { if (node) sectionRefs.current.set("other", node); }} className="settings-section" data-settings-section="other">
-          <SectionTitle title="其他设置" />
+          <SectionTitle iconName="other" title={uiText("settingsPanel.title33")} />
           <div className="settings-control-row" data-settings-search="window-layout">
-            <span className="settings-control-label ui-type-control text-t2">主窗口布局</span>
-            <button type="button" onClick={() => requestReset("恢复主窗口布局？", "将恢复主窗口及工作台的默认尺寸和位置，不会关闭副窗口或清除现场数据。", onResetWindowLayout)} className="h-8 rounded-md border border-line bg-bg px-2.5 ui-type-control text-t2 transition-colors hover:border-accent/50 hover:bg-surface hover:text-t1 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent-ring">恢复布局</button>
+            <span className="settings-control-label ui-type-control text-t2">{uiText("settingsPanel.SettingsPanel21")}</span>
+            <button type="button" onClick={() => requestReset(uiText("settingsPanel.onClick"), uiText("settingsPanel.onClick2"), onResetWindowLayout)} className="h-8 rounded-md border border-line bg-bg px-2.5 ui-type-control text-t2 transition-colors hover:border-accent/50 hover:bg-surface hover:text-t1 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent-ring">{uiText("settingsPanel.SettingsPanel22")}</button>
           </div>
           <div className="settings-control-row">
-            <span className="settings-control-label ui-type-control text-t2">弹幕窗布局</span>
-            <button type="button" onClick={() => requestReset("恢复弹幕窗布局？", "将恢复弹幕窗的默认尺寸和位置，不会关闭窗口或清除现场数据。", onResetDisplayWindowLayout)} className="h-8 rounded-md border border-line bg-bg px-2.5 ui-type-control text-t2 transition-colors hover:border-accent/50 hover:bg-surface hover:text-t1 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent-ring">恢复布局</button>
+            <span className="settings-control-label ui-type-control text-t2">{uiText("settingsPanel.SettingsPanel23")}</span>
+            <button type="button" onClick={() => requestReset(uiText("settingsPanel.onClick3"), uiText("settingsPanel.onClick4"), onResetDisplayWindowLayout)} className="h-8 rounded-md border border-line bg-bg px-2.5 ui-type-control text-t2 transition-colors hover:border-accent/50 hover:bg-surface hover:text-t1 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent-ring">{uiText("settingsPanel.SettingsPanel22")}</button>
           </div>
           <div className="settings-control-row">
-            <span className="settings-control-label ui-type-control text-t2">收益窗布局</span>
-            <button type="button" onClick={() => requestReset("恢复收益窗布局？", "将恢复收益窗的默认尺寸和位置，不会关闭窗口或清除现场数据。", onResetGiftWindowLayout)} className="h-8 rounded-md border border-line bg-bg px-2.5 ui-type-control text-t2 transition-colors hover:border-accent/50 hover:bg-surface hover:text-t1 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent-ring">恢复布局</button>
+            <span className="settings-control-label ui-type-control text-t2">{uiText("settingsPanel.SettingsPanel24")}</span>
+            <button type="button" onClick={() => requestReset(uiText("settingsPanel.onClick5"), uiText("settingsPanel.onClick6"), onResetGiftWindowLayout)} className="h-8 rounded-md border border-line bg-bg px-2.5 ui-type-control text-t2 transition-colors hover:border-accent/50 hover:bg-surface hover:text-t1 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent-ring">{uiText("settingsPanel.SettingsPanel22")}</button>
           </div>
           <div className="settings-control-row">
-            <span className="settings-control-label ui-type-control text-t2">全部窗口布局</span>
-            <button type="button" onClick={() => requestReset("恢复全部窗口布局？", "将恢复主窗口、工作台、弹幕窗和收益窗的默认尺寸和位置，不会清除现场数据。", onResetAllWindowLayout)} className="h-8 rounded-md border border-line bg-bg px-2.5 ui-type-control text-t2 transition-colors hover:border-accent/50 hover:bg-surface hover:text-t1 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent-ring">恢复全部布局</button>
+            <span className="settings-control-label ui-type-control text-t2">{uiText("settingsPanel.SettingsPanel25")}</span>
+            <button type="button" onClick={() => requestReset(uiText("settingsPanel.onClick7"), uiText("settingsPanel.onClick8"), onResetAllWindowLayout)} className="h-8 rounded-md border border-line bg-bg px-2.5 ui-type-control text-t2 transition-colors hover:border-accent/50 hover:bg-surface hover:text-t1 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent-ring">{uiText("settingsPanel.SettingsPanel26")}</button>
           </div>
           <div className="settings-control-row">
-            <span className="settings-control-label ui-type-control text-t2">设置页默认</span>
-            <button type="button" onClick={() => requestReset("恢复设置页全部默认？", "将恢复设置页中的全部设置，但不会清除主播记录、用户数据或登录凭证。", resetAll)} className="h-8 rounded-md border border-line bg-bg px-2.5 ui-type-control text-t2 transition-colors hover:border-accent/50 hover:bg-surface hover:text-t1 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent-ring">恢复设置页默认</button>
+            <span className="settings-control-label ui-type-control text-t2">{uiText("settingsPanel.SettingsPanel27")}</span>
+            <button type="button" onClick={() => requestReset(uiText("settingsPanel.onClick9"), uiText("settingsPanel.onClick10"), resetAll)} className="h-8 rounded-md border border-line bg-bg px-2.5 ui-type-control text-t2 transition-colors hover:border-accent/50 hover:bg-surface hover:text-t1 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent-ring">{uiText("settingsPanel.SettingsPanel28")}</button>
           </div>
           <div ref={(node) => { if (node) anchorRefs.current.set("diagnostics", node); }} data-settings-search="diagnostics">
             <DiagnosticSettings
@@ -1921,7 +1917,7 @@ export function SettingsPanel({
         </section>
 
         <section ref={(node) => { if (node) sectionRefs.current.set("about", node); }} className="settings-section" data-settings-section="about">
-          <SectionTitle title="关于" />
+          <SectionTitle iconName="about" title={uiText("settingsPanel.title34")} />
           <SoftwareUpdateSettings version={version} onOpenAbout={() => setAboutOpen(true)} />
         </section>
       </WorkbenchScroll>
@@ -1930,7 +1926,7 @@ export function SettingsPanel({
         <ConfirmDialog
           title={pendingReset.title}
           description={pendingReset.description}
-          confirmLabel="确认恢复"
+          confirmLabel={uiText("settingsPanel.confirmLabel")}
           onCancel={() => setPendingReset(null)}
           onConfirm={pendingReset.action}
         />

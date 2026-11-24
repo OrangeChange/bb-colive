@@ -1,3 +1,4 @@
+import { uiText } from "../i18n/index.ts";
 import { useEffect, useId, useRef, useState, type ReactNode } from "react";
 import { createPortal } from "react-dom";
 import { accentSolidButtonClass, dangerSolidButtonClass } from "./actionButtonStyles";
@@ -16,7 +17,7 @@ export type ConfirmDialogProps = {
 };
 
 /** 应用内的确认对话框：不调用浏览器原生 confirm，并保留焦点与 Escape 语义。 */
-export function ConfirmDialog({ title, description, confirmLabel, confirmTone = "accent", errorMessage = "操作失败，请稍后重试。", children, confirmDisabled = false, cancelAriaLabel = "取消", onCancel, onConfirm }: ConfirmDialogProps) {
+export function ConfirmDialog({ title, description, confirmLabel, confirmTone = "accent", errorMessage = uiText("confirmDialog.ConfirmDialog"), children, confirmDisabled = false, cancelAriaLabel = uiText("common.cancel"), onCancel, onConfirm }: ConfirmDialogProps) {
   const dialogRef = useRef<HTMLDivElement>(null);
   const cancelRef = useRef<HTMLButtonElement>(null);
   const onCancelRef = useRef(onCancel);
@@ -107,13 +108,13 @@ export function ConfirmDialog({ title, description, confirmLabel, confirmTone = 
             disabled={busy}
             onClick={onCancel}
             className="h-8 rounded-md border border-line bg-bg px-3 ui-type-control text-t2 transition-colors enabled:hover:bg-raised enabled:hover:text-t1 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent-ring disabled:cursor-not-allowed disabled:opacity-50"
-          >取消</button>
+          >{uiText("common.cancel")}</button>
           <button
             type="button"
             disabled={busy || confirmDisabled}
             onClick={() => void confirm()}
             className={confirmTone === "danger" ? dangerSolidButtonClass : accentSolidButtonClass}
-          >{busy ? "处理中…" : confirmLabel}</button>
+          >{busy ? uiText("confirmDialog.ConfirmDialog2") : confirmLabel}</button>
         </div>
       </div>
     </div>,
