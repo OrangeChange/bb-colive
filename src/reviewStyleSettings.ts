@@ -16,6 +16,7 @@ export const REVIEW_PRICE_GRADIENT_CSS = REVIEW_PRICE_GRADIENT.bands.flatMap(ban
 
 export type ReviewStyleSettings = {
   fontSize: number;
+  identityDisplayMode: "icon" | "text";
   showAvatar: boolean;
   showAvatarFrame: boolean;
   showGuardIdentity: boolean;
@@ -30,6 +31,7 @@ export type ReviewStyleSettings = {
 
 export const DEFAULT_REVIEW_STYLE_SETTINGS: ReviewStyleSettings = {
   fontSize: 14,
+  identityDisplayMode: "icon",
   showAvatar: true,
   showAvatarFrame: true,
   showGuardIdentity: true,
@@ -51,6 +53,8 @@ export function normalizeReviewStyleSettings(
     if (key === "fontSize") {
       if (typeof input.fontSize === "number" && Number.isFinite(input.fontSize))
         result.fontSize = clampEventFontSize(input.fontSize);
+    } else if (key === "identityDisplayMode") {
+      if (input[key] === "icon" || input[key] === "text") result[key] = input[key];
     } else if (typeof input[key] === "boolean") result[key] = input[key];
   }
   return result;
@@ -61,6 +65,10 @@ export function reviewDisplayPreferences(
 ): EventDisplayPreferences {
   return {
     ...DEFAULT_EVENT_DISPLAY_PREFERENCES,
+    guardIdentityDisplayMode: settings.identityDisplayMode,
+    anchorIdentityDisplayMode: settings.identityDisplayMode,
+    adminIdentityDisplayMode: settings.identityDisplayMode,
+    honorLevelDisplayMode: settings.identityDisplayMode,
     eventSpacing: 0,
     eventPadding: 6,
     eventAnimationPreset: "none",

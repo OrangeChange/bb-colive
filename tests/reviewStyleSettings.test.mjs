@@ -54,3 +54,10 @@ test('回看价格梯度开关独立保存，旧设置保持固定配色', () =>
   assert.equal(normalizeReviewStyleSettings({ usePriceGradient: true }).usePriceGradient, true);
   assert.equal(normalizeReviewStyleSettings({ usePriceGradient: 'true' }).usePriceGradient, false);
 });
+
+test("身份标记形式独立保存并统一控制四种身份", () => {
+  assert.equal(normalizeReviewStyleSettings().identityDisplayMode, "icon");
+  assert.equal(normalizeReviewStyleSettings({identityDisplayMode: "invalid"}).identityDisplayMode, "icon");
+  const display = reviewDisplayPreferences(normalizeReviewStyleSettings({identityDisplayMode: "text"}));
+  for (const key of ["guardIdentityDisplayMode", "anchorIdentityDisplayMode", "adminIdentityDisplayMode", "honorLevelDisplayMode"]) assert.equal(display[key], "text");
+});

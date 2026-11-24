@@ -1,6 +1,7 @@
-import { useEffect, useRef, useState, type CSSProperties } from "react";
+import { useEffect, useRef, useState } from "react";
 import { createPortal } from "react-dom";
 import { Settings2, X, RotateCcw } from "lucide-react";
+import { SettingsChoiceControl } from "./SettingsChoiceControl";
 import { SettingsIcon } from "./SettingsIcon";
 import { useGeneralSettings } from "../generalSettings.ts";
 import {
@@ -27,7 +28,7 @@ export function ReviewStyleSettings() {
     trigger.current?.focus();
   };
   const toggle = (
-    key: Exclude<keyof Preferences, "fontSize">,
+    key: Exclude<keyof Preferences, "fontSize" | "identityDisplayMode">,
     label: string,
     disabled = false,
   ) => (
@@ -123,7 +124,6 @@ export function ReviewStyleSettings() {
                   px
                 </span>
               </label>
-              <input className="settings-range review-style-font-range" style={{ "--settings-range-progress": `${(settings.fontSize - MIN_EVENT_FONT_SIZE) / (MAX_EVENT_FONT_SIZE - MIN_EVENT_FONT_SIZE) * 100}%` } as CSSProperties} type="range" aria-label="基准字号滑动调整" min={MIN_EVENT_FONT_SIZE} max={MAX_EVENT_FONT_SIZE} step={1} value={settings.fontSize} onChange={event => update({ fontSize: Number(event.target.value) })} />
               {toggle("showAvatar", "头像")}
               {toggle("showAvatarFrame", "头像框", !settings.showAvatar)}
               <fieldset>
@@ -149,6 +149,10 @@ export function ReviewStyleSettings() {
                   ))}
                 </div>
               </fieldset>
+              <div className="review-style-toggle">
+                <span>身份标记形式</span>
+                <SettingsChoiceControl label="身份标记形式" value={settings.identityDisplayMode} onChange={identityDisplayMode => update({ identityDisplayMode })} options={[{ value: "icon", label: "图标" }, { value: "text", label: "文字" }]} />
+              </div>
               {toggle("showFanMedal", "粉丝牌")}
               {toggle("showLevelAndRank", "等级与排名")}
               {toggle("showIcons", "图标")}
