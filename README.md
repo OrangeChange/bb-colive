@@ -8,7 +8,8 @@
 
 面向 B站直播的弹幕展示、语音播报、样式定制与记录回看工具。
 
-![版本 1.0.0](https://img.shields.io/badge/版本-1.0.0-D43870?style=flat)
+[![GitHub 版本 1.1.0](https://img.shields.io/badge/GitHub-1.1.0-D43870?style=flat)](https://github.com/OrangeChange/bb-colive/releases/tag/v1.1.0)
+[![Gitee 版本 1.1.0](https://img.shields.io/badge/Gitee-1.1.0-D43870?style=flat)](https://gitee.com/orange-chan/bb-colive/releases/tag/v1.1.0)
 ![Windows 10 / 11 x64](https://img.shields.io/badge/Windows-10%20%2F%2011%20x64-4C9A8D?style=flat)
 [![源码可用许可](https://img.shields.io/badge/许可-源码可用-706A75?style=flat)](LICENSE)
 
@@ -96,7 +97,7 @@ OBS 输出由本机程序提供，使用期间需保持 BB CoLive 运行。详�
 
 ### 支持哪些系统？
 
-当前正式支持 **Windows 10 / 11 x64**，依赖 WebView2。暂不支持 macOS、Linux 与自动更新。
+当前正式支持 **Windows 10 / 11 x64**，依赖 WebView2。暂不支持 macOS、Linux。安装版与便携版支持软件内更新，可选择国内或国外下载线路。
 
 ### 数据和自定义主题保存在哪里？
 

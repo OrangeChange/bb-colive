@@ -2,16 +2,14 @@
 
 ## 当前分发
 
-客户端版本 1.0.0，正式支持 Windows 10/11 x64。分发文件：
+客户端版本 1.1.0，正式支持 Windows 10/11 x64。分发文件：
 
-- NSIS 安装包：`release/bb-colive_1.0.0_x64-setup.exe`
-- 便携 ZIP：`release/bb-colive_1.0.0_x64-portable.zip`
-- 便携解压目录：`release/bb-colive-1.0.0-portable/`
-- 源码 ZIP：`release/bb-colive-1.0.0-source.zip`，包含生成时的正式源码和文档，并遵循 `.gitattributes` 排除规则。
+- NSIS 安装包：`release/bb-colive_1.1.0_x64-setup.exe`
+- 便携 ZIP：`release/bb-colive_1.1.0_x64-portable.zip`
+- 便携解压目录：`release/bb-colive-1.1.0-portable/`
+- 源码 ZIP：`release/bb-colive-1.1.0-source.zip`，包含生成时的正式源码和文档，并遵循 `.gitattributes` 排除规则。
 
-不包含 MSI。2026-11-24 保持 1.0.0 版本号，以当前发行提交重建上述文件和 dist；同版本旧产物已另行备份，历史版本保留。源码包包含生成时工作目录中的正式源码和文档，并遵循归档排除规则；后续修改不会自动进入已生成的包。
-
-正式交付统一使用上述路径，不按修复内容另建同版本分发目录。经确认替换同版本产物时，先将旧产物移到验收归档区，再以同一次构建生成安装包和便携包。本机构建日志和验证记录保存在忽略的 `.superpowers/` 目录，不混入 `release`。便携解压目录必须与对应 ZIP 一致，不作为日常运行或主题编辑目录。NSIS 原始构建输出位于 Cargo 目标目录的 `release/bundle/nsis/`。
+不包含 MSI。安装包与便携包使用同一次 release 构建，源码包对应同一发行源码。NSIS 原始输出位于 Cargo 目标目录的 `release/bundle/nsis/`。
 
 应用标识为 `orange.bbcolive`。安装版的数据根目录为 `%APPDATA%\BB CoLive\`；便携版由程序旁 `portable.flag` 启用同目录 `data/`。数据库、配置、日志、云恢复文件均使用该根目录，WebView 状态位于其 `WebView/` 子目录；主题仍位于程序旁的 `style/`。
 
@@ -31,9 +29,7 @@
 
 开发命令见[项目说明](../../README.md)，原目录调试要求见[调试与验收](debugging-and-testing.md)。构建使用 `npm run tauri -- build --bundles nsis`；生成便携包时使用同一 release exe。关于页保留必要致谢。安装版与便携版附带相同的 `licenses/THIRD_PARTY_NOTICES.txt` 与 `licenses/Tsanger.pdf`，可离线查阅。
 
-更新版本须同步 npm、Tauri 和 Cargo 声明及锁文件。提交源码后再生成源码包，排除 node_modules、target、dist、Git 内部资料、运行数据、Cookie、身份码和密钥；包含正式文档、必要研究资料、运行资源及字体许可证。源码包不是发布程序包。
-
-发布前核对安装／便携版本、运行资源、源码包含范围及实际生成文件。已有构建警告与验证证据见[项目状态](../project-status.md)。自动更新、双源与其他平台属于[后续规划](../roadmap/platform-and-updates.md)，没有接入当前版本。
+客户端版本采用 `主版本.次版本.修订版本`，Release 标签为 `v<版本号>`。安装包、便携包和源码包使用同一版本。源码包遵循 `.gitattributes` 归档排除规则，包含正式文档、运行资源及许可资料，不包含运行数据、凭据和构建缓存。
 
 远程主题依赖缓存位于程序旁 `style/remote-cache`，不混入公共素材库；本地素材的发布副本位于 `style/published-assets`。安装升级须保留自定义主题和被旧快照引用的素材版本。构建源码中的内置素材不包含用户运行缓存。
 
@@ -46,10 +42,6 @@
 安装器使用新品牌安装身份，不自动卸载旧版或删除旧安装目录。能够定位旧版安装位置时，复制缺失的主题和素材，不覆盖新版已有文件。旧便携版应在备份后于原目录升级，保留 style 与 portable.flag；不要只移动 exe。
 
 构建执行 `node scripts/package-license-notices.mjs`，合并相同许可原文并保留各组件来源，仓耳授权随原 PDF 分发。原始许可资料继续保存在源码中。便携脚本生成 portable.flag，不预装 data。协议为《BB CoLive 软件与源码使用许可协议》1.1，署名为橙橙子君（Orange）。
-
-## 当前分发核对
-
-安装包与便携包来自同一次 release 构建，文件版本为 1.0.0。便携包解压后实际启动，数据根目录为解压位置下的 data，主题和离线许可随包提供。源码归档排除用户数据、构建缓存、技能资料、本地历史与历史发布物。安装器已完成构建与分发内容核对；本次未执行覆盖安装向导。
 
 ## 软件内更新
 
