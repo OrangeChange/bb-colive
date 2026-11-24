@@ -8,7 +8,7 @@
 
 - [项目状态](project-status.md)：版本、未完成事项、已知问题与待验范围。
 - [当前架构](architecture.md)：模块职责、数据流及共享边界。
-- [产品目标](../PRODUCT.md)、[视觉与文案](../DESIGN.md)、[跨功能交互](../UX-CONTRACT.md)。
+- [产品与界面规范](specifications/README.md)：产品目标、视觉与文案、跨功能交互。
 
 ## 功能文档
 

@@ -7,9 +7,9 @@
 | README.md | 面向使用者的项目介绍、功能预览和上手入口 |
 | docs/user-guide.md | 日常操作、主题、窗口、记录备份与问题反馈 |
 | docs/images/ | README 和现行用户文档引用的界面图片及徽章 |
-| PRODUCT.md | 产品范围与使用场景 |
-| DESIGN.md | 全局视觉、排版与文案 |
-| UX-CONTRACT.md | 跨功能交互约定 |
+| docs/specifications/PRODUCT.md | 产品范围与使用场景 |
+| docs/specifications/DESIGN.md | 全局视觉、排版与文案 |
+| docs/specifications/UX-CONTRACT.md | 跨功能交互约定 |
 | docs/project-status.md | 当前完成范围、待办与已知限制 |
 | docs/architecture.md | 模块职责与数据流 |
 | docs/features/ | 按功能维护当前行为、设置与金额口径 |
@@ -17,13 +17,13 @@
 | docs/research/ | 必要字段依据、协议样本与调查结论 |
 | docs/roadmap/ | 尚未实现的后续方案 |
 
-同一规则只在所属文档维护，其他文档链接引用。公共事件语义由native-event-style-contract.md维护，视觉规则与交互规则分别归DESIGN.md、UX-CONTRACT.md。旧计划不能替代当前代码和契约。
+同一规则只在所属文档维护，其他文档链接引用。公共事件语义由native-event-style-contract.md维护，视觉规则与交互规则分别归 docs/specifications/DESIGN.md、docs/specifications/UX-CONTRACT.md。旧计划不能替代当前代码和契约。
 
 ## 本地历史
 
 历史计划、验收截图、执行报告、旧版本状态和来源替换过程放在docs/local-history，保留原记录及日期，不再按当前版本改写。现行文档不依赖该目录才能阅读或构建。仍有效的要求先纳入所属契约，原件只供本机追溯。
 
-.hallmark、.impeccable、.superpowers是审阅或技能工作资料；AGENTS.md是本机执行规则。它们不属于软件资源，也不进入GitHub或源码包。技能辅助维护的PRODUCT.md、DESIGN.md、UX-CONTRACT.md属于正式项目文档，继续提交。
+.hallmark、.impeccable、.superpowers是审阅或技能工作资料；AGENTS.md是本机执行规则。它们不属于软件资源，也不进入GitHub或源码包。docs/specifications 中的产品、视觉和交互规范属于正式项目文档，继续提交。
 
 ## GitHub与源码包
 

@@ -33,7 +33,7 @@ BB CoLive 将 B 站直播间事件完整采集到统一事件流，再按现场�
 - 四类主题分别应用于现场、副窗口和 OBS；主题外观与场景筛选分开，回看使用独立样式设置。
 - 云端记录可按主播、场次和时间恢复到已有档案；采集服务独立部署，客户端不承担服务端发布。
 - 语音、个性播报、礼物及大航海特效按各自开关工作，不因切换主页面重置队列。
-- 当前进度与边界见[项目状态](docs/project-status.md)，具体行为见[功能文档](docs/README.md#功能文档)，分发见[构建与发布](docs/development/build-and-release.md)。
+- 当前进度与边界见[项目状态](../project-status.md)，具体行为见[功能文档](../README.md#功能文档)，分发见[构建与发布](../development/build-and-release.md)。
 
 ## Brand Commitments
 

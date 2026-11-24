@@ -37,4 +37,6 @@
 
 ## 文档与本地资料
 
+根目录 README 是软件介绍和使用入口，docs/README.md 是开发文档索引。产品、视觉和交互规范集中在 docs/specifications，具体操作维护在 docs/user-guide.md。
+
 公开文档维护当前产品、架构、功能、开发方法和必要协议依据。历史过程统一放在docs/local-history；.hallmark、.impeccable、.superpowers及本机AGENTS.md不进入公开源码。范围见[文档维护](documentation-maintenance.md)。

@@ -63,4 +63,4 @@ B 站接口与 WebSocket
 
 现场 `EventList` 与回看 `ReviewSessionTimeline` 保持独立虚拟滚动机制，共用 `EventRowSlot` 与 ResizeObserver 测量边界。现场顶部锁定阅读使用稳定事件键和视口偏移持续保护前插与高度重测；底部只在尺寸重排期间恢复稳定锚点，普通追加和跟随沿用原路径。`src/events/feedScroll.ts` 读取未裁剪的行测量起点，在最终滚动位置计算后限制范围。回看继续由原分页、阅读和刷新模块管理定位、阅读锁定及持续跟随。
 
-交互契约见 [UX-CONTRACT.md](../UX-CONTRACT.md)，具体行为以[功能文档](README.md#功能文档)为准。架构调整的阶段证据保存在[历史记录](README.md#历史记录)。
+交互契约见 [UX-CONTRACT.md](specifications/UX-CONTRACT.md)，具体行为以[功能文档](README.md#功能文档)为准。架构调整的阶段证据保存在[历史记录](README.md#历史记录)。

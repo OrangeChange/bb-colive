@@ -113,8 +113,8 @@ test("三种恢复默认边界互不覆盖", async () => {
 });
 
 test("设计契约记录个性播报一级面板和声音输出唯一归属", () => {
-  const design = read("DESIGN.md");
-  const ux = read("UX-CONTRACT.md");
+  const design = read("docs/specifications/DESIGN.md");
+  const ux = read("docs/specifications/UX-CONTRACT.md");
   assert.match(design, /个性播报.*语音.*同级|语音.*个性播报.*同级/);
   assert.match(design, /设置.*语音与播报.*声音输出/);
   assert.match(ux, /PersonalBroadcastPanel/);

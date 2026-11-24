@@ -86,7 +86,7 @@ OBS 输出由本机程序提供，使用期间需保持 BB CoLive 运行。详�
 | 导出记录与收益数据 | [数据导出](docs/user-guide.md#备份与导出) |
 | 排查连接、声音或显示问题 | [诊断与日志](docs/user-guide.md#如何反馈问题) |
 
-[完整使用指南](docs/user-guide.md)
+[完整使用指南](docs/user-guide.md) · [开发与维护文档](docs/README.md)
 
 ## 常见问题
 
@@ -135,7 +135,7 @@ npm run tauri -- build --bundles nsis   # 生成 Windows 安装包
 - [调试与验收](docs/development/debugging-and-testing.md)：开发入口、运行约束与验证方法。
 - [构建与发布](docs/development/build-and-release.md)：安装版、便携版与源码包。
 - [当前架构](docs/architecture.md) · [目录职责](docs/development/repository-structure.md)。
-- [视觉规范](DESIGN.md) · [交互约定](UX-CONTRACT.md) · [原生事件样式契约](docs/development/native-event-style-contract.md)。
+- [产品与界面规范](docs/specifications/README.md) · [原生事件样式契约](docs/development/native-event-style-contract.md)。
 
 <h2 align="center">作者与相关项目</h2>
 

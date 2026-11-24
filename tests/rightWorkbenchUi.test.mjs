@@ -16,7 +16,7 @@ const surfaceSource = readFileSync(
   'utf8',
 );
 const uiDesignSource = readFileSync(
-  fileURLToPath(new URL('../DESIGN.md', import.meta.url)),
+  fileURLToPath(new URL('../docs/specifications/DESIGN.md', import.meta.url)),
   'utf8',
 );
 const requirementsSource = readFileSync(
