@@ -1,5 +1,6 @@
 mod data_paths;
 mod data_migration;
+mod updates;
 // Tauri 后端：薄壳，只做窗口管理 + 插件注册
 // 协议层/存储逻辑全在前端 TS
 
@@ -2483,6 +2484,7 @@ fn set_tray_window_state(
 
 #[cfg_attr(mobile, tauri::mobile_entry_point)]
 pub fn run() {
+    if updates::helper::run_if_requested() { return; }
     let _root = match data_paths::initialize() {
         Ok(root) => root,
         Err(error) => {
@@ -2501,6 +2503,7 @@ pub fn run() {
         window.create = false;
     }
     tauri::Builder::default()
+        .manage(updates::commands::UpdateManager::default())
         .manage(obs_server::ObsServerState::default())
         .manage(AudioOutputState::default())
         .manage(TrayWindowState::default())
@@ -2577,6 +2580,11 @@ pub fn run() {
         // JSON 配置：登录 cookie / 窗口布局 / 样式参数
         .plugin(tauri_plugin_store::Builder::default().build())
         .invoke_handler(tauri::generate_handler![
+            updates::commands::restore_software_update,
+            updates::commands::check_software_update,
+            updates::commands::download_software_update,
+            updates::commands::cancel_software_update,
+            updates::commands::install_software_update,
             data_paths::get_app_data_directory,
             data_paths::read_anchor_list,
             data_paths::create_app_window,
