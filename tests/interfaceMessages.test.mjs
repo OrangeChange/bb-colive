@@ -27,3 +27,9 @@ test("翻译清单保留三种目标语言与UTF-8表格编码", () => {
   assert.ok(table.includes('"backend.lib.build_tray_menu"'));
   assert.ok(!table.includes('"eventRow.'));
 });
+
+test("兼容事件展示包不引入操作界面的语言资源", () => {
+  const renderer = fs.readFileSync("public/laplace/product/renderer.js", "utf8");
+  assert.ok(!renderer.includes("src/i18n/zh-CN.json"));
+  assert.ok(!renderer.includes('"common.cancel"'));
+});
