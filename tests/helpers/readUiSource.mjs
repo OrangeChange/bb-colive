@@ -31,7 +31,9 @@ export function readUiSource(file, encoding = "utf8") {
         text = JSON.stringify(text);
       }
       if (ts.isJsxExpression(node.parent) && !parameters && (ts.isJsxAttribute(node.parent.parent) || ts.isJsxElement(node.parent.parent) || ts.isJsxFragment(node.parent.parent))) {
-        edits.push({ start: node.parent.getStart(tree), end: node.parent.end, text: ts.isJsxAttribute(node.parent.parent) ? text : messages[key] });
+        const start = node.parent.getStart(tree);
+        const jsxText = source[start - 1] === " " && messages[key].startsWith(" ") ? messages[key].slice(1) : messages[key];
+        edits.push({ start, end: node.parent.end, text: ts.isJsxAttribute(node.parent.parent) ? text : jsxText });
       } else {
         edits.push({ start: node.getStart(tree), end: node.end, text });
       }

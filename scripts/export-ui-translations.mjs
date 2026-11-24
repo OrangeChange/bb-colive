@@ -14,7 +14,7 @@ function files(directory) {
   });
 }
 
-for (const file of [...files(path.join(root, "src")), ...files(path.join(root, "src-tauri/src"))]) {
+for (const file of [...files(path.join(root, "src")), ...files(path.join(root, "src-tauri/src")), path.join(root, "vite.config.ts")]) {
   if (!/\.(ts|tsx|rs)$/.test(file) || file.includes(`${path.sep}i18n${path.sep}`)) continue;
   const source = fs.readFileSync(file, "utf8");
   const relative = path.relative(root, file).replaceAll("\\", "/");

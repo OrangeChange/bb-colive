@@ -4449,5 +4449,6 @@
   "priceBands.custom": "自定义{number}",
   "liveSummary.blindProfit": " · 盲盒盈亏 {sign}{amount}",
   "liveSummary.total": "总收益 {amount}{blind}",
-  "nativeThemeThumbnail.title": "主题缩略图"
+  "nativeThemeThumbnail.title": "主题缩略图",
+  "obs.pageTitle": "OBS 样式预览"
 }

@@ -2,6 +2,9 @@ import { defineConfig } from "vite";
 import react from "@vitejs/plugin-react";
 import tailwindcss from "@tailwindcss/vite";
 import { execFileSync } from "node:child_process";
+import { readFileSync } from "node:fs";
+
+const uiMessages = JSON.parse(readFileSync("src/i18n/zh-CN.json", "utf8"));
 
 function gitOutput(args: string[]): string | null {
   try {
@@ -32,7 +35,10 @@ const devPort = /^\d+$/.test(requestedPort ?? "") ? Number(requestedPort) : 1420
 
 // https://vite.dev/config/
 export default defineConfig(async () => ({
-  plugins: [react(), tailwindcss()],
+  plugins: [react(), tailwindcss(), {
+    name: "interface-document-titles",
+    transformIndexHtml: (html) => html.replace("%UI_OBS_TITLE%", uiMessages["obs.pageTitle"]),
+  }],
   build: { rollupOptions: { input: { main: "index.html", obs: "obs.html" } } },
   cacheDir: `node_modules/.vite-${devPort}`,
   define: {

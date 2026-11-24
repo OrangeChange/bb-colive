@@ -2044,6 +2044,7 @@ src/components/NativeThemeVisualEditor.tsx:194","用户身份","","","","","仅�
 "nativeThemeVisualEditor.status2","nativeThemeVisualEditor","src/components/NativeThemeVisualEditor.tsx:163","继承主题预设","","","","","仅软件操作界面；保持占位符名称原样，可按语序移动。"
 "nativeThemeVisualEditor.status3","nativeThemeVisualEditor","src/components/NativeThemeVisualEditor.tsx:163","继承共用档位","","","","","仅软件操作界面；保持占位符名称原样，可按语序移动。"
 "nativeThemeVisualEditor.summary","nativeThemeVisualEditor","src/components/NativeThemeVisualEditor.tsx:185"," · {min}元起","","","","min","仅软件操作界面；保持占位符名称原样，可按语序移动。 保留首尾空格。"
+"obs.pageTitle","obs","vite.config.ts:40","OBS 样式预览","","","","","仅软件操作界面；保持占位符名称原样，可按语序移动。"
 "obsHost.attach","obsHost","src/obs/obsHost.ts:205","OBS 配置不存在，请在软件中保存配置后重新复制地址","","","","","仅软件操作界面；保持占位符名称原样，可按语序移动。"
 "obsHost.attach.identity","obsHost","src/obs/obsHost.ts:263","混合流","","","","","仅软件操作界面；保持占位符名称原样，可按语序移动。"
 "obsHost.attach.message","obsHost","src/obs/obsHost.ts:334","无法读取 OBS 配置","","","","","仅软件操作界面；保持占位符名称原样，可按语序移动。"
