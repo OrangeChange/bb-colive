@@ -294,6 +294,7 @@ class Renderer {
 public:
     Renderer() {
         capture=desktopFor(MonitorFromWindow(windowHandle,MONITOR_DEFAULTTONEAREST));
+        std::lock_guard<std::mutex> lock(capture->mutex);
         device=capture->device;context=capture->context;desktop=capture->desktop;desktopView=capture->desktopView;
         output=capture->output;
         auto factory=capture->factory;
@@ -438,7 +439,7 @@ public:
         context->OMSetRenderTargets(0, nullptr, nullptr);
         rememberPresented(position);
 
-        lock.unlock();
+        // DXGI 提交也会访问共享的即时上下文，与其他窗口的绘制串行执行。
         check(swapChain->Present(1, 0), "Present");
 
         frameAvailable = false; firstDraw = false; lastPosition = position; lastDark = surfaceDark; lastLens = surfaceLens; lastRevision = revision;
