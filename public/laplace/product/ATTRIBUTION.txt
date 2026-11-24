@@ -1,0 +1,12 @@
+# LAPLACE compatible renderer
+
+The product renderer is independently implemented in src/compat/laplace/renderer/independent. It uses the project's event projection, host bridge, media resolution and theme editor. It does not execute the captured LAPLACE application or extracted renderer functions.
+
+Runtime libraries:
+- React and ReactDOM: MIT; bundled notices accompany renderer.js.
+- Radix Scroll Area: MIT; src-tauri/licenses/Radix-ScrollArea-LICENSE.txt.
+- Tabler Icons: MIT; src-tauri/licenses/Tabler-LICENSE.txt.
+
+Default CSS, template CSS, fonts, image assets, static price-trend artwork and sample data remain separate from the program implementation. The retained LAPLACE default appearance and artwork originate from the public Stable238 capture dated 2026-10-02. Resource locations and source URLs are recorded in src/compat/laplace/renderer/asset-locations.json and public/laplace/qa-asset-manifest.json. Theme-specific source records accompany the theme catalog.
+
+Build the product renderer with node scripts/build-laplace-product.mjs. The product build does not require captured source references or extraction tools.

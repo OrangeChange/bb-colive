@@ -1,0 +1,14 @@
+import assert from 'node:assert/strict';
+import {createBuiltinNativeTheme} from '../src/themes/nativeBuiltinThemes.ts';
+import {renderManagedNativeCss} from '../src/themes/nativeManagedCss.ts';
+import {nativeVisualPropertiesForPart,resolveNativePartShape,NATIVE_SEMANTIC_PARTS} from '../src/themes/nativeThemeCapabilities.ts';
+const theme=createBuiltinNativeTheme('native-default');
+theme.settings.visualModel.common['guard|all|honorSummary']={fontSize:{source:'custom',value:28}};
+const css=renderManagedNativeCss(theme.settings);
+assert.match(css,/\.honor-summary > :not\(\.honor-highlight\)/);
+assert.doesNotMatch(css,/\[hidden\]/);
+assert.ok(NATIVE_SEMANTIC_PARTS.some(p=>p.id==='honorWatermark'));
+assert.equal(resolveNativePartShape('honorWatermark',{event:'guard',display:theme.settings.display}),'image');
+assert.ok(nativeVisualPropertiesForPart('honorWatermark','image').includes('color'));
+assert.ok(!nativeVisualPropertiesForPart('honor','image').includes('width'));
+console.log('成就说明定位、水印能力、图片尺寸与语义选择器通过');

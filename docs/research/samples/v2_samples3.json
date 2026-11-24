@@ -1,0 +1,2796 @@
+{
+  "ENTRY_EFFECT": [
+    {
+      "cmd": "ENTRY_EFFECT",
+      "data": {
+        "id": 381,
+        "uid": 15237188,
+        "target_id": 480680646,
+        "mock_effect": 0,
+        "face": "https://i2.hdslb.com/bfs/face/b119826045ea4e88c17cafae7ed146f28210caf0.jpg",
+        "privilege_type": 0,
+        "copy_writing": "<%是幼安z%> 来了",
+        "copy_color": "#F7F7F7",
+        "highlight_color": "#FFFFFF",
+        "priority": 1,
+        "basemap_url": "",
+        "show_avatar": 0,
+        "effective_time": 0,
+        "web_basemap_url": "https://i0.hdslb.com/bfs/live/mlive/b436ffaac9ef05903023cc6acbcb59376d10ccd1.png",
+        "web_effective_time": 4,
+        "web_effect_close": 1,
+        "web_close_time": 900,
+        "business": 6,
+        "copy_writing_v2": "<%是幼安z%> 来了",
+        "icon_list": [],
+        "max_delay_time": 7,
+        "trigger_time": 1787497684368474000,
+        "identities": 1,
+        "effect_silent_time": 0,
+        "effective_time_new": 0,
+        "web_dynamic_url_webp": "",
+        "web_dynamic_url_apng": "",
+        "mobile_dynamic_url_webp": "",
+        "wealthy_info": {
+          "uid": 0,
+          "level": 25,
+          "level_total_score": 0,
+          "cur_score": 0,
+          "upgrade_need_score": 0,
+          "status": 0,
+          "dm_icon_key": ""
+        },
+        "new_style": 1,
+        "is_mystery": false,
+        "uinfo": {
+          "uid": 15237188,
+          "base": {
+            "name": "是幼安z",
+            "face": "https://i2.hdslb.com/bfs/face/b119826045ea4e88c17cafae7ed146f28210caf0.jpg",
+            "name_color": 0,
+            "is_mystery": false,
+            "risk_ctrl_info": null,
+            "origin_info": null,
+            "official_info": null,
+            "name_color_str": ""
+          },
+          "medal": null,
+          "wealth": {
+            "level": 25,
+            "dm_icon_key": ""
+          },
+          "title": null,
+          "guard": {
+            "level": 0,
+            "expired_str": ""
+          },
+          "uhead_frame": null,
+          "guard_leader": null,
+          "anon": null,
+          "bubble_box": null,
+          "dm_config": null,
+          "name_color": null
+        },
+        "full_cartoon_id": 1801,
+        "priority_level": 0,
+        "wealth_style_info": {
+          "url": "https://i0.hdslb.com/bfs/live/7e3c647c9b6abea76703f43fe89f0dd729a63954.png"
+        }
+      }
+    },
+    {
+      "cmd": "ENTRY_EFFECT",
+      "data": {
+        "id": 4,
+        "uid": 288745332,
+        "target_id": 480680646,
+        "mock_effect": 0,
+        "face": "https://i0.hdslb.com/bfs/face/283e23bae1b4a1b6a779592926b7c6d470974d5d.jpg",
+        "privilege_type": 3,
+        "copy_writing": "<%二磷_PP%> 来了",
+        "copy_color": "#ffffff",
+        "highlight_color": "#E6FF00",
+        "priority": 70,
+        "basemap_url": "",
+        "show_avatar": 0,
+        "effective_time": 0,
+        "web_basemap_url": "https://i0.hdslb.com/bfs/live/mlive/75e5cc5dc03c3ea8f2fd40d6833f9f11a8d26b88.png",
+        "web_effective_time": 2,
+        "web_effect_close": 0,
+        "web_close_time": 0,
+        "business": 1,
+        "copy_writing_v2": "<%二磷_PP%> 来了",
+        "icon_list": [],
+        "max_delay_time": 7,
+        "trigger_time": 1787497687757248800,
+        "identities": 6,
+        "effect_silent_time": 0,
+        "effective_time_new": 0,
+        "web_dynamic_url_webp": "",
+        "web_dynamic_url_apng": "",
+        "mobile_dynamic_url_webp": "",
+        "wealthy_info": null,
+        "new_style": 0,
+        "is_mystery": false,
+        "uinfo": {
+          "uid": 288745332,
+          "base": {
+            "name": "二磷_PP",
+            "face": "https://i0.hdslb.com/bfs/face/283e23bae1b4a1b6a779592926b7c6d470974d5d.jpg",
+            "name_color": 0,
+            "is_mystery": false,
+            "risk_ctrl_info": null,
+            "origin_info": null,
+            "official_info": null,
+            "name_color_str": "#00D1F1"
+          },
+          "medal": {
+            "name": "酷萨",
+            "level": 40,
+            "color_start": 16736523,
+            "color_end": 16765060,
+            "color_border": 6809855,
+            "color": 16736523,
+            "id": 233077,
+            "typ": 0,
+            "is_light": 1,
+            "ruid": 480680646,
+            "guard_level": 3,
+            "score": 325557,
+            "guard_icon": "https://i0.hdslb.com/bfs/live/fd26e0053f3d24672ffdabcb1f6d2545e26b1e33.png",
+            "honor_icon": "",
+            "v2_medal_color_start": "#4C7DFF99",
+            "v2_medal_color_end": "#4C7DFF99",
+            "v2_medal_color_border": "#58A1F8",
+            "v2_medal_color_text": "#FFFFFF",
+            "v2_medal_color_level": "#4C7DFFE6",
+            "user_receive_count": 0
+          },
+          "wealth": {
+            "level": 32,
+            "dm_icon_key": ""
+          },
+          "title": null,
+          "guard": {
+            "level": 3,
+            "expired_str": "2026-10-07 23:59:59"
+          },
+          "uhead_frame": null,
+          "guard_leader": null,
+          "anon": null,
+          "bubble_box": null,
+          "dm_config": null,
+          "name_color": null
+        },
+        "full_cartoon_id": 1805,
+        "priority_level": 0,
+        "wealth_style_info": null
+      }
+    },
+    {
+      "cmd": "ENTRY_EFFECT",
+      "data": {
+        "id": 382,
+        "uid": 284122210,
+        "target_id": 480680646,
+        "mock_effect": 0,
+        "face": "https://i1.hdslb.com/bfs/face/fe78fc2c3cdb8b22c0ddec77655f6b382becf1de.jpg",
+        "privilege_type": 0,
+        "copy_writing": "<%秋本澪akim...%> 来了",
+        "copy_color": "#F7F7F7",
+        "highlight_color": "#FFFFFF",
+        "priority": 1,
+        "basemap_url": "",
+        "show_avatar": 0,
+        "effective_time": 0,
+        "web_basemap_url": "https://i0.hdslb.com/bfs/live/mlive/5b14d1fc398f891c01f18e54a3384e75914d9333.png",
+        "web_effective_time": 4,
+        "web_effect_close": 1,
+        "web_close_time": 900,
+        "business": 6,
+        "copy_writing_v2": "<%秋本澪akimot…%> 来了",
+        "icon_list": [],
+        "max_delay_time": 7,
+        "trigger_time": 1787497688604676900,
+        "identities": 1,
+        "effect_silent_time": 0,
+        "effective_time_new": 0,
+        "web_dynamic_url_webp": "",
+        "web_dynamic_url_apng": "",
+        "mobile_dynamic_url_webp": "",
+        "wealthy_info": {
+          "uid": 0,
+          "level": 30,
+          "level_total_score": 0,
+          "cur_score": 0,
+          "upgrade_need_score": 0,
+          "status": 0,
+          "dm_icon_key": ""
+        },
+        "new_style": 1,
+        "is_mystery": false,
+        "uinfo": {
+          "uid": 284122210,
+          "base": {
+            "name": "秋本澪akimoto_",
+            "face": "https://i1.hdslb.com/bfs/face/fe78fc2c3cdb8b22c0ddec77655f6b382becf1de.jpg",
+            "name_color": 0,
+            "is_mystery": false,
+            "risk_ctrl_info": null,
+            "origin_info": null,
+            "official_info": null,
+            "name_color_str": ""
+          },
+          "medal": {
+            "name": "酷萨",
+            "level": 36,
+            "color_start": 7996451,
+            "color_end": 15304379,
+            "color_border": 7996451,
+            "color": 7996451,
+            "id": 233077,
+            "typ": 0,
+            "is_light": 1,
+            "ruid": 480680646,
+            "guard_level": 0,
+            "score": 153028,
+            "guard_icon": "",
+            "honor_icon": "",
+            "v2_medal_color_start": "#4C7DFF99",
+            "v2_medal_color_end": "#4C7DFF99",
+            "v2_medal_color_border": "#4C7DFF99",
+            "v2_medal_color_text": "#FFFFFF",
+            "v2_medal_color_level": "#4C7DFFE6",
+            "user_receive_count": 0
+          },
+          "wealth": {
+            "level": 30,
+            "dm_icon_key": ""
+          },
+          "title": null,
+          "guard": {
+            "level": 0,
+            "expired_str": ""
+          },
+          "uhead_frame": null,
+          "guard_leader": null,
+          "anon": null,
+          "bubble_box": null,
+          "dm_config": null,
+          "name_color": null
+        },
+        "full_cartoon_id": 1800,
+        "priority_level": 0,
+        "wealth_style_info": {
+          "url": "https://i0.hdslb.com/bfs/live/a33f6d3e7c49f1c48cd04711d41d37423edc64b1.png"
+        }
+      }
+    },
+    {
+      "cmd": "ENTRY_EFFECT",
+      "data": {
+        "id": 4,
+        "uid": 637797565,
+        "target_id": 480680646,
+        "mock_effect": 0,
+        "face": "https://i1.hdslb.com/bfs/face/7208a8cc9d219ac9b24538bc8457ee65f2c21c51.jpg",
+        "privilege_type": 3,
+        "copy_writing": "<%半规规规规_%> 来了",
+        "copy_color": "#ffffff",
+        "highlight_color": "#E6FF00",
+        "priority": 70,
+        "basemap_url": "",
+        "show_avatar": 0,
+        "effective_time": 0,
+        "web_basemap_url": "https://i0.hdslb.com/bfs/live/mlive/75e5cc5dc03c3ea8f2fd40d6833f9f11a8d26b88.png",
+        "web_effective_time": 2,
+        "web_effect_close": 0,
+        "web_close_time": 0,
+        "business": 1,
+        "copy_writing_v2": "<%半规规规规_%> 来了",
+        "icon_list": [],
+        "max_delay_time": 7,
+        "trigger_time": 1787497688769590000,
+        "identities": 6,
+        "effect_silent_time": 0,
+        "effective_time_new": 0,
+        "web_dynamic_url_webp": "",
+        "web_dynamic_url_apng": "",
+        "mobile_dynamic_url_webp": "",
+        "wealthy_info": null,
+        "new_style": 0,
+        "is_mystery": false,
+        "uinfo": {
+          "uid": 637797565,
+          "base": {
+            "name": "半规规规规_",
+            "face": "https://i1.hdslb.com/bfs/face/7208a8cc9d219ac9b24538bc8457ee65f2c21c51.jpg",
+            "name_color": 0,
+            "is_mystery": false,
+            "risk_ctrl_info": null,
+            "origin_info": null,
+            "official_info": null,
+            "name_color_str": "#00D1F1"
+          },
+          "medal": {
+            "name": "酷萨",
+            "level": 34,
+            "color_start": 7996451,
+            "color_end": 15304379,
+            "color_border": 6809855,
+            "color": 7996451,
+            "id": 233077,
+            "typ": 0,
+            "is_light": 1,
+            "ruid": 480680646,
+            "guard_level": 3,
+            "score": 82262,
+            "guard_icon": "https://i0.hdslb.com/bfs/live/fd26e0053f3d24672ffdabcb1f6d2545e26b1e33.png",
+            "honor_icon": "",
+            "v2_medal_color_start": "#4C7DFF99",
+            "v2_medal_color_end": "#4C7DFF99",
+            "v2_medal_color_border": "#58A1F8",
+            "v2_medal_color_text": "#FFFFFF",
+            "v2_medal_color_level": "#4C7DFFE6",
+            "user_receive_count": 0
+          },
+          "wealth": {
+            "level": 27,
+            "dm_icon_key": ""
+          },
+          "title": null,
+          "guard": {
+            "level": 3,
+            "expired_str": "2026-09-21 23:59:59"
+          },
+          "uhead_frame": null,
+          "guard_leader": null,
+          "anon": null,
+          "bubble_box": null,
+          "dm_config": null,
+          "name_color": null
+        },
+        "full_cartoon_id": 1805,
+        "priority_level": 0,
+        "wealth_style_info": null
+      }
+    },
+    {
+      "cmd": "ENTRY_EFFECT",
+      "data": {
+        "id": 380,
+        "uid": 1650847255,
+        "target_id": 480680646,
+        "mock_effect": 0,
+        "face": "https://i1.hdslb.com/bfs/face/c0bccce399f7206fbbbf5b3835ea27d3ff4d372b.jpg",
+        "privilege_type": 0,
+        "copy_writing": "<%不要用板蓝根冲...%> 来了",
+        "copy_color": "#F7F7F7",
+        "highlight_color": "#FFFFFF",
+        "priority": 1,
+        "basemap_url": "",
+        "show_avatar": 0,
+        "effective_time": 0,
+        "web_basemap_url": "https://i0.hdslb.com/bfs/live/mlive/19e7564ed9d466b02f341abfa979c6e38c2ffffb.png",
+        "web_effective_time": 4,
+        "web_effect_close": 1,
+        "web_close_time": 900,
+        "business": 6,
+        "copy_writing_v2": "<%不要用板蓝根…%> 来了",
+        "icon_list": [],
+        "max_delay_time": 7,
+        "trigger_time": 1787497690311890400,
+        "identities": 1,
+        "effect_silent_time": 0,
+        "effective_time_new": 0,
+        "web_dynamic_url_webp": "",
+        "web_dynamic_url_apng": "",
+        "mobile_dynamic_url_webp": "",
+        "wealthy_info": {
+          "uid": 0,
+          "level": 16,
+          "level_total_score": 0,
+          "cur_score": 0,
+          "upgrade_need_score": 0,
+          "status": 0,
+          "dm_icon_key": ""
+        },
+        "new_style": 1,
+        "is_mystery": false,
+        "uinfo": {
+          "uid": 1650847255,
+          "base": {
+            "name": "不要用板蓝根冲凉粉",
+            "face": "https://i1.hdslb.com/bfs/face/c0bccce399f7206fbbbf5b3835ea27d3ff4d372b.jpg",
+            "name_color": 0,
+            "is_mystery": false,
+            "risk_ctrl_info": null,
+            "origin_info": null,
+            "official_info": null,
+            "name_color_str": ""
+          },
+          "medal": {
+            "name": "酷萨",
+            "level": 3,
+            "color_start": 6067854,
+            "color_end": 6067854,
+            "color_border": 6067854,
+            "color": 6067854,
+            "id": 233077,
+            "typ": 0,
+            "is_light": 1,
+            "ruid": 480680646,
+            "guard_level": 0,
+            "score": 13,
+            "guard_icon": "",
+            "honor_icon": "",
+            "v2_medal_color_start": "#5762A799",
+            "v2_medal_color_end": "#5762A799",
+            "v2_medal_color_border": "#5762A799",
+            "v2_medal_color_text": "#FFFFFF",
+            "v2_medal_color_level": "#5762A7E6",
+            "user_receive_count": 0
+          },
+          "wealth": {
+            "level": 16,
+            "dm_icon_key": ""
+          },
+          "title": null,
+          "guard": {
+            "level": 0,
+            "expired_str": ""
+          },
+          "uhead_frame": {
+            "id": 1326,
+            "frame_img": "https://i0.hdslb.com/bfs/live/ec8d25a7d9db11e9aa266ac39e25055360ab7dfd.png",
+            "frame_dynamic_img": ""
+          },
+          "guard_leader": null,
+          "anon": null,
+          "bubble_box": null,
+          "dm_config": null,
+          "name_color": null
+        },
+        "full_cartoon_id": 1802,
+        "priority_level": 0,
+        "wealth_style_info": {
+          "url": "https://i0.hdslb.com/bfs/live/ea32c9db0a5402580541ec974f336ad55b473869.png"
+        }
+      }
+    },
+    {
+      "cmd": "ENTRY_EFFECT",
+      "data": {
+        "id": 381,
+        "uid": 384468490,
+        "target_id": 480680646,
+        "mock_effect": 0,
+        "face": "https://i1.hdslb.com/bfs/face/d4871aab861524a7645f7e184f9060bd574b1cf7.jpg",
+        "privilege_type": 0,
+        "copy_writing": "<%咪咪咪小米糕%> 来了",
+        "copy_color": "#F7F7F7",
+        "highlight_color": "#FFFFFF",
+        "priority": 1,
+        "basemap_url": "",
+        "show_avatar": 0,
+        "effective_time": 0,
+        "web_basemap_url": "https://i0.hdslb.com/bfs/live/mlive/b436ffaac9ef05903023cc6acbcb59376d10ccd1.png",
+        "web_effective_time": 4,
+        "web_effect_close": 1,
+        "web_close_time": 900,
+        "business": 6,
+        "copy_writing_v2": "<%咪咪咪小米糕%> 来了",
+        "icon_list": [],
+        "max_delay_time": 7,
+        "trigger_time": 1787497748489969400,
+        "identities": 1,
+        "effect_silent_time": 0,
+        "effective_time_new": 0,
+        "web_dynamic_url_webp": "",
+        "web_dynamic_url_apng": "",
+        "mobile_dynamic_url_webp": "",
+        "wealthy_info": {
+          "uid": 0,
+          "level": 23,
+          "level_total_score": 0,
+          "cur_score": 0,
+          "upgrade_need_score": 0,
+          "status": 0,
+          "dm_icon_key": ""
+        },
+        "new_style": 1,
+        "is_mystery": false,
+        "uinfo": {
+          "uid": 384468490,
+          "base": {
+            "name": "咪咪咪小米糕",
+            "face": "https://i1.hdslb.com/bfs/face/d4871aab861524a7645f7e184f9060bd574b1cf7.jpg",
+            "name_color": 0,
+            "is_mystery": false,
+            "risk_ctrl_info": null,
+            "origin_info": null,
+            "official_info": null,
+            "name_color_str": ""
+          },
+          "medal": {
+            "name": "酷萨",
+            "level": 18,
+            "color_start": 13081892,
+            "color_end": 13081892,
+            "color_border": 13081892,
+            "color": 13081892,
+            "id": 233077,
+            "typ": 0,
+            "is_light": 1,
+            "ruid": 480680646,
+            "guard_level": 0,
+            "score": 1056,
+            "guard_icon": "",
+            "honor_icon": "",
+            "v2_medal_color_start": "#C770A499",
+            "v2_medal_color_end": "#C770A499",
+            "v2_medal_color_border": "#C770A499",
+            "v2_medal_color_text": "#FFFFFF",
+            "v2_medal_color_level": "#C770A4E6",
+            "user_receive_count": 0
+          },
+          "wealth": {
+            "level": 23,
+            "dm_icon_key": ""
+          },
+          "title": null,
+          "guard": {
+            "level": 0,
+            "expired_str": ""
+          },
+          "uhead_frame": null,
+          "guard_leader": null,
+          "anon": null,
+          "bubble_box": null,
+          "dm_config": null,
+          "name_color": null
+        },
+        "full_cartoon_id": 1801,
+        "priority_level": 0,
+        "wealth_style_info": {
+          "url": "https://i0.hdslb.com/bfs/live/caeb95e67eb8f447d55e526a67fb065eb01a9fb7.png"
+        }
+      }
+    },
+    {
+      "cmd": "ENTRY_EFFECT",
+      "data": {
+        "id": 383,
+        "uid": 420996696,
+        "target_id": 480680646,
+        "mock_effect": 0,
+        "face": "https://i0.hdslb.com/bfs/face/6e6867684df0aaa832af872a25f26ec963a60897.webp",
+        "privilege_type": 0,
+        "copy_writing": "<%_小娜喵_%> 来了",
+        "copy_color": "#F7F7F7",
+        "highlight_color": "#FFFFFF",
+        "priority": 1,
+        "basemap_url": "",
+        "show_avatar": 0,
+        "effective_time": 0,
+        "web_basemap_url": "https://i0.hdslb.com/bfs/live/mlive/8e6ba9f309cdc77fd0b941760fe92263a4243f42.png",
+        "web_effective_time": 4,
+        "web_effect_close": 1,
+        "web_close_time": 900,
+        "business": 6,
+        "copy_writing_v2": "<%_小娜喵_%> 来了",
+        "icon_list": [],
+        "max_delay_time": 7,
+        "trigger_time": 1787497752488331500,
+        "identities": 1,
+        "effect_silent_time": 0,
+        "effective_time_new": 0,
+        "web_dynamic_url_webp": "",
+        "web_dynamic_url_apng": "",
+        "mobile_dynamic_url_webp": "",
+        "wealthy_info": {
+          "uid": 0,
+          "level": 48,
+          "level_total_score": 0,
+          "cur_score": 0,
+          "upgrade_need_score": 0,
+          "status": 0,
+          "dm_icon_key": ""
+        },
+        "new_style": 1,
+        "is_mystery": false,
+        "uinfo": {
+          "uid": 420996696,
+          "base": {
+            "name": "_小娜喵_",
+            "face": "https://i0.hdslb.com/bfs/face/6e6867684df0aaa832af872a25f26ec963a60897.webp",
+            "name_color": 0,
+            "is_mystery": false,
+            "risk_ctrl_info": null,
+            "origin_info": null,
+            "official_info": null,
+            "name_color_str": ""
+          },
+          "medal": null,
+          "wealth": {
+            "level": 48,
+            "dm_icon_key": "ChronosWealth_4.png"
+          },
+          "title": null,
+          "guard": {
+            "level": 0,
+            "expired_str": ""
+          },
+          "uhead_frame": null,
+          "guard_leader": null,
+          "anon": null,
+          "bubble_box": null,
+          "dm_config": null,
+          "name_color": null
+        },
+        "full_cartoon_id": 1799,
+        "priority_level": 0,
+        "wealth_style_info": {
+          "url": "https://i0.hdslb.com/bfs/live/17617c5b54b3f9de31ba0737f87266b201a3ad51.png"
+        }
+      }
+    },
+    {
+      "cmd": "ENTRY_EFFECT",
+      "data": {
+        "id": 381,
+        "uid": 1020329884,
+        "target_id": 480680646,
+        "mock_effect": 0,
+        "face": "https://i1.hdslb.com/bfs/face/b7378a0b19ba107618baba26155e50fc0ea5ffc7.jpg",
+        "privilege_type": 0,
+        "copy_writing": "<%张小波zzz%> 来了",
+        "copy_color": "#F7F7F7",
+        "highlight_color": "#FFFFFF",
+        "priority": 1,
+        "basemap_url": "",
+        "show_avatar": 0,
+        "effective_time": 0,
+        "web_basemap_url": "https://i0.hdslb.com/bfs/live/mlive/b436ffaac9ef05903023cc6acbcb59376d10ccd1.png",
+        "web_effective_time": 4,
+        "web_effect_close": 1,
+        "web_close_time": 900,
+        "business": 6,
+        "copy_writing_v2": "<%张小波zzz%> 来了",
+        "icon_list": [],
+        "max_delay_time": 7,
+        "trigger_time": 1787497755053913600,
+        "identities": 1,
+        "effect_silent_time": 0,
+        "effective_time_new": 0,
+        "web_dynamic_url_webp": "",
+        "web_dynamic_url_apng": "",
+        "mobile_dynamic_url_webp": "",
+        "wealthy_info": {
+          "uid": 0,
+          "level": 24,
+          "level_total_score": 0,
+          "cur_score": 0,
+          "upgrade_need_score": 0,
+          "status": 0,
+          "dm_icon_key": ""
+        },
+        "new_style": 1,
+        "is_mystery": false,
+        "uinfo": {
+          "uid": 1020329884,
+          "base": {
+            "name": "张小波zzz",
+            "face": "https://i1.hdslb.com/bfs/face/b7378a0b19ba107618baba26155e50fc0ea5ffc7.jpg",
+            "name_color": 0,
+            "is_mystery": false,
+            "risk_ctrl_info": null,
+            "origin_info": null,
+            "official_info": null,
+            "name_color_str": ""
+          },
+          "medal": {
+            "name": "酷萨",
+            "level": 33,
+            "color_start": 7996451,
+            "color_end": 15304379,
+            "color_border": 7996451,
+            "color": 7996451,
+            "id": 233077,
+            "typ": 0,
+            "is_light": 1,
+            "ruid": 480680646,
+            "guard_level": 0,
+            "score": 58324,
+            "guard_icon": "",
+            "honor_icon": "",
+            "v2_medal_color_start": "#4C7DFF99",
+            "v2_medal_color_end": "#4C7DFF99",
+            "v2_medal_color_border": "#4C7DFF99",
+            "v2_medal_color_text": "#FFFFFF",
+            "v2_medal_color_level": "#4C7DFFE6",
+            "user_receive_count": 0
+          },
+          "wealth": {
+            "level": 24,
+            "dm_icon_key": ""
+          },
+          "title": null,
+          "guard": {
+            "level": 0,
+            "expired_str": ""
+          },
+          "uhead_frame": null,
+          "guard_leader": null,
+          "anon": null,
+          "bubble_box": null,
+          "dm_config": null,
+          "name_color": null
+        },
+        "full_cartoon_id": 1801,
+        "priority_level": 0,
+        "wealth_style_info": {
+          "url": "https://i0.hdslb.com/bfs/live/d3162320a7b844113343faae9eedbe840860f77f.png"
+        }
+      }
+    }
+  ],
+  "INTERACT_WORD_V2": [
+    {
+      "cmd": "INTERACT_WORD_V2",
+      "data": {
+        "dmscore": 10,
+        "pb": "CPPTteMBEg/noo7noo7njrvnkoPkvZMiAgMBKAEwtqOsCjjTmazUBkC/x6SBgzRKKwjGtZrlARAZGgbphbfokKggzKoYKMyqGDDxkaIDOMyqGEABYLajrApoujRiAHi85/Wgv/Wd5xiaAQCyAdABCPPTteMBEl0KD+eijueijueOu+eSg+S9kxJKaHR0cHM6Ly9pMi5oZHNsYi5jb20vYmZzL2ZhY2UvZmQ5NmIzZmIyY2UzZWJjOTk3YWIyMmEyMjQyYWQ4NTM5YjlkNDQyYi5qcGcaYwoG6YW36JCoEBkYzKoYIPGRogMozKoYMMyqGDj1nA5IAVDGtZrlAWC6NHoJIzNGQjRGNjk5ggEJIzNGQjRGNjk5igEJIzNGQjRGNjk5kgEHI0ZGRkZGRpoBCSMzRkI0RjZFNiICCAUyALoBAMIBAA=="
+      }
+    },
+    {
+      "cmd": "INTERACT_WORD_V2",
+      "data": {
+        "dmscore": 20,
+        "pb": "CPH1iLsHEgxkZXJycnJycnJycnkiAgMBKAEwtqOsCjjTmazUBkD1gdv+gjRKLgjGtZrlARATGgbphbfokKggpLqeBiikup4GMKS6ngY4pLqeBkABYLajrApoowpiAHjqzOOEvvWd5xiaAQCyAdABCPH1iLsHEloKDGRlcnJycnJycnJyeRJKaHR0cHM6Ly9pMC5oZHNsYi5jb20vYmZzL2ZhY2UvMzk1NTBkMmE1NWRlNTkxNTY3M2ZmNWFjY2JlYmM3Y2JiZGE5ZWUxNS5qcGcaZgoG6YW36JCoEBMYpLqeBiCkup4GKKS6ngYwpLqeBjj1nA5IAVDGtZrlAWCjCnoJI0M3NzBBNDk5ggEJI0M3NzBBNDk5igEJI0M3NzBBNDk5kgEHI0ZGRkZGRpoBCSNDNzcwQTRFNiICCA8yALoBAMIBAA=="
+      }
+    },
+    {
+      "cmd": "INTERACT_WORD_V2",
+      "data": {
+        "dmscore": 10,
+        "pb": "CNKv7+ABEhXlvoDmrbvlvoDmrbvnlLvlvpfkuoYiAgMBKAEwtqOsCjjUmazUBkDIgrz/gjRKKwjGtZrlARAWGgbphbfokKggy6hpKMuoaTCSu8oCOMuoaUABYLajrApo1xZiAHjBvaucw/Wd5xiaAQCyAdYBCNKv7+ABEmMKFeW+gOatu+W+gOatu+eUu+W+l+S6hhJKaHR0cHM6Ly9pMC5oZHNsYi5jb20vYmZzL2ZhY2UvZjY4ZTQyMzAxZDRmZGE0ZGI0NDc0Nzc1NTA5OWZkODk1ZGU2OGQwZi5qcGcaYwoG6YW36JCoEBYYy6hpIJK7ygIoy6hpMMuoaTj1nA5IAVDGtZrlAWDXFnoJIzNGQjRGNjk5ggEJIzNGQjRGNjk5igEJIzNGQjRGNjk5kgEHI0ZGRkZGRpoBCSMzRkI0RjZFNiICCAgyALoBAMIBAA=="
+      }
+    },
+    {
+      "cmd": "INTERACT_WORD_V2",
+      "data": {
+        "dmscore": 3,
+        "pb": "COTc7qYHEhBiaWxpXzQ5Mzk5MTYzNzEwIgEBKAEwtqOsCjjUmazUBkCJvaj5gjRiAHjOydLuwvWd5xiaAQCyAVEI5NzupgcSQwoQYmlsaV80OTM5OTE2MzcxMBIvaHR0cHM6Ly9pMC5oZHNsYi5jb20vYmZzL2ZhY2UvbWVtYmVyL25vZmFjZS5qcGciAggBMgC6AQDCAQA="
+      }
+    },
+    {
+      "cmd": "INTERACT_WORD_V2",
+      "data": {
+        "dmscore": 12,
+        "pb": "CJK6rYQBEg/nmpPmnIjlvZPnqbrpuKMiAQEoATC2o6wKONWZrNQGQK7AqPmCNGIAeNDbn7vE9Z3nGJoBALIBawiSuq2EARJdCg/nmpPmnIjlvZPnqbrpuKMSSmh0dHBzOi8vaTIuaGRzbGIuY29tL2Jmcy9mYWNlL2Q4ZTI3MTBjMWUyM2Y0OGMwZDllYjU4Y2M0OWY3OWFhNGY4NmVmMTUuanBnIgIIIDIAugEAwgEA"
+      }
+    },
+    {
+      "cmd": "INTERACT_WORD_V2",
+      "data": {
+        "dmscore": 3,
+        "pb": "CIjc0w4SCeWuieS6keW8iyIBASgBMLajrAo4nJqs1AZAl+6s+YI0YgB4s86p3M73necYmgEAsgFhCIjc0w4SVgoJ5a6J5LqR5byLEklodHRwOi8vaTAuaGRzbGIuY29tL2Jmcy9mYWNlL2E3NGQyZmNhOWFjYzAwNTE2ZWUwZjdlNzVhMjNmYWEyMDFiNDVlZTguanBnIgAyALoBeQpKaHR0cHM6Ly9pMC5oZHNsYi5jb20vYmZzL2xpdmUvYjlkZTVkNTEwMTI1YzZmMTRjZDY4MzkxZDVhNDg3OGZlMTYzNTZiMy5wbmcSKVRB5bi455yL5L2g55qE55u05pKt77yM5L2G6L+Y5rKh5pyJ5YWz5rOoGAHCAQA="
+      }
+    },
+    {
+      "cmd": "INTERACT_WORD_V2",
+      "data": {
+        "dmscore": 20,
+        "pb": "CJ+RkI4HEgzpk7bni7wwMDPlj7ciAgMBKAEwtqOsCjidmqzUBkDY0sH/gjRKKwjGtZrlARAWGgbphbfokKggy6hpKMuoaTCSu8oCOMuoaUABYLajrApo6hZiAHjQ95vt0/ed5xiaAQCyAc0BCJ+RkI4HEloKDOmTtueLvDAwM+WPtxJKaHR0cHM6Ly9pMi5oZHNsYi5jb20vYmZzL2ZhY2UvMzhiZTliZWJlNzcxZGVhNjNhM2Q4NGE4MTY1NDRiN2U0MTYxYmRiOC5qcGcaYwoG6YW36JCoEBYYy6hpIJK7ygIoy6hpMMuoaTj1nA5IAVDGtZrlAWDqFnoJIzNGQjRGNjk5ggEJIzNGQjRGNjk5igEJIzNGQjRGNjk5kgEHI0ZGRkZGRpoBCSMzRkI0RjZFNiICCAsyALoBAMIBAA=="
+      }
+    },
+    {
+      "cmd": "INTERACT_WORD_V2",
+      "data": {
+        "dmscore": 3,
+        "pb": "CPK2jKkFEg/oi43oi43oi43oi43ojKsiAQEoATC2o6wKOJ2arNQGQNrzrPmCNGIAeP/+kuXQ953nGJoBALIBawjytoypBRJdCg/oi43oi43oi43oi43ojKsSSmh0dHBzOi8vaTAuaGRzbGIuY29tL2Jmcy9mYWNlLzFmMDQ0YjdkMjQ4NmE4N2NlZjk3NTFjZDI1NTA4ZmQzMGIzZmY5MWQuanBnIgIIBDIAugF6CkpodHRwczovL2kwLmhkc2xiLmNvbS9iZnMvbGl2ZS9iYjg4NzM0NTU4YzYzODNhNGNmYjVmYTE2Yzk3NDlkNTI5MGQ5NWU4LnBuZxIq5pu+57uP5rS76LeD6L+H77yM6L+R5pyf5LiO5L2g5LqS5Yqo6L6D5bCRGATCAQA="
+      }
+    }
+  ],
+  "DANMU_MSG": [
+    {
+      "cmd": "DANMU_MSG",
+      "dm_v2": "",
+      "info": [
+        [
+          0,
+          4,
+          25,
+          14893055,
+          1787497684667,
+          1787488342,
+          0,
+          "06caae57",
+          0,
+          0,
+          0,
+          "",
+          0,
+          "{}",
+          "{}",
+          {
+            "extra": "{\"send_from_me\":false,\"master_player_hidden\":false,\"mode\":0,\"color\":14893055,\"dm_type\":0,\"font_size\":25,\"player_mode\":4,\"show_player_type\":0,\"content\":\"哈哈哈哈哈\",\"user_hash\":\"113946199\",\"emoticon_unique\":\"\",\"bulge_display\":0,\"recommend_score\":0,\"dm_score\":0,\"chronos_force_display\":0,\"main_state_dm_color\":\"\",\"objective_state_dm_color\":\"\",\"direction\":0,\"pk_direction\":0,\"quartet_direction\":0,\"anniversary_crowd\":0,\"yeah_space_type\":\"\",\"yeah_space_url\":\"\",\"jump_to_url\":\"\",\"space_type\":\"\",\"space_url\":\"\",\"animation\":{},\"emots\":null,\"is_audited\":false,\"id_str\":\"40d6879d88a240d91a1d014fe76a8b0c4162\",\"icon\":null,\"show_reply\":true,\"reply_mid\":0,\"reply_uname\":\"\",\"reply_uname_color\":\"\",\"reply_is_mystery\":false,\"reply_type_enum\":0,\"hit_combo\":0,\"esports_jump_url\":\"\",\"is_mirror\":false,\"is_collaboration_member\":false,\"card\":{\"card_type\":0,\"oid_str\":\"\",\"oid_str_1\":\"\",\"origin_oid_str\":\"\",\"share_id\":\"\",\"share_origin\":\"\",\"from\":\"\",\"card_content\":null},\"voice\":null,\"background_type\":0}",
+            "mode": 0,
+            "show_player_type": 0,
+            "user": {
+              "anon": null,
+              "base": {
+                "face": "https://i0.hdslb.com/bfs/face/5e798493d59103d4b8652eb810e48df18e3ef92e.jpg",
+                "is_mystery": false,
+                "name": "橙子qin",
+                "name_color": 0,
+                "name_color_str": "#00D1F1",
+                "official_info": {
+                  "desc": "",
+                  "role": 0,
+                  "title": "",
+                  "type": -1
+                },
+                "origin_info": {
+                  "face": "https://i0.hdslb.com/bfs/face/5e798493d59103d4b8652eb810e48df18e3ef92e.jpg",
+                  "name": "橙子qin"
+                },
+                "risk_ctrl_info": null
+              },
+              "bubble_box": null,
+              "dm_config": {
+                "color": 14893055,
+                "length": 40,
+                "mode": 4
+              },
+              "guard": null,
+              "guard_leader": null,
+              "medal": {
+                "color": 2951253,
+                "color_border": 6809855,
+                "color_end": 10329087,
+                "color_start": 2951253,
+                "guard_icon": "https://i0.hdslb.com/bfs/live/fd26e0053f3d24672ffdabcb1f6d2545e26b1e33.png",
+                "guard_level": 3,
+                "honor_icon": "",
+                "id": 233077,
+                "is_light": 1,
+                "level": 31,
+                "name": "酷萨",
+                "ruid": 480680646,
+                "score": 34200,
+                "typ": 0,
+                "user_receive_count": 0,
+                "v2_medal_color_border": "#58A1F8",
+                "v2_medal_color_end": "#4C7DFF99",
+                "v2_medal_color_level": "#4C7DFFE6",
+                "v2_medal_color_start": "#4C7DFF99",
+                "v2_medal_color_text": "#FFFFFF"
+              },
+              "name_color": null,
+              "title": {
+                "old_title_css_id": "",
+                "title_css_id": ""
+              },
+              "uhead_frame": null,
+              "uid": 3546668890851669,
+              "wealth": null
+            }
+          },
+          {
+            "activity_identity": "",
+            "activity_source": 0,
+            "not_show": 0
+          },
+          0
+        ],
+        "哈哈哈哈哈",
+        [
+          3546668890851669,
+          "橙子qin",
+          0,
+          0,
+          0,
+          10000,
+          1,
+          "#00D1F1"
+        ],
+        [
+          31,
+          "酷萨",
+          "阿萨Aza",
+          21696950,
+          2951253,
+          "",
+          0,
+          6809855,
+          2951253,
+          10329087,
+          3,
+          1,
+          480680646
+        ],
+        [
+          19,
+          0,
+          6406234,
+          ">50000",
+          0
+        ],
+        [
+          "",
+          ""
+        ],
+        0,
+        3,
+        null,
+        {
+          "ct": "15FDAA4C",
+          "ts": 1787497684
+        },
+        0,
+        0,
+        null,
+        null,
+        0,
+        884,
+        [
+          33
+        ],
+        null
+      ]
+    },
+    {
+      "cmd": "DANMU_MSG",
+      "dm_v2": "",
+      "info": [
+        [
+          0,
+          1,
+          25,
+          14893055,
+          1787497685597,
+          -119816864,
+          0,
+          "87cc4f7d",
+          0,
+          0,
+          43,
+          "#1453BAFF,#3353BAFF,#3353BAFF",
+          0,
+          "{}",
+          "{}",
+          {
+            "extra": "{\"send_from_me\":false,\"master_player_hidden\":false,\"mode\":0,\"color\":14893055,\"dm_type\":0,\"font_size\":25,\"player_mode\":1,\"show_player_type\":0,\"content\":\"火生土吧\",\"user_hash\":\"2278313853\",\"emoticon_unique\":\"\",\"bulge_display\":0,\"recommend_score\":2,\"dm_score\":0,\"chronos_force_display\":0,\"main_state_dm_color\":\"\",\"objective_state_dm_color\":\"\",\"direction\":0,\"pk_direction\":0,\"quartet_direction\":0,\"anniversary_crowd\":0,\"yeah_space_type\":\"\",\"yeah_space_url\":\"\",\"jump_to_url\":\"\",\"space_type\":\"\",\"space_url\":\"\",\"animation\":{},\"emots\":null,\"is_audited\":false,\"id_str\":\"0a9273c5c07e6478065b7ba8ed6a8b0c6380\",\"icon\":null,\"show_reply\":true,\"reply_mid\":0,\"reply_uname\":\"\",\"reply_uname_color\":\"\",\"reply_is_mystery\":false,\"reply_type_enum\":0,\"hit_combo\":0,\"esports_jump_url\":\"\",\"is_mirror\":false,\"is_collaboration_member\":false,\"card\":{\"card_type\":0,\"oid_str\":\"\",\"oid_str_1\":\"\",\"origin_oid_str\":\"\",\"share_id\":\"\",\"share_origin\":\"\",\"from\":\"\",\"card_content\":null},\"voice\":null,\"background_type\":0}",
+            "mode": 0,
+            "show_player_type": 0,
+            "user": {
+              "anon": null,
+              "base": {
+                "face": "https://i0.hdslb.com/bfs/face/f1abaefc5927f964cf476120097dd1b2b9170ac4.jpg",
+                "is_mystery": false,
+                "name": "滞祠",
+                "name_color": 0,
+                "name_color_str": "#00D1F1",
+                "official_info": {
+                  "desc": "",
+                  "role": 0,
+                  "title": "",
+                  "type": -1
+                },
+                "origin_info": {
+                  "face": "https://i0.hdslb.com/bfs/face/f1abaefc5927f964cf476120097dd1b2b9170ac4.jpg",
+                  "name": "滞祠"
+                },
+                "risk_ctrl_info": null
+              },
+              "bubble_box": {
+                "color": "#1453BAFF,#3353BAFF,#3353BAFF",
+                "id": 43,
+                "old_id": 43
+              },
+              "dm_config": {
+                "color": 14893055,
+                "length": 40,
+                "mode": 1
+              },
+              "guard": null,
+              "guard_leader": null,
+              "medal": {
+                "color": 398668,
+                "color_border": 6809855,
+                "color_end": 6850801,
+                "color_start": 398668,
+                "guard_icon": "https://i0.hdslb.com/bfs/live/fd26e0053f3d24672ffdabcb1f6d2545e26b1e33.png",
+                "guard_level": 3,
+                "honor_icon": "",
+                "id": 233077,
+                "is_light": 1,
+                "level": 26,
+                "name": "酷萨",
+                "ruid": 480680646,
+                "score": 9729,
+                "typ": 0,
+                "user_receive_count": 0,
+                "v2_medal_color_border": "#5FC7F4",
+                "v2_medal_color_end": "#3FB4F699",
+                "v2_medal_color_level": "#3FB4F6E6",
+                "v2_medal_color_start": "#3FB4F699",
+                "v2_medal_color_text": "#FFFFFF"
+              },
+              "name_color": null,
+              "title": {
+                "old_title_css_id": "",
+                "title_css_id": ""
+              },
+              "uhead_frame": null,
+              "uid": 667825692,
+              "wealth": null
+            }
+          },
+          {
+            "activity_identity": "",
+            "activity_source": 0,
+            "not_show": 0
+          },
+          43
+        ],
+        "火生土吧",
+        [
+          667825692,
+          "滞祠",
+          0,
+          0,
+          0,
+          10000,
+          1,
+          "#00D1F1"
+        ],
+        [
+          26,
+          "酷萨",
+          "阿萨Aza",
+          21696950,
+          398668,
+          "",
+          0,
+          6809855,
+          398668,
+          6850801,
+          3,
+          1,
+          480680646
+        ],
+        [
+          5,
+          0,
+          9868950,
+          ">50000",
+          0
+        ],
+        [
+          "",
+          ""
+        ],
+        0,
+        3,
+        null,
+        {
+          "ct": "6EACF9A7",
+          "ts": 1787497685
+        },
+        0,
+        0,
+        null,
+        null,
+        0,
+        442,
+        [
+          15
+        ],
+        null
+      ]
+    },
+    {
+      "cmd": "DANMU_MSG",
+      "dm_v2": "",
+      "info": [
+        [
+          0,
+          4,
+          25,
+          14893055,
+          1787497689055,
+          488219030,
+          0,
+          "214b5e20",
+          0,
+          0,
+          43,
+          "#1453BAFF,#3353BAFF,#3353BAFF",
+          0,
+          "{}",
+          "{}",
+          {
+            "extra": "{\"send_from_me\":false,\"master_player_hidden\":false,\"mode\":0,\"color\":14893055,\"dm_type\":0,\"font_size\":25,\"player_mode\":4,\"show_player_type\":0,\"content\":\"长得像牛来（）\",\"user_hash\":\"558587424\",\"emoticon_unique\":\"\",\"bulge_display\":0,\"recommend_score\":9,\"dm_score\":0,\"chronos_force_display\":0,\"main_state_dm_color\":\"\",\"objective_state_dm_color\":\"\",\"direction\":0,\"pk_direction\":0,\"quartet_direction\":0,\"anniversary_crowd\":0,\"yeah_space_type\":\"\",\"yeah_space_url\":\"\",\"jump_to_url\":\"\",\"space_type\":\"\",\"space_url\":\"\",\"animation\":{},\"emots\":null,\"is_audited\":false,\"id_str\":\"71ecea8503d039193240d117de6a8b0c478\",\"icon\":null,\"show_reply\":true,\"reply_mid\":0,\"reply_uname\":\"\",\"reply_uname_color\":\"\",\"reply_is_mystery\":false,\"reply_type_enum\":0,\"hit_combo\":0,\"esports_jump_url\":\"\",\"is_mirror\":false,\"is_collaboration_member\":false,\"card\":{\"card_type\":0,\"oid_str\":\"\",\"oid_str_1\":\"\",\"origin_oid_str\":\"\",\"share_id\":\"\",\"share_origin\":\"\",\"from\":\"\",\"card_content\":null},\"voice\":null,\"background_type\":0}",
+            "mode": 0,
+            "show_player_type": 0,
+            "user": {
+              "anon": null,
+              "base": {
+                "face": "https://i2.hdslb.com/bfs/face/73bb36391ee3af7e93ef14f199e64ae41a0fce50.jpg",
+                "is_mystery": false,
+                "name": "阿俟As",
+                "name_color": 0,
+                "name_color_str": "#00D1F1",
+                "official_info": {
+                  "desc": "",
+                  "role": 0,
+                  "title": "",
+                  "type": -1
+                },
+                "origin_info": {
+                  "face": "https://i2.hdslb.com/bfs/face/73bb36391ee3af7e93ef14f199e64ae41a0fce50.jpg",
+                  "name": "阿俟As"
+                },
+                "risk_ctrl_info": null
+              },
+              "bubble_box": {
+                "color": "#1453BAFF,#3353BAFF,#3353BAFF",
+                "id": 43,
+                "old_id": 43
+              },
+              "dm_config": {
+                "color": 14893055,
+                "length": 40,
+                "mode": 4
+              },
+              "guard": null,
+              "guard_leader": null,
+              "medal": {
+                "color": 2951253,
+                "color_border": 6809855,
+                "color_end": 10329087,
+                "color_start": 2951253,
+                "guard_icon": "https://i0.hdslb.com/bfs/live/fd26e0053f3d24672ffdabcb1f6d2545e26b1e33.png",
+                "guard_level": 3,
+                "honor_icon": "",
+                "id": 233077,
+                "is_light": 1,
+                "level": 32,
+                "name": "酷萨",
+                "ruid": 480680646,
+                "score": 44154,
+                "typ": 0,
+                "user_receive_count": 0,
+                "v2_medal_color_border": "#58A1F8",
+                "v2_medal_color_end": "#4C7DFF99",
+                "v2_medal_color_level": "#4C7DFFE6",
+                "v2_medal_color_start": "#4C7DFF99",
+                "v2_medal_color_text": "#FFFFFF"
+              },
+              "name_color": null,
+              "title": {
+                "old_title_css_id": "",
+                "title_css_id": ""
+              },
+              "uhead_frame": null,
+              "uid": 3546968406100133,
+              "wealth": null
+            }
+          },
+          {
+            "activity_identity": "",
+            "activity_source": 0,
+            "not_show": 0
+          },
+          43
+        ],
+        "长得像牛来（）",
+        [
+          3546968406100133,
+          "阿俟As",
+          0,
+          0,
+          0,
+          10000,
+          1,
+          "#00D1F1"
+        ],
+        [
+          32,
+          "酷萨",
+          "阿萨Aza",
+          21696950,
+          2951253,
+          "",
+          0,
+          6809855,
+          2951253,
+          10329087,
+          3,
+          1,
+          480680646
+        ],
+        [
+          10,
+          0,
+          9868950,
+          ">50000",
+          0
+        ],
+        [
+          "",
+          ""
+        ],
+        0,
+        3,
+        null,
+        {
+          "ct": "C8B1A390",
+          "ts": 1787497689
+        },
+        0,
+        0,
+        null,
+        null,
+        0,
+        663,
+        [
+          23
+        ],
+        null
+      ]
+    },
+    {
+      "cmd": "DANMU_MSG",
+      "dm_v2": "",
+      "info": [
+        [
+          0,
+          1,
+          25,
+          14893055,
+          1787497690145,
+          -423232095,
+          0,
+          "606f1feb",
+          0,
+          0,
+          43,
+          "#1453BAFF,#3353BAFF,#3353BAFF",
+          0,
+          "{}",
+          "{}",
+          {
+            "extra": "{\"send_from_me\":false,\"master_player_hidden\":false,\"mode\":0,\"color\":14893055,\"dm_type\":0,\"font_size\":25,\"player_mode\":1,\"show_player_type\":0,\"content\":\"？\",\"user_hash\":\"1617895403\",\"emoticon_unique\":\"\",\"bulge_display\":0,\"recommend_score\":8,\"dm_score\":0,\"chronos_force_display\":0,\"main_state_dm_color\":\"\",\"objective_state_dm_color\":\"\",\"direction\":0,\"pk_direction\":0,\"quartet_direction\":0,\"anniversary_crowd\":0,\"yeah_space_type\":\"\",\"yeah_space_url\":\"\",\"jump_to_url\":\"\",\"space_type\":\"\",\"space_url\":\"\",\"animation\":{},\"emots\":null,\"is_audited\":false,\"id_str\":\"0377d24633b5244e5f0f60e0306a8b0c5162\",\"icon\":null,\"show_reply\":true,\"reply_mid\":0,\"reply_uname\":\"\",\"reply_uname_color\":\"\",\"reply_is_mystery\":false,\"reply_type_enum\":0,\"hit_combo\":0,\"esports_jump_url\":\"\",\"is_mirror\":false,\"is_collaboration_member\":false,\"card\":{\"card_type\":0,\"oid_str\":\"\",\"oid_str_1\":\"\",\"origin_oid_str\":\"\",\"share_id\":\"\",\"share_origin\":\"\",\"from\":\"\",\"card_content\":null},\"voice\":null,\"background_type\":0}",
+            "mode": 0,
+            "show_player_type": 0,
+            "user": {
+              "anon": null,
+              "base": {
+                "face": "https://i1.hdslb.com/bfs/face/633660db453bb2b78aff81a007811b22d797db81.jpg",
+                "is_mystery": false,
+                "name": "时令cx",
+                "name_color": 0,
+                "name_color_str": "#00D1F1",
+                "official_info": {
+                  "desc": "",
+                  "role": 0,
+                  "title": "",
+                  "type": -1
+                },
+                "origin_info": {
+                  "face": "https://i1.hdslb.com/bfs/face/633660db453bb2b78aff81a007811b22d797db81.jpg",
+                  "name": "时令cx"
+                },
+                "risk_ctrl_info": null
+              },
+              "bubble_box": {
+                "color": "#1453BAFF,#3353BAFF,#3353BAFF",
+                "id": 43,
+                "old_id": 43
+              },
+              "dm_config": {
+                "color": 14893055,
+                "length": 40,
+                "mode": 1
+              },
+              "guard": null,
+              "guard_leader": null,
+              "medal": {
+                "color": 16736523,
+                "color_border": 6809855,
+                "color_end": 16765060,
+                "color_start": 16736523,
+                "guard_icon": "https://i0.hdslb.com/bfs/live/fd26e0053f3d24672ffdabcb1f6d2545e26b1e33.png",
+                "guard_level": 3,
+                "honor_icon": "",
+                "id": 233077,
+                "is_light": 1,
+                "level": 39,
+                "name": "酷萨",
+                "ruid": 480680646,
+                "score": 288778,
+                "typ": 0,
+                "user_receive_count": 0,
+                "v2_medal_color_border": "#58A1F8",
+                "v2_medal_color_end": "#4C7DFF99",
+                "v2_medal_color_level": "#4C7DFFE6",
+                "v2_medal_color_start": "#4C7DFF99",
+                "v2_medal_color_text": "#FFFFFF"
+              },
+              "name_color": null,
+              "title": {
+                "old_title_css_id": "",
+                "title_css_id": ""
+              },
+              "uhead_frame": null,
+              "uid": 387821308,
+              "wealth": null
+            }
+          },
+          {
+            "activity_identity": "",
+            "activity_source": 0,
+            "not_show": 0
+          },
+          43
+        ],
+        "？",
+        [
+          387821308,
+          "时令cx",
+          0,
+          0,
+          0,
+          10000,
+          1,
+          "#00D1F1"
+        ],
+        [
+          39,
+          "酷萨",
+          "阿萨Aza",
+          21696950,
+          16736523,
+          "",
+          0,
+          6809855,
+          16736523,
+          16765060,
+          3,
+          1,
+          480680646
+        ],
+        [
+          20,
+          0,
+          6406234,
+          ">50000",
+          0
+        ],
+        [
+          "",
+          ""
+        ],
+        0,
+        3,
+        null,
+        {
+          "ct": "8E22212D",
+          "ts": 1787497690
+        },
+        0,
+        0,
+        null,
+        null,
+        0,
+        884,
+        [
+          32
+        ],
+        null
+      ]
+    },
+    {
+      "cmd": "DANMU_MSG",
+      "dm_v2": "",
+      "info": [
+        [
+          0,
+          4,
+          25,
+          14893055,
+          1787497690376,
+          162007105,
+          0,
+          "523c3c83",
+          0,
+          0,
+          43,
+          "#1453BAFF,#3353BAFF,#3353BAFF",
+          0,
+          "{}",
+          "{}",
+          {
+            "extra": "{\"send_from_me\":false,\"master_player_hidden\":false,\"mode\":0,\"color\":14893055,\"dm_type\":0,\"font_size\":25,\"player_mode\":4,\"show_player_type\":0,\"content\":\"害怕了\",\"user_hash\":\"1379679363\",\"emoticon_unique\":\"\",\"bulge_display\":0,\"recommend_score\":7,\"dm_score\":0,\"chronos_force_display\":0,\"main_state_dm_color\":\"\",\"objective_state_dm_color\":\"\",\"direction\":0,\"pk_direction\":0,\"quartet_direction\":0,\"anniversary_crowd\":0,\"yeah_space_type\":\"\",\"yeah_space_url\":\"\",\"jump_to_url\":\"\",\"space_type\":\"\",\"space_url\":\"\",\"animation\":{},\"emots\":null,\"is_audited\":false,\"id_str\":\"7bc2585b5e62c9743bd9c72d246a8b0c6372\",\"icon\":null,\"show_reply\":true,\"reply_mid\":0,\"reply_uname\":\"\",\"reply_uname_color\":\"\",\"reply_is_mystery\":false,\"reply_type_enum\":0,\"hit_combo\":0,\"esports_jump_url\":\"\",\"is_mirror\":false,\"is_collaboration_member\":false,\"card\":{\"card_type\":0,\"oid_str\":\"\",\"oid_str_1\":\"\",\"origin_oid_str\":\"\",\"share_id\":\"\",\"share_origin\":\"\",\"from\":\"\",\"card_content\":null},\"voice\":null,\"background_type\":0}",
+            "mode": 0,
+            "show_player_type": 0,
+            "user": {
+              "anon": null,
+              "base": {
+                "face": "https://i0.hdslb.com/bfs/face/98f91aa3eed8bd3700c5e1d95c317a45382722a4.jpg",
+                "is_mystery": false,
+                "name": "十分饱和度",
+                "name_color": 0,
+                "name_color_str": "#00D1F1",
+                "official_info": {
+                  "desc": "",
+                  "role": 0,
+                  "title": "",
+                  "type": -1
+                },
+                "origin_info": {
+                  "face": "https://i0.hdslb.com/bfs/face/98f91aa3eed8bd3700c5e1d95c317a45382722a4.jpg",
+                  "name": "十分饱和度"
+                },
+                "risk_ctrl_info": null
+              },
+              "bubble_box": {
+                "color": "#1453BAFF,#3353BAFF,#3353BAFF",
+                "id": 43,
+                "old_id": 43
+              },
+              "dm_config": {
+                "color": 14893055,
+                "length": 40,
+                "mode": 4
+              },
+              "guard": null,
+              "guard_leader": null,
+              "medal": {
+                "color": 1725515,
+                "color_border": 6809855,
+                "color_end": 5414290,
+                "color_start": 1725515,
+                "guard_icon": "https://i0.hdslb.com/bfs/live/fd26e0053f3d24672ffdabcb1f6d2545e26b1e33.png",
+                "guard_level": 3,
+                "honor_icon": "",
+                "id": 233077,
+                "is_light": 1,
+                "level": 22,
+                "name": "酷萨",
+                "ruid": 480680646,
+                "score": 3093,
+                "typ": 0,
+                "user_receive_count": 0,
+                "v2_medal_color_border": "#5FC7F4",
+                "v2_medal_color_end": "#3FB4F699",
+                "v2_medal_color_level": "#3FB4F6E6",
+                "v2_medal_color_start": "#3FB4F699",
+                "v2_medal_color_text": "#FFFFFF"
+              },
+              "name_color": null,
+              "title": {
+                "old_title_css_id": "",
+                "title_css_id": ""
+              },
+              "uhead_frame": null,
+              "uid": 3494365051750509,
+              "wealth": null
+            }
+          },
+          {
+            "activity_identity": "",
+            "activity_source": 0,
+            "not_show": 0
+          },
+          43
+        ],
+        "害怕了",
+        [
+          3494365051750509,
+          "十分饱和度",
+          0,
+          0,
+          0,
+          10000,
+          1,
+          "#00D1F1"
+        ],
+        [
+          22,
+          "酷萨",
+          "阿萨Aza",
+          21696950,
+          1725515,
+          "",
+          0,
+          6809855,
+          1725515,
+          5414290,
+          3,
+          1,
+          480680646
+        ],
+        [
+          1,
+          0,
+          9868950,
+          ">50000",
+          0
+        ],
+        [
+          "",
+          ""
+        ],
+        0,
+        3,
+        null,
+        {
+          "ct": "BDE3317",
+          "ts": 1787497690
+        },
+        0,
+        0,
+        null,
+        null,
+        0,
+        221,
+        [
+          8
+        ],
+        null
+      ]
+    },
+    {
+      "cmd": "DANMU_MSG",
+      "dm_v2": "",
+      "info": [
+        [
+          0,
+          4,
+          25,
+          14893055,
+          1787497753417,
+          1787488318,
+          0,
+          "442a17cb",
+          0,
+          0,
+          43,
+          "#1453BAFF,#3353BAFF,#3353BAFF",
+          0,
+          "{}",
+          "{}",
+          {
+            "extra": "{\"send_from_me\":false,\"master_player_hidden\":false,\"mode\":0,\"color\":14893055,\"dm_type\":0,\"font_size\":25,\"player_mode\":4,\"show_player_type\":0,\"content\":\"原来如此\",\"user_hash\":\"1143609291\",\"emoticon_unique\":\"\",\"bulge_display\":0,\"recommend_score\":7,\"dm_score\":0,\"chronos_force_display\":0,\"main_state_dm_color\":\"\",\"objective_state_dm_color\":\"\",\"direction\":0,\"pk_direction\":0,\"quartet_direction\":0,\"anniversary_crowd\":0,\"yeah_space_type\":\"\",\"yeah_space_url\":\"\",\"jump_to_url\":\"\",\"space_type\":\"\",\"space_url\":\"\",\"animation\":{},\"emots\":null,\"is_audited\":false,\"id_str\":\"62273dd4c3bea9c923e6daf17f6a8b0d2743\",\"icon\":null,\"show_reply\":true,\"reply_mid\":0,\"reply_uname\":\"\",\"reply_uname_color\":\"\",\"reply_is_mystery\":false,\"reply_type_enum\":0,\"hit_combo\":0,\"esports_jump_url\":\"\",\"is_mirror\":false,\"is_collaboration_member\":false,\"card\":{\"card_type\":0,\"oid_str\":\"\",\"oid_str_1\":\"\",\"origin_oid_str\":\"\",\"share_id\":\"\",\"share_origin\":\"\",\"from\":\"\",\"card_content\":null},\"voice\":null,\"background_type\":0}",
+            "mode": 0,
+            "show_player_type": 0,
+            "user": {
+              "anon": null,
+              "base": {
+                "face": "https://i2.hdslb.com/bfs/face/506980c96f95081f4910b4c7d138b0aee5117199.jpg",
+                "is_mystery": false,
+                "name": "我们始终如一",
+                "name_color": 0,
+                "name_color_str": "#00D1F1",
+                "official_info": {
+                  "desc": "",
+                  "role": 0,
+                  "title": "",
+                  "type": -1
+                },
+                "origin_info": {
+                  "face": "https://i2.hdslb.com/bfs/face/506980c96f95081f4910b4c7d138b0aee5117199.jpg",
+                  "name": "我们始终如一"
+                },
+                "risk_ctrl_info": null
+              },
+              "bubble_box": {
+                "color": "#1453BAFF,#3353BAFF,#3353BAFF",
+                "id": 43,
+                "old_id": 43
+              },
+              "dm_config": {
+                "color": 14893055,
+                "length": 40,
+                "mode": 4
+              },
+              "guard": null,
+              "guard_leader": null,
+              "medal": {
+                "color": 2951253,
+                "color_border": 6809855,
+                "color_end": 10329087,
+                "color_start": 2951253,
+                "guard_icon": "https://i0.hdslb.com/bfs/live/fd26e0053f3d24672ffdabcb1f6d2545e26b1e33.png",
+                "guard_level": 3,
+                "honor_icon": "",
+                "id": 233077,
+                "is_light": 1,
+                "level": 31,
+                "name": "酷萨",
+                "ruid": 480680646,
+                "score": 41949,
+                "typ": 0,
+                "user_receive_count": 0,
+                "v2_medal_color_border": "#58A1F8",
+                "v2_medal_color_end": "#4C7DFF99",
+                "v2_medal_color_level": "#4C7DFFE6",
+                "v2_medal_color_start": "#4C7DFF99",
+                "v2_medal_color_text": "#FFFFFF"
+              },
+              "name_color": null,
+              "title": {
+                "old_title_css_id": "",
+                "title_css_id": ""
+              },
+              "uhead_frame": null,
+              "uid": 1974060758,
+              "wealth": null
+            }
+          },
+          {
+            "activity_identity": "",
+            "activity_source": 0,
+            "not_show": 0
+          },
+          43
+        ],
+        "原来如此",
+        [
+          1974060758,
+          "我们始终如一",
+          0,
+          0,
+          0,
+          10000,
+          1,
+          "#00D1F1"
+        ],
+        [
+          31,
+          "酷萨",
+          "阿萨Aza",
+          21696950,
+          2951253,
+          "",
+          0,
+          6809855,
+          2951253,
+          10329087,
+          3,
+          1,
+          480680646
+        ],
+        [
+          12,
+          0,
+          6406234,
+          ">50000",
+          0
+        ],
+        [
+          "",
+          ""
+        ],
+        0,
+        3,
+        null,
+        {
+          "ct": "1E12F5E1",
+          "ts": 1787497753
+        },
+        0,
+        0,
+        null,
+        null,
+        0,
+        663,
+        [
+          24
+        ],
+        null
+      ]
+    },
+    {
+      "cmd": "DANMU_MSG",
+      "dm_v2": "",
+      "info": [
+        [
+          0,
+          4,
+          25,
+          14893055,
+          1787497754612,
+          1967025077,
+          0,
+          "b692986b",
+          0,
+          0,
+          43,
+          "#1453BAFF,#3353BAFF,#3353BAFF",
+          0,
+          "{}",
+          "{}",
+          {
+            "extra": "{\"send_from_me\":false,\"master_player_hidden\":false,\"mode\":0,\"color\":14893055,\"dm_type\":0,\"font_size\":25,\"player_mode\":4,\"show_player_type\":0,\"content\":\"哦哦供奉啊\",\"user_hash\":\"3063060587\",\"emoticon_unique\":\"\",\"bulge_display\":0,\"recommend_score\":8,\"dm_score\":0,\"chronos_force_display\":0,\"main_state_dm_color\":\"\",\"objective_state_dm_color\":\"\",\"direction\":0,\"pk_direction\":0,\"quartet_direction\":0,\"anniversary_crowd\":0,\"yeah_space_type\":\"\",\"yeah_space_url\":\"\",\"jump_to_url\":\"\",\"space_type\":\"\",\"space_url\":\"\",\"animation\":{},\"emots\":null,\"is_audited\":false,\"id_str\":\"07cf91097c593595450e4532a66a8b0d1736\",\"icon\":null,\"show_reply\":true,\"reply_mid\":0,\"reply_uname\":\"\",\"reply_uname_color\":\"\",\"reply_is_mystery\":false,\"reply_type_enum\":0,\"hit_combo\":0,\"esports_jump_url\":\"\",\"is_mirror\":false,\"is_collaboration_member\":false,\"card\":{\"card_type\":0,\"oid_str\":\"\",\"oid_str_1\":\"\",\"origin_oid_str\":\"\",\"share_id\":\"\",\"share_origin\":\"\",\"from\":\"\",\"card_content\":null},\"voice\":null,\"background_type\":0}",
+            "mode": 0,
+            "show_player_type": 0,
+            "user": {
+              "anon": null,
+              "base": {
+                "face": "https://i1.hdslb.com/bfs/face/7b59a817f8bf4eb52d40e61f0fa1c039033d3ddf.jpg",
+                "is_mystery": false,
+                "name": "抹茶呼哇呼哇",
+                "name_color": 0,
+                "name_color_str": "#00D1F1",
+                "official_info": {
+                  "desc": "",
+                  "role": 0,
+                  "title": "",
+                  "type": -1
+                },
+                "origin_info": {
+                  "face": "https://i1.hdslb.com/bfs/face/7b59a817f8bf4eb52d40e61f0fa1c039033d3ddf.jpg",
+                  "name": "抹茶呼哇呼哇"
+                },
+                "risk_ctrl_info": null
+              },
+              "bubble_box": {
+                "color": "#1453BAFF,#3353BAFF,#3353BAFF",
+                "id": 43,
+                "old_id": 43
+              },
+              "dm_config": {
+                "color": 14893055,
+                "length": 40,
+                "mode": 4
+              },
+              "guard": null,
+              "guard_leader": null,
+              "medal": {
+                "color": 16736523,
+                "color_border": 6809855,
+                "color_end": 16765060,
+                "color_start": 16736523,
+                "guard_icon": "https://i0.hdslb.com/bfs/live/fd26e0053f3d24672ffdabcb1f6d2545e26b1e33.png",
+                "guard_level": 3,
+                "honor_icon": "",
+                "id": 233077,
+                "is_light": 1,
+                "level": 43,
+                "name": "酷萨",
+                "ruid": 480680646,
+                "score": 741550,
+                "typ": 0,
+                "user_receive_count": 0,
+                "v2_medal_color_border": "#D47AFF",
+                "v2_medal_color_end": "#A773F199",
+                "v2_medal_color_level": "#A773F1E6",
+                "v2_medal_color_start": "#A773F199",
+                "v2_medal_color_text": "#FFFFFF"
+              },
+              "name_color": null,
+              "title": {
+                "old_title_css_id": "",
+                "title_css_id": ""
+              },
+              "uhead_frame": null,
+              "uid": 321199762,
+              "wealth": null
+            }
+          },
+          {
+            "activity_identity": "",
+            "activity_source": 0,
+            "not_show": 0
+          },
+          43
+        ],
+        "哦哦供奉啊",
+        [
+          321199762,
+          "抹茶呼哇呼哇",
+          0,
+          0,
+          0,
+          10000,
+          1,
+          "#00D1F1"
+        ],
+        [
+          43,
+          "酷萨",
+          "阿萨Aza",
+          21696950,
+          16736523,
+          "",
+          0,
+          6809855,
+          16736523,
+          16765060,
+          3,
+          1,
+          480680646
+        ],
+        [
+          23,
+          0,
+          5805790,
+          ">50000",
+          0
+        ],
+        [
+          "",
+          ""
+        ],
+        0,
+        3,
+        null,
+        {
+          "ct": "75C23865",
+          "ts": 1787497754
+        },
+        0,
+        0,
+        null,
+        null,
+        0,
+        884,
+        [
+          39
+        ],
+        null
+      ]
+    },
+    {
+      "cmd": "DANMU_MSG",
+      "dm_v2": "",
+      "info": [
+        [
+          0,
+          1,
+          25,
+          16777215,
+          1787497758472,
+          2122387977,
+          0,
+          "c84ca21e",
+          0,
+          0,
+          0,
+          "",
+          0,
+          "{}",
+          "{}",
+          {
+            "extra": "{\"send_from_me\":false,\"master_player_hidden\":false,\"mode\":0,\"color\":16777215,\"dm_type\":0,\"font_size\":25,\"player_mode\":1,\"show_player_type\":0,\"content\":\"抖抖抖\",\"user_hash\":\"3360465438\",\"emoticon_unique\":\"\",\"bulge_display\":0,\"recommend_score\":9,\"dm_score\":0,\"chronos_force_display\":0,\"main_state_dm_color\":\"\",\"objective_state_dm_color\":\"\",\"direction\":0,\"pk_direction\":0,\"quartet_direction\":0,\"anniversary_crowd\":0,\"yeah_space_type\":\"\",\"yeah_space_url\":\"\",\"jump_to_url\":\"\",\"space_type\":\"\",\"space_url\":\"\",\"animation\":{},\"emots\":null,\"is_audited\":false,\"id_str\":\"1fd1838ef982226f440f4df21a6a8b0d2496\",\"icon\":null,\"show_reply\":true,\"reply_mid\":0,\"reply_uname\":\"\",\"reply_uname_color\":\"\",\"reply_is_mystery\":false,\"reply_type_enum\":0,\"hit_combo\":0,\"esports_jump_url\":\"\",\"is_mirror\":false,\"is_collaboration_member\":false,\"card\":{\"card_type\":0,\"oid_str\":\"\",\"oid_str_1\":\"\",\"origin_oid_str\":\"\",\"share_id\":\"\",\"share_origin\":\"\",\"from\":\"\",\"card_content\":null},\"voice\":null,\"background_type\":0}",
+            "mode": 0,
+            "show_player_type": 0,
+            "user": {
+              "anon": null,
+              "base": {
+                "face": "https://i0.hdslb.com/bfs/face/c176fe5f420c62fb6cb0505706694ef1f0a936b2.webp",
+                "is_mystery": false,
+                "name": "秋百酒是也",
+                "name_color": 0,
+                "name_color_str": "",
+                "official_info": {
+                  "desc": "",
+                  "role": 0,
+                  "title": "",
+                  "type": -1
+                },
+                "origin_info": {
+                  "face": "https://i0.hdslb.com/bfs/face/c176fe5f420c62fb6cb0505706694ef1f0a936b2.webp",
+                  "name": "秋百酒是也"
+                },
+                "risk_ctrl_info": null
+              },
+              "bubble_box": null,
+              "dm_config": {
+                "color": 16777215,
+                "length": 40,
+                "mode": 1
+              },
+              "guard": null,
+              "guard_leader": null,
+              "medal": {
+                "color": 398668,
+                "color_border": 398668,
+                "color_end": 6850801,
+                "color_start": 398668,
+                "guard_icon": "",
+                "guard_level": 0,
+                "honor_icon": "",
+                "id": 233077,
+                "is_light": 1,
+                "level": 26,
+                "name": "酷萨",
+                "ruid": 480680646,
+                "score": 11352,
+                "typ": 0,
+                "user_receive_count": 0,
+                "v2_medal_color_border": "#3FB4F699",
+                "v2_medal_color_end": "#3FB4F699",
+                "v2_medal_color_level": "#3FB4F6E6",
+                "v2_medal_color_start": "#3FB4F699",
+                "v2_medal_color_text": "#FFFFFF"
+              },
+              "name_color": null,
+              "title": {
+                "old_title_css_id": "",
+                "title_css_id": ""
+              },
+              "uhead_frame": null,
+              "uid": 694081689,
+              "wealth": null
+            }
+          },
+          {
+            "activity_identity": "",
+            "activity_source": 0,
+            "not_show": 0
+          },
+          0
+        ],
+        "抖抖抖",
+        [
+          694081689,
+          "秋百酒是也",
+          0,
+          0,
+          0,
+          10000,
+          1,
+          ""
+        ],
+        [
+          26,
+          "酷萨",
+          "阿萨Aza",
+          21696950,
+          398668,
+          "",
+          0,
+          398668,
+          398668,
+          6850801,
+          0,
+          1,
+          480680646
+        ],
+        [
+          0,
+          0,
+          9868950,
+          ">50000",
+          0
+        ],
+        [
+          "",
+          ""
+        ],
+        0,
+        0,
+        null,
+        {
+          "ct": "3D270934",
+          "ts": 1787497758
+        },
+        0,
+        0,
+        null,
+        null,
+        0,
+        130,
+        [
+          6
+        ],
+        null
+      ]
+    }
+  ],
+  "LIKE_INFO_V3_CLICK": [
+    {
+      "cmd": "LIKE_INFO_V3_CLICK",
+      "data": {
+        "contribution_info": {
+          "grade": 0
+        },
+        "dmscore": 16,
+        "fans_medal": {
+          "anchor_roomid": 0,
+          "guard_level": 0,
+          "icon_id": 0,
+          "is_lighted": 0,
+          "medal_color": 9272486,
+          "medal_color_border": 12632256,
+          "medal_color_end": 12632256,
+          "medal_color_start": 12632256,
+          "medal_level": 11,
+          "medal_name": "酷萨",
+          "score": 245,
+          "special": "",
+          "target_id": 480680646
+        },
+        "group_medal": null,
+        "identities": [
+          1
+        ],
+        "is_mystery": false,
+        "like_icon": "https://i0.hdslb.com/bfs/live/23678e3d90402bea6a65251b3e728044c21b1f0f.png",
+        "like_text": "为主播点赞了",
+        "msg_type": 6,
+        "show_area": 0,
+        "uid": 1350933393,
+        "uinfo": {
+          "anon": null,
+          "base": {
+            "face": "https://i0.hdslb.com/bfs/face/2ccf2fdbbc487c47bafcec996428b767eaf7af8b.jpg",
+            "is_mystery": false,
+            "name": "雨暮莲灯",
+            "name_color": 0,
+            "name_color_str": "",
+            "official_info": {
+              "desc": "",
+              "role": 0,
+              "title": "",
+              "type": -1
+            },
+            "origin_info": {
+              "face": "https://i0.hdslb.com/bfs/face/2ccf2fdbbc487c47bafcec996428b767eaf7af8b.jpg",
+              "name": "雨暮莲灯"
+            },
+            "risk_ctrl_info": null
+          },
+          "guard": {
+            "expired_str": "",
+            "level": 0
+          },
+          "guard_leader": null,
+          "medal": {
+            "color": 9272486,
+            "color_border": 12632256,
+            "color_end": 12632256,
+            "color_start": 12632256,
+            "guard_icon": "",
+            "guard_level": 0,
+            "honor_icon": "",
+            "id": 0,
+            "is_light": 0,
+            "level": 11,
+            "name": "酷萨",
+            "ruid": 480680646,
+            "score": 245,
+            "typ": 0,
+            "user_receive_count": 0,
+            "v2_medal_color_border": "#919298CC",
+            "v2_medal_color_end": "#919298CC",
+            "v2_medal_color_level": "#919298E6",
+            "v2_medal_color_start": "#919298CC",
+            "v2_medal_color_text": "#FFFFFF"
+          },
+          "title": null,
+          "uhead_frame": null,
+          "uid": 1350933393,
+          "wealth": null
+        },
+        "uname": "雨暮莲灯",
+        "uname_color": ""
+      }
+    },
+    {
+      "cmd": "LIKE_INFO_V3_CLICK",
+      "data": {
+        "contribution_info": {
+          "grade": 0
+        },
+        "dmscore": 10,
+        "fans_medal": {
+          "anchor_roomid": 0,
+          "guard_level": 0,
+          "icon_id": 0,
+          "is_lighted": 1,
+          "medal_color": 6067854,
+          "medal_color_border": 6067854,
+          "medal_color_end": 6067854,
+          "medal_color_start": 6067854,
+          "medal_level": 4,
+          "medal_name": "酷萨",
+          "score": 19,
+          "special": "",
+          "target_id": 480680646
+        },
+        "group_medal": null,
+        "identities": [
+          3,
+          1
+        ],
+        "is_mystery": false,
+        "like_icon": "https://i0.hdslb.com/bfs/live/23678e3d90402bea6a65251b3e728044c21b1f0f.png",
+        "like_text": "为主播点赞了",
+        "msg_type": 6,
+        "show_area": 0,
+        "uid": 3546943024269506,
+        "uinfo": {
+          "anon": null,
+          "base": {
+            "face": "https://i2.hdslb.com/bfs/face/db2c583448176ac02543792d41f7bed6f6c68e1a.jpg",
+            "is_mystery": false,
+            "name": "被猫砸成饼",
+            "name_color": 0,
+            "name_color_str": "",
+            "official_info": {
+              "desc": "",
+              "role": 0,
+              "title": "",
+              "type": -1
+            },
+            "origin_info": {
+              "face": "https://i2.hdslb.com/bfs/face/db2c583448176ac02543792d41f7bed6f6c68e1a.jpg",
+              "name": "被猫砸成饼"
+            },
+            "risk_ctrl_info": null
+          },
+          "guard": {
+            "expired_str": "",
+            "level": 0
+          },
+          "guard_leader": null,
+          "medal": {
+            "color": 6067854,
+            "color_border": 6067854,
+            "color_end": 6067854,
+            "color_start": 6067854,
+            "guard_icon": "",
+            "guard_level": 0,
+            "honor_icon": "",
+            "id": 0,
+            "is_light": 1,
+            "level": 4,
+            "name": "酷萨",
+            "ruid": 480680646,
+            "score": 19,
+            "typ": 0,
+            "user_receive_count": 0,
+            "v2_medal_color_border": "#5762A799",
+            "v2_medal_color_end": "#5762A799",
+            "v2_medal_color_level": "#5762A7E6",
+            "v2_medal_color_start": "#5762A799",
+            "v2_medal_color_text": "#FFFFFF"
+          },
+          "title": null,
+          "uhead_frame": null,
+          "uid": 3546943024269506,
+          "wealth": null
+        },
+        "uname": "被猫砸成饼",
+        "uname_color": ""
+      }
+    },
+    {
+      "cmd": "LIKE_INFO_V3_CLICK",
+      "data": {
+        "contribution_info": {
+          "grade": 0
+        },
+        "dmscore": 102,
+        "fans_medal": {
+          "anchor_roomid": 0,
+          "guard_level": 3,
+          "icon_id": 0,
+          "is_lighted": 1,
+          "medal_color": 7996451,
+          "medal_color_border": 6809855,
+          "medal_color_end": 15304379,
+          "medal_color_start": 7996451,
+          "medal_level": 33,
+          "medal_name": "酷萨",
+          "score": 67738,
+          "special": "",
+          "target_id": 480680646
+        },
+        "group_medal": null,
+        "identities": [
+          6,
+          3,
+          1
+        ],
+        "is_mystery": false,
+        "like_icon": "https://i0.hdslb.com/bfs/live/23678e3d90402bea6a65251b3e728044c21b1f0f.png",
+        "like_text": "为主播点赞了",
+        "msg_type": 6,
+        "show_area": 0,
+        "uid": 273784560,
+        "uinfo": {
+          "anon": null,
+          "base": {
+            "face": "https://i0.hdslb.com/bfs/face/00701ba5479156262faf388951930cb25530f955.jpg",
+            "is_mystery": false,
+            "name": "_Mimio",
+            "name_color": 0,
+            "name_color_str": "#00D1F1",
+            "official_info": {
+              "desc": "",
+              "role": 0,
+              "title": "",
+              "type": -1
+            },
+            "origin_info": {
+              "face": "https://i0.hdslb.com/bfs/face/00701ba5479156262faf388951930cb25530f955.jpg",
+              "name": "_Mimio"
+            },
+            "risk_ctrl_info": null
+          },
+          "guard": {
+            "expired_str": "2026-09-04 23:59:59",
+            "level": 3
+          },
+          "guard_leader": null,
+          "medal": {
+            "color": 7996451,
+            "color_border": 6809855,
+            "color_end": 15304379,
+            "color_start": 7996451,
+            "guard_icon": "https://i0.hdslb.com/bfs/live/fd26e0053f3d24672ffdabcb1f6d2545e26b1e33.png",
+            "guard_level": 3,
+            "honor_icon": "",
+            "id": 0,
+            "is_light": 1,
+            "level": 33,
+            "name": "酷萨",
+            "ruid": 480680646,
+            "score": 67738,
+            "typ": 0,
+            "user_receive_count": 0,
+            "v2_medal_color_border": "#58A1F8",
+            "v2_medal_color_end": "#4C7DFF99",
+            "v2_medal_color_level": "#4C7DFFE6",
+            "v2_medal_color_start": "#4C7DFF99",
+            "v2_medal_color_text": "#FFFFFF"
+          },
+          "title": null,
+          "uhead_frame": null,
+          "uid": 273784560,
+          "wealth": null
+        },
+        "uname": "_Mimio",
+        "uname_color": ""
+      }
+    },
+    {
+      "cmd": "LIKE_INFO_V3_CLICK",
+      "data": {
+        "contribution_info": {
+          "grade": 0
+        },
+        "dmscore": 68,
+        "fans_medal": {
+          "anchor_roomid": 0,
+          "guard_level": 3,
+          "icon_id": 0,
+          "is_lighted": 1,
+          "medal_color": 2951253,
+          "medal_color_border": 6809855,
+          "medal_color_end": 10329087,
+          "medal_color_start": 2951253,
+          "medal_level": 32,
+          "medal_name": "酷萨",
+          "score": 51019,
+          "special": "",
+          "target_id": 480680646
+        },
+        "group_medal": null,
+        "identities": [
+          6,
+          3,
+          1
+        ],
+        "is_mystery": false,
+        "like_icon": "https://i0.hdslb.com/bfs/live/23678e3d90402bea6a65251b3e728044c21b1f0f.png",
+        "like_text": "为主播点赞了",
+        "msg_type": 6,
+        "show_area": 0,
+        "uid": 1888245418,
+        "uinfo": {
+          "anon": null,
+          "base": {
+            "face": "https://i1.hdslb.com/bfs/face/ee8e7a9399ae82d0105577df724864058f83f160.jpg",
+            "is_mystery": false,
+            "name": "公玉茨",
+            "name_color": 0,
+            "name_color_str": "#00D1F1",
+            "official_info": {
+              "desc": "",
+              "role": 0,
+              "title": "",
+              "type": -1
+            },
+            "origin_info": {
+              "face": "https://i1.hdslb.com/bfs/face/ee8e7a9399ae82d0105577df724864058f83f160.jpg",
+              "name": "公玉茨"
+            },
+            "risk_ctrl_info": null
+          },
+          "guard": {
+            "expired_str": "2026-09-29 23:59:59",
+            "level": 3
+          },
+          "guard_leader": null,
+          "medal": {
+            "color": 2951253,
+            "color_border": 6809855,
+            "color_end": 10329087,
+            "color_start": 2951253,
+            "guard_icon": "https://i0.hdslb.com/bfs/live/fd26e0053f3d24672ffdabcb1f6d2545e26b1e33.png",
+            "guard_level": 3,
+            "honor_icon": "",
+            "id": 0,
+            "is_light": 1,
+            "level": 32,
+            "name": "酷萨",
+            "ruid": 480680646,
+            "score": 51019,
+            "typ": 0,
+            "user_receive_count": 0,
+            "v2_medal_color_border": "#58A1F8",
+            "v2_medal_color_end": "#4C7DFF99",
+            "v2_medal_color_level": "#4C7DFFE6",
+            "v2_medal_color_start": "#4C7DFF99",
+            "v2_medal_color_text": "#FFFFFF"
+          },
+          "title": null,
+          "uhead_frame": null,
+          "uid": 1888245418,
+          "wealth": null
+        },
+        "uname": "公玉茨",
+        "uname_color": ""
+      }
+    },
+    {
+      "cmd": "LIKE_INFO_V3_CLICK",
+      "data": {
+        "contribution_info": {
+          "grade": 0
+        },
+        "dmscore": 20,
+        "fans_medal": {
+          "anchor_roomid": 0,
+          "guard_level": 0,
+          "icon_id": 0,
+          "is_lighted": 1,
+          "medal_color": 1725515,
+          "medal_color_border": 1725515,
+          "medal_color_end": 5414290,
+          "medal_color_start": 1725515,
+          "medal_level": 23,
+          "medal_name": "酷萨",
+          "score": 4826,
+          "special": "",
+          "target_id": 480680646
+        },
+        "group_medal": null,
+        "identities": [
+          3,
+          1
+        ],
+        "is_mystery": false,
+        "like_icon": "https://i0.hdslb.com/bfs/live/23678e3d90402bea6a65251b3e728044c21b1f0f.png",
+        "like_text": "为主播点赞了",
+        "msg_type": 6,
+        "show_area": 0,
+        "uid": 1635266876,
+        "uinfo": {
+          "anon": null,
+          "base": {
+            "face": "https://i2.hdslb.com/bfs/face/1a598bc019ab3a3df6cae5b87b7d21780637eb0d.jpg",
+            "is_mystery": false,
+            "name": "Q布洛芬重度依赖_",
+            "name_color": 0,
+            "name_color_str": "",
+            "official_info": {
+              "desc": "",
+              "role": 0,
+              "title": "",
+              "type": -1
+            },
+            "origin_info": {
+              "face": "https://i2.hdslb.com/bfs/face/1a598bc019ab3a3df6cae5b87b7d21780637eb0d.jpg",
+              "name": "Q布洛芬重度依赖_"
+            },
+            "risk_ctrl_info": null
+          },
+          "guard": {
+            "expired_str": "",
+            "level": 0
+          },
+          "guard_leader": null,
+          "medal": {
+            "color": 1725515,
+            "color_border": 1725515,
+            "color_end": 5414290,
+            "color_start": 1725515,
+            "guard_icon": "",
+            "guard_level": 0,
+            "honor_icon": "",
+            "id": 0,
+            "is_light": 1,
+            "level": 23,
+            "name": "酷萨",
+            "ruid": 480680646,
+            "score": 4826,
+            "typ": 0,
+            "user_receive_count": 0,
+            "v2_medal_color_border": "#3FB4F699",
+            "v2_medal_color_end": "#3FB4F699",
+            "v2_medal_color_level": "#3FB4F6E6",
+            "v2_medal_color_start": "#3FB4F699",
+            "v2_medal_color_text": "#FFFFFF"
+          },
+          "title": null,
+          "uhead_frame": null,
+          "uid": 1635266876,
+          "wealth": null
+        },
+        "uname": "Q布洛芬重度依赖_",
+        "uname_color": ""
+      }
+    },
+    {
+      "cmd": "LIKE_INFO_V3_CLICK",
+      "data": {
+        "contribution_info": {
+          "grade": 0
+        },
+        "dmscore": 60,
+        "fans_medal": {
+          "anchor_roomid": 0,
+          "guard_level": 0,
+          "icon_id": 0,
+          "is_lighted": 1,
+          "medal_color": 2951253,
+          "medal_color_border": 2951253,
+          "medal_color_end": 10329087,
+          "medal_color_start": 2951253,
+          "medal_level": 32,
+          "medal_name": "酷萨",
+          "score": 45613,
+          "special": "",
+          "target_id": 480680646
+        },
+        "group_medal": null,
+        "identities": [
+          3,
+          1
+        ],
+        "is_mystery": false,
+        "like_icon": "https://i0.hdslb.com/bfs/live/23678e3d90402bea6a65251b3e728044c21b1f0f.png",
+        "like_text": "为主播点赞了",
+        "msg_type": 6,
+        "show_area": 0,
+        "uid": 677151674,
+        "uinfo": {
+          "anon": null,
+          "base": {
+            "face": "http://i2.hdslb.com/bfs/face/abf12027277d056e808d2a4dbf8d62558693b8d2.jpg",
+            "is_mystery": false,
+            "name": "少酒欲延",
+            "name_color": 0,
+            "name_color_str": "",
+            "official_info": {
+              "desc": "",
+              "role": 0,
+              "title": "",
+              "type": -1
+            },
+            "origin_info": {
+              "face": "http://i2.hdslb.com/bfs/face/abf12027277d056e808d2a4dbf8d62558693b8d2.jpg",
+              "name": "少酒欲延"
+            },
+            "risk_ctrl_info": null
+          },
+          "guard": {
+            "expired_str": "",
+            "level": 0
+          },
+          "guard_leader": null,
+          "medal": {
+            "color": 2951253,
+            "color_border": 2951253,
+            "color_end": 10329087,
+            "color_start": 2951253,
+            "guard_icon": "",
+            "guard_level": 0,
+            "honor_icon": "",
+            "id": 0,
+            "is_light": 1,
+            "level": 32,
+            "name": "酷萨",
+            "ruid": 480680646,
+            "score": 45613,
+            "typ": 0,
+            "user_receive_count": 0,
+            "v2_medal_color_border": "#4C7DFF99",
+            "v2_medal_color_end": "#4C7DFF99",
+            "v2_medal_color_level": "#4C7DFFE6",
+            "v2_medal_color_start": "#4C7DFF99",
+            "v2_medal_color_text": "#FFFFFF"
+          },
+          "title": null,
+          "uhead_frame": null,
+          "uid": 677151674,
+          "wealth": null
+        },
+        "uname": "少酒欲延",
+        "uname_color": ""
+      }
+    },
+    {
+      "cmd": "LIKE_INFO_V3_CLICK",
+      "data": {
+        "contribution_info": {
+          "grade": 0
+        },
+        "dmscore": 20,
+        "fans_medal": {
+          "anchor_roomid": 0,
+          "guard_level": 0,
+          "icon_id": 0,
+          "is_lighted": 1,
+          "medal_color": 12478086,
+          "medal_color_border": 12478086,
+          "medal_color_end": 12478086,
+          "medal_color_start": 12478086,
+          "medal_level": 16,
+          "medal_name": "酷萨",
+          "score": 693,
+          "special": "",
+          "target_id": 480680646
+        },
+        "group_medal": null,
+        "identities": [
+          3,
+          1
+        ],
+        "is_mystery": false,
+        "like_icon": "https://i0.hdslb.com/bfs/live/23678e3d90402bea6a65251b3e728044c21b1f0f.png",
+        "like_text": "为主播点赞了",
+        "msg_type": 6,
+        "show_area": 0,
+        "uid": 514007585,
+        "uinfo": {
+          "anon": null,
+          "base": {
+            "face": "https://i2.hdslb.com/bfs/face/e0be1c1243c85bf52416c4df04522bcbd64a188a.jpg",
+            "is_mystery": false,
+            "name": "水水石榴汁",
+            "name_color": 0,
+            "name_color_str": "",
+            "official_info": {
+              "desc": "",
+              "role": 0,
+              "title": "",
+              "type": -1
+            },
+            "origin_info": {
+              "face": "https://i2.hdslb.com/bfs/face/e0be1c1243c85bf52416c4df04522bcbd64a188a.jpg",
+              "name": "水水石榴汁"
+            },
+            "risk_ctrl_info": null
+          },
+          "guard": {
+            "expired_str": "",
+            "level": 0
+          },
+          "guard_leader": null,
+          "medal": {
+            "color": 12478086,
+            "color_border": 12478086,
+            "color_end": 12478086,
+            "color_start": 12478086,
+            "guard_icon": "",
+            "guard_level": 0,
+            "honor_icon": "",
+            "id": 0,
+            "is_light": 1,
+            "level": 16,
+            "name": "酷萨",
+            "ruid": 480680646,
+            "score": 693,
+            "typ": 0,
+            "user_receive_count": 0,
+            "v2_medal_color_border": "#C770A499",
+            "v2_medal_color_end": "#C770A499",
+            "v2_medal_color_level": "#C770A4E6",
+            "v2_medal_color_start": "#C770A499",
+            "v2_medal_color_text": "#FFFFFF"
+          },
+          "title": null,
+          "uhead_frame": null,
+          "uid": 514007585,
+          "wealth": null
+        },
+        "uname": "水水石榴汁",
+        "uname_color": ""
+      }
+    },
+    {
+      "cmd": "LIKE_INFO_V3_CLICK",
+      "data": {
+        "contribution_info": {
+          "grade": 0
+        },
+        "dmscore": 68,
+        "fans_medal": {
+          "anchor_roomid": 0,
+          "guard_level": 3,
+          "icon_id": 0,
+          "is_lighted": 1,
+          "medal_color": 398668,
+          "medal_color_border": 6809855,
+          "medal_color_end": 6850801,
+          "medal_color_start": 398668,
+          "medal_level": 26,
+          "medal_name": "酷萨",
+          "score": 9994,
+          "special": "",
+          "target_id": 480680646
+        },
+        "group_medal": null,
+        "identities": [
+          6,
+          3,
+          1
+        ],
+        "is_mystery": false,
+        "like_icon": "https://i0.hdslb.com/bfs/live/23678e3d90402bea6a65251b3e728044c21b1f0f.png",
+        "like_text": "为主播点赞了",
+        "msg_type": 6,
+        "show_area": 0,
+        "uid": 3493092103555357,
+        "uinfo": {
+          "anon": null,
+          "base": {
+            "face": "https://i1.hdslb.com/bfs/face/621b4fdb0da029d703e69f5a60ea2fc9606205c1.jpg",
+            "is_mystery": false,
+            "name": "雅慕夜",
+            "name_color": 0,
+            "name_color_str": "#00D1F1",
+            "official_info": {
+              "desc": "",
+              "role": 0,
+              "title": "",
+              "type": -1
+            },
+            "origin_info": {
+              "face": "https://i1.hdslb.com/bfs/face/621b4fdb0da029d703e69f5a60ea2fc9606205c1.jpg",
+              "name": "雅慕夜"
+            },
+            "risk_ctrl_info": null
+          },
+          "guard": {
+            "expired_str": "2026-09-07 23:59:59",
+            "level": 3
+          },
+          "guard_leader": null,
+          "medal": {
+            "color": 398668,
+            "color_border": 6809855,
+            "color_end": 6850801,
+            "color_start": 398668,
+            "guard_icon": "https://i0.hdslb.com/bfs/live/fd26e0053f3d24672ffdabcb1f6d2545e26b1e33.png",
+            "guard_level": 3,
+            "honor_icon": "",
+            "id": 0,
+            "is_light": 1,
+            "level": 26,
+            "name": "酷萨",
+            "ruid": 480680646,
+            "score": 9994,
+            "typ": 0,
+            "user_receive_count": 0,
+            "v2_medal_color_border": "#5FC7F4",
+            "v2_medal_color_end": "#3FB4F699",
+            "v2_medal_color_level": "#3FB4F6E6",
+            "v2_medal_color_start": "#3FB4F699",
+            "v2_medal_color_text": "#FFFFFF"
+          },
+          "title": null,
+          "uhead_frame": null,
+          "uid": 3493092103555357,
+          "wealth": null
+        },
+        "uname": "雅慕夜",
+        "uname_color": ""
+      }
+    }
+  ],
+  "DM_INTERACTION": [
+    {
+      "cmd": "DM_INTERACTION",
+      "data": {
+        "data": "{\"fade_duration\":10000,\"cnt\":3,\"card_appear_interval\":0,\"suffix_text\":\"人在投喂\",\"reset_cnt\":0,\"display_flag\":1,\"gift_id\":31164,\"gift_alert_message\":\"投喂一个%s支持主播\"}",
+        "dmscore": 36,
+        "id": 184865978865664,
+        "status": 4,
+        "type": 104
+      }
+    },
+    {
+      "cmd": "DM_INTERACTION",
+      "data": {
+        "data": "{\"fade_duration\":10000,\"cnt\":3,\"card_appear_interval\":0,\"suffix_text\":\"人在投喂\",\"reset_cnt\":0,\"display_flag\":1,\"gift_id\":31164,\"gift_alert_message\":\"投喂一个%s支持主播\"}",
+        "dmscore": 36,
+        "id": 184865978865664,
+        "status": 4,
+        "type": 104
+      }
+    },
+    {
+      "cmd": "DM_INTERACTION",
+      "data": {
+        "data": "{\"fade_duration\":10000,\"cnt\":3,\"card_appear_interval\":0,\"suffix_text\":\"人在投喂\",\"reset_cnt\":0,\"display_flag\":1,\"gift_id\":31164,\"gift_alert_message\":\"投喂一个%s支持主播\"}",
+        "dmscore": 36,
+        "id": 184865978865664,
+        "status": 4,
+        "type": 104
+      }
+    },
+    {
+      "cmd": "DM_INTERACTION",
+      "data": {
+        "data": "{\"fade_duration\":10000,\"cnt\":3,\"card_appear_interval\":0,\"suffix_text\":\"人在投喂\",\"reset_cnt\":0,\"display_flag\":1,\"gift_id\":31164,\"gift_alert_message\":\"投喂一个%s支持主播\"}",
+        "dmscore": 36,
+        "id": 184865978865664,
+        "status": 4,
+        "type": 104
+      }
+    },
+    {
+      "cmd": "DM_INTERACTION",
+      "data": {
+        "data": "{\"fade_duration\":10000,\"cnt\":3,\"card_appear_interval\":0,\"suffix_text\":\"人在投喂\",\"reset_cnt\":0,\"display_flag\":1,\"gift_id\":31164,\"gift_alert_message\":\"投喂一个%s支持主播\"}",
+        "dmscore": 36,
+        "id": 184865978865664,
+        "status": 4,
+        "type": 104
+      }
+    },
+    {
+      "cmd": "DM_INTERACTION",
+      "data": {
+        "data": "{\"fade_duration\":10000,\"cnt\":16,\"card_appear_interval\":0,\"suffix_text\":\"人正在点赞\",\"reset_cnt\":1,\"display_flag\":1,\"pv_cnt\":1391,\"count_type\":0,\"pv_prefix_text\":\"大家正在点赞\",\"pv_suffix_text\":\"次\"}",
+        "dmscore": 36,
+        "id": 184866029222400,
+        "status": 4,
+        "type": 106
+      }
+    },
+    {
+      "cmd": "DM_INTERACTION",
+      "data": {
+        "data": "{\"fade_duration\":10000,\"cnt\":16,\"card_appear_interval\":0,\"suffix_text\":\"人正在点赞\",\"reset_cnt\":1,\"display_flag\":1,\"pv_cnt\":1391,\"count_type\":0,\"pv_prefix_text\":\"大家正在点赞\",\"pv_suffix_text\":\"次\"}",
+        "dmscore": 36,
+        "id": 184866029222400,
+        "status": 4,
+        "type": 106
+      }
+    },
+    {
+      "cmd": "DM_INTERACTION",
+      "data": {
+        "data": "{\"fade_duration\":10000,\"cnt\":16,\"card_appear_interval\":0,\"suffix_text\":\"人正在点赞\",\"reset_cnt\":1,\"display_flag\":1,\"pv_cnt\":1391,\"count_type\":0,\"pv_prefix_text\":\"大家正在点赞\",\"pv_suffix_text\":\"次\"}",
+        "dmscore": 36,
+        "id": 184866029222400,
+        "status": 5,
+        "type": 106
+      }
+    }
+  ]
+}

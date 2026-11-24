@@ -1,0 +1,1663 @@
+{
+  "version": 1,
+  "themes": {
+    "blivechat-classic": {
+      "assets/catalog-1.ttf": {
+        "kind": "remote",
+        "sourceUrl": "https://fonts.gstatic.com/s/imprima/v19/VEMxRoN7sY3yuy-7yoKNzA.ttf",
+        "mediaType": "font/ttf"
+      },
+      "assets/catalog-2.ttf": {
+        "kind": "remote",
+        "sourceUrl": "https://fonts.gstatic.com/s/notosanssc/v41/k3kCo84MPvpLmixcA63oeAL7Iqp5IZJF9bmaG9_FrYtHaA.ttf",
+        "mediaType": "font/ttf"
+      }
+    },
+    "blivechat-open-classic": {
+      "assets/catalog-3.ttf": {
+        "kind": "remote",
+        "sourceUrl": "https://fonts.gstatic.com/s/changaone/v22/xfu00W3wXn3QLUJXhzq42AHivA.ttf",
+        "mediaType": "font/ttf"
+      },
+      "assets/catalog-1.ttf": {
+        "kind": "remote",
+        "sourceUrl": "https://fonts.gstatic.com/s/imprima/v19/VEMxRoN7sY3yuy-7yoKNzA.ttf",
+        "mediaType": "font/ttf"
+      }
+    },
+    "blivechat-open-wechat": {
+      "assets/catalog-2.ttf": {
+        "kind": "remote",
+        "sourceUrl": "https://fonts.gstatic.com/s/notosanssc/v41/k3kCo84MPvpLmixcA63oeAL7Iqp5IZJF9bmaG9_FrYtHaA.ttf",
+        "mediaType": "font/ttf"
+      }
+    },
+    "blivechat-wechat": {
+      "assets/catalog-2.ttf": {
+        "kind": "remote",
+        "sourceUrl": "https://fonts.gstatic.com/s/notosanssc/v41/k3kCo84MPvpLmixcA63oeAL7Iqp5IZJF9bmaG9_FrYtHaA.ttf",
+        "mediaType": "font/ttf"
+      }
+    },
+    "laplace-builtin-bubble-next": {
+      "assets/catalog-4.ttf": {
+        "kind": "remote",
+        "sourceUrl": "https://fonts.gstatic.com/s/jost/v20/92zJtBhPNqw73oHH7BbQp4-B6XlrZu0FNI0.ttf",
+        "mediaType": "font/ttf"
+      },
+      "assets/catalog-5.ttf": {
+        "kind": "remote",
+        "sourceUrl": "https://fonts.gstatic.com/s/jost/v20/92zJtBhPNqw73oHH7BbQp4-B6XlrZt8FNI0.ttf",
+        "mediaType": "font/ttf"
+      },
+      "assets/catalog-6.ttf": {
+        "kind": "remote",
+        "sourceUrl": "https://fonts.gstatic.com/s/jost/v20/92zPtBhPNqw79Ij1E865zBUv7myjJQVG.ttf",
+        "mediaType": "font/ttf"
+      },
+      "assets/catalog-7.ttf": {
+        "kind": "remote",
+        "sourceUrl": "https://fonts.gstatic.com/s/jost/v20/92zPtBhPNqw79Ij1E865zBUv7myRJQVG.ttf",
+        "mediaType": "font/ttf"
+      },
+      "assets/catalog-8.ttf": {
+        "kind": "remote",
+        "sourceUrl": "https://fonts.gstatic.com/s/zcoolkuaile/v22/tssqApdaRQokwFjFJjvM6h2Wpg.ttf",
+        "mediaType": "font/ttf"
+      },
+      "assets/catalog-9.svg": {
+        "kind": "remote",
+        "sourceUrl": "https://rsrc.laplace.cn/assets/chat-templates/flower-symbol-1.svg",
+        "mediaType": "image/svg+xml"
+      },
+      "assets/catalog-10.svg": {
+        "kind": "remote",
+        "sourceUrl": "https://rsrc.laplace.cn/assets/chat-templates/milky-green-spring/guard-level-1.svg?v=3",
+        "mediaType": "image/svg+xml"
+      },
+      "assets/catalog-11.svg": {
+        "kind": "remote",
+        "sourceUrl": "https://rsrc.laplace.cn/assets/chat-templates/milky-green-spring/guard-deco-level-1.svg",
+        "mediaType": "image/svg+xml"
+      },
+      "assets/catalog-12.svg": {
+        "kind": "remote",
+        "sourceUrl": "https://rsrc.laplace.cn/assets/chat-templates/flower-symbol-2.svg",
+        "mediaType": "image/svg+xml"
+      },
+      "assets/catalog-13.svg": {
+        "kind": "remote",
+        "sourceUrl": "https://rsrc.laplace.cn/assets/chat-templates/milky-green-spring/guard-level-2.svg",
+        "mediaType": "image/svg+xml"
+      },
+      "assets/catalog-14.svg": {
+        "kind": "remote",
+        "sourceUrl": "https://rsrc.laplace.cn/assets/chat-templates/milky-green-spring/guard-deco-level-2.svg",
+        "mediaType": "image/svg+xml"
+      },
+      "assets/catalog-15.svg": {
+        "kind": "remote",
+        "sourceUrl": "https://rsrc.laplace.cn/assets/chat-templates/flower-symbol-3.svg",
+        "mediaType": "image/svg+xml"
+      },
+      "assets/catalog-16.svg": {
+        "kind": "remote",
+        "sourceUrl": "https://rsrc.laplace.cn/assets/chat-templates/milky-green-spring/guard-level-3.svg",
+        "mediaType": "image/svg+xml"
+      },
+      "assets/catalog-17.svg": {
+        "kind": "remote",
+        "sourceUrl": "https://rsrc.laplace.cn/assets/chat-templates/milky-green-spring/guard-deco-level-3.svg",
+        "mediaType": "image/svg+xml"
+      },
+      "assets/catalog-18.svg": {
+        "kind": "remote",
+        "sourceUrl": "https://rsrc.laplace.cn/assets/chat-templates/milky-green-spring/guard-level-100-alt.svg?v=2",
+        "mediaType": "image/svg+xml"
+      }
+    },
+    "laplace-builtin-bubble-rhea": {
+      "assets/catalog-4.ttf": {
+        "kind": "remote",
+        "sourceUrl": "https://fonts.gstatic.com/s/jost/v20/92zJtBhPNqw73oHH7BbQp4-B6XlrZu0FNI0.ttf",
+        "mediaType": "font/ttf"
+      },
+      "assets/catalog-19.ttf": {
+        "kind": "remote",
+        "sourceUrl": "https://fonts.gstatic.com/s/jost/v20/92zJtBhPNqw73oHH7BbQp4-B6XlrZjMCNI0.ttf",
+        "mediaType": "font/ttf"
+      },
+      "assets/catalog-6.ttf": {
+        "kind": "remote",
+        "sourceUrl": "https://fonts.gstatic.com/s/jost/v20/92zPtBhPNqw79Ij1E865zBUv7myjJQVG.ttf",
+        "mediaType": "font/ttf"
+      },
+      "assets/catalog-20.ttf": {
+        "kind": "remote",
+        "sourceUrl": "https://fonts.gstatic.com/s/jost/v20/92zPtBhPNqw79Ij1E865zBUv7mx9IgVG.ttf",
+        "mediaType": "font/ttf"
+      }
+    },
+    "laplace-builtin-bubble": {
+      "assets/catalog-4.ttf": {
+        "kind": "remote",
+        "sourceUrl": "https://fonts.gstatic.com/s/jost/v20/92zJtBhPNqw73oHH7BbQp4-B6XlrZu0FNI0.ttf",
+        "mediaType": "font/ttf"
+      },
+      "assets/catalog-19.ttf": {
+        "kind": "remote",
+        "sourceUrl": "https://fonts.gstatic.com/s/jost/v20/92zJtBhPNqw73oHH7BbQp4-B6XlrZjMCNI0.ttf",
+        "mediaType": "font/ttf"
+      },
+      "assets/catalog-6.ttf": {
+        "kind": "remote",
+        "sourceUrl": "https://fonts.gstatic.com/s/jost/v20/92zPtBhPNqw79Ij1E865zBUv7myjJQVG.ttf",
+        "mediaType": "font/ttf"
+      },
+      "assets/catalog-20.ttf": {
+        "kind": "remote",
+        "sourceUrl": "https://fonts.gstatic.com/s/jost/v20/92zPtBhPNqw79Ij1E865zBUv7mx9IgVG.ttf",
+        "mediaType": "font/ttf"
+      },
+      "assets/catalog-9.svg": {
+        "kind": "remote",
+        "sourceUrl": "https://rsrc.laplace.cn/assets/chat-templates/flower-symbol-1.svg",
+        "mediaType": "image/svg+xml"
+      },
+      "assets/catalog-12.svg": {
+        "kind": "remote",
+        "sourceUrl": "https://rsrc.laplace.cn/assets/chat-templates/flower-symbol-2.svg",
+        "mediaType": "image/svg+xml"
+      },
+      "assets/catalog-15.svg": {
+        "kind": "remote",
+        "sourceUrl": "https://rsrc.laplace.cn/assets/chat-templates/flower-symbol-3.svg",
+        "mediaType": "image/svg+xml"
+      }
+    },
+    "laplace-builtin-collab": {
+      "assets/catalog-4.ttf": {
+        "kind": "remote",
+        "sourceUrl": "https://fonts.gstatic.com/s/jost/v20/92zJtBhPNqw73oHH7BbQp4-B6XlrZu0FNI0.ttf",
+        "mediaType": "font/ttf"
+      },
+      "assets/catalog-19.ttf": {
+        "kind": "remote",
+        "sourceUrl": "https://fonts.gstatic.com/s/jost/v20/92zJtBhPNqw73oHH7BbQp4-B6XlrZjMCNI0.ttf",
+        "mediaType": "font/ttf"
+      },
+      "assets/catalog-6.ttf": {
+        "kind": "remote",
+        "sourceUrl": "https://fonts.gstatic.com/s/jost/v20/92zPtBhPNqw79Ij1E865zBUv7myjJQVG.ttf",
+        "mediaType": "font/ttf"
+      },
+      "assets/catalog-20.ttf": {
+        "kind": "remote",
+        "sourceUrl": "https://fonts.gstatic.com/s/jost/v20/92zPtBhPNqw79Ij1E865zBUv7mx9IgVG.ttf",
+        "mediaType": "font/ttf"
+      }
+    },
+    "laplace-builtin-modern": {
+      "assets/catalog-4.ttf": {
+        "kind": "remote",
+        "sourceUrl": "https://fonts.gstatic.com/s/jost/v20/92zJtBhPNqw73oHH7BbQp4-B6XlrZu0FNI0.ttf",
+        "mediaType": "font/ttf"
+      },
+      "assets/catalog-19.ttf": {
+        "kind": "remote",
+        "sourceUrl": "https://fonts.gstatic.com/s/jost/v20/92zJtBhPNqw73oHH7BbQp4-B6XlrZjMCNI0.ttf",
+        "mediaType": "font/ttf"
+      },
+      "assets/catalog-6.ttf": {
+        "kind": "remote",
+        "sourceUrl": "https://fonts.gstatic.com/s/jost/v20/92zPtBhPNqw79Ij1E865zBUv7myjJQVG.ttf",
+        "mediaType": "font/ttf"
+      },
+      "assets/catalog-20.ttf": {
+        "kind": "remote",
+        "sourceUrl": "https://fonts.gstatic.com/s/jost/v20/92zPtBhPNqw79Ij1E865zBUv7mx9IgVG.ttf",
+        "mediaType": "font/ttf"
+      }
+    },
+    "laplace-builtin-orange-block": {
+      "assets/catalog-21.ttf": {
+        "kind": "remote",
+        "sourceUrl": "https://fonts.gstatic.com/s/notosanssc/v41/k3kCo84MPvpLmixcA63oeAL7Iqp5IZJF9bmaG1_FnYw.ttf",
+        "mediaType": "font/ttf"
+      },
+      "assets/catalog-22.ttf": {
+        "kind": "remote",
+        "sourceUrl": "https://fonts.gstatic.com/s/notosanssc/v41/k3kCo84MPvpLmixcA63oeAL7Iqp5IZJF9bmaG4HFnYw.ttf",
+        "mediaType": "font/ttf"
+      },
+      "assets/catalog-23.ttf": {
+        "kind": "remote",
+        "sourceUrl": "https://fonts.gstatic.com/s/notosanssc/v41/k3kCo84MPvpLmixcA63oeAL7Iqp5IZJF9bmaG9_FnYw.ttf",
+        "mediaType": "font/ttf"
+      },
+      "assets/catalog-24.ttf": {
+        "kind": "remote",
+        "sourceUrl": "https://fonts.gstatic.com/s/notosanssc/v41/k3kCo84MPvpLmixcA63oeAL7Iqp5IZJF9bmaG-3FnYw.ttf",
+        "mediaType": "font/ttf"
+      },
+      "assets/catalog-25.ttf": {
+        "kind": "remote",
+        "sourceUrl": "https://fonts.gstatic.com/s/notosanssc/v41/k3kCo84MPvpLmixcA63oeAL7Iqp5IZJF9bmaGwHCnYw.ttf",
+        "mediaType": "font/ttf"
+      },
+      "assets/catalog-26.ttf": {
+        "kind": "remote",
+        "sourceUrl": "https://fonts.gstatic.com/s/notosanssc/v41/k3kCo84MPvpLmixcA63oeAL7Iqp5IZJF9bmaGzjCnYw.ttf",
+        "mediaType": "font/ttf"
+      },
+      "assets/catalog-27.ttf": {
+        "kind": "remote",
+        "sourceUrl": "https://fonts.gstatic.com/s/notosanssc/v41/k3kCo84MPvpLmixcA63oeAL7Iqp5IZJF9bmaG3bCnYw.ttf",
+        "mediaType": "font/ttf"
+      },
+      "assets/catalog-28.bin": {
+        "kind": "remote",
+        "sourceUrl": "https://fontsapi.zeoseven.com/370/main/beabb90211ba1368352b182021fc91be.woff2",
+        "mediaType": "font/woff2"
+      },
+      "assets/catalog-29.bin": {
+        "kind": "remote",
+        "sourceUrl": "https://fontsapi.zeoseven.com/370/main/2ddb9c766ee985b492d0af1725af1b52.woff2",
+        "mediaType": "font/woff2"
+      },
+      "assets/catalog-30.bin": {
+        "kind": "remote",
+        "sourceUrl": "https://fontsapi.zeoseven.com/370/main/4b998b0e2879ce5aac41d051a7d704fc.woff2",
+        "mediaType": "font/woff2"
+      },
+      "assets/catalog-31.bin": {
+        "kind": "remote",
+        "sourceUrl": "https://fontsapi.zeoseven.com/370/main/00c7996b83eefb1b14bb006a7c49cf08.woff2",
+        "mediaType": "font/woff2"
+      },
+      "assets/catalog-32.bin": {
+        "kind": "remote",
+        "sourceUrl": "https://fontsapi.zeoseven.com/370/main/c5661cfcda96285be49770585fd6a676.woff2",
+        "mediaType": "font/woff2"
+      },
+      "assets/catalog-33.bin": {
+        "kind": "remote",
+        "sourceUrl": "https://fontsapi.zeoseven.com/370/main/c0e696da0960705a798644b9738c3e56.woff2",
+        "mediaType": "font/woff2"
+      },
+      "assets/catalog-34.bin": {
+        "kind": "remote",
+        "sourceUrl": "https://fontsapi.zeoseven.com/370/main/68de1fa838eab5eb935d5f93e9c8202d.woff2",
+        "mediaType": "font/woff2"
+      },
+      "assets/catalog-35.bin": {
+        "kind": "remote",
+        "sourceUrl": "https://fontsapi.zeoseven.com/370/main/d256f9393a639853b8b5113d5aa73a84.woff2",
+        "mediaType": "font/woff2"
+      },
+      "assets/catalog-36.bin": {
+        "kind": "remote",
+        "sourceUrl": "https://fontsapi.zeoseven.com/370/main/544c601135919c121f9b6f70f8860adb.woff2",
+        "mediaType": "font/woff2"
+      },
+      "assets/catalog-37.bin": {
+        "kind": "remote",
+        "sourceUrl": "https://fontsapi.zeoseven.com/370/main/84e54dfe5911a74038d2fbc94d5fe08d.woff2",
+        "mediaType": "font/woff2"
+      },
+      "assets/catalog-38.bin": {
+        "kind": "remote",
+        "sourceUrl": "https://fontsapi.zeoseven.com/370/main/9af5977f274051e26dda933f3f942b1e.woff2",
+        "mediaType": "font/woff2"
+      },
+      "assets/catalog-39.bin": {
+        "kind": "remote",
+        "sourceUrl": "https://fontsapi.zeoseven.com/370/main/bc1be923e8235ef6db8986fcd2a1d0f7.woff2",
+        "mediaType": "font/woff2"
+      },
+      "assets/catalog-40.bin": {
+        "kind": "remote",
+        "sourceUrl": "https://fontsapi.zeoseven.com/370/main/a9eb4d1df53baba7c016f9aaf6141fd5.woff2",
+        "mediaType": "font/woff2"
+      },
+      "assets/catalog-41.bin": {
+        "kind": "remote",
+        "sourceUrl": "https://fontsapi.zeoseven.com/370/main/318b2d2e90cd03608106c8397b62f68e.woff2",
+        "mediaType": "font/woff2"
+      },
+      "assets/catalog-42.bin": {
+        "kind": "remote",
+        "sourceUrl": "https://fontsapi.zeoseven.com/370/main/7fe8fd7ce271715e33f8ce093840273e.woff2",
+        "mediaType": "font/woff2"
+      },
+      "assets/catalog-43.bin": {
+        "kind": "remote",
+        "sourceUrl": "https://fontsapi.zeoseven.com/370/main/c81b54278f84193289517fae78403b64.woff2",
+        "mediaType": "font/woff2"
+      },
+      "assets/catalog-44.bin": {
+        "kind": "remote",
+        "sourceUrl": "https://fontsapi.zeoseven.com/370/main/52556e9724b27550e170407f9bfcd4c3.woff2",
+        "mediaType": "font/woff2"
+      },
+      "assets/catalog-45.bin": {
+        "kind": "remote",
+        "sourceUrl": "https://fontsapi.zeoseven.com/370/main/027b7145a514e831676a4a4370bc3aaa.woff2",
+        "mediaType": "font/woff2"
+      },
+      "assets/catalog-46.bin": {
+        "kind": "remote",
+        "sourceUrl": "https://fontsapi.zeoseven.com/370/main/b20aa66609ee05c7302d4be585e0a9ab.woff2",
+        "mediaType": "font/woff2"
+      },
+      "assets/catalog-47.bin": {
+        "kind": "remote",
+        "sourceUrl": "https://fontsapi.zeoseven.com/370/main/34e06910026581fc0b94404fc6b437b8.woff2",
+        "mediaType": "font/woff2"
+      },
+      "assets/catalog-48.bin": {
+        "kind": "remote",
+        "sourceUrl": "https://fontsapi.zeoseven.com/370/main/7e10c35e0bec15380f69321294b64bc0.woff2",
+        "mediaType": "font/woff2"
+      },
+      "assets/catalog-49.bin": {
+        "kind": "remote",
+        "sourceUrl": "https://fontsapi.zeoseven.com/370/main/45f5a02680bf8d828bd2c758c3ffab4a.woff2",
+        "mediaType": "font/woff2"
+      },
+      "assets/catalog-50.bin": {
+        "kind": "remote",
+        "sourceUrl": "https://fontsapi.zeoseven.com/370/main/f9e26dd16d1cf2f77cd185d670cda09e.woff2",
+        "mediaType": "font/woff2"
+      },
+      "assets/catalog-51.bin": {
+        "kind": "remote",
+        "sourceUrl": "https://fontsapi.zeoseven.com/370/main/bc43bb3332a59d764d804b5340275b59.woff2",
+        "mediaType": "font/woff2"
+      },
+      "assets/catalog-52.bin": {
+        "kind": "remote",
+        "sourceUrl": "https://fontsapi.zeoseven.com/370/main/35e1c59b68eeeee1c04058e27464ef4b.woff2",
+        "mediaType": "font/woff2"
+      },
+      "assets/catalog-53.bin": {
+        "kind": "remote",
+        "sourceUrl": "https://fontsapi.zeoseven.com/370/main/c4e206a4b71b0ed0144d6b9b62b0215a.woff2",
+        "mediaType": "font/woff2"
+      },
+      "assets/catalog-54.bin": {
+        "kind": "remote",
+        "sourceUrl": "https://fontsapi.zeoseven.com/370/main/7aacfe8d55a92248a51a51c352df0035.woff2",
+        "mediaType": "font/woff2"
+      },
+      "assets/catalog-55.bin": {
+        "kind": "remote",
+        "sourceUrl": "https://fontsapi.zeoseven.com/370/main/6d1b3f80ef6531fd1c8870bb2e2ac923.woff2",
+        "mediaType": "font/woff2"
+      },
+      "assets/catalog-56.bin": {
+        "kind": "remote",
+        "sourceUrl": "https://fontsapi.zeoseven.com/370/main/7f6dfe3dbb7f598fc4f51074861ecbdf.woff2",
+        "mediaType": "font/woff2"
+      },
+      "assets/catalog-57.bin": {
+        "kind": "remote",
+        "sourceUrl": "https://fontsapi.zeoseven.com/370/main/03c96b84a66bdc2ddda775563beeee95.woff2",
+        "mediaType": "font/woff2"
+      },
+      "assets/catalog-58.bin": {
+        "kind": "remote",
+        "sourceUrl": "https://fontsapi.zeoseven.com/370/main/c240d29f162d4a3ff6f2ade353691a74.woff2",
+        "mediaType": "font/woff2"
+      },
+      "assets/catalog-59.bin": {
+        "kind": "remote",
+        "sourceUrl": "https://fontsapi.zeoseven.com/370/main/5112315ca64d48c39b1afa825505f62c.woff2",
+        "mediaType": "font/woff2"
+      },
+      "assets/catalog-60.bin": {
+        "kind": "remote",
+        "sourceUrl": "https://fontsapi.zeoseven.com/370/main/3a33786df3e1ebdb892d7e5df4f3d7ae.woff2",
+        "mediaType": "font/woff2"
+      },
+      "assets/catalog-61.bin": {
+        "kind": "remote",
+        "sourceUrl": "https://fontsapi.zeoseven.com/370/main/0d3b14f326854a30d0ff1f6fc002571a.woff2",
+        "mediaType": "font/woff2"
+      },
+      "assets/catalog-62.bin": {
+        "kind": "remote",
+        "sourceUrl": "https://fontsapi.zeoseven.com/370/main/c749a04e5cd977e8368bad4d853cf1ed.woff2",
+        "mediaType": "font/woff2"
+      },
+      "assets/catalog-63.bin": {
+        "kind": "remote",
+        "sourceUrl": "https://fontsapi.zeoseven.com/370/main/095a8414f6cc5aaf97c48a319b376ed9.woff2",
+        "mediaType": "font/woff2"
+      },
+      "assets/catalog-64.bin": {
+        "kind": "remote",
+        "sourceUrl": "https://fontsapi.zeoseven.com/370/main/d59e0472d30f86ff851867dd7c727e0f.woff2",
+        "mediaType": "font/woff2"
+      },
+      "assets/catalog-65.bin": {
+        "kind": "remote",
+        "sourceUrl": "https://fontsapi.zeoseven.com/370/main/412672083d975150d12d1e1acdc37166.woff2",
+        "mediaType": "font/woff2"
+      },
+      "assets/catalog-66.bin": {
+        "kind": "remote",
+        "sourceUrl": "https://fontsapi.zeoseven.com/370/main/efd9eca36db278180320e646e2cf18cd.woff2",
+        "mediaType": "font/woff2"
+      },
+      "assets/catalog-67.bin": {
+        "kind": "remote",
+        "sourceUrl": "https://fontsapi.zeoseven.com/370/main/64c63df2639c2a5c5b14d619b915cf23.woff2",
+        "mediaType": "font/woff2"
+      },
+      "assets/catalog-68.bin": {
+        "kind": "remote",
+        "sourceUrl": "https://fontsapi.zeoseven.com/370/main/2fd5f96bb45509a62b8ac55c585c36bb.woff2",
+        "mediaType": "font/woff2"
+      },
+      "assets/catalog-69.bin": {
+        "kind": "remote",
+        "sourceUrl": "https://fontsapi.zeoseven.com/370/main/f1fe2f7a44eaded7fb395b7472ee8a40.woff2",
+        "mediaType": "font/woff2"
+      },
+      "assets/catalog-70.bin": {
+        "kind": "remote",
+        "sourceUrl": "https://fontsapi.zeoseven.com/370/main/88525b8e1ec0e853a196f5ce9729e669.woff2",
+        "mediaType": "font/woff2"
+      },
+      "assets/catalog-71.bin": {
+        "kind": "remote",
+        "sourceUrl": "https://fontsapi.zeoseven.com/370/main/c380ad58b0c17c9db8529479f0565c41.woff2",
+        "mediaType": "font/woff2"
+      },
+      "assets/catalog-72.bin": {
+        "kind": "remote",
+        "sourceUrl": "https://fontsapi.zeoseven.com/370/main/d11defd896a300b7c9dd46664b3d81cd.woff2",
+        "mediaType": "font/woff2"
+      },
+      "assets/catalog-73.bin": {
+        "kind": "remote",
+        "sourceUrl": "https://fontsapi.zeoseven.com/370/main/45845123caa4642fc0e495899a7d2dfc.woff2",
+        "mediaType": "font/woff2"
+      },
+      "assets/catalog-74.bin": {
+        "kind": "remote",
+        "sourceUrl": "https://fontsapi.zeoseven.com/370/main/98bd97349b38fa3d4663dc7b2f08112d.woff2",
+        "mediaType": "font/woff2"
+      },
+      "assets/catalog-75.bin": {
+        "kind": "remote",
+        "sourceUrl": "https://fontsapi.zeoseven.com/370/main/68e03b81453d9dfdd52e03ea5a882dbb.woff2",
+        "mediaType": "font/woff2"
+      },
+      "assets/catalog-76.bin": {
+        "kind": "remote",
+        "sourceUrl": "https://fontsapi.zeoseven.com/370/main/e87e0d0e9fd284adc0b818c590b51612.woff2",
+        "mediaType": "font/woff2"
+      },
+      "assets/catalog-77.bin": {
+        "kind": "remote",
+        "sourceUrl": "https://fontsapi.zeoseven.com/370/main/f812731ae25c8468e15ed86bf21997fc.woff2",
+        "mediaType": "font/woff2"
+      },
+      "assets/catalog-78.bin": {
+        "kind": "remote",
+        "sourceUrl": "https://fontsapi.zeoseven.com/370/main/65f39f0a2e1f2b522a86fbe4f0ea4d06.woff2",
+        "mediaType": "font/woff2"
+      },
+      "assets/catalog-79.bin": {
+        "kind": "remote",
+        "sourceUrl": "https://fontsapi.zeoseven.com/370/main/a22a020a320b47a9028ba4e7e4c5c5d8.woff2",
+        "mediaType": "font/woff2"
+      },
+      "assets/catalog-80.bin": {
+        "kind": "remote",
+        "sourceUrl": "https://fontsapi.zeoseven.com/370/main/325e783865e6c82e5641a2c698412c0c.woff2",
+        "mediaType": "font/woff2"
+      },
+      "assets/catalog-81.bin": {
+        "kind": "remote",
+        "sourceUrl": "https://fontsapi.zeoseven.com/370/main/4371661c5c280b7bdcdb1268c80d2f88.woff2",
+        "mediaType": "font/woff2"
+      },
+      "assets/catalog-82.bin": {
+        "kind": "remote",
+        "sourceUrl": "https://fontsapi.zeoseven.com/370/main/0e478ca7f8d4571541071345f7f63e43.woff2",
+        "mediaType": "font/woff2"
+      },
+      "assets/catalog-83.bin": {
+        "kind": "remote",
+        "sourceUrl": "https://fontsapi.zeoseven.com/370/main/ff18b85509d7d9a49106e3b5805e7d1c.woff2",
+        "mediaType": "font/woff2"
+      },
+      "assets/catalog-84.bin": {
+        "kind": "remote",
+        "sourceUrl": "https://fontsapi.zeoseven.com/370/main/196d59ad940a80e7266d02a8e6a5a2c0.woff2",
+        "mediaType": "font/woff2"
+      },
+      "assets/catalog-85.bin": {
+        "kind": "remote",
+        "sourceUrl": "https://fontsapi.zeoseven.com/370/main/27bb65e19f1db5e11016ee7d190efaae.woff2",
+        "mediaType": "font/woff2"
+      },
+      "assets/catalog-86.bin": {
+        "kind": "remote",
+        "sourceUrl": "https://fontsapi.zeoseven.com/370/main/7d9d0670b9c3854e2f89975c93f676e5.woff2",
+        "mediaType": "font/woff2"
+      },
+      "assets/catalog-87.bin": {
+        "kind": "remote",
+        "sourceUrl": "https://fontsapi.zeoseven.com/370/main/0f4d42b279a97f22dba10c59ba9d5626.woff2",
+        "mediaType": "font/woff2"
+      },
+      "assets/catalog-88.bin": {
+        "kind": "remote",
+        "sourceUrl": "https://fontsapi.zeoseven.com/370/main/2de73412b5b2ba079e2ebc1dcd91c187.woff2",
+        "mediaType": "font/woff2"
+      },
+      "assets/catalog-89.bin": {
+        "kind": "remote",
+        "sourceUrl": "https://fontsapi.zeoseven.com/370/main/6f988d56c5aeb907512c310378c7c4e7.woff2",
+        "mediaType": "font/woff2"
+      },
+      "assets/catalog-90.bin": {
+        "kind": "remote",
+        "sourceUrl": "https://fontsapi.zeoseven.com/370/main/c0258d207dfd4c3d806c7a3d048e6c43.woff2",
+        "mediaType": "font/woff2"
+      },
+      "assets/catalog-91.bin": {
+        "kind": "remote",
+        "sourceUrl": "https://fontsapi.zeoseven.com/370/main/b1b9836485bc47716899309a75b2b2ec.woff2",
+        "mediaType": "font/woff2"
+      },
+      "assets/catalog-92.bin": {
+        "kind": "remote",
+        "sourceUrl": "https://fontsapi.zeoseven.com/370/main/04460ad355d1113e4bec9f6f3be86023.woff2",
+        "mediaType": "font/woff2"
+      },
+      "assets/catalog-93.bin": {
+        "kind": "remote",
+        "sourceUrl": "https://fontsapi.zeoseven.com/370/main/ab0d517983ab9f77184b163acccd989f.woff2",
+        "mediaType": "font/woff2"
+      },
+      "assets/catalog-94.bin": {
+        "kind": "remote",
+        "sourceUrl": "https://fontsapi.zeoseven.com/370/main/5c4f301f308131caa863a6238bdcb038.woff2",
+        "mediaType": "font/woff2"
+      },
+      "assets/catalog-95.bin": {
+        "kind": "remote",
+        "sourceUrl": "https://fontsapi.zeoseven.com/370/main/f55cfb46639360fdd277cd8b964041d3.woff2",
+        "mediaType": "font/woff2"
+      },
+      "assets/catalog-96.bin": {
+        "kind": "remote",
+        "sourceUrl": "https://fontsapi.zeoseven.com/370/main/56c4c88348dc9430cce87e60eb062ec3.woff2",
+        "mediaType": "font/woff2"
+      },
+      "assets/catalog-97.bin": {
+        "kind": "remote",
+        "sourceUrl": "https://fontsapi.zeoseven.com/370/main/782b7cb682522f6b1b2a2b7f0a23fd5a.woff2",
+        "mediaType": "font/woff2"
+      },
+      "assets/catalog-98.bin": {
+        "kind": "remote",
+        "sourceUrl": "https://fontsapi.zeoseven.com/370/main/ba4e74b3e0dac56863e3a7fb7f319dc6.woff2",
+        "mediaType": "font/woff2"
+      },
+      "assets/catalog-99.bin": {
+        "kind": "remote",
+        "sourceUrl": "https://fontsapi.zeoseven.com/370/main/da03353678fb25a476697539fe38553d.woff2",
+        "mediaType": "font/woff2"
+      },
+      "assets/catalog-100.bin": {
+        "kind": "remote",
+        "sourceUrl": "https://fontsapi.zeoseven.com/370/main/00a9cdc4acac61ca5dcfe82fe344239b.woff2",
+        "mediaType": "font/woff2"
+      },
+      "assets/catalog-101.bin": {
+        "kind": "remote",
+        "sourceUrl": "https://fontsapi.zeoseven.com/370/main/6a07270e46ffb0039c36d72ba7d540ce.woff2",
+        "mediaType": "font/woff2"
+      },
+      "assets/catalog-102.bin": {
+        "kind": "remote",
+        "sourceUrl": "https://fontsapi.zeoseven.com/370/main/d8a00004f4b4e602dc6b62189000c85a.woff2",
+        "mediaType": "font/woff2"
+      },
+      "assets/catalog-103.bin": {
+        "kind": "remote",
+        "sourceUrl": "https://fontsapi.zeoseven.com/370/main/3bc4c51df967bbb842e07ecd2c0f2588.woff2",
+        "mediaType": "font/woff2"
+      },
+      "assets/catalog-104.bin": {
+        "kind": "remote",
+        "sourceUrl": "https://fontsapi.zeoseven.com/370/main/9828fdb7512b61063b57f7d4e563c964.woff2",
+        "mediaType": "font/woff2"
+      },
+      "assets/catalog-105.bin": {
+        "kind": "remote",
+        "sourceUrl": "https://fontsapi.zeoseven.com/370/main/ccfb3daa8de3cca13b842f9e2f6ee42a.woff2",
+        "mediaType": "font/woff2"
+      },
+      "assets/catalog-106.bin": {
+        "kind": "remote",
+        "sourceUrl": "https://fontsapi.zeoseven.com/370/main/74bd80d62c460ee385bac72e300b0c1a.woff2",
+        "mediaType": "font/woff2"
+      },
+      "assets/catalog-107.bin": {
+        "kind": "remote",
+        "sourceUrl": "https://fontsapi.zeoseven.com/370/main/2dd26856cca61b6fdc980f222886bc86.woff2",
+        "mediaType": "font/woff2"
+      },
+      "assets/catalog-108.bin": {
+        "kind": "remote",
+        "sourceUrl": "https://fontsapi.zeoseven.com/370/main/37468cf595b38c284e2c1310ca717572.woff2",
+        "mediaType": "font/woff2"
+      },
+      "assets/catalog-109.bin": {
+        "kind": "remote",
+        "sourceUrl": "https://fontsapi.zeoseven.com/370/main/682d8846c5ea85f725186d2281fdebdd.woff2",
+        "mediaType": "font/woff2"
+      },
+      "assets/catalog-110.bin": {
+        "kind": "remote",
+        "sourceUrl": "https://fontsapi.zeoseven.com/370/main/ad02eb329e91f758e7e4148a0710b143.woff2",
+        "mediaType": "font/woff2"
+      },
+      "assets/catalog-111.bin": {
+        "kind": "remote",
+        "sourceUrl": "https://fontsapi.zeoseven.com/370/main/a71ad46ee580ea76820c69794ca730e5.woff2",
+        "mediaType": "font/woff2"
+      },
+      "assets/catalog-112.bin": {
+        "kind": "remote",
+        "sourceUrl": "https://fontsapi.zeoseven.com/370/main/ea0c0237b723632cb58c743c5b096fde.woff2",
+        "mediaType": "font/woff2"
+      },
+      "assets/catalog-113.bin": {
+        "kind": "remote",
+        "sourceUrl": "https://fontsapi.zeoseven.com/370/main/cac08c3b1d43bc5d3cda06239efb8962.woff2",
+        "mediaType": "font/woff2"
+      },
+      "assets/catalog-114.bin": {
+        "kind": "remote",
+        "sourceUrl": "https://fontsapi.zeoseven.com/370/main/765c64af32f15323331874a9065f65a1.woff2",
+        "mediaType": "font/woff2"
+      },
+      "assets/catalog-115.bin": {
+        "kind": "remote",
+        "sourceUrl": "https://fontsapi.zeoseven.com/370/main/c2ffaab177caee7c4f1bd9858ba611a6.woff2",
+        "mediaType": "font/woff2"
+      },
+      "assets/catalog-116.bin": {
+        "kind": "remote",
+        "sourceUrl": "https://fontsapi.zeoseven.com/370/main/4dd4112668e8c65aaa88a4df39d5ee64.woff2",
+        "mediaType": "font/woff2"
+      },
+      "assets/catalog-117.bin": {
+        "kind": "remote",
+        "sourceUrl": "https://fontsapi.zeoseven.com/370/main/920dd0093370feb2890224d03777fe17.woff2",
+        "mediaType": "font/woff2"
+      },
+      "assets/catalog-118.bin": {
+        "kind": "remote",
+        "sourceUrl": "https://fontsapi.zeoseven.com/370/main/7ed5e4f810f4a2b45b500e17fa40aef5.woff2",
+        "mediaType": "font/woff2"
+      },
+      "assets/catalog-119.bin": {
+        "kind": "remote",
+        "sourceUrl": "https://fontsapi.zeoseven.com/370/main/d8472b488c3538b11aa15c80072d176e.woff2",
+        "mediaType": "font/woff2"
+      },
+      "assets/catalog-120.bin": {
+        "kind": "remote",
+        "sourceUrl": "https://fontsapi.zeoseven.com/370/main/62857a9d0c70495957fcb433e227e68e.woff2",
+        "mediaType": "font/woff2"
+      },
+      "assets/catalog-121.bin": {
+        "kind": "remote",
+        "sourceUrl": "https://fontsapi.zeoseven.com/370/main/41e3a3fd9674c6c2e7c45aff6ff3fb4a.woff2",
+        "mediaType": "font/woff2"
+      },
+      "assets/catalog-122.bin": {
+        "kind": "remote",
+        "sourceUrl": "https://fontsapi.zeoseven.com/370/main/63b4bd59910ee9efa69d482e14843a6b.woff2",
+        "mediaType": "font/woff2"
+      },
+      "assets/catalog-123.bin": {
+        "kind": "remote",
+        "sourceUrl": "https://fontsapi.zeoseven.com/370/main/ad10eaf4ce0634d208c9072a3cc520e3.woff2",
+        "mediaType": "font/woff2"
+      },
+      "assets/catalog-124.bin": {
+        "kind": "remote",
+        "sourceUrl": "https://fontsapi.zeoseven.com/370/main/2e7aa61f59aee6ab8e8bc69d1b678ff6.woff2",
+        "mediaType": "font/woff2"
+      },
+      "assets/catalog-125.bin": {
+        "kind": "remote",
+        "sourceUrl": "https://fontsapi.zeoseven.com/370/main/ab0f365cae9ae79e7fc83c350d09abc1.woff2",
+        "mediaType": "font/woff2"
+      },
+      "assets/catalog-126.bin": {
+        "kind": "remote",
+        "sourceUrl": "https://fontsapi.zeoseven.com/370/main/e15d722337b802636a151c610d706f52.woff2",
+        "mediaType": "font/woff2"
+      },
+      "assets/catalog-127.bin": {
+        "kind": "remote",
+        "sourceUrl": "https://fontsapi.zeoseven.com/370/main/687fd84aba0ae7a37941b8c4c3a1950d.woff2",
+        "mediaType": "font/woff2"
+      },
+      "assets/catalog-128.bin": {
+        "kind": "remote",
+        "sourceUrl": "https://fontsapi.zeoseven.com/370/main/2556157a92b6723ac01c59ef01245bb3.woff2",
+        "mediaType": "font/woff2"
+      },
+      "assets/catalog-129.bin": {
+        "kind": "remote",
+        "sourceUrl": "https://fontsapi.zeoseven.com/370/main/96c0eacfcc6eea740efc126d31d84315.woff2",
+        "mediaType": "font/woff2"
+      },
+      "assets/catalog-130.bin": {
+        "kind": "remote",
+        "sourceUrl": "https://fontsapi.zeoseven.com/370/main/ae4b44333a9ccaad832985e2d2a816c8.woff2",
+        "mediaType": "font/woff2"
+      },
+      "assets/catalog-131.bin": {
+        "kind": "remote",
+        "sourceUrl": "https://fontsapi.zeoseven.com/370/main/46f9c59b6dd979c65a0526be4e86bb03.woff2",
+        "mediaType": "font/woff2"
+      },
+      "assets/catalog-132.bin": {
+        "kind": "remote",
+        "sourceUrl": "https://fontsapi.zeoseven.com/370/main/d8f185655ce7b9f48ddeeeac90e5a623.woff2",
+        "mediaType": "font/woff2"
+      },
+      "assets/catalog-133.bin": {
+        "kind": "remote",
+        "sourceUrl": "https://fontsapi.zeoseven.com/370/main/ba70db9d695eb751ac1870c07760c5ab.woff2",
+        "mediaType": "font/woff2"
+      },
+      "assets/catalog-134.bin": {
+        "kind": "remote",
+        "sourceUrl": "https://fontsapi.zeoseven.com/370/main/81c53365afaae99c9bb78c12d6faa3db.woff2",
+        "mediaType": "font/woff2"
+      },
+      "assets/catalog-135.bin": {
+        "kind": "remote",
+        "sourceUrl": "https://fontsapi.zeoseven.com/370/main/5a44d3094035d5a166c4fd3ec2a558e6.woff2",
+        "mediaType": "font/woff2"
+      },
+      "assets/catalog-136.bin": {
+        "kind": "remote",
+        "sourceUrl": "https://fontsapi.zeoseven.com/370/main/a4f9d0afaff6e528dad918fb75f9fb9a.woff2",
+        "mediaType": "font/woff2"
+      },
+      "assets/catalog-137.bin": {
+        "kind": "remote",
+        "sourceUrl": "https://fontsapi.zeoseven.com/370/main/20ad0694d9930a5297a97cfe568657a5.woff2",
+        "mediaType": "font/woff2"
+      },
+      "assets/catalog-138.bin": {
+        "kind": "remote",
+        "sourceUrl": "https://fontsapi.zeoseven.com/370/main/8f7568beb151e714a955a98e209df679.woff2",
+        "mediaType": "font/woff2"
+      },
+      "assets/catalog-139.bin": {
+        "kind": "remote",
+        "sourceUrl": "https://fontsapi.zeoseven.com/370/main/6cc26f50988f6d7e18728742996d4106.woff2",
+        "mediaType": "font/woff2"
+      },
+      "assets/catalog-140.bin": {
+        "kind": "remote",
+        "sourceUrl": "https://fontsapi.zeoseven.com/370/main/be1e3ca46c02e2790b2f55bc5c78de6d.woff2",
+        "mediaType": "font/woff2"
+      },
+      "assets/catalog-141.bin": {
+        "kind": "remote",
+        "sourceUrl": "https://fontsapi.zeoseven.com/370/main/1f64df6e36a4041549b0ff35c22e9026.woff2",
+        "mediaType": "font/woff2"
+      },
+      "assets/catalog-142.bin": {
+        "kind": "remote",
+        "sourceUrl": "https://fontsapi.zeoseven.com/370/main/c3a562b571633ba6ef28653f70d1ec83.woff2",
+        "mediaType": "font/woff2"
+      },
+      "assets/catalog-143.bin": {
+        "kind": "remote",
+        "sourceUrl": "https://fontsapi.zeoseven.com/370/main/b454e47a748db4c8e6f6aec27a433c65.woff2",
+        "mediaType": "font/woff2"
+      },
+      "assets/catalog-144.bin": {
+        "kind": "remote",
+        "sourceUrl": "https://fontsapi.zeoseven.com/370/main/9f221916a2787ca8ebd95bb00a5e256b.woff2",
+        "mediaType": "font/woff2"
+      },
+      "assets/catalog-145.bin": {
+        "kind": "remote",
+        "sourceUrl": "https://fontsapi.zeoseven.com/370/main/3fda016cf91be8e9ba9e7991acdc3092.woff2",
+        "mediaType": "font/woff2"
+      },
+      "assets/catalog-146.bin": {
+        "kind": "remote",
+        "sourceUrl": "https://fontsapi.zeoseven.com/370/main/02ebd361cf03cf169cfdc2154b3a93b7.woff2",
+        "mediaType": "font/woff2"
+      },
+      "assets/catalog-147.bin": {
+        "kind": "remote",
+        "sourceUrl": "https://fontsapi.zeoseven.com/370/main/50851f044a6d73493491e6dcd689823d.woff2",
+        "mediaType": "font/woff2"
+      },
+      "assets/catalog-148.bin": {
+        "kind": "remote",
+        "sourceUrl": "https://fontsapi.zeoseven.com/370/main/a8cbcbbec4cc4a87a0e09632937d5c0b.woff2",
+        "mediaType": "font/woff2"
+      },
+      "assets/catalog-149.bin": {
+        "kind": "remote",
+        "sourceUrl": "https://fontsapi.zeoseven.com/370/main/7c6bdcaf9338c766f631ef7d0010fcb2.woff2",
+        "mediaType": "font/woff2"
+      },
+      "assets/catalog-150.bin": {
+        "kind": "remote",
+        "sourceUrl": "https://fontsapi.zeoseven.com/370/main/11752071a09e5d471fe97fb9a2cc6b3d.woff2",
+        "mediaType": "font/woff2"
+      },
+      "assets/catalog-151.bin": {
+        "kind": "remote",
+        "sourceUrl": "https://fontsapi.zeoseven.com/370/main/3b42ae93c45483a8b87e84acdb78e5d7.woff2",
+        "mediaType": "font/woff2"
+      },
+      "assets/catalog-152.bin": {
+        "kind": "remote",
+        "sourceUrl": "https://fontsapi.zeoseven.com/370/main/773653f2d12cb6b00f393849c58a4192.woff2",
+        "mediaType": "font/woff2"
+      },
+      "assets/catalog-153.bin": {
+        "kind": "remote",
+        "sourceUrl": "https://fontsapi.zeoseven.com/370/main/3be92f53212ab7bd3148310c3f96bcc2.woff2",
+        "mediaType": "font/woff2"
+      },
+      "assets/catalog-154.bin": {
+        "kind": "remote",
+        "sourceUrl": "https://fontsapi.zeoseven.com/370/main/7014b025a26be0c7f505acc44d2ba757.woff2",
+        "mediaType": "font/woff2"
+      },
+      "assets/catalog-155.bin": {
+        "kind": "remote",
+        "sourceUrl": "https://fontsapi.zeoseven.com/370/main/335fd42b0df521eef5cec330a44f0630.woff2",
+        "mediaType": "font/woff2"
+      },
+      "assets/catalog-156.bin": {
+        "kind": "remote",
+        "sourceUrl": "https://fontsapi.zeoseven.com/370/main/0a89ed4f2bfaf1d41671100cb7f34a4c.woff2",
+        "mediaType": "font/woff2"
+      },
+      "assets/catalog-157.bin": {
+        "kind": "remote",
+        "sourceUrl": "https://fontsapi.zeoseven.com/370/main/a8e986b7e04f2d2b590f484858ab1726.woff2",
+        "mediaType": "font/woff2"
+      },
+      "assets/catalog-158.bin": {
+        "kind": "remote",
+        "sourceUrl": "https://fontsapi.zeoseven.com/370/main/203a969d50af4e41ac49e483f8bb4da1.woff2",
+        "mediaType": "font/woff2"
+      },
+      "assets/catalog-159.bin": {
+        "kind": "remote",
+        "sourceUrl": "https://fontsapi.zeoseven.com/370/main/c75948169716e398da73ac07d45b88d5.woff2",
+        "mediaType": "font/woff2"
+      },
+      "assets/catalog-160.bin": {
+        "kind": "remote",
+        "sourceUrl": "https://fontsapi.zeoseven.com/370/main/f2382d238876b9f03151cc6a1c4f21a8.woff2",
+        "mediaType": "font/woff2"
+      },
+      "assets/catalog-161.bin": {
+        "kind": "remote",
+        "sourceUrl": "https://fontsapi.zeoseven.com/370/main/837843526147a02746e097556e12eb7f.woff2",
+        "mediaType": "font/woff2"
+      },
+      "assets/catalog-162.bin": {
+        "kind": "remote",
+        "sourceUrl": "https://fontsapi.zeoseven.com/370/main/0f01b10b1ae468da74023c53e9e57f4d.woff2",
+        "mediaType": "font/woff2"
+      },
+      "assets/catalog-163.bin": {
+        "kind": "remote",
+        "sourceUrl": "https://fontsapi.zeoseven.com/370/main/5915135a276526fda18adf16cee8adfd.woff2",
+        "mediaType": "font/woff2"
+      },
+      "assets/catalog-164.bin": {
+        "kind": "remote",
+        "sourceUrl": "https://fontsapi.zeoseven.com/370/main/cbbdb4f6ea7bda10a50eee1fcdcd2680.woff2",
+        "mediaType": "font/woff2"
+      },
+      "assets/catalog-165.bin": {
+        "kind": "remote",
+        "sourceUrl": "https://fontsapi.zeoseven.com/370/main/2e57d30a40320426ede1973e558b8dde.woff2",
+        "mediaType": "font/woff2"
+      },
+      "assets/catalog-166.bin": {
+        "kind": "remote",
+        "sourceUrl": "https://fontsapi.zeoseven.com/370/main/c0bfecd84b114a43e0c08d6b072585f6.woff2",
+        "mediaType": "font/woff2"
+      },
+      "assets/catalog-167.bin": {
+        "kind": "remote",
+        "sourceUrl": "https://fontsapi.zeoseven.com/370/main/a774380a72454cfb043d1f6e7a76efd0.woff2",
+        "mediaType": "font/woff2"
+      },
+      "assets/catalog-168.bin": {
+        "kind": "remote",
+        "sourceUrl": "https://fontsapi.zeoseven.com/370/main/c078ecfb11005327408fa7802ae5ccff.woff2",
+        "mediaType": "font/woff2"
+      },
+      "assets/catalog-169.bin": {
+        "kind": "remote",
+        "sourceUrl": "https://fontsapi.zeoseven.com/370/main/d7a543f1ef213c049d1b99454566da01.woff2",
+        "mediaType": "font/woff2"
+      },
+      "assets/catalog-170.bin": {
+        "kind": "remote",
+        "sourceUrl": "https://fontsapi.zeoseven.com/370/main/aa3a0d29719d70f046f4d651b7dc71c8.woff2",
+        "mediaType": "font/woff2"
+      },
+      "assets/catalog-171.bin": {
+        "kind": "remote",
+        "sourceUrl": "https://fontsapi.zeoseven.com/370/main/d27a2efa77cc36245a2bfd0e32bd806b.woff2",
+        "mediaType": "font/woff2"
+      },
+      "assets/catalog-172.bin": {
+        "kind": "remote",
+        "sourceUrl": "https://fontsapi.zeoseven.com/370/main/f3d4a1b2934fc54538c68bc0fff135e7.woff2",
+        "mediaType": "font/woff2"
+      },
+      "assets/catalog-173.bin": {
+        "kind": "remote",
+        "sourceUrl": "https://fontsapi.zeoseven.com/370/main/45b6edf07b9c76e3fffcf6a57798d5b4.woff2",
+        "mediaType": "font/woff2"
+      },
+      "assets/catalog-174.bin": {
+        "kind": "remote",
+        "sourceUrl": "https://fontsapi.zeoseven.com/370/main/807ab5f5eeb5dcb08376cf6d0d121da9.woff2",
+        "mediaType": "font/woff2"
+      },
+      "assets/catalog-175.bin": {
+        "kind": "remote",
+        "sourceUrl": "https://fontsapi.zeoseven.com/370/main/8abf71a4864a445bbed955a57a9711c6.woff2",
+        "mediaType": "font/woff2"
+      },
+      "assets/catalog-176.bin": {
+        "kind": "remote",
+        "sourceUrl": "https://fontsapi.zeoseven.com/370/main/5542fd59d26bf9d59684e2f8e64670e4.woff2",
+        "mediaType": "font/woff2"
+      },
+      "assets/catalog-177.bin": {
+        "kind": "remote",
+        "sourceUrl": "https://fontsapi.zeoseven.com/370/main/1d1add14360c06a2c0d0d0f2f1a968b6.woff2",
+        "mediaType": "font/woff2"
+      },
+      "assets/catalog-178.bin": {
+        "kind": "remote",
+        "sourceUrl": "https://fontsapi.zeoseven.com/370/main/8c286ccadcc3cfb0254558adec85c6b0.woff2",
+        "mediaType": "font/woff2"
+      },
+      "assets/catalog-179.bin": {
+        "kind": "remote",
+        "sourceUrl": "https://fontsapi.zeoseven.com/370/main/2c337242685277ecd7df163e2dfe262c.woff2",
+        "mediaType": "font/woff2"
+      },
+      "assets/catalog-180.bin": {
+        "kind": "remote",
+        "sourceUrl": "https://fontsapi.zeoseven.com/370/main/af7d49a099c1654dad5de9f6f2f28cc0.woff2",
+        "mediaType": "font/woff2"
+      },
+      "assets/catalog-181.bin": {
+        "kind": "remote",
+        "sourceUrl": "https://fontsapi.zeoseven.com/370/main/7e5142df95f8efcf00b2902b77e3d641.woff2",
+        "mediaType": "font/woff2"
+      },
+      "assets/catalog-182.bin": {
+        "kind": "remote",
+        "sourceUrl": "https://fontsapi.zeoseven.com/370/main/bbd8b04bef71afba003ee5bc33c46b85.woff2",
+        "mediaType": "font/woff2"
+      },
+      "assets/catalog-183.bin": {
+        "kind": "remote",
+        "sourceUrl": "https://fontsapi.zeoseven.com/370/main/8e5710f328afa81ea2663ff398f92573.woff2",
+        "mediaType": "font/woff2"
+      },
+      "assets/catalog-184.bin": {
+        "kind": "remote",
+        "sourceUrl": "https://fontsapi.zeoseven.com/370/main/1a931ce2218d695b14c16ee2fcc3a036.woff2",
+        "mediaType": "font/woff2"
+      },
+      "assets/catalog-185.bin": {
+        "kind": "remote",
+        "sourceUrl": "https://fontsapi.zeoseven.com/370/main/eb278b3e7f3593ce5db8b836a4110c4c.woff2",
+        "mediaType": "font/woff2"
+      },
+      "assets/catalog-186.bin": {
+        "kind": "remote",
+        "sourceUrl": "https://fontsapi.zeoseven.com/370/main/dde3fa87c01cd2996c175d2295c72fbc.woff2",
+        "mediaType": "font/woff2"
+      },
+      "assets/catalog-187.bin": {
+        "kind": "remote",
+        "sourceUrl": "https://fontsapi.zeoseven.com/370/main/0b41066d687d55ca87e1150e1a483bb6.woff2",
+        "mediaType": "font/woff2"
+      },
+      "assets/catalog-188.bin": {
+        "kind": "remote",
+        "sourceUrl": "https://fontsapi.zeoseven.com/370/main/cb883d9dfca6a5b7a826e0d0980e8fe6.woff2",
+        "mediaType": "font/woff2"
+      },
+      "assets/catalog-189.bin": {
+        "kind": "remote",
+        "sourceUrl": "https://fontsapi.zeoseven.com/370/main/272cf4bcf42737fee9e4b5e0c2ad826c.woff2",
+        "mediaType": "font/woff2"
+      },
+      "assets/catalog-190.bin": {
+        "kind": "remote",
+        "sourceUrl": "https://fontsapi.zeoseven.com/370/main/b818869efd50fe8790603caaa02e58e9.woff2",
+        "mediaType": "font/woff2"
+      },
+      "assets/catalog-191.bin": {
+        "kind": "remote",
+        "sourceUrl": "https://fontsapi.zeoseven.com/370/main/fd14c72e9965a84409e7d0102a3b5f0f.woff2",
+        "mediaType": "font/woff2"
+      },
+      "assets/catalog-192.bin": {
+        "kind": "remote",
+        "sourceUrl": "https://fontsapi.zeoseven.com/370/main/a81205a04bf6663d234c9fca0130d7c4.woff2",
+        "mediaType": "font/woff2"
+      },
+      "assets/catalog-193.bin": {
+        "kind": "remote",
+        "sourceUrl": "https://fontsapi.zeoseven.com/370/main/d60c3d54eb9eb121b8f36cd77d5a5392.woff2",
+        "mediaType": "font/woff2"
+      },
+      "assets/catalog-194.bin": {
+        "kind": "remote",
+        "sourceUrl": "https://fontsapi.zeoseven.com/370/main/4ce4575748f9b800001da3f8a538d854.woff2",
+        "mediaType": "font/woff2"
+      },
+      "assets/catalog-195.bin": {
+        "kind": "remote",
+        "sourceUrl": "https://fontsapi.zeoseven.com/370/main/e17147df6dadceb26154caf4d5ea2d09.woff2",
+        "mediaType": "font/woff2"
+      },
+      "assets/catalog-196.bin": {
+        "kind": "remote",
+        "sourceUrl": "https://fontsapi.zeoseven.com/370/main/ec56f42707a2dd796c1e9eaf6688f89c.woff2",
+        "mediaType": "font/woff2"
+      },
+      "assets/catalog-197.bin": {
+        "kind": "remote",
+        "sourceUrl": "https://fontsapi.zeoseven.com/370/main/afd0d67d082d9718add881717039c347.woff2",
+        "mediaType": "font/woff2"
+      },
+      "assets/catalog-198.bin": {
+        "kind": "remote",
+        "sourceUrl": "https://fontsapi.zeoseven.com/370/main/720cb07d7dceca8bf79c4812ecd912f7.woff2",
+        "mediaType": "font/woff2"
+      },
+      "assets/catalog-199.bin": {
+        "kind": "remote",
+        "sourceUrl": "https://fontsapi.zeoseven.com/370/main/7d7ad6d226c2e03c29fb55e5f34b2033.woff2",
+        "mediaType": "font/woff2"
+      },
+      "assets/catalog-200.bin": {
+        "kind": "remote",
+        "sourceUrl": "https://fontsapi.zeoseven.com/370/main/9163103e395f86aec9154f60f94d80ec.woff2",
+        "mediaType": "font/woff2"
+      },
+      "assets/catalog-201.bin": {
+        "kind": "remote",
+        "sourceUrl": "https://fontsapi.zeoseven.com/370/main/39e063aa6dbf8f558302521dd5466210.woff2",
+        "mediaType": "font/woff2"
+      },
+      "assets/catalog-202.bin": {
+        "kind": "remote",
+        "sourceUrl": "https://fontsapi.zeoseven.com/370/main/c0ee82c0410b0bc8398c1087d470517c.woff2",
+        "mediaType": "font/woff2"
+      },
+      "assets/catalog-203.bin": {
+        "kind": "remote",
+        "sourceUrl": "https://fontsapi.zeoseven.com/370/main/acb51012ea70c3e916a5fd06b8e71b0a.woff2",
+        "mediaType": "font/woff2"
+      },
+      "assets/catalog-204.bin": {
+        "kind": "remote",
+        "sourceUrl": "https://fontsapi.zeoseven.com/370/main/5512d506cf334253e15f47851f652d34.woff2",
+        "mediaType": "font/woff2"
+      },
+      "assets/catalog-205.bin": {
+        "kind": "remote",
+        "sourceUrl": "https://fontsapi.zeoseven.com/370/main/43c7180869dc4f2e7eb1ff8cec66b106.woff2",
+        "mediaType": "font/woff2"
+      },
+      "assets/catalog-206.bin": {
+        "kind": "remote",
+        "sourceUrl": "https://fontsapi.zeoseven.com/370/main/57cbee1863f8241f1fc9a0db824a3323.woff2",
+        "mediaType": "font/woff2"
+      },
+      "assets/catalog-207.bin": {
+        "kind": "remote",
+        "sourceUrl": "https://fontsapi.zeoseven.com/370/main/426742a62c0dcb4fa0c4076a890982e6.woff2",
+        "mediaType": "font/woff2"
+      },
+      "assets/catalog-208.bin": {
+        "kind": "remote",
+        "sourceUrl": "https://fontsapi.zeoseven.com/370/main/f7ac0e18b57e2f0c44ebcc12392fb183.woff2",
+        "mediaType": "font/woff2"
+      }
+    },
+    "laplace-builtin-orange": {
+      "assets/catalog-21.ttf": {
+        "kind": "remote",
+        "sourceUrl": "https://fonts.gstatic.com/s/notosanssc/v41/k3kCo84MPvpLmixcA63oeAL7Iqp5IZJF9bmaG1_FnYw.ttf",
+        "mediaType": "font/ttf"
+      },
+      "assets/catalog-22.ttf": {
+        "kind": "remote",
+        "sourceUrl": "https://fonts.gstatic.com/s/notosanssc/v41/k3kCo84MPvpLmixcA63oeAL7Iqp5IZJF9bmaG4HFnYw.ttf",
+        "mediaType": "font/ttf"
+      },
+      "assets/catalog-23.ttf": {
+        "kind": "remote",
+        "sourceUrl": "https://fonts.gstatic.com/s/notosanssc/v41/k3kCo84MPvpLmixcA63oeAL7Iqp5IZJF9bmaG9_FnYw.ttf",
+        "mediaType": "font/ttf"
+      },
+      "assets/catalog-24.ttf": {
+        "kind": "remote",
+        "sourceUrl": "https://fonts.gstatic.com/s/notosanssc/v41/k3kCo84MPvpLmixcA63oeAL7Iqp5IZJF9bmaG-3FnYw.ttf",
+        "mediaType": "font/ttf"
+      },
+      "assets/catalog-25.ttf": {
+        "kind": "remote",
+        "sourceUrl": "https://fonts.gstatic.com/s/notosanssc/v41/k3kCo84MPvpLmixcA63oeAL7Iqp5IZJF9bmaGwHCnYw.ttf",
+        "mediaType": "font/ttf"
+      },
+      "assets/catalog-26.ttf": {
+        "kind": "remote",
+        "sourceUrl": "https://fonts.gstatic.com/s/notosanssc/v41/k3kCo84MPvpLmixcA63oeAL7Iqp5IZJF9bmaGzjCnYw.ttf",
+        "mediaType": "font/ttf"
+      },
+      "assets/catalog-27.ttf": {
+        "kind": "remote",
+        "sourceUrl": "https://fonts.gstatic.com/s/notosanssc/v41/k3kCo84MPvpLmixcA63oeAL7Iqp5IZJF9bmaG3bCnYw.ttf",
+        "mediaType": "font/ttf"
+      }
+    },
+    "laplace-builtin-outline": {
+      "assets/catalog-209.ttf": {
+        "kind": "remote",
+        "sourceUrl": "https://fonts.gstatic.com/s/changaone/v22/xfu20W3wXn3QLUJXhzq42ATivA.ttf",
+        "mediaType": "font/ttf"
+      },
+      "assets/catalog-210.ttf": {
+        "kind": "remote",
+        "sourceUrl": "https://fonts.gstatic.com/s/changaone/v22/xfu00W3wXn3QLUJXhzq46AY.ttf",
+        "mediaType": "font/ttf"
+      }
+    },
+    "laplace-builtin-rotated": {},
+    "laplace-builtin-shed-bubble": {
+      "assets/catalog-211.woff2": {
+        "kind": "remote",
+        "sourceUrl": "https://npm.elemecdn.com/shed-fonts/HarmonyOS%20Sans/Medium/2fd0c6975630049158f25917ee12998b.woff2",
+        "mediaType": "font/woff2"
+      },
+      "assets/catalog-212.woff2": {
+        "kind": "remote",
+        "sourceUrl": "https://npm.elemecdn.com/shed-fonts/HarmonyOS%20Sans/Medium/ad28bec4f899ddf74acd0a40afa972c0.woff2",
+        "mediaType": "font/woff2"
+      },
+      "assets/catalog-213.woff2": {
+        "kind": "remote",
+        "sourceUrl": "https://npm.elemecdn.com/shed-fonts/HarmonyOS%20Sans/Medium/3039f13c93128482dd0c5d852f9cec76.woff2",
+        "mediaType": "font/woff2"
+      },
+      "assets/catalog-214.woff2": {
+        "kind": "remote",
+        "sourceUrl": "https://npm.elemecdn.com/shed-fonts/HarmonyOS%20Sans/Medium/403159d38540e7dc1d92d05a8c3bde50.woff2",
+        "mediaType": "font/woff2"
+      },
+      "assets/catalog-215.woff2": {
+        "kind": "remote",
+        "sourceUrl": "https://npm.elemecdn.com/shed-fonts/HarmonyOS%20Sans/Medium/b56b3c635fd62154b77c8e26b9678131.woff2",
+        "mediaType": "font/woff2"
+      },
+      "assets/catalog-216.woff2": {
+        "kind": "remote",
+        "sourceUrl": "https://npm.elemecdn.com/shed-fonts/HarmonyOS%20Sans/Medium/9dbfff5ade06b27ad4934de13bd5a017.woff2",
+        "mediaType": "font/woff2"
+      },
+      "assets/catalog-217.woff2": {
+        "kind": "remote",
+        "sourceUrl": "https://npm.elemecdn.com/shed-fonts/HarmonyOS%20Sans/Medium/693098733e8b2b38113d2fb5ede9ae2d.woff2",
+        "mediaType": "font/woff2"
+      },
+      "assets/catalog-218.woff2": {
+        "kind": "remote",
+        "sourceUrl": "https://npm.elemecdn.com/shed-fonts/HarmonyOS%20Sans/Medium/2775748f16d73ae674fc7d6a8c75afb3.woff2",
+        "mediaType": "font/woff2"
+      },
+      "assets/catalog-219.woff2": {
+        "kind": "remote",
+        "sourceUrl": "https://npm.elemecdn.com/shed-fonts/HarmonyOS%20Sans/Medium/abeedfdf756c67df581aafbe36d1c5bd.woff2",
+        "mediaType": "font/woff2"
+      }
+    },
+    "laplace-builtin-shed": {
+      "assets/catalog-211.woff2": {
+        "kind": "remote",
+        "sourceUrl": "https://npm.elemecdn.com/shed-fonts/HarmonyOS%20Sans/Medium/2fd0c6975630049158f25917ee12998b.woff2",
+        "mediaType": "font/woff2"
+      },
+      "assets/catalog-212.woff2": {
+        "kind": "remote",
+        "sourceUrl": "https://npm.elemecdn.com/shed-fonts/HarmonyOS%20Sans/Medium/ad28bec4f899ddf74acd0a40afa972c0.woff2",
+        "mediaType": "font/woff2"
+      },
+      "assets/catalog-213.woff2": {
+        "kind": "remote",
+        "sourceUrl": "https://npm.elemecdn.com/shed-fonts/HarmonyOS%20Sans/Medium/3039f13c93128482dd0c5d852f9cec76.woff2",
+        "mediaType": "font/woff2"
+      },
+      "assets/catalog-214.woff2": {
+        "kind": "remote",
+        "sourceUrl": "https://npm.elemecdn.com/shed-fonts/HarmonyOS%20Sans/Medium/403159d38540e7dc1d92d05a8c3bde50.woff2",
+        "mediaType": "font/woff2"
+      },
+      "assets/catalog-215.woff2": {
+        "kind": "remote",
+        "sourceUrl": "https://npm.elemecdn.com/shed-fonts/HarmonyOS%20Sans/Medium/b56b3c635fd62154b77c8e26b9678131.woff2",
+        "mediaType": "font/woff2"
+      },
+      "assets/catalog-216.woff2": {
+        "kind": "remote",
+        "sourceUrl": "https://npm.elemecdn.com/shed-fonts/HarmonyOS%20Sans/Medium/9dbfff5ade06b27ad4934de13bd5a017.woff2",
+        "mediaType": "font/woff2"
+      },
+      "assets/catalog-217.woff2": {
+        "kind": "remote",
+        "sourceUrl": "https://npm.elemecdn.com/shed-fonts/HarmonyOS%20Sans/Medium/693098733e8b2b38113d2fb5ede9ae2d.woff2",
+        "mediaType": "font/woff2"
+      },
+      "assets/catalog-218.woff2": {
+        "kind": "remote",
+        "sourceUrl": "https://npm.elemecdn.com/shed-fonts/HarmonyOS%20Sans/Medium/2775748f16d73ae674fc7d6a8c75afb3.woff2",
+        "mediaType": "font/woff2"
+      },
+      "assets/catalog-219.woff2": {
+        "kind": "remote",
+        "sourceUrl": "https://npm.elemecdn.com/shed-fonts/HarmonyOS%20Sans/Medium/abeedfdf756c67df581aafbe36d1c5bd.woff2",
+        "mediaType": "font/woff2"
+      }
+    },
+    "laplace-builtin-simple": {},
+    "laplace-builtin-zelda": {
+      "assets/catalog-4.ttf": {
+        "kind": "remote",
+        "sourceUrl": "https://fonts.gstatic.com/s/jost/v20/92zJtBhPNqw73oHH7BbQp4-B6XlrZu0FNI0.ttf",
+        "mediaType": "font/ttf"
+      },
+      "assets/catalog-19.ttf": {
+        "kind": "remote",
+        "sourceUrl": "https://fonts.gstatic.com/s/jost/v20/92zJtBhPNqw73oHH7BbQp4-B6XlrZjMCNI0.ttf",
+        "mediaType": "font/ttf"
+      },
+      "assets/catalog-6.ttf": {
+        "kind": "remote",
+        "sourceUrl": "https://fonts.gstatic.com/s/jost/v20/92zPtBhPNqw79Ij1E865zBUv7myjJQVG.ttf",
+        "mediaType": "font/ttf"
+      },
+      "assets/catalog-20.ttf": {
+        "kind": "remote",
+        "sourceUrl": "https://fonts.gstatic.com/s/jost/v20/92zPtBhPNqw79Ij1E865zBUv7mx9IgVG.ttf",
+        "mediaType": "font/ttf"
+      }
+    },
+    "laplace-curated-1": {
+      "assets/catalog-21.ttf": {
+        "kind": "remote",
+        "sourceUrl": "https://fonts.gstatic.com/s/notosanssc/v41/k3kCo84MPvpLmixcA63oeAL7Iqp5IZJF9bmaG1_FnYw.ttf",
+        "mediaType": "font/ttf"
+      },
+      "assets/catalog-22.ttf": {
+        "kind": "remote",
+        "sourceUrl": "https://fonts.gstatic.com/s/notosanssc/v41/k3kCo84MPvpLmixcA63oeAL7Iqp5IZJF9bmaG4HFnYw.ttf",
+        "mediaType": "font/ttf"
+      },
+      "assets/catalog-23.ttf": {
+        "kind": "remote",
+        "sourceUrl": "https://fonts.gstatic.com/s/notosanssc/v41/k3kCo84MPvpLmixcA63oeAL7Iqp5IZJF9bmaG9_FnYw.ttf",
+        "mediaType": "font/ttf"
+      },
+      "assets/catalog-24.ttf": {
+        "kind": "remote",
+        "sourceUrl": "https://fonts.gstatic.com/s/notosanssc/v41/k3kCo84MPvpLmixcA63oeAL7Iqp5IZJF9bmaG-3FnYw.ttf",
+        "mediaType": "font/ttf"
+      },
+      "assets/catalog-25.ttf": {
+        "kind": "remote",
+        "sourceUrl": "https://fonts.gstatic.com/s/notosanssc/v41/k3kCo84MPvpLmixcA63oeAL7Iqp5IZJF9bmaGwHCnYw.ttf",
+        "mediaType": "font/ttf"
+      },
+      "assets/catalog-26.ttf": {
+        "kind": "remote",
+        "sourceUrl": "https://fonts.gstatic.com/s/notosanssc/v41/k3kCo84MPvpLmixcA63oeAL7Iqp5IZJF9bmaGzjCnYw.ttf",
+        "mediaType": "font/ttf"
+      },
+      "assets/catalog-27.ttf": {
+        "kind": "remote",
+        "sourceUrl": "https://fonts.gstatic.com/s/notosanssc/v41/k3kCo84MPvpLmixcA63oeAL7Iqp5IZJF9bmaG3bCnYw.ttf",
+        "mediaType": "font/ttf"
+      },
+      "assets/catalog-220.png": {
+        "kind": "remote",
+        "sourceUrl": "https://rsrc.laplace.cn/assets/guard-icons/guard-1k-1.png",
+        "mediaType": "image/png"
+      },
+      "assets/catalog-221.png": {
+        "kind": "remote",
+        "sourceUrl": "https://rsrc.laplace.cn/assets/guard-icons/guard-1k-2.png",
+        "mediaType": "image/png"
+      },
+      "assets/catalog-222.png": {
+        "kind": "remote",
+        "sourceUrl": "https://rsrc.laplace.cn/assets/guard-icons/guard-1k-3.png",
+        "mediaType": "image/png"
+      }
+    },
+    "laplace-curated-2": {
+      "assets/catalog-223.svg": {
+        "kind": "remote",
+        "sourceUrl": "https://rsrc.laplace.cn/assets/chat-templates/snowL.svg",
+        "mediaType": "image/svg+xml"
+      },
+      "assets/catalog-224.svg": {
+        "kind": "remote",
+        "sourceUrl": "https://rsrc.laplace.cn/assets/chat-templates/snowC.svg",
+        "mediaType": "image/svg+xml"
+      },
+      "assets/catalog-225.svg": {
+        "kind": "remote",
+        "sourceUrl": "https://rsrc.laplace.cn/assets/chat-templates/snowR.svg",
+        "mediaType": "image/svg+xml"
+      },
+      "assets/catalog-226.svg": {
+        "kind": "remote",
+        "sourceUrl": "https://rsrc.laplace.cn/assets/chat-templates/snowAlt.svg",
+        "mediaType": "image/svg+xml"
+      }
+    },
+    "laplace-curated-3": {},
+    "laplace-curated-4": {
+      "assets/catalog-4.ttf": {
+        "kind": "remote",
+        "sourceUrl": "https://fonts.gstatic.com/s/jost/v20/92zJtBhPNqw73oHH7BbQp4-B6XlrZu0FNI0.ttf",
+        "mediaType": "font/ttf"
+      },
+      "assets/catalog-5.ttf": {
+        "kind": "remote",
+        "sourceUrl": "https://fonts.gstatic.com/s/jost/v20/92zJtBhPNqw73oHH7BbQp4-B6XlrZt8FNI0.ttf",
+        "mediaType": "font/ttf"
+      },
+      "assets/catalog-6.ttf": {
+        "kind": "remote",
+        "sourceUrl": "https://fonts.gstatic.com/s/jost/v20/92zPtBhPNqw79Ij1E865zBUv7myjJQVG.ttf",
+        "mediaType": "font/ttf"
+      },
+      "assets/catalog-7.ttf": {
+        "kind": "remote",
+        "sourceUrl": "https://fonts.gstatic.com/s/jost/v20/92zPtBhPNqw79Ij1E865zBUv7myRJQVG.ttf",
+        "mediaType": "font/ttf"
+      },
+      "assets/catalog-8.ttf": {
+        "kind": "remote",
+        "sourceUrl": "https://fonts.gstatic.com/s/zcoolkuaile/v22/tssqApdaRQokwFjFJjvM6h2Wpg.ttf",
+        "mediaType": "font/ttf"
+      }
+    },
+    "openlive-bride-dark": {
+      "assets/catalog-227.bin": {
+        "kind": "remote",
+        "sourceUrl": "https://i1.xuehusang.cn/font/SourceHanSansSC-Regular-2.otf",
+        "mediaType": "font/otf"
+      },
+      "assets/catalog-228.png": {
+        "kind": "remote",
+        "sourceUrl": "https://css.pandamiao.com/DM/LF/A45%E9%AD%94%E5%A5%B3%E8%8A%B1%E5%AB%81/picture/mem-name-side.png",
+        "mediaType": "image/png"
+      },
+      "assets/catalog-229.png": {
+        "kind": "remote",
+        "sourceUrl": "https://css.pandamiao.com/DM/LF/A45%E9%AD%94%E5%A5%B3%E8%8A%B1%E5%AB%81/picture/nmem-name-left.png",
+        "mediaType": "image/png"
+      },
+      "assets/catalog-230.png": {
+        "kind": "remote",
+        "sourceUrl": "https://css.pandamiao.com/DM/LF/A45%E9%AD%94%E5%A5%B3%E8%8A%B1%E5%AB%81/picture/mem-right.png",
+        "mediaType": "image/png"
+      },
+      "assets/catalog-231.png": {
+        "kind": "remote",
+        "sourceUrl": "https://css.pandamiao.com/DM/LF/A45%E9%AD%94%E5%A5%B3%E8%8A%B1%E5%AB%81/picture/nor-name-side.png",
+        "mediaType": "image/png"
+      },
+      "assets/catalog-232.png": {
+        "kind": "remote",
+        "sourceUrl": "https://css.pandamiao.com/DM/LF/A45%E9%AD%94%E5%A5%B3%E8%8A%B1%E5%AB%81/picture/admin-icon.png",
+        "mediaType": "image/png"
+      },
+      "assets/catalog-233.png": {
+        "kind": "remote",
+        "sourceUrl": "https://css.pandamiao.com/DM/LF/A45%E9%AD%94%E5%A5%B3%E8%8A%B1%E5%AB%81/picture/admin-avatar.png",
+        "mediaType": "image/png"
+      },
+      "assets/catalog-234.png": {
+        "kind": "remote",
+        "sourceUrl": "https://css.pandamiao.com/DM/LF/A45%E9%AD%94%E5%A5%B3%E8%8A%B1%E5%AB%81/picture/admin-pattern.png",
+        "mediaType": "image/png"
+      },
+      "assets/catalog-235.png": {
+        "kind": "remote",
+        "sourceUrl": "https://css.pandamiao.com/DM/LF/A45%E9%AD%94%E5%A5%B3%E8%8A%B1%E5%AB%81/picture/admin-dot.png",
+        "mediaType": "image/png"
+      },
+      "assets/catalog-236.png": {
+        "kind": "remote",
+        "sourceUrl": "https://css.pandamiao.com/DM/LF/A45%E9%AD%94%E5%A5%B3%E8%8A%B1%E5%AB%81/picture/new-mem-name-side.png",
+        "mediaType": "image/png"
+      },
+      "assets/catalog-237.png": {
+        "kind": "remote",
+        "sourceUrl": "https://css.pandamiao.com/DM/LF/A45%E9%AD%94%E5%A5%B3%E8%8A%B1%E5%AB%81/picture/new-mem.png",
+        "mediaType": "image/png"
+      },
+      "assets/catalog-238.png": {
+        "kind": "remote",
+        "sourceUrl": "https://css.pandamiao.com/DM/LF/A45%E9%AD%94%E5%A5%B3%E8%8A%B1%E5%AB%81/picture/gift-pattern.png",
+        "mediaType": "image/png"
+      },
+      "assets/catalog-239.png": {
+        "kind": "remote",
+        "sourceUrl": "https://css.pandamiao.com/DM/LF/A45%E9%AD%94%E5%A5%B3%E8%8A%B1%E5%AB%81/picture/gift-icon.png",
+        "mediaType": "image/png"
+      },
+      "assets/catalog-240.png": {
+        "kind": "remote",
+        "sourceUrl": "https://css.pandamiao.com/DM/LF/A45%E9%AD%94%E5%A5%B3%E8%8A%B1%E5%AB%81/picture/gift-star.png",
+        "mediaType": "image/png"
+      },
+      "assets/catalog-241.png": {
+        "kind": "remote",
+        "sourceUrl": "https://css.pandamiao.com/DM/LF/A45%E9%AD%94%E5%A5%B3%E8%8A%B1%E5%AB%81/picture/gift-avatar.png",
+        "mediaType": "image/png"
+      },
+      "assets/catalog-242.png": {
+        "kind": "remote",
+        "sourceUrl": "https://css.pandamiao.com/DM/LF/A45%E9%AD%94%E5%A5%B3%E8%8A%B1%E5%AB%81/picture/sc-avatar.png",
+        "mediaType": "image/png"
+      }
+    },
+    "openlive-bride-light": {
+      "assets/catalog-227.bin": {
+        "kind": "remote",
+        "sourceUrl": "https://i1.xuehusang.cn/font/SourceHanSansSC-Regular-2.otf",
+        "mediaType": "font/otf"
+      },
+      "assets/catalog-243.png": {
+        "kind": "remote",
+        "sourceUrl": "https://css.pandamiao.com/DM/LF/A45%E9%AD%94%E5%A5%B3%E8%8A%B1%E5%AB%81/picture/name-side2.png",
+        "mediaType": "image/png"
+      },
+      "assets/catalog-244.png": {
+        "kind": "remote",
+        "sourceUrl": "https://css.pandamiao.com/DM/LF/A45%E9%AD%94%E5%A5%B3%E8%8A%B1%E5%AB%81/picture/2mem-left.png",
+        "mediaType": "image/png"
+      },
+      "assets/catalog-245.png": {
+        "kind": "remote",
+        "sourceUrl": "https://css.pandamiao.com/DM/LF/A45%E9%AD%94%E5%A5%B3%E8%8A%B1%E5%AB%81/picture/2mem-right.png",
+        "mediaType": "image/png"
+      },
+      "assets/catalog-246.png": {
+        "kind": "remote",
+        "sourceUrl": "https://css.pandamiao.com/DM/LF/A45%E9%AD%94%E5%A5%B3%E8%8A%B1%E5%AB%81/picture/2admin-icon.png",
+        "mediaType": "image/png"
+      },
+      "assets/catalog-247.png": {
+        "kind": "remote",
+        "sourceUrl": "https://css.pandamiao.com/DM/LF/A45%E9%AD%94%E5%A5%B3%E8%8A%B1%E5%AB%81/picture/2admin-avatar.png",
+        "mediaType": "image/png"
+      },
+      "assets/catalog-248.png": {
+        "kind": "remote",
+        "sourceUrl": "https://css.pandamiao.com/DM/LF/A45%E9%AD%94%E5%A5%B3%E8%8A%B1%E5%AB%81/picture/2admin-pattern.png",
+        "mediaType": "image/png"
+      },
+      "assets/catalog-235.png": {
+        "kind": "remote",
+        "sourceUrl": "https://css.pandamiao.com/DM/LF/A45%E9%AD%94%E5%A5%B3%E8%8A%B1%E5%AB%81/picture/admin-dot.png",
+        "mediaType": "image/png"
+      },
+      "assets/catalog-236.png": {
+        "kind": "remote",
+        "sourceUrl": "https://css.pandamiao.com/DM/LF/A45%E9%AD%94%E5%A5%B3%E8%8A%B1%E5%AB%81/picture/new-mem-name-side.png",
+        "mediaType": "image/png"
+      },
+      "assets/catalog-249.png": {
+        "kind": "remote",
+        "sourceUrl": "https://css.pandamiao.com/DM/LF/A45%E9%AD%94%E5%A5%B3%E8%8A%B1%E5%AB%81/picture/2new-mem.png",
+        "mediaType": "image/png"
+      },
+      "assets/catalog-238.png": {
+        "kind": "remote",
+        "sourceUrl": "https://css.pandamiao.com/DM/LF/A45%E9%AD%94%E5%A5%B3%E8%8A%B1%E5%AB%81/picture/gift-pattern.png",
+        "mediaType": "image/png"
+      },
+      "assets/catalog-239.png": {
+        "kind": "remote",
+        "sourceUrl": "https://css.pandamiao.com/DM/LF/A45%E9%AD%94%E5%A5%B3%E8%8A%B1%E5%AB%81/picture/gift-icon.png",
+        "mediaType": "image/png"
+      },
+      "assets/catalog-240.png": {
+        "kind": "remote",
+        "sourceUrl": "https://css.pandamiao.com/DM/LF/A45%E9%AD%94%E5%A5%B3%E8%8A%B1%E5%AB%81/picture/gift-star.png",
+        "mediaType": "image/png"
+      },
+      "assets/catalog-250.png": {
+        "kind": "remote",
+        "sourceUrl": "https://css.pandamiao.com/DM/LF/A45%E9%AD%94%E5%A5%B3%E8%8A%B1%E5%AB%81/picture/2gift-avatar.png",
+        "mediaType": "image/png"
+      },
+      "assets/catalog-251.png": {
+        "kind": "remote",
+        "sourceUrl": "https://css.pandamiao.com/DM/LF/A45%E9%AD%94%E5%A5%B3%E8%8A%B1%E5%AB%81/picture/2sc-avatar.png",
+        "mediaType": "image/png"
+      },
+      "assets/catalog-231.png": {
+        "kind": "remote",
+        "sourceUrl": "https://css.pandamiao.com/DM/LF/A45%E9%AD%94%E5%A5%B3%E8%8A%B1%E5%AB%81/picture/nor-name-side.png",
+        "mediaType": "image/png"
+      }
+    },
+    "openlive-bubble": {
+      "assets/catalog-252.ttf": {
+        "kind": "remote",
+        "sourceUrl": "https://i1.xuehusang.cn/font/MiSans-Semibold.ttf",
+        "mediaType": "font/ttf"
+      }
+    },
+    "openlive-candy": {
+      "assets/catalog-253.bin": {
+        "kind": "remote",
+        "sourceUrl": "https://i1.xuehusang.cn/font/Resource-Han-Rounded-CN-Heavy.ttf",
+        "mediaType": "font/ttf"
+      },
+      "assets/catalog-254.svg": {
+        "kind": "embedded",
+        "mediaType": "image/svg+xml"
+      },
+      "assets/catalog-255.svg": {
+        "kind": "embedded",
+        "mediaType": "image/svg+xml"
+      },
+      "assets/catalog-256.svg": {
+        "kind": "embedded",
+        "mediaType": "image/svg+xml"
+      },
+      "assets/catalog-257.svg": {
+        "kind": "embedded",
+        "mediaType": "image/svg+xml"
+      },
+      "assets/catalog-258.svg": {
+        "kind": "embedded",
+        "mediaType": "image/svg+xml"
+      },
+      "assets/catalog-259.svg": {
+        "kind": "embedded",
+        "mediaType": "image/svg+xml"
+      },
+      "assets/catalog-260.svg": {
+        "kind": "embedded",
+        "mediaType": "image/svg+xml"
+      },
+      "assets/catalog-261.svg": {
+        "kind": "embedded",
+        "mediaType": "image/svg+xml"
+      },
+      "assets/catalog-262.svg": {
+        "kind": "embedded",
+        "mediaType": "image/svg+xml"
+      }
+    },
+    "openlive-yt": {}
+  },
+  "relativeDependencies": {
+    "laplace-builtin-shed": {
+      "./21dc475f8735279808e9dc54bc57a5fc.woff2": "https://npm.elemecdn.com/shed-fonts/HarmonyOS%20Sans/Medium/21dc475f8735279808e9dc54bc57a5fc.woff2",
+      "./5432972636dce38bf42983e2b180f734.woff2": "https://npm.elemecdn.com/shed-fonts/HarmonyOS%20Sans/Medium/5432972636dce38bf42983e2b180f734.woff2",
+      "./51895d7c51f026370c7791d09cfbc384.woff2": "https://npm.elemecdn.com/shed-fonts/HarmonyOS%20Sans/Medium/51895d7c51f026370c7791d09cfbc384.woff2",
+      "./097bf64c4d39f40cda6622bf3df98d81.woff2": "https://npm.elemecdn.com/shed-fonts/HarmonyOS%20Sans/Medium/097bf64c4d39f40cda6622bf3df98d81.woff2"
+    },
+    "laplace-builtin-shed-bubble": {
+      "./21dc475f8735279808e9dc54bc57a5fc.woff2": "https://npm.elemecdn.com/shed-fonts/HarmonyOS%20Sans/Medium/21dc475f8735279808e9dc54bc57a5fc.woff2",
+      "./5432972636dce38bf42983e2b180f734.woff2": "https://npm.elemecdn.com/shed-fonts/HarmonyOS%20Sans/Medium/5432972636dce38bf42983e2b180f734.woff2",
+      "./51895d7c51f026370c7791d09cfbc384.woff2": "https://npm.elemecdn.com/shed-fonts/HarmonyOS%20Sans/Medium/51895d7c51f026370c7791d09cfbc384.woff2",
+      "./097bf64c4d39f40cda6622bf3df98d81.woff2": "https://npm.elemecdn.com/shed-fonts/HarmonyOS%20Sans/Medium/097bf64c4d39f40cda6622bf3df98d81.woff2"
+    }
+  }
+}

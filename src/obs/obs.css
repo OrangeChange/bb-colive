@@ -1,0 +1,88 @@
+/* 浏览器底板独立于事件明暗，输出背景保持透明。 */
+html[data-obs-browser] {
+  color-scheme: light;
+}
+html[data-obs-browser],
+html[data-obs-browser] body,
+html[data-obs-browser] #root {
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  background: transparent;
+}
+html[data-obs-browser] body {
+  overflow: hidden;
+}
+.obs-output-root {
+  width: 100%;
+  height: 100%;
+  background: transparent;
+  overflow: hidden;
+}
+.obs-native-root {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+  overflow: hidden;
+}
+.obs-native-root > .event-list {
+  flex: 1;
+  min-height: 0;
+  overflow: auto;
+  scrollbar-width: none;
+  display: flex;
+  flex-direction: column;
+}
+.obs-native-root > .event-list:has(> .blivechat-source-surface),
+.obs-native-root > .event-list:has(> .laplace-product-surface) {
+  display: block;
+}
+.obs-native-root .sticky-area {
+  display: flex;
+  overflow-x: auto;
+  overflow-y: hidden;
+  scrollbar-width: none;
+}
+.obs-native-root .sticky-area::-webkit-scrollbar {
+  display: none;
+}
+.obs-native-root .sticky-area > * {
+  flex: none;
+}
+.obs-native-root iframe {
+  border: 0;
+}
+.obs-output-root .compatible-frame-status {
+  display: none;
+}
+.obs-preview-scroll {
+  flex: 1;
+  min-height: 0;
+  overflow: auto;
+}
+.obs-preview-canvas {
+  height: 100%;
+  min-height: 300px;
+  margin: 0 auto;
+}
+.obs-preview-canvas.is-transparent {
+  background-image: conic-gradient(
+    #8883 25%,
+    transparent 0 50%,
+    #8883 0 75%,
+    transparent 0
+  );
+  background-size: 20px 20px;
+}
+
+.obs-native-root > .event-list > .event-row-slot { flex: none; }
+.obs-native-root > .event-list::-webkit-scrollbar { display: none; }
+.obs-native-root .event-list:has(> .blivechat-source-surface),
+.obs-native-root .event-list:has(> .laplace-product-surface) {
+  justify-content: normal;
+}
+.obs-management-preview .obs-preview-canvas {
+  background-color: transparent;
+}

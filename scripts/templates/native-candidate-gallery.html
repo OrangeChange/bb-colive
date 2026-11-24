@@ -1,0 +1,599 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>原生静态候选画册</title>
+    <style>
+      __NATIVE_CSS__
+    </style>
+    <style>
+      * {
+        box-sizing: border-box;
+      }
+      body {
+        margin: 0;
+        font-family: MiSans, sans-serif;
+        font-weight: 500;
+        background: #f3f6f5;
+        color: #243932;
+        --page: #fff;
+        --line: #d9e4df;
+        --muted: #586b63;
+        --accent: #30786c;
+      }
+      body.dark {
+        background: #171f1c;
+        color: #e1eae5;
+        --page: #232e28;
+        --line: #43534a;
+        --muted: #b5c6bc;
+        --accent: #8ccab6;
+      }
+      button,
+      input,
+      select {
+        font: inherit;
+      }
+      button {
+        cursor: pointer;
+      }
+      button:focus-visible,
+      a:focus-visible,
+      input:focus-visible,
+      select:focus-visible {
+        outline: 3px solid #58ab91;
+        outline-offset: 2px;
+      }
+      button {
+        border: 1px solid var(--line);
+        background: var(--page);
+        color: inherit;
+        padding: 8px 12px;
+        border-radius: 8px;
+      }
+      button:hover {
+        border-color: var(--accent);
+      }
+      header {
+        position: sticky;
+        top: 0;
+        z-index: 5;
+        background: var(--page);
+        border-bottom: 1px solid var(--line);
+        padding: 16px 24px;
+        display: flex;
+        gap: 16px;
+        align-items: center;
+        justify-content: space-between;
+      }
+      h1 {
+        font-size: 20px;
+        margin: 0;
+        font-weight: 700;
+      }
+      header p {
+        margin: 4px 0 0;
+        color: var(--muted);
+        font-size: 14px;
+      }
+      .actions {
+        display: flex;
+        gap: 8px;
+        flex-wrap: wrap;
+      }
+      .primary {
+        background: #30786c;
+        color: white;
+        border-color: #30786c;
+      }
+      .layout {
+        display: grid;
+        grid-template-columns: 240px minmax(0, 1fr);
+        max-width: 1520px;
+        margin: auto;
+      }
+      nav {
+        position: sticky;
+        top: 96px;
+        align-self: start;
+        max-height: calc(100vh - 112px);
+        overflow: auto;
+        padding: 16px;
+      }
+      nav button {
+        gap: 12px;
+        display: flex;
+        justify-content: space-between;
+        width: 100%;
+        margin-bottom: 4px;
+        text-align: left;
+        border-color: transparent;
+        background: transparent;
+      }
+      nav button.active {
+        background: var(--page);
+        border-color: var(--accent);
+      }
+      nav small {
+        color: var(--muted);
+      }
+      main {
+        padding: 24px;
+        min-width: 0;
+      }
+      h2 {
+        font-size: 24px;
+        margin: 0 0 8px;
+        font-weight: 700;
+      }
+      .intro,
+      .metadata,
+      .hint {
+        font-size: 14px;
+        color: var(--muted);
+      }
+      .intro {
+        margin: 0 0 16px;
+      }
+      .filters {
+        display: flex;
+        gap: 12px;
+        flex-wrap: wrap;
+        align-items: center;
+        margin-bottom: 24px;
+      }
+      input,
+      select {
+        background: var(--page);
+        color: inherit;
+        border: 1px solid var(--line);
+        border-radius: 8px;
+        padding: 8px 12px;
+        max-width: 100%;
+      }
+      input {
+        flex: 1;
+        min-width: 160px;
+      }
+      .cards {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(min(100%, 380px), 1fr));
+        gap: 16px;
+      }
+      .candidate {
+        padding: 16px;
+        background: var(--page);
+        border: 1px solid var(--line);
+        border-radius: 12px;
+        min-width: 0;
+      }
+      .candidate.chosen {
+        border-color: var(--accent);
+        box-shadow: inset 0 0 0 1px var(--accent);
+      }
+      .card-head {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        gap: 12px;
+        margin-bottom: 12px;
+      }
+      .card-head strong {
+        font-weight: 700;
+      }
+      .preview {
+        overflow: auto;
+        max-height: 320px;
+        padding: 8px;
+        background-color: #fff;
+        background-image:
+          linear-gradient(45deg, #e1e6e3 25%, transparent 25%),
+          linear-gradient(-45deg, #e1e6e3 25%, transparent 25%),
+          linear-gradient(45deg, transparent 75%, #e1e6e3 75%),
+          linear-gradient(-45deg, transparent 75%, #e1e6e3 75%);
+        background-size: 16px 16px;
+        background-position:
+          0 0,
+          0 8px,
+          8px -8px,
+          -8px 0;
+      }
+      .dark .preview {
+        background-color: #222b27;
+        background-image:
+          linear-gradient(45deg, #354039 25%, transparent 25%),
+          linear-gradient(-45deg, #354039 25%, transparent 25%),
+          linear-gradient(45deg, transparent 75%, #354039 75%),
+          linear-gradient(-45deg, transparent 75%, #354039 75%);
+      }
+      .preview .event-area {
+        background: transparent;
+        min-width: 0;
+        width: 100%;
+      }
+      .metadata {
+        margin-top: 12px;
+        line-height: 1.6;
+        overflow-wrap: anywhere;
+      }
+      .metadata span {
+        display: block;
+      }
+      details {
+        margin-top: 8px;
+        font-size: 14px;
+      }
+      summary {
+        cursor: pointer;
+        color: var(--accent);
+      }
+      .original {
+        white-space: pre-wrap;
+        overflow-wrap: anywhere;
+        margin: 8px 0;
+      }
+      .empty {
+        padding: 32px;
+        border: 1px dashed var(--line);
+        border-radius: 12px;
+        line-height: 1.7;
+      }
+      .bottom {
+        display: flex;
+        justify-content: space-between;
+        margin-top: 24px;
+        gap: 12px;
+      }
+      dialog {
+        width: min(760px, calc(100% - 32px));
+        max-height: 85vh;
+        overflow: auto;
+        background: var(--page);
+        color: inherit;
+        border: 1px solid var(--line);
+        border-radius: 12px;
+        padding: 24px;
+      }
+      dialog::backdrop {
+        background: #14231d80;
+      }
+      dialog h2 {
+        font-size: 20px;
+      }
+      textarea {
+        width: 100%;
+        height: 160px;
+        padding: 12px;
+        background: var(--page);
+        color: inherit;
+        border: 1px solid var(--line);
+        border-radius: 8px;
+        font: 14px monospace;
+      }
+      .selected-row {
+        padding: 8px 0;
+        border-bottom: 1px solid var(--line);
+      }
+      #status {
+        font-size: 14px;
+        color: var(--accent);
+        min-height: 24px;
+        margin: 8px 0;
+      }
+      body,
+      nav,
+      .preview,
+      dialog {
+        scrollbar-width: thin;
+        scrollbar-color: var(--line) transparent;
+      }
+      ::selection {
+        background: #92cdb480;
+      }
+      @media (max-width: 800px) {
+        header {
+          position: static;
+          display: block;
+          padding: 16px;
+        }
+        header .actions {
+          margin-top: 12px;
+        }
+        .layout {
+          grid-template-columns: 1fr;
+        }
+        nav {
+          position: static;
+          display: flex;
+          gap: 8px;
+          max-height: 160px;
+          flex-wrap: wrap;
+          border-bottom: 1px solid var(--line);
+        }
+        nav button {
+          width: auto;
+        }
+        main {
+          padding: 16px;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <header>
+      <div>
+        <h1>原生静态候选画册</h1>
+        <p>
+          候选保留原文与金额。先挑选，不修改软件；身份标记显示全部已捕获信息。
+        </p>
+      </div>
+      <div class="actions">
+        <button id="theme">切换深色</button
+        ><button id="review" class="primary">
+          查看选择 · <span id="progress"></span>
+        </button>
+      </div>
+    </header>
+    <div class="layout">
+      <nav aria-label="候选分类" id="nav"></nav>
+      <main>
+        <h2 id="title"></h2>
+        <p id="intro" class="intro"></p>
+        <div class="filters">
+          <label
+            >主播
+            <select id="owner">
+              <option value="">全部主播</option>
+            </select></label
+          ><input
+            id="search"
+            placeholder="搜索用户、正文或礼物"
+            aria-label="搜索候选"
+          /><button id="clear">取消本组选择</button>
+        </div>
+        <section id="cards" class="cards" aria-label="候选事件"></section>
+        <div class="bottom">
+          <button id="prev">上一组</button><span id="amount" class="hint"></span
+          ><button id="next">下一组</button>
+        </div>
+      </main>
+    </div>
+    <dialog id="dialog" aria-labelledby="selection-title">
+      <h2 id="selection-title">已选样例</h2>
+      <p class="intro">
+        尚未选择的位置会保留为空。复制结果发给我，确认后再替换静态预览。
+      </p>
+      <div id="summary"></div>
+      <p id="status" role="status"></p>
+      <textarea id="result" readonly aria-label="选择结果"></textarea>
+      <div class="actions" style="margin-top: 16px">
+        <button id="copy" class="primary">复制选择结果</button
+        ><button id="download">下载选择文件</button
+        ><button id="close">继续挑选</button>
+      </div>
+    </dialog>
+    <script id="data" type="application/json">
+      __GALLERY_DATA__
+    </script>
+    <script>
+      const data = JSON.parse(document.getElementById("data").textContent),
+        groups = data.groups;
+      const $ = (id) => document.getElementById(id);
+      if (data.description)
+        document.querySelector("header p").textContent = data.description;
+      let selection = { ...(data.selection || {}) },
+        active = 0;
+      try {
+        selection = JSON.parse(
+          localStorage.getItem(data.id) || JSON.stringify(data.selection || {}),
+        );
+      } catch {}
+      const text = (tag, value) => {
+        const e = document.createElement(tag);
+        e.textContent = value;
+        return e;
+      };
+      function save() {
+        localStorage.setItem(data.id, JSON.stringify(selection));
+        updateNav();
+      }
+      function updateNav() {
+        $("progress").textContent =
+          Object.keys(selection).length + " / " + groups.length;
+        $("nav").replaceChildren(
+          ...groups.map((g, i) => {
+            const b = text("button", g.label);
+            b.className = i === active ? "active" : "";
+            b.append(
+              text("small", selection[g.key] ? "已选" : " " + g.options.length),
+            );
+            b.onclick = () => openGroup(i);
+            return b;
+          }),
+        );
+      }
+      function openGroup(i) {
+        active = i;
+        $("search").value = "";
+        $("owner").replaceChildren(
+          new Option("全部主播", ""),
+          ...[...new Set(groups[i].options.map((o) => o.owner))].map(
+            (o) => new Option(o, o),
+          ),
+        );
+        render();
+        updateNav();
+        window.scrollTo({ top: 0, behavior: "instant" });
+      }
+      function render() {
+        const group = groups[active];
+        $("title").textContent = group.label;
+        $("intro").textContent =
+          group.note || "每个候选均可查看原文与身份信息，选用后可随时更换。";
+        const query = $("search").value.trim().toLowerCase(),
+          owner = $("owner").value;
+        const options = group.options.filter(
+          (o) =>
+            (!owner || o.owner === owner) &&
+            (!query ||
+              (o.name + " " + o.owner + " " + o.description)
+                .toLowerCase()
+                .includes(query)),
+        );
+        $("cards").replaceChildren(
+          ...options.map((o) => {
+            const c = document.createElement("article");
+            c.className =
+              "candidate" + (selection[group.key] === o.id ? " chosen" : "");
+            const h = document.createElement("div");
+            h.className = "card-head";
+            h.append(text("strong", o.name || "系统事件"));
+            const choose = text(
+              "button",
+              selection[group.key] === o.id ? "已选用" : "选用",
+            );
+            choose.setAttribute(
+              "aria-pressed",
+              String(selection[group.key] === o.id),
+            );
+            choose.onclick = () => {
+              selection[group.key] = o.id;
+              save();
+              render();
+            };
+            h.append(choose);
+            const preview = document.createElement("div");
+            preview.className = "preview theme-surface theme-target-live";
+            preview.innerHTML = o.html;
+            const meta = document.createElement("div");
+            meta.className = "metadata";
+            meta.append(
+              text("span", o.owner + " · " + o.identity),
+              text("span", o.amount || o.time),
+            );
+            const details = document.createElement("details");
+            details.append(text("summary", "原文与来源"));
+            const original = text("div", o.description);
+            original.className = "original";
+            details.append(
+              original,
+              text("div", "房间 " + o.room + " · " + o.time),
+              text("div", "编号 " + o.id),
+              ...(o.notes || []).map((note) => text("div", note)),
+              ...(o.source
+                ? [
+                    text(
+                      "div",
+                      "来源：" +
+                        (o.source.kind === "archive"
+                          ? "档案 " +
+                            o.source.sessionId +
+                            " / " +
+                            o.source.eventKey
+                          : o.source.file +
+                            " 第" +
+                            o.source.line +
+                            "行 · " +
+                            o.source.cmd),
+                    ),
+                  ]
+                : []),
+            );
+            c.append(h, preview, meta, details);
+            return c;
+          }),
+        );
+        if (!options.length) {
+          const e = text(
+            "div",
+            group.options.length
+              ? "没有符合筛选的候选，请更换主播或搜索词。"
+              : "未找到符合条件的完整实录，暂不改写其他记录补齐。",
+          );
+          e.className = "empty";
+          $("cards").append(e);
+        }
+        $("amount").textContent =
+          "本组 " + options.length + " / " + group.options.length + " 个候选";
+        $("prev").disabled = active === 0;
+        $("next").disabled = active === groups.length - 1;
+      }
+      function showReview() {
+        const rows = groups.flatMap((g) => {
+          const o = g.options.find((o) => o.id === selection[g.key]);
+          return o
+            ? [
+                {
+                  group: g.key,
+                  label: g.label,
+                  id: o.id,
+                  user: o.name,
+                  owner: o.owner,
+                },
+              ]
+            : [];
+        });
+        $("summary").replaceChildren(
+          ...rows.map((r) => {
+            const e = text("div", r.label + "：" + r.user + " · " + r.owner);
+            e.className = "selected-row";
+            return e;
+          }),
+        );
+        $("result").value = JSON.stringify(
+          {
+            gallery: data.id,
+            choices: rows.map(({ group, id }) => ({ group, id })),
+          },
+          null,
+          2,
+        );
+        $("status").textContent = rows.length
+          ? "已选 " + rows.length + " 组；其余可以稍后再选。"
+          : "还没有选择样例。";
+        $("dialog").showModal();
+      }
+      $("owner").onchange = render;
+      $("search").oninput = render;
+      $("prev").onclick = () => openGroup(active - 1);
+      $("next").onclick = () => openGroup(active + 1);
+      $("clear").onclick = () => {
+        delete selection[groups[active].key];
+        save();
+        render();
+      };
+      $("theme").onclick = () => {
+        document.body.classList.toggle("dark");
+        $("theme").textContent = document.body.classList.contains("dark")
+          ? "切换浅色"
+          : "切换深色";
+      };
+      $("review").onclick = showReview;
+      $("close").onclick = () => $("dialog").close();
+      $("copy").onclick = async () => {
+        try {
+          await navigator.clipboard.writeText($("result").value);
+          $("status").textContent = "已复制，粘贴到对话中即可。";
+        } catch {
+          $("result").focus();
+          $("result").select();
+          const ok = document.execCommand("copy");
+          $("status").textContent = ok
+            ? "已复制，粘贴到对话中即可。"
+            : "请复制下方已选中的文字。";
+        }
+      };
+      $("download").onclick = () => {
+        const a = document.createElement("a");
+        a.href = URL.createObjectURL(
+          new Blob([$("result").value], { type: "application/json" }),
+        );
+        a.download = "原生静态样例选择.json";
+        a.click();
+        setTimeout(() => URL.revokeObjectURL(a.href), 1000);
+      };
+      openGroup(0);
+    </script>
+  </body>
+</html>

@@ -1,0 +1,38 @@
+/*
+  @title        Subspace Glitch
+  @description  可以让人回忆起亚空间被强力干扰的那个夜晚
+  @author       Subspace Institute 亚空间研究所
+  @updated      Apr 1, 2026, 0:00:00 PM GMT+8
+  @version      1.0.0
+  @thumbnail    https://rsrc.laplace.cn/assets/chat-templates/thumbnails/subspace-glitch.gif
+*/
+
+@layer remote-css {
+  /* ARG glitch for event list with reduced power */
+  .in-obs .event-list,
+  .in-obs .gift-sticky-bar {
+    position: relative;
+    animation: arg-glitch-shift 1.2s infinite steps(1) alternate-reverse;
+  }
+
+  @keyframes arg-glitch-shift {
+    0% { transform: translate(0); filter: none; }
+    5% { transform: translate(-3px, 1px); filter: hue-rotate(10deg); }
+    10% { transform: translate(2px, -1px); filter: hue-rotate(-40deg); }
+    15% { transform: translate(0); filter: none; }
+    20% { transform: translate(4px, 0); filter: hue-rotate(180deg); }
+    25% { transform: translate(-1px, 2px); filter: brightness(1.2); }
+    30% { transform: translate(0); filter: none; }
+    40% { transform: translate(-2px, -1px); filter: hue-rotate(5deg); }
+    45% { transform: translate(3px, 1px); filter: hue-rotate(-10deg); }
+    50% { transform: translate(0); filter: none; }
+    60% { transform: translate(2px, -2px); filter: hue-rotate(20deg) brightness(1.3); }
+    65% { transform: translate(-4px, 0); filter: saturate(4); }
+    70% { transform: translate(0); filter: none; }
+    80% { transform: translate(1px, 2px); filter: hue-rotate(-20deg); }
+    85% { transform: translate(-2px, -1px); filter: hue-rotate(30deg); }
+    90% { transform: translate(0); filter: none; }
+    95% { transform: translate(3px, -1px); filter: hue-rotate(10deg) brightness(1.1); }
+    100% { transform: translate(0); filter: none; }
+  }
+}

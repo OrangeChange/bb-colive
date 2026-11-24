@@ -1,0 +1,922 @@
+@layer default {
+  /* 浅映卡片 · Soft Light */
+  .event-area {
+    --card-surface: #fffefa;
+    --card-sheen: #ffffffbf;
+    --card-shadow: #4036250b;
+    --card-edge: #00000014;
+    --text-body: #19201d;
+    --text-secondary: #47524d;
+    --text-muted: #56625c;
+    --card-gold: #765608;
+    background: transparent;
+    border: 0;
+    border-radius: 0;
+    --event-default-line-height: 1.5;
+    box-shadow: none;
+    --text-name: rgb(25, 39, 59);
+  }
+  .dark .event-area {
+    --text-name: rgb(222, 225, 229);
+    --card-surface: #1b211e;
+    --card-sheen: #ffffff09;
+    --card-shadow: #00000029;
+    --card-edge: #ffffff12;
+    --text-body: #e9eeec;
+    --text-secondary: #aab5b0;
+    --text-muted: #939e98;
+    --card-gold: #ebcb6b;
+  }
+  /* 列表留白保护头像框、圆角和阴影，事件本身不增加外边距。 */
+  .event-list {
+    padding: calc(var(--event-font-size) * 0.25);
+  }
+  .event .repeat-count {
+    padding: 0 calc(var(--event-font-size) * 0.375);
+  }
+
+  /* 公共尺寸与主题颜色 */
+  .event.type-gift {
+    --card-tone: var(--card-gold);
+    --card-fill:
+      linear-gradient(var(--card-sheen), transparent calc(var(--event-font-size) * 2)), #f5f2e9;
+  }
+
+  .dark .event.type-gift {
+    --card-fill:
+      linear-gradient(var(--card-sheen), transparent calc(var(--event-font-size) * 2)), #272b23;
+  }
+
+  .dark .event.type-superchat {
+    --card-fill: #262a28;
+    --card-tone: var(--price-color, #d6afbf);
+  }
+  .event.type-redpocket {
+    --card-tone: #af3520;
+  }
+  .dark .event.type-redpocket {
+    --card-tone: #dca18e;
+  }
+  .event.type-lottery {
+    --card-tone: #5125ff;
+  }
+  .dark .event.type-lottery {
+    --card-tone: rgb(185, 133, 244);
+  }
+  .event.guard-purchase-level-3 {
+    --card-tone: #235799;
+    --card-fill:
+      linear-gradient(var(--card-sheen), transparent calc(var(--event-font-size) * 2)), #f0f2f3;
+    --card-outline:
+      inset 0 0 0 calc(var(--event-font-size) * 1 / 16) #1a40713e,
+      0 calc(var(--event-font-size) * 2 / 16) calc(var(--event-font-size) * 4 / 16)
+        var(--card-shadow);
+  }
+
+  .dark .event.guard-purchase-level-3 {
+    --card-fill:
+      linear-gradient(var(--card-sheen), transparent calc(var(--event-font-size) * 2)), #232a29;
+    --card-outline:
+      inset 0 0 0 calc(var(--event-font-size) * 1 / 16) #becfe12e,
+      0 calc(var(--event-font-size) * 2 / 16) calc(var(--event-font-size) * 4 / 16)
+        var(--card-shadow);
+    --card-tone: #9cb6d2;
+  }
+  .event.guard-purchase-level-2 {
+    --card-tone: #5c3f9b;
+    --card-fill:
+      linear-gradient(var(--card-sheen), transparent calc(var(--event-font-size) * 2)), #efebf0;
+    --card-outline:
+      inset 0 0 0 calc(var(--event-font-size) * 1 / 16) #4d348156,
+      0 calc(var(--event-font-size) * 2 / 16) calc(var(--event-font-size) * 4 / 16)
+        var(--card-shadow);
+  }
+
+  .dark .event.guard-purchase-level-2 {
+    --card-fill:
+      linear-gradient(var(--card-sheen), transparent calc(var(--event-font-size) * 2)), #292e2e;
+    --card-outline:
+      inset 0 0 0 calc(var(--event-font-size) * 1 / 16) #c9bfdd41,
+      0 calc(var(--event-font-size) * 2 / 16) calc(var(--event-font-size) * 4 / 16)
+        var(--card-shadow);
+    --card-tone: #baadd3;
+  }
+  .event.guard-purchase-level-1 {
+    --card-tone: #944c07;
+    --card-fill:
+      linear-gradient(var(--card-sheen), transparent calc(var(--event-font-size) * 2)), #f1e7da;
+    --card-outline:
+      inset 0 0 0 calc(var(--event-font-size) * 1 / 16) #86450677,
+      0 calc(var(--event-font-size) * 2 / 16) calc(var(--event-font-size) * 4 / 16)
+        var(--card-shadow);
+  }
+
+  .dark .event.guard-purchase-level-1 {
+    --card-fill:
+      linear-gradient(var(--card-sheen), transparent calc(var(--event-font-size) * 2)), #34342c;
+    --card-outline:
+      inset 0 0 0 calc(var(--event-font-size) * 1 / 16) #debb9a63,
+      0 calc(var(--event-font-size) * 2 / 16) calc(var(--event-font-size) * 4 / 16)
+        var(--card-shadow);
+    --card-tone: #d9b28c;
+  }
+
+  /* 公共卡面。尺寸由基准字号派生，部件仍接受原有自定义变量。 */
+  .event {
+    --event-text-color: var(--text-body);
+    --event-secondary-color: var(--message-color, var(--text-secondary));
+    --event-muted-color: var(--message-color, var(--text-muted));
+    --card-tone: var(--text-secondary);
+    --card-tint: 7%;
+    --card-ring: 18%;
+    --card-fill:
+      linear-gradient(var(--card-sheen), transparent calc(var(--event-font-size) * 2)),
+      color-mix(in srgb, var(--card-tone) var(--card-tint), var(--card-surface));
+    --card-outline:
+      inset 0 0 0 calc(var(--event-font-size) / 16)
+        color-mix(in srgb, var(--card-tone) var(--card-ring), var(--card-edge)),
+      0 calc(var(--event-font-size) * 0.125) calc(var(--event-font-size) * 0.25) var(--card-shadow);
+    font-size: var(--event-font-size);
+    line-height: var(--event-line-height, 1.5);
+    color: var(--message-color, var(--text-body));
+    padding: var(--event-padding, calc(var(--event-font-size) * 0.5))
+      var(--event-padding, calc(var(--event-font-size) * 0.75));
+    border: 0;
+    border-radius: calc(var(--event-font-size) * 0.625);
+    background: var(--event-background, var(--event-background-color, var(--card-fill)));
+    box-shadow: var(--card-outline);
+    isolation: isolate;
+  }
+  .dark .event {
+    --card-tint: 6%;
+    --card-ring: 12%;
+  }
+  .event.price-gradient-active {
+    --card-tone: var(--price-color);
+    --price-gradient-background:
+      linear-gradient(var(--card-sheen), transparent calc(var(--event-font-size) * 2)),
+      color-mix(in srgb, var(--card-tone) var(--card-tint), var(--price-tier-background-color));
+  }
+  .event .price {
+    font-family: inherit;
+    font-size: var(--price-font-size, inherit);
+    line-height: inherit;
+    color: var(--price-color, var(--card-tone));
+    font-weight: 700;
+  }
+  .event :is(.gift-name, .guard-name, .honor-highlight) {
+    color: var(--message-color, var(--card-tone));
+  }
+  .event .blind-profit {
+    font-family: inherit;
+    font-weight: 700;
+  }
+
+  /* 弹幕：头像在卡面外，姓名与正文共用右侧卡面。 */
+  .event-list .event.type-chat {
+    display: inline-grid;
+    grid-template-columns: minmax(0, 1fr);
+    width: fit-content;
+    max-width: 100%;
+    padding: 0;
+    background: none;
+    box-shadow: none;
+    column-gap: var(--event-gap, calc(var(--event-font-size) * 0.5));
+    row-gap: 0;
+  }
+  .event-list .event.type-chat:has(> .avatar-wrap) {
+    grid-template-columns: auto minmax(0, 1fr);
+    padding-left: var(--event-padding, calc(var(--event-font-size) * 0.25));
+  }
+  .event-list .event.type-chat > .avatar-wrap {
+    grid-column: 1;
+    grid-row: 1 / span 2;
+    align-self: start;
+    width: var(--avatar-size, calc(var(--event-font-size) * 2));
+    height: var(
+      --avatar-height,
+      var(--avatar-size, calc(var(--event-font-size) * 2))
+    );
+    margin: calc(var(--event-font-size) * 0.25) 0 0;
+  }
+  .event-list .event.type-chat::before {
+    content: "";
+    display: block;
+    grid-column: -2;
+    grid-row: 1 / span 3;
+    z-index: -1;
+    border: calc(var(--event-font-size) / 16) solid var(--card-edge);
+    border-radius: calc(var(--event-font-size) * 0.625);
+    background: var(
+      --event-background,
+      var(
+        --event-background-color,
+        linear-gradient(var(--card-sheen), transparent calc(var(--event-font-size) * 1.75))
+          var(--card-surface)
+      )
+    );
+    box-shadow: 0 calc(var(--event-font-size) * 0.125) calc(var(--event-font-size) * 0.25)
+      var(--card-shadow);
+  }
+  .event-list .event.type-chat > .user {
+    grid-column: -2;
+    grid-row: 1;
+    max-width: 100%;
+    min-height: 0;
+    padding: var(--event-padding, calc(var(--event-font-size) * 0.5))
+      var(--event-padding, calc(var(--event-font-size) * 0.625)) 0;
+    margin: 0;
+  }
+  .event-list .event.type-chat > .content {
+    grid-column: -2;
+    grid-row: 2;
+    display: block;
+    padding: calc(var(--event-font-size) * 0.125)
+      var(--event-padding, calc(var(--event-font-size) * 0.625))
+      var(--event-padding, calc(var(--event-font-size) * 0.5));
+    line-height: var(--event-line-height, 1.5);
+  }
+  .event-list .event.type-chat > .time {
+    grid-column: -2;
+    grid-row: 3;
+    display: block;
+    margin: 0 calc(var(--event-font-size) * 0.625)
+      calc(var(--event-font-size) * 0.5);
+    padding: 0;
+    font-size: calc(var(--event-font-size) * 0.875);
+  }
+  .event-list .event.type-chat > .time.time-inline {
+    position: absolute;
+    right: var(--time-edge-right);
+    bottom: var(--event-padding, calc(var(--event-font-size) * 0.5));
+    margin: 0;
+  }
+  .event-list .event.type-chat:has(> .time:not(.time-inline)) > .content {
+    padding-bottom: calc(var(--event-font-size) * 0.25);
+  }
+  .event-list .event.type-chat:has(:is(.big-emote, .banner-emote)) .repeat-count {
+    display: table;
+    margin: calc(var(--event-font-size) * 0.25) 0 0;
+  }
+
+  /* 互动沿用自然行流，不画卡面。 */
+  .event-list .event.type-interaction {
+    font-size: calc(var(--event-font-size) * 0.875);
+    padding: var(--event-padding, calc(var(--event-font-size) * 0.25))
+      var(--event-padding, calc(var(--event-font-size) * 0.75));
+    background: var(--event-background, transparent);
+    box-shadow: none;
+  }
+  .event-list .event.type-interaction > :is(.avatar-wrap, .user) {
+    vertical-align: middle;
+  }
+
+  .event-list .event.type-interaction > .avatar-wrap {
+    width: var(--avatar-size, calc(var(--event-font-size) * 1.5));
+    height: var(--avatar-height, var(--avatar-size, calc(var(--event-font-size) * 1.5)));
+    margin-right: var(--event-gap, calc(var(--event-font-size) * 0.5));
+  }
+  .event-list .event.type-interaction:has(> .avatar-wrap) > .user {
+    max-width: calc(100% - var(--avatar-size, var(--event-font-size) * 1.5)
+      - var(--event-gap, var(--event-font-size) * 0.5)
+      - var(--event-gap, var(--event-font-size) * 0.25));
+  }
+  .event-list .event.type-interaction .username {
+    font-size: var(--event-font-size);
+  }
+
+  /* 礼物与大航海：头像跨两行，购买信息内部仍可用 order 调整顺序。 */
+  .event-list .event:is(.type-gift, .type-guard) {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    gap: var(--event-gap, calc(var(--event-font-size) * 0.125))
+      var(--event-gap, calc(var(--event-font-size) * 0.75));
+    align-items: center;
+    padding-right: calc(
+      var(--gift-icon-size, calc(var(--event-font-size) * 2)) + calc(var(--event-font-size) * 5.5)
+    );
+  }
+  .event-list .event:is(.type-gift, .type-guard):has(> .avatar-wrap) {
+    grid-template-columns: auto minmax(0, 1fr);
+  }
+  .event-list .event:is(.type-gift, .type-guard) > .avatar-wrap {
+    grid-row: 1 / span 2;
+    align-self: center;
+    width: var(--avatar-size, calc(var(--event-font-size) * 2));
+    height: var(--avatar-height, var(--avatar-size, calc(var(--event-font-size) * 2)));
+    margin: 0;
+  }
+  .event-list .event:is(.type-gift, .type-guard) > .user {
+    grid-column: -2;
+    grid-row: 1;
+    max-width: 100%;
+    min-height: 0;
+    margin: 0;
+  }
+  .event-list .event:is(.type-gift, .type-guard) > .content {
+    grid-column: -2;
+    grid-row: 2;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: var(--event-gap, calc(var(--event-font-size) * 0.25));
+    row-gap: var(--event-gap, calc(var(--event-font-size) * 0.125));
+    min-width: 0;
+  }
+  .event-list .event:is(.type-gift, .type-guard) .content > .price {
+    position: absolute;
+    top: 50%;
+    right: calc(
+      var(--gift-icon-size, calc(var(--event-font-size) * 2)) + var(--event-font-size) * 1.25
+    );
+    transform: translateY(-50%);
+    margin: 0;
+  }
+  .event-list .event:is(.type-gift, .type-guard) .content > :is(.gift-icon, .guard-purchase-icon) {
+    order: 1;
+    position: absolute;
+    right: calc(var(--event-font-size) * 0.75);
+    top: 50%;
+    transform: translateY(-50%);
+    width: var(--gift-icon-size, calc(var(--event-font-size) * 2));
+    height: var(--gift-icon-size, calc(var(--event-font-size) * 2));
+  }
+  .event .content > .guard-companion-days {
+    order: 0;
+    flex-basis: auto;
+    padding: 0 calc(var(--event-font-size) * 0.5);
+    border-radius: calc(var(--event-font-size) * 0.25);
+    background: color-mix(in srgb, var(--card-tone) 14%, transparent);
+    color: var(--card-tone);
+    font-size: inherit;
+  }
+  .event-list .event .blind-gift {
+    order: 2;
+    flex-basis: 100%;
+    display: inline-flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: var(--event-gap, calc(var(--event-font-size) * 0.25));
+    margin: 0;
+  }
+  .event .blind-gift :is(.blind-price, .blind-profit) {
+    font-size: var(--price-font-size, inherit);
+  }
+
+  /* SC：信息行与正文分区，背景直接画在已有 info 上。 */
+  .event.type-superchat {
+    --card-tone: var(--price-color, #9f3a69);
+    --card-fill: #f8f0f0;
+  }
+  .event-list .event.type-superchat {
+    display: block;
+    padding: 0;
+  }
+  .event-list .event.type-superchat > .info {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: var(--event-gap, calc(var(--event-font-size) * 0.5));
+    padding: var(--event-padding, calc(var(--event-font-size) * 0.5))
+      var(--event-padding, calc(var(--event-font-size) * 0.75));
+    background: color-mix(in srgb, var(--card-tone) 7%, transparent);
+    border-radius: inherit;
+    border-bottom-left-radius: 0;
+    border-bottom-right-radius: 0;
+    border-bottom: calc(var(--event-font-size) / 16) solid
+      color-mix(in srgb, var(--card-tone) 12%, transparent);
+  }
+  .event-list .event.type-superchat .info > .user {
+    flex: 1 1 calc(var(--event-font-size) * 6);
+    min-width: 0;
+    margin: 0;
+    max-width: none;
+  }
+  .event-list .event.type-superchat .info > .avatar-wrap {
+    margin: 0;
+  }
+  .event-list .event.type-superchat .info > .price {
+    margin: 0;
+  }
+  .event-list .event.type-superchat .info > .event-icon {
+    width: calc(var(--event-font-size) * 1.5);
+    height: calc(var(--event-font-size) * 1.5);
+  }
+  .event-list .event.type-superchat > .content {
+    display: block;
+    margin: 0;
+    padding: var(--event-padding, calc(var(--event-font-size) * 0.75));
+    line-height: var(--event-line-height, 1.5);
+  }
+  .event .bili-translation {
+    margin-top: calc(var(--event-font-size) * 0.5);
+    padding-top: calc(var(--event-font-size) * 0.5);
+    border-top: calc(var(--event-font-size) / 16) solid var(--card-edge);
+    color: var(--message-color, var(--text-secondary));
+    font-size: calc(var(--event-font-size) * 0.875);
+  }
+
+  /* 活动：状态位于信息行，图片与金额留在正文区域。 */
+  .event.redpocket-start {
+    --card-fill:
+      linear-gradient(var(--card-sheen), transparent calc(var(--event-font-size) * 2)), #f9f0eb;
+  }
+  .dark .event.redpocket-start {
+    --card-fill:
+      linear-gradient(var(--card-sheen), transparent calc(var(--event-font-size) * 2)), #272925;
+  }
+  .event-list .event:is(.lottery-start, .redpocket-start) {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+    gap: var(--event-gap, calc(var(--event-font-size) * 0.125))
+      var(--event-gap, calc(var(--event-font-size) * 0.75));
+  }
+  .event-list .event:is(.lottery-start, .redpocket-start):has(> .avatar-wrap) {
+    grid-template-columns: auto minmax(0, 1fr) auto;
+  }
+  .event-list .event:is(.lottery-start, .redpocket-start) > .avatar-wrap {
+    grid-column: 1;
+    grid-row: 1 / span 2;
+    align-self: center;
+    margin: 0;
+  }
+  .event-list .event:is(.lottery-start, .redpocket-start) > :is(.user, .activity-title) {
+    grid-column: -3;
+    grid-row: 1;
+    margin: 0;
+    max-width: 100%;
+    min-height: 0;
+  }
+  .event-list .event:is(.lottery-start, .redpocket-start) > .content {
+    grid-column: -3;
+    grid-row: 2;
+  }
+  .event-list .event.redpocket-start > .content {
+    grid-column: -3 / -1;
+  }
+  .event-list .event.lottery-start > .event-icon {
+    grid-column: -2;
+    grid-row: 2;
+    align-self: center;
+    width: calc(var(--event-font-size) * 2);
+    height: calc(var(--event-font-size) * 2);
+  }
+  .event-list .event:is(.lottery-start, .redpocket-start) > .activity-status {
+    grid-column: -2;
+    grid-row: 1;
+    justify-self: end;
+    position: static;
+    align-self: start;
+    margin: 0;
+  }
+  .event
+    :is(
+      .lottery-command,
+      .lottery-required-gift,
+      .lottery-requirement,
+      .redpocket-awards,
+      .redpocket-command
+    ) {
+    display: block;
+    margin: calc(var(--event-font-size) * 0.125) 0 0;
+    line-height: inherit;
+  }
+  .event :is(.lottery-command, .redpocket-command) > .prefix {
+    margin-right: calc(var(--event-font-size) * 0.25);
+  }
+  .event .redpocket {
+    display: block;
+  }
+  .event :is(.lottery-name, .redpocket-name, .activity-prize) {
+    color: inherit;
+    font-weight: 700;
+  }
+
+  .event-list .event.redpocket-start .redpocket {
+    position: relative;
+    min-height: calc(var(--event-font-size) * 2);
+    padding-right: calc(var(--event-font-size) * 6.75);
+  }
+  .event-list .event.redpocket-start .redpocket > .price {
+    position: absolute;
+    top: 50%;
+    right: calc(var(--event-font-size) * 2.5);
+    transform: translateY(-50%);
+    margin: 0;
+  }
+  .event-list .event.redpocket-start .activity-action > .event-icon {
+    position: absolute;
+    top: 50%;
+    right: 0;
+    transform: translateY(-50%);
+    width: calc(var(--event-font-size) * 2);
+    height: calc(var(--event-font-size) * 2);
+    margin: 0;
+  }
+  .event .activity-status {
+    padding: 0 calc(var(--event-font-size) * 0.375);
+    border-radius: calc(var(--event-font-size) * 0.375);
+    background: var(--card-surface);
+    box-shadow: inset 0 0 0 calc(var(--event-font-size) / 16)
+      color-mix(in srgb, var(--card-tone) 20%, transparent);
+    color: var(--card-tone);
+    font-size: calc(var(--event-font-size) * 0.75);
+  }
+  .event .activity-status.activity-urgent {
+    color: var(--status-danger);
+  }
+  .event-list .event.type-superchat > .content > .message {
+    display: inline;
+  }
+
+  .event-list .event.lottery-start > .activity-title {
+    padding-left: 0;
+  }
+
+  /* 开奖：为名单留出首行空间，展开内容保持在原 details 中。 */
+  .event-list .event:is(.lottery-result, .redpocket-result) {
+    display: grid;
+    grid-template-columns: auto minmax(0, 1fr);
+    gap: 0 calc(var(--event-font-size) * 0.5);
+  }
+  .event-list .event:is(.lottery-result, .redpocket-result) > .event-icon {
+    grid-column: 1;
+    grid-row: 1 / span 2;
+    align-self: center;
+    width: calc(var(--event-font-size) * 1.5);
+    height: calc(var(--event-font-size) * 1.5);
+    margin: 0;
+  }
+  .event-list .event:is(.lottery-result, .redpocket-result) > .result-title {
+    grid-column: 2;
+    grid-row: 1;
+    display: block;
+    padding: 0;
+    font-size: inherit;
+    color: inherit;
+  }
+  .event-list .event:is(.lottery-result, .redpocket-result) > .content {
+    display: block;
+    grid-column: 2;
+    grid-row: 2;
+  }
+  .event .result-description {
+    font-weight: 700;
+    color: var(--text-body);
+  }
+  .event .winner-list-toggle {
+    top: calc(var(--event-font-size) * 0.5);
+    right: calc(var(--event-font-size) * 0.75);
+    font-size: calc(var(--event-font-size) * 0.75);
+    line-height: 1.5;
+  }
+  .event .winner-list-items {
+    margin-top: calc(var(--event-font-size) * 0.5);
+    padding-top: calc(var(--event-font-size) * 0.5);
+    border-color: var(--card-edge);
+  }
+  .event .winner-list-item {
+    font-size: calc(var(--event-font-size) * 0.875);
+  }
+
+  .event-list .event:is(.lottery-result, .redpocket-result):has(.winner-list) > .result-title {
+    padding-right: calc(var(--event-font-size) * 2.5);
+  }
+
+  /* 成就：两行文案、右侧数字与原有官方图片。 */
+  .event-list .event.type-guard-honor {
+    --card-tone: var(--card-gold);
+    --card-fill: #f4f1e7;
+    display: flex;
+    align-items: center;
+    gap: var(--event-gap, calc(var(--event-font-size) * 0.5));
+    padding: var(--event-padding, calc(var(--event-font-size) * 0.75));
+    border-radius: var(--event-font-size);
+    box-shadow: inset 0 0 0 calc(var(--event-font-size) / 16)
+      color-mix(in srgb, var(--card-tone) 36%, transparent);
+  }
+  .dark .event.type-guard-honor {
+    --card-fill: #2c2f24;
+  }
+  .event-list .event.type-guard-honor > .avatar-wrap {
+    flex: none;
+    width: var(--avatar-size, calc(var(--event-font-size) * 2));
+    height: var(
+      --avatar-height,
+      var(--avatar-size, calc(var(--event-font-size) * 2))
+    );
+    margin: 0;
+  }
+  .event-list .event.type-guard-honor > .content {
+    flex: 1;
+    min-width: 0;
+    padding-right: calc(var(--event-font-size) * 5);
+  }
+  .event .honor-heading {
+    font-size: inherit;
+    line-height: 1.5;
+  }
+  .event .honor-summary {
+    margin-top: 0;
+    font-size: inherit;
+    line-height: 1.5;
+  }
+  .event-list .event.type-guard-honor .honor-icon {
+    position: absolute;
+    right: calc(var(--event-font-size) * 0.75);
+    top: 50%;
+    transform: translateY(-50%);
+    width: calc(var(--event-font-size) * 3.5);
+    height: calc(var(--event-font-size) * 3.5);
+    opacity: 0.3;
+  }
+  .event-list .event.type-guard-honor .honor-milestone {
+    position: absolute;
+    right: calc(var(--event-font-size) * 0.75);
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: calc(var(--event-font-size) * 2);
+    line-height: 1;
+    margin: 0;
+    color: var(--message-color, var(--card-tone));
+  }
+  /* 四圈半径为基准字号的2.5、4.375、6.25、8.125倍，透明度沿用原图。 */
+  .event-list .event.type-guard-honor::before {
+    content: "";
+    display: block;
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    z-index: -1;
+    pointer-events: none;
+    background: var(--card-tone);
+    mask-image: url("data:image/svg+xml,%3Csvg%20xmlns%3D'http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg'%20viewBox%3D'0%200%20264%20264'%3E%3Cg%20fill%3D'none'%20stroke%3D'black'%20stroke-width%3D'1'%3E%3Ccircle%20cx%3D'132'%20cy%3D'132'%20r%3D'40'%20stroke-opacity%3D'.22'%2F%3E%3Ccircle%20cx%3D'132'%20cy%3D'132'%20r%3D'70'%20stroke-opacity%3D'.17'%2F%3E%3Ccircle%20cx%3D'132'%20cy%3D'132'%20r%3D'100'%20stroke-opacity%3D'.12'%2F%3E%3Ccircle%20cx%3D'132'%20cy%3D'132'%20r%3D'130'%20stroke-opacity%3D'.07'%2F%3E%3C%2Fg%3E%3C%2Fsvg%3E");
+    mask-repeat: no-repeat;
+    mask-size: calc(var(--event-font-size) * 16.5) calc(var(--event-font-size) * 16.5);
+    mask-position: calc(
+        var(--event-padding, calc(var(--event-font-size) * 0.75)) +
+          var(--avatar-size, calc(var(--event-font-size) * 2)) / 2 - var(--event-font-size) * 8.25
+      )
+      center;
+  }
+  .event-list .event.type-guard-honor:not(:has(> .avatar-wrap))::before {
+    display: none;
+  }
+  .event-list .event.type-guard-honor::after {
+    inset: calc(var(--event-font-size) * 0.25);
+    border-radius: calc(var(--event-font-size) * 0.75);
+    box-shadow: inset 0 0 0 calc(var(--event-font-size) / 16)
+      color-mix(in srgb, var(--card-tone) 18%, transparent);
+  }
+
+  /* 系统消息用自然行流，开播与下播时间靠右。 */
+  .event:is(.type-system, .type-live-status, .type-unknown) {
+    --card-fill: var(--card-surface);
+  }
+  .event-list .event:is(.type-system, .type-live-status, .type-unknown) {
+    padding: var(--event-padding, calc(var(--event-font-size) * 0.5))
+      var(--event-padding, calc(var(--event-font-size) * 0.625));
+    display: block;
+    border-radius: calc(var(--event-font-size) * 0.5);
+    box-shadow: inset 0 0 0 calc(var(--event-font-size) / 16) var(--card-edge);
+  }
+  .event-list .event .system-message {
+    font-size: var(--event-font-size);
+    line-height: calc(var(--event-font-size) * var(--event-line-height, 1.5));
+    color: var(--message-color, var(--text-secondary));
+    font-weight: 500;
+  }
+  .event-list .event .system-message-copy {
+    flex: 1;
+    min-width: 0;
+  }
+  .event-list .event .system-message-detail {
+    margin-top: calc(var(--event-font-size) * 0.125);
+    font-size: calc(var(--event-font-size) * 0.875);
+    line-height: calc(var(--event-font-size) * 1.5);
+    font-weight: 500;
+    color: var(--message-color, var(--text-muted));
+  }
+  .event-list .event:is(.live-start, .live-end) .system-message-title {
+    font-weight: 500;
+  }
+  .event .lifecycle-time {
+    float: right;
+    margin: 0 0 0 calc(var(--event-font-size) * 0.75);
+    font-size: inherit;
+    line-height: inherit;
+    font-weight: inherit;
+    color: inherit;
+  }
+  .event:is(.live-start, .system-room-silent-off, .system-admin-appointed, .system-admin-list-updated) {
+    --card-tone: #20673f;
+  }
+  .dark .event:is(.live-start, .system-room-silent-off, .system-admin-appointed, .system-admin-list-updated) {
+    --card-tone: #7fcaa0;
+  }
+  .event:is(.system-user-block, .system-room-silent-on) {
+    --card-tone: #7e4f05;
+  }
+  .dark .event:is(.system-user-block, .system-room-silent-on) {
+    --card-tone: #e6bb78;
+  }
+  .event.live-end {
+    --card-tone: var(--native-system-tone);
+  }
+  .event-list .event:is(.live-start, .live-end, .system-room-change, .system-room-silent-off) .system-message {
+    font-size: calc(var(--event-font-size) * 0.875);
+    color: var(--message-color, var(--text-muted));
+  }
+  .event-list .event:is(.live-start, .live-end) .system-message {
+    color: var(--message-color, var(--card-tone));
+  }
+  .event-list .event:is(.system-user-block, .system-room-silent-on, .system-room-silent-off, .system-admin-appointed) .system-message-title > .message {
+    color: var(--message-color, var(--card-tone));
+  }
+  .event-list .event:is(.system-admin-revoked, .system-admin-list-updated, .system-room-change) .system-message-title {
+    color: var(--message-color, var(--text-body));
+  }
+  .event-list .event:is(.live-warning, .live-cutoff) .system-message {
+    color: var(--text-body);
+  }
+  .event-list .event:is(.live-warning, .live-cutoff) .system-message-title {
+    color: var(--message-color, #7e4f05);
+  }
+  .dark .event-list .event:is(.live-warning, .live-cutoff) .system-message-title {
+    color: var(--message-color, #e6bb78);
+  }
+  .event-list .event:is(.live-warning, .live-cutoff) .system-message-detail {
+    color: var(--message-color, var(--text-secondary));
+  }
+  .event.live-warning {
+    --card-tone: #7e4f05;
+  }
+  .event.live-cutoff {
+    --card-tone: #a02c2c;
+  }
+  .dark .event.live-warning {
+    --card-tone: #e6bb78;
+  }
+  .dark .event.live-cutoff {
+    --card-tone: #ee8f8f;
+  }
+  .event-list .event:is(.live-warning, .live-cutoff) {
+    --card-fill: color-mix(in srgb, var(--card-tone) 6%, var(--card-surface));
+    box-shadow: inset 0 0 0 calc(var(--event-font-size) / 16)
+      color-mix(in srgb, var(--card-tone) 18%, var(--card-edge));
+  }
+  .event-list .event:is(.live-warning, .live-cutoff) .system-message {
+    font-size: inherit;
+    font-weight: 700;
+  }
+  .event-list .event .system-message-icon {
+    width: var(--event-font-size);
+    height: calc(var(--event-font-size) * var(--event-line-height, 1.5));
+    margin: 0;
+    color: var(--card-tone);
+  }
+
+  /* 置顶沿用胶囊结构，不应用正文分区。 */
+  .event.event-sticky {
+    display: flex;
+    flex-wrap: nowrap;
+    align-items: center;
+    width: max-content;
+    padding: var(--event-padding, calc(var(--event-font-size) * 0.25));
+    padding-right: var(--event-padding, calc(var(--event-font-size) * 0.5));
+    border-radius: var(--event-font-size);
+    color: var(--message-color, var(--card-tone));
+    background-image: none;
+    --price-gradient-background:
+      color-mix(in srgb, var(--card-tone) var(--card-tint), var(--price-tier-background-color));
+  }
+  .event.event-sticky::before {
+    content: "";
+    display: block;
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    background: linear-gradient(var(--card-sheen), transparent);
+    pointer-events: none;
+    z-index: -1;
+  }
+  .event.event-sticky :is(.price, .lottery) {
+    font-size: var(--price-font-size, var(--event-font-size));
+    line-height: 1;
+    font-weight: 700;
+    color: var(--price-color, var(--message-color, var(--card-tone)));
+  }
+  .event.event-sticky > .content {
+    flex-wrap: nowrap;
+  }
+  .event.event-sticky .blind-gift {
+    flex: none;
+  }
+  .event.event-sticky .avatar-wrap {
+    align-self: center;
+    width: var(--avatar-size, calc(var(--event-font-size) * 1.5));
+    height: var(--avatar-height, var(--avatar-size, calc(var(--event-font-size) * 1.5)));
+  }
+
+  /* 窄幅不保留侧栏，价格和正文部件各自自然换行。 */
+  @container native-events (max-width: 20em) {
+    .event-list .event:is(.type-gift, .type-guard, .lottery-start, .redpocket-start) > .content {
+      grid-column: 1 / -1;
+      grid-row: 2;
+    }
+    .event-list .event:is(.type-gift, .type-guard, .lottery-start, .redpocket-start) > .avatar-wrap {
+      grid-row: 1;
+    }
+    .event-list .event:is(.type-gift, .type-guard) {
+      padding-right: var(--event-padding, calc(var(--event-font-size) * 0.75));
+    }
+    .event-list .event:is(.type-gift, .type-guard) .content > :is(.price, .gift-icon, .guard-purchase-icon) {
+      position: static;
+      transform: none;
+      margin: 0;
+    }
+    .event-list .event.redpocket-start .redpocket > .price,
+    .event-list .event.redpocket-start .activity-action > .event-icon {
+      position: static;
+      transform: none;
+    }
+    .event-list .event.redpocket-start .redpocket {
+      padding-right: 0;
+      min-height: 0;
+    }
+    .event-list .event:is(.lottery-start, .redpocket-start):has(> .avatar-wrap) {
+      grid-template-columns: auto minmax(0, 1fr);
+    }
+    .event-list .event:is(.lottery-start, .redpocket-start) > :is(.user, .activity-title) {
+      grid-column: 1;
+    }
+    .event-list .event:is(.lottery-start, .redpocket-start):has(> .avatar-wrap)
+      > :is(.user, .activity-title) {
+      grid-column: 2;
+    }
+    .event-list .event:is(.lottery-start, .redpocket-start) > .activity-status {
+      position: static;
+      grid-column: 1 / -1;
+      grid-row: 2;
+      margin: 0;
+    }
+    .event-list .event:is(.lottery-start, .redpocket-start) > .content {
+      grid-row: 3;
+    }
+    .event-list .event.lottery-start > .event-icon {
+      grid-row: 3;
+      grid-column: 1 / -1;
+      justify-self: end;
+    }
+    .event-list .event.lottery-start > .content {
+      padding-right: calc(var(--event-font-size) * 2.5);
+    }
+    .event-list .event:is(.lottery-result, .redpocket-result) > .result-title {
+      font-size: calc(var(--event-font-size) * 0.875);
+    }
+    .event-list .event.type-guard-honor {
+      flex-wrap: wrap;
+    }
+    .event-list .event.type-guard-honor > .content {
+      flex-basis: 100%;
+      padding-right: 0;
+    }
+    .event-list .event.type-guard-honor .honor-milestone {
+      position: static;
+      display: inline;
+      font-size: calc(var(--event-font-size) * 1.5);
+      transform: none;
+      margin-left: calc(var(--event-font-size) * 0.25);
+    }
+    .event-list .event.type-guard-honor .honor-icon {
+      top: calc(var(--event-font-size) * 0.5);
+      transform: none;
+      width: calc(var(--event-font-size) * 2.5);
+      height: calc(var(--event-font-size) * 2.5);
+    }
+    .event-list .event.type-guard-honor::before {
+      mask-position: calc(
+          var(--event-padding, calc(var(--event-font-size) * 0.75)) +
+            var(--avatar-size, calc(var(--event-font-size) * 2)) / 2 - var(--event-font-size) *
+            8.25
+        )
+        calc(
+          var(--event-padding, calc(var(--event-font-size) * 0.75)) +
+            var(--avatar-size, calc(var(--event-font-size) * 2)) / 2 - var(--event-font-size) *
+            8.25
+        );
+    }
+  }
+
+  .event-list .event:is(
+      .type-gift,
+      .type-guard,
+      .type-superchat,
+      .type-lottery,
+      .type-redpocket,
+      .type-guard-honor
+    )
+    > .time {
+    display: none;
+  }
+}

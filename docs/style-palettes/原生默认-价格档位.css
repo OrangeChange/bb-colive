@@ -1,0 +1,86 @@
+/* 原生默认：基础档与六档价格配色。仅在“按价格梯度配色”开启且该事件使用梯度时应用。
+ * --tier-档位标识：价格文字主色；卡片同时用于渐变、标题区域和描边。
+ * --tier-bg-档位标识：事件底色；卡片会继续叠加原有高光与渐变。
+ * 起始金额在管理档位中设置；颜色绑定档位标识。浅色、深色分别修改。
+ */
+
+/* 浅色 */
+.event-area {
+  /* 基础档：不足下一档的付费事件，免费礼物不参与价格梯度。 */
+  --tier-band-0: rgb(61, 83, 114);
+  --tier-bg-band-0: rgba(156, 176, 218, 0.3);
+  /* 档位1：主色、底色；起始金额在管理档位中设置。 */
+  --tier-band-1: rgb(29, 91, 171);
+  --tier-bg-band-1: rgba(152, 219, 255, 0.3);
+  /* 档位2：主色、底色；起始金额在管理档位中设置。 */
+  --tier-band-2: rgb(33, 115, 126);
+  --tier-bg-band-2: rgba(146, 241, 241, 0.3);
+  /* 档位3：主色、底色；起始金额在管理档位中设置。 */
+  --tier-band-3: rgb(156, 128, 17);
+  --tier-bg-band-3: rgba(249, 221, 128, 0.3);
+  /* 档位4：主色、底色；起始金额在管理档位中设置。 */
+  --tier-band-4: rgb(176, 89, 8);
+  --tier-bg-band-4: rgba(240, 187, 101, 0.3);
+  /* 档位5：主色、底色；起始金额在管理档位中设置。 */
+  --tier-band-5: rgb(193, 61, 41);
+  --tier-bg-band-5: rgba(253, 198, 182, 0.3);
+  /* 档位6：主色、底色；起始金额在管理档位中设置。 */
+  --tier-band-6: rgb(159, 19, 85);
+  --tier-bg-band-6: rgba(251, 98, 98, 0.3);
+}
+
+/* 深色 */
+.dark .event-area {
+  /* 基础档：不足下一档的付费事件，免费礼物不参与价格梯度。 */
+  --tier-band-0: rgb(160, 185, 221);
+  --tier-bg-band-0: rgba(82, 99, 134, 0.3);
+  /* 档位1：主色、底色；起始金额在管理档位中设置。 */
+  --tier-band-1: rgb(170, 205, 255);
+  --tier-bg-band-1: rgba(70, 124, 152, 0.3);
+  /* 档位2：主色、底色；起始金额在管理档位中设置。 */
+  --tier-band-2: rgb(140, 217, 229);
+  --tier-bg-band-2: rgba(51, 130, 131, 0.3);
+  /* 档位3：主色、底色；起始金额在管理档位中设置。 */
+  --tier-band-3: rgb(230, 201, 105);
+  --tier-bg-band-3: rgba(137, 115, 35, 0.3);
+  /* 档位4：主色、底色；起始金额在管理档位中设置。 */
+  --tier-band-4: rgb(254, 185, 140);
+  --tier-bg-band-4: rgba(149, 108, 34, 0.3);
+  /* 档位5：主色、底色；起始金额在管理档位中设置。 */
+  --tier-band-5: rgb(255, 182, 167);
+  --tier-bg-band-5: rgba(148, 104, 92, 0.3);
+  /* 档位6：主色、底色；起始金额在管理档位中设置。 */
+  --tier-band-6: rgb(255, 177, 200);
+  --tier-bg-band-6: rgba(176, 85, 82, 0.3);
+}
+
+/* 档位应用：通常只需修改上面的变量。 */
+.event.price-gradient-active.price-tier-band-1 {
+  --price-color: var(--tier-band-1);
+  --event-background: var(--tier-bg-band-1);
+}
+.event.price-gradient-active.price-tier-band-2 {
+  --price-color: var(--tier-band-2);
+  --event-background: var(--tier-bg-band-2);
+}
+.event.price-gradient-active.price-tier-band-3 {
+  --price-color: var(--tier-band-3);
+  --event-background: var(--tier-bg-band-3);
+}
+.event.price-gradient-active.price-tier-band-4 {
+  --price-color: var(--tier-band-4);
+  --event-background: var(--tier-bg-band-4);
+}
+.event.price-gradient-active.price-tier-band-5 {
+  --price-color: var(--tier-band-5);
+  --event-background: var(--tier-bg-band-5);
+}
+.event.price-gradient-active.price-tier-band-6 {
+  --price-color: var(--tier-band-6);
+  --event-background: var(--tier-bg-band-6);
+}
+
+.event.price-gradient-active.price-tier-band-0 {
+  --price-color: var(--tier-band-0);
+  --event-background: var(--tier-bg-band-0);
+}

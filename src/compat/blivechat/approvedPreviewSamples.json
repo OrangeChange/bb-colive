@@ -1,0 +1,2248 @@
+{
+  "blivechat": {
+    "static": [
+      {
+        "offsetMs": 1841,
+        "method": "onAddText",
+        "data": {
+          "avatarUrl": "/media/noface.gif",
+          "timestamp": 1700000001.841,
+          "authorName": "空條承太郎",
+          "authorType": 0,
+          "content": "text[吃瓜]emoticon",
+          "privilegeType": 0,
+          "isGiftDanmaku": false,
+          "authorLevel": 21,
+          "isNewbie": false,
+          "isMobileVerified": true,
+          "medalLevel": 0,
+          "id": "bca5f08701c111bf7f65f811cd3807e9",
+          "emoticon": null,
+          "isMirror": false,
+          "uid": "",
+          "medalName": "",
+          "contentParts": [
+            {
+              "type": 0,
+              "text": "text"
+            },
+            {
+              "type": 1,
+              "text": "[吃瓜]",
+              "url": "/media/style-preview-small-emote.png",
+              "width": 59,
+              "height": 59
+            },
+            {
+              "type": 0,
+              "text": "emoticon"
+            }
+          ]
+        }
+      },
+      {
+        "offsetMs": 17635,
+        "method": "onAddText",
+        "data": {
+          "avatarUrl": "/media/noface.gif",
+          "timestamp": 1700000017.635,
+          "authorName": "ディオ・ブランドー",
+          "authorType": 1,
+          "content": "已经没有什么好怕的了",
+          "privilegeType": 3,
+          "isGiftDanmaku": false,
+          "authorLevel": 13,
+          "isNewbie": false,
+          "isMobileVerified": true,
+          "medalLevel": 32,
+          "id": "3a0bf8890d5ffe4be1b25df74274e9df",
+          "emoticon": null,
+          "isMirror": false,
+          "uid": "",
+          "medalName": "小孤独"
+        }
+      },
+      {
+        "offsetMs": 907,
+        "method": "onAddText",
+        "data": {
+          "avatarUrl": "/media/noface.gif",
+          "timestamp": 1700000000.907,
+          "authorName": "成龙",
+          "authorType": 1,
+          "content": "我衰咗三年，我等緊個機會，爭番口氣",
+          "privilegeType": 2,
+          "isGiftDanmaku": false,
+          "authorLevel": 33,
+          "isNewbie": false,
+          "isMobileVerified": true,
+          "medalLevel": 2,
+          "id": "e16e6f9d24c6105a243a3b9520b3c7f7",
+          "emoticon": null,
+          "isMirror": false,
+          "uid": "",
+          "medalName": "ikun"
+        }
+      },
+      {
+        "offsetMs": 32601,
+        "method": "onAddText",
+        "data": {
+          "avatarUrl": "/media/noface.gif",
+          "timestamp": 1700000032.601,
+          "authorName": "御剑侍伶",
+          "authorType": 1,
+          "content": "让我看看",
+          "privilegeType": 1,
+          "isGiftDanmaku": true,
+          "authorLevel": 53,
+          "isNewbie": false,
+          "isMobileVerified": false,
+          "medalLevel": 3,
+          "id": "1dd02030338d40aba1ba4f4c690bd08d",
+          "emoticon": null,
+          "isMirror": false,
+          "uid": "",
+          "medalName": "小孤独"
+        }
+      },
+      {
+        "offsetMs": 45591,
+        "method": "onAddText",
+        "data": {
+          "avatarUrl": "/media/noface.gif",
+          "timestamp": 1700000045.591,
+          "authorName": "Rick Astley",
+          "authorType": 2,
+          "content": "kksk",
+          "privilegeType": 1,
+          "isGiftDanmaku": false,
+          "authorLevel": 9,
+          "isNewbie": false,
+          "isMobileVerified": true,
+          "medalLevel": 7,
+          "id": "5cb001ece0a7baf56d5bf1ad98e2148e",
+          "emoticon": null,
+          "isMirror": false,
+          "uid": "",
+          "medalName": "ikun"
+        }
+      },
+      {
+        "offsetMs": 23741,
+        "method": "onAddText",
+        "data": {
+          "avatarUrl": "/media/noface.gif",
+          "timestamp": 1700000023.741,
+          "authorName": "Arthur Morgan",
+          "authorType": 3,
+          "content": "让我看看",
+          "privilegeType": 0,
+          "isGiftDanmaku": false,
+          "authorLevel": 3,
+          "isNewbie": false,
+          "isMobileVerified": true,
+          "medalLevel": 17,
+          "id": "f8a7c66affcae90f3d066fb626d8d4a2",
+          "emoticon": null,
+          "isMirror": false,
+          "uid": "",
+          "medalName": "ikun"
+        }
+      },
+      {
+        "offsetMs": 3777,
+        "method": "onAddText",
+        "data": {
+          "avatarUrl": "/media/noface.gif",
+          "timestamp": 1700000003.777,
+          "authorName": "孙悟空",
+          "authorType": 0,
+          "content": "草",
+          "privilegeType": 0,
+          "isGiftDanmaku": false,
+          "authorLevel": 5,
+          "isNewbie": false,
+          "isMobileVerified": true,
+          "medalLevel": 8,
+          "id": "b6e8812993e2452d42132c9a1ea4a4c9",
+          "emoticon": null,
+          "isMirror": false,
+          "uid": "",
+          "medalName": "不登校"
+        }
+      },
+      {
+        "offsetMs": 211879,
+        "method": "onAddText",
+        "data": {
+          "avatarUrl": "/media/noface.gif",
+          "timestamp": 1700000211.879,
+          "authorName": "Jim Hacker",
+          "authorType": 2,
+          "content": "Hey Vergil, your portal opening days are over. Give me the Yamato",
+          "privilegeType": 3,
+          "isGiftDanmaku": false,
+          "authorLevel": 9,
+          "isNewbie": false,
+          "isMobileVerified": true,
+          "medalLevel": 12,
+          "id": "fd8336a55b58ed5d7636d93e8180daf6",
+          "emoticon": null,
+          "isMirror": false,
+          "uid": "",
+          "medalName": "不登校"
+        }
+      },
+      {
+        "offsetMs": 2818,
+        "method": "onAddText",
+        "data": {
+          "avatarUrl": "/media/noface.gif",
+          "timestamp": 1700000002.818,
+          "authorName": "御剑侍伶",
+          "authorType": 0,
+          "content": "",
+          "privilegeType": 0,
+          "isGiftDanmaku": false,
+          "authorLevel": 46,
+          "isNewbie": false,
+          "isMobileVerified": true,
+          "medalLevel": 28,
+          "id": "0ae907fbb978061993be9f994089c33b",
+          "emoticon": "/blivechat/static/img/emoticons/sakaban_jiayu_yutou.png",
+          "isMirror": false,
+          "uid": "",
+          "medalName": "小孤独"
+        }
+      },
+      {
+        "offsetMs": 16643,
+        "method": "onAddText",
+        "data": {
+          "avatarUrl": "/media/noface.gif",
+          "timestamp": 1700000016.643,
+          "authorName": "長崎そよ",
+          "authorType": 1,
+          "content": "",
+          "privilegeType": 3,
+          "isGiftDanmaku": false,
+          "authorLevel": 58,
+          "isNewbie": false,
+          "isMobileVerified": true,
+          "medalLevel": 0,
+          "id": "f1472d6f02c4c794b1e9231755c76605",
+          "emoticon": "/blivechat/static/img/emoticons/lipu.png",
+          "isMirror": false,
+          "uid": "",
+          "medalName": ""
+        }
+      },
+      {
+        "offsetMs": 92693,
+        "method": "onAddGift",
+        "data": {
+          "id": "3c579f14d63ad0fb815d8be9538ac935",
+          "avatarUrl": "/media/noface.gif",
+          "timestamp": 1700000092.693,
+          "authorName": "Dante",
+          "totalCoin": 0,
+          "totalFreeCoin": 200,
+          "giftName": "粉丝团灯牌",
+          "num": 10,
+          "giftId": 1,
+          "giftIconUrl": "//s1.hdslb.com/bfs/live/e051dfd4557678f8edcac4993ed00a0935cbd9cc.png",
+          "uid": "",
+          "privilegeType": 1,
+          "medalLevel": 0,
+          "medalName": ""
+        }
+      },
+      {
+        "offsetMs": 63836,
+        "method": "onAddGift",
+        "data": {
+          "id": "933370447cdba7b1b243a32c008bf0d1",
+          "avatarUrl": "/media/noface.gif",
+          "timestamp": 1700000063.836,
+          "authorName": "Rick Astley",
+          "totalCoin": 9900,
+          "totalFreeCoin": 0,
+          "giftName": "可爱捏",
+          "num": 1,
+          "giftId": 2,
+          "giftIconUrl": "//s1.hdslb.com/bfs/live/6dab14826b531c731521345e00d6b56a6708a449.png",
+          "uid": "",
+          "privilegeType": 3,
+          "medalLevel": 21,
+          "medalName": "ikun"
+        }
+      },
+      {
+        "offsetMs": 410999,
+        "method": "onAddGift",
+        "data": {
+          "id": "6f856c479b898bcc1b501073053fbe65",
+          "avatarUrl": "/media/noface.gif",
+          "timestamp": 1700000410.999,
+          "authorName": "哈基米",
+          "totalCoin": 29900,
+          "totalFreeCoin": 0,
+          "giftName": "花式夸夸",
+          "num": 1,
+          "giftId": 3,
+          "giftIconUrl": "//s1.hdslb.com/bfs/live/28186596880db45a7b843f17d6ebb70feeac06f9.png",
+          "uid": "",
+          "privilegeType": 0,
+          "medalLevel": 32,
+          "medalName": "K学姐"
+        }
+      },
+      {
+        "offsetMs": 254076,
+        "method": "onAddGift",
+        "data": {
+          "id": "88f0fa3a8c23d8d1b6834578dfd0a573",
+          "avatarUrl": "/media/noface.gif",
+          "timestamp": 1700000254.076,
+          "authorName": "孙悟空",
+          "totalCoin": 52000,
+          "totalFreeCoin": 0,
+          "giftName": "情书",
+          "num": 10,
+          "giftId": 4,
+          "giftIconUrl": "//s1.hdslb.com/bfs/live/14dafbf217618f0931c08897e0b3eefc00d0da22.png",
+          "uid": "",
+          "privilegeType": 3,
+          "medalLevel": 0,
+          "medalName": ""
+        }
+      },
+      {
+        "offsetMs": 91756,
+        "method": "onAddGift",
+        "data": {
+          "id": "52b0d0a1604cfdf2964486b7a10440d5",
+          "avatarUrl": "/media/noface.gif",
+          "timestamp": 1700000091.756,
+          "authorName": "小岛秀夫",
+          "totalCoin": 100000,
+          "totalFreeCoin": 0,
+          "giftName": "极速超跑",
+          "num": 1,
+          "giftId": 5,
+          "giftIconUrl": "//s1.hdslb.com/bfs/live/27b9734d1a5f77ea6fc94957e3fcbeb55505c6b9.png",
+          "uid": "",
+          "privilegeType": 2,
+          "medalLevel": 0,
+          "medalName": ""
+        }
+      },
+      {
+        "offsetMs": 91756,
+        "method": "onAddGift",
+        "data": {
+          "id": "review-gift-orange-original",
+          "avatarUrl": "/media/noface.gif",
+          "timestamp": 1700000091.756,
+          "authorName": "小岛秀夫",
+          "totalCoin": 200000,
+          "totalFreeCoin": 0,
+          "giftName": "极速超跑",
+          "num": 2,
+          "giftId": 5,
+          "giftIconUrl": "//s1.hdslb.com/bfs/live/27b9734d1a5f77ea6fc94957e3fcbeb55505c6b9.png",
+          "uid": "",
+          "privilegeType": 2,
+          "medalLevel": 0,
+          "medalName": ""
+        }
+      },
+      {
+        "offsetMs": 279929,
+        "method": "onAddGift",
+        "data": {
+          "id": "39df3e63d2dcfbadad94ae2c2ff465c7",
+          "avatarUrl": "/media/noface.gif",
+          "timestamp": 1700000279.929,
+          "authorName": "Tifa Lockhart",
+          "totalCoin": 520000,
+          "totalFreeCoin": 0,
+          "giftName": "为你摘星",
+          "num": 1,
+          "giftId": 6,
+          "giftIconUrl": "//s1.hdslb.com/bfs/live/5bd584b6fdfb03d66de56102e775582fb29ceab7.png",
+          "uid": "",
+          "privilegeType": 3,
+          "medalLevel": 23,
+          "medalName": "Go学长"
+        }
+      },
+      {
+        "offsetMs": 209919,
+        "method": "onAddGift",
+        "data": {
+          "id": "6b49c308eeeff53e8b1f0f704ecd6747",
+          "avatarUrl": "/media/noface.gif",
+          "timestamp": 1700000209.919,
+          "authorName": "周冠宇",
+          "totalCoin": 1245000,
+          "totalFreeCoin": 0,
+          "giftName": "次元之城",
+          "num": 1,
+          "giftId": 7,
+          "giftIconUrl": "//s1.hdslb.com/bfs/live/cdae8136b1ee767609aeec688bca8124651d4d01.png",
+          "uid": "",
+          "privilegeType": 3,
+          "medalLevel": 26,
+          "medalName": "不登校"
+        }
+      },
+      {
+        "offsetMs": 181017,
+        "method": "onAddSuperChat",
+        "data": {
+          "id": "95efe434378daad5bfd6b4083405f914",
+          "avatarUrl": "/media/noface.gif",
+          "timestamp": 1700000181.017,
+          "authorName": "大张伟",
+          "price": 30,
+          "content": "なんで春日影やったの！？",
+          "uid": "",
+          "privilegeType": 1,
+          "medalLevel": 21,
+          "medalName": "K学姐"
+        }
+      },
+      {
+        "offsetMs": 34642,
+        "method": "onAddSuperChat",
+        "data": {
+          "id": "e81e967aa05e5abd6c7f3114d8625cd1",
+          "avatarUrl": "/media/noface.gif",
+          "timestamp": 1700000034.642,
+          "authorName": "Tifa Lockhart",
+          "price": 50,
+          "content": "我衰咗三年，我等緊個機會，爭番口氣",
+          "uid": "",
+          "privilegeType": 3,
+          "medalLevel": 0,
+          "medalName": ""
+        }
+      },
+      {
+        "offsetMs": 41625,
+        "method": "onAddSuperChat",
+        "data": {
+          "id": "0df63c967bc746f2de3e4bd45adb781a",
+          "avatarUrl": "/media/noface.gif",
+          "timestamp": 1700000041.625,
+          "authorName": "長崎そよ",
+          "price": 100,
+          "content": "我衰咗三年，我等緊個機會，爭番口氣",
+          "uid": "",
+          "privilegeType": 2,
+          "medalLevel": 5,
+          "medalName": "ikun"
+        }
+      },
+      {
+        "offsetMs": 14798,
+        "method": "onAddSuperChat",
+        "data": {
+          "id": "4873d8c64c8b00759031b3fc0eff32a0",
+          "avatarUrl": "/media/noface.gif",
+          "timestamp": 1700000014.798,
+          "authorName": "みもりあいの",
+          "price": 200,
+          "content": "Hey Vergil, your portal opening days are over. Give me the Yamato",
+          "uid": "",
+          "privilegeType": 0,
+          "medalLevel": 39,
+          "medalName": "K学姐"
+        }
+      },
+      {
+        "offsetMs": 15737,
+        "method": "onAddSuperChat",
+        "data": {
+          "id": "9b0abae680c4c5c97ce32c366f82bbd1",
+          "avatarUrl": "/media/noface.gif",
+          "timestamp": 1700000015.737,
+          "authorName": "成龙",
+          "price": 500,
+          "content": "已经没有什么好怕的了",
+          "uid": "",
+          "privilegeType": 3,
+          "medalLevel": 21,
+          "medalName": "K学姐"
+        }
+      },
+      {
+        "offsetMs": 53783,
+        "method": "onAddSuperChat",
+        "data": {
+          "id": "cfb865b621eed3ed7fa3a5bffa3141e4",
+          "avatarUrl": "/media/noface.gif",
+          "timestamp": 1700000053.783,
+          "authorName": "孙悟空",
+          "price": 1000,
+          "content": "已经没有什么好怕的了",
+          "uid": "",
+          "privilegeType": 0,
+          "medalLevel": 5,
+          "medalName": "Go学长"
+        }
+      },
+      {
+        "offsetMs": 78811,
+        "method": "onAddMember",
+        "data": {
+          "id": "af0f6ffbe2e91bacdcec2b960c803efb",
+          "avatarUrl": "/media/noface.gif",
+          "timestamp": 1700000078.811,
+          "authorName": "成龙",
+          "privilegeType": 3,
+          "num": 1,
+          "unit": "月",
+          "totalCoin": 198000,
+          "uid": "",
+          "medalLevel": 19,
+          "medalName": "Go学长"
+        }
+      },
+      {
+        "offsetMs": 296427,
+        "method": "onAddMember",
+        "data": {
+          "id": "3b40a8f689b20d3b9b008b8c884ba3f0",
+          "avatarUrl": "/media/noface.gif",
+          "timestamp": 1700000296.427,
+          "authorName": "周冠宇",
+          "privilegeType": 2,
+          "num": 1,
+          "unit": "月",
+          "totalCoin": 1998000,
+          "uid": "",
+          "medalLevel": 6,
+          "medalName": "Go学长"
+        }
+      },
+      {
+        "offsetMs": 102726,
+        "method": "onAddMember",
+        "data": {
+          "id": "b10f4362756e13b44a7b52e7a2e297fc",
+          "avatarUrl": "/media/noface.gif",
+          "timestamp": 1700000102.726,
+          "authorName": "大张伟",
+          "privilegeType": 1,
+          "num": 1,
+          "unit": "月",
+          "totalCoin": 19998000,
+          "uid": "",
+          "medalLevel": 28,
+          "medalName": "K学姐"
+        }
+      }
+    ],
+    "design": [
+      {
+        "offsetMs": 1841,
+        "method": "onAddText",
+        "data": {
+          "avatarUrl": "/media/noface.gif",
+          "timestamp": 1700000001.841,
+          "authorName": "普通用户",
+          "authorType": 0,
+          "content": "普通用户：检查用户名和身份样式。",
+          "privilegeType": 0,
+          "isGiftDanmaku": false,
+          "authorLevel": 21,
+          "isNewbie": false,
+          "isMobileVerified": true,
+          "medalLevel": 10,
+          "id": "review-point-blivechat-1",
+          "emoticon": null,
+          "isMirror": false,
+          "uid": "",
+          "medalName": "粉丝牌"
+        }
+      },
+      {
+        "offsetMs": 1841,
+        "method": "onAddText",
+        "data": {
+          "avatarUrl": "/media/noface.gif",
+          "timestamp": 1700000001.841,
+          "authorName": "舰长",
+          "authorType": 1,
+          "content": "舰长：检查用户名和身份样式。",
+          "privilegeType": 3,
+          "isGiftDanmaku": false,
+          "authorLevel": 21,
+          "isNewbie": false,
+          "isMobileVerified": true,
+          "medalLevel": 10,
+          "id": "review-point-blivechat-2",
+          "emoticon": null,
+          "isMirror": false,
+          "uid": "",
+          "medalName": "粉丝牌"
+        }
+      },
+      {
+        "offsetMs": 1841,
+        "method": "onAddText",
+        "data": {
+          "avatarUrl": "/media/noface.gif",
+          "timestamp": 1700000001.841,
+          "authorName": "提督",
+          "authorType": 1,
+          "content": "提督：检查用户名和身份样式。",
+          "privilegeType": 2,
+          "isGiftDanmaku": false,
+          "authorLevel": 21,
+          "isNewbie": false,
+          "isMobileVerified": true,
+          "medalLevel": 10,
+          "id": "review-point-blivechat-3",
+          "emoticon": null,
+          "isMirror": false,
+          "uid": "",
+          "medalName": "粉丝牌"
+        }
+      },
+      {
+        "offsetMs": 1841,
+        "method": "onAddText",
+        "data": {
+          "avatarUrl": "/media/noface.gif",
+          "timestamp": 1700000001.841,
+          "authorName": "总督",
+          "authorType": 1,
+          "content": "总督：检查用户名和身份样式。",
+          "privilegeType": 1,
+          "isGiftDanmaku": false,
+          "authorLevel": 21,
+          "isNewbie": false,
+          "isMobileVerified": true,
+          "medalLevel": 10,
+          "id": "review-point-blivechat-4",
+          "emoticon": null,
+          "isMirror": false,
+          "uid": "",
+          "medalName": "粉丝牌"
+        }
+      },
+      {
+        "offsetMs": 1841,
+        "method": "onAddText",
+        "data": {
+          "avatarUrl": "/media/noface.gif",
+          "timestamp": 1700000001.841,
+          "authorName": "房管",
+          "authorType": 2,
+          "content": "房管：检查用户名和身份样式。",
+          "privilegeType": 0,
+          "isGiftDanmaku": false,
+          "authorLevel": 21,
+          "isNewbie": false,
+          "isMobileVerified": true,
+          "medalLevel": 10,
+          "id": "review-point-blivechat-5",
+          "emoticon": null,
+          "isMirror": false,
+          "uid": "",
+          "medalName": "粉丝牌"
+        }
+      },
+      {
+        "offsetMs": 1841,
+        "method": "onAddText",
+        "data": {
+          "avatarUrl": "/media/noface.gif",
+          "timestamp": 1700000001.841,
+          "authorName": "主播",
+          "authorType": 3,
+          "content": "主播：检查用户名和身份样式。",
+          "privilegeType": 0,
+          "isGiftDanmaku": false,
+          "authorLevel": 21,
+          "isNewbie": false,
+          "isMobileVerified": true,
+          "medalLevel": 10,
+          "id": "review-point-blivechat-6",
+          "emoticon": null,
+          "isMirror": false,
+          "uid": "",
+          "medalName": "粉丝牌"
+        }
+      },
+      {
+        "offsetMs": 1841,
+        "method": "onAddText",
+        "data": {
+          "avatarUrl": "/media/noface.gif",
+          "timestamp": 1700000001.841,
+          "authorName": "房管兼舰长",
+          "authorType": 2,
+          "content": "同时具备房管与舰长身份，检查两种身份的显示。",
+          "privilegeType": 3,
+          "isGiftDanmaku": false,
+          "authorLevel": 21,
+          "isNewbie": false,
+          "isMobileVerified": true,
+          "medalLevel": 0,
+          "id": "review-point-blivechat-7",
+          "emoticon": null,
+          "isMirror": false,
+          "uid": "",
+          "medalName": ""
+        }
+      },
+      {
+        "offsetMs": 1841,
+        "method": "onAddText",
+        "data": {
+          "avatarUrl": "/media/noface.gif",
+          "timestamp": 1700000001.841,
+          "authorName": "短文本用户",
+          "authorType": 0,
+          "content": "短文本示例。",
+          "privilegeType": 0,
+          "isGiftDanmaku": false,
+          "authorLevel": 21,
+          "isNewbie": false,
+          "isMobileVerified": true,
+          "medalLevel": 0,
+          "id": "review-point-blivechat-8",
+          "emoticon": null,
+          "isMirror": false,
+          "uid": "",
+          "medalName": ""
+        }
+      },
+      {
+        "offsetMs": 1841,
+        "method": "onAddText",
+        "data": {
+          "avatarUrl": "/media/noface.gif",
+          "timestamp": 1700000001.841,
+          "authorName": "长文本用户",
+          "authorType": 0,
+          "content": "这是一条用于检查自动换行的长弹幕。请观察第二行文字的位置、行间距，以及长用户名与正文之间的关系。",
+          "privilegeType": 0,
+          "isGiftDanmaku": false,
+          "authorLevel": 21,
+          "isNewbie": false,
+          "isMobileVerified": true,
+          "medalLevel": 0,
+          "id": "review-point-blivechat-9",
+          "emoticon": null,
+          "isMirror": false,
+          "uid": "",
+          "medalName": ""
+        }
+      },
+      {
+        "offsetMs": 1841,
+        "method": "onAddText",
+        "data": {
+          "avatarUrl": "/media/noface.gif",
+          "timestamp": 1700000001.841,
+          "authorName": "小表情用户",
+          "authorType": 0,
+          "content": "正文中包含[热]表情，检查图文对齐和换行。",
+          "privilegeType": 0,
+          "isGiftDanmaku": false,
+          "authorLevel": 21,
+          "isNewbie": false,
+          "isMobileVerified": true,
+          "medalLevel": 0,
+          "id": "review-point-blivechat-10",
+          "emoticon": null,
+          "isMirror": false,
+          "uid": "",
+          "medalName": "",
+          "contentParts": [
+            {
+              "type": 0,
+              "text": "正文中包含"
+            },
+            {
+              "type": 1,
+              "text": "[热]",
+              "url": "/media/style-preview-small-emote.png",
+              "width": 59,
+              "height": 59
+            },
+            {
+              "type": 0,
+              "text": "表情，检查图文对齐和换行。"
+            }
+          ]
+        }
+      },
+      {
+        "offsetMs": 2818,
+        "method": "onAddText",
+        "data": {
+          "avatarUrl": "/media/noface.gif",
+          "timestamp": 1700000002.818,
+          "authorName": "大表情用户",
+          "authorType": 0,
+          "content": "",
+          "privilegeType": 0,
+          "isGiftDanmaku": false,
+          "authorLevel": 46,
+          "isNewbie": false,
+          "isMobileVerified": true,
+          "medalLevel": 28,
+          "id": "review-point-blivechat-11",
+          "emoticon": "/blivechat/static/img/emoticons/sakaban_jiayu_yutou.png",
+          "isMirror": false,
+          "uid": "",
+          "medalName": "小孤独"
+        }
+      },
+      {
+        "offsetMs": 16643,
+        "method": "onAddText",
+        "data": {
+          "avatarUrl": "/media/noface.gif",
+          "timestamp": 1700000016.643,
+          "authorName": "长条表情用户",
+          "authorType": 1,
+          "content": "",
+          "privilegeType": 3,
+          "isGiftDanmaku": false,
+          "authorLevel": 58,
+          "isNewbie": false,
+          "isMobileVerified": true,
+          "medalLevel": 0,
+          "id": "review-point-blivechat-12",
+          "emoticon": "/blivechat/static/img/emoticons/lipu.png",
+          "isMirror": false,
+          "uid": "",
+          "medalName": ""
+        }
+      },
+      {
+        "offsetMs": 92693,
+        "method": "onAddGift",
+        "data": {
+          "id": "review-point-blivechat-13",
+          "avatarUrl": "/media/noface.gif",
+          "timestamp": 1700000092.693,
+          "authorName": "礼物梯度用户",
+          "totalCoin": 0,
+          "totalFreeCoin": 200,
+          "giftName": "粉丝团灯牌",
+          "num": 10,
+          "giftId": 1,
+          "giftIconUrl": "//s1.hdslb.com/bfs/live/e051dfd4557678f8edcac4993ed00a0935cbd9cc.png",
+          "uid": "",
+          "privilegeType": 1,
+          "medalLevel": 0,
+          "medalName": ""
+        }
+      },
+      {
+        "offsetMs": 63836,
+        "method": "onAddGift",
+        "data": {
+          "id": "review-point-blivechat-14",
+          "avatarUrl": "/media/noface.gif",
+          "timestamp": 1700000063.836,
+          "authorName": "礼物梯度用户",
+          "totalCoin": 9900,
+          "totalFreeCoin": 0,
+          "giftName": "可爱捏",
+          "num": 1,
+          "giftId": 2,
+          "giftIconUrl": "//s1.hdslb.com/bfs/live/6dab14826b531c731521345e00d6b56a6708a449.png",
+          "uid": "",
+          "privilegeType": 3,
+          "medalLevel": 21,
+          "medalName": "ikun"
+        }
+      },
+      {
+        "offsetMs": 410999,
+        "method": "onAddGift",
+        "data": {
+          "id": "review-point-blivechat-15",
+          "avatarUrl": "/media/noface.gif",
+          "timestamp": 1700000410.999,
+          "authorName": "礼物梯度用户",
+          "totalCoin": 29900,
+          "totalFreeCoin": 0,
+          "giftName": "花式夸夸",
+          "num": 1,
+          "giftId": 3,
+          "giftIconUrl": "//s1.hdslb.com/bfs/live/28186596880db45a7b843f17d6ebb70feeac06f9.png",
+          "uid": "",
+          "privilegeType": 0,
+          "medalLevel": 32,
+          "medalName": "K学姐"
+        }
+      },
+      {
+        "offsetMs": 254076,
+        "method": "onAddGift",
+        "data": {
+          "id": "review-point-blivechat-16",
+          "avatarUrl": "/media/noface.gif",
+          "timestamp": 1700000254.076,
+          "authorName": "礼物梯度用户",
+          "totalCoin": 52000,
+          "totalFreeCoin": 0,
+          "giftName": "情书",
+          "num": 10,
+          "giftId": 4,
+          "giftIconUrl": "//s1.hdslb.com/bfs/live/14dafbf217618f0931c08897e0b3eefc00d0da22.png",
+          "uid": "",
+          "privilegeType": 3,
+          "medalLevel": 0,
+          "medalName": ""
+        }
+      },
+      {
+        "offsetMs": 91756,
+        "method": "onAddGift",
+        "data": {
+          "id": "review-point-blivechat-17",
+          "avatarUrl": "/media/noface.gif",
+          "timestamp": 1700000091.756,
+          "authorName": "礼物梯度用户",
+          "totalCoin": 100000,
+          "totalFreeCoin": 0,
+          "giftName": "极速超跑",
+          "num": 1,
+          "giftId": 5,
+          "giftIconUrl": "//s1.hdslb.com/bfs/live/27b9734d1a5f77ea6fc94957e3fcbeb55505c6b9.png",
+          "uid": "",
+          "privilegeType": 2,
+          "medalLevel": 0,
+          "medalName": ""
+        }
+      },
+      {
+        "offsetMs": 91756,
+        "method": "onAddGift",
+        "data": {
+          "id": "review-point-blivechat-18",
+          "avatarUrl": "/media/noface.gif",
+          "timestamp": 1700000091.756,
+          "authorName": "礼物梯度用户",
+          "totalCoin": 200000,
+          "totalFreeCoin": 0,
+          "giftName": "极速超跑",
+          "num": 2,
+          "giftId": 5,
+          "giftIconUrl": "//s1.hdslb.com/bfs/live/27b9734d1a5f77ea6fc94957e3fcbeb55505c6b9.png",
+          "uid": "",
+          "privilegeType": 2,
+          "medalLevel": 0,
+          "medalName": ""
+        }
+      },
+      {
+        "offsetMs": 279929,
+        "method": "onAddGift",
+        "data": {
+          "id": "review-point-blivechat-19",
+          "avatarUrl": "/media/noface.gif",
+          "timestamp": 1700000279.929,
+          "authorName": "礼物梯度用户",
+          "totalCoin": 520000,
+          "totalFreeCoin": 0,
+          "giftName": "为你摘星",
+          "num": 1,
+          "giftId": 6,
+          "giftIconUrl": "//s1.hdslb.com/bfs/live/5bd584b6fdfb03d66de56102e775582fb29ceab7.png",
+          "uid": "",
+          "privilegeType": 3,
+          "medalLevel": 23,
+          "medalName": "Go学长"
+        }
+      },
+      {
+        "offsetMs": 209919,
+        "method": "onAddGift",
+        "data": {
+          "id": "review-point-blivechat-20",
+          "avatarUrl": "/media/noface.gif",
+          "timestamp": 1700000209.919,
+          "authorName": "礼物梯度用户",
+          "totalCoin": 1245000,
+          "totalFreeCoin": 0,
+          "giftName": "次元之城",
+          "num": 1,
+          "giftId": 7,
+          "giftIconUrl": "//s1.hdslb.com/bfs/live/cdae8136b1ee767609aeec688bca8124651d4d01.png",
+          "uid": "",
+          "privilegeType": 3,
+          "medalLevel": 26,
+          "medalName": "不登校"
+        }
+      },
+      {
+        "offsetMs": 63836,
+        "method": "onAddGift",
+        "data": {
+          "id": "review-point-blivechat-21",
+          "avatarUrl": "/media/noface.gif",
+          "timestamp": 1700000063.836,
+          "authorName": "单件礼物用户",
+          "totalCoin": 9900,
+          "totalFreeCoin": 0,
+          "giftName": "可爱捏",
+          "num": 1,
+          "giftId": 2,
+          "giftIconUrl": "//s1.hdslb.com/bfs/live/6dab14826b531c731521345e00d6b56a6708a449.png",
+          "uid": "",
+          "privilegeType": 3,
+          "medalLevel": 21,
+          "medalName": "ikun"
+        }
+      },
+      {
+        "offsetMs": 63836,
+        "method": "onAddGift",
+        "data": {
+          "id": "review-point-blivechat-22",
+          "avatarUrl": "/media/noface.gif",
+          "timestamp": 1700000063.836,
+          "authorName": "多数量礼物用户",
+          "totalCoin": 1267200,
+          "totalFreeCoin": 0,
+          "giftName": "可爱捏",
+          "num": 128,
+          "giftId": 2,
+          "giftIconUrl": "//s1.hdslb.com/bfs/live/6dab14826b531c731521345e00d6b56a6708a449.png",
+          "uid": "",
+          "privilegeType": 3,
+          "medalLevel": 21,
+          "medalName": "ikun"
+        }
+      },
+      {
+        "offsetMs": 181017,
+        "method": "onAddSuperChat",
+        "data": {
+          "id": "review-point-blivechat-24",
+          "avatarUrl": "/media/noface.gif",
+          "timestamp": 1700000181.017,
+          "authorName": "30元醒目留言用户",
+          "price": 30,
+          "content": "30元醒目留言：检查头像、用户名、金额和正文。",
+          "uid": "",
+          "privilegeType": 1,
+          "medalLevel": 21,
+          "medalName": "K学姐"
+        }
+      },
+      {
+        "offsetMs": 34642,
+        "method": "onAddSuperChat",
+        "data": {
+          "id": "review-point-blivechat-25",
+          "avatarUrl": "/media/noface.gif",
+          "timestamp": 1700000034.642,
+          "authorName": "50元醒目留言用户",
+          "price": 50,
+          "content": "50元醒目留言：检查头像、用户名、金额和正文。",
+          "uid": "",
+          "privilegeType": 3,
+          "medalLevel": 0,
+          "medalName": ""
+        }
+      },
+      {
+        "offsetMs": 41625,
+        "method": "onAddSuperChat",
+        "data": {
+          "id": "review-point-blivechat-26",
+          "avatarUrl": "/media/noface.gif",
+          "timestamp": 1700000041.625,
+          "authorName": "100元醒目留言用户",
+          "price": 100,
+          "content": "100元醒目留言：检查头像、用户名、金额和正文。",
+          "uid": "",
+          "privilegeType": 2,
+          "medalLevel": 5,
+          "medalName": "ikun"
+        }
+      },
+      {
+        "offsetMs": 14798,
+        "method": "onAddSuperChat",
+        "data": {
+          "id": "review-point-blivechat-27",
+          "avatarUrl": "/media/noface.gif",
+          "timestamp": 1700000014.798,
+          "authorName": "200元醒目留言用户",
+          "price": 200,
+          "content": "200元醒目留言：检查头像、用户名、金额和正文。",
+          "uid": "",
+          "privilegeType": 0,
+          "medalLevel": 39,
+          "medalName": "K学姐"
+        }
+      },
+      {
+        "offsetMs": 15737,
+        "method": "onAddSuperChat",
+        "data": {
+          "id": "review-point-blivechat-28",
+          "avatarUrl": "/media/noface.gif",
+          "timestamp": 1700000015.737,
+          "authorName": "500元醒目留言用户",
+          "price": 500,
+          "content": "500元醒目留言：检查头像、用户名、金额和正文。",
+          "uid": "",
+          "privilegeType": 3,
+          "medalLevel": 21,
+          "medalName": "K学姐"
+        }
+      },
+      {
+        "offsetMs": 53783,
+        "method": "onAddSuperChat",
+        "data": {
+          "id": "review-point-blivechat-29",
+          "avatarUrl": "/media/noface.gif",
+          "timestamp": 1700000053.783,
+          "authorName": "1000元醒目留言用户",
+          "price": 1000,
+          "content": "1000元醒目留言：检查头像、用户名、金额和正文。",
+          "uid": "",
+          "privilegeType": 0,
+          "medalLevel": 5,
+          "medalName": "Go学长"
+        }
+      },
+      {
+        "offsetMs": 78811,
+        "method": "onAddMember",
+        "data": {
+          "id": "review-point-blivechat-30",
+          "avatarUrl": "/media/noface.gif",
+          "timestamp": 1700000078.811,
+          "authorName": "舰长用户",
+          "privilegeType": 3,
+          "num": 1,
+          "unit": "月",
+          "totalCoin": 198000,
+          "uid": "",
+          "medalLevel": 19,
+          "medalName": "Go学长"
+        }
+      },
+      {
+        "offsetMs": 296427,
+        "method": "onAddMember",
+        "data": {
+          "id": "review-point-blivechat-31",
+          "avatarUrl": "/media/noface.gif",
+          "timestamp": 1700000296.427,
+          "authorName": "提督用户",
+          "privilegeType": 2,
+          "num": 1,
+          "unit": "月",
+          "totalCoin": 1998000,
+          "uid": "",
+          "medalLevel": 6,
+          "medalName": "Go学长"
+        }
+      },
+      {
+        "offsetMs": 102726,
+        "method": "onAddMember",
+        "data": {
+          "id": "review-point-blivechat-32",
+          "avatarUrl": "/media/noface.gif",
+          "timestamp": 1700000102.726,
+          "authorName": "总督用户",
+          "privilegeType": 1,
+          "num": 1,
+          "unit": "月",
+          "totalCoin": 19998000,
+          "uid": "",
+          "medalLevel": 28,
+          "medalName": "K学姐"
+        }
+      }
+    ]
+  },
+  "blivechat-open": {
+    "static": [
+      {
+        "method": "onAddText",
+        "payload": {
+          "authorType": 0,
+          "privilegeType": 0,
+          "avatarUrl": "/media/noface.gif",
+          "timestamp": 1782526223.655,
+          "authorName": "Misty",
+          "content": "中嘞",
+          "isGiftDanmaku": false,
+          "authorLevel": 42,
+          "isNewbie": false,
+          "isMobileVerified": true,
+          "medalName": "勋章名称",
+          "medalLevel": 9,
+          "isFanGroup": false,
+          "id": "42d6f64b8110f7b68eaabf7d970426cb",
+          "emoticon": null,
+          "time": 1782526223655
+        },
+        "receivedAt": 1782526223655
+      },
+      {
+        "method": "onAddText",
+        "payload": {
+          "authorType": 1,
+          "privilegeType": 3,
+          "avatarUrl": "/media/noface.gif",
+          "timestamp": 1782526233.54,
+          "authorName": "冰绒冷焰",
+          "content": "啊哈哈哈哈",
+          "isGiftDanmaku": false,
+          "authorLevel": 16,
+          "isNewbie": false,
+          "isMobileVerified": false,
+          "medalName": "被炉",
+          "medalLevel": 11,
+          "isFanGroup": false,
+          "id": "657072da025771763af972d0573bf293",
+          "emoticon": null,
+          "time": 1782526233540
+        },
+        "receivedAt": 1782526233540
+      },
+      {
+        "method": "onAddText",
+        "payload": {
+          "authorType": 1,
+          "privilegeType": 2,
+          "avatarUrl": "/media/noface.gif",
+          "timestamp": 1782526225.136,
+          "authorName": "冷焰",
+          "content": "原神，启动！",
+          "isGiftDanmaku": false,
+          "authorLevel": 12,
+          "isNewbie": false,
+          "isMobileVerified": false,
+          "medalName": "勋章名称",
+          "medalLevel": 6,
+          "isFanGroup": true,
+          "id": "fb0b1ae39fd60f4129bf24eb4abb2b70",
+          "emoticon": null,
+          "time": 1782526225136
+        },
+        "receivedAt": 1782526225136
+      },
+      {
+        "method": "onAddText",
+        "payload": {
+          "authorType": 1,
+          "privilegeType": 1,
+          "avatarUrl": "/media/noface.gif",
+          "timestamp": 1782526242.735,
+          "authorName": "兔宝的神奇口袋",
+          "content": "打call",
+          "isGiftDanmaku": false,
+          "authorLevel": 41,
+          "isNewbie": true,
+          "isMobileVerified": false,
+          "medalName": "勋章名称",
+          "medalLevel": 33,
+          "isFanGroup": false,
+          "id": "244640a1170a7171de809e3c4d5382ff",
+          "emoticon": null,
+          "time": 1782526242735
+        },
+        "receivedAt": 1782526242735
+      },
+      {
+        "method": "onAddText",
+        "payload": {
+          "authorType": 2,
+          "privilegeType": 2,
+          "avatarUrl": "/media/noface.gif",
+          "timestamp": 1782526225.779,
+          "authorName": "米",
+          "content": "不要停下来啊",
+          "isGiftDanmaku": false,
+          "authorLevel": 25,
+          "isNewbie": false,
+          "isMobileVerified": false,
+          "medalName": "玲喵",
+          "medalLevel": 23,
+          "isFanGroup": false,
+          "id": "6f54b1682b4317a9bfa6133e4e8712a3",
+          "emoticon": null,
+          "time": 1782526225779
+        },
+        "receivedAt": 1782526225779
+      },
+      {
+        "offsetMs": 23741,
+        "method": "onAddText",
+        "data": {
+          "avatarUrl": "/media/noface.gif",
+          "timestamp": 1700000023.741,
+          "authorName": "Arthur Morgan",
+          "authorType": 3,
+          "content": "让我看看",
+          "privilegeType": 0,
+          "isGiftDanmaku": false,
+          "authorLevel": 3,
+          "isNewbie": false,
+          "isMobileVerified": true,
+          "medalLevel": 17,
+          "id": "f8a7c66affcae90f3d066fb626d8d4a2",
+          "emoticon": null,
+          "isMirror": false,
+          "uid": "",
+          "medalName": "ikun"
+        }
+      },
+      {
+        "method": "onAddText",
+        "payload": {
+          "authorType": 1,
+          "privilegeType": 1,
+          "avatarUrl": "/media/noface.gif",
+          "timestamp": 1782526248.473,
+          "authorName": "空條承太郎",
+          "content": "I am the bone of my sword. Steel is my body, and fire is my blood.",
+          "isGiftDanmaku": false,
+          "authorLevel": 39,
+          "isNewbie": false,
+          "isMobileVerified": false,
+          "medalName": "勋章名称",
+          "medalLevel": 37,
+          "isFanGroup": true,
+          "id": "70dcc0b3f4106ae409de4c13e4dfcfc8",
+          "emoticon": null,
+          "time": 1782526248473
+        },
+        "receivedAt": 1782526248473
+      },
+      {
+        "method": "onAddText",
+        "payload": {
+          "authorType": 0,
+          "privilegeType": 0,
+          "avatarUrl": "/media/noface.gif",
+          "timestamp": 1782526388.764,
+          "authorName": "兔宝的神奇口袋",
+          "content": "三点几嘞[喝茶]先嘞",
+          "isGiftDanmaku": false,
+          "authorLevel": 24,
+          "isNewbie": false,
+          "isMobileVerified": false,
+          "medalName": "玲喵",
+          "medalLevel": 40,
+          "isFanGroup": true,
+          "id": "7a69482b17bc885c213563cf3b4c1398",
+          "emoticon": null,
+          "time": 1782526388764,
+          "emotes": {
+            "[喝茶]": {
+              "url": "/media/style-preview-small-emote.png"
+            }
+          }
+        },
+        "receivedAt": 1782526388764
+      },
+      {
+        "method": "onAddText",
+        "payload": {
+          "authorType": 0,
+          "privilegeType": 0,
+          "avatarUrl": "/media/noface.gif",
+          "timestamp": 1782526229.195,
+          "authorName": "ディオ・ブランドー",
+          "content": "",
+          "emoticon": "https://i0.hdslb.com/bfs/emote/5f1e8b4f73e23c68e11f5925be8241ce775e65a7.png",
+          "isGiftDanmaku": false,
+          "authorLevel": 2,
+          "isNewbie": true,
+          "isMobileVerified": true,
+          "medalLevel": 10,
+          "id": "fc88c0ce96a425fd2f8c2eb3774781e8",
+          "time": 1782526229195
+        },
+        "receivedAt": 1782526229195
+      },
+      {
+        "method": "onAddText",
+        "payload": {
+          "authorType": 2,
+          "privilegeType": 3,
+          "avatarUrl": "/media/noface.gif",
+          "timestamp": 1782526228.112,
+          "authorName": "Simon",
+          "content": "",
+          "emoticon": "https://i0.hdslb.com/bfs/live/0e28444c8e2faef3169e98e1a41c487144d877d4.png",
+          "isGiftDanmaku": false,
+          "authorLevel": 27,
+          "isNewbie": true,
+          "isMobileVerified": true,
+          "medalLevel": 3,
+          "id": "edaad393193b428160684d6b0f2dffc6",
+          "time": 1782526228112
+        },
+        "receivedAt": 1782526228112
+      },
+      {
+        "method": "onAddLike",
+        "payload": {
+          "id": "constructed-like-2",
+          "avatarUrl": "/media/noface.gif",
+          "timestamp": 1782526223.773,
+          "time": 1782526223773,
+          "authorName": "只熊KUMA",
+          "likeCount": 3,
+          "privilegeType": 0,
+          "medalName": "勋章名称",
+          "medalLevel": 19,
+          "isFanGroup": true,
+          "emoticon": null,
+          "content": "点赞了直播间3次",
+          "authorType": 0
+        },
+        "receivedAt": 1782526223773
+      },
+      {
+        "method": "onAddGift",
+        "payload": {
+          "giftName": "小心心",
+          "price": 0,
+          "totalCoin": 0,
+          "coinType": "silver",
+          "num": 1,
+          "id": "cbd3499aa976e8e8994f87e3645437f3",
+          "avatarUrl": "/media/noface.gif",
+          "timestamp": 1782526467.48,
+          "authorName": "Kinori",
+          "time": 1782526467480
+        },
+        "receivedAt": 1782526467480
+      },
+      {
+        "method": "onAddGift",
+        "payload": {
+          "giftName": "辣条",
+          "price": 0,
+          "totalCoin": 100,
+          "coinType": "silver",
+          "num": 10,
+          "id": "1b3c9a80411007d589774e0f8f031b79",
+          "avatarUrl": "/media/noface.gif",
+          "timestamp": 1782526373.253,
+          "authorName": "只熊KUMA",
+          "time": 1782526373253
+        },
+        "receivedAt": 1782526373253
+      },
+      {
+        "method": "onAddGift",
+        "payload": {
+          "giftName": "比心",
+          "price": 0.5,
+          "totalCoin": 1000,
+          "coinType": "gold",
+          "num": 2,
+          "id": "07eda6a9e36b8ead0d3f9096a5dd8269",
+          "avatarUrl": "/media/noface.gif",
+          "timestamp": 1782526281.755,
+          "authorName": "DoodleBear",
+          "time": 1782526281755
+        },
+        "receivedAt": 1782526281755
+      },
+      {
+        "method": "onAddGift",
+        "payload": {
+          "giftName": "花式夸夸",
+          "price": 39,
+          "totalCoin": 39000,
+          "coinType": "gold",
+          "num": 1,
+          "id": "00c88d1fa09fa792b545a43ce860e431",
+          "avatarUrl": "/media/noface.gif",
+          "timestamp": 1782526339.845,
+          "authorName": "椅子_Official",
+          "time": 1782526339845
+        },
+        "receivedAt": 1782526339845
+      },
+      {
+        "method": "onAddGift",
+        "payload": {
+          "giftName": "喵娘",
+          "price": 5.2,
+          "totalCoin": 52000,
+          "coinType": "gold",
+          "num": 10,
+          "id": "d21e08ffeed5f52fcf2da7cec9574db5",
+          "avatarUrl": "/media/noface.gif",
+          "timestamp": 1782526358.193,
+          "authorName": "椅子_Official",
+          "time": 1782526358193
+        },
+        "receivedAt": 1782526358193
+      },
+      {
+        "method": "onAddGift",
+        "payload": {
+          "giftName": "天空之翼",
+          "price": 100,
+          "totalCoin": 100000,
+          "coinType": "gold",
+          "num": 1,
+          "id": "8fbd1e2e32ef96ffe607834c4f38634d",
+          "avatarUrl": "/media/noface.gif",
+          "timestamp": 1782526319.424,
+          "authorName": "yuyuyzl",
+          "time": 1782526319424
+        },
+        "receivedAt": 1782526319424
+      },
+      {
+        "method": "onAddGift",
+        "payload": {
+          "giftName": "小电视飞船",
+          "price": 1245,
+          "totalCoin": 1245000,
+          "coinType": "gold",
+          "num": 1,
+          "id": "c1edeffec2f9f6793fda4d6a6ca8d26a",
+          "avatarUrl": "/media/noface.gif",
+          "timestamp": 1782526552.433,
+          "authorName": "ジョナサン・ジョースター",
+          "time": 1782526552433
+        },
+        "receivedAt": 1782526552433
+      },
+      {
+        "method": "onAddSuperChat",
+        "payload": {
+          "id": "1e73a8ce9711d8c93666b15391b1fe20",
+          "avatarUrl": "/media/noface.gif",
+          "timestamp": 1782526362.717,
+          "authorName": "xfgryujk",
+          "price": 30,
+          "content": "老板大气，老板身体健康",
+          "time": 1782526362717
+        },
+        "receivedAt": 1782526362717
+      },
+      {
+        "method": "onAddSuperChat",
+        "payload": {
+          "id": "c43e2e4fab6a911603ed77e06712554f",
+          "avatarUrl": "/media/noface.gif",
+          "timestamp": 1782526244.049,
+          "authorName": "yuyuyzl",
+          "price": 50,
+          "content": " ",
+          "time": 1782526244049
+        },
+        "receivedAt": 1782526244049
+      },
+      {
+        "method": "onAddSuperChat",
+        "payload": {
+          "id": "01512c977c0d9f74080b434e79561029",
+          "avatarUrl": "/media/noface.gif",
+          "timestamp": 1782526232.108,
+          "authorName": "yuyuyzl",
+          "price": 100,
+          "content": "老板大气，老板身体健康",
+          "time": 1782526232108
+        },
+        "receivedAt": 1782526232108
+      },
+      {
+        "method": "onAddSuperChat",
+        "payload": {
+          "id": "6452acc713779d17488e4457d42fe9a2",
+          "avatarUrl": "/media/noface.gif",
+          "timestamp": 1782526306.185,
+          "authorName": "海式",
+          "price": 200,
+          "content": "啊这",
+          "time": 1782526306185
+        },
+        "receivedAt": 1782526306185
+      },
+      {
+        "method": "onAddSuperChat",
+        "payload": {
+          "id": "6af5535d79d52d9e9f8e9fd792b26856",
+          "avatarUrl": "/media/noface.gif",
+          "timestamp": 1782526308.741,
+          "authorName": "兔宝的神奇口袋",
+          "price": 500,
+          "content": "一个bug，只需要改3行，我改了3个小时才知道问题出在哪【希望之花】",
+          "time": 1782526308741
+        },
+        "receivedAt": 1782526308741
+      },
+      {
+        "method": "onAddSuperChat",
+        "payload": {
+          "id": "92df9b449c59a03861d5dbf09599cc57",
+          "avatarUrl": "/media/noface.gif",
+          "timestamp": 1782526400.444,
+          "authorName": "ジョセフ・ジョースター",
+          "price": 1000,
+          "content": "三点几嘞[喝茶]先嘞，做什么做，[喝茶], 喝茶先啦",
+          "time": 1782526400444
+        },
+        "receivedAt": 1782526400444
+      },
+      {
+        "method": "onAddSuperChat",
+        "payload": {
+          "id": "6ff72777b33ac02896f3b78440b0a0f0",
+          "avatarUrl": "/media/noface.gif",
+          "timestamp": 1782526300.362,
+          "authorName": "博丽灵梦",
+          "price": 2000,
+          "content": "8888888888",
+          "time": 1782526300362
+        },
+        "receivedAt": 1782526300362
+      },
+      {
+        "method": "onAddMember",
+        "payload": {
+          "id": "c40adcbde860971eed281271991e0208",
+          "avatarUrl": "/media/noface.gif",
+          "timestamp": 1782526294.676,
+          "authorName": "海式",
+          "privilegeType": 3,
+          "time": 1782526294676,
+          "price": 198
+        },
+        "receivedAt": 1782526294676
+      },
+      {
+        "method": "onAddMember",
+        "payload": {
+          "id": "417b294887a5f7abdd3f45d01c439921",
+          "avatarUrl": "/media/noface.gif",
+          "timestamp": 1782526237.655,
+          "authorName": "3Shain",
+          "privilegeType": 2,
+          "time": 1782526237655,
+          "price": 1998
+        },
+        "receivedAt": 1782526237655
+      },
+      {
+        "method": "onAddMember",
+        "payload": {
+          "id": "b2bf989abd2775489e7d0317b60e599e",
+          "avatarUrl": "/media/noface.gif",
+          "timestamp": 1782526284.2,
+          "authorName": "兔宝的神奇口袋",
+          "privilegeType": 1,
+          "time": 1782526284200,
+          "price": 19998
+        },
+        "receivedAt": 1782526284200
+      }
+    ],
+    "design": [
+      {
+        "method": "onAddText",
+        "payload": {
+          "authorType": 0,
+          "privilegeType": 0,
+          "avatarUrl": "/media/noface.gif",
+          "timestamp": 1782526223.655,
+          "authorName": "普通用户",
+          "content": "普通用户：检查用户名和身份样式。",
+          "isGiftDanmaku": false,
+          "authorLevel": 42,
+          "isNewbie": false,
+          "isMobileVerified": true,
+          "medalName": "粉丝牌",
+          "medalLevel": 10,
+          "isFanGroup": false,
+          "id": "review-point-blivechat-open-1",
+          "emoticon": null,
+          "time": 1782526223655
+        },
+        "receivedAt": 1782526223655
+      },
+      {
+        "method": "onAddText",
+        "payload": {
+          "authorType": 1,
+          "privilegeType": 3,
+          "avatarUrl": "/media/noface.gif",
+          "timestamp": 1782526223.655,
+          "authorName": "舰长",
+          "content": "舰长：检查用户名和身份样式。",
+          "isGiftDanmaku": false,
+          "authorLevel": 42,
+          "isNewbie": false,
+          "isMobileVerified": true,
+          "medalName": "粉丝牌",
+          "medalLevel": 10,
+          "isFanGroup": false,
+          "id": "review-point-blivechat-open-2",
+          "emoticon": null,
+          "time": 1782526223655
+        },
+        "receivedAt": 1782526223655
+      },
+      {
+        "method": "onAddText",
+        "payload": {
+          "authorType": 1,
+          "privilegeType": 2,
+          "avatarUrl": "/media/noface.gif",
+          "timestamp": 1782526223.655,
+          "authorName": "提督",
+          "content": "提督：检查用户名和身份样式。",
+          "isGiftDanmaku": false,
+          "authorLevel": 42,
+          "isNewbie": false,
+          "isMobileVerified": true,
+          "medalName": "粉丝牌",
+          "medalLevel": 10,
+          "isFanGroup": false,
+          "id": "review-point-blivechat-open-3",
+          "emoticon": null,
+          "time": 1782526223655
+        },
+        "receivedAt": 1782526223655
+      },
+      {
+        "method": "onAddText",
+        "payload": {
+          "authorType": 1,
+          "privilegeType": 1,
+          "avatarUrl": "/media/noface.gif",
+          "timestamp": 1782526223.655,
+          "authorName": "总督",
+          "content": "总督：检查用户名和身份样式。",
+          "isGiftDanmaku": false,
+          "authorLevel": 42,
+          "isNewbie": false,
+          "isMobileVerified": true,
+          "medalName": "粉丝牌",
+          "medalLevel": 10,
+          "isFanGroup": false,
+          "id": "review-point-blivechat-open-4",
+          "emoticon": null,
+          "time": 1782526223655
+        },
+        "receivedAt": 1782526223655
+      },
+      {
+        "method": "onAddText",
+        "payload": {
+          "authorType": 2,
+          "privilegeType": 0,
+          "avatarUrl": "/media/noface.gif",
+          "timestamp": 1782526223.655,
+          "authorName": "房管",
+          "content": "房管：检查用户名和身份样式。",
+          "isGiftDanmaku": false,
+          "authorLevel": 42,
+          "isNewbie": false,
+          "isMobileVerified": true,
+          "medalName": "粉丝牌",
+          "medalLevel": 10,
+          "isFanGroup": false,
+          "id": "review-point-blivechat-open-5",
+          "emoticon": null,
+          "time": 1782526223655
+        },
+        "receivedAt": 1782526223655
+      },
+      {
+        "method": "onAddText",
+        "payload": {
+          "authorType": 3,
+          "privilegeType": 0,
+          "avatarUrl": "/media/noface.gif",
+          "timestamp": 1782526223.655,
+          "authorName": "主播",
+          "content": "主播：检查用户名和身份样式。",
+          "isGiftDanmaku": false,
+          "authorLevel": 42,
+          "isNewbie": false,
+          "isMobileVerified": true,
+          "medalName": "粉丝牌",
+          "medalLevel": 10,
+          "isFanGroup": false,
+          "id": "review-point-blivechat-open-6",
+          "emoticon": null,
+          "time": 1782526223655
+        },
+        "receivedAt": 1782526223655
+      },
+      {
+        "method": "onAddText",
+        "payload": {
+          "authorType": 2,
+          "privilegeType": 3,
+          "avatarUrl": "/media/noface.gif",
+          "timestamp": 1782526223.655,
+          "authorName": "房管兼舰长",
+          "content": "同时具备房管与舰长身份，检查两种身份的显示。",
+          "isGiftDanmaku": false,
+          "authorLevel": 42,
+          "isNewbie": false,
+          "isMobileVerified": true,
+          "medalName": "勋章名称",
+          "medalLevel": 9,
+          "isFanGroup": false,
+          "id": "review-point-blivechat-open-7",
+          "emoticon": null,
+          "time": 1782526223655
+        },
+        "receivedAt": 1782526223655
+      },
+      {
+        "method": "onAddText",
+        "payload": {
+          "authorType": 0,
+          "privilegeType": 0,
+          "avatarUrl": "/media/noface.gif",
+          "timestamp": 1782526223.655,
+          "authorName": "佩戴粉丝牌的用户",
+          "content": "检查粉丝牌名称、等级和用户名之间的间距。",
+          "isGiftDanmaku": false,
+          "authorLevel": 42,
+          "isNewbie": false,
+          "isMobileVerified": true,
+          "medalName": "粉丝牌",
+          "medalLevel": 20,
+          "isFanGroup": false,
+          "id": "review-point-blivechat-open-8",
+          "emoticon": null,
+          "time": 1782526223655
+        },
+        "receivedAt": 1782526223655
+      },
+      {
+        "method": "onAddText",
+        "payload": {
+          "authorType": 0,
+          "privilegeType": 0,
+          "avatarUrl": "/media/noface.gif",
+          "timestamp": 1782526223.655,
+          "authorName": "短文本用户",
+          "content": "短文本示例。",
+          "isGiftDanmaku": false,
+          "authorLevel": 42,
+          "isNewbie": false,
+          "isMobileVerified": true,
+          "medalName": "勋章名称",
+          "medalLevel": 9,
+          "isFanGroup": false,
+          "id": "review-point-blivechat-open-9",
+          "emoticon": null,
+          "time": 1782526223655
+        },
+        "receivedAt": 1782526223655
+      },
+      {
+        "method": "onAddText",
+        "payload": {
+          "authorType": 0,
+          "privilegeType": 0,
+          "avatarUrl": "/media/noface.gif",
+          "timestamp": 1782526223.655,
+          "authorName": "长文本用户",
+          "content": "这是一条用于检查自动换行的长弹幕。请观察第二行文字的位置、行间距，以及长用户名与正文之间的关系。",
+          "isGiftDanmaku": false,
+          "authorLevel": 42,
+          "isNewbie": false,
+          "isMobileVerified": true,
+          "medalName": "勋章名称",
+          "medalLevel": 9,
+          "isFanGroup": false,
+          "id": "review-point-blivechat-open-10",
+          "emoticon": null,
+          "time": 1782526223655
+        },
+        "receivedAt": 1782526223655
+      },
+      {
+        "method": "onAddText",
+        "payload": {
+          "authorType": 0,
+          "privilegeType": 0,
+          "avatarUrl": "/media/noface.gif",
+          "timestamp": 1782526223.655,
+          "authorName": "小表情用户",
+          "content": "正文中包含[热]表情，检查图文对齐和换行。",
+          "isGiftDanmaku": false,
+          "authorLevel": 42,
+          "isNewbie": false,
+          "isMobileVerified": true,
+          "medalName": "勋章名称",
+          "medalLevel": 9,
+          "isFanGroup": false,
+          "id": "review-point-blivechat-open-11",
+          "emoticon": null,
+          "time": 1782526223655,
+          "emotes": {
+            "[热]": {
+              "url": "/media/style-preview-small-emote.png"
+            }
+          }
+        },
+        "receivedAt": 1782526223655
+      },
+      {
+        "method": "onAddText",
+        "payload": {
+          "authorType": 0,
+          "privilegeType": 0,
+          "avatarUrl": "/media/noface.gif",
+          "timestamp": 1782526229.195,
+          "authorName": "大表情用户",
+          "content": "",
+          "emoticon": "https://i0.hdslb.com/bfs/emote/5f1e8b4f73e23c68e11f5925be8241ce775e65a7.png",
+          "isGiftDanmaku": false,
+          "authorLevel": 2,
+          "isNewbie": true,
+          "isMobileVerified": true,
+          "medalLevel": 10,
+          "id": "review-point-blivechat-open-12",
+          "time": 1782526229195
+        },
+        "receivedAt": 1782526229195
+      },
+      {
+        "method": "onAddText",
+        "payload": {
+          "authorType": 2,
+          "privilegeType": 3,
+          "avatarUrl": "/media/noface.gif",
+          "timestamp": 1782526228.112,
+          "authorName": "长条表情用户",
+          "content": "",
+          "emoticon": "https://i0.hdslb.com/bfs/live/0e28444c8e2faef3169e98e1a41c487144d877d4.png",
+          "isGiftDanmaku": false,
+          "authorLevel": 27,
+          "isNewbie": true,
+          "isMobileVerified": true,
+          "medalLevel": 3,
+          "id": "review-point-blivechat-open-13",
+          "time": 1782526228112
+        },
+        "receivedAt": 1782526228112
+      },
+      {
+        "method": "onAddLike",
+        "payload": {
+          "id": "review-point-blivechat-open-14",
+          "avatarUrl": "/media/noface.gif",
+          "timestamp": 1782526223.773,
+          "time": 1782526223773,
+          "authorName": "点赞用户",
+          "likeCount": 3,
+          "privilegeType": 0,
+          "medalName": "勋章名称",
+          "medalLevel": 19,
+          "isFanGroup": true,
+          "emoticon": null,
+          "content": "点赞事件：检查头像、用户名和点赞内容。",
+          "authorType": 0
+        },
+        "receivedAt": 1782526223773
+      },
+      {
+        "method": "onAddGift",
+        "payload": {
+          "giftName": "小心心",
+          "price": 0,
+          "totalCoin": 0,
+          "coinType": "silver",
+          "num": 1,
+          "id": "review-point-blivechat-open-15",
+          "avatarUrl": "/media/noface.gif",
+          "timestamp": 1782526467.48,
+          "authorName": "礼物梯度用户",
+          "time": 1782526467480
+        },
+        "receivedAt": 1782526467480
+      },
+      {
+        "method": "onAddGift",
+        "payload": {
+          "giftName": "辣条",
+          "price": 0,
+          "totalCoin": 100,
+          "coinType": "silver",
+          "num": 10,
+          "id": "review-point-blivechat-open-16",
+          "avatarUrl": "/media/noface.gif",
+          "timestamp": 1782526373.253,
+          "authorName": "礼物梯度用户",
+          "time": 1782526373253
+        },
+        "receivedAt": 1782526373253
+      },
+      {
+        "method": "onAddGift",
+        "payload": {
+          "giftName": "比心",
+          "price": 0.5,
+          "totalCoin": 1000,
+          "coinType": "gold",
+          "num": 2,
+          "id": "review-point-blivechat-open-17",
+          "avatarUrl": "/media/noface.gif",
+          "timestamp": 1782526281.755,
+          "authorName": "礼物梯度用户",
+          "time": 1782526281755
+        },
+        "receivedAt": 1782526281755
+      },
+      {
+        "method": "onAddGift",
+        "payload": {
+          "giftName": "花式夸夸",
+          "price": 39,
+          "totalCoin": 39000,
+          "coinType": "gold",
+          "num": 1,
+          "id": "review-point-blivechat-open-18",
+          "avatarUrl": "/media/noface.gif",
+          "timestamp": 1782526339.845,
+          "authorName": "礼物梯度用户",
+          "time": 1782526339845
+        },
+        "receivedAt": 1782526339845
+      },
+      {
+        "method": "onAddGift",
+        "payload": {
+          "giftName": "喵娘",
+          "price": 5.2,
+          "totalCoin": 52000,
+          "coinType": "gold",
+          "num": 10,
+          "id": "review-point-blivechat-open-19",
+          "avatarUrl": "/media/noface.gif",
+          "timestamp": 1782526358.193,
+          "authorName": "礼物梯度用户",
+          "time": 1782526358193
+        },
+        "receivedAt": 1782526358193
+      },
+      {
+        "method": "onAddGift",
+        "payload": {
+          "giftName": "天空之翼",
+          "price": 100,
+          "totalCoin": 100000,
+          "coinType": "gold",
+          "num": 1,
+          "id": "review-point-blivechat-open-20",
+          "avatarUrl": "/media/noface.gif",
+          "timestamp": 1782526319.424,
+          "authorName": "礼物梯度用户",
+          "time": 1782526319424
+        },
+        "receivedAt": 1782526319424
+      },
+      {
+        "method": "onAddGift",
+        "payload": {
+          "giftName": "小电视飞船",
+          "price": 1245,
+          "totalCoin": 1245000,
+          "coinType": "gold",
+          "num": 1,
+          "id": "review-point-blivechat-open-21",
+          "avatarUrl": "/media/noface.gif",
+          "timestamp": 1782526552.433,
+          "authorName": "礼物梯度用户",
+          "time": 1782526552433
+        },
+        "receivedAt": 1782526552433
+      },
+      {
+        "method": "onAddGift",
+        "payload": {
+          "giftName": "花式夸夸",
+          "price": 39,
+          "totalCoin": 39000,
+          "coinType": "gold",
+          "num": 1,
+          "id": "review-point-blivechat-open-22",
+          "avatarUrl": "/media/noface.gif",
+          "timestamp": 1782526247.692,
+          "authorName": "单件礼物用户",
+          "time": 1782526247692
+        },
+        "receivedAt": 1782526247692
+      },
+      {
+        "method": "onAddGift",
+        "payload": {
+          "giftName": "花式夸夸",
+          "price": 39,
+          "totalCoin": 4992000,
+          "coinType": "gold",
+          "num": 128,
+          "id": "review-point-blivechat-open-23",
+          "avatarUrl": "/media/noface.gif",
+          "timestamp": 1782526247.692,
+          "authorName": "多数量礼物用户",
+          "time": 1782526247692
+        },
+        "receivedAt": 1782526247692
+      },
+      {
+        "method": "onAddSuperChat",
+        "payload": {
+          "id": "review-point-blivechat-open-25",
+          "avatarUrl": "/media/noface.gif",
+          "timestamp": 1782526362.717,
+          "authorName": "30元醒目留言用户",
+          "price": 30,
+          "content": "30元醒目留言：检查头像、用户名、金额和正文。",
+          "time": 1782526362717
+        },
+        "receivedAt": 1782526362717
+      },
+      {
+        "method": "onAddSuperChat",
+        "payload": {
+          "id": "review-point-blivechat-open-26",
+          "avatarUrl": "/media/noface.gif",
+          "timestamp": 1782526244.049,
+          "authorName": "50元醒目留言用户",
+          "price": 50,
+          "content": "50元醒目留言：检查头像、用户名、金额和正文。",
+          "time": 1782526244049
+        },
+        "receivedAt": 1782526244049
+      },
+      {
+        "method": "onAddSuperChat",
+        "payload": {
+          "id": "review-point-blivechat-open-27",
+          "avatarUrl": "/media/noface.gif",
+          "timestamp": 1782526232.108,
+          "authorName": "100元醒目留言用户",
+          "price": 100,
+          "content": "100元醒目留言：检查头像、用户名、金额和正文。",
+          "time": 1782526232108
+        },
+        "receivedAt": 1782526232108
+      },
+      {
+        "method": "onAddSuperChat",
+        "payload": {
+          "id": "review-point-blivechat-open-28",
+          "avatarUrl": "/media/noface.gif",
+          "timestamp": 1782526306.185,
+          "authorName": "200元醒目留言用户",
+          "price": 200,
+          "content": "200元醒目留言：检查头像、用户名、金额和正文。",
+          "time": 1782526306185
+        },
+        "receivedAt": 1782526306185
+      },
+      {
+        "method": "onAddSuperChat",
+        "payload": {
+          "id": "review-point-blivechat-open-29",
+          "avatarUrl": "/media/noface.gif",
+          "timestamp": 1782526308.741,
+          "authorName": "500元醒目留言用户",
+          "price": 500,
+          "content": "500元醒目留言：检查头像、用户名、金额和正文。",
+          "time": 1782526308741
+        },
+        "receivedAt": 1782526308741
+      },
+      {
+        "method": "onAddSuperChat",
+        "payload": {
+          "id": "review-point-blivechat-open-30",
+          "avatarUrl": "/media/noface.gif",
+          "timestamp": 1782526400.444,
+          "authorName": "1000元醒目留言用户",
+          "price": 1000,
+          "content": "1000元醒目留言：检查头像、用户名、金额和正文。",
+          "time": 1782526400444
+        },
+        "receivedAt": 1782526400444
+      },
+      {
+        "method": "onAddSuperChat",
+        "payload": {
+          "id": "review-point-blivechat-open-31",
+          "avatarUrl": "/media/noface.gif",
+          "timestamp": 1782526300.362,
+          "authorName": "2000元醒目留言用户",
+          "price": 2000,
+          "content": "2000元醒目留言：检查头像、用户名、金额和正文。",
+          "time": 1782526300362
+        },
+        "receivedAt": 1782526300362
+      },
+      {
+        "method": "onAddMember",
+        "payload": {
+          "id": "review-point-blivechat-open-32",
+          "avatarUrl": "/media/noface.gif",
+          "timestamp": 1782526294.676,
+          "authorName": "舰长用户",
+          "privilegeType": 3,
+          "time": 1782526294676,
+          "price": 198
+        },
+        "receivedAt": 1782526294676
+      },
+      {
+        "method": "onAddMember",
+        "payload": {
+          "id": "review-point-blivechat-open-33",
+          "avatarUrl": "/media/noface.gif",
+          "timestamp": 1782526237.655,
+          "authorName": "提督用户",
+          "privilegeType": 2,
+          "time": 1782526237655,
+          "price": 1998
+        },
+        "receivedAt": 1782526237655
+      },
+      {
+        "method": "onAddMember",
+        "payload": {
+          "id": "review-point-blivechat-open-34",
+          "avatarUrl": "/media/noface.gif",
+          "timestamp": 1782526284.2,
+          "authorName": "总督用户",
+          "privilegeType": 1,
+          "time": 1782526284200,
+          "price": 19998
+        },
+        "receivedAt": 1782526284200
+      }
+    ]
+  }
+}

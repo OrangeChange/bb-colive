@@ -1,0 +1,8 @@
+import assert from 'node:assert/strict';
+import {createServer} from 'vite';
+import {createRequire} from 'node:module';
+const {chromium}=createRequire(import.meta.url)(process.env.PLAYWRIGHT_MODULE || 'playwright');
+const {build}=createRequire(import.meta.url)('esbuild');const bundle=await build({entryPoints:['tests/fixtures/themeEditorRecovery.tsx'],bundle:true,write:false,format:'iife',platform:'browser',jsx:'automatic',define:{'process.env.NODE_ENV':'"production"'}});
+const server=await createServer({configFile:false,esbuild:{jsx:'automatic'},server:{host:'127.0.0.1',port:0,watch:null},optimizeDeps:{noDiscovery:true},plugins:[{name:'recovery-fixture',configureServer(server){server.middlewares.use((req,res,next)=>{if(req.url?.split('?')[0]!=='/tests/fixtures/themeEditorRecovery.tsx')return next();res.setHeader('Content-Type','text/javascript');res.end(bundle.outputFiles[0].text);});}}],logLevel:'error'});await server.listen();
+const browser=await chromium.launch({channel:'chrome',headless:true});
+try{const page=await browser.newPage();await page.goto(`http://127.0.0.1:${server.httpServer.address().port}/tests/fixtures/themeEditorRecovery.html`);await page.getByLabel('草稿').fill('保留当前编辑');await page.getByRole('button',{name:'高级编辑',exact:true}).click();await page.getByRole('alert').waitFor();assert.match(await page.getByRole('alert').innerText(),/高级编辑加载失败/);await page.getByRole('button',{name:'返回基础设置'}).click();await page.getByText('基础设置',{exact:true}).waitFor();assert.equal(await page.getByLabel('草稿').inputValue(),'保留当前编辑');console.log('Chrome: 高级编辑加载失败局部呈现，返回后草稿保留');}finally{await browser.close();await server.close();}

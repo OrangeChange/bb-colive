@@ -1,0 +1,38 @@
+[
+  {
+    "id": "openlive-bubble",
+    "url": "https://i1.xuehusang.cn/openlivechat-css/openlivechat.css"
+  },
+  {
+    "id": "openlive-yt",
+    "url": "https://i1.xuehusang.cn/openlivechat-css/default.css"
+  },
+  {
+    "id": "openlive-candy",
+    "url": "https://i1.xuehusang.cn/openlivechat-css/1125-candy-game-all-in.css"
+  },
+  {
+    "id": "openlive-bride-light",
+    "url": "https://i1.xuehusang.cn/openlivechat-css/A45%E9%AD%94%E5%A5%B3%E8%8A%B1%E5%AB%81light.css"
+  },
+  {
+    "id": "openlive-bride-dark",
+    "url": "https://i1.xuehusang.cn/openlivechat-css/A45%E9%AD%94%E5%A5%B3%E8%8A%B1%E5%AB%81night.css"
+  },
+  {
+    "id": "laplace-curated-1",
+    "url": "https://pub-d4d706263dfc409fb4c0991a6f6ba4f1.r2.dev/gradient_chat/normal.css"
+  },
+  {
+    "id": "laplace-curated-2",
+    "url": "https://rsrc.laplace.cn/assets/bubble-snow.css"
+  },
+  {
+    "id": "laplace-curated-3",
+    "url": "https://rsrc.laplace.cn/assets/subspace-glitch.css"
+  },
+  {
+    "id": "laplace-curated-4",
+    "url": "https://rsrc.laplace.cn/assets/wechat-bubbles.css"
+  }
+]

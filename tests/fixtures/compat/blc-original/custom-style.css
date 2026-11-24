@@ -1,0 +1,3 @@
+/* unchanged custom CSS fixture */
+yt-live-chat-paid-message-renderer[blc-price-level="2"] #message { color: rgb(12, 34, 56) !important; }
+yt-live-chat-renderer { --fixture-token: original; }

@@ -1,0 +1,48 @@
+{
+  "sourceBuild": "1782526222773",
+  "kind": "CONSTRUCTED Like events, separate from the original ChatClientTest fixture batch.",
+  "sourceSha256": "cc0de0d586ad48b871248a6631fdb577187edf2a3b1fd391da27eb8b91424f95",
+  "provenance": "ChatClientTest has no Like fixture. Payload shape and content follow Gn.likeMessageCallback; names and counts below are invented test inputs.",
+  "events": [
+    {
+      "method": "onAddLike",
+      "payload": {
+        "id": "constructed-like-1",
+        "avatarUrl": "//static.hdslb.com/images/member/noface.gif",
+        "timestamp": 1782526222.773,
+        "time": 1782526222773,
+        "authorName": "构造点赞测试用户",
+        "likeCount": 1,
+        "privilegeType": 0,
+        "medalName": null,
+        "medalLevel": 0,
+        "isFanGroup": false,
+        "translation": "",
+        "emoticon": null,
+        "content": "点赞了直播间",
+        "authorType": 0
+      },
+      "receivedAt": 1782526222773
+    },
+    {
+      "method": "onAddLike",
+      "payload": {
+        "id": "constructed-like-2",
+        "avatarUrl": "//static.hdslb.com/images/member/noface.gif",
+        "timestamp": 1782526223.773,
+        "time": 1782526223773,
+        "authorName": "构造点赞测试用户",
+        "likeCount": 3,
+        "privilegeType": 0,
+        "medalName": null,
+        "medalLevel": 0,
+        "isFanGroup": false,
+        "translation": "",
+        "emoticon": null,
+        "content": "点赞了直播间3次",
+        "authorType": 0
+      },
+      "receivedAt": 1782526223773
+    }
+  ]
+}

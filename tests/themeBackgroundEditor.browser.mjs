@@ -1,0 +1,32 @@
+import assert from 'node:assert/strict';
+import {createRequire} from 'node:module';
+import {readFile,mkdir} from 'node:fs/promises';
+import {build} from 'esbuild';
+const {chromium}=createRequire(import.meta.url)(process.env.PLAYWRIGHT_MODULE||'playwright');
+const out=process.env.LAYOUT_ACCEPTANCE_DIR||'D:/CodexBuild/background-gradient-editor';await mkdir(out,{recursive:true});
+const result=await build({entryPoints:['tests/fixtures/themeBackgroundEditor.tsx'],bundle:true,write:false,format:'iife',jsx:'automatic',loader:{'.css':'empty'}});
+const css=await readFile('src/components/nativeThemeEditor.css','utf8');
+const browser=await chromium.launch({channel:'chrome',headless:true});
+try{
+ const page=await browser.newPage({viewport:{width:1100,height:850}});const errors=[];page.on('pageerror',e=>errors.push(e.message));
+ await page.setContent(`<style>:root{--color-bg:#f7f9f9;--color-raised:#fff;--color-line:#cbd5d5;--color-t1:#152d32;--color-t2:#405a60;--color-t3:#52676d;--color-accent:#307e72;--font-ui:Arial}body{font-family:Arial}button{cursor:pointer}*{box-sizing:border-box}${css}</style><div id="root" style="margin:60px 340px"></div>`);
+ await page.addScriptTag({content:result.outputFiles[0].text});
+ const choose=async(label,name)=>{await page.getByRole('button',{name:name==='径向渐变'?'径向':'线性',exact:true}).click();};
+ await page.getByRole('button',{name:'事件背景',exact:true}).click();await page.waitForSelector('.theme-background-popover');
+ assert.equal((await page.evaluate(()=>window.backgroundReport)).commits.length,0,'打开不改样式');
+ await page.getByRole('spinbutton',{name:'渐变角度'}).fill('90');await page.getByRole('spinbutton',{name:'渐变角度'}).press('Enter');
+ assert.match(await page.locator('#value').textContent(),/90deg/);assert.match(await page.locator('#value').textContent(),/rgb\(50, 70, 90\)$/);
+ await page.getByRole('button',{name:'添加色点',exact:true}).click();assert.equal(await page.locator('.theme-gradient-stop').count(),3);
+ const point=page.getByRole('slider',{name:'色点 3',exact:true});const box=await point.boundingBox();const before=await page.evaluate(()=>window.backgroundReport.commits.length);
+ await page.mouse.move(box.x+8,box.y+8);await page.mouse.down();await page.mouse.move(box.x+30,box.y+8,{steps:8});await page.mouse.up();
+ assert.equal(await page.evaluate(()=>window.backgroundReport.commits.length),before+1,'色点拖动只提交一次');
+ const saved=await page.locator('#value').textContent();await page.getByRole('spinbutton',{name:'色点位置'}).focus();await page.keyboard.press('Escape');
+ await page.getByRole('button',{name:'事件背景',exact:true}).click();assert.equal(await page.locator('#value').textContent(),saved);
+ await choose('背景填充类型','径向渐变');await page.getByRole('spinbutton',{name:'径向中心X'}).fill('25');await page.getByRole('spinbutton',{name:'径向中心X'}).press('Enter');
+ assert.match(await page.locator('#value').textContent(),/radial-gradient\(ellipse at 25% 50%/);
+ await page.screenshot({path:out+'/gradient-editor.png'});
+ const color=page.locator('.theme-background-popover .react-colorful__saturation');const cb=await color.boundingBox();const saved2=await page.locator('#value').textContent();
+ await page.mouse.move(cb.x+30,cb.y+30);await page.mouse.down();await page.mouse.move(cb.x+70,cb.y+50);await page.keyboard.press('Escape');await page.mouse.up();
+ assert.equal(await page.locator('#value').textContent(),saved2,'取消拖色不提交');
+ assert.deepEqual(errors,[]);console.log(JSON.stringify({openUnchanged:true,layersPreserved:true,dragCommitOnce:true,radial:true,cancel:true}));
+}finally{await browser.close();}

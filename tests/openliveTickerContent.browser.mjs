@@ -1,0 +1,37 @@
+import assert from 'node:assert/strict';
+import {createRequire} from 'node:module';
+import {readFileSync,writeFileSync} from 'node:fs';
+import {createServer} from 'vite';
+const require=createRequire(import.meta.url);
+const {chromium}=require(process.env.PLAYWRIGHT_MODULE||'playwright');
+const server=await createServer({configFile:false,server:{host:'127.0.0.1',port:0,watch:null},optimizeDeps:{noDiscovery:true},logLevel:'error'});
+await server.listen();
+const browser=await chromium.launch({channel:'chrome',headless:true});
+try{
+ const {createOpenLiveDocumentCss}=await server.ssrLoadModule('/src/compat/openlive/css.ts');
+ const {OPENLIVE_SOURCE_CSS}=await server.ssrLoadModule('/src/compat/openlive/source.ts');
+ const page=await browser.newPage({viewport:{width:900,height:600}});
+ await page.goto(`http://127.0.0.1:${server.httpServer.address().port}/openlive/renderer.html?qa=1`);
+ await page.waitForFunction(()=>window.__bbOpenLiveQA);
+ const now=Date.now();
+ const record=(id,method,payload)=>({method,payload:{id,time:now,authorName:'置顶用户',avatarUrl:'',...payload},receivedAt:now});
+ const records=[...[[3,138],[2,1998],[1,19998]].map(([privilegeType,price])=>record('guard-'+privilegeType,'onAddMember',{privilegeType,price,title:'开通大航海',num:1})),record('gift','onAddGift',{giftName:'普通礼物',num:1,price:39}),record('sc','onAddSuperChat',{price:30,content:'醒目留言'})];
+ await page.evaluate(records=>{const send=(command,data)=>postMessage({type:'bb-openlive',command,data},location.origin);send('config',{skin:'none',maxNumber:100,mergeGift:false});send('host',{managed:true,direction:'bottom',scale:1,tickerEnabled:true});const now=Date.now();send('hydrate',{records,presentation:{layout:records.map(r=>({kind:'source',eventId:r.payload.id})),stickyRecords:records.map(record=>({record,startedAt:now,expiresAt:now+60000})),position:'top',direction:'bottom'}});},records);
+ await page.waitForSelector('yt-live-chat-ticker-paid-message-item-renderer[type="2"]');
+ const snapshot=()=>page.evaluate(()=>[...document.querySelectorAll('yt-live-chat-ticker-paid-message-item-renderer')].map(n=>({id:n.dataset.compatibleEventId,text:n.querySelector('#text').textContent,after:getComputedStyle(n.querySelector('#content'),'::after').content})));
+ const initial=await snapshot();
+ assert.deepEqual(initial.filter(r=>r.id.startsWith('guard')).map(r=>r.text),['会员','会员','会员']);
+ assert.equal(initial.find(r=>r.id==='gift').text,'普通礼物x1');
+ assert.equal(initial.find(r=>r.id==='sc').text,'CN¥30.0');
+ const bubble=createOpenLiveDocumentCss({mode:'blivechat-open',settings:{skin:'none'},styles:{baseCss:readFileSync('resources/theme-catalog/openlive-bubble.css','utf8'),visualCss:'',customCss:''}});
+ await page.evaluate(css=>{postMessage({type:'bb-openlive',command:'css',data:css},location.origin);},bubble);
+ await page.waitForFunction(()=>[...document.querySelectorAll('yt-live-chat-ticker-paid-message-item-renderer[type="2"] #text')].every(n=>n.textContent===''));
+ const themed=await snapshot();
+ assert.deepEqual(themed.filter(r=>r.id.startsWith('guard')).map(r=>r.after),['"新舰长"','"新提督"','"新总督"']);
+ const defaults=createOpenLiveDocumentCss({mode:'blivechat-open',settings:{skin:'none'},styles:{baseCss:OPENLIVE_SOURCE_CSS,visualCss:'',customCss:''}});
+ await page.evaluate(css=>postMessage({type:'bb-openlive',command:'css',data:css},location.origin),defaults);
+ await page.waitForFunction(()=>[...document.querySelectorAll('yt-live-chat-ticker-paid-message-item-renderer[type="2"] #text')].every(n=>n.textContent==='会员'));
+ await page.screenshot({path:'.superpowers/sdd/openlive-mit-source/ticker-default.png'});
+ writeFileSync('.superpowers/sdd/openlive-mit-source/ticker-content.json',JSON.stringify({initial,themed,restored:await snapshot()},null,2));
+ console.log('默认三种大航海置顶文案、主题替代文案及切换恢复通过；礼物和SC文案保持不变');
+}finally{await browser.close();await server.close();}

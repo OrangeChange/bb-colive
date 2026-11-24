@@ -1,0 +1,155 @@
+{
+  "repository": "https://github.com/xfgryujk/blivechat",
+  "commit": "848409df78d2cca65d3cc8ffe938eb6b6f261b76",
+  "version": "1.10.4",
+  "files": [
+    {
+      "path": "upstream/frontend/public/static/img/emoticons/233.png",
+      "sha256": "ec8212ac860eee2ff9bfd64942ba586cf0bd394b49d6a182fa307c9a67a29ffe"
+    },
+    {
+      "path": "upstream/frontend/public/static/img/emoticons/huangdou_xihuan.png",
+      "sha256": "be9785b0b4ac4680fd1da83cdb1f9fc9d5b143b61cbb573feb8c3419703fc98b"
+    },
+    {
+      "path": "upstream/frontend/public/static/img/emoticons/lipu.png",
+      "sha256": "0f0a495080e142be74ef6c88e99d368c115795fb8ea075c94d81cb0609a9daf8"
+    },
+    {
+      "path": "upstream/frontend/public/static/img/emoticons/miaoa.png",
+      "sha256": "2e87c8c0932459c7cf54b7178ede81a0edf32df69bab7a68ee499ce26418cad3"
+    },
+    {
+      "path": "upstream/frontend/public/static/img/emoticons/sakaban_jiayu_yutou.png",
+      "sha256": "b7c893ad39d2428e8e02498b65c78b15dece079882b19563aebbe10bf54a1f38"
+    },
+    {
+      "path": "upstream/frontend/src/api/chat/ChatClientTest.js",
+      "sha256": "37d7318034645f84256462b46fa9ff3c8e9894e0869e94f802bb23afba8c795d"
+    },
+    {
+      "path": "upstream/frontend/src/api/chat/models.js",
+      "sha256": "0f099a09a0f23325063a45d9ca6ab2a8a04f7d3a9797719f1a8ba50d74abfc07"
+    },
+    {
+      "path": "upstream/frontend/src/api/chatConfig.js",
+      "sha256": "6d925708d1d83d36dad53187302c9bb7abd349da13029c8ca63aa43fc25bf222"
+    },
+    {
+      "path": "upstream/frontend/src/App.vue",
+      "sha256": "34f2e67ffa7ded4c9415f74f32cb650ee75b9c98012a6580630c512fafc07d02"
+    },
+    {
+      "path": "upstream/frontend/src/assets/css/youtube/yt-html.css",
+      "sha256": "7e5bcd2366e0e839e80ff7b36bd91c09dd3e55defb09c77021da3c74fba2a27f"
+    },
+    {
+      "path": "upstream/frontend/src/assets/css/youtube/yt-icon.css",
+      "sha256": "f2d979f5f417e6dc438696eac0a3a4d0470855ea0a71b42a70551d389ee2ee1a"
+    },
+    {
+      "path": "upstream/frontend/src/assets/css/youtube/yt-img-shadow.css",
+      "sha256": "8ab58372f82e126e7f1c62b95deb0f4818cedf548473b3dfba131cb4959220fe"
+    },
+    {
+      "path": "upstream/frontend/src/assets/css/youtube/yt-live-chat-author-badge-renderer.css",
+      "sha256": "6a48ce2227ac6e381714e683e42c905264107e004faf35ee01219782636dc788"
+    },
+    {
+      "path": "upstream/frontend/src/assets/css/youtube/yt-live-chat-author-chip.css",
+      "sha256": "2004dcadb78279fdf09c83d678d4df5ea4cfb4347d54df05a5c20d5a51f53324"
+    },
+    {
+      "path": "upstream/frontend/src/assets/css/youtube/yt-live-chat-item-list-renderer.css",
+      "sha256": "b3282828409841f4d1c4544ca09a7cb1ea3f12a3795ec46f796ec034c5da7cee"
+    },
+    {
+      "path": "upstream/frontend/src/assets/css/youtube/yt-live-chat-membership-item-renderer.css",
+      "sha256": "e1d8381b64054d9f65945d49cff35d8519eaeeaae6c2f8a5222ddcccd3f69492"
+    },
+    {
+      "path": "upstream/frontend/src/assets/css/youtube/yt-live-chat-paid-message-renderer.css",
+      "sha256": "4e18fec204baa5c57a9fa24b68968568dd9f0ac1201e8471974f99f2a66a17b8"
+    },
+    {
+      "path": "upstream/frontend/src/assets/css/youtube/yt-live-chat-renderer.css",
+      "sha256": "37a3002a1bb99b5513a5023cf87e4e3c2aded7e1b12e437fcb1dbe71db1d9dcc"
+    },
+    {
+      "path": "upstream/frontend/src/assets/css/youtube/yt-live-chat-text-message-renderer.css",
+      "sha256": "62c26e99bdf34e6a0d789cdac23f307843e8b370c2009ea3b07c0e1b9ff0ea44"
+    },
+    {
+      "path": "upstream/frontend/src/assets/css/youtube/yt-live-chat-ticker-paid-message-item-renderer.css",
+      "sha256": "32fced64098a5df72e0fcb749710606e0754cfa0f981eefb6a91c0138de25b16"
+    },
+    {
+      "path": "upstream/frontend/src/assets/css/youtube/yt-live-chat-ticker-renderer.css",
+      "sha256": "be726cb401fb72fe483cbe16e744959b08f5d5c852c93962329c5eedf9d0ebfb"
+    },
+    {
+      "path": "upstream/frontend/src/blcsdk.js",
+      "sha256": "cfe3f068079200dc8a3de92fbc5cf87570089e59318d3759d7f5a4f66ac5e557"
+    },
+    {
+      "path": "upstream/frontend/src/components/ChatRenderer/AuthorBadge.vue",
+      "sha256": "635c4d1164c429a2e22e4275bdf57b89a28e1b33b50c215441287d88f39f4dc7"
+    },
+    {
+      "path": "upstream/frontend/src/components/ChatRenderer/AuthorChip.vue",
+      "sha256": "f067d623bc4c54ef9d1bec8d5bd97e3862018ea93e1e9f305a37d275f2bb5c49"
+    },
+    {
+      "path": "upstream/frontend/src/components/ChatRenderer/constants.js",
+      "sha256": "cc7663808bb5a1dff28048bba019bbd2fce5e61ed99876492e46103031b0ff44"
+    },
+    {
+      "path": "upstream/frontend/src/components/ChatRenderer/ImgShadow.vue",
+      "sha256": "ffe5814e71887869f2f1cbc6cd3444a72a595e976478eb0847a8a3cc2e816bad"
+    },
+    {
+      "path": "upstream/frontend/src/components/ChatRenderer/index.vue",
+      "sha256": "09b069121ade96feb185e68c58b7e4e8b4162881e5439e387f77e16dc27ff143"
+    },
+    {
+      "path": "upstream/frontend/src/components/ChatRenderer/MembershipItem.vue",
+      "sha256": "2f444084bf2a2869482ad68759ed539dbf1c70cf1eb39d5da3254a9f5cf83155"
+    },
+    {
+      "path": "upstream/frontend/src/components/ChatRenderer/PaidMessage.vue",
+      "sha256": "0c119f51993a59783a3a193119525064360e0a69a75c010f1ca0cac09b65aec5"
+    },
+    {
+      "path": "upstream/frontend/src/components/ChatRenderer/TextMessage.vue",
+      "sha256": "a9083bbe090fee82c749b60fcec56d86994a81cad5b920340e5ed4b7a4129d24"
+    },
+    {
+      "path": "upstream/frontend/src/components/ChatRenderer/Ticker.vue",
+      "sha256": "eca80891382fa13a4010c27471580c80f602933debe8be49b86584db0541c0ef"
+    },
+    {
+      "path": "upstream/frontend/src/i18n.js",
+      "sha256": "2a8ebcd4df4fd9c3b770ed99903aac1af4648f115975d0dcf8eba1f113a24ce8"
+    },
+    {
+      "path": "upstream/frontend/src/lang/en.js",
+      "sha256": "eb626d5ff16c6694eb8d84e9af021d59536991535f3f2d28b7313ea84315cd33"
+    },
+    {
+      "path": "upstream/frontend/src/lang/ja.js",
+      "sha256": "977f259d5361bf932658fc7949ef9f9aa00438db46e5f49e459d10d378a18916"
+    },
+    {
+      "path": "upstream/frontend/src/lang/zh.js",
+      "sha256": "bcd46715a1de67d7b87e9e1cd60fc8d704246276d19d6454e392c9888f50e667"
+    },
+    {
+      "path": "upstream/frontend/src/utils/index.js",
+      "sha256": "849045f31740462ae9383073d7e83d9a3dd2757f0d6066c2bcfdaa3b90300c81"
+    },
+    {
+      "path": "upstream/frontend/src/views/Room.vue",
+      "sha256": "75f29dfaec2f254564b78b8458c0fa43a233976ec0d6fbba0712ae2c8200554f"
+    }
+  ]
+}

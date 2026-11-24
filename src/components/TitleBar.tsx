@@ -1,0 +1,131 @@
+import { Minus as LucideMinus, Square as LucideSquare, Copy as LucideCopy, X as LucideX } from "lucide-react";
+import { useEffect, useState } from "react";
+import { getCurrentWindow } from "@tauri-apps/api/window";
+import { useConnection } from "../stores/connection";
+import { useGeneralSettings } from "../generalSettings";
+import { getWindowTitle } from "../windowTitle";
+import { CoLiveLogo } from './CoLiveLogo';
+import { resolveCoLiveState } from '../coliveLogo';
+
+function IconMinimize() {
+  return (
+    <LucideMinus className="size-4" />
+  );
+}
+
+function IconMaximize() {
+  return (
+    <LucideSquare className="size-4" />
+  );
+}
+
+function IconRestore() {
+  return (
+    <LucideCopy className="size-4" />
+  );
+}
+
+function IconClose() {
+  return (
+    <LucideX className="size-4" />
+  );
+}
+
+const windowButton =
+  "flex h-9 w-11 items-center justify-center text-t2 transition-colors hover:bg-raised hover:text-t1 focus-visible:z-10 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-accent-ring";
+
+export function TitleBar() {
+  const [appWindow] = useState(() => getCurrentWindow());
+  const [maximized, setMaximized] = useState(false);
+  const windowState = useConnection((s) => s.state);
+  const minimizeBehavior = useGeneralSettings((state) => state.minimizeBehavior);
+
+  const { status, anchorName, roomId, liveStatus } = windowState;
+
+  useEffect(() => {
+    void appWindow.setTitle(getWindowTitle({ status, anchorName, roomId, liveStatus })).catch(() => {});
+  }, [appWindow, status, anchorName, roomId, liveStatus]);
+
+  useEffect(() => {
+    let disposed = false;
+    let unlisten: (() => void) | undefined;
+
+    const syncMaximized = async () => {
+      try {
+        const next = await appWindow.isMaximized();
+        if (!disposed) setMaximized(next);
+      } catch {
+        // 在普通浏览器预览而非 Tauri 窗口中时，窗口 API 不可用。
+      }
+    };
+
+    void syncMaximized();
+    void appWindow
+      .onResized(() => {
+        void syncMaximized();
+      })
+      .then((stop) => {
+        if (disposed) stop();
+        else unlisten = stop;
+      })
+      .catch(() => {
+        // Vite 独立预览没有 Tauri 事件总线，不影响界面渲染。
+      });
+
+    return () => {
+      disposed = true;
+      unlisten?.();
+    };
+  }, [appWindow]);
+
+  const minimize = () => {
+    const action = minimizeBehavior === "tray" ? appWindow.hide() : appWindow.minimize();
+    void action.catch(() => {});
+  };
+
+  const toggleMaximize = () => {
+    void appWindow.toggleMaximize().then(() => {
+      void appWindow.isMaximized().then(setMaximized).catch(() => {});
+    }).catch(() => {});
+  };
+
+  const close = () => {
+    void appWindow.close().catch(() => {});
+  };
+
+  return (
+    <header className="flex h-9 shrink-0 items-center bg-surface text-t1">
+      <div
+        data-tauri-drag-region
+        onDoubleClick={toggleMaximize}
+        className="flex h-full min-w-0 flex-1 cursor-default select-none items-center gap-1.5 px-3"
+      >
+        <CoLiveLogo state={resolveCoLiveState(status, liveStatus)} className="titlebar-logo pointer-events-none" />
+        <span className="truncate ui-type-control font-medium text-t1">BB CoLive</span>
+      </div>
+      <div className="flex h-full shrink-0 items-center" aria-label="窗口控制">
+        <button type="button" className={windowButton} aria-label="最小化窗口" title="最小化" onClick={minimize}>
+          <IconMinimize />
+        </button>
+        <button
+          type="button"
+          className={windowButton}
+          aria-label={maximized ? "还原窗口" : "最大化窗口"}
+          title={maximized ? "还原" : "最大化"}
+          onClick={toggleMaximize}
+        >
+          {maximized ? <IconRestore /> : <IconMaximize />}
+        </button>
+        <button
+          type="button"
+          className={`${windowButton} hover:bg-danger-solid hover:text-danger-fg focus-visible:ring-danger`}
+          aria-label="关闭窗口"
+          title="关闭"
+          onClick={close}
+        >
+          <IconClose />
+        </button>
+      </div>
+    </header>
+  );
+}

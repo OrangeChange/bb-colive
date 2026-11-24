@@ -1,0 +1,6 @@
+import test from 'node:test';import assert from 'node:assert/strict';import{buildCompatibleVisualNavigation,resolveCompatibleNavigationSelection}from'../src/themes/compatibleVisualNavigation.ts';
+test('普通与单条置顶导航保留局部事件及身份，整体容器仍清除范围',()=>{for(const mode of ['blivechat','blivechat-open','laplace']){const walk=items=>items.flatMap(i=>[i,...walk(i.children??[])]);const items=buildCompatibleVisualNavigation(mode,{event:{},allEvents:{},eventArea:{}}).flatMap(g=>walk(g.items));const current={part:'username',event:'danmaku',identity:'captain',placement:'main'};const selected=resolveCompatibleNavigationSelection(items.find(i=>i.id==='main'),current);assert.equal(selected.event,'danmaku');assert.equal(selected.identity,'captain');const area=items.find(i=>i.part==='eventArea');if(area)assert.equal(resolveCompatibleNavigationSelection(area,current).identity,'all');}});
+
+import {LAPLACE_CAPABILITY} from '../src/compat/laplace/theme.ts';
+import {compatibleSelectorFor} from '../src/themes/compatManagedCss.ts';
+test('LAPLACE公共普通礼物范围不包含红包和天选',()=>{const css=compatibleSelectorFor(LAPLACE_CAPABILITY,'gift-regular|all|main|allEvents','common');assert.match(css,/event--gift/);assert.match(css,/gift-sticky-bar/);assert.doesNotMatch(css,/red-envelope|lottery/)});

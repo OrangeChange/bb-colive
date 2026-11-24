@@ -1,0 +1,15 @@
+# Renderer bridge v1
+
+Host postMessage payload is `LaplaceRenderMessage` in bridge.ts. The entry URL is `/laplace/product/index.html?generation=N`. Frame generation is fixed for the document; stale generations and non-increasing sequences are ignored. `ready` replies use sequence 0. First host render conventionally uses sequence 1.
+
+Required: channel `bb-laplace`, version 1, type `render`, generation, sequence, events, stickyEvents, settings, css `{cloud,remote,custom}`, preview, scrollable, rate. Optional `layout` orders source rows and native fallback slots inside the source-owned `.event-list`; it never creates another `.events-list-wrap`. Optional acquisitionMode `direct` or `open-platform` carries truthful BB source provenance, not a restored connection setting. Source fixture preview explicitly supplies direct; unknown provenance leaves the hook absent instead of guessing. Optional appearance `{demoBgColor,uiHue,uiChroma}`, dashboardLiveGuards `{[uid]:{roomId,guardCount}}`.
+
+Host owns queue delay, approximate rate, queue pause/resume, BB admission/recompute, deleted retention, independent main/sticky selection and proactive expiry. Frame reports scroll-state `{following}` from the 250px bottom tolerance. Non-scrollable OBS auto-scroll uses the existing horizontal / vertical-lr / vertical-rl calculations; rate >6 uses auto, otherwise smooth. The independent FLIP implementation preserves IDs and spring parameters through browser animation APIs. Scroll Area comes from the MIT-licensed Radix package.
+
+Replies: ready, rendered, error, asset-missing, scroll-state, action and context-menu; all contain version/channel/generation/sequence. `control` messages provide locate and scroll-latest without borrowing another renderer protocol. Hosts must use exact source-window and the expected origin. The pinned local product frame allows same-origin access so the host can mount the exact native fallback renderer into source-owned layout slots; it remains script-isolated and cannot navigate the parent. All bundles are classic IIFEs. `connect-src 'none'` forbids original live/room/translation services.
+
+`getOriginalSamples` and `generateOriginalSimulationEvent` in samples.ts return field-picked source data. They do not perform admission. Host static/simulation admission is separate; design mode uses its approved preview exception. Do not remap original fixture guard values again.
+
+The product entry and single-event entry use `independent/index.tsx`. Product compilation uses `scripts/build-laplace-product.mjs`, targeting Chromium 111. Captured JavaScript and extracted renderer modules are reference-only; they are not product dependencies. `sample-data.json`, the URL map, CSS and artwork remain data or appearance assets with their original source records.
+
+The three CSS sources are raw strings; their original selector/layer semantics remain unchanged. `pickLaplaceRendererEvent` removes unused top-level source metadata; nested credential-like keys are rejected by the validator. Unknown arbitrary envelope data cannot become executable code.

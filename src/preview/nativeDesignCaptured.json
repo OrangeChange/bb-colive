@@ -1,0 +1,192 @@
+{
+  "samples": [
+    {
+      "key": "admin",
+      "source": {
+        "eventKey": "session-545068-1793506965967-2:archive-event:1517226661|32020532|点了|1793507318200",
+        "sessionId": "session-545068-1793506965967-2",
+        "eventId": "1517226661"
+      },
+      "event": {
+        "id": "1517226661",
+        "msgType": 0,
+        "roomId": 545068,
+        "ts": 1793507318200,
+        "user": {
+          "uid": "32020532",
+          "uname": "loveRos1e",
+          "avatar": "/media/native-preview/design-001.jpg",
+          "guardLevel": 0,
+          "wealthLevel": 16,
+          "currentRank": 0,
+          "userLevel": 15,
+          "userLevelBorder": 0,
+          "phoneVerified": true,
+          "isAdmin": true,
+          "medal": {
+            "name": "德云色",
+            "level": 31,
+            "guardLevel": 0,
+            "type": 0,
+            "anchorName": "老实憨厚的笑笑",
+            "anchorUid": "8739477",
+            "isCurrentRoom": true,
+            "isLighted": true
+          }
+        },
+        "text": "点了"
+      }
+    },
+    {
+      "key": "governor",
+      "source": {
+        "eventKey": "session-22886883-1794658114829-1:archive-event:1794660133|486553605|怪盗最重要的是怪|1794662521359",
+        "sessionId": "session-22886883-1794658114829-1",
+        "eventId": "1794660133"
+      },
+      "event": {
+        "id": "1794660133",
+        "msgType": 0,
+        "roomId": 22886883,
+        "ts": 1794662521359,
+        "user": {
+          "uid": "486553605",
+          "uname": "钉钩鱼没后缀",
+          "avatar": "/media/native-preview/design-002.jpg",
+          "guardLevel": 3,
+          "guardIconUrl": "/media/native-preview/asset-030.png",
+          "guardMilestone": "thousand",
+          "guardIconSet": "enhanced",
+          "wealthLevel": 60,
+          "wealthIconKey": "ChronosWealth_6.png",
+          "currentRank": 1,
+          "userLevel": 51,
+          "userLevelBorder": 0,
+          "phoneVerified": true,
+          "medal": {
+            "name": "瞳星结",
+            "level": 57,
+            "guardLevel": 3,
+            "type": 0,
+            "anchorName": "星瞳_Official",
+            "guardIconUrl": "/media/native-preview/asset-030.png",
+            "anchorUid": "401315430",
+            "isCurrentRoom": true,
+            "isLighted": true
+          }
+        },
+        "text": "怪盗最重要的是怪"
+      }
+    },
+    {
+      "key": "lottery-guard",
+      "source": {
+        "eventKey": "session-22886883-1794658114829-1:archive-event:anchor-start:16472565",
+        "sessionId": "session-22886883-1794658114829-1",
+        "eventId": "anchor-start:16472565"
+      },
+      "event": {
+        "id": "anchor-start:16472565",
+        "msgType": 4,
+        "roomId": 22886883,
+        "ts": 1794663185016,
+        "lottery": {
+          "id": 16472565,
+          "awardName": "罗技H390耳机一副",
+          "awardNum": 5,
+          "danmu": "新的挑战者！小星星星瞳加油！",
+          "maxTime": 600,
+          "timing": {
+            "endsAt": 1794663783000,
+            "serverNow": 1794663184000,
+            "observedAt": 1794663185016,
+            "source": "remaining"
+          },
+          "giftName": "",
+          "requireText": "大航海会员：舰长及以上"
+        },
+        "broadcaster": {
+          "uid": "",
+          "uname": "星瞳_Official",
+          "avatar": "/media/native-preview/design-003.png",
+          "guardLevel": 0,
+          "isAnchor": true
+        }
+      }
+    },
+    {
+      "key": "lottery-follow",
+      "source": {
+        "eventKey": "session-22886883-1794658114829-1:archive-event:anchor-start:16472354",
+        "sessionId": "session-22886883-1794658114829-1",
+        "eventId": "anchor-start:16472354"
+      },
+      "event": {
+        "id": "anchor-start:16472354",
+        "msgType": 4,
+        "roomId": 22886883,
+        "ts": 1794662189670,
+        "lottery": {
+          "id": 16472354,
+          "awardName": "欢乐斗地主豪华礼包一份",
+          "awardNum": 10,
+          "danmu": "生日闯关继续 星瞳小星星加油~",
+          "maxTime": 600,
+          "timing": {
+            "endsAt": 1794662787000,
+            "serverNow": 1794662188000,
+            "observedAt": 1794662189670,
+            "source": "remaining"
+          },
+          "giftName": "",
+          "requireText": "关注主播"
+        },
+        "broadcaster": {
+          "uid": "",
+          "uname": "星瞳_Official",
+          "avatar": "/media/native-preview/design-003.png",
+          "guardLevel": 0,
+          "isAnchor": true
+        }
+      }
+    },
+    {
+      "key": "long-name",
+      "source": {
+        "eventKey": "session-545068-1790280315236-3:archive-event:221589489|3706968734697957|老弟没实力呀|1790282851194",
+        "sessionId": "session-545068-1790280315236-3",
+        "eventId": "221589489"
+      },
+      "event": {
+        "id": "221589489",
+        "msgType": 0,
+        "roomId": 545068,
+        "ts": 1790282851194,
+        "user": {
+          "uid": "3706968734697957",
+          "uname": "bili_3706968734697957",
+          "avatar": "/media/native-preview/asset-062.jpg",
+          "guardLevel": 0
+        },
+        "text": "老弟没实力呀"
+      }
+    }
+  ],
+  "resources": [
+    {
+      "url": "https://i2.hdslb.com/bfs/face/50ef567d438fe8b2aa15e59b829a571d3869475c.jpg",
+      "path": "/media/native-preview/design-001.jpg",
+      "bytes": 64761
+    },
+    {
+      "url": "https://i0.hdslb.com/bfs/face/7cddd3d3b3a871084e3c4071594e2c01c8589d16.jpg",
+      "path": "/media/native-preview/design-002.jpg",
+      "bytes": 174746
+    },
+    {
+      "url": "https://i0.hdslb.com/bfs/garb/a5a22989a3c14027c478ac95c2062e3241cec892.png",
+      "path": "/media/native-preview/design-003.png",
+      "bytes": 2404015
+    }
+  ]
+}

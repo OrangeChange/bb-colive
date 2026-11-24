@@ -1,0 +1,90 @@
+import assert from 'node:assert/strict';
+import fs from 'node:fs/promises';
+import { createRequire } from 'node:module';
+const { chromium } = createRequire(import.meta.url)(process.env.PLAYWRIGHT_MODULE || 'playwright');
+const output=process.env.ACCEPTANCE_DIRECTORY||'.superpowers/sdd/2026-11-01-style-common-behavior';
+await fs.mkdir(output,{recursive:true});
+const browser=await chromium.launch({channel:'chrome',headless:true});
+const results=[],errors=[];const actions=process.env.PREVIEW_ACTIONS?.split(',');
+const modes=(process.env.PREVIEW_MODES||'native,blivechat,blivechat-open,laplace').split(',');
+const state=p=>p.evaluate(()=>window.editorAcceptance.getSnapshot());
+const count=s=>s?.kind==='native'?s.frame.cursor:s?.frame.records?.length??s?.frame.events?.length??0;
+const ids=s=>s?.kind==='native'?s.content.previewMainEventIds:s?.frame.mainEventIds??[];
+async function until(fn,timeout=9000){const deadline=Date.now()+timeout;let e;do{try{return await fn()}catch(x){e=x;await new Promise(r=>setTimeout(r,40))}}while(Date.now()<deadline);throw e;}
+async function choose(p,label,value){await p.getByRole('combobox',{name:label,exact:true}).click();await p.getByRole('option',{name:value,exact:true}).click();}
+const source=(p,mode)=>p.frames().find(f=>mode==='native'?f.url()==='about:blank':f.url().includes(mode==='laplace'?'/laplace/product/':mode==='blivechat'?'/blivechat/renderer':'/openlive/renderer'));
+async function read(p,mode){const f=source(p,mode);assert(f,'预览来源文档');return f.evaluate(mode=>{const main=mode==='native'?'.event-row-slot[data-event-id]':mode==='laplace'?'.event-list .event[data-event-id]':'[data-blc-placement="main"],[data-openlive-placement="main"]';return [...document.querySelectorAll(main)].map(n=>n.getAttribute('data-event-id')||n.getAttribute('data-compatible-event-id'))},mode)}
+try {for(const mode of modes){
+ const context=await browser.newContext({viewport:{width:1500,height:950}});let current=null;const sockets=new Set();const timeline=[];
+ await context.route(/^https?:\/\/(?!127\.0\.0\.1(?=[:/]))/,r=>r.abort());
+ await context.route('**/tests/fixtures/compat/*/original-fixed-batch.json',async r=>{const path=r.request().url().includes('/blc-open/')?'tests/fixtures/compat/blc-open/original-fixed-batch.json':'tests/fixtures/compat/blc-original/original-fixed-batch.json';const batch=JSON.parse(await fs.readFile(path,'utf8'));const original=batch.events;batch.events=[...original.slice(0,18),...original.filter(e=>e.method==='onAddGift').slice(0,3)];await r.fulfill({json:batch})});
+ await context.routeWebSocket('**/ws?preview=current',socket=>{sockets.add(socket);if(current)socket.send(JSON.stringify({type:'preview:replace',state:current}));socket.onClose(()=>sockets.delete(socket))});
+ await context.exposeBinding('__publishPreview',(_,{state,message})=>{current=state;timeline.push({at:Date.now(),revision:state?.revision,restart:state?.frame.restart,count:count(state),main:ids(state),playing:state?.frame.playing,now:state?.frame.now??state?.content?.previewNow});for(const socket of sockets)socket.send(JSON.stringify(message))});
+ await context.addInitScript(()=>{window.__previewTicks=[];const original=window.setTimeout;window.setTimeout=function(callback,delay,...args){const tracked=typeof callback==='function'&&new Error().stack?.includes('/src/preview/stylePreviewPlayback.ts');return original.call(window,tracked?()=>{window.__previewTicks.push({at:performance.now(),delay});callback(...args)}:callback,delay,...args)}});
+ const p=await context.newPage();p.on('pageerror',e=>errors.push({mode,message:e.message}));
+ const url=(process.env.THEME_IMAGE_TEST_URL||'http://127.0.0.1:1442')+'/tests/fixtures/stylePreviewPolicyEditor.html';
+ console.log('OPEN',mode);await p.goto(url+'?mode='+mode,{waitUntil:'domcontentloaded'});await p.getByRole('combobox',{name:'预览样例',exact:true}).waitFor();
+ current=await state(p);
+ const receivers=[];for(let i=0;i<2;i++){const page=await context.newPage();page.on('pageerror',e=>errors.push({mode,receiver:i,message:e.message}));await page.goto(url.replace('Editor.html','Web.html'),{waitUntil:'domcontentloaded'});receivers.push(page)}
+ async function sync(){return until(async()=>{const expected=ids(await state(p));assert(expected);const actual=await Promise.all([p,...receivers].map(x=>read(x,mode)));for(const row of actual)assert.deepEqual(row,expected);return {expected,actual}})}
+ async function record(action,fn){if(actions&&!actions.includes(action))return;try{const detail=await fn();results.push({mode,action,status:'PASS',...detail});console.log('PASS',mode,action)}catch(e){results.push({mode,action,status:'FAIL',error:e.message});console.log('FAIL',mode,action,e.message);await p.screenshot({path:`${output}/preview-editor-${mode}-${action}-failure.png`});}}
+ try{
+  await choose(p,'预览目标','OBS');await choose(p,'预览样例','弹幕');
+  if(await p.getByRole('switch',{name:'显示全部部件',exact:true}).getAttribute('aria-checked')==='true')await p.getByRole('switch',{name:'显示全部部件',exact:true}).click();
+  if(actions&&!actions.includes('play-pause-speed')){await p.getByRole('button',{name:'动态',exact:true}).click();await until(async()=>assert(count(await state(p))>=1));await p.getByRole('button',{name:'暂停',exact:true}).click();await choose(p,'动态速度','0.5×');}
+  await record('sample-room-scope',async()=>{
+   const previous=await p.evaluate(async()=>{const {useConnection}=await import('/src/stores/connection.ts');const {SCENE_SETTINGS_KEY,loadSceneSettings,saveSceneSettings}=await import('/src/components/sceneSettings.ts');const scene=localStorage.getItem(SCENE_SETTINGS_KEY);const roomId=useConnection.getState().state.roomId;useConnection.setState(v=>({state:{...v.state,roomId:999999}}));saveSceneSettings({...loadSceneSettings(),audienceFilters:{...loadSceneSettings().audienceFilters,showCrossRoomEvents:false}});return {scene,roomId}});
+   try{
+    await until(async()=>assert.equal((await state(p)).content.previewPolicy.targetRoomId,999999));
+    await p.getByRole('button',{name:'静态',exact:true}).click();await until(async()=>{const r=await sync();assert(r.expected.length>0)});
+    const fixed=await sync();await p.getByRole('button',{name:'动态',exact:true}).click();await p.getByRole('button',{name:'重新开始',exact:true}).click();await until(async()=>{const r=await sync();assert(r.expected.length>0)});await p.getByRole('button',{name:'暂停',exact:true}).click();
+    return {targetRoomId:999999,fixed,dynamic:await sync()};
+   }finally{await p.evaluate(async previous=>{const {useConnection}=await import('/src/stores/connection.ts');const {saveSceneSettings,createDefaultSceneSettings}=await import('/src/components/sceneSettings.ts');useConnection.setState(v=>({state:{...v.state,roomId:previous.roomId}}));saveSceneSettings(previous.scene===null?createDefaultSceneSettings():JSON.parse(previous.scene))},previous)}
+  });
+  await record('play-pause-speed',async()=>{
+   await p.getByRole('button',{name:'动态',exact:true}).click();await until(async()=>assert(count(await state(p))>=1));await p.getByRole('button',{name:'暂停',exact:true}).click();await p.waitForTimeout(200);const paused=await state(p);await p.waitForTimeout(1150);assert.equal(count(await state(p)),count(paused),'暂停后不得产生新样例');
+   await choose(p,'动态速度','0.5×');await p.waitForTimeout(200);assert.equal((await state(p)).frame.restart,paused.frame.restart);const before=count(await state(p));await p.getByRole('button',{name:'播放',exact:true}).click();await p.waitForTimeout(350);assert.equal(count(await state(p)),before,'慢速恢复不能立即追加');await until(async()=>assert(count(await state(p))>before),3000);
+   const measurements={};for(const speed of ['0.5','2']){await choose(p,'动态速度',speed+'×');const intervals=await p.evaluate(async()=>{const read=()=>window.__previewTicks.length;let previous=read(),start=performance.now();const intervals=[];const deadline=start+9500;while(intervals.length<3&&performance.now()<deadline){await new Promise(r=>setTimeout(r,15));const next=read();if(next!==previous){intervals.push(performance.now()-start);start=performance.now();previous=next}}return intervals});assert.equal(intervals.length,3);const steady=intervals.slice(1);assert(steady.every(ms=>Math.abs(ms-1000/Number(speed))<200),JSON.stringify({speed,intervals}));measurements[speed]=intervals;}
+   await p.getByRole('button',{name:'暂停',exact:true}).click();return {measurements,...await sync()};
+  });
+  await record('restart-reenter',async()=>{
+   await choose(p,'动态速度','0.5×');const old=(await state(p)).frame.restart;await p.getByRole('button',{name:'重新开始',exact:true}).click();await until(async()=>{const s=await state(p);assert(s.frame.restart>old);assert(count(s)>=1&&count(s)<=2)});await p.getByRole('button',{name:'暂停',exact:true}).click();const steps=[];
+   for(const fixed of ['静态','点选']){await p.getByRole('button',{name:fixed,exact:true}).click();await p.waitForTimeout(250);const previous=(await state(p)).frame.restart;await p.getByRole('button',{name:'动态',exact:true}).click();await until(async()=>{const s=await state(p);assert(s.frame.restart>previous);assert(count(s)>=1&&count(s)<=2)});await p.getByRole('button',{name:'暂停',exact:true}).click();await p.waitForTimeout(200);const s=await state(p);assert(count(s)<=2,'重入动态不保留固定样例');steps.push({from:fixed,count:count(s),restart:s.frame.restart,...await sync()});}
+   return {steps};
+  });
+  await record('wall-clock-expiry',async()=>{
+   await p.evaluate(()=>window.editorAcceptance.configure({expiry:true,seconds:2}));await p.getByRole('button',{name:'重新开始',exact:true}).click();await until(async()=>assert((ids(await state(p))??[]).length>0),4000);await p.getByRole('button',{name:'暂停',exact:true}).click();await until(async()=>{const expected=ids(await state(p));assert(expected.length>0);for(const page of [p,...receivers])assert.deepEqual(await read(page,mode),expected)});const before={at:Date.now(),snapshot:await state(p),actual:await Promise.all([p,...receivers].map(page=>read(page,mode)))};await until(async()=>{assert.deepEqual(ids(await state(p)),[]);for(const page of [p,...receivers])assert.deepEqual(await read(page,mode),[])},4000);const after={at:Date.now(),...await sync()};
+   await p.evaluate(()=>window.editorAcceptance.configure({expiry:false}));await p.getByRole('button',{name:'静态',exact:true}).click();await until(async()=>assert((ids(await state(p))??[]).length>0));const fixed=(await sync()).expected;await p.evaluate(()=>window.editorAcceptance.configure({expiry:true,seconds:1}));await p.waitForTimeout(2250);assert.deepEqual(await read(p,mode),fixed,'静态固定样例豁免寿命');await p.evaluate(()=>window.editorAcceptance.configure({expiry:false}));return {before,after,fixedIds:fixed};
+  });
+  await record('theme-switch',async()=>{
+   await p.evaluate(()=>window.editorAcceptance.configure({expiry:false}));const oldOwner=(await state(p)).ownerId;await p.getByRole('button',{name:`打开 ${mode} B`,exact:true}).click();await until(async()=>{const s=await state(p);assert(s&&s.ownerId!==oldOwner)});await choose(p,'预览目标','OBS');await choose(p,'预览样例','弹幕');await p.getByRole('button',{name:'动态',exact:true}).click();await choose(p,'动态速度','0.5×');const previousIds=new Set(ids(await state(p))??[]);await p.getByRole('button',{name:'重新开始',exact:true}).click();await until(async()=>{const current=ids(await state(p))??[];assert(current.length>0&&current.some(id=>!previousIds.has(id)))});await p.getByRole('button',{name:'暂停',exact:true}).click();const final=await sync();for(const page of [p,...receivers])assert.equal(await source(page,mode).locator(mode==='native'?'.event-row-slot[data-event-id]':mode==='laplace'?'.event-list .event[data-event-id]':'[data-blc-placement="main"],[data-openlive-placement="main"]').first().evaluate(n=>getComputedStyle(n).outlineColor),'rgb(177, 55, 17)');return {ownerChanged:true,count:count(await state(p)),...final};
+  });
+  await record('cross-theme-switch',async()=>{
+   const steps=[];for(const nextMode of ['blivechat','blivechat-open','laplace','native']){const owner=(await state(p)).ownerId;await p.getByRole('button',{name:`打开 ${nextMode} B`,exact:true}).click();await until(async()=>{const s=await state(p);assert(s&&s.ownerId!==owner)});await choose(p,'预览目标','OBS');await choose(p,'预览样例','弹幕');await p.getByRole('button',{name:'动态',exact:true}).click();await choose(p,'动态速度','0.5×');await p.getByRole('button',{name:'重新开始',exact:true}).click();await until(async()=>assert(count(await state(p))>=1));await p.getByRole('button',{name:'暂停',exact:true}).click();
+    const actual=await until(async()=>{const expected=ids(await state(p));assert(expected?.length>0);const actual=await Promise.all([p,...receivers].map(page=>read(page,nextMode)));for(const row of actual)assert.deepEqual(row,expected);return actual});assert(count(await state(p))<=2);steps.push({mode:nextMode,owner:(await state(p)).ownerId,count:count(await state(p)),actual});
+   }return {steps};
+  });
+  await record('sticky-deadline',async()=>{
+   await p.clock.install();await p.evaluate(()=>window.editorAcceptance.configure({expiry:false,sticky:true}));await choose(p,'预览样例',mode==='blivechat'?'全部礼物':'礼物');await choose(p,'动态速度','3×');await p.getByRole('button',{name:'重新开始',exact:true}).click();
+   const sticky=async page=>source(page,mode).evaluate(mode=>{const selector=mode==='native'?'.sticky-area [data-event-id]':mode==='laplace'?'.gift-sticky-bar .event[data-event-id]':'[data-blc-placement="sticky"],[data-openlive-placement="sticky"]';return [...document.querySelectorAll(selector)].map(n=>n.getAttribute('data-event-id')||n.getAttribute('data-compatible-event-id'))},mode);
+   await until(async()=>{for(const page of [p,...receivers])assert((await sticky(page)).length>0)},12000);await p.getByRole('button',{name:'暂停',exact:true}).click();await sync();
+   const before=await Promise.all([p,...receivers].map(sticky));const deadline=await p.evaluate(async()=>{const s=window.editorAcceptance.getSnapshot();const {selectStylePreviewEvents,projectSourcePreviewFact}=await import('/src/preview/stylePreviewPolicy.ts');const events=s.kind==='native'?s.content.events:s.content.document.mode==='laplace'?s.frame.events.map(e=>projectSourcePreviewFact(e,'laplace')):s.frame.records.map(e=>projectSourcePreviewFact(e,s.content.document.mode));const result=selectStylePreviewEvents(events,s.content.previewPolicy,{target:'obs',displayAll:s.content.displayAll??s.content.mode==='all',mode:'simulation',now:s.frame.now??s.content.previewNow});return {now:Date.now(),expiresAt:Math.max(...result.sticky.map(c=>c.expiresAt))}});
+   assert(Number.isFinite(deadline.expiresAt));const mainBefore=await read(p,mode);const advanceMs=Math.max(1,deadline.expiresAt-deadline.now+100);await p.clock.fastForward(advanceMs);await until(async()=>{for(const page of [p,...receivers])assert.deepEqual(await sticky(page),[])});const mainAfter=await sync();assert.deepEqual(mainAfter.expected,mainBefore);return {clock:'Playwright page.clock.fastForward',advanceMs,before,after:await Promise.all([p,...receivers].map(sticky)),mainRetained:mainAfter.expected};
+  });
+  await record('editor-exit-reopen',async()=>{
+   const previous=(await state(p)).ownerId;await p.getByRole('button',{name:'返回样式',exact:true}).click();await until(async()=>assert.equal(await state(p),null));for(const receiver of receivers)await receiver.getByRole('status').filter({hasText:'请在软件中打开样式预览'}).waitFor();
+   await p.getByRole('button',{name:`打开 ${mode} A`,exact:true}).click();await until(async()=>assert((await state(p))?.ownerId!==previous));await choose(p,'预览目标','OBS');await choose(p,'预览样例','弹幕');await p.getByRole('button',{name:'动态',exact:true}).click();await choose(p,'动态速度','0.5×');await p.getByRole('button',{name:'重新开始',exact:true}).click();await until(async()=>assert(count(await state(p))>=1));await p.getByRole('button',{name:'暂停',exact:true}).click();assert(count(await state(p))<=2,'退出重开从新轮次开始');return {ownerChanged:true,...await sync()};
+  });
+  if(mode==='blivechat'||mode==='blivechat-open') await record('source-retry',async()=>{
+   const before=await sync(),receiver=receivers[1];
+   await source(receiver,mode).evaluate(mode=>parent.postMessage({type:mode==='blivechat'?'bb-blivechat':'bb-openlive',command:'error',data:{message:'预览加载失败'}},location.origin),mode);
+   await receiver.getByRole('alert').getByRole('button',{name:'重试',exact:true}).click();
+   const after=await sync();assert.deepEqual(after.expected,before.expected);return {before,after};
+  });
+  await record('fixed-page-reconnect',async()=>{
+   if(await p.getByRole('button',{name:'暂停',exact:true}).count())await p.getByRole('button',{name:'暂停',exact:true}).click();await p.waitForTimeout(250);const paused=await state(p),fixedUrl=receivers[1].url();await receivers[1].reload({waitUntil:'domcontentloaded'});const reloaded=await sync();assert.equal(receivers[1].url(),fixedUrl);assert.equal(await receivers[1].getByRole('combobox').count(),0);await receivers[1].waitForTimeout(1100);assert.equal(count(await state(p)),count(paused));const stable=await sync();const socketsBefore=sockets.size;for(const socket of [...sockets]){sockets.delete(socket);socket.close();}await until(async()=>assert.equal(sockets.size,socketsBefore),5000);const reconnected=await sync();return {fixedUrl,reloaded,stable,reconnected,background:await receivers[1].locator('.native-preview-stage').first().evaluate(n=>getComputedStyle(n).backgroundColor)};
+  });
+  await p.screenshot({path:`${output}/preview-editor-${mode}-${process.env.PREVIEW_RUN||"result"}-final.png`});await receivers[1].screenshot({path:`${output}/preview-editor-${mode}-${process.env.PREVIEW_RUN||"result"}-web.png`});
+ }finally{await fs.writeFile(`${output}/preview-editor-${mode}-${process.env.PREVIEW_RUN||"result"}-timeline.json`,JSON.stringify(timeline,null,2));await context.close()}
+}}finally{await fs.writeFile(`${output}/preview-editor-${process.env.PREVIEW_RUN||'result'}.json`,JSON.stringify({browser:browser.version(),ipcCovered:false,results,errors},null,2));await browser.close()}
+assert(results.every(r=>r.status==='PASS'),'真实编辑器验收存在失败');assert.equal(errors.length,0,JSON.stringify(errors));

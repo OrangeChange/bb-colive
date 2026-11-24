@@ -1,0 +1,83 @@
+{
+  "laplace-curated-1": {
+    "author": "橙橙子君",
+    "updated": "May 18, 2025, 11:05:00 PM UTC+8",
+    "version": "1.2.0"
+  },
+  "laplace-curated-2": {
+    "author": "LAPLACE Chat",
+    "updated": "Apr 1, 2026, 12:18:01 PM GMT+8",
+    "version": "1.1.9"
+  },
+  "laplace-curated-3": {
+    "author": "Subspace Institute 亚空间研究所",
+    "updated": "Apr 1, 2026, 0:00:00 PM GMT+8",
+    "version": "1.0.0"
+  },
+  "laplace-curated-4": {
+    "author": "LAPLACE Chat",
+    "updated": "Apr 12, 2026, 4:25:11 PM GMT+8",
+    "version": "1.0.0"
+  },
+  "laplace-builtin-bubble": {
+    "author": "LAPLACE Chat",
+    "version": "2.0.7",
+    "updated": "Mar 21, 2026, 10:01:40 AM GMT+8"
+  },
+  "laplace-builtin-bubble-next": {
+    "author": "LAPLACE Chat",
+    "version": "1.2.2",
+    "updated": "Mar 21, 2026, 10:01:40 AM GMT+8"
+  },
+  "laplace-builtin-bubble-rhea": {
+    "author": "LAPLACE Chat",
+    "version": "1.0.5",
+    "updated": "May 13, 2025, 8:43:50 AM PDT"
+  },
+  "laplace-builtin-outline": {
+    "author": "LAPLACE Chat",
+    "version": "1.0.6",
+    "updated": "May 28, 2025, 8:25:56 AM PDT"
+  },
+  "laplace-builtin-zelda": {
+    "author": "LAPLACE Chat",
+    "version": "1.0.5",
+    "updated": "May 13, 2025, 8:43:50 AM PDT"
+  },
+  "laplace-builtin-simple": {
+    "author": "未知艺术家，如果知道出处可联系我",
+    "version": "1.0.8",
+    "updated": "Mar 21, 2026, 10:01:40 AM GMT+8"
+  },
+  "laplace-builtin-modern": {
+    "author": "海式policturn",
+    "version": "1.0.3",
+    "updated": "May 13, 2025, 8:43:50 AM PDT"
+  },
+  "laplace-builtin-collab": {
+    "author": "LAPLACE Chat",
+    "version": "1.1.1",
+    "updated": "May 13, 2025, 8:43:50 AM PDT"
+  },
+  "laplace-builtin-rotated": {
+    "author": "LAPLACE Chat",
+    "version": "0.0.5",
+    "updated": "May 13, 2025, 8:43:50 AM PDT"
+  },
+  "laplace-builtin-orange": {
+    "author": "橙橙子君",
+    "updated": "May 18, 2025, 2:35:11 PM PDT"
+  },
+  "laplace-builtin-shed": {
+    "author": "SHED",
+    "updated": "Aug 9, 2024, 7:40 PM"
+  },
+  "laplace-builtin-shed-bubble": {
+    "author": "SHED",
+    "updated": "Aug 25, 2025, 12:13:03 AM GMT+8"
+  },
+  "laplace-builtin-orange-block": {
+    "author": "橙橙子君",
+    "updated": "May 18, 2025, 2:35:11 PM PDT"
+  }
+}

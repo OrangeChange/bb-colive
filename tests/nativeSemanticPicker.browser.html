@@ -1,0 +1,22 @@
+<!doctype html><html lang="zh"><meta charset="utf-8"><title>部件点选契约</title>
+<div id="boundary" class="event-area">
+ <div class="sticky-bar" id="bar"><div class="event event-sticky" id="sticky"><span class="price"><span class="price-value" id="sticky-price">10</span></span></div></div>
+ <div class="event-list"><div class="event event-normal" id="normal"><div class="content"><span class="gift"><span class="price gift-price"><span class="price-unit" id="unit">¥</span><span class="price-value" id="amount">30</span></span></span><details class="winner-list"><ul class="winner-list-items"><li class="winner-list-item"><span class="username" id="winner">观众</span></li></ul></details></div></div></div>
+ <div class="event event-normal type-gift gift-normal guard-level-3"><span class="message" id="normal-gift-message">普通礼物</span></div>
+ <div class="event event-normal type-interaction interact-follow"><span class="message" id="follow-message">关注</span></div>
+ <div class="event event-normal type-system system-room-change"><span class="message" id="room-change-message">房间变更</span></div>
+</div><pre id="result">运行中</pre>
+<script type="module">
+import { nativePartFromElement, nativeSelectionContextFromElement } from '/src/themes/nativeSemanticSelectors.ts';
+const boundary = document.getElementById('boundary');
+const cases = [['unit','priceUnit'],['amount','priceValue'],['winner','winnerUser'],['normal','row'],['sticky','stickyEvent'],['bar','sticky'],['boundary','whole']];
+const results = cases.map(([id,want]) => {
+ const actual = nativePartFromElement(document.getElementById(id), boundary);
+ return `${actual === want ? 'PASS' : 'FAIL'} ${id}: ${actual} / ${want}`;
+});
+for (const [id,event,identity] of [['normal-gift-message','normal','captain'],['follow-message','follow','ordinary'],['room-change-message','roomChange','ordinary']]) {
+ const actual = nativeSelectionContextFromElement(document.getElementById(id), boundary, ['anchor','admin','viceroy','admiral','captain','normal']);
+ results.push(`${actual?.event === event && actual?.identity === identity && actual?.part === 'message' ? 'PASS' : 'FAIL'} ${id}: ${JSON.stringify(actual)} / ${event},${identity},message`);
+}
+document.getElementById('result').textContent = results.join('\n');
+</script></html>

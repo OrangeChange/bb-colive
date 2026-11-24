@@ -1,0 +1,18 @@
+.anchor-menu-row { position:relative; display:flex; min-width:0; border-radius:6px; }
+.anchor-menu-row.is-live,.anchor-menu-row.is-selected { background:var(--color-accent-subtle); }
+.anchor-menu-row.is-selected { box-shadow:inset 0 0 0 1px var(--color-accent); }
+.anchor-menu-select { display:flex; align-items:center; gap:8px; flex:1; min-width:0; border:0; border-radius:inherit; padding:6px 8px; background:transparent; color:var(--color-t1); font:inherit; text-align:left; }
+.anchor-menu-select:hover { background:var(--color-raised); }
+.anchor-menu-name { min-width:0; flex:1; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
+.anchor-menu-room { flex:none; color:var(--color-t3); font-variant-numeric:tabular-nums; transition:opacity 120ms ease; }
+.anchor-menu-remove { position:absolute; inset-block:0; right:4px; display:flex; align-items:center; justify-content:center; width:32px; border:0; border-radius:6px; background:transparent; color:var(--color-t3); visibility:hidden; opacity:0; pointer-events:none; transition:opacity 120ms ease; }
+.anchor-menu-remove:hover { color:var(--color-danger); background:var(--color-raised); }
+.anchor-menu-row.is-remove-visible .anchor-menu-room,.anchor-menu-row:has(:focus-visible) .anchor-menu-room { opacity:0; }
+.anchor-menu-row.is-remove-visible .anchor-menu-remove,.anchor-menu-row:has(:focus-visible) .anchor-menu-remove { visibility:visible; opacity:1; pointer-events:auto; }
+.anchor-menu-select:focus-visible,.anchor-menu-remove:focus-visible { outline:2px solid var(--color-accent); outline-offset:-2px; }
+@media(prefers-reduced-motion:reduce) { .anchor-menu-room,.anchor-menu-remove { transition:none; } }
+.anchor-removal-options { display:grid; gap:12px; font:inherit; }
+.anchor-removal-options label { display:grid; grid-template-columns:16px minmax(0,1fr); column-gap:8px; align-items:baseline; color:var(--color-t1); }
+.anchor-removal-options input { accent-color:var(--color-accent); }
+.anchor-removal-options small { display:block; margin-top:4px; color:var(--color-t3); font-size:12px; line-height:20px; }
+.anchor-removal-options label:has(input:disabled) { color:var(--color-t3); }

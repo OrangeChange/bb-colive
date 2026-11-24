@@ -1,0 +1,32 @@
+import assert from 'node:assert/strict';
+import fs from 'node:fs';
+import {createRequire} from 'node:module';
+const {chromium}=createRequire(import.meta.url)(process.env.PLAYWRIGHT_MODULE || 'playwright');
+const browser=await chromium.connectOverCDP(process.env.UI_AUDIT_CDP || 'http://127.0.0.1:9235');
+const page=browser.contexts()[0].pages()[0];page.setDefaultTimeout(12000);
+const evidence=[];const out='.hallmark/implemented';fs.mkdirSync(out,{recursive:true});
+const capture=async name=>{await page.waitForTimeout(350);await page.screenshot({path:out+'/native-'+name+'.png'});evidence.push({name,viewport:await page.evaluate(()=>({width:innerWidth,height:innerHeight,dpr:devicePixelRatio})),result:'通过'});fs.writeFileSync(out+'/native.json',JSON.stringify(evidence,null,2));};
+try {
+ assert.equal(await page.evaluate(()=>window.__TAURI_INTERNALS__.invoke('plugin:app|identifier')),'cc.orange.danmu-app.ui-refinement');
+ await page.evaluate(async()=>{const {useSession}=await import('/src/stores/session.ts');if(useSession.getState().phase!=='loggedIn')useSession.setState({phase:'loggedIn',session:{cookie:'',refreshToken:'',mid:'0',uname:'界面验收',savedAt:Date.now()}})});
+ await page.getByRole('button',{name:'样式',exact:true}).click();
+ if(await page.getByRole('button',{name:'返回样式',exact:true}).isVisible())await page.getByRole('button',{name:'返回样式',exact:true}).click();
+ await page.locator('.theme-library-search input').fill('不存在的主题验收');await page.getByRole('button',{name:'清除搜索',exact:true}).click();await page.locator('.theme-current-use-card').first().getByRole('button',{name:'编辑',exact:true}).click();
+ await page.getByText('预览设置',{exact:true}).waitFor();
+ assert.equal(await page.getByRole('spinbutton',{name:'画布宽度',exact:true}).isVisible(),false);
+ await page.getByText('预览设置',{exact:true}).click();await page.getByRole('spinbutton',{name:'画布宽度',exact:true}).fill('320');
+ await page.getByRole('switch',{name:'显示全部部件',exact:true}).click();
+ await page.getByRole('combobox',{name:'预览主题',exact:true}).click();await page.getByRole('option',{name:'深色主题',exact:true}).click();
+ await capture('preview-settings');
+ await page.getByRole('button',{name:'保存调整',exact:true}).click();await page.getByText('调整已保存，应用后更新输出',{exact:true}).waitFor();
+ await page.getByRole('button',{name:'返回样式',exact:true}).click();
+ await page.getByRole('button',{name:'导入',exact:true}).click();const dialog=page.getByRole('dialog',{name:'导入主题',exact:true});await dialog.getByRole('radio',{name:'LAPLACE',exact:true}).check();await dialog.getByRole('group',{name:'CSS 来源'}).waitFor();await page.keyboard.press('Escape');await dialog.waitFor({state:'hidden'});
+ await page.getByRole('button',{name:'OBS 设置',exact:true}).click();if(await page.locator('.theme-obs-list-entry').count())await page.locator('.theme-obs-list-entry').first().locator('button').first().click();else await page.getByRole('button',{name:'新建配置',exact:true}).click();await page.getByRole('textbox',{name:'名称',exact:true}).fill('界面验收配置');await page.getByRole('textbox',{name:'OBS 房间号',exact:true}).fill('1');
+ const primary=page.locator('.theme-obs-page-heading button.is-primary');assert.notEqual(await primary.evaluate(e=>getComputedStyle(e).backgroundColor),await primary.evaluate(e=>getComputedStyle(e.parentElement).backgroundColor));await capture('obs-config');
+ await page.getByRole('button',{name:'保存配置',exact:true}).click();await page.getByText('配置已保存',{exact:true}).waitFor();
+ await page.getByTitle('语音（TTS播报）',{exact:true}).click();await page.getByRole('heading',{name:'播报状态',exact:true}).waitFor();assert.equal(await page.locator('.runtime-queue-current:visible').count(),1);await capture('voice');
+ await page.getByTitle('个性播报（提示音）',{exact:true}).click();await page.getByRole('heading',{name:'播报状态',exact:true}).waitFor();await capture('personal');
+ await page.getByTitle('回看',{exact:true}).click();await page.getByRole('tab',{name:'主播档案',exact:true}).click();await page.getByRole('searchbox',{name:'搜索主播档案',exact:true}).fill('不存在的主播');await page.getByRole('button',{name:'清除搜索',exact:true}).click();await page.getByRole('tab',{name:'收藏',exact:true}).click();await page.getByText('还没有收藏',{exact:true}).waitFor();await capture('favorites-empty');
+ await page.getByRole('button',{name:'打开设置',exact:true}).click();await page.getByRole('button',{name:'自定义',exact:true}).click();await page.getByRole('button',{name:'主题色',exact:false}).waitFor();await capture('custom-settings');
+ console.log(JSON.stringify(evidence));
+}finally{await browser.close();}

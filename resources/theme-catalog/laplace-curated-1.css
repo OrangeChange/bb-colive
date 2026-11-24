@@ -1,0 +1,901 @@
+/***** 原作者：@橙橙子君 *****/
+
+/*
+  @title        渐变聊天样式
+  @description  免费可自定义样式，详情请见B站@橙橙子君 相关视频
+  @author       橙橙子君
+  @updated      May 18, 2025, 11:05:00 PM UTC+8
+  @version      1.2.0
+  @thumbnail    https://pub-d4d706263dfc409fb4c0991a6f6ba4f1.r2.dev/gradient_chat/cover.jpg
+*/
+
+/* 引用在线字体 */
+  /* 思源黑体 */
+  @import url("https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@200;300;400;500;600;700;900&display=swap");
+
+body{ background-color: rgba(0, 0, 0, 0); }
+
+
+@layer remote-css {
+
+/*** 整体设置 ***/
+.event{
+  --event-font-family: 'Noto Sans SC', var(--fontstack-sans-serif);
+  font-size: var(--size);
+  --size: var(--event-font-size);
+  /* 字重 （字体粗细）*/
+  font-weight: 500;
+}
+
+/** 事件变量颜色 **/
+/* 弹幕 */
+.event--message.guard-level--0{
+  --main-color: #b0c2dd;
+  --text-color: #000;
+  --message-gradient: linear-gradient(-25deg, #b0c2dd, #cad6e8, #e5eaf4, #ffffff);
+}
+.event--message.guard-level--1,
+.event--message.guard-level--2,
+.event--message.guard-level--3{
+  --main-color: #d9979b;
+  --text-color: #000;
+  --message-gradient: linear-gradient(-25deg, #d9979b, #e7b9bb, #f4dcdd, #ffffff);
+}
+/* 礼物 */
+.event--gift{
+  --main-color: #ca8347;
+  --trans-color: #ca834770;
+  --text-color: #000;
+  --message-gradient: linear-gradient(-25deg, #ca8347, #e1ab82, #f2d4bf, #ffffff);
+}
+/* 红包 */
+.event--red-envelope-start,
+.event--red-envelope-result{
+  --main-color: #e17e7e;
+  --trans-color: #e17e7e70;
+  --text-color: #000;
+  --message-gradient: linear-gradient(-25deg, #cf3c48, #e17e7e, #eab7b8, #e9f0f5);
+}
+/* 天选时刻 */
+.event--lottery-start,
+.event--lottery-result{
+  --main-color: #8f74ce;
+  --trans-color: #8f74ce70;
+  --text-color: #000;
+  --message-gradient: linear-gradient(-25deg, #8f74ce, #aa91d4, #c4aed9, #dcccde);
+}
+/* 守护圣殿 */
+.event--mvp{
+  --main-color: #c95a4f;
+  --trans-color: #c95a4f70;
+  --text-color: #000;
+  --message-gradient: linear-gradient(-25deg, #c95a4f, #d28463, #d8ac78, #dbd38e);
+}
+/* SC */
+.event--superchat{
+  --main-color: #cfb4f4;
+  --trans-color: #cfb4f470;
+  --text-color: #000;
+  --message-gradient: linear-gradient(-25deg, #cfb4f4, #dcc4e3, #e8d5d1, #f1e5be);
+}
+/* 舰长 */
+.event--toast.guard-level--1{
+  --main-color: #c65c54;
+  --trans-color: #c65c5470;
+  --text-color: #000;
+  --message-gradient: linear-gradient(-25deg, #d02a35, #c65c54, #eeb5ab, #decdb2);
+  --guard-mark: url(https://rsrc.laplace.cn/assets/guard-icons/guard-1k-1.png);
+}
+.event--toast.guard-level--2{
+  --main-color: #6571cd;
+  --trans-color: #6571cd70;
+  --text-color: #000;
+  --message-gradient: linear-gradient(-25deg, #6571cd, #9493d8, #bdb7e2, #e5dcec);
+  --guard-mark: url(https://rsrc.laplace.cn/assets/guard-icons/guard-1k-2.png);
+}
+.event--toast.guard-level--3{
+  --main-color: #6f98e8;
+  --trans-color: #6f98e870;
+  --text-color: #000;
+  --message-gradient: linear-gradient(-25deg, #6f98e8, #83a5e6, #a8bcd4, #c5cec9);
+  --guard-mark: url(https://rsrc.laplace.cn/assets/guard-icons/guard-1k-3.png);
+}
+/** 粉丝牌文字颜色 **/
+.fans-medal-content{
+  color: #fff;
+}
+
+
+/*** 弹幕设置 ***/
+.event--message{
+  display: grid;
+  margin: calc(var(--size) * 0.8) 0;
+}
+.event--message .meta{
+  margin: 0;
+  margin-top: calc(var(--size) * 0.2);
+  margin-right: calc(var(--size) * -0.2);
+  justify-content: flex-end;
+  text-align: right;
+  align-items: flex-start;
+  font-size: calc(var(--size) * 0.8);
+  line-height: 1;
+  z-index: 3;
+}
+.event--message .avatar--sender{
+  margin-top: calc(var(--size) * -1.8);
+  --avatar-size: calc(var(--size) * 2.7);
+  order: 4;
+}
+.event--message .avatar{
+  box-shadow: 0 0 calc(var(--1px) * 8) var(--main-color);
+}
+.event--message .username{
+  color: var(--main-color);
+  line-height: 1.1;
+}
+.event--message .message{
+  display: block;
+  position: relative;
+  margin-left: auto;
+  margin-right: calc(var(--size) * 0.5);
+  padding: calc(var(--size) * 0.5) calc(var(--size) * 1.5) calc(var(--size) * 0.5) calc(var(--size) * 2);
+  min-height: calc(var(--size) * 3);
+  min-width: 50%;
+  max-width: calc(100% - var(--size));
+  width: fit-content;
+  color: var(--text-color);
+  background-image: var(--message-gradient);
+  --event-reply-text: var(--main-color);
+  text-align: right;
+  border-radius: calc(var(--size) * 0) calc(var(--size) * 1) calc(var(--size) * 0.2) calc(var(--size) * 1.5);
+  filter: drop-shadow(calc(var(--1px) * -2) calc(var(--1px) * 3) calc(var(--1px) * 5) var(--main-color));
+  order: -3;
+}
+.event--message .message::before{
+  content: " “ ";
+  display: block;
+  position: absolute;
+  left: calc(var(--size) * -2.1);
+  top: calc(var(--size) * 0.5);
+  color: var(--main-color);
+  font-size: calc(var(--size) * 4);
+  text-shadow: calc(var(--1px) * 1) calc(var(--1px) * 2) calc(var(--1px) * 4) rgba(0, 0, 0, 0.3), calc(var(--1px) * 4) calc(var(--1px) * 6) calc(var(--1px) * 10) rgba(255, 255, 255, 0.4);
+}
+
+
+/*** 系统消息设置 ***/
+.event--system,
+.event--user-block,
+.event--live-warning,
+.event--live-cutoff,
+.event--room-mute-on,
+.event--room-mute-off,
+.event--room-name-update,
+.event--notice,
+.event--live-start,
+.event--live-end{
+  display: block;
+  position: relative;
+  margin: calc(var(--size) * 0.6) calc(var(--size) * 0.4) calc(var(--size) * 0.6) auto;
+  padding: calc(var(--size) * 0.25) calc(var(--size) * 1) calc(var(--size) * 0.25) calc(var(--size) * 1);
+  min-width: 20%;
+  max-width: calc(100% - var(--size));
+  width: fit-content;
+  color: #000;
+  background-color: #fff;
+  font-size: calc(var(--size) * 0.8);
+  text-align: right;
+  border-radius: calc(var(--size) * 0.5) calc(var(--size) * 0.5) calc(var(--size) * 0.2) calc(var(--size) * 0.5);
+  filter: drop-shadow(calc(var(--1px) * -0.5) calc(var(--1px) * 1) calc(var(--1px) * 2) #aaa);
+  order: -3;
+  opacity: 0.8;
+}
+.event--notice .notice-text,
+.event--notice .notice-highlight{
+  color: #000 !important;
+}
+
+
+/*** 互动消息&普通礼物设置 ***/
+.event--gift.event-show-as--normal.event-size--normal,
+.event--red-envelope-start.event-show-as--normal.event-size--normal{
+  margin: calc(var(--size) * 0.8) calc(var(--size) * 0.6);
+  padding: 0;
+}
+.event--interaction,
+.event--like-click,
+.event--gift.event-show-as--normal.event-size--normal .content,
+.event--red-envelope-start.event-show-as--normal.event-size--normal .content{
+  display: grid;
+  position: relative;
+  margin: calc(var(--size) * 0.6) 0;
+  margin-left: auto;
+}
+.event--interaction .meta,
+.event--like-click .meta,
+.event--gift.event-show-as--normal.event-size--normal .top,
+.event--red-envelope-start.event-show-as--normal.event-size--normal .top{
+  margin: 0;
+  margin-top: calc(var(--size) * 0.2);
+  margin-right: calc(var(--size) * -0.2);
+  justify-content: flex-end;
+  text-align: right;
+  align-items: flex-start;
+  font-size: calc(var(--size) * 0.8);
+  line-height: 1;
+  z-index: 3;
+}
+.event--interaction .avatar-wrap,
+.event--like-click .avatar-wrap,
+.event--gift.event-show-as--normal.event-size--normal .avatar-wrap,
+.event--red-envelope-start.event-show-as--normal.event-size--normal .avatar-wrap{
+  margin-top: calc(var(--size) * -1.1);
+  --avatar-size: calc(var(--size) * 2);
+  order: 4;
+}
+.event--interaction .avatar,
+.event--like-click .avatar{
+  box-shadow: 0 0 calc(var(--1px) * 4) #aaa;
+}
+.event--gift.event-show-as--normal.event-size--normal .avatar,
+.event--red-envelope-start.event-show-as--normal.event-size--normal .avatar{
+  box-shadow: 0 0 calc(var(--1px) * 4) var(--main-color);
+}
+.event--gift.event-show-as--normal.event-size--normal .message .gift-image-wrap,
+.event--red-envelope-start.event-size--normal .message .red-envelope-start-icon-wrap{
+  display: block;
+  position: absolute;
+  top: calc(var(--size) * -0.6);
+  left: calc(var(--size) * 0.4);
+  right: auto;
+  --gift-size: calc(var(--size) * 2);
+}
+.event--interaction .username,
+.event--like-click .username{
+  color: #777;
+  line-height: 1.1;
+}
+.event--gift.event-show-as--normal.event-size--normal .username,
+.event--red-envelope-start.event-show-as--normal.event-size--normal .username{
+  color: var(--main-color);
+  line-height: 1.1;
+}
+.event--interaction .message,
+.event--like-click .message,
+.event--gift.event-show-as--normal.event-size--normal .message,
+.event--red-envelope-start.event-show-as--normal.event-size--normal .message{
+  display: block;
+  position: relative;
+  margin: auto calc(var(--size) * 0.5) auto auto;
+  padding: calc(var(--size) * 0.55) calc(var(--size) * 1.5) calc(var(--size) * 0.5) calc(var(--size) * 1.5);
+  min-width: 20%;
+  max-width: calc(100% - var(--size));
+  width: fit-content;
+  color: #000;
+  background-color: #fff;
+  font-size: calc(var(--size) * 0.8);
+  line-height: 1;
+  text-align: right;
+  border-radius: calc(var(--size) * 0.2) calc(var(--size) * 0.5) calc(var(--size) * 0.2) calc(var(--size) * 1);
+  filter: drop-shadow(calc(var(--1px) * -0.5) calc(var(--1px) * 1) calc(var(--1px) * 2) #aaa);
+  order: -3;
+}
+.event--gift.event-show-as--normal.event-size--normal .message,
+.event--red-envelope-start.event-show-as--normal.event-size--normal .message{
+  padding-left: calc(var(--size) * 2.5);
+  color: var(--text-color);
+  background-image: var(--message-gradient);
+  filter: drop-shadow(calc(var(--1px) * -0.5) calc(var(--1px) * 1) calc(var(--1px) * 2) var(--main-color));
+}
+
+
+/*** 高亮礼物&红包、天选设置 ***/
+.event--gift.event-show-as--normal.event-size--highlight,
+.event--red-envelope-start.event-show-as--normal.event-size--highlight,
+.event--lottery-start.event-show-as--normal,
+.event--mvp.event-show-as--normal,
+.event--red-envelope-result,
+.event--lottery-result{
+  margin: 0;
+  padding: 0;
+  background: none;
+}
+.event--gift.event-show-as--normal.event-size--highlight .content,
+.event--red-envelope-start.event-show-as--normal.event-size--highlight .content,
+.event--lottery-start.event-show-as--normal .content,
+.event--mvp.event-show-as--normal .content,
+.event--red-envelope-result .content,
+.event--lottery-result .content{
+  margin: calc(var(--size) * 1.2) 0;
+  padding: 0 calc(var(--size) * 1);
+  gap: 0;
+}
+.event--gift.event-show-as--normal.event-size--highlight .top,
+.event--red-envelope-start.event-show-as--normal.event-size--highlight .top,
+.event--lottery-start.event-show-as--normal .top,
+.event--mvp.event-show-as--normal .top{
+  margin: 0;
+  margin-top: calc(var(--size) * 0.2);
+  margin-right: calc(var(--size) * -0.7);
+  justify-content: flex-end;
+  text-align: right;
+  align-items: flex-start;
+  font-size: calc(var(--size) * 0.8);
+  line-height: 1;
+  z-index: 3;
+}
+.event--gift.event-show-as--normal.event-size--highlight .avatar-wrap,
+.event--red-envelope-start.event-show-as--normal.event-size--highlight .avatar-wrap,
+.event--lottery-start.event-show-as--normal .avatar-wrap,
+.event--mvp.event-show-as--normal .avatar-wrap{
+  margin-top: calc(var(--size) * -2);
+  --avatar-size: calc(var(--size) * 3);
+  order: 4;
+}
+.event--gift.event-show-as--normal.event-size--highlight .avatar,
+.event--red-envelope-start.event-show-as--normal.event-size--highlight .avatar,
+.event--lottery-start.event-show-as--normal .avatar,
+.event--mvp.event-show-as--normal .avatar{
+  box-shadow: 0 0 calc(var(--1px) * 8) var(--main-color);
+}
+.event--gift.event-show-as--normal.event-size--highlight .gift-image-wrap,
+.event--red-envelope-start.event-size--highlight .red-envelope-start-icon-wrap,
+.event--lottery-start.event-size--highlight .lottery-start-icon-wrap,
+.event--mvp.event-show-as--normal .mvp-icon-wrap{
+  position: absolute;
+  top: calc(var(--size) * -1.2);
+  left: calc(var(--size) * 1.2);
+  right: auto;
+}
+.event--gift.event-show-as--normal.event-size--highlight .username,
+.event--red-envelope-start.event-show-as--normal.event-size--highlight .username,
+.event--lottery-start.event-show-as--normal .top .message,
+.event--mvp.event-show-as--normal .username{
+  color: var(--main-color);
+  line-height: 1.1;
+}
+.event--gift.event-show-as--normal.event-size--highlight .price-alt,
+.event--red-envelope-start.event-show-as--normal.event-size--highlight .price-alt,
+.event--mvp.event-show-as--normal .price-alt{
+  display: block;
+  position: absolute;
+  padding: calc(var(--size) * 0.2) calc(var(--size) * 0.4) calc(var(--size) * 0.3) calc(var(--size) * 0.8);
+  bottom: calc(var(--size) * 1.2);
+  left: calc(var(--size) * 1);
+  font-size: calc(var(--size) * 0.8);
+  min-width: calc(var(--size) * 3.5);
+  text-align: center;
+  color: var(--text-color);
+  background-color: #ffffff4d;
+  line-height: 1;
+  border-radius: calc(var(--size) * 0.2) calc(var(--size) * 0.5) calc(var(--size) * 0.2) calc(var(--size) * 1);
+  box-shadow: calc(var(--1px) * -1) calc(var(--1px) * 1) calc(var(--1px) * 1) var(--trans-color) inset;
+}
+.event--gift.event-show-as--normal.event-size--highlight .message,
+.event--red-envelope-start.event-show-as--normal.event-size--highlight .message,
+.event--lottery-start.event-show-as--normal .content > .message,
+.event--mvp.event-show-as--normal .message{
+  display: inline;
+  padding: calc(var(--size) * 0.6) calc(var(--size) * 1.5) calc(var(--size) * 0.75) calc(var(--size) * 3.5);
+  min-height: calc(var(--size) * 4);
+  width: 100%;
+  color: var(--text-color);
+  background-image: var(--message-gradient);
+  font-size: calc(var(--size) * 1.1);
+  text-align: right;
+  line-height: 1.5;
+  border-radius: calc(var(--size) * 0.2) calc(var(--size) * 0.5) calc(var(--size) * 0.2) calc(var(--size) * 1);
+  filter: drop-shadow(calc(var(--1px) * -2) calc(var(--1px) * 3) calc(var(--1px) * 5) var(--main-color));
+  order: -3;
+}
+.event--red-envelope-result .content > .message,
+.event--lottery-result .content > .message{
+  padding: calc(var(--size) * 0.6) calc(var(--size) * 1.5) calc(var(--size) * 0.75) calc(var(--size) * 1.5);
+  min-height: calc(var(--size) * 4);
+  width: 100%;
+  color: var(--text-color);
+  background-image: var(--message-gradient);
+  font-size: calc(var(--size) * 0.8);
+  line-height: 1.5;
+  text-align: right;
+  border-radius: calc(var(--size) * 0.2) calc(var(--size) * 0.5) calc(var(--size) * 0.2) calc(var(--size) * 1);
+  filter: drop-shadow(calc(var(--1px) * -2) calc(var(--1px) * 3) calc(var(--1px) * 5) var(--main-color));
+  order: -3;
+}
+.event--red-envelope-result .red-envelope-result-details-name,
+.event--lottery-result .lottery-result-details-name{
+  margin-bottom: calc(var(--size) * 0.25);
+  justify-content: end;
+  font-weight: 700;
+}
+
+
+/*** SC设置 ***/
+.event--superchat.event-show-as--normal{
+  margin: 0;
+  padding: 0;
+  background: none;
+}
+.event--superchat.event-show-as--normal .content{
+  position: relative;
+  margin: calc(var(--size) * 1.2) 0;
+  padding: 0 calc(var(--size) * 1);
+  gap: 0;
+}
+.event--superchat.event-show-as--normal .top{
+  margin: 0;
+  margin-top: calc(var(--size) * 0.2);
+  margin-right: calc(var(--size) * -0.7);
+  padding: 0;
+  justify-content: flex-end;
+  text-align: right;
+  align-items: flex-start;
+  font-size: calc(var(--size) * 0.8);
+  line-height: 1;
+  background: none;
+  z-index: 3;
+  order: 1;
+}
+.event--superchat.event-show-as--normal .meta{
+  flex-wrap: nowrap;
+  flex: none;
+}
+.event--superchat.event-show-as--normal .avatar-wrap{
+  margin-top: calc(var(--size) * -2);
+  --avatar-size: calc(var(--size) * 3);
+  order: 4;
+}
+.event--superchat.event-show-as--normal .avatar{
+  box-shadow: 0 0 calc(var(--1px) * 8) var(--main-color);
+}
+.event--superchat.event-show-as--normal .username-wrap{
+  color: var(--main-color);
+  line-height: 1.1;
+}
+.event--superchat.event-show-as--normal .price{
+  display: block;
+  position: absolute;
+  padding: calc(var(--size) * 0.2) calc(var(--size) * 0.4) calc(var(--size) * 0.3) calc(var(--size) * 0.8);
+  bottom: calc(var(--size) * 1.2);
+  left: calc(var(--size) * 1);
+  font-size: calc(var(--size) * 1);
+  min-width: calc(var(--size) * 3.5);
+  text-align: center;
+  color: var(--text-color);
+  background-color: #ffffff4d;
+  line-height: 1;
+  border-radius: calc(var(--size) * 0.2) calc(var(--size) * 0.5) calc(var(--size) * 0.2) calc(var(--size) * 1);
+  box-shadow: calc(var(--1px) * -2) calc(var(--1px) * 2) calc(var(--1px) * 2) var(--trans-color) inset;
+}
+.event--superchat.event-show-as--normal .message{
+  display: inline;
+  padding: calc(var(--size) * 0.6) calc(var(--size) * 1.5) calc(var(--size) * 1.7) calc(var(--size) * 1.5);
+  min-height: calc(var(--size) * 4);
+  width: 100%;
+  color: var(--text-color);
+  background-image: var(--message-gradient);
+  font-size: calc(var(--size) * 1);
+  text-align: right;
+  line-height: 1.5;
+  font-weight: 700;
+  border-radius: calc(var(--size) * 0.2) calc(var(--size) * 0.5) calc(var(--size) * 0.2) calc(var(--size) * 1);
+  filter: drop-shadow(calc(var(--1px) * -2) calc(var(--1px) * 3) calc(var(--1px) * 5) var(--main-color));
+  order: -3;
+}
+.event--superchat.event-show-as--normal .message-translation{
+  margin-top: calc(var(--size) * 0.3);
+  font-size: calc(var(--size) * 0.85);
+  font-weight: 500;
+  background-color: #ffffff40;
+  border-radius: calc(var(--size) * 0.2) calc(var(--size) * 0.5) calc(var(--size) * 0.2) calc(var(--size) * 1);
+}
+.event--superchat.event-show-as--normal .message::before{
+  content: "┏";
+  display: block;
+  position: absolute;
+  left: calc(var(--size) * -1.3);
+  top: calc(var(--size) * -3.6);
+  color: var(--main-color);
+  font-size: calc(var(--size) * 4);
+  text-shadow: calc(var(--1px) * 1) calc(var(--1px) * 2) calc(var(--1px) * 4) rgba(0, 0, 0, 0.3), calc(var(--1px) * 4) calc(var(--1px) * 6) calc(var(--1px) * 10) rgba(255, 255, 255, 0.5);
+}
+.event--superchat.event-show-as--normal .message::after{
+  content: "┛";
+  display: block;
+  position: absolute;
+  right: calc(var(--size) * -1.3);
+  bottom: calc(var(--size) * -1.8);
+  color: var(--main-color);
+  font-size: calc(var(--size) * 4);
+  text-shadow: calc(var(--1px) * 1) calc(var(--1px) * 2) calc(var(--1px) * 4) rgba(0, 0, 0, 0.3), calc(var(--1px) * 4) calc(var(--1px) * 6) calc(var(--1px) * 10) rgba(255, 255, 255, 0.5);
+}
+
+
+/*** 舰长设置 ***/
+.event--toast.event-show-as--normal{
+  position: relative;
+  margin: 0;
+  padding: 0;
+  background: none;
+}
+.event--toast.event-show-as--normal .content{
+  margin: calc(var(--size) * 1.2) 0;
+  padding: 0 calc(var(--size) * 1);
+  width: 100%;
+  gap: 0;
+}
+.event--toast.event-show-as--normal .avatar-wrap{
+  position: absolute;
+  top: calc(var(--size) * 1.5);
+  left: calc(var(--size) * 0.25);
+  margin-top: calc(var(--size) * -2);
+  --avatar-size: calc(var(--size) * 3);
+  z-index: 9;
+}
+.event--toast.event-show-as--normal .avatar-wrap .avatar{
+  box-shadow: 0 0 calc(var(--1px) * 8) var(--main-color);
+}
+.event--toast.event-show-as--normal .username{
+  margin-top: calc(var(--size) * -1.2);
+  margin-left: calc(var(--size) * 2.4);
+  color: var(--main-color);
+  font-size: calc(var(--size) * 0.9);
+}
+.event--toast.event-show-as--normal .price{
+  display: block;
+  position: absolute;
+  padding: calc(var(--size) * 0.2) calc(var(--size) * 0.4) calc(var(--size) * 0.3) calc(var(--size) * 0.8);
+  bottom: calc(var(--size) * 1.2);
+  left: calc(var(--size) * 1);
+  font-size: calc(var(--size) * 1);
+  min-width: calc(var(--size) * 3.5);
+  text-align: center;
+  color: var(--text-color);
+  background-color: #ffffff4d;
+  line-height: 1;
+  border-radius: calc(var(--size) * 0.2) calc(var(--size) * 0.5) calc(var(--size) * 0.2) calc(var(--size) * 1);
+  box-shadow: calc(var(--1px) * -2) calc(var(--1px) * 2) calc(var(--1px) * 2) var(--trans-color) inset;
+  order: -3;
+  z-index: 9;
+}
+.event--toast.event-show-as--normal .message{
+  display: inline;
+  padding: calc(var(--size) * 0.6) calc(var(--size) * 2) calc(var(--size) * 1.7) calc(var(--size) * 2);
+  min-height: calc(var(--size) * 4);
+  width: 100%;
+  overflow: hidden;
+  color: var(--text-color);
+  background-image: var(--message-gradient);
+  font-size: calc(var(--size) * 1);
+  line-height: 1.5;
+  text-align: center;
+  font-weight: 700;
+  border-radius: calc(var(--size) * 0.2) calc(var(--size) * 0.5) calc(var(--size) * 0.2) calc(var(--size) * 1);
+  filter: drop-shadow(calc(var(--1px) * -2) calc(var(--1px) * 3) calc(var(--1px) * 5) var(--main-color));
+  order: 3;
+  z-index: 0;
+}
+.event--toast.event-show-as--normal .toast-icon-wrap-alt-bottom{
+  display: block;
+  position: absolute;
+  right: calc(var(--size) * -0.2);
+  bottom: calc(var(--size) * 0);
+  width: calc(var(--size) * 3.5);
+  height: calc(var(--size) * 3.5);
+  z-index: 9;
+}
+.toast-icon-wrap-alt-bottom img{
+  max-width: 100%;
+}
+.toast-details-total-days::before{
+  content: '已陪伴主播';
+  font-weight: 500;
+}
+.toast-details-total-days{
+  display: block;
+}
+.toast-details-total-days::after{
+  content: '天';
+  font-weight: 500;
+}
+
+
+/*** 礼物栏样式 ***/
+.gift-sticky-bar{
+  padding: calc(var(--1px) * 4) 0;
+  flex-direction: row-reverse;
+}
+.event-show-as--sticky,
+.event-show-as--sticky :is(.content, .top, .meta, .message){
+  margin: 0;
+  padding: 0 !important;
+  font-size: calc(var(--size) * 0.9);
+  line-height: 1.5 !important;
+  color: var(--text-color);
+  background: none;
+  --avatar-size: calc(var(--size) * 1.5);
+  --badge-size: calc(var(--size) * 1.3);
+  gap: calc(var(--size) * 0.2);
+}
+.event-show-as--sticky{
+  padding-left: calc(var(--size) * 0.4) !important;
+  border-radius: calc(var(--size) * 0.2) calc(var(--size) * 1) calc(var(--size) * 1) calc(var(--size) * 1);
+}
+.event-show-as--sticky .avatar-wrap{
+  order: 2;
+}
+.event-show-as--sticky .avatar{
+  box-shadow: none;
+}
+.event-show-as--sticky :is(.gift-image-wrap, .red-envelope-start-icon-wrap, .lottery-start-icon-wrap, .mvp-icon-wrap){
+  display: none;
+}
+/* 颜色样式 */
+.event--gift.event-show-as--sticky,
+.event--superchat.event-show-as--sticky,
+.event--red-envelope-start.event-show-as--sticky,
+.event--lottery-start.event-show-as--sticky,
+.event--mvp.event-show-as--sticky,
+.event--toast.event-show-as--sticky{
+  background-image: var(--message-gradient);
+  filter: drop-shadow(calc(var(--1px) * -1) calc(var(--1px) * 1) calc(var(--1px) * 2) var(--main-color));
+}
+
+
+/*** 其他调整 ***/
+/** 关闭内容 **/
+.wealth-medal,
+.guard-badge,
+.mod-badge,
+.streamer-badge,
+.current-rank,
+.user-level,
+.reply-avatar,
+.red-envelope-start-rewards,
+.avatar-frame,
+.gift-receiver,
+svg.tabler-icon.tabler-icon-thumb-up-filled,
+.lottery-start-details-message,
+.toast-details-total-days-text-before,
+.toast-details-total-days-text-after,
+.in-dashboard .event--superchat .timestamp-wrap,
+.event .relation-wrap,
+.event--gift.event-show-as--normal.event-size--normal .top .gift-image-wrap,
+.event--red-envelope-start.event-show-as--normal.event-size--normal .top .red-envelope-start-icon-wrap,
+.event--lottery-start.event-size--highlight .message .lottery-start-icon-wrap,
+.event--gift.event-show-as--normal.event-size--highlight .price,
+.event--red-envelope-start.event-show-as--normal.event-size--highlight .price,
+.event--mvp.event--mvp.event-show-as--normal .price{
+  display: none;
+}
+/** 礼物前置语 **/
+.event--gift.event-show-as--normal .message::before{
+  display: inline;
+  content: "投喂";
+  flex-shrink: 0;
+  padding-right: calc(var(--size) * 0.15);
+  font-weight: 700;
+}
+/** 调整升降价符号 **/
+.price-blind-result{
+  display: inline;
+}
+.price-blind-result svg{
+  height: var(--size);
+}
+/** 调整粉丝牌样式 **/
+.fans-medal-content{
+  padding: 0 !important;
+  font-size: calc(var(--size) * 0.7);
+  line-height: 1.2;
+}
+.fans-medal-level{
+  display: none;
+}
+.fans-medal{
+  padding: calc(var(--1px) * 0.5) calc(var(--1px) * 4) calc(var(--1px) * 0.5) calc(var(--1px) * 4);
+  background-color: var(--main-color, #b0c2dd);
+  background-image: none;
+  text-shadow: calc(var(--1px) * 1) calc(var(--1px) * 0) calc(var(--1px) * 2) #00000070;
+  font-weight: 500;
+  border: none;
+  border-radius: calc(var(--1px) * 4);
+  order: 3;
+}
+/** 调整大表情大小 **/
+.event .emote--large{
+  max-width: calc(var(--size) * 2.5);
+  max-height: calc(var(--size) * 2.5);
+}
+/** 调整大表情定位 **/
+.event--message .emote-wrap--large{
+  padding-right: calc(25% + var(--size) * 0.25);
+  vertical-align: middle;
+}
+/** 深色模式调整 **/
+/* 以下仅支持111版本及以上浏览器和最新版obs */
+.scheme-dark .event:not(.event--user-block) .username,
+.scheme-dark .event.event-show-as--normal .username,
+.event--lottery-start.event-show-as--normal .top .message{
+  color: #ddd;
+  color: color-mix(in srgb, var(--main-color), #ddd 70%);
+}
+
+
+/*** 动画样式 ***/
+/** 头像&礼物进入 **/
+@keyframes avatar_in{
+  0% {
+    transform: translateY(calc(var(--size) * 2));
+    opacity: 0;
+  }
+  100% {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+.event--message .avatar-wrap,
+.event--interaction .avatar-wrap,
+.event--like-click .avatar-wrap,
+.event--gift.event-show-as--normal .avatar-wrap,
+.event--red-envelope-start.event-show-as--normal .avatar-wrap,
+.event--lottery-start.event-show-as--normal .avatar-wrap,
+.event--mvp.event-show-as--normal .avatar-wrap,
+.event--superchat.event-show-as--normal .avatar-wrap,
+.event--toast.event-show-as--normal .avatar-wrap{
+  animation-timing-function: cubic-bezier(0.8, 0, 0.2, 1);
+  animation: avatar_in 0.5s both;
+}
+.event--gift.event-show-as--normal .gift-image-wrap,
+.event--red-envelope-start.event-show-as--normal .red-envelope-start-icon-wrap,
+.event--lottery-start.event-show-as--normal .lottery-start-icon-wrap,
+.event--mvp.event-show-as--normal .mvp-icon-wrap,
+.event--toast.event-show-as--normal .toast-icon-wrap-alt-bottom{
+  animation-timing-function: cubic-bezier(0.8, 0, 0.2, 1);
+  animation: avatar_in 0.5s 0.3s both;
+}
+/** 弹幕缩放进入 **/
+@keyframes bounce_in{
+  0% {
+    transform-origin: right 100%;
+    transform: scale(1.1);
+    opacity: 0;
+  }
+  20% {
+    transform-origin: right 100%;
+    transform: scale(0.9);
+    opacity: 0.2;
+  }
+  50% {
+    transform-origin: right 100%;
+    transform: scale(1.05);
+    opacity: 0.8;
+  }
+  100% {
+    transform-origin: right 100%;
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+.event--message .message,
+.event--interaction .message,
+.event--like-click .message,
+.event--system,
+.event--user-block,
+.event--live-warning,
+.event--live-cutoff,
+.event--room-mute-on,
+.event--room-mute-off,
+.event--room-name-update,
+.event--notice,
+.event--live-start,
+.event--live-end,
+.event--gift.event-show-as--normal .message,
+.event--red-envelope-start.event-show-as--normal .message,
+.event--lottery-start.event-show-as--normal .content > .message,
+.event--mvp.event-show-as--normal .message,
+.event--red-envelope-result .content > .message,
+.event--lottery-result .content > .message,
+.event--superchat.event-show-as--normal .message{
+  animation-timing-function: cubic-bezier(0.8, 0, 0.2, 1);
+  animation: bounce_in 0.6s both;
+}
+/** 弹幕缩放进入 **/
+@keyframes bounce_in1{
+  0% {
+    transform-origin: left 100%;
+    transform: scale(1.1);
+    opacity: 0;
+  }
+  20% {
+    transform-origin: left 100%;
+    transform: scale(0.9);
+    opacity: 0.2;
+  }
+  50% {
+    transform-origin: left 100%;
+    transform: scale(1.05);
+    opacity: 0.8;
+  }
+  100% {
+    transform-origin: left 100%;
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+.event--toast.event-show-as--normal .message{
+  animation-timing-function: cubic-bezier(0.8, 0, 0.2, 1);
+  animation: bounce_in1 0.6s both;
+}
+/** 用户名进入 **/
+@keyframes user_in{
+  0% {
+    transform: translateX(calc(var(--size) * 2));
+    opacity: 0;
+  }
+  100% {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+.event--message :is(.username, .fans-medal),
+.event--interaction :is(.username, .fans-medal),
+.event--like-click :is(.username, .fans-medal),
+.event--gift.event-show-as--normal :is(.username, .fans-medal),
+.event--red-envelope-start.event-show-as--normal :is(.username, .fans-medal),
+.event--lottery-start.event-show-as--normal .top .message,
+.event--mvp.event-show-as--normal :is(.username, .fans-medal),
+.event--superchat.event-show-as--normal :is(.username-wrap, .fans-medal){
+  animation: user_in 0.5s 0.3s both;
+}
+/** 用户名进入（舰长） **/
+@keyframes user_in1{
+  0% {
+    transform: translateX(calc(var(--size) * -2));
+    opacity: 0;
+  }
+  100% {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+.event--toast.event-show-as--normal :is(.username, .fans-medal){
+  animation: user_in1 0.5s 0.3s both;
+}
+/** 价格进入 **/
+@keyframes price_in{
+  0% {
+    transform: scale(0);
+    transform-origin: var(--size) 100%;
+    opacity: 1;
+  }
+  100% {
+    transform: scale(1);
+    transform-origin: var(--size) 100%;
+    opacity: 1;
+  }
+}
+.event--gift.event-show-as--normal.event-size--highlight .price-alt,
+.event--red-envelope-start.event-show-as--normal.event-size--highlight .price-alt,
+.event--mvp.event-show-as--normal .price-alt,
+.event--superchat.event-show-as--normal .price,
+.event--toast.event-show-as--normal .price{
+  animation: price_in 0.4s 0.6s both;
+}
+/** 舰长扫光特效 **/
+.event--toast.event-show-as--normal .message::after{
+  content: '';
+  position: absolute;
+  inset: 0%;
+  background: linear-gradient(50deg, rgba(255, 255, 255, 0) 40%, rgba(255, 255, 255, 0.25), rgba(255, 255, 255, 0) 60%);
+  animation: shark-wrap 3s 1s infinite;
+  transform: translateX(-100%);
+}
+@keyframes shark-wrap {
+  to {
+    transform: translateX(100%);
+  }
+}
+
+}

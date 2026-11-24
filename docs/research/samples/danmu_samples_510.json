@@ -1,0 +1,296 @@
+[
+  {
+    "cmd": "DANMU_MSG",
+    "dm_v2": "",
+    "info": [
+      [
+        0,
+        1,
+        25,
+        16777215,
+        1787515832681,
+        1787513510,
+        0,
+        "a647916a",
+        0,
+        0,
+        0,
+        "",
+        0,
+        "{}",
+        "{}",
+        {
+          "extra": "{\"send_from_me\":false,\"master_player_hidden\":false,\"mode\":0,\"color\":16777215,\"dm_type\":0,\"font_size\":25,\"player_mode\":1,\"show_player_type\":0,\"content\":\"梓神适合 小图 好好练练遗迹 小镇吧 把沙2ban了\",\"user_hash\":\"2789708138\",\"emoticon_unique\":\"\",\"bulge_display\":0,\"recommend_score\":2,\"dm_score\":0,\"chronos_force_display\":0,\"main_state_dm_color\":\"\",\"objective_state_dm_color\":\"\",\"direction\":0,\"pk_direction\":0,\"quartet_direction\":0,\"anniversary_crowd\":0,\"yeah_space_type\":\"\",\"yeah_space_url\":\"\",\"jump_to_url\":\"\",\"space_type\":\"\",\"space_url\":\"\",\"animation\":{},\"emots\":null,\"is_audited\":false,\"id_str\":\"0cc99fd07e1282036c6bfd99556a8b533336\",\"icon\":null,\"show_reply\":true,\"reply_mid\":0,\"reply_uname\":\"\",\"reply_uname_color\":\"\",\"reply_is_mystery\":false,\"reply_type_enum\":0,\"hit_combo\":0,\"esports_jump_url\":\"\",\"is_mirror\":false,\"is_collaboration_member\":false,\"card\":{\"card_type\":0,\"oid_str\":\"\",\"oid_str_1\":\"\",\"origin_oid_str\":\"\",\"share_id\":\"\",\"share_origin\":\"\",\"from\":\"\",\"card_content\":null},\"voice\":null,\"background_type\":0}",
+          "mode": 0,
+          "show_player_type": 0,
+          "user": {
+            "anon": null,
+            "base": {
+              "face": "https://i2.hdslb.com/bfs/face/2eb47d1a09a41b445fa45353e1ca4bd3f0562daf.jpg",
+              "is_mystery": false,
+              "name": "LazzyDay",
+              "name_color": 0,
+              "name_color_str": "",
+              "official_info": {
+                "desc": "",
+                "role": 0,
+                "title": "",
+                "type": -1
+              },
+              "origin_info": {
+                "face": "https://i2.hdslb.com/bfs/face/2eb47d1a09a41b445fa45353e1ca4bd3f0562daf.jpg",
+                "name": "LazzyDay"
+              },
+              "risk_ctrl_info": null
+            },
+            "bubble_box": null,
+            "dm_config": {
+              "color": 16777215,
+              "length": 40,
+              "mode": 1
+            },
+            "guard": null,
+            "guard_leader": null,
+            "medal": {
+              "color": 6126494,
+              "color_border": 6126494,
+              "color_end": 6126494,
+              "color_start": 6126494,
+              "guard_icon": "",
+              "guard_level": 0,
+              "honor_icon": "",
+              "id": 13139,
+              "is_light": 1,
+              "level": 7,
+              "name": "小孩梓",
+              "ruid": 7706705,
+              "score": 71,
+              "typ": 0,
+              "user_receive_count": 0,
+              "v2_medal_color_border": "#5762A799",
+              "v2_medal_color_end": "#5762A799",
+              "v2_medal_color_level": "#5762A7E6",
+              "v2_medal_color_start": "#5762A799",
+              "v2_medal_color_text": "#FFFFFF"
+            },
+            "name_color": null,
+            "title": {
+              "old_title_css_id": "",
+              "title_css_id": ""
+            },
+            "uhead_frame": null,
+            "uid": 178861328,
+            "wealth": null
+          }
+        },
+        {
+          "activity_identity": "",
+          "activity_source": 0,
+          "not_show": 0
+        },
+        0
+      ],
+      "梓神适合 小图 好好练练遗迹 小镇吧 把沙2ban了",
+      [
+        178861328,
+        "LazzyDay",
+        0,
+        0,
+        0,
+        10000,
+        1,
+        ""
+      ],
+      [
+        7,
+        "小孩梓",
+        "阿梓从小就很可爱",
+        80397,
+        6126494,
+        "",
+        0,
+        6126494,
+        6126494,
+        6126494,
+        0,
+        1,
+        7706705
+      ],
+      [
+        11,
+        0,
+        6406234,
+        ">50000",
+        0
+      ],
+      [
+        "",
+        ""
+      ],
+      0,
+      0,
+      null,
+      {
+        "ct": "FE3B5CEF",
+        "ts": 1787515832
+      },
+      0,
+      0,
+      null,
+      null,
+      0,
+      78,
+      [
+        7
+      ],
+      null
+    ]
+  },
+  {
+    "cmd": "DANMU_MSG",
+    "dm_v2": "",
+    "info": [
+      [
+        0,
+        1,
+        25,
+        16777215,
+        1787515835675,
+        1472003671,
+        0,
+        "413e9b09",
+        0,
+        0,
+        0,
+        "",
+        0,
+        "{}",
+        "{}",
+        {
+          "extra": "{\"send_from_me\":false,\"master_player_hidden\":false,\"mode\":0,\"color\":16777215,\"dm_type\":0,\"font_size\":25,\"player_mode\":1,\"show_player_type\":0,\"content\":\"王子换永恒\",\"user_hash\":\"1094621961\",\"emoticon_unique\":\"\",\"bulge_display\":0,\"recommend_score\":6,\"dm_score\":0,\"chronos_force_display\":0,\"main_state_dm_color\":\"\",\"objective_state_dm_color\":\"\",\"direction\":0,\"pk_direction\":0,\"quartet_direction\":0,\"anniversary_crowd\":0,\"yeah_space_type\":\"\",\"yeah_space_url\":\"\",\"jump_to_url\":\"\",\"space_type\":\"\",\"space_url\":\"\",\"animation\":{},\"emots\":null,\"is_audited\":false,\"id_str\":\"21ecb0e9b82562e40c57eef2986a8b533886\",\"icon\":null,\"show_reply\":true,\"reply_mid\":0,\"reply_uname\":\"\",\"reply_uname_color\":\"\",\"reply_is_mystery\":false,\"reply_type_enum\":0,\"hit_combo\":0,\"esports_jump_url\":\"\",\"is_mirror\":false,\"is_collaboration_member\":false,\"card\":{\"card_type\":0,\"oid_str\":\"\",\"oid_str_1\":\"\",\"origin_oid_str\":\"\",\"share_id\":\"\",\"share_origin\":\"\",\"from\":\"\",\"card_content\":null},\"voice\":null,\"background_type\":0}",
+          "mode": 0,
+          "show_player_type": 0,
+          "user": {
+            "anon": null,
+            "base": {
+              "face": "https://i0.hdslb.com/bfs/face/7416352f2024ff7d391d32de731f2f7557d8cec1.jpg",
+              "is_mystery": false,
+              "name": "芢井芹菜",
+              "name_color": 0,
+              "name_color_str": "",
+              "official_info": {
+                "desc": "",
+                "role": 0,
+                "title": "",
+                "type": -1
+              },
+              "origin_info": {
+                "face": "https://i0.hdslb.com/bfs/face/7416352f2024ff7d391d32de731f2f7557d8cec1.jpg",
+                "name": "芢井芹菜"
+              },
+              "risk_ctrl_info": null
+            },
+            "bubble_box": null,
+            "dm_config": {
+              "color": 16777215,
+              "length": 40,
+              "mode": 1
+            },
+            "guard": null,
+            "guard_leader": null,
+            "medal": {
+              "color": 9272486,
+              "color_border": 9272486,
+              "color_end": 9272486,
+              "color_start": 9272486,
+              "guard_icon": "",
+              "guard_level": 0,
+              "honor_icon": "",
+              "id": 13139,
+              "is_light": 1,
+              "level": 10,
+              "name": "小孩梓",
+              "ruid": 7706705,
+              "score": 185,
+              "typ": 0,
+              "user_receive_count": 0,
+              "v2_medal_color_border": "#5762A799",
+              "v2_medal_color_end": "#5762A799",
+              "v2_medal_color_level": "#5762A7E6",
+              "v2_medal_color_start": "#5762A799",
+              "v2_medal_color_text": "#FFFFFF"
+            },
+            "name_color": null,
+            "title": {
+              "old_title_css_id": "",
+              "title_css_id": ""
+            },
+            "uhead_frame": null,
+            "uid": 517205541,
+            "wealth": null
+          }
+        },
+        {
+          "activity_identity": "",
+          "activity_source": 0,
+          "not_show": 0
+        },
+        0
+      ],
+      "王子换永恒",
+      [
+        517205541,
+        "芢井芹菜",
+        0,
+        0,
+        0,
+        10000,
+        1,
+        ""
+      ],
+      [
+        10,
+        "小孩梓",
+        "阿梓从小就很可爱",
+        80397,
+        9272486,
+        "",
+        0,
+        9272486,
+        9272486,
+        9272486,
+        0,
+        1,
+        7706705
+      ],
+      [
+        1,
+        0,
+        9868950,
+        ">50000",
+        0
+      ],
+      [
+        "",
+        ""
+      ],
+      0,
+      0,
+      null,
+      {
+        "ct": "2F224195",
+        "ts": 1787515835
+      },
+      0,
+      0,
+      null,
+      null,
+      0,
+      104,
+      [
+        6
+      ],
+      null
+    ]
+  }
+]

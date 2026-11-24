@@ -1,0 +1,36 @@
+{
+  "upstream": "848409df78d2cca65d3cc8ffe938eb6b6f261b76",
+  "qaBuild": false,
+  "versions": {
+    "vue": "2.7.16",
+    "vue-i18n": "8.28.2",
+    "element-ui": "2.15.14",
+    "lodash": "4.18.1",
+    "webpack": "5.111.1",
+    "@vue/vue-loader-v15": "15.11.1",
+    "css-loader": "6.11.0",
+    "mini-css-extract-plugin": "2.10.2"
+  },
+  "sourceHashes": {
+    "src/nativeTextFilterFacts.mjs": "f4b253166751b0fa5139c2eb3c6d46499aef9f925c1d1833af252e43ae322886",
+    "src/compat/blivechat/runtime/nativeText.mjs": "b9dc15148317416152583802121338dbb9d04d50ac725c33b14307da6877a0f3",
+    "src/compat/paidFilter.mjs": "d42a622cc4c37cb08a99eb2c913b03b55966c49dd3c494bb8accb3ea77ad409e",
+    "src/compat/blivechat/runtime/core.mjs": "7faa4e5320ff9e0e39248b6209a20dcd593991bbbd318d3a3f6be21b7f365707",
+    "src/themes/compatibleThemeCascade.ts": "eb89cddabd3a14a6077d8e5dadbcd4595487d8d5e121f9da22de68fbcfd1049f",
+    "src/themes/nativeThemeCascade.ts": "4c8f1eb86cb70486af73e91d16e6366a5cead323c9f3b02d1596256470794dc1",
+    "scripts/build-blivechat.cjs": "851ebba116f2c27fc0ed219fe2c14ee43c2798a473745e7fa0fbd23177405558",
+    "vendor/blivechat/host/chat.js": "9d5feee56437016a772923ed1b661c42028c653cfa7dea8e19b56a875c8de73e",
+    "vendor/blivechat/host/document.css": "9cdcf7cc80b57328f5253b32224177ec4c4928c0fee1f52ea5a3541889cf296b",
+    "vendor/blivechat/host/entry.js": "abf7c6e0dc8dc0420e3fef87ea21559bd18b805ebd4184f01e93638b8c6c2730",
+    "vendor/blivechat/host/i18n.js": "7a4f039d3bb2057d900d755ad490a082995b17172645280379dead6c94f5eea4",
+    "vendor/blivechat/host/images.js": "c0b67cf19c070149764083bfb0c2168c780fdf77df94ff877a956009f90151ea"
+  },
+  "artifactHashes": {
+    "renderer.js": "77c6d201cccae8dde5d2fd56e3fdeafb406ccc8286f2325eb5061dcf4b948532",
+    "renderer.css": "1c4305473d822de447268396dbd5c656ecd501c579664b7ad580670c13d36cea",
+    "renderer-layered.css": "574d12819b466ed9886be3975b48376a1690b2875fcbc683ffcd8a64795216b3",
+    "renderer.html": "0a09dcdedccaddade688391d16ac125df45d1a48e03e24abb4e762887a3fb158",
+    "css-layer.mjs": "f2d1b9b955dce776dfec290a380b51269d80e04aa4093379bf22605c305102a3",
+    "blcsdk.js": "cfe3f068079200dc8a3de92fbc5cf87570089e59318d3759d7f5a4f66ac5e557"
+  }
+}

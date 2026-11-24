@@ -1,0 +1,2496 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "bb-recovery-v0.3",
+  "$ref": "#/$defs/Root",
+  "$defs": {
+    "Limits": {
+      "type": "object",
+      "properties": {
+        "chunk_max_bytes": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "prefetch_chunks": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "catalog_page_max_bytes": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "catalog_fanout": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "root_max_bytes": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "object_max_bytes": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "envelope_decode_max_bytes": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "snapshot_decode_max_bytes": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "job_max_bytes": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "global_max_bytes": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "job_ttl_seconds": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "build_timeout_seconds": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "freeze_timeout_ms": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "active_builds_per_room": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "workers": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "retained_jobs_max": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "cut_ttl_seconds": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "cut_max_records": {
+          "type": "integer",
+          "minimum": 1
+        }
+      },
+      "required": [
+        "chunk_max_bytes",
+        "prefetch_chunks",
+        "catalog_page_max_bytes",
+        "catalog_fanout",
+        "root_max_bytes",
+        "object_max_bytes",
+        "envelope_decode_max_bytes",
+        "snapshot_decode_max_bytes",
+        "job_max_bytes",
+        "global_max_bytes",
+        "job_ttl_seconds",
+        "build_timeout_seconds",
+        "freeze_timeout_ms",
+        "active_builds_per_room",
+        "workers",
+        "retained_jobs_max",
+        "cut_ttl_seconds",
+        "cut_max_records"
+      ],
+      "additionalProperties": false
+    },
+    "RecoverySelection": {
+      "oneOf": [
+        {
+          "type": "object",
+          "properties": {"scope":{"const":"all"},"include_danmaku":{"type":"boolean"},"include_interactions":{"type":"boolean"}},
+          "required": ["scope","include_danmaku","include_interactions"],
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "properties": {"scope":{"const":"sessions"},"session_ids":{"type":"array","minItems":1,"uniqueItems":true,"items":{"type":"string","pattern":"^[a-f0-9]{8}(-[a-f0-9]{4}){3}-[a-f0-9]{12}$"}},"include_danmaku":{"type":"boolean"},"include_interactions":{"type":"boolean"}},
+          "required": ["scope","session_ids","include_danmaku","include_interactions"],
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "properties": {"scope":{"const":"time"},"started_at":{"type":"string","pattern":"^\\d{4}-\\d\\d-\\d\\dT\\d\\d:\\d\\d:\\d\\d\\.\\d{3}Z$"},"ended_at":{"type":"string","pattern":"^\\d{4}-\\d\\d-\\d\\dT\\d\\d:\\d\\d:\\d\\d\\.\\d{3}Z$"},"include_danmaku":{"type":"boolean"},"include_interactions":{"type":"boolean"}},
+          "required": ["scope","started_at","ended_at","include_danmaku","include_interactions"],
+          "additionalProperties": false
+        }
+      ]
+    },
+    "Cut": {
+      "type": "object",
+      "properties": {
+        "cut_id": {
+          "type": "string",
+          "pattern": "^[a-f0-9]{8}(-[a-f0-9]{4}){3}-[a-f0-9]{12}$"
+        },
+        "server_id": {
+          "type": "string",
+          "pattern": "^[a-f0-9]{8}(-[a-f0-9]{4}){3}-[a-f0-9]{12}$"
+        },
+        "room_id": {
+          "type": "string",
+          "pattern": "^(0|[1-9][0-9]*)$",
+          "maxLength": 19
+        },
+        "event_head": {
+          "type": "string",
+          "pattern": "^(0|[1-9][0-9]*)$",
+          "maxLength": 19
+        },
+        "revision_head": {
+          "type": "string",
+          "pattern": "^(0|[1-9][0-9]*)$",
+          "maxLength": 19
+        },
+        "issued_at": {
+          "type": "string",
+          "pattern": "^\\d{4}-\\d\\d-\\d\\dT\\d\\d:\\d\\d:\\d\\d\\.\\d{3}Z$"
+        },
+        "expires_at": {
+          "type": "string",
+          "pattern": "^\\d{4}-\\d\\d-\\d\\dT\\d\\d:\\d\\d:\\d\\d\\.\\d{3}Z$"
+        },
+        "selection": {
+          "$ref": "#/$defs/RecoverySelection"
+        }
+      },
+      "required": [
+        "cut_id",
+        "server_id",
+        "room_id",
+        "event_head",
+        "revision_head",
+        "issued_at",
+        "expires_at",
+        "selection"
+      ],
+      "additionalProperties": false
+    },
+    "Chunk": {
+      "type": "object",
+      "properties": {
+        "index": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "byte_size": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "sha256": {
+          "type": "string",
+          "pattern": "^[a-f0-9]{64}$"
+        }
+      },
+      "required": [
+        "index",
+        "byte_size",
+        "sha256"
+      ],
+      "additionalProperties": false
+    },
+    "CatalogRef": {
+      "type": "object",
+      "properties": {
+        "object_id": {
+          "type": "string",
+          "pattern": "^[a-f0-9]{8}(-[a-f0-9]{4}){3}-[a-f0-9]{12}$"
+        },
+        "kind": {
+          "enum": [
+            "catalog_index",
+            "catalog_leaf"
+          ]
+        },
+        "level": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 8
+        },
+        "byte_size": {
+          "type": "string",
+          "pattern": "^(0|[1-9][0-9]*)$",
+          "maxLength": 19
+        },
+        "sha256": {
+          "type": "string",
+          "pattern": "^[a-f0-9]{64}$"
+        },
+        "chunk_count": {
+          "const": 1
+        }
+      },
+      "required": [
+        "object_id",
+        "kind",
+        "level",
+        "byte_size",
+        "sha256",
+        "chunk_count"
+      ],
+      "additionalProperties": false
+    },
+    "ObjectEntry": {
+      "type": "object",
+      "properties": {
+        "type": {
+          "const": "object"
+        },
+        "object_id": {
+          "type": "string",
+          "pattern": "^[a-f0-9]{8}(-[a-f0-9]{4}){3}-[a-f0-9]{12}$"
+        },
+        "kind": {
+          "enum": [
+            "facts",
+            "baseline",
+            "effects",
+            "snapshot"
+          ]
+        },
+        "stream_id": {
+          "type": "string"
+        },
+        "stream_ordinal": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "media_type": {
+          "enum": [
+            "application/json",
+            "application/x-ndjson"
+          ]
+        },
+        "byte_size": {
+          "type": "string",
+          "pattern": "^(0|[1-9][0-9]*)$",
+          "maxLength": 19
+        },
+        "sha256": {
+          "type": "string",
+          "pattern": "^[a-f0-9]{64}$"
+        },
+        "chunk_count": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "chunks": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/Chunk"
+          }
+        }
+      },
+      "required": [
+        "type",
+        "object_id",
+        "kind",
+        "stream_id",
+        "stream_ordinal",
+        "media_type",
+        "byte_size",
+        "sha256",
+        "chunk_count",
+        "chunks"
+      ],
+      "additionalProperties": false
+    },
+    "SnapshotRef": {
+      "type": "object",
+      "properties": {
+        "type": {
+          "const": "snapshot_ref"
+        },
+        "server_id": {
+          "type": "string",
+          "pattern": "^[a-f0-9]{8}(-[a-f0-9]{4}){3}-[a-f0-9]{12}$"
+        },
+        "room_id": {
+          "type": "string",
+          "pattern": "^(0|[1-9][0-9]*)$",
+          "maxLength": 19
+        },
+        "snapshot_id": {
+          "type": "string",
+          "pattern": "^[a-f0-9]{8}(-[a-f0-9]{4}){3}-[a-f0-9]{12}$"
+        },
+        "availability": {
+          "enum": [
+            "available",
+            "expired",
+            "missing"
+          ]
+        },
+        "result": {
+          "anyOf": [
+            {
+              "enum": [
+                "success",
+                "failed"
+              ]
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "object_id": {
+          "anyOf": [
+            {
+              "type": "string",
+              "pattern": "^[a-f0-9]{8}(-[a-f0-9]{4}){3}-[a-f0-9]{12}$"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "sha256": {
+          "anyOf": [
+            {
+              "type": "string",
+              "pattern": "^[a-f0-9]{64}$"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "reason": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "required": [
+        "type",
+        "server_id",
+        "room_id",
+        "snapshot_id",
+        "availability",
+        "result",
+        "object_id",
+        "sha256",
+        "reason"
+      ],
+      "additionalProperties": false
+    },
+    "CatalogEntry": {
+      "oneOf": [
+        {
+          "$ref": "#/$defs/ObjectEntry"
+        },
+        {
+          "$ref": "#/$defs/SnapshotRef"
+        }
+      ]
+    },
+    "CatalogIndex": {
+      "type": "object",
+      "properties": {
+        "kind": {
+          "const": "catalog_index"
+        },
+        "level": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 8
+        },
+        "children": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/CatalogRef"
+          },
+          "maxItems": 64,
+          "minItems": 1
+        }
+      },
+      "required": [
+        "kind",
+        "level",
+        "children"
+      ],
+      "additionalProperties": false
+    },
+    "CatalogLeaf": {
+      "type": "object",
+      "properties": {
+        "kind": {
+          "const": "catalog_leaf"
+        },
+        "level": {
+          "const": 0
+        },
+        "entries": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/CatalogEntry"
+          },
+          "maxItems": 64,
+          "minItems": 1
+        }
+      },
+      "required": [
+        "kind",
+        "level",
+        "entries"
+      ],
+      "additionalProperties": false
+    },
+    "Catalog": {
+      "oneOf": [
+        {
+          "$ref": "#/$defs/CatalogIndex"
+        },
+        {
+          "$ref": "#/$defs/CatalogLeaf"
+        }
+      ]
+    },
+    "Root": {
+      "type": "object",
+      "properties": {
+        "contract_version": {
+          "const": "0.3"
+        },
+        "serialization_version": {
+          "const": "bb-json-utf8-v1"
+        },
+        "job_id": {
+          "type": "string",
+          "pattern": "^[a-f0-9]{8}(-[a-f0-9]{4}){3}-[a-f0-9]{12}$"
+        },
+        "state": {
+          "const": "ready"
+        },
+        "mode": {
+          "enum": [
+            "baseline",
+            "delta"
+          ]
+        },
+        "server_id": {
+          "type": "string",
+          "pattern": "^[a-f0-9]{8}(-[a-f0-9]{4}){3}-[a-f0-9]{12}$"
+        },
+        "room_id": {
+          "type": "string",
+          "pattern": "^(0|[1-9][0-9]*)$",
+          "maxLength": 19
+        },
+        "created_at": {
+          "type": "string",
+          "pattern": "^\\d{4}-\\d\\d-\\d\\dT\\d\\d:\\d\\d:\\d\\d\\.\\d{3}Z$"
+        },
+        "expires_at": {
+          "type": "string",
+          "pattern": "^\\d{4}-\\d\\d-\\d\\dT\\d\\d:\\d\\d:\\d\\d\\.\\d{3}Z$"
+        },
+        "cut": {
+          "$ref": "#/$defs/Cut"
+        },
+        "from_cut": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/Cut"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "selection": {
+          "$ref": "#/$defs/RecoverySelection"
+        },
+        "absorbed_revisions": {
+          "anyOf": [
+            {
+              "type": "object",
+              "properties": {
+                "from": {
+                  "type": "string",
+                  "pattern": "^(0|[1-9][0-9]*)$",
+                  "maxLength": 19
+                },
+                "through": {
+                  "type": "string",
+                  "pattern": "^(0|[1-9][0-9]*)$",
+                  "maxLength": 19
+                }
+              },
+              "required": [
+                "from",
+                "through"
+              ],
+              "additionalProperties": false
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "counts": {
+          "type": "object",
+          "properties": {
+            "facts": {
+              "type": "string",
+              "pattern": "^(0|[1-9][0-9]*)$",
+              "maxLength": 19
+            },
+            "missing_ranges": {
+              "type": "string",
+              "pattern": "^(0|[1-9][0-9]*)$",
+              "maxLength": 19
+            },
+            "pending_assignments": {
+              "type": "string",
+              "pattern": "^(0|[1-9][0-9]*)$",
+              "maxLength": 19
+            }
+          },
+          "required": [
+            "facts",
+            "missing_ranges",
+            "pending_assignments"
+          ],
+          "additionalProperties": false
+        },
+        "streams": {
+          "type": "object",
+          "properties": {
+            "facts": {
+              "const": "facts"
+            },
+            "baseline": {
+              "const": "baseline"
+            },
+            "effects": {
+              "anyOf": [
+                {
+                  "const": "effects"
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            }
+          },
+          "required": [
+            "facts",
+            "baseline",
+            "effects"
+          ],
+          "additionalProperties": false
+        },
+        "catalog_root": {
+          "$ref": "#/$defs/CatalogRef"
+        },
+        "limits": {
+          "$ref": "#/$defs/Limits"
+        }
+      },
+      "required": [
+        "contract_version",
+        "serialization_version",
+        "job_id",
+        "state",
+        "mode",
+        "server_id",
+        "room_id",
+        "created_at",
+        "expires_at",
+        "cut",
+        "from_cut",
+        "selection",
+        "absorbed_revisions",
+        "counts",
+        "streams",
+        "catalog_root",
+        "limits"
+      ],
+      "additionalProperties": false
+    },
+    "Fact": {
+      "type": "object",
+      "properties": {
+        "server_id": {
+          "type": "string",
+          "pattern": "^[a-f0-9]{8}(-[a-f0-9]{4}){3}-[a-f0-9]{12}$"
+        },
+        "room_id": {
+          "type": "string",
+          "pattern": "^(0|[1-9][0-9]*)$",
+          "maxLength": 19
+        },
+        "server_sequence": {
+          "type": "string",
+          "pattern": "^(0|[1-9][0-9]*)$",
+          "maxLength": 19
+        },
+        "server_session_id": {
+          "anyOf": [
+            {
+              "type": "string",
+              "pattern": "^[a-f0-9]{8}(-[a-f0-9]{4}){3}-[a-f0-9]{12}$"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "received_at": {
+          "type": "string",
+          "pattern": "^\\d{4}-\\d\\d-\\d\\dT\\d\\d:\\d\\d:\\d\\d\\.\\d{3}Z$"
+        },
+        "bilibili_timestamp": {
+          "anyOf": [
+            {
+              "type": "string",
+              "pattern": "^(0|[1-9][0-9]*)$",
+              "maxLength": 19
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "command": {
+          "type": "string"
+        },
+        "protocol_version": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "raw_payload": {
+          "oneOf": [
+            {
+              "type": "object",
+              "properties": {
+                "kind": {
+                  "const": "json"
+                },
+                "value": {}
+              },
+              "required": [
+                "kind",
+                "value"
+              ],
+              "additionalProperties": false
+            },
+            {
+              "type": "object",
+              "properties": {
+                "kind": {
+                  "const": "binary"
+                },
+                "encoding": {
+                  "const": "base64"
+                },
+                "value": {
+                  "type": "string",
+                  "pattern": "^(?:[A-Za-z0-9+/]{4})*(?:[A-Za-z0-9+/]{2}==|[A-Za-z0-9+/]{3}=)?$"
+                },
+                "outer": {}
+              },
+              "required": [
+                "kind",
+                "encoding",
+                "value",
+                "outer"
+              ],
+              "additionalProperties": false
+            }
+          ]
+        },
+        "connection_id": {
+          "type": "string",
+          "pattern": "^[a-f0-9]{8}(-[a-f0-9]{4}){3}-[a-f0-9]{12}$"
+        },
+        "login_account_uid": {
+          "type": "string",
+          "pattern": "^(0|[1-9][0-9]*)$",
+          "maxLength": 19
+        },
+        "upstream_event_id": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "user_uid": {
+          "anyOf": [
+            {
+              "type": "string",
+              "pattern": "^(0|[1-9][0-9]*)$",
+              "maxLength": 19
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "command_category": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "is_paid": {
+          "anyOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "business_id": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "combo_id": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "index_extractor_version": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "decode_status": {
+          "type": "string"
+        },
+        "duplicate_of_sequence": {
+          "anyOf": [
+            {
+              "type": "string",
+              "pattern": "^(0|[1-9][0-9]*)$",
+              "maxLength": 19
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "quality_flags": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "snapshot_ids": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "pattern": "^[a-f0-9]{8}(-[a-f0-9]{4}){3}-[a-f0-9]{12}$"
+          }
+        }
+      },
+      "required": [
+        "server_id",
+        "room_id",
+        "server_sequence",
+        "server_session_id",
+        "received_at",
+        "bilibili_timestamp",
+        "command",
+        "protocol_version",
+        "raw_payload",
+        "connection_id",
+        "login_account_uid",
+        "upstream_event_id",
+        "user_uid",
+        "command_category",
+        "is_paid",
+        "business_id",
+        "combo_id",
+        "index_extractor_version",
+        "decode_status",
+        "duplicate_of_sequence",
+        "quality_flags",
+        "snapshot_ids"
+      ],
+      "additionalProperties": false
+    },
+    "SessionIdentity": {
+      "type": "object",
+      "properties": {
+        "type": {
+          "const": "session_identity"
+        },
+        "server_id": {
+          "type": "string",
+          "pattern": "^[a-f0-9]{8}(-[a-f0-9]{4}){3}-[a-f0-9]{12}$"
+        },
+        "room_id": {
+          "type": "string",
+          "pattern": "^(0|[1-9][0-9]*)$",
+          "maxLength": 19
+        },
+        "server_session_id": {
+          "type": "string",
+          "pattern": "^[a-f0-9]{8}(-[a-f0-9]{4}){3}-[a-f0-9]{12}$"
+        },
+        "source_live_started_at": {
+          "anyOf": [
+            {
+              "type": "string",
+              "pattern": "^(0|[1-9][0-9]*)$",
+              "maxLength": 19
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "evidence": {
+          "anyOf": [
+            {
+              "const": "persisted_session"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "required": [
+        "type",
+        "server_id",
+        "room_id",
+        "server_session_id",
+        "source_live_started_at",
+        "evidence"
+      ],
+      "additionalProperties": false
+    },
+    "SessionState": {
+      "type": "object",
+      "properties": {
+        "type": {
+          "const": "session_state"
+        },
+        "server_session_id": {
+          "type": "string",
+          "pattern": "^[a-f0-9]{8}(-[a-f0-9]{4}){3}-[a-f0-9]{12}$"
+        },
+        "availability": {
+          "enum": [
+            "available",
+            "expired",
+            "deleted"
+          ]
+        },
+        "broadcaster_snapshot": {},
+        "title": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "area": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "source_live_started_at": {
+          "anyOf": [
+            {
+              "type": "string",
+              "pattern": "^(0|[1-9][0-9]*)$",
+              "maxLength": 19
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "capture_started_at": {
+          "type": "string",
+          "pattern": "^\\d{4}-\\d\\d-\\d\\dT\\d\\d:\\d\\d:\\d\\d\\.\\d{3}Z$"
+        },
+        "captured_start": {
+          "type": "boolean"
+        },
+        "ended_at": {
+          "anyOf": [
+            {
+              "type": "string",
+              "pattern": "^\\d{4}-\\d\\d-\\d\\dT\\d\\d:\\d\\d:\\d\\d\\.\\d{3}Z$"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "end_evidence": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "ended_discovered_at": {
+          "anyOf": [
+            {
+              "type": "string",
+              "pattern": "^\\d{4}-\\d\\d-\\d\\dT\\d\\d:\\d\\d:\\d\\d\\.\\d{3}Z$"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "live_status": {
+          "enum": [
+            "ongoing",
+            "ended",
+            "unknown"
+          ]
+        },
+        "recording_status": {
+          "enum": [
+            "recording",
+            "reconnecting",
+            "stopped"
+          ]
+        },
+        "stopped_at": {
+          "anyOf": [
+            {
+              "type": "string",
+              "pattern": "^\\d{4}-\\d\\d-\\d\\dT\\d\\d:\\d\\d:\\d\\d\\.\\d{3}Z$"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "stop_reason": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "quality": {
+          "enum": [
+            "pending",
+            "complete",
+            "incomplete"
+          ]
+        },
+        "quality_reasons": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "pending_evidence": {},
+        "min_sequence": {
+          "anyOf": [
+            {
+              "type": "string",
+              "pattern": "^(0|[1-9][0-9]*)$",
+              "maxLength": 19
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "max_sequence": {
+          "anyOf": [
+            {
+              "type": "string",
+              "pattern": "^(0|[1-9][0-9]*)$",
+              "maxLength": 19
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "event_count": {
+          "type": "string",
+          "pattern": "^(0|[1-9][0-9]*)$",
+          "maxLength": 19
+        },
+        "expires_at": {
+          "anyOf": [
+            {
+              "type": "string",
+              "pattern": "^\\d{4}-\\d\\d-\\d\\dT\\d\\d:\\d\\d:\\d\\d\\.\\d{3}Z$"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "required": [
+        "type",
+        "server_session_id",
+        "availability",
+        "broadcaster_snapshot",
+        "title",
+        "area",
+        "source_live_started_at",
+        "capture_started_at",
+        "captured_start",
+        "ended_at",
+        "end_evidence",
+        "ended_discovered_at",
+        "live_status",
+        "recording_status",
+        "stopped_at",
+        "stop_reason",
+        "quality",
+        "quality_reasons",
+        "pending_evidence",
+        "min_sequence",
+        "max_sequence",
+        "event_count",
+        "expires_at"
+      ],
+      "additionalProperties": false
+    },
+    "Assignment": {
+      "type": "object",
+      "properties": {
+        "type": {
+          "const": "assignment"
+        },
+        "from_sequence": {
+          "type": "string",
+          "pattern": "^(0|[1-9][0-9]*)$",
+          "maxLength": 19
+        },
+        "through_sequence": {
+          "type": "string",
+          "pattern": "^(0|[1-9][0-9]*)$",
+          "maxLength": 19
+        },
+        "server_session_id": {
+          "anyOf": [
+            {
+              "type": "string",
+              "pattern": "^[a-f0-9]{8}(-[a-f0-9]{4}){3}-[a-f0-9]{12}$"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "required": [
+        "type",
+        "from_sequence",
+        "through_sequence",
+        "server_session_id"
+      ],
+      "additionalProperties": false
+    },
+    "Connection": {
+      "type": "object",
+      "properties": {
+        "type": {
+          "const": "connection"
+        },
+        "connection_id": {
+          "type": "string",
+          "pattern": "^[a-f0-9]{8}(-[a-f0-9]{4}){3}-[a-f0-9]{12}$"
+        },
+        "server_session_ids": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "pattern": "^[a-f0-9]{8}(-[a-f0-9]{4}){3}-[a-f0-9]{12}$"
+          }
+        },
+        "started_at": {
+          "type": "string",
+          "pattern": "^\\d{4}-\\d\\d-\\d\\dT\\d\\d:\\d\\d:\\d\\d\\.\\d{3}Z$"
+        },
+        "ended_at": {
+          "anyOf": [
+            {
+              "type": "string",
+              "pattern": "^\\d{4}-\\d\\d-\\d\\dT\\d\\d:\\d\\d:\\d\\d\\.\\d{3}Z$"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "login_status": {
+          "enum": [
+            "valid",
+            "invalid",
+            "unconfirmed"
+          ]
+        },
+        "disconnect_reason": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "recovery_reason": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "recovered_at": {
+          "anyOf": [
+            {
+              "type": "string",
+              "pattern": "^\\d{4}-\\d\\d-\\d\\dT\\d\\d:\\d\\d:\\d\\d\\.\\d{3}Z$"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "gap_start": {
+          "anyOf": [
+            {
+              "type": "string",
+              "pattern": "^\\d{4}-\\d\\d-\\d\\dT\\d\\d:\\d\\d:\\d\\d\\.\\d{3}Z$"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "gap_end": {
+          "anyOf": [
+            {
+              "type": "string",
+              "pattern": "^\\d{4}-\\d\\d-\\d\\dT\\d\\d:\\d\\d:\\d\\d\\.\\d{3}Z$"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "quality_impact": {
+          "enum": [
+            "none",
+            "pending",
+            "confirmed"
+          ]
+        }
+      },
+      "required": [
+        "type",
+        "connection_id",
+        "server_session_ids",
+        "started_at",
+        "ended_at",
+        "login_status",
+        "disconnect_reason",
+        "recovery_reason",
+        "recovered_at",
+        "gap_start",
+        "gap_end",
+        "quality_impact"
+      ],
+      "additionalProperties": false
+    },
+    "Quality": {
+      "type": "object",
+      "properties": {
+        "type": {
+          "const": "quality"
+        },
+        "issue_id": {
+          "type": "string",
+          "pattern": "^[a-f0-9]{8}(-[a-f0-9]{4}){3}-[a-f0-9]{12}$"
+        },
+        "server_session_id": {
+          "anyOf": [
+            {
+              "type": "string",
+              "pattern": "^[a-f0-9]{8}(-[a-f0-9]{4}){3}-[a-f0-9]{12}$"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "connection_id": {
+          "anyOf": [
+            {
+              "type": "string",
+              "pattern": "^[a-f0-9]{8}(-[a-f0-9]{4}){3}-[a-f0-9]{12}$"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "category": {
+          "type": "string"
+        },
+        "occurred_at": {
+          "type": "string",
+          "pattern": "^\\d{4}-\\d\\d-\\d\\dT\\d\\d:\\d\\d:\\d\\d\\.\\d{3}Z$"
+        },
+        "recovered_at": {
+          "anyOf": [
+            {
+              "type": "string",
+              "pattern": "^\\d{4}-\\d\\d-\\d\\dT\\d\\d:\\d\\d:\\d\\d\\.\\d{3}Z$"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "quality_impact": {
+          "enum": [
+            "none",
+            "pending",
+            "confirmed"
+          ]
+        },
+        "gap_start": {
+          "anyOf": [
+            {
+              "type": "string",
+              "pattern": "^\\d{4}-\\d\\d-\\d\\dT\\d\\d:\\d\\d:\\d\\d\\.\\d{3}Z$"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "gap_end": {
+          "anyOf": [
+            {
+              "type": "string",
+              "pattern": "^\\d{4}-\\d\\d-\\d\\dT\\d\\d:\\d\\d:\\d\\d\\.\\d{3}Z$"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "required": [
+        "type",
+        "issue_id",
+        "server_session_id",
+        "connection_id",
+        "category",
+        "occurred_at",
+        "recovered_at",
+        "quality_impact",
+        "gap_start",
+        "gap_end"
+      ],
+      "additionalProperties": false
+    },
+    "MissingRange": {
+      "type": "object",
+      "properties": {
+        "type": {
+          "const": "missing_range"
+        },
+        "kind": {
+          "enum": [
+            "cleared",
+            "loss",
+            "unknown_gap"
+          ]
+        },
+        "from_sequence": {
+          "type": "string",
+          "pattern": "^(0|[1-9][0-9]*)$",
+          "maxLength": 19
+        },
+        "through_sequence": {
+          "type": "string",
+          "pattern": "^(0|[1-9][0-9]*)$",
+          "maxLength": 19
+        },
+        "reason": {
+          "type": "string"
+        },
+        "issue_id": {
+          "anyOf": [
+            {
+              "type": "string",
+              "pattern": "^[a-f0-9]{8}(-[a-f0-9]{4}){3}-[a-f0-9]{12}$"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "required": [
+        "type",
+        "kind",
+        "from_sequence",
+        "through_sequence",
+        "reason",
+        "issue_id"
+      ],
+      "additionalProperties": false
+    },
+    "Cover": {
+      "type": "object",
+      "properties": {
+        "type": {
+          "const": "cover_metadata"
+        },
+        "resource_id": {
+          "type": "string",
+          "pattern": "^[a-f0-9]{8}(-[a-f0-9]{4}){3}-[a-f0-9]{12}$"
+        },
+        "server_session_id": {
+          "type": "string",
+          "pattern": "^[a-f0-9]{8}(-[a-f0-9]{4}){3}-[a-f0-9]{12}$"
+        },
+        "source_url": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "mime_type": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "byte_size": {
+          "anyOf": [
+            {
+              "type": "string",
+              "pattern": "^(0|[1-9][0-9]*)$",
+              "maxLength": 19
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "fetched_at": {
+          "anyOf": [
+            {
+              "type": "string",
+              "pattern": "^\\d{4}-\\d\\d-\\d\\dT\\d\\d:\\d\\d:\\d\\d\\.\\d{3}Z$"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "discovered_at": {
+          "type": "string",
+          "pattern": "^\\d{4}-\\d\\d-\\d\\dT\\d\\d:\\d\\d:\\d\\d\\.\\d{3}Z$"
+        },
+        "next_discovered_at": {
+          "anyOf": [
+            {
+              "type": "string",
+              "pattern": "^\\d{4}-\\d\\d-\\d\\dT\\d\\d:\\d\\d:\\d\\d\\.\\d{3}Z$"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "source_changed_at": {
+          "anyOf": [
+            {
+              "type": "string",
+              "pattern": "^\\d{4}-\\d\\d-\\d\\dT\\d\\d:\\d\\d:\\d\\d\\.\\d{3}Z$"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "time_source": {
+          "type": "string"
+        },
+        "result": {
+          "enum": [
+            "pending",
+            "success",
+            "failed",
+            "deleting"
+          ]
+        },
+        "failure_reason": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "availability": {
+          "enum": [
+            "available",
+            "expired",
+            "deleted"
+          ]
+        },
+        "file_url": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "required": [
+        "type",
+        "resource_id",
+        "server_session_id",
+        "source_url",
+        "mime_type",
+        "byte_size",
+        "fetched_at",
+        "discovered_at",
+        "next_discovered_at",
+        "source_changed_at",
+        "time_source",
+        "result",
+        "failure_reason",
+        "availability",
+        "file_url"
+      ],
+      "additionalProperties": false
+    },
+    "BaselineRow": {
+      "oneOf": [
+        {
+          "$ref": "#/$defs/SessionIdentity"
+        },
+        {
+          "$ref": "#/$defs/SessionState"
+        },
+        {
+          "$ref": "#/$defs/Assignment"
+        },
+        {
+          "$ref": "#/$defs/Connection"
+        },
+        {
+          "$ref": "#/$defs/Quality"
+        },
+        {
+          "$ref": "#/$defs/MissingRange"
+        },
+        {
+          "$ref": "#/$defs/Cover"
+        }
+      ]
+    },
+    "Snapshot": {
+      "type": "object",
+      "properties": {
+        "server_id": {
+          "type": "string",
+          "pattern": "^[a-f0-9]{8}(-[a-f0-9]{4}){3}-[a-f0-9]{12}$"
+        },
+        "room_id": {
+          "type": "string",
+          "pattern": "^(0|[1-9][0-9]*)$",
+          "maxLength": 19
+        },
+        "snapshot_id": {
+          "type": "string",
+          "pattern": "^[a-f0-9]{8}(-[a-f0-9]{4}){3}-[a-f0-9]{12}$"
+        },
+        "kind": {
+          "enum": [
+            "room_info",
+            "gift_config",
+            "gift_effect_config"
+          ]
+        },
+        "requested_at": {
+          "type": "string",
+          "pattern": "^\\d{4}-\\d\\d-\\d\\dT\\d\\d:\\d\\d:\\d\\d\\.\\d{3}Z$"
+        },
+        "fetched_at": {
+          "type": "string",
+          "pattern": "^\\d{4}-\\d\\d-\\d\\dT\\d\\d:\\d\\d:\\d\\d\\.\\d{3}Z$"
+        },
+        "result": {
+          "enum": [
+            "success",
+            "failed"
+          ]
+        },
+        "failure_reason": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "raw_data": {}
+      },
+      "required": [
+        "server_id",
+        "room_id",
+        "snapshot_id",
+        "kind",
+        "requested_at",
+        "fetched_at",
+        "result",
+        "failure_reason",
+        "raw_data"
+      ],
+      "additionalProperties": false
+    },
+    "Effect": {
+      "oneOf": [
+        {
+          "type": "object",
+          "properties": {
+            "effect_index": {
+              "type": "integer",
+              "minimum": 0
+            },
+            "type": {
+              "const": "session_upsert"
+            },
+            "basis_event_head": {
+              "type": "string",
+              "pattern": "^(0|[1-9][0-9]*)$",
+              "maxLength": 19
+            },
+            "session": {
+              "type": "object",
+              "properties": {
+                "server_session_id": {
+                  "type": "string",
+                  "pattern": "^[a-f0-9]{8}(-[a-f0-9]{4}){3}-[a-f0-9]{12}$"
+                },
+                "availability": {
+                  "enum": [
+                    "available",
+                    "expired",
+                    "deleted"
+                  ]
+                },
+                "broadcaster_snapshot": {},
+                "title": {
+                  "anyOf": [
+                    {
+                      "type": "string"
+                    },
+                    {
+                      "type": "null"
+                    }
+                  ]
+                },
+                "area": {
+                  "anyOf": [
+                    {
+                      "type": "string"
+                    },
+                    {
+                      "type": "null"
+                    }
+                  ]
+                },
+                "source_live_started_at": {
+                  "anyOf": [
+                    {
+                      "type": "string",
+                      "pattern": "^(0|[1-9][0-9]*)$",
+                      "maxLength": 19
+                    },
+                    {
+                      "type": "null"
+                    }
+                  ]
+                },
+                "capture_started_at": {
+                  "type": "string",
+                  "pattern": "^\\d{4}-\\d\\d-\\d\\dT\\d\\d:\\d\\d:\\d\\d\\.\\d{3}Z$"
+                },
+                "captured_start": {
+                  "type": "boolean"
+                },
+                "ended_at": {
+                  "anyOf": [
+                    {
+                      "type": "string",
+                      "pattern": "^\\d{4}-\\d\\d-\\d\\dT\\d\\d:\\d\\d:\\d\\d\\.\\d{3}Z$"
+                    },
+                    {
+                      "type": "null"
+                    }
+                  ]
+                },
+                "end_evidence": {
+                  "anyOf": [
+                    {
+                      "type": "string"
+                    },
+                    {
+                      "type": "null"
+                    }
+                  ]
+                },
+                "ended_discovered_at": {
+                  "anyOf": [
+                    {
+                      "type": "string",
+                      "pattern": "^\\d{4}-\\d\\d-\\d\\dT\\d\\d:\\d\\d:\\d\\d\\.\\d{3}Z$"
+                    },
+                    {
+                      "type": "null"
+                    }
+                  ]
+                },
+                "live_status": {
+                  "enum": [
+                    "ongoing",
+                    "ended",
+                    "unknown"
+                  ]
+                },
+                "recording_status": {
+                  "enum": [
+                    "recording",
+                    "reconnecting",
+                    "stopped"
+                  ]
+                },
+                "stopped_at": {
+                  "anyOf": [
+                    {
+                      "type": "string",
+                      "pattern": "^\\d{4}-\\d\\d-\\d\\dT\\d\\d:\\d\\d:\\d\\d\\.\\d{3}Z$"
+                    },
+                    {
+                      "type": "null"
+                    }
+                  ]
+                },
+                "stop_reason": {
+                  "anyOf": [
+                    {
+                      "type": "string"
+                    },
+                    {
+                      "type": "null"
+                    }
+                  ]
+                },
+                "quality": {
+                  "enum": [
+                    "pending",
+                    "complete",
+                    "incomplete"
+                  ]
+                },
+                "quality_reasons": {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  }
+                },
+                "pending_evidence": {},
+                "min_sequence": {
+                  "anyOf": [
+                    {
+                      "type": "string",
+                      "pattern": "^(0|[1-9][0-9]*)$",
+                      "maxLength": 19
+                    },
+                    {
+                      "type": "null"
+                    }
+                  ]
+                },
+                "max_sequence": {
+                  "anyOf": [
+                    {
+                      "type": "string",
+                      "pattern": "^(0|[1-9][0-9]*)$",
+                      "maxLength": 19
+                    },
+                    {
+                      "type": "null"
+                    }
+                  ]
+                },
+                "event_count": {
+                  "type": "string",
+                  "pattern": "^(0|[1-9][0-9]*)$",
+                  "maxLength": 19
+                },
+                "expires_at": {
+                  "anyOf": [
+                    {
+                      "type": "string",
+                      "pattern": "^\\d{4}-\\d\\d-\\d\\dT\\d\\d:\\d\\d:\\d\\d\\.\\d{3}Z$"
+                    },
+                    {
+                      "type": "null"
+                    }
+                  ]
+                }
+              },
+              "required": [
+                "server_session_id",
+                "availability",
+                "broadcaster_snapshot",
+                "title",
+                "area",
+                "source_live_started_at",
+                "capture_started_at",
+                "captured_start",
+                "ended_at",
+                "end_evidence",
+                "ended_discovered_at",
+                "live_status",
+                "recording_status",
+                "stopped_at",
+                "stop_reason",
+                "quality",
+                "quality_reasons",
+                "pending_evidence",
+                "min_sequence",
+                "max_sequence",
+                "event_count",
+                "expires_at"
+              ],
+              "additionalProperties": false
+            }
+          },
+          "required": [
+            "effect_index",
+            "type",
+            "basis_event_head",
+            "session"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "properties": {
+            "effect_index": {
+              "type": "integer",
+              "minimum": 0
+            },
+            "type": {
+              "const": "assignment_replace"
+            },
+            "basis_event_head": {
+              "type": "string",
+              "pattern": "^(0|[1-9][0-9]*)$",
+              "maxLength": 19
+            },
+            "from_sequence": {
+              "type": "string",
+              "pattern": "^(0|[1-9][0-9]*)$",
+              "maxLength": 19
+            },
+            "through_sequence": {
+              "type": "string",
+              "pattern": "^(0|[1-9][0-9]*)$",
+              "maxLength": 19
+            },
+            "server_session_id": {
+              "anyOf": [
+                {
+                  "type": "string",
+                  "pattern": "^[a-f0-9]{8}(-[a-f0-9]{4}){3}-[a-f0-9]{12}$"
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            }
+          },
+          "required": [
+            "effect_index",
+            "type",
+            "basis_event_head",
+            "from_sequence",
+            "through_sequence",
+            "server_session_id"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "properties": {
+            "effect_index": {
+              "type": "integer",
+              "minimum": 0
+            },
+            "type": {
+              "const": "connection_upsert"
+            },
+            "basis_event_head": {
+              "type": "string",
+              "pattern": "^(0|[1-9][0-9]*)$",
+              "maxLength": 19
+            },
+            "connection": {
+              "type": "object",
+              "properties": {
+                "connection_id": {
+                  "type": "string",
+                  "pattern": "^[a-f0-9]{8}(-[a-f0-9]{4}){3}-[a-f0-9]{12}$"
+                },
+                "server_session_ids": {
+                  "type": "array",
+                  "items": {
+                    "type": "string",
+                    "pattern": "^[a-f0-9]{8}(-[a-f0-9]{4}){3}-[a-f0-9]{12}$"
+                  }
+                },
+                "started_at": {
+                  "type": "string",
+                  "pattern": "^\\d{4}-\\d\\d-\\d\\dT\\d\\d:\\d\\d:\\d\\d\\.\\d{3}Z$"
+                },
+                "ended_at": {
+                  "anyOf": [
+                    {
+                      "type": "string",
+                      "pattern": "^\\d{4}-\\d\\d-\\d\\dT\\d\\d:\\d\\d:\\d\\d\\.\\d{3}Z$"
+                    },
+                    {
+                      "type": "null"
+                    }
+                  ]
+                },
+                "login_status": {
+                  "enum": [
+                    "valid",
+                    "invalid",
+                    "unconfirmed"
+                  ]
+                },
+                "disconnect_reason": {
+                  "anyOf": [
+                    {
+                      "type": "string"
+                    },
+                    {
+                      "type": "null"
+                    }
+                  ]
+                },
+                "recovery_reason": {
+                  "anyOf": [
+                    {
+                      "type": "string"
+                    },
+                    {
+                      "type": "null"
+                    }
+                  ]
+                },
+                "recovered_at": {
+                  "anyOf": [
+                    {
+                      "type": "string",
+                      "pattern": "^\\d{4}-\\d\\d-\\d\\dT\\d\\d:\\d\\d:\\d\\d\\.\\d{3}Z$"
+                    },
+                    {
+                      "type": "null"
+                    }
+                  ]
+                },
+                "gap_start": {
+                  "anyOf": [
+                    {
+                      "type": "string",
+                      "pattern": "^\\d{4}-\\d\\d-\\d\\dT\\d\\d:\\d\\d:\\d\\d\\.\\d{3}Z$"
+                    },
+                    {
+                      "type": "null"
+                    }
+                  ]
+                },
+                "gap_end": {
+                  "anyOf": [
+                    {
+                      "type": "string",
+                      "pattern": "^\\d{4}-\\d\\d-\\d\\dT\\d\\d:\\d\\d:\\d\\d\\.\\d{3}Z$"
+                    },
+                    {
+                      "type": "null"
+                    }
+                  ]
+                },
+                "quality_impact": {
+                  "enum": [
+                    "none",
+                    "pending",
+                    "confirmed"
+                  ]
+                }
+              },
+              "required": [
+                "connection_id",
+                "server_session_ids",
+                "started_at",
+                "ended_at",
+                "login_status",
+                "disconnect_reason",
+                "recovery_reason",
+                "recovered_at",
+                "gap_start",
+                "gap_end",
+                "quality_impact"
+              ],
+              "additionalProperties": false
+            }
+          },
+          "required": [
+            "effect_index",
+            "type",
+            "basis_event_head",
+            "connection"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "properties": {
+            "effect_index": {
+              "type": "integer",
+              "minimum": 0
+            },
+            "type": {
+              "const": "quality_upsert"
+            },
+            "basis_event_head": {
+              "type": "string",
+              "pattern": "^(0|[1-9][0-9]*)$",
+              "maxLength": 19
+            },
+            "quality": {
+              "type": "object",
+              "properties": {
+                "issue_id": {
+                  "type": "string",
+                  "pattern": "^[a-f0-9]{8}(-[a-f0-9]{4}){3}-[a-f0-9]{12}$"
+                },
+                "server_session_id": {
+                  "anyOf": [
+                    {
+                      "type": "string",
+                      "pattern": "^[a-f0-9]{8}(-[a-f0-9]{4}){3}-[a-f0-9]{12}$"
+                    },
+                    {
+                      "type": "null"
+                    }
+                  ]
+                },
+                "connection_id": {
+                  "anyOf": [
+                    {
+                      "type": "string",
+                      "pattern": "^[a-f0-9]{8}(-[a-f0-9]{4}){3}-[a-f0-9]{12}$"
+                    },
+                    {
+                      "type": "null"
+                    }
+                  ]
+                },
+                "category": {
+                  "type": "string"
+                },
+                "occurred_at": {
+                  "type": "string",
+                  "pattern": "^\\d{4}-\\d\\d-\\d\\dT\\d\\d:\\d\\d:\\d\\d\\.\\d{3}Z$"
+                },
+                "recovered_at": {
+                  "anyOf": [
+                    {
+                      "type": "string",
+                      "pattern": "^\\d{4}-\\d\\d-\\d\\dT\\d\\d:\\d\\d:\\d\\d\\.\\d{3}Z$"
+                    },
+                    {
+                      "type": "null"
+                    }
+                  ]
+                },
+                "quality_impact": {
+                  "enum": [
+                    "none",
+                    "pending",
+                    "confirmed"
+                  ]
+                },
+                "gap_start": {
+                  "anyOf": [
+                    {
+                      "type": "string",
+                      "pattern": "^\\d{4}-\\d\\d-\\d\\dT\\d\\d:\\d\\d:\\d\\d\\.\\d{3}Z$"
+                    },
+                    {
+                      "type": "null"
+                    }
+                  ]
+                },
+                "gap_end": {
+                  "anyOf": [
+                    {
+                      "type": "string",
+                      "pattern": "^\\d{4}-\\d\\d-\\d\\dT\\d\\d:\\d\\d:\\d\\d\\.\\d{3}Z$"
+                    },
+                    {
+                      "type": "null"
+                    }
+                  ]
+                }
+              },
+              "required": [
+                "issue_id",
+                "server_session_id",
+                "connection_id",
+                "category",
+                "occurred_at",
+                "recovered_at",
+                "quality_impact",
+                "gap_start",
+                "gap_end"
+              ],
+              "additionalProperties": false
+            }
+          },
+          "required": [
+            "effect_index",
+            "type",
+            "basis_event_head",
+            "quality"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "properties": {
+            "effect_index": {
+              "type": "integer",
+              "minimum": 0
+            },
+            "type": {
+              "const": "source_availability"
+            },
+            "basis_event_head": {
+              "type": "string",
+              "pattern": "^(0|[1-9][0-9]*)$",
+              "maxLength": 19
+            },
+            "from_sequence": {
+              "type": "string",
+              "pattern": "^(0|[1-9][0-9]*)$",
+              "maxLength": 19
+            },
+            "through_sequence": {
+              "type": "string",
+              "pattern": "^(0|[1-9][0-9]*)$",
+              "maxLength": 19
+            },
+            "availability": {
+              "enum": [
+                "expired",
+                "deleted"
+              ]
+            },
+            "reason": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "effect_index",
+            "type",
+            "basis_event_head",
+            "from_sequence",
+            "through_sequence",
+            "availability",
+            "reason"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "properties": {
+            "effect_index": {
+              "type": "integer",
+              "minimum": 0
+            },
+            "type": {
+              "const": "session_tombstone"
+            },
+            "basis_event_head": {
+              "type": "string",
+              "pattern": "^(0|[1-9][0-9]*)$",
+              "maxLength": 19
+            },
+            "server_session_id": {
+              "type": "string",
+              "pattern": "^[a-f0-9]{8}(-[a-f0-9]{4}){3}-[a-f0-9]{12}$"
+            },
+            "availability": {
+              "enum": [
+                "expired",
+                "deleted"
+              ]
+            },
+            "reason": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "effect_index",
+            "type",
+            "basis_event_head",
+            "server_session_id",
+            "availability",
+            "reason"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "properties": {
+            "effect_index": {
+              "type": "integer",
+              "minimum": 0
+            },
+            "type": {
+              "const": "snapshot_reference"
+            },
+            "basis_event_head": {
+              "type": "string",
+              "pattern": "^(0|[1-9][0-9]*)$",
+              "maxLength": 19
+            },
+            "snapshot": {
+              "$ref": "#/$defs/SnapshotRef"
+            }
+          },
+          "required": [
+            "effect_index",
+            "type",
+            "basis_event_head",
+            "snapshot"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "properties": {
+            "effect_index": {
+              "type": "integer",
+              "minimum": 0
+            },
+            "type": {
+              "const": "cover_upsert"
+            },
+            "basis_event_head": {
+              "type": "string",
+              "pattern": "^(0|[1-9][0-9]*)$",
+              "maxLength": 19
+            },
+            "cover": {
+              "type": "object",
+              "properties": {
+                "resource_id": {
+                  "type": "string",
+                  "pattern": "^[a-f0-9]{8}(-[a-f0-9]{4}){3}-[a-f0-9]{12}$"
+                },
+                "server_session_id": {
+                  "type": "string",
+                  "pattern": "^[a-f0-9]{8}(-[a-f0-9]{4}){3}-[a-f0-9]{12}$"
+                },
+                "source_url": {
+                  "anyOf": [
+                    {
+                      "type": "string"
+                    },
+                    {
+                      "type": "null"
+                    }
+                  ]
+                },
+                "mime_type": {
+                  "anyOf": [
+                    {
+                      "type": "string"
+                    },
+                    {
+                      "type": "null"
+                    }
+                  ]
+                },
+                "byte_size": {
+                  "anyOf": [
+                    {
+                      "type": "string",
+                      "pattern": "^(0|[1-9][0-9]*)$",
+                      "maxLength": 19
+                    },
+                    {
+                      "type": "null"
+                    }
+                  ]
+                },
+                "fetched_at": {
+                  "anyOf": [
+                    {
+                      "type": "string",
+                      "pattern": "^\\d{4}-\\d\\d-\\d\\dT\\d\\d:\\d\\d:\\d\\d\\.\\d{3}Z$"
+                    },
+                    {
+                      "type": "null"
+                    }
+                  ]
+                },
+                "discovered_at": {
+                  "type": "string",
+                  "pattern": "^\\d{4}-\\d\\d-\\d\\dT\\d\\d:\\d\\d:\\d\\d\\.\\d{3}Z$"
+                },
+                "next_discovered_at": {
+                  "anyOf": [
+                    {
+                      "type": "string",
+                      "pattern": "^\\d{4}-\\d\\d-\\d\\dT\\d\\d:\\d\\d:\\d\\d\\.\\d{3}Z$"
+                    },
+                    {
+                      "type": "null"
+                    }
+                  ]
+                },
+                "source_changed_at": {
+                  "anyOf": [
+                    {
+                      "type": "string",
+                      "pattern": "^\\d{4}-\\d\\d-\\d\\dT\\d\\d:\\d\\d:\\d\\d\\.\\d{3}Z$"
+                    },
+                    {
+                      "type": "null"
+                    }
+                  ]
+                },
+                "time_source": {
+                  "type": "string"
+                },
+                "result": {
+                  "enum": [
+                    "pending",
+                    "success",
+                    "failed",
+                    "deleting"
+                  ]
+                },
+                "failure_reason": {
+                  "anyOf": [
+                    {
+                      "type": "string"
+                    },
+                    {
+                      "type": "null"
+                    }
+                  ]
+                },
+                "availability": {
+                  "enum": [
+                    "available",
+                    "expired",
+                    "deleted"
+                  ]
+                },
+                "file_url": {
+                  "anyOf": [
+                    {
+                      "type": "string"
+                    },
+                    {
+                      "type": "null"
+                    }
+                  ]
+                }
+              },
+              "required": [
+                "resource_id",
+                "server_session_id",
+                "source_url",
+                "mime_type",
+                "byte_size",
+                "fetched_at",
+                "discovered_at",
+                "next_discovered_at",
+                "source_changed_at",
+                "time_source",
+                "result",
+                "failure_reason",
+                "availability",
+                "file_url"
+              ],
+              "additionalProperties": false
+            }
+          },
+          "required": [
+            "effect_index",
+            "type",
+            "basis_event_head",
+            "cover"
+          ],
+          "additionalProperties": false
+        }
+      ]
+    },
+    "CreateJob": {
+      "oneOf": [
+        {
+          "type": "object",
+          "properties": {
+            "request_id": {
+              "type": "string",
+              "pattern": "^[a-f0-9]{8}(-[a-f0-9]{4}){3}-[a-f0-9]{12}$"
+            },
+            "mode": {
+              "const": "baseline"
+            },
+            "expected_server_id": {
+              "type": "string",
+              "pattern": "^[a-f0-9]{8}(-[a-f0-9]{4}){3}-[a-f0-9]{12}$"
+            },
+            "selection": {
+              "$ref": "#/$defs/RecoverySelection"
+            }
+          },
+          "required": [
+            "request_id",
+            "mode",
+            "expected_server_id",
+            "selection"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "properties": {
+            "request_id": {
+              "type": "string",
+              "pattern": "^[a-f0-9]{8}(-[a-f0-9]{4}){3}-[a-f0-9]{12}$"
+            },
+            "mode": {
+              "const": "delta"
+            },
+            "expected_server_id": {
+              "type": "string",
+              "pattern": "^[a-f0-9]{8}(-[a-f0-9]{4}){3}-[a-f0-9]{12}$"
+            },
+            "from_cut_id": {
+              "type": "string",
+              "pattern": "^[a-f0-9]{8}(-[a-f0-9]{4}){3}-[a-f0-9]{12}$"
+            },
+            "selection": {
+              "$ref": "#/$defs/RecoverySelection"
+            }
+          },
+          "required": [
+            "request_id",
+            "mode",
+            "expected_server_id",
+            "from_cut_id",
+            "selection"
+          ],
+          "additionalProperties": false
+        }
+      ]
+    }
+  }
+}
+

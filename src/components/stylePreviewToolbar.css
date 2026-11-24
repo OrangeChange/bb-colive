@@ -1,0 +1,118 @@
+.compact-preview-toolbar .native-preview-toolbar-row {
+  flex-wrap: wrap;
+  gap: 6px;
+}
+.preview-playback-controls {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  flex: 0 0 auto;
+}
+.preview-playback-controls .ui-select-trigger {
+  width: 62px;
+  min-width: 62px;
+}
+.preview-icon-button {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 30px;
+  height: 30px;
+  flex: 0 0 auto;
+  padding: 0;
+  border: 1px solid var(--color-line);
+  border-radius: 6px;
+  background: var(--color-bg);
+  color: var(--color-t2);
+}
+.preview-icon-button.is-active {
+  color: var(--color-accent-text);
+  background: var(--color-accent-subtle);
+}
+.preview-event-filter {
+  margin-left: auto;
+}
+.preview-filter-dot {
+  position: absolute;
+  right: 3px;
+  top: 3px;
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: var(--color-accent);
+}
+.preview-event-popover {
+  z-index: 10000;
+  display: grid;
+  gap: 8px;
+  min-width: 180px;
+  padding: 12px;
+  border: 1px solid var(--color-line);
+  border-radius: 8px;
+  background: var(--color-bg);
+  color: var(--color-t1);
+  box-shadow: 0 6px 24px #0002;
+  font-size: 13px;
+}
+.preview-event-popover label {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.preview-event-filter-heading {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+  padding-bottom: 5px;
+}
+.preview-event-filter-heading button {
+  color: var(--color-accent-text);
+}
+.preview-event-popover-arrow {
+  fill: var(--color-bg);
+}
+.compact-preview-toolbar
+  .native-preview-toolbar-row.is-canvas
+  .native-preview-width {
+  margin-inline-start: auto;
+  flex: 0 0 auto;
+  padding-left: 6px;
+}
+.compact-preview-toolbar .native-preview-canvas-color .theme-color-trigger {
+  width: 106px;
+  min-width: 106px;
+}
+.shared-preview-actions .native-preview-open-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 30px;
+  min-width: 30px;
+  padding: 0;
+}
+.compact-preview-toolbar .native-preview-motion-group button {
+  min-width: 46px;
+  padding: 0 7px;
+}
+
+.preview-filter-all {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  min-height: 28px;
+  padding: 3px 8px;
+  border: 1px solid transparent;
+  border-radius: 5px;
+}
+.preview-filter-all.is-active {
+  background: var(--color-accent-subtle);
+  border-color: var(--color-accent);
+  color: var(--color-accent-text);
+}
+.preview-live-toggle.is-active {
+  border-color: var(--color-accent);
+  background: var(--color-accent-subtle);
+  color: var(--color-accent-text);
+}

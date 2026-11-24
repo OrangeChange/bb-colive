@@ -1,0 +1,139 @@
+{
+  "repository": "OrangeChange/BB-Event-Fetcher",
+  "commit": "2dc2aff57ce0c1bf896487df742de32da06c9ffb",
+  "source": "Official GitHub fetch_file base64; bytes copied unchanged; no regeneration",
+  "files": [
+    {
+      "path": "test/fixtures/recovery-v02/baseline/root.json",
+      "local": "tests/fixtures/cloudRecovery/v02/baseline/root.json",
+      "gitBlob": "6245e8b22ecb7b9faf4c664c0a8ce64ed7844c11",
+      "bytes": 1453
+    },
+    {
+      "path": "test/fixtures/recovery-v02/baseline/headers.json",
+      "local": "tests/fixtures/cloudRecovery/v02/baseline/headers.json",
+      "gitBlob": "fe6d60549036be159fa464929fba5bdfcc0eb5e2",
+      "bytes": 124
+    },
+    {
+      "path": "test/fixtures/recovery-v02/baseline/fixture-files.json",
+      "local": "tests/fixtures/cloudRecovery/v02/baseline/fixture-files.json",
+      "gitBlob": "85a6e6ddb9fca01f5f3888e5a41e1d7b1903314c",
+      "bytes": 573
+    },
+    {
+      "path": "test/fixtures/recovery-v02/baseline/objects/00000000-0000-4000-8000-000000000100.data",
+      "local": "tests/fixtures/cloudRecovery/v02/baseline/objects/00000000-0000-4000-8000-000000000100.data",
+      "gitBlob": "9bdd53c67c72eb04d5840595f9e26ff0cd6b1144",
+      "bytes": 2503
+    },
+    {
+      "path": "test/fixtures/recovery-v02/baseline/objects/00000000-0000-4000-8000-000000000101.data",
+      "local": "tests/fixtures/cloudRecovery/v02/baseline/objects/00000000-0000-4000-8000-000000000101.data",
+      "gitBlob": "409634812d2e654b6aa73d2e97d379d22342386e",
+      "bytes": 1042
+    },
+    {
+      "path": "test/fixtures/recovery-v02/baseline/objects/00000000-0000-4000-8000-000000000102.data",
+      "local": "tests/fixtures/cloudRecovery/v02/baseline/objects/00000000-0000-4000-8000-000000000102.data",
+      "gitBlob": "eb61a14b054228ad3667379a1f856493be756b32",
+      "bytes": 346
+    },
+    {
+      "path": "test/fixtures/recovery-v02/baseline/objects/00000000-0000-4000-8000-000000000103.data",
+      "local": "tests/fixtures/cloudRecovery/v02/baseline/objects/00000000-0000-4000-8000-000000000103.data",
+      "gitBlob": "e43dfe7be368b673bf926d75cdc33143c7ee548e",
+      "bytes": 8603
+    },
+    {
+      "path": "test/fixtures/recovery-v02/baseline/objects/00000000-0000-4000-8000-000000000104.data",
+      "local": "tests/fixtures/cloudRecovery/v02/baseline/objects/00000000-0000-4000-8000-000000000104.data",
+      "gitBlob": "017dc339c8d01a2505b5df0303876f5a22f3057a",
+      "bytes": 1524
+    },
+    {
+      "path": "test/fixtures/recovery-v02/baseline/objects/00000000-0000-4000-8000-000000000105.data",
+      "local": "tests/fixtures/cloudRecovery/v02/baseline/objects/00000000-0000-4000-8000-000000000105.data",
+      "gitBlob": "f2e6003063d646a945cc58f477cea1fdaee7a555",
+      "bytes": 440
+    },
+    {
+      "path": "test/fixtures/recovery-v02/delta/root.json",
+      "local": "tests/fixtures/cloudRecovery/v02/delta/root.json",
+      "gitBlob": "f8a7e73a2ea7012265f71437cf336c431cb0f9ba",
+      "bytes": 1674
+    },
+    {
+      "path": "test/fixtures/recovery-v02/delta/headers.json",
+      "local": "tests/fixtures/cloudRecovery/v02/delta/headers.json",
+      "gitBlob": "55d1976d316efeef51a2142bee3bed72f20a274e",
+      "bytes": 124
+    },
+    {
+      "path": "test/fixtures/recovery-v02/delta/fixture-files.json",
+      "local": "tests/fixtures/cloudRecovery/v02/delta/fixture-files.json",
+      "gitBlob": "f4d67738969f57006844de1be989397423a41bb2",
+      "bytes": 953
+    },
+    {
+      "path": "test/fixtures/recovery-v02/delta/objects/00000000-0000-4000-8000-000000000200.data",
+      "local": "tests/fixtures/cloudRecovery/v02/delta/objects/00000000-0000-4000-8000-000000000200.data",
+      "gitBlob": "94222c613567260245d517b384c12fee7edfdcbb",
+      "bytes": 1461
+    },
+    {
+      "path": "test/fixtures/recovery-v02/delta/objects/00000000-0000-4000-8000-000000000201.data",
+      "local": "tests/fixtures/cloudRecovery/v02/delta/objects/00000000-0000-4000-8000-000000000201.data",
+      "gitBlob": "76596536e395d77d10efa5db8bcae9285b68128f",
+      "bytes": 213
+    },
+    {
+      "path": "test/fixtures/recovery-v02/delta/objects/00000000-0000-4000-8000-000000000202.data",
+      "local": "tests/fixtures/cloudRecovery/v02/delta/objects/00000000-0000-4000-8000-000000000202.data",
+      "gitBlob": "eb61a14b054228ad3667379a1f856493be756b32",
+      "bytes": 346
+    },
+    {
+      "path": "test/fixtures/recovery-v02/delta/objects/00000000-0000-4000-8000-000000000203.data",
+      "local": "tests/fixtures/cloudRecovery/v02/delta/objects/00000000-0000-4000-8000-000000000203.data",
+      "gitBlob": "176dd786f672f21e5c892238d7cb4bffcca01fec",
+      "bytes": 4446
+    },
+    {
+      "path": "test/fixtures/recovery-v02/delta/objects/00000000-0000-4000-8000-000000000204.data",
+      "local": "tests/fixtures/cloudRecovery/v02/delta/objects/00000000-0000-4000-8000-000000000204.data",
+      "gitBlob": "e9ad6366727d078ee2bd1a6a26c9a6df938580c8",
+      "bytes": 1308
+    },
+    {
+      "path": "test/fixtures/recovery-v02/delta/objects/00000000-0000-4000-8000-000000000205.data",
+      "local": "tests/fixtures/cloudRecovery/v02/delta/objects/00000000-0000-4000-8000-000000000205.data",
+      "gitBlob": "2ffd951be3a3f26d550a50b458a92763d64f4703",
+      "bytes": 4368
+    },
+    {
+      "path": "test/fixtures/recovery-v02/delta/objects/00000000-0000-4000-8000-000000000206.data",
+      "local": "tests/fixtures/cloudRecovery/v02/delta/objects/00000000-0000-4000-8000-000000000206.data",
+      "gitBlob": "0f37b015536cdfcb24d66d9978986b7acb820c32",
+      "bytes": 440
+    },
+    {
+      "path": "test/fixtures/recovery-v02/delta/objects/00000000-0000-4000-8000-000000000207.data",
+      "local": "tests/fixtures/cloudRecovery/v02/delta/objects/00000000-0000-4000-8000-000000000207.data",
+      "gitBlob": "1687fb8dfd586a810004b680277dd0739a738871",
+      "bytes": 390
+    },
+    {
+      "path": "test/fixtures/recovery-v02/delta/objects/00000000-0000-4000-8000-000000000208.data",
+      "local": "tests/fixtures/cloudRecovery/v02/delta/objects/00000000-0000-4000-8000-000000000208.data",
+      "gitBlob": "c3c4417081247258921788248a74c8a748ca45e7",
+      "bytes": 243
+    },
+    {
+      "path": "test/fixtures/recovery-v02/delta/objects/00000000-0000-4000-8000-000000000209.data",
+      "local": "tests/fixtures/cloudRecovery/v02/delta/objects/00000000-0000-4000-8000-000000000209.data",
+      "gitBlob": "0f1c7d7e0682e3d1552fb11f8661e732dec3fd77",
+      "bytes": 440
+    }
+  ]
+}

@@ -1,0 +1,6 @@
+{
+  "extends": "../../tsconfig.json",
+  "compilerOptions": { "target": "ES2022", "lib": ["ES2022", "DOM", "DOM.Iterable"] },
+  "include": ["../../src", "nativeEventIntegration.tsx", "nativeEventPreview.tsx", "nativeEventFeeds.tsx", "nativeEventRepository.ts", "nativeEventWindow.tsx", "nativeEventSemanticRegression.tsx", "../helpers/nativeEventBrowserPorts.ts"],
+  "references": []
+}

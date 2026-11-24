@@ -1,0 +1,52 @@
+import {createRequire} from 'node:module';
+import assert from 'node:assert/strict';
+import {scopeThemeCss} from '../src/themes/themeCssScope.ts';
+import {readFile} from 'node:fs/promises';
+import {createServer} from 'vite';
+import React from 'react';
+import {renderToStaticMarkup} from 'react-dom/server';
+import {getNativeEventSample} from './fixtures/nativeEventSamples.ts';
+const {chromium}=createRequire(import.meta.url)(process.env.PLAYWRIGHT_MODULE||'playwright');
+const browser=await chromium.launch({channel:'msedge',headless:true});
+const page=await browser.newPage();
+await page.setContent(`<div class="dark"><div class="event-area review"><div class="event"><span class="username">回看</span><span class="price">30</span></div></div>${['live','window','obs'].map(c=>`<div class="theme-surface event-area ${c}"><div class="event"><span class="username">用户</span><span class="price">30</span></div></div>`).join('')}</div><span class="username outside">软件界面</span>`);
+const read=()=>page.locator('.review,.review .event,.review .username,.review .price,.outside').evaluateAll(es=>es.map(e=>{const s=getComputedStyle(e);return [s.color,s.fontSize,s.padding,s.backgroundColor,e.getBoundingClientRect().height]}));
+const before=await read();
+await page.addStyleTag({content:scopeThemeCss('.theme-surface ~ .outside{color:red}', '.theme-surface')});
+await page.addStyleTag({content:scopeThemeCss('body + .outside,body ~ .outside{color:red}', '.theme-surface')});
+assert.deepEqual(await read(),before);
+await page.addStyleTag({content:scopeThemeCss('::before{content:"";display:inline-block;width:2px}', '.theme-surface')});
+assert.equal(await page.locator('.live .username').evaluate(e=>getComputedStyle(e,'::before').width),'2px');
+assert.deepEqual(await read(),before);
+await page.addStyleTag({content:scopeThemeCss('@scope (.event-area){.username{color:rgb(100,20,30)}}', '.theme-surface')});
+assert.equal(await page.locator('.live .username').evaluate(e=>getComputedStyle(e).color),'rgb(100, 20, 30)');
+assert.deepEqual(await read(),before);
+await page.addStyleTag({content:scopeThemeCss(':root {--ink:rgb(100, 20, 30)} .event-area{background:rgb(1, 2, 3);padding:12px} *{font-size:24px} .username{color:var(--ink)} .dark .event-area .price{font-size:32px}', '.theme-surface')});
+assert.deepEqual(await read(),before);
+for(const c of ['live','window','obs']){
+ assert.equal(await page.locator(`.${c}`).evaluate(e=>getComputedStyle(e).backgroundColor),'rgb(1, 2, 3)');
+ assert.equal(await page.locator(`.${c} .username`).evaluate(e=>getComputedStyle(e).color),'rgb(100, 20, 30)');
+ assert.equal(await page.locator(`.${c} .price`).evaluate(e=>getComputedStyle(e).fontSize),'32px');
+}
+console.log('区域根、公共选择器与明暗覆盖共同作用于现场/副窗/OBS；回看及软件界面保持原值');
+const vite=await createServer({configFile:false,server:{middlewareMode:true,watch:null},logLevel:'silent'});
+const {EventRow}=await vite.ssrLoadModule('/src/components/EventRow.tsx');
+const sample=getNativeEventSample('normal-gift');
+const live=renderToStaticMarkup(React.createElement(EventRow,{ev:sample,liveLayout:true}));
+const review=renderToStaticMarkup(React.createElement(EventRow,{ev:sample,reviewLayout:true}));
+await page.setContent(`<style>${await readFile('src/themes/nativeDefaultStyle.generated.css','utf8')}${await readFile('src/archiveEventStyle.css','utf8')}</style><div class="event-area review">${review}</div>${['live','window','obs'].map(c=>`<div class="theme-surface event-area ${c}">${live}</div>`).join('')}<span class="outside username">软件界面</span>`);
+const archivedBefore=await read();
+await page.addStyleTag({content:scopeThemeCss('.event-area{background:rgb(1, 2, 3)} .event{--price-font-size:32px;--avatar-size:40px;--event-padding:20px} .username{color:rgb(100, 20, 30)}', '.theme-surface')});
+assert.deepEqual(await read(),archivedBefore);
+for(const c of ['live','window','obs'])assert.equal(await page.locator(`.${c} .price`).first().evaluate(e=>getComputedStyle(e).fontSize),'32px');
+for(const mode of ['blivechat','blivechat-open','laplace']){
+ const iframe=await page.evaluateHandle(mode=>{const frame=document.createElement('iframe');frame.className='theme-surface';frame.title=mode;document.body.append(frame);return frame},mode);
+ const frame=await (await iframe.asElement()).contentFrame();
+ await frame.setContent('<body><span>兼容主题内容</span></body>');
+ await frame.addStyleTag({content:'body{background:rgb(1,2,3)} *{color:rgb(100,20,30);font-size:32px}'});
+ assert.equal(await frame.locator('span').evaluate(e=>getComputedStyle(e).fontSize),'32px');
+ assert.deepEqual(await read(),archivedBefore);
+}
+console.log('真实EventRow及三个兼容文档的主题编辑保持回看原计算样式与尺寸');
+await vite.close();
+await browser.close();

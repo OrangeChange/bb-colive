@@ -1,0 +1,81 @@
+{
+  "samples": [
+    {
+      "key": "up",
+      "source": {
+        "eventKey": "session-545068-1794975664321-1:archive-event:277224476|24227952|666|1794975686750",
+        "sessionId": "session-545068-1794975664321-1"
+      },
+      "package": "UP主大表情",
+      "event": {
+        "id": "277224476",
+        "msgType": 0,
+        "roomId": 545068,
+        "ts": 1794975686750,
+        "user": {
+          "uid": "0",
+          "uname": "普通用户",
+          "guardLevel": 0
+        },
+        "text": "666",
+        "emoticon": {
+          "url": "/media/native-design/up.png",
+          "width": 162,
+          "height": 162,
+          "unique": "room_545068_9735"
+        }
+      }
+    },
+    {
+      "key": "room",
+      "source": {
+        "eventKey": "session-545068-1794975664321-1:archive-event:1660892254|26201830|嘻嘻|1794976740192",
+        "sessionId": "session-545068-1794975664321-1"
+      },
+      "package": "房间专属表情",
+      "event": {
+        "id": "1660892254",
+        "msgType": 0,
+        "roomId": 545068,
+        "ts": 1794976740192,
+        "user": {
+          "uid": "0",
+          "uname": "普通用户",
+          "guardLevel": 0
+        },
+        "text": "嘻嘻",
+        "emoticon": {
+          "url": "/media/native-design/room.png",
+          "width": 162,
+          "height": 162,
+          "unique": "room_545068_9780"
+        }
+      }
+    },
+    {
+      "key": "charge",
+      "source": {
+        "eventKey": "session-1700301235-1789956985213-1:archive-event:1505755374|6586455|[UPOWER_1512246445_泥哭啦]|1789957131154"
+      },
+      "package": "充电专属表情",
+      "event": {
+        "id": "1505755374",
+        "msgType": 0,
+        "roomId": 1700301235,
+        "ts": 1789957131154,
+        "text": "[UPOWER_1512246445_泥哭啦]",
+        "emoticon": {
+          "url": "/media/native-design/charge.png",
+          "width": 20,
+          "height": 20,
+          "unique": "upower_[UPOWER_1512246445_泥哭啦]"
+        },
+        "user": {
+          "uid": "0",
+          "uname": "普通用户",
+          "guardLevel": 0
+        }
+      }
+    }
+  ]
+}

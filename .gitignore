@@ -1,0 +1,67 @@
+# ===== 敏感凭证（绝不能提交）=====
+cookies.json
+*.cookies.json
+*.log
+*.local.json
+.env
+.env.*
+TAURI_SIGNING_PRIVATE_KEY*
+
+# ===== Node =====
+node_modules/
+dist/
+
+# ===== Rust / Tauri =====
+src-tauri/target/
+src-tauri/gen/schemas/
+
+# ===== 运行时产物 =====
+*.sqlite
+*.sqlite3
+*.db
+qrcode.png
+
+# ===== 编辑器/系统 =====
+.vscode/
+.idea/
+Thumbs.db
+.DS_Store
+*.tsbuildinfo
+
+# ===== 工具运行时缓存 =====
+.impeccable/
+.superpowers/
+
+# ===== Git worktrees =====
+.worktrees/
+
+# ===== 字体源文件（不随仓库分发，子集化产物在 src/assets/fonts/）=====
+# 子集化 woff2 产物需要入库（应用运行依赖）
+!src/assets/fonts/*.woff2
+# 未使用的字体源文件
+*.ttf
+*.otf
+!src/assets/fonts/MiSans-L3.otf
+!public/blivechat/assets/element-icons.ttf
+# 授权 PDF 原件不入库（随 Tauri resources 打包，本地维护）
+src-tauri/licenses/*.pdf
+
+/src-tauri/style-distribution/
+/release/
+/src-tauri/style/
+
+# BB CoLive portable runtime
+/data/
+/portable.flag
+
+# 本机审阅与设置快照
+/.hallmark/
+/design/
+
+# 本地历史与技能计划
+/docs/local-history/
+/docs/superpowers/
+
+# 本机项目说明与历史资料
+/AGENTS.md
+/docs/archive/

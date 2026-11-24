@@ -1,0 +1,2073 @@
+@layer base {
+  .dark .event-area {
+    --name-anchor: rgb(250, 123, 159);
+    --name-admin: rgb(137, 212, 187);
+    --name-captain: rgb(117, 187, 227);
+    --name-admiral: rgb(221, 166, 222);
+    --name-governor: rgb(247, 189, 153);
+  }
+  .event-area {
+    --name-anchor: rgb(246, 66, 117);
+    --name-admin: rgb(36, 128, 97);
+    --name-captain: rgb(17, 135, 204);
+    --name-admiral: rgb(192, 41, 179);
+    --name-governor: rgb(238, 114, 37);
+  }
+  /* 公共字体与配色。局部编辑参数优先于主题默认值。 */
+  .dark .event {
+    --native-line: var(--event-border-color, #3a414b);
+    --native-system-fill: #a6afbd;
+    --native-tint: 30%;
+    --event-gift: #dfb56b;
+    --event-sc: #e08eb3;
+    --event-guard-1: #76b0ed;
+    --event-guard-2: #c699ed;
+    --event-guard-3: #edaa7d;
+    --event-lottery: #c49beb;
+    --event-red: #e19a8f;
+    --status-success: #82c9a7;
+    --status-warning: #d5a55f;
+    --status-danger: #ed9299;
+    --native-honor: #d9b47d;
+  }
+  .event.type-gift {
+    --event-semantic-color: var(--event-gift);
+  }
+  .event.type-superchat {
+    --event-semantic-color: var(--event-sc);
+  }
+  .event.type-guard.guard-purchase-level-3 {
+    --event-semantic-color: var(--event-guard-1);
+  }
+  .event.type-guard.guard-purchase-level-2 {
+    --event-semantic-color: var(--event-guard-2);
+  }
+  .event.type-guard.guard-purchase-level-1 {
+    --event-semantic-color: var(--event-guard-3);
+  }
+  .event.type-lottery {
+    --event-semantic-color: var(--event-lottery);
+  }
+  .event.type-redpocket {
+    --event-semantic-color: var(--event-red);
+  }
+  .event:not(.event-sticky) {
+    margin-inline: 0;
+    width: 100%;
+  }
+  .event::before {
+    border: 0;
+    display: none;
+  }
+  .event:is(
+    .type-gift,
+    .type-guard,
+    .type-guard-honor,
+    .type-lottery,
+    .type-redpocket
+  ) {
+    display: grid;
+    grid-template-columns:
+      var(--avatar-size, calc(var(--event-font-size, 16px) * var(--event-config-avatar-scale, 1.5)))
+      minmax(0, 1fr);
+    column-gap: var(--event-gap, calc(var(--native-space) * 2));
+    row-gap: var(--event-gap, var(--native-space));
+    align-items: start;
+  }
+  .event,
+  .event > :is(.user, .activity-title, .result-title, .info) {
+    --native-size: var(--event-font-size, 16px);
+    --native-line-height: calc(
+      var(--native-size) *
+        var(--event-line-height, var(--event-default-line-height, 1.25))
+    );
+    --native-text-line: var(
+      --event-line-height,
+      max(
+        var(--native-line-height),
+        calc(1em * var(--event-default-line-height, 1.25))
+      )
+    );
+    --native-meta: calc(var(--native-size) * 0.875);
+    --native-micro: calc(var(--native-size) * 0.75);
+    --native-space: calc(var(--native-size) * 0.25);
+    font-family: var(--event-font-family, var(--font-ui));
+    line-height: var(--event-line-height, var(--native-line-height));
+  }
+  .event:not(:has(> .avatar-wrap)) {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .event > .avatar-wrap {
+    grid-column: 1;
+    grid-row: 1;
+    align-self: start;
+  }
+  .event > :is(.user, .activity-title, .result-title, .info) {
+    grid-column: 2;
+    grid-row: 1;
+    display: inline-flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: var(--event-gap, var(--native-space));
+    min-width: 0;
+    min-height: var(--avatar-size, calc(var(--event-font-size, 16px) * var(--event-config-avatar-scale, 1.5)));
+    margin: 0;
+    padding: 0;
+    line-height: var(--native-text-line);
+  }
+  .event:not(:has(> .avatar-wrap))
+    > :is(.user, .activity-title, .result-title, .info) {
+    grid-column: 1;
+    min-height: var(--native-line-height);
+  }
+  .event:not(:has(> .avatar-wrap)) .content {
+    grid-column: 1;
+  }
+  .event > :is(.user, .activity-title, .result-title, .info) > .price {
+    margin-left: auto;
+    flex: none;
+    align-self: center;
+  }
+  .event .user {
+    max-width: 100%;
+    min-width: 0;
+    display: inline-flex;
+    flex-wrap: wrap;
+    align-items: center;
+    vertical-align: middle;
+  }
+  .event .username {
+    font-size: inherit;
+    line-height: var(--native-text-line);
+    font-weight: 700;
+    color: var(
+      --username-color,
+      var(--resolved-username-color, var(--native-username))
+    );
+    max-width: 100%;
+    min-width: 0;
+    vertical-align: baseline;
+    text-align: left;
+  }
+  .event .username .username-text {
+    vertical-align: baseline;
+    line-height: inherit;
+  }
+  .event .username-text {
+    line-height: inherit;
+  }
+
+  .event {
+    --weight-normal: var(--event-font-weight, 500);
+    --font-ui: "MiSans", "MiSans TC", "MiSans L3";
+    --font-mono: var(--font-ui);
+    --font-display: var(--font-ui);
+    --native-ink: var(--event-text-color, var(--text-body, #30353c));
+    --native-secondary: var(--event-secondary-color, var(--text-secondary, #4b5563));
+    --native-muted: var(--event-muted-color, var(--text-secondary, #4b5563));
+    --native-line: var(--event-border-color, #e2e5e9);
+    --native-system-fill: #657080;
+    --native-tint: 30%;
+    --event-gift: #b68739;
+    --event-sc: #c25285;
+    --event-guard-1: #4386ce;
+    --event-guard-2: #9a62c5;
+    --event-guard-3: #d07845;
+    --event-lottery: #9b70c8;
+    --event-red: #c56659;
+    --status-success: #248061;
+    --status-warning: #a36b25;
+    --status-danger: #c6505b;
+    --native-honor: #99713a;
+    --native-size: var(--event-font-size, 16px);
+    --native-line-height: calc(
+      var(--native-size) *
+        var(--event-line-height, var(--event-default-line-height, 1.25))
+    );
+    --native-text-line: var(
+      --event-line-height,
+      max(
+        var(--native-line-height),
+        calc(1em * var(--event-default-line-height, 1.25))
+      )
+    );
+    --native-meta: calc(var(--native-size) * 0.875);
+    --native-micro: calc(var(--native-size) * 0.75);
+    --native-space: calc(var(--native-size) * 0.25);
+    --event-semantic-color: var(--native-ink);
+    --native-accent-ink: color-mix(
+      in srgb,
+      var(--event-semantic-color) 45%,
+      var(--native-ink)
+    );
+    --native-fill: color-mix(
+      in srgb,
+      var(--event-semantic-color) var(--native-tint),
+      transparent
+    );
+    max-width: 100%;
+    font-family: var(--event-font-family, var(--font-ui));
+    line-height: var(--event-line-height, var(--native-line-height));
+    display: block;
+    gap: 0;
+    overflow-wrap: anywhere;
+    -webkit-text-stroke-width: var(--event-stroke-width, calc(var(--native-size) * var(--event-stroke-scale, 0)));
+    -webkit-text-stroke-color: var(--event-stroke-color, transparent);
+    position: relative;
+    min-width: 0;
+    width: 100%;
+    box-sizing: border-box;
+    padding: var(--event-padding, calc(var(--event-font-size, 16px) * var(--event-config-padding-scale, 0.5)))
+      var(--event-padding, calc(var(--native-space) * 3));
+    border: 0;
+    border-radius: calc(var(--native-size) * 0.5);
+    background: var(
+      --event-background,
+      var(
+        --event-background-color,
+        var(--event-config-background, var(--native-fill))
+      )
+    );
+    box-shadow: none;
+    --native-username: var(--text-name, rgb(25, 39, 59));
+  }
+  .streamer {
+    --native-username: var(--name-anchor);
+  }
+  .mod {
+    --native-username: var(--name-admin);
+  }
+  .guard-level-3 {
+    --native-username: var(--name-captain);
+  }
+  .guard-level-2 {
+    --native-username: var(--name-admiral);
+  }
+  .guard-level-1 {
+    --native-username: var(--name-governor);
+  }
+  .event .badges {
+    line-height: var(--native-text-line);
+    display: inline-flex;
+    flex-wrap: wrap;
+    align-items: center;
+    vertical-align: middle;
+    min-width: 0;
+    max-width: 100%;
+  }
+  .event .badges > img {
+    display: inline-block;
+  }
+  .event .badges > * {
+    vertical-align: middle;
+    font-weight: 400;
+  }
+  .event .badges .fan-medal {
+    height: auto;
+    min-height: calc(var(--native-size) * 1.125 * var(--fan-medal-scale, 1));
+    font-size: calc(
+      var(--badge-font-size, var(--native-micro)) * var(--fan-medal-scale, 1)
+    );
+    line-height: 1.5;
+    padding-inline: calc(
+      var(--fan-medal-padding, calc(var(--event-font-size, 16px) * 4 / 16)) * var(--fan-medal-scale, 1)
+    );
+    gap: var(--fan-medal-gap, calc(var(--event-font-size, 16px) * 4 / 16));
+    color: var(--badge-color, var(--medal-text, #fff));
+    background: var(--badge-background, var(--medal-gradient));
+  }
+  .event .fan-medal .medal-level {
+    color: inherit;
+  }
+  .event .badges :is(.streamer-badge, .mod-badge) {
+    font-size: var(--badge-font-size, var(--native-micro));
+    line-height: 1.1666667;
+  }
+  .event .badges .streamer-badge {
+    color: var(--badge-color, var(--name-anchor));
+  }
+  .event .badges .mod-badge {
+    color: var(--badge-color, var(--name-admin));
+  }
+
+  .event .badges :is(span.guard-badge, span.wealth-medal, .streamer-badge:not(.identity-icon), .mod-badge:not(.identity-icon)) {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    box-sizing: border-box;
+    min-height: calc(var(--native-size) * 1.125);
+    padding: 0 var(--native-space);
+    font-size: var(--badge-font-size, var(--native-micro));
+    line-height: 1.5;
+    white-space: nowrap;
+    border: 0;
+    border-radius: var(--native-space);
+    outline: calc(var(--native-size) / 16) solid color-mix(in srgb, currentColor 40%, transparent);
+    outline-offset: calc(var(--native-size) / -16);
+    background: var(--badge-background, color-mix(in srgb, currentColor 18%, transparent));
+  }
+  .event.guard-level-1 .badges span.guard-badge { color: var(--badge-color, var(--name-governor)); }
+  .event.guard-level-2 .badges span.guard-badge { color: var(--badge-color, var(--name-admiral)); }
+  .event.guard-level-3 .badges span.guard-badge { color: var(--badge-color, var(--name-captain)); }
+  .event .badges span.wealth-medal { color: var(--badge-color, rgb(105, 89, 166)); }
+  .dark .event .badges span.wealth-medal { color: var(--badge-color, rgb(190, 178, 238)); }
+  .event .badges .identity-icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: var(--native-size);
+    height: var(--native-size);
+    padding: 0;
+    border: 0;
+    background: transparent;
+    line-height: 1;
+  }
+  .event .identity-icon svg {
+    display: block;
+    width: 100%;
+    height: 100%;
+  }
+  .event img.guard-badge {
+    height: var(--guard-badge-size, var(--native-size));
+    width: auto;
+    max-width: calc(var(--guard-badge-size, var(--native-size)) * 2.25);
+    object-fit: contain;
+  }
+  .event img.wealth-medal {
+    height: var(--wealth-medal-size, var(--native-size));
+    width: auto;
+    max-width: calc(var(--wealth-medal-size, var(--native-size)) * 2.25);
+    object-fit: contain;
+  }
+  /* 排行榜与身份标记 */
+  .event .rank-badge {
+    line-height: 1;
+    display: inline-flex;
+    align-items: center;
+    min-height: var(--native-size);
+    vertical-align: middle;
+    font-weight: 500;
+    padding: 0 var(--native-space);
+    border-radius: calc(var(--event-font-size, 16px) * 4 / 16);
+    background: var(--badge-background, #ffdd33);
+    color: var(--badge-color, #000);
+  }
+  .event .rank-badge.event-current-rank--2 {
+    background: var(--badge-background, #ddd);
+  }
+  .event .rank-badge.event-current-rank--3 {
+    background: var(--badge-background, #fdb492);
+  }
+  .event .user-avatar {
+    display: inline-flex;
+    position: relative;
+    flex: none;
+    width: var(--avatar-size, calc(var(--event-font-size, 16px) * var(--event-config-avatar-scale, 1.5)));
+    height: var(--avatar-height, var(--avatar-size, calc(var(--event-font-size, 16px) * var(--event-config-avatar-scale, 1.5))));
+    vertical-align: middle;
+  }
+  .event .content {
+    grid-column: 2;
+    grid-row: 2;
+    line-height: var(--native-text-line);
+    display: inline;
+    min-width: 0;
+    color: var(
+      --message-color,
+      var(--resolved-message-color, var(--native-ink))
+    );
+  }
+  .event .message {
+    font-size: inherit;
+    line-height: var(--native-text-line);
+  }
+  .event .event-user-content {
+    font-size: inherit;
+    color: inherit;
+  }
+
+  .event .reply {
+    color: var(--reply-color, #fb7299);
+    text-align: left;
+  }
+
+  .dark .event .reply {
+    color: var(--reply-color, #ff9fba);
+  }
+  .event
+    :is(
+      .action,
+      .reply,
+      .guard-name,
+      .blind-gift-name,
+      .blind-profit,
+      .activity-title,
+      .result-title,
+      .system-message-detail,
+      .winner-list-toggle
+    ),
+  .event .gift > .gift-name,
+  .event .activity-prize .lottery-name,
+  .event :is(.honor-heading, .honor-summary) > * {
+    line-height: var(--native-text-line);
+  }
+  .event
+    :is(.action, .guard-companion-days, :is(.blind-gift-icon, .blind-gift)) {
+    color: var(
+      --message-color,
+      var(--resolved-message-color, var(--native-secondary))
+    );
+    font-weight: 500;
+  }
+  .event
+    :is(
+      .price,
+      .quantity,
+      .guard-duration,
+      .guard-companion-days,
+      :is(.blind-gift-icon, .blind-gift),
+      .activity-status,
+      .result-description
+    ) {
+    font-size: var(--native-meta);
+    line-height: var(--native-text-line);
+  }
+  .event
+    :is(
+      .price,
+      .quantity,
+      .guard-duration,
+      .activity-status,
+      .honor-milestone
+    ) {
+    font-family: var(--event-font-family, var(--font-ui));
+    font-variant-numeric: tabular-nums;
+  }
+  .event .price {
+    min-height: var(--native-line-height);
+    display: inline-flex;
+    align-items: center;
+    white-space: nowrap;
+    gap: 0;
+    font-weight: 700;
+  }
+  .event .price > :is(.price-unit, .price-value) {
+    font-size: inherit;
+    line-height: inherit;
+    display: block;
+  }
+  .event .price-unit {
+    font-weight: 500;
+  }
+  .event .price-value {
+    font-weight: 700;
+  }
+  .event .gift-free-label {
+    font-family: var(--event-font-family, var(--font-ui));
+  }
+  .event .quantity,
+  .event .guard-duration {
+    height: auto;
+    min-height: var(--native-line-height);
+    display: inline-flex;
+    align-items: baseline;
+    white-space: nowrap;
+    vertical-align: baseline;
+    font-size: var(--count-font-size, inherit);
+  }
+  .event .quantity-number {
+    font-weight: 700;
+  }
+  .event :is(.quantity-prefix, .quantity-unit) {
+    font-weight: 500;
+  }
+  .event
+    .guard-duration
+    > :is(.quantity-prefix, .quantity-number, .quantity-unit) {
+    font-weight: 700;
+  }
+  .event .gift-count {
+    margin: 0;
+  }
+  /* 无单位行高让货币、数量和周期各自按实际字号排版，并继承整组的显式倍率。 */
+  .event :is(.price, .quantity, .guard-duration) {
+    line-height: var(
+      --event-line-height,
+      var(--event-default-line-height, 1.25)
+    );
+  }
+  .event
+    :is(
+      .gift-name,
+      .guard-name,
+      .lottery-name,
+      .redpocket-name,
+      .activity-title
+    ) {
+    font-weight: 700;
+  }
+  .event:is(.type-gift, .type-guard) .content {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: var(--event-gap, var(--native-space));
+  }
+  .event :is(.gift, .guard) {
+    min-width: 0;
+    line-height: var(--native-text-line);
+    overflow-wrap: anywhere;
+  }
+  .event .content > .guard-companion-days {
+    flex-basis: 100%;
+  }
+  .event :is(.gift-icon, .blind-gift-icon) {
+    display: inline-block;
+    width: var(--gift-icon-size, calc(var(--native-size) * 1.5));
+    height: var(--gift-icon-size, calc(var(--native-size) * 1.5));
+    object-fit: contain;
+    vertical-align: middle;
+    margin: 0;
+  }
+  .event .event-gift-effect-trigger {
+    vertical-align: middle;
+  }
+  .event .blind-gift-count {
+    font-size: var(--count-font-size, inherit);
+  }
+  .event :is(.blind-price, .blind-profit) {
+    font-size: var(--price-font-size, inherit);
+  }
+  .event .blind-gift-icon {
+    width: var(--blind-gift-icon-size, calc(var(--event-font-size, 16px) * 20 / 16));
+    height: var(--blind-gift-icon-size, calc(var(--event-font-size, 16px) * 20 / 16));
+  }
+  .event .blind-gift > .blind-price {
+    margin: 0;
+  }
+  .event .blind-profit {
+    font-family: var(--event-font-family, var(--font-ui));
+    font-weight: 700;
+    font-variant-numeric: tabular-nums;
+  }
+  .event .blind-profit.is-gain {
+    color: var(--blind-profit-gain-color, rgb(192, 57, 71));
+  }
+  .event .blind-profit.is-loss {
+    color: var(--blind-profit-loss-color, rgb(36, 128, 97));
+  }
+  .event .guard {
+    display: inline;
+  }
+  .event .gift-icon > .event-effect-image {
+    width: 100%;
+    height: 100%;
+    object-fit: inherit;
+    object-position: inherit;
+    border-radius: inherit;
+  }
+  .event .guard-duration > * {
+    line-height: inherit;
+  }
+  .event .guard-companion-days {
+    line-height: var(
+      --event-line-height,
+      var(--event-default-line-height, 1.25)
+    );
+    min-height: var(--native-line-height);
+    display: block;
+    padding: 0;
+    border: 0;
+  }
+  .event .native-event-icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    flex: none;
+    width: var(--native-size);
+    height: var(--native-size);
+    vertical-align: middle;
+  }
+  .event .native-event-icon > img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+  }
+  .event .guard-purchase-icon {
+    display: block;
+    flex: none;
+    width: calc(var(--native-size) * 1.5);
+    height: calc(var(--native-size) * 1.5);
+    object-fit: contain;
+  }
+  .event .battery-pocket > img {
+    transform: scale(1.42);
+  }
+  .event .standard-pocket > img {
+    transform: scale(1.03);
+  }
+  .event .guard-pocket > img {
+    transform: scale(1.12);
+  }
+  .event .bili-translation {
+    display: block;
+    font-size: var(--native-meta);
+    line-height: var(--native-text-line);
+    color: var(--message-color, var(--native-secondary));
+    padding-top: var(--native-space);
+    margin-top: var(--native-space);
+    border-top: calc(var(--event-font-size, 16px) * 1 / 16) solid var(--native-line);
+  }
+  .event.deleted {
+    filter: grayscale(1);
+    opacity: 1;
+  }
+  .event.deleted .message {
+    text-decoration: none;
+    opacity: 1;
+  }
+  .event .status.deleted {
+    display: inline-block;
+    font-size: var(--native-micro);
+    line-height: 1.5;
+    border: calc(var(--event-font-size, 16px) * 1 / 16) solid var(--native-line);
+    border-radius: calc(var(--native-size) * 0.25);
+    padding: 0 calc(var(--native-size) * 0.25);
+    margin-left: 0;
+    max-width: 100%;
+    overflow-wrap: anywhere;
+    white-space: normal;
+    background: transparent;
+  }
+  /* 头像、身份和正文共用行盒，续行从正文左边界开始。 */
+  .event:is(.type-chat, .type-interaction) {
+    padding: var(--event-padding, calc(var(--event-font-size, 16px) * var(--event-config-padding-scale, 0.5)))
+      var(--event-padding, calc(var(--native-space) * 3));
+    display: block;
+    background: transparent;
+    line-height: var(--native-text-line);
+  }
+  .event:is(.type-chat, .type-interaction) > .content {
+    display: inline;
+    min-height: 0;
+    line-height: inherit;
+  }
+  .event:is(.type-chat, .type-interaction) > .avatar-wrap {
+    display: inline-block;
+    vertical-align: middle;
+    margin: 0 var(--event-gap, var(--native-space)) 0 0;
+  }
+  .event:is(.type-chat, .type-interaction) .username {
+    word-break: break-all;
+  }
+  .event:is(.type-chat, .type-interaction) :is(.username, .action, .time),
+  .event.type-chat .message:not(:has(.big-emote, .banner-emote)) {
+    vertical-align: middle;
+  }
+  .event.type-chat .message .inline-emote {
+    vertical-align: calc((0.75em - var(--emote-size, calc(var(--event-font-size, 16px) * 20 / 16))) / 2);
+  }
+  .event .inline-emote {
+    display: inline-block;
+    width: auto;
+    height: var(--emote-size, calc(var(--event-font-size, 16px) * 20 / 16));
+    max-width: calc(var(--native-size) * 3);
+    vertical-align: middle;
+    margin-inline: calc(var(--native-space) / 2);
+    object-fit: contain;
+  }
+  .event .emote { border-radius: calc(var(--native-size) * 0.125); }
+  .event .message .event-resource-retry {
+    height: var(--emote-size, calc(var(--native-size) * 1.25));
+    max-width: calc(var(--native-size) * 6);
+    margin-inline: calc(var(--native-size) * 0.125);
+    vertical-align: calc(var(--native-size) * -0.1875);
+    border-radius: calc(var(--native-size) * 0.125);
+  }
+  .event .big-emote {
+    display: inline-block;
+    max-width: min(100%, var(--big-emote-size, calc(var(--event-font-size, 16px) * 40 / 16)));
+    max-height: var(--big-emote-size, calc(var(--event-font-size, 16px) * 40 / 16));
+    vertical-align: middle;
+    object-fit: contain;
+  }
+  .event .banner-emote {
+    display: inline-block;
+    max-width: min(100%, calc(var(--native-size) * 15));
+    max-height: calc(var(--native-size) * 1.25);
+    width: auto;
+    height: auto;
+    vertical-align: middle;
+    object-fit: contain;
+  }
+  .event .repeat-count {
+    display: inline-block;
+    overflow-wrap: anywhere;
+    height: auto;
+    min-height: calc(var(--native-size) * 1.25);
+    max-width: 100%;
+    padding-inline: var(--native-space);
+    margin-inline-start: var(--native-space);
+    font-family: inherit;
+    font-size: var(--count-font-size, var(--native-micro));
+    font-weight: 700;
+    line-height: 1.5;
+    vertical-align: middle;
+  }
+  .dark .event .repeat-count {
+    color: rgb(137, 212, 187);
+    background-color: rgb(35, 61, 54);
+  }
+  /* 红包与天选 */
+  .event:is(.lottery-start, .redpocket-start) {
+    grid-template-columns:
+      var(--avatar-size, calc(var(--event-font-size, 16px) * var(--event-config-avatar-scale, 1.5)))
+      minmax(0, 1fr) auto;
+    column-gap: var(--event-gap, calc(var(--native-space) * 2));
+  }
+  .event:is(.lottery-start, .redpocket-start):not(:has(> .avatar-wrap)) {
+    grid-template-columns: minmax(0, 1fr) auto;
+  }
+  .event:is(.lottery-start, .redpocket-start)
+    > :is(.user, .activity-title, .result-title, .info) {
+    grid-column: 2;
+    gap: var(--event-gap, calc(var(--native-space) / 2))
+      var(--event-gap, var(--native-space));
+  }
+  .event:is(.lottery-start, .redpocket-start):not(:has(> .avatar-wrap))
+    > :is(.user, .activity-title, .result-title, .info) {
+    grid-column: 1;
+  }
+  .event:is(.lottery-start, .redpocket-start) > .avatar-wrap {
+    grid-row: 1 / span 2;
+    align-self: start;
+    margin-top: calc(
+      (
+          max(
+              var(--native-line-height),
+              var(--avatar-size, calc(var(--event-font-size, 16px) * var(--event-config-avatar-scale, 1.5)))
+            ) -
+            var(--avatar-size, calc(var(--event-font-size, 16px) * var(--event-config-avatar-scale, 1.5)))
+        ) /
+        2
+    );
+  }
+  .event:is(.lottery-start, .redpocket-start):not(:has(> .avatar-wrap))
+    .content {
+    grid-column: 1/-1;
+  }
+  .event:is(.lottery-start, .redpocket-start) .content {
+    grid-column: 2/-1;
+    grid-row: 2;
+  }
+  .event .activity-status {
+    grid-column: 3;
+    grid-row: 1;
+    align-self: center;
+    display: inline-flex;
+    align-items: center;
+    gap: var(--event-gap, var(--native-space));
+    white-space: nowrap;
+  }
+  .event:is(.lottery-start, .redpocket-start):not(:has(> .avatar-wrap))
+    .activity-status {
+    grid-column: 2;
+  }
+  .event .activity-clock {
+    display: block;
+    flex: none;
+    width: 1em;
+    height: 1em;
+    stroke-width: 2.2;
+  }
+  .event .activity-status.activity-urgent {
+    color: color-mix(in srgb, var(--status-danger) 45%, var(--native-ink));
+  }
+  .event .activity-title {
+    color: var(--native-ink);
+  }
+  .event .activity-prize {
+    display: block;
+  }
+  .event .activity-action {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: var(--event-gap, var(--native-space));
+  }
+  .event
+    :is(
+      .lottery-command,
+      .lottery-required-gift,
+      .lottery-requirement,
+      .redpocket-command,
+      .redpocket-awards
+    ) {
+    display: block;
+    font-size: var(--native-meta);
+    line-height: var(--native-text-line);
+    min-height: var(--native-line-height);
+    margin: var(--native-space) 0 0;
+    color: var(--message-color, var(--native-secondary));
+  }
+  .event
+    :is(
+      .lottery-command,
+      .lottery-required-gift,
+      .lottery-requirement,
+      .redpocket-command
+    ) {
+    display: grid;
+    grid-template-columns: 2em minmax(0, 1fr);
+    gap: var(--event-gap, var(--native-space));
+  }
+  .event
+    :is(
+      .lottery-command,
+      .lottery-required-gift,
+      .lottery-requirement,
+      .redpocket-command,
+      .redpocket-awards
+    )
+    :is(.prefix, .text, .gift-name) {
+    line-height: var(
+      --event-line-height,
+      max(
+        var(--native-line-height),
+        calc(1em * var(--event-default-line-height, 1.25))
+      )
+    );
+  }
+  .event .lottery-required-gift {
+    grid-template-columns: max-content minmax(0, 1fr);
+  }
+  .event .lottery-required-gift > .prefix {
+    white-space: nowrap;
+  }
+  .event .lottery-required-gift > .gift-name {
+    min-width: 0;
+    overflow-wrap: anywhere;
+  }
+  .event .redpocket-award {
+    display: inline;
+    vertical-align: top;
+    max-width: 100%;
+  }
+  .event .result-title {
+    font-size: var(--native-meta);
+    color: var(--native-secondary);
+  }
+  .event:is(.lottery-result, .redpocket-result) {
+    grid-template-columns: var(--native-size) minmax(0, 1fr) auto;
+    column-gap: var(--event-gap, var(--native-space));
+  }
+  .event:is(.lottery-result, .redpocket-result)
+    > :is(.user, .activity-title, .result-title, .info) {
+    grid-column: 1/-1;
+    grid-row: 1;
+    min-height: var(--native-line-height);
+  }
+  .event:is(.lottery-result, .redpocket-result) .content {
+    grid-row: 2;
+  }
+  .event .result-description {
+    line-height: var(
+      --event-line-height,
+      var(--event-default-line-height, 1.25)
+    );
+    color: var(--native-ink);
+  }
+  .event .result-description :is(.lottery-name, .redpocket-name) {
+    color: var(--native-accent-ink);
+    font-weight: inherit;
+  }
+  /* 开奖名单 */
+  .event .winner-list {
+    grid-column: 1 / -1;
+    display: block;
+    min-width: 0;
+    color: var(--native-secondary);
+  }
+  .event .winner-list-toggle {
+    display: inline-flex;
+    vertical-align: baseline;
+    align-items: center;
+    margin-inline-start: var(--event-gap, var(--native-space));
+    width: fit-content;
+    font-size: var(--native-micro);
+    cursor: pointer;
+    list-style: none;
+    white-space: nowrap;
+  }
+  .event:is(.lottery-result, .redpocket-result):has(.winner-list)
+    > :is(.user, .activity-title, .result-title, .info) {
+    padding-inline-end: calc(var(--native-size) * 3);
+  }
+  .event:is(.lottery-result, .redpocket-result) .winner-list-toggle {
+    position: absolute;
+    top: var(
+      --event-padding,
+      calc(var(--native-size) * var(--event-config-padding-scale, 0.5))
+    );
+    right: var(--event-padding, calc(var(--native-size) * 0.75));
+    margin: 0;
+  }
+  .event:is(.lottery-result, .redpocket-result) .content:has(.winner-list) {
+    grid-column-end: -1;
+    padding-inline-end: 0;
+  }
+  .event:is(.lottery-result, .redpocket-result) .content,
+  .event:is(.lottery-result, .redpocket-result) .result-description {
+    display: inline;
+  }
+  .event .winner-list-toggle::after {
+    content: "";
+    display: inline-block;
+    width: calc(var(--event-font-size, 16px) * 6 / 16);
+    height: calc(var(--event-font-size, 16px) * 6 / 16);
+    border-right: calc(var(--event-font-size, 16px) * 2 / 16) solid currentColor;
+    border-bottom: calc(var(--event-font-size, 16px) * 2 / 16) solid currentColor;
+    transform: rotate(45deg);
+    margin-left: var(--native-space);
+    vertical-align: calc(var(--event-font-size, 16px) * 2 / 16);
+  }
+  .event .winner-list-toggle::-webkit-details-marker {
+    display: none;
+  }
+  .event .winner-list.is-expanded .winner-list-toggle::after {
+    transform: rotate(225deg);
+    vertical-align: calc(var(--event-font-size, 16px) * -1 / 16);
+  }
+  .event :is(.system-message-icon, .honor-icon) {
+    stroke-width: 2;
+  }
+  .event .winner-list-collapse,
+  .event .winner-list.is-expanded .winner-list-expand {
+    display: none;
+  }
+  .event .winner-list.is-expanded .winner-list-collapse {
+    display: inline;
+  }
+  .event .winner-list-count {
+    display: block;
+    font-size: var(--native-micro);
+    line-height: var(--native-text-line);
+    margin-top: var(--native-space);
+  }
+  .event .winner-list-items {
+    display: flex;
+    flex-wrap: wrap;
+    gap: calc(var(--event-font-size, 16px) * 8 / 16) calc(var(--event-font-size, 16px) * 12 / 16);
+    list-style: none;
+    padding: calc(var(--event-font-size, 16px) * 8 / 16) 0 0;
+    margin: calc(var(--event-font-size, 16px) * 8 / 16) 0 0;
+    border-top: calc(var(--event-font-size, 16px) * 1 / 16) solid var(--native-line);
+    max-height: calc(var(--event-font-size, 16px) * 120 / 16);
+    overflow-y: auto;
+    overscroll-behavior: contain;
+  }
+  .event .winner-list-item {
+    display: flex;
+    align-items: center;
+    gap: var(--event-gap, var(--native-space));
+    min-width: 0;
+    max-width: 100%;
+    font-size: var(--native-meta);
+    line-height: var(--native-text-line);
+  }
+  .event .winner-avatar {
+    --avatar-size: calc(var(--native-size) * 1.25);
+  }
+  .event .winner-list-item .username {
+    min-width: 0;
+    font-size: inherit;
+    color: var(--native-ink);
+    text-align: left;
+    overflow-wrap: anywhere;
+  }
+  .event .winner-list-toggle:focus-visible,
+  .event .winner-list button:focus-visible {
+    outline: calc(var(--event-font-size, 16px) * 2 / 16) solid var(--event-guard-1);
+    outline-offset: calc(var(--event-font-size, 16px) * 2 / 16);
+  }
+  .event:is(.type-system, .type-live-status) {
+    display: block;
+    background: var(
+      --event-background,
+      var(
+        --event-background-color,
+        var(
+          --event-config-background,
+          color-mix(
+            in srgb,
+            var(--native-system-fill) var(--native-tint),
+            transparent
+          )
+        )
+      )
+    );
+  }
+  .event .system-message {
+    display: flex;
+    align-items: flex-start;
+    gap: var(--event-gap, var(--native-space));
+    font-size: var(--native-meta);
+    line-height: var(--native-text-line);
+    color: var(--native-secondary);
+  }
+  .event .system-message:not(:has(> .system-message-icon)) {
+  }
+  .event .system-message-icon {
+    display: inline-block;
+    width: var(--native-size);
+    height: var(--native-size);
+    margin: calc((1lh - var(--native-size)) / 2) 0 0;
+    flex: none;
+    vertical-align: middle;
+    color: var(--native-secondary);
+  }
+  .event .system-message-copy {
+    display: block;
+    min-width: 0;
+  }
+  .event .system-message-title {
+    display: block;
+    font-size: inherit;
+    font-weight: 500;
+    line-height: var(--native-text-line);
+  }
+  .event .system-message-title .message {
+    color: inherit;
+    line-height: inherit;
+  }
+  .event .system-message-title .user {
+    display: inline-flex;
+    line-height: inherit;
+    vertical-align: baseline;
+  }
+  .event .system-message-title .username {
+    font-size: inherit;
+    line-height: inherit;
+  }
+  .event .system-message-title .avatar-wrap {
+    --avatar-size: var(--native-size);
+    height: 1lh;
+    vertical-align: top;
+    margin-right: var(--event-gap, var(--native-space));
+    position: relative;
+  }
+  .event .system-message-title .avatar-wrap :is(.avatar, .avatar-placeholder) {
+    height: var(--avatar-height, var(--avatar-size));
+  }
+  .event .system-message-title:has(> .lifecycle-time) > .message {
+    margin-inline-end: var(--event-gap, var(--native-space));
+  }
+  .event .system-message-detail {
+    display: block;
+    color: var(--native-muted);
+    margin-top: var(--native-space);
+  }
+  .event .lifecycle-time {
+    display: inline;
+    font-family: var(--font-mono);
+    color: var(--native-secondary);
+    white-space: nowrap;
+  }
+  .event.live-start {
+    --native-system-tone: #238264;
+  }
+  .event.live-end {
+    --native-system-tone: #6d70ac;
+  }
+  .dark .event.live-start {
+    --native-system-tone: #7fc8ac;
+  }
+  .dark .event.live-end {
+    --native-system-tone: #aeb2e0;
+  }
+  .event:is(.live-start, .live-end) {
+    background: var(
+      --event-background,
+      var(
+        --event-background-color,
+        var(
+          --event-config-background,
+          color-mix(in srgb, var(--native-system-tone) 30%, transparent)
+        )
+      )
+    );
+  }
+  .event:is(.live-start, .live-end)
+    :is(.system-message-icon, .system-message-title) {
+    font-weight: 700;
+  }
+  .event.live-warning {
+    --native-system-tone: #a76519;
+    --native-system-ink: #623b10;
+  }
+  .event.live-cutoff {
+    --native-system-tone: #bf3e4b;
+    --native-system-ink: #742431;
+  }
+  .dark .event.live-warning {
+    --native-system-tone: #bf8c48;
+    --native-system-ink: #fff5e4;
+  }
+  .dark .event.live-cutoff {
+    --native-system-tone: #cb7181;
+    --native-system-ink: #ffeef1;
+  }
+  .event:is(.live-warning, .live-cutoff)
+    :is(.system-message-icon, .system-message-title) {
+    color: var(--native-system-ink);
+    font-weight: 700;
+  }
+  .event:is(.live-warning, .live-cutoff) .system-message-detail {
+    color: var(--native-system-ink);
+  }
+  /* 大航海荣誉：数字跟随正文，官方勋章使用独立列。 */
+  .event.type-guard-honor:not(:has(.avatar-wrap)) {
+    --honor-text-column: 1;
+    --honor-side-column: 2;
+    --honor-columns: minmax(0, 1fr) calc(var(--native-size) * 3.5);
+  }
+  .event.type-guard-honor:where(:not(:has(.honor-icon))) {
+    --honor-columns: var(--avatar-size, var(--honor-avatar-size)) minmax(0, 1fr);
+  }
+  .event.type-guard-honor:not(:has(.avatar-wrap)):where(
+      :not(:has(.honor-icon))
+    ) {
+    --honor-columns: minmax(0, 1fr);
+  }
+  .event.type-guard-honor {
+    --honor-avatar-size: calc(var(--native-size) * var(--event-config-avatar-scale, 1.5));
+    --honor-text-column: 2;
+    --honor-side-column: 3;
+    --honor-avatar-rows: 1 / span 2;
+    --honor-columns: var(--avatar-size, var(--honor-avatar-size)) minmax(0, 1fr)
+      calc(var(--native-size) * 3.5);
+    isolation: isolate;
+    padding: var(--event-padding, calc(var(--native-space) * 2))
+      var(--event-padding, calc(var(--native-space) * 3));
+    position: relative;
+    display: grid;
+    grid-template-columns: var(--honor-columns);
+    align-items: center;
+    gap: var(--event-gap, var(--native-space))
+      var(--event-gap, calc(var(--native-space) * 2));
+  }
+  .event.type-guard-honor::after {
+    content: "";
+    position: absolute;
+    inset: calc(var(--event-font-size, 16px) * 4 / 16);
+    pointer-events: none;
+    border-radius: calc(var(--event-font-size, 16px) * 4 / 16);
+    box-shadow: inset 0 0 0 calc(var(--event-font-size, 16px) * 1 / 16)
+      color-mix(in srgb, var(--native-honor) 10%, transparent);
+    z-index: -1;
+  }
+  .event.type-guard-honor > .avatar-wrap {
+    grid-column: 1;
+    grid-row: var(--honor-avatar-rows);
+    width: var(--avatar-size, var(--honor-avatar-size));
+    height: var(--avatar-height, var(--avatar-size, var(--honor-avatar-size)));
+    align-self: center;
+    margin: 0;
+  }
+  .event.type-guard-honor :is(.event-body, .content, .honor-message) {
+    display: block;
+  }
+  .event.type-guard-honor .content {
+    grid-column: var(--honor-text-column);
+    grid-row: 1 / span 2;
+    min-width: 0;
+  }
+  .event .honor-heading {
+    display: block;
+    font-size: var(--native-size);
+    line-height: var(--native-text-line);
+    font-weight: 500;
+  }
+  .event .honor-summary {
+    display: block;
+    margin-block-start: var(--event-gap, var(--native-space));
+    font-size: var(--native-size);
+    line-height: var(--native-text-line);
+    font-weight: 500;
+    z-index: 1;
+  }
+  .event .honor-highlight {
+    color: var(--native-ink);
+    font-weight: 700;
+  }
+  .event .honor-icon {
+    position: static;
+    grid-column: var(--honor-side-column);
+    grid-row: 1 / span 2;
+    justify-self: center;
+    align-self: center;
+    width: calc(var(--native-size) * 3.5);
+    height: calc(var(--native-size) * 3.5);
+    max-width: 100%;
+    color: var(--native-honor);
+    opacity: 1;
+    z-index: 0;
+  }
+  .event .honor-icon:not(button) {
+    pointer-events: none;
+  }
+  .dark .event .honor-icon {
+    opacity: 1;
+  }
+  .event .honor-milestone {
+    position: relative;
+    display: inline;
+    margin-inline-start: var(--native-space);
+    white-space: nowrap;
+    z-index: 1;
+    font-size: inherit;
+    line-height: var(--native-text-line);
+    font-weight: 700;
+    font-style: normal;
+    color: color-mix(in srgb, var(--native-honor) 45%, var(--native-ink));
+  }
+  .event > .time {
+    display: block;
+    grid-column: 1/-1;
+    font-size: var(--native-meta);
+    font-family: inherit;
+    font-weight: 500;
+    line-height: var(--native-text-line);
+    color: var(--text-secondary, var(--native-muted));
+    width: auto;
+    justify-self: end;
+    text-align: right;
+    white-space: nowrap;
+  }
+  .event > .time.time-inline {
+    position: absolute;
+    grid-column: auto;
+    grid-row: auto;
+    right: var(--time-edge-right);
+    bottom: var(--time-edge-bottom);
+    margin: 0;
+  }
+  .event:is(.type-chat, .type-interaction) > .time {
+    display: inline;
+    margin: 0;
+  }
+  .event-row-slot-content.event-spacing-enabled {
+    padding-block-end: var(
+      --event-spacing,
+      calc(var(--event-font-size, 16px) * var(--event-config-spacing-scale, 0.25))
+    );
+  }
+  .sticky-area {
+    display: flex;
+    align-items: center;
+    gap: var(--event-spacing, calc(var(--event-font-size, 16px) * var(--event-config-spacing-scale, 0.25)));
+    flex: none;
+    overflow-x: auto;
+    overflow-y: hidden;
+    overscroll-behavior-x: contain;
+    scrollbar-width: none;
+    margin: calc(var(--event-font-size, 16px) * 4 / 16);
+    padding: 0;
+  }
+  .sticky-area::-webkit-scrollbar {
+    display: none;
+  }
+  .sticky-area:empty {
+    margin: 0;
+  }
+  .sticky-area > .sticky-motion-host {
+    flex: none;
+    width: max-content;
+    max-width: none;
+  }
+  .sticky-area .event.event-sticky {
+    display: flex;
+    align-items: center;
+    gap: var(--event-gap, var(--native-space));
+    flex: none;
+    width: max-content;
+    max-width: none;
+    white-space: nowrap;
+    padding: var(--event-padding, var(--native-space));
+    padding-inline-end: calc(var(--event-padding, var(--native-space)) * 1.5);
+    border: 0;
+    border-radius: 999em;
+    background: var(--event-background, var(--native-fill));
+    line-height: var(--native-text-line);
+    pointer-events: none;
+  }
+  .event.event-sticky .content {
+    display: inline-flex;
+    align-items: center;
+    gap: calc(var(--native-size) * 0.25);
+    white-space: nowrap;
+  }
+  .event.event-sticky .avatar-wrap {
+    width: var(--avatar-size, calc(var(--native-size) * var(--event-config-avatar-scale, 1.5)));
+    height: var(--avatar-height, var(--avatar-size, calc(var(--native-size) * var(--event-config-avatar-scale, 1.5))));
+  }
+  .event.event-sticky
+    :is(.gift-icon, .guard-purchase-icon, .native-event-icon) {
+    width: var(--native-size);
+    height: var(--native-size);
+    margin: 0;
+    object-fit: contain;
+    flex: none;
+  }
+  .event.event-sticky .lottery {
+    color: var(--native-ink);
+  }
+  .event.event-sticky .blind-gift {
+    display: inline-flex;
+    align-items: center;
+  }
+  .event.event-sticky :is(.gift-icon, .guard-purchase-icon) {
+    width: var(--gift-icon-size, var(--native-size));
+    height: var(--gift-icon-size, var(--native-size));
+  }
+  .event-area,
+  .event-row-slot-content {
+    font-size: var(--event-font-size, 16px);
+    container-type: inline-size;
+    container-name: native-events;
+  }
+  @container native-events (max-width: 20em) {
+    .event :is(.lottery-command, .lottery-required-gift, .lottery-requirement) {
+      display: flex;
+      flex-wrap: wrap;
+      row-gap: 0;
+    }
+    .event
+      :is(
+        .lottery-command,
+        .redpocket-command,
+        .lottery-required-gift,
+        .lottery-requirement
+      )
+      > :is(.prefix, .text, .gift-name) {
+      max-width: 100%;
+      white-space: normal;
+      overflow-wrap: anywhere;
+    }
+    .event .lifecycle-time {
+      display: inline-block;
+      max-width: calc(100% - var(--native-space) * 2);
+      white-space: normal;
+    }
+    .event .badges,
+    .event .fan-medal {
+      max-width: 100%;
+      flex-wrap: wrap;
+    }
+    .event .fan-medal {
+      justify-content: center;
+    }
+    .event :is(.price, .quantity, .guard-duration) {
+      display: inline-block;
+      max-width: 100%;
+      white-space: normal;
+    }
+    .event .price > :is(.price-unit, .price-value) {
+      display: inline;
+    }
+    .event.type-guard-honor:has(> .avatar-wrap) {
+      grid-template-columns: minmax(0, 1fr) auto;
+    }
+    .event.type-guard-honor > .avatar-wrap {
+      grid-column: 1;
+      grid-row: 1;
+    }
+    .event.type-guard-honor:has(.avatar-wrap) > .content {
+      grid-column: 1 / -1;
+      grid-row: 2;
+    }
+    .event.type-guard-honor:has(.avatar-wrap) > .honor-icon {
+      position: static;
+      grid-column: 2;
+      grid-row: 1;
+      width: calc(var(--native-size) * 2);
+      height: calc(var(--native-size) * 2);
+    }
+
+    .event .content {
+      grid-column: 1/-1;
+    }
+    .event:is(.lottery-start, .redpocket-start) {
+      grid-template-columns:
+        var(--avatar-size, calc(var(--event-font-size, 16px) * var(--event-config-avatar-scale, 1.5)))
+        minmax(0, 1fr);
+    }
+    .event:is(.lottery-start, .redpocket-start)
+      > :is(.user, .activity-title, .result-title, .info) {
+      grid-column: 2;
+      grid-row: 1;
+    }
+    .event:is(.lottery-start, .redpocket-start) .activity-status {
+      grid-column: 2;
+      grid-row: 2;
+      justify-self: end;
+    }
+    .event:is(.lottery-start, .redpocket-start) > .avatar-wrap {
+      grid-row: 1;
+    }
+    .event:is(.lottery-start, .redpocket-start) .content {
+      grid-column: 1/-1;
+      grid-row: 3;
+    }
+    .event:is(.lottery-start, .redpocket-start):not(:has(> .avatar-wrap)) {
+      grid-template-columns: minmax(0, 1fr);
+    }
+    .event:is(.lottery-start, .redpocket-start):not(:has(> .avatar-wrap))
+      :is(
+        .activity-status,
+        > :is(.user, .activity-title, .result-title, .info)
+      ) {
+      grid-column: 1;
+    }
+    .event:is(.lottery-result, .redpocket-result) .content {
+      grid-column: 1/-1;
+    }
+  }
+  /* 当头像、一个汉字和默认留白已无法共用一行时，按内容顺序分行。 */
+  @container native-events (max-width: 6em) {
+    .event:not(.event-sticky) {
+      margin-inline: 0;
+      width: 100%;
+    }
+    .event:not(.event-sticky):is(.type-chat, .type-interaction),
+    .event:not(.event-sticky) {
+      padding-inline: var(--event-padding, var(--native-space));
+    }
+    .event:not(.type-chat, .type-interaction) {
+      display: flex;
+      flex-direction: column;
+      align-items: stretch;
+    }
+    .event > .avatar-wrap {
+      align-self: start;
+    }
+    .event > .activity-status {
+      order: 1;
+      white-space: normal;
+      flex-wrap: wrap;
+    }
+    .event > .time {
+      order: 2;
+      white-space: normal;
+    }
+    .event > .honor-icon {
+      position: static;
+      max-width: 100%;
+    }
+    .event .lifecycle-time {
+      margin-inline-start: 0;
+      max-width: 100%;
+    }
+    .event .system-message {
+      row-gap: var(--event-gap, var(--native-space));
+    }
+    .event .honor-milestone {
+      white-space: normal;
+    }
+    .event .redpocket-command {
+      display: block;
+    }
+    .event .redpocket-command > .prefix {
+      margin-inline-end: var(--native-space);
+    }
+    .event .winner-list-item {
+      display: block;
+    }
+    .event .winner-list-item .username {
+      display: inline;
+    }
+    .event:is(.lottery-result, .redpocket-result):has(.winner-list)
+      > :is(.user, .activity-title, .result-title, .info) {
+      padding-inline-end: 0;
+    }
+    .event:is(.lottery-result, .redpocket-result) .winner-list-toggle {
+      position: static;
+    }
+    .event .winner-list-toggle {
+      display: inline-block;
+      max-width: 100%;
+      white-space: normal;
+    }
+  }
+  .dark .event .blind-profit.is-gain {
+    color: var(--blind-profit-gain-color, rgb(250, 123, 139));
+  }
+  .dark .event .blind-profit.is-loss {
+    color: var(--blind-profit-loss-color, rgb(137, 212, 187));
+  }
+  .event .blind-gift-name {
+    color: rgb(75, 85, 99);
+  }
+  .event .honor-heading > :not(.honor-highlight) {
+    color: var(
+      --message-color,
+      var(--resolved-message-color, var(--text-body, var(--native-ink)))
+    );
+  }
+  /* 用户信息组内使用 gap，行内组合与正文之间使用右间距。 */
+  .event:is(.type-chat, .type-interaction) > .user {
+    display: inline-flex;
+    flex-wrap: wrap;
+    align-items: center;
+    vertical-align: middle;
+    min-height: 0;
+    margin: 0 var(--event-gap, var(--native-space)) 0 0;
+    padding: 0;
+  }
+  .event :is(.user, .badges) {
+    column-gap: var(--event-gap, var(--native-space));
+    row-gap: var(--event-gap, calc(var(--native-space) / 2));
+  }
+  .event:is(.type-chat, .type-interaction):has(> .avatar-wrap) > .user {
+    max-width: calc(
+      100% - var(--avatar-size, calc(var(--event-font-size, 16px) * var(--event-config-avatar-scale, 1.5)))
+      - var(--event-gap, var(--native-space)) * 2
+    );
+  }
+  .event .info {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: var(--event-gap, var(--native-space));
+  }
+  .event .info > .price {
+    margin-inline-start: auto;
+  }
+  .event.type-superchat > .content {
+    display: block;
+  }
+  .type-superchat > .info + .content {
+    padding: var(--native-space) 0 0;
+  }
+  .event.type-superchat > .content > .message {
+    display: block;
+  }
+  .event:is(.type-gift, .type-guard) > .content {
+    display: inline-flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: var(--event-gap, var(--native-space));
+  }
+  .event :is(.gift, .guard, .quantity, .guard-duration, .price) {
+    display: inline-flex;
+    align-items: center;
+    white-space: nowrap;
+    gap: 0;
+  }
+  .event .blind-gift {
+    min-width: 0;
+    line-height: inherit;
+    display: inline-flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: var(--event-gap, var(--native-space));
+  }
+  .event:is(.type-system, .type-live-status, .type-unknown) {
+    display: block;
+  }
+  .event.type-unknown > .avatar-wrap {
+    margin-inline-end: var(--native-space);
+  }
+  /* 盲盒来源独立成行，主礼物与来源组分别使用 order 调序。 */
+  .gift-blind > .content > .blind-gift {
+    flex-basis: 100%;
+    order: 1;
+  }
+}
+
+@layer base {
+  /* 原生默认基础样式。布局与公共部件沿用共享底座，具体部件可由可视化或自定义CSS覆盖。 */
+
+  .event-area {
+    --text-name: rgb(8, 8, 8);
+    --text-body: rgb(20, 20, 20);
+    --text-secondary: rgb(40, 40, 40);
+    /* 字号档位为基准字号倍率，16px时分别为16、14、12px。 */
+    --size-main: 1;
+    --size-secondary: 0.875;
+    --size-small: 0.75;
+    --weight-bold: 700;
+  }
+
+  .dark .event-area {
+    --text-name: rgb(237, 237, 237);
+    --text-body: rgb(213, 215, 216);
+    --text-secondary: rgb(153, 155, 158);
+  }
+
+  /* 文字层级。局部字号参数及可视化声明仍可独立覆盖。 */
+  .event {
+    font-size: calc(var(--native-size) * var(--size-main));
+    font-weight: var(--weight-normal);
+    color: var(
+      --message-color,
+      var(--resolved-message-color, var(--text-body))
+    );
+  }
+  .event:not(.event-sticky):is(.type-chat, .type-interaction) {
+    padding-block: var(--event-padding, var(--native-space));
+  }
+  .event,
+  .event > :is(.user, .activity-title, .result-title, .info) {
+    font-size: var(--native-size);
+  }
+  .event
+    :is(
+      .redpocket-awards,
+      .result-title,
+      .result-description,
+      .honor-heading,
+      .honor-summary
+    ) {
+    font-size: calc(var(--native-size) * var(--size-main));
+  }
+  .event .price {
+    font-size: var(
+      --price-font-size,
+      calc(var(--native-size) * var(--size-main))
+    );
+  }
+  .event
+    :is(
+      .action,
+      :is(.blind-gift-icon, .blind-gift),
+      .guard-companion-days,
+      .bili-translation,
+      .honor-heading,
+      .honor-summary
+    ),
+  .event
+    :is(
+      .lottery-command,
+      .lottery-required-gift,
+      .lottery-requirement,
+      .redpocket-command,
+      .activity-status,
+      .time,
+      .winner-list-toggle,
+      .winner-list-count,
+      .system-message-title,
+      .system-message-detail
+    ) {
+    font-weight: var(--weight-normal);
+  }
+  .event.type-interaction,
+  .event.type-interaction > :is(.user, .activity-title, .result-title, .info),
+  .event.type-interaction .username,
+  .event
+    :is(
+      :is(.blind-gift-icon, .blind-gift),
+      .guard-companion-days,
+      .bili-translation,
+      .lottery-command,
+      .lottery-required-gift,
+      .lottery-requirement,
+      .redpocket-command,
+      .activity-status,
+      .time,
+      .winner-list-toggle,
+      .winner-list-count,
+      .system-message
+    ) {
+    font-size: calc(var(--native-size) * var(--size-secondary));
+  }
+  .event :is(.blind-gift-icon, .blind-gift) .price {
+    font-size: inherit;
+  }
+  .event.event-sticky .lottery {
+    font-size: calc(var(--native-size) * var(--size-main));
+    font-weight: var(--weight-bold);
+  }
+  .event:is(.lottery-result, .redpocket-result) .content {
+    grid-column: 1 / -1;
+  }
+  .event .repeat-count {
+    font-size: var(--count-font-size, calc(var(--native-size) * var(--size-small)));
+  }
+  .event .status.deleted {
+    font-size: calc(var(--native-size) * var(--size-small));
+  }
+  .event .rank-badge {
+    font-size: var(
+      --rank-badge-size,
+      calc(var(--native-size) * var(--size-small))
+    );
+  }
+  .event :is(.quantity, .guard-duration),
+  .event
+    :is(
+      .username,
+      .gift-name,
+      .guard-name,
+      .lottery-name,
+      .redpocket-awards,
+      .price,
+      .blind-profit,
+      .honor-highlight,
+      .honor-milestone
+    ),
+  .event :is(.activity-title, .result-title, .result-description),
+  .event:is(.lottery-result, .redpocket-result)
+    :is(.result-title, .result-description),
+  .event:is(.live-start, .live-end, .live-warning, .live-cutoff)
+    .system-message-title {
+    font-weight: var(--weight-bold);
+  }
+  .event
+    :is(.price, .quantity, .guard-duration)
+    > :is(
+      .price-unit,
+      .price-value,
+      .quantity-prefix,
+      .quantity-number,
+      .quantity-unit
+    ),
+  .event .lottery-required-gift .gift-name,
+  .event .redpocket-awards .redpocket-name {
+    font-weight: inherit;
+  }
+  .event .lifecycle-time {
+    font-size: inherit;
+    font-weight: inherit;
+  }
+
+  .event.type-chat {
+    background: var(
+      --event-background,
+      var(--event-background-color, var(--event-config-background, transparent))
+    );
+  }
+  .event
+    :is(
+      .content,
+      .system-message,
+      .honor-heading,
+      .honor-summary,
+      .quantity,
+      .redpocket-awards,
+      .blind-gift-name,
+      .lifecycle-time
+    ),
+  .event:is(.type-gift, .type-guard, .type-lottery, .type-redpocket) .action,
+  .event:is(.live-start, .live-end, .live-warning, .live-cutoff)
+    :is(.message, .system-message-title, .system-message-detail),
+  .event:is(.type-lottery, .type-redpocket)
+    :is(.result-description, .winner-count),
+  .event.type-guard-honor
+    :is(.honor-heading, .honor-summary)
+    > :not(.honor-milestone),
+  .event.type-redpocket
+    .redpocket-awards
+    :is(
+      .prefix,
+      .redpocket-award,
+      .redpocket-name,
+      .redpocket-count,
+      .quantity-number
+    ),
+  .event.type-system .system-message-title .user .username {
+    color: inherit;
+  }
+  .event.type-gift {
+    background: var(--event-background, #d49c2c4c);
+  }
+  .event.type-superchat {
+    background: var(--event-background, #f473ad4c);
+  }
+  .event.guard-purchase-level-3 {
+    background: var(--event-background, #31a1f64c);
+  }
+  .event.guard-purchase-level-2 {
+    background: var(--event-background, #ce67fe4c);
+  }
+  .event.guard-purchase-level-1 {
+    background: var(--event-background, #f4894b4c);
+  }
+  .event.type-lottery {
+    background: var(--event-background, #7711eb4c);
+  }
+  .event.type-lottery.lottery-result .winner-list-toggle,
+  .event.type-redpocket.redpocket-result .winner-list-toggle,
+  .event.type-interaction .action,
+  .event .lottery-required-gift .prefix,
+  .event .lottery-required-gift .gift-name,
+  .event .lottery-requirement .prefix,
+  .event .lottery-requirement .text,
+  .event.type-lottery .winner-list-count,
+  .event.type-redpocket .winner-list-count {
+    color: var(--text-secondary);
+  }
+  .event.type-redpocket {
+    background: var(--event-background, #ff52524c);
+  }
+  .event.type-guard-honor {
+    background: var(--event-background, #e49e3a4c);
+    box-shadow: #b470113d 0 0 0 calc(var(--event-font-size, 16px) * 1 / 16) inset;
+  }
+  .event.type-system {
+    background: var(--event-background, #b0bcc24c);
+  }
+  .event.live-start {
+    background: var(--event-background, #2382644c);
+  }
+  .event.live-end {
+    background: var(--event-background, #6d70ac4c);
+  }
+  .event.live-warning {
+    background: var(--event-background, #fac73b80);
+  }
+  .event.live-cutoff {
+    background: var(--event-background, #ef475880);
+  }
+  .dark .event.type-chat {
+    background: var(
+      --event-background,
+      var(--event-background-color, var(--event-config-background, transparent))
+    );
+  }
+  .dark .event.type-gift {
+    background: var(--event-background, rgba(169, 125, 45, 0.3));
+  }
+  .dark .event.type-superchat {
+    background: var(--event-background, rgba(164, 76, 118, 0.3));
+  }
+  .dark .event.guard-purchase-level-3 {
+    background: var(--event-background, rgba(42, 112, 174, 0.3));
+  }
+  .dark .event.guard-purchase-level-2 {
+    background: var(--event-background, rgba(128, 77, 170, 0.3));
+  }
+  .dark .event.guard-purchase-level-1 {
+    background: var(--event-background, rgba(175, 103, 60, 0.3));
+  }
+  .dark .event.type-lottery {
+    background: var(--event-background, rgba(116, 65, 174, 0.3));
+  }
+  .dark .event.type-redpocket {
+    background: var(--event-background, rgba(173, 67, 77, 0.3));
+  }
+  .dark .event.type-guard-honor {
+    background: var(--event-background, rgba(163, 120, 50, 0.3));
+    box-shadow: #d9b47d3d 0 0 0 calc(var(--event-font-size, 16px) * 1 / 16) inset;
+  }
+  .dark .event.type-system {
+    background: var(--event-background, rgba(94, 108, 122, 0.3));
+  }
+  .dark .event.live-start {
+    background: var(--event-background, rgba(43, 112, 91, 0.3));
+  }
+  .dark .event.live-end {
+    background: var(--event-background, rgba(89, 90, 140, 0.3));
+  }
+  .dark .event.live-warning {
+    background: var(--event-background, rgba(140, 110, 35, 0.5));
+  }
+  .dark .event.live-cutoff {
+    background: var(--event-background, rgba(164, 57, 75, 0.5));
+  }
+  .event .activity-status,
+  .event .action,
+  .event .guard-companion-days,
+  .event .lottery-command,
+  .event .lottery-wait,
+  .event .lottery-requirement,
+  .event .redpocket-command,
+  .event .redpocket-wait {
+    color: var(--text-secondary);
+  }
+  .event .price,
+  .event .message,
+  .event .gift-count,
+  .event .gift-name,
+  .event .price.blind-price,
+  .event .guard,
+  .event .lottery-name,
+  .event .result-description .lottery-name,
+  .event .lottery-count,
+  .event .redpocket-name,
+  .event .result-description .redpocket-name {
+    color: inherit;
+  }
+  .bili-translation,
+  .event .status.deleted {
+    border-color: rgb(226, 229, 233);
+  }
+  .event .status.deleted {
+    color: var(--text-secondary);
+  }
+  .event .event-icon {
+    color: rgb(25, 39, 59);
+  }
+  .dark .bili-translation,
+  .dark .event .status.deleted {
+    border-color: rgb(58, 65, 75);
+  }
+  .dark .event .event-icon {
+    color: rgb(205, 212, 221);
+  }
+  .event.type-guard-honor .honor-milestone {
+    color: #8f5504;
+  }
+  .event.type-guard-honor .honor-icon {
+    color: rgb(97, 57, 11);
+  }
+  .dark .event.type-guard-honor .honor-milestone {
+    color: rgb(225, 185, 112);
+  }
+  .dark .event.type-guard-honor .honor-icon {
+    color: rgb(217, 180, 125);
+  }
+  .event :is(.blind-gift-icon, .blind-gift) {
+    color: var(
+      --message-color,
+      var(--resolved-message-color, var(--text-body))
+    );
+  }
+  .event .blind-gift-count {
+    color: var(--text-secondary);
+  }
+  .dark .event .blind-gift-name {
+    color: inherit;
+  }
+  .event:is(.type-lottery, .type-redpocket) .winner-list-item .username {
+    color: var(
+      --username-color,
+      var(--resolved-username-color, var(--text-name))
+    );
+  }
+}
+
+@layer base {
+  /* 系统图标共用原生默认的语义配色。 */
+  .event.type-system .system-message-icon {
+    color: rgb(25, 39, 59);
+  }
+  .event.system-user-block .system-message-icon,
+  .event.system-room-silent-on .system-message-icon {
+    color: rgb(50, 93, 95);
+  }
+  .event.system-admin-appointed .system-message-icon,
+  .event.system-admin-list-updated .system-message-icon {
+    color: rgb(36, 128, 97);
+  }
+  .event.system-room-change .system-message-icon {
+    color: rgb(52, 105, 160);
+  }
+  .event.live-start .system-message {
+    color: #14433d;
+  }
+  .event.live-end .system-message {
+    color: #353b5d;
+  }
+  .event.live-warning .system-message-icon {
+    color: rgb(98, 59, 16);
+  }
+  .event.live-cutoff .system-message-icon {
+    color: rgb(116, 36, 49);
+  }
+  .dark .event.type-system .system-message-icon {
+    color: rgb(205, 212, 221);
+  }
+  .dark .event.system-user-block .system-message-icon,
+  .dark .event.system-room-silent-on .system-message-icon {
+    color: rgb(130, 178, 180);
+  }
+  .dark .event.system-admin-appointed .system-message-icon,
+  .dark .event.system-admin-list-updated .system-message-icon {
+    color: rgb(137, 212, 187);
+  }
+  .dark .event.system-room-change .system-message-icon {
+    color: rgb(115, 167, 219);
+  }
+  .dark .event.live-start .system-message {
+    color: #b7dad0;
+  }
+  .dark .event.live-end .system-message {
+    color: #ccd0e8;
+  }
+  .dark .event.live-warning .system-message-icon {
+    color: rgb(230, 190, 100);
+  }
+  .dark .event.live-cutoff .system-message-icon {
+    color: rgb(239, 148, 163);
+  }
+  .event:is(.live-start, .live-end)
+    :is(.system-message-icon, .system-message-title, .lifecycle-time),
+  .dark
+    .event:is(.live-start, .live-end)
+    :is(.system-message-icon, .system-message-title, .lifecycle-time) {
+    color: inherit;
+  }
+}
+
+@layer base {
+  .event.lottery-start > .native-event-icon {
+    grid-column: 2;
+    grid-row: 1;
+    justify-self: start;
+    align-self: center;
+  }
+  .event.lottery-start:not(:has(> .avatar-wrap)) > .native-event-icon {
+    grid-column: 1;
+  }
+  .event.lottery-start:has(.native-event-icon)
+    > :is(.user, .activity-title, .result-title, .info) {
+    padding-inline-start: calc(var(--native-size) + var(--native-space));
+  }
+  .event:is(.lottery-result, .redpocket-result) > .native-event-icon {
+    grid-column: 1;
+    grid-row: 1;
+    align-self: center;
+  }
+  .event:is(.lottery-result, .redpocket-result):has(.native-event-icon)
+    > :is(.user, .activity-title, .result-title, .info) {
+    padding-inline-start: calc(var(--native-size) + var(--native-space));
+  }
+  .event:is(.lottery-result, .redpocket-result):not(
+      :has(> .native-event-icon)
+    ) {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .event.redpocket-start .redpocket {
+    display: block;
+  }
+  .event.redpocket-start .activity-action {
+    display: inline-flex;
+    vertical-align: baseline;
+    align-items: baseline;
+    margin-inline-end: var(--event-gap, var(--native-space));
+  }
+  .event.type-superchat .info {
+    display: flex;
+    flex-wrap: wrap;
+    padding: 0 0 var(--native-space);
+  }
+  .event.type-superchat .info > .avatar-wrap {
+    align-self: center;
+    max-width: 100%;
+    height: auto;
+    aspect-ratio: 1;
+  }
+  .event.type-superchat .info > .user {
+    flex: 1 1 min(100%, 6em);
+    min-width: 0;
+  }
+  @container native-events (max-width: 6em) {
+    .event.lottery-start:has(.native-event-icon)
+      > :is(.user, .activity-title, .result-title, .info),
+    .event:is(.lottery-result, .redpocket-result):has(.native-event-icon)
+      > :is(.user, .activity-title, .result-title, .info) {
+      padding-inline-start: 0;
+    }
+  }
+}

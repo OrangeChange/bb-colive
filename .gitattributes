@@ -1,0 +1,68 @@
+# 统一换行符处理，避免 Windows CRLF/LF 混乱
+* text=auto
+
+# 强制 LF（跨平台脚本与配置）
+*.rs text eol=lf
+*.ts text eol=lf
+*.tsx text eol=lf
+*.js text eol=lf
+*.mjs text eol=lf
+*.json text eol=lf
+*.css text eol=lf
+*.html text eol=lf
+*.toml text eol=lf
+*.md text eol=lf
+*.yml text eol=lf
+*.yaml text eol=lf
+
+# Windows 脚本保留 CRLF
+*.ps1 text eol=crlf
+*.bat text eol=crlf
+
+# 二进制
+*.png binary
+*.ico binary
+*.icns binary
+
+# 固定来源与生成许可文件保持原始 LF 字节
+vendor/blivechat/upstream/**/*.vue text eol=lf
+public/laplace/**/renderer.js.LEGAL.txt text eol=lf
+licenses/distribution/THIRD_PARTY_NOTICES.txt whitespace=-blank-at-eol
+
+# 公开源码快照不包含本机发布物与历史设计资料
+/release export-ignore
+/release/** export-ignore
+/.superpowers export-ignore
+/.superpowers/** export-ignore
+/src-tauri/style export-ignore
+/src-tauri/style/** export-ignore
+/design export-ignore
+/design/** export-ignore
+/docs/archive export-ignore
+/docs/archive/** export-ignore
+/docs/superpowers export-ignore
+/docs/superpowers/** export-ignore
+tests/helpers/laplaceBaseline.mjs export-ignore
+tests/helpers/laplaceIsolatedServer.mjs export-ignore
+tests/laplaceIndependent.browser.mjs export-ignore
+tests/laplaceThemeAnimationParity.browser.mjs export-ignore
+tests/laplaceIndependentProperties.browser.mjs export-ignore
+tests/laplaceIndependentInteractions.browser.mjs export-ignore
+tests/laplaceIndependentThemes.browser.mjs export-ignore
+scripts/capture-native-foundation-baseline.mjs export-ignore
+scripts/native-foundation-metrics.mjs export-ignore
+scripts/verify-native-dom-layout.mjs export-ignore
+tests/laplaceIndependentProgram.browser.mjs export-ignore
+tests/laplaceIndependentCompare.mjs export-ignore
+tests/openliveMitParity.browser.mjs export-ignore
+tests/stylePreviewFonts.browser.mjs export-ignore
+src/assets/fonts/MiSans-*.subset.woff2 export-ignore
+
+# 本机审阅和历史记录不进入源码归档
+/.hallmark export-ignore
+/.hallmark/** export-ignore
+/.impeccable export-ignore
+/.impeccable/** export-ignore
+/docs/local-history export-ignore
+/docs/local-history/** export-ignore
+AGENTS.md export-ignore

@@ -1,0 +1,29 @@
+import type { ReactNode } from "react";
+import { RotateCcw } from "lucide-react";
+import { ThemeImageEditingContext } from "./ThemeImagePreview.tsx";
+
+export interface ThemeVisualContextItem {
+  label: string;
+  value: string;
+  path?: boolean;
+}
+
+export function ThemeVisualPropertyPanel({ title, context, canRestore, onRestore, children, imageTarget }: {
+  title: string;
+  context: readonly ThemeVisualContextItem[];
+  canRestore: boolean;
+  onRestore: () => void;
+  children: ReactNode;
+  imageTarget?: {root?: HTMLElement | null; selector: string};
+}) {
+  return <section className="native-property-panel">
+    <header>
+      <div>
+        <h3>{title}</h3>
+        <div className="native-edit-context">{context.map(item => <div className={item.path ? "is-path" : undefined} key={`${item.label}-${item.value}`}><span>{item.label}</span><strong title={item.path ? item.value : undefined}>{item.value}</strong></div>)}</div>
+      </div>
+      {canRestore && <button type="button" className="settings-icon-action native-target-restore" title="全部恢复继承" aria-label="全部恢复继承" onClick={onRestore}><RotateCcw size={16} aria-hidden="true" /></button>}
+    </header>
+    <ThemeImageEditingContext.Provider value={{scope:context.map(item=>item.value).join(" · "),...imageTarget}}>{children}</ThemeImageEditingContext.Provider>
+  </section>;
+}

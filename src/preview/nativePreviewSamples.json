@@ -1,0 +1,3193 @@
+{
+  "samples": [
+    {
+      "key": "native-001",
+      "source": {
+        "eventKey": "session-22381346-1793580018679-1:archive-event:-2106035523|3195284|拜比|1793583354683",
+        "sessionId": "session-22381346-1793580018679-1",
+        "eventId": "-2106035523"
+      },
+      "kind": "弹幕",
+      "features": [
+        "type:0",
+        "chat:plain",
+        "identity:normal",
+        "info:medal",
+        "info:wealth"
+      ],
+      "event": {
+        "id": "-2106035523",
+        "msgType": 0,
+        "roomId": 22381346,
+        "ts": 1793583354683,
+        "user": {
+          "uid": "3195284",
+          "uname": "妖刀静刃",
+          "avatar": "/media/native-preview/asset-002.jpg",
+          "guardLevel": 0,
+          "wealthLevel": 47,
+          "wealthIconKey": "ChronosWealth_4.png",
+          "wealthIconUrl": "/media/native-preview/asset-001.png",
+          "currentRank": 0,
+          "userLevel": 48,
+          "userLevelBorder": 0,
+          "phoneVerified": true,
+          "medal": {
+            "name": "羊柚串",
+            "level": 23,
+            "guardLevel": 0,
+            "type": 0,
+            "anchorName": "北柚香Yuka",
+            "anchorUid": "480248442",
+            "isCurrentRoom": true,
+            "isLighted": true
+          }
+        },
+        "text": "拜比",
+        "isAutoDanmaku": false,
+        "danmakuSendType": 0
+      }
+    },
+    {
+      "key": "native-002",
+      "source": {
+        "eventKey": "session-22381346-1793580018679-1:archive-event:gift-v2:batch:gift:combo_id:318662966:480248442:34001:1793582842.7859",
+        "sessionId": "session-22381346-1793580018679-1",
+        "eventId": "gift-v2:batch:gift:combo_id:318662966:480248442:34001:1793582842.7859"
+      },
+      "kind": "礼物",
+      "features": [
+        "type:1",
+        "gift:paid"
+      ],
+      "event": {
+        "id": "gift-v2:batch:gift:combo_id:318662966:480248442:34001:1793582842.7859",
+        "msgType": 1,
+        "roomId": 22381346,
+        "ts": 1793582842000,
+        "user": {
+          "uid": "318662966",
+          "uname": "冰泠秋没在画",
+          "avatar": "/media/native-preview/asset-004.jpg",
+          "guardLevel": 0,
+          "wealthLevel": 30,
+          "wealthIconUrl": "/media/native-preview/asset-006.png"
+        },
+        "gift": {
+          "id": 34001,
+          "name": "粉丝团灯牌",
+          "count": 1,
+          "price": 100,
+          "coinType": "gold",
+          "total": 100,
+          "icon": "/media/native-preview/asset-009.png",
+          "webp": "/media/native-preview/asset-003.webp",
+          "gif": "/media/native-preview/asset-005.gif",
+          "effect": 3,
+          "effectId": 0,
+          "hasImagedGift": 0,
+          "isFree": false,
+          "priceRmb": 0.1,
+          "totalRmb": 0.1,
+          "paymentRmb": 0.1
+        }
+      }
+    },
+    {
+      "key": "native-003",
+      "source": {
+        "eventKey": "session-22381346-1793580018679-1:archive-event:20127526",
+        "sessionId": "session-22381346-1793580018679-1",
+        "eventId": "20127526"
+      },
+      "kind": "醒目留言",
+      "features": [
+        "type:2",
+        "sc-price:2"
+      ],
+      "event": {
+        "id": "20127526",
+        "msgType": 2,
+        "roomId": 22381346,
+        "ts": 1793582915000,
+        "user": {
+          "uid": "474533451",
+          "uname": "我看你是相思了",
+          "avatar": "/media/native-preview/asset-012.jpg",
+          "guardLevel": 0,
+          "wealthLevel": 31,
+          "wealthIconUrl": "/media/native-preview/asset-007.png",
+          "userLevel": 20,
+          "medal": {
+            "name": "羊柚串",
+            "level": 19,
+            "guardLevel": 0,
+            "isLighted": true
+          }
+        },
+        "text": "姐姐别给我发黑色蚯蚓和葡萄干了，警察叔叔要去找你了",
+        "sc": {
+          "price": 2,
+          "message": "姐姐别给我发黑色蚯蚓和葡萄干了，警察叔叔要去找你了",
+          "duration": 5
+        }
+      }
+    },
+    {
+      "key": "native-004",
+      "source": {
+        "eventKey": "session-32098296-1793459010765-1:archive-event:USER_TOAST_MSG_V2-1793459783395-1513",
+        "sessionId": "session-32098296-1793459010765-1",
+        "eventId": "USER_TOAST_MSG_V2-1793459783395-1513"
+      },
+      "kind": "大航海",
+      "features": [
+        "type:3",
+        "purchase:1",
+        "purchase-action:开通",
+        "purchase-unit:月"
+      ],
+      "event": {
+        "id": "USER_TOAST_MSG_V2-1793459783395-1513",
+        "msgType": 3,
+        "roomId": 32098296,
+        "ts": 1793459784000,
+        "user": {
+          "uid": "479132017",
+          "uname": "白给选手YouZi",
+          "avatar": "/media/native-preview/asset-025.jpg",
+          "guardLevel": 1,
+          "guardMilestone": "thousand",
+          "guardIconSet": "enhanced",
+          "wealthLevel": 10,
+          "wealthIconUrl": "/media/native-preview/asset-008.png"
+        },
+        "text": "<%白给选手YouZi%> 在主播白水Jimmy的直播间开通了舰长，今天是TA陪伴主播的第31天",
+        "guard": {
+          "level": 1,
+          "count": 1,
+          "unit": "月",
+          "price": 168000,
+          "priceRmb": 168,
+          "opType": 2,
+          "action": "开通"
+        }
+      }
+    },
+    {
+      "key": "native-005",
+      "source": {
+        "eventKey": "session-545068-1792963612429-1:archive-event:ANCHOR_LOT_START-1792967265644-19201",
+        "sessionId": "session-545068-1792963612429-1",
+        "eventId": "ANCHOR_LOT_START-1792967265644-19201"
+      },
+      "kind": "红包/天选",
+      "features": [
+        "type:4"
+      ],
+      "event": {
+        "id": "ANCHOR_LOT_START-1792967265644-19201",
+        "msgType": 4,
+        "roomId": 545068,
+        "ts": 1792967265644,
+        "lottery": {
+          "id": 16339032,
+          "awardName": "抽奖30rmb  喵胡",
+          "awardNum": 10,
+          "danmu": "加餐",
+          "maxTime": 600,
+          "giftName": "",
+          "requireText": "粉丝团成员：24级及以上"
+        }
+      }
+    },
+    {
+      "key": "native-006",
+      "source": {
+        "eventKey": "session-545068-1792963612429-1:archive-event:ANCHOR_LOT_AWARD-1792967863419-23684",
+        "sessionId": "session-545068-1792963612429-1",
+        "eventId": "ANCHOR_LOT_AWARD-1792967863419-23684"
+      },
+      "kind": "红包/天选",
+      "features": [
+        "type:5"
+      ],
+      "event": {
+        "id": "ANCHOR_LOT_AWARD-1792967863419-23684",
+        "msgType": 5,
+        "roomId": 545068,
+        "ts": 1792967863419,
+        "user": {
+          "uid": "363626845",
+          "uname": "V1tal1ty_Zywoo",
+          "avatar": "/media/native-preview/asset-029.webp",
+          "guardLevel": 0,
+          "wealthLevel": 6
+        },
+        "lottery": {
+          "id": 16339032,
+          "awardName": "抽奖30rmb  喵胡",
+          "awardNum": 10,
+          "winners": [
+            {
+              "uid": "363626845",
+              "uname": "V1tal1ty_Zywoo"
+            },
+            {
+              "uid": "23258026",
+              "uname": "好想觉醒系统"
+            },
+            {
+              "uid": "233284831",
+              "uname": "茶茶叶茶茶叶"
+            },
+            {
+              "uid": "679402395",
+              "uname": "dys卡多克本人"
+            },
+            {
+              "uid": "27077483",
+              "uname": "国家一级自洽运动员"
+            },
+            {
+              "uid": "53085032",
+              "uname": "彼岸兮花笑开靥丶"
+            },
+            {
+              "uid": "37336269",
+              "uname": "枕月---"
+            },
+            {
+              "uid": "25259222",
+              "uname": "爱玩朋友交易的猫"
+            },
+            {
+              "uid": "17511284",
+              "uname": "拼多多运营-清风"
+            },
+            {
+              "uid": "270747444",
+              "uname": "熊不熊猫不猫丶"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "key": "native-007",
+      "source": {
+        "eventKey": "session-22381346-1793580018679-1:archive-event:pocket-start:28877957",
+        "sessionId": "session-22381346-1793580018679-1",
+        "eventId": "pocket-start:28877957"
+      },
+      "kind": "红包/天选",
+      "features": [
+        "type:6"
+      ],
+      "event": {
+        "id": "pocket-start:28877957",
+        "msgType": 6,
+        "roomId": 22381346,
+        "ts": 1793580327000,
+        "user": {
+          "uid": "53720432",
+          "uname": "应麟",
+          "avatar": "/media/native-preview/asset-010.jpg",
+          "guardLevel": 0,
+          "wealthLevel": 64,
+          "wealthIconKey": "ChronosWealth_6.png",
+          "wealthIconUrl": "/media/native-preview/asset-011.png"
+        },
+        "lottery": {
+          "id": 28877957,
+          "awardName": "",
+          "awardNum": 0,
+          "awards": [
+            {
+              "id": 0,
+              "name": "电池红包",
+              "count": 20
+            }
+          ],
+          "totalPrice": 2000,
+          "waitTime": 600
+        },
+        "pocket": {
+          "lotId": 28877957,
+          "danmu": "",
+          "rpType": 3
+        }
+      }
+    },
+    {
+      "key": "native-008",
+      "source": {
+        "eventKey": "session-22381346-1793580018679-1:archive-event:pocket-win:28877957",
+        "sessionId": "session-22381346-1793580018679-1",
+        "eventId": "pocket-win:28877957"
+      },
+      "kind": "红包/天选",
+      "features": [
+        "type:7"
+      ],
+      "event": {
+        "id": "pocket-win:28877957",
+        "msgType": 7,
+        "roomId": 22381346,
+        "ts": 1793580927054,
+        "user": {
+          "uid": "6300547",
+          "uname": "凉心冰镇OVO",
+          "avatar": "/media/native-preview/asset-022.jpg",
+          "guardLevel": 0,
+          "wealthLevel": 23,
+          "wealthIconUrl": "/media/native-preview/asset-013.png"
+        },
+        "lottery": {
+          "id": 28877957,
+          "awardName": "电池",
+          "awardNum": 20,
+          "winners": [
+            {
+              "uid": "6300547",
+              "uname": "凉心冰镇OVO",
+              "awardName": "电池"
+            },
+            {
+              "uid": "471106625",
+              "uname": "拱下山脚真菌",
+              "awardName": "电池"
+            },
+            {
+              "uid": "155662379",
+              "uname": "GAMEKT",
+              "awardName": "电池"
+            },
+            {
+              "uid": "320382",
+              "uname": "Volca2333",
+              "awardName": "电池"
+            },
+            {
+              "uid": "88251563",
+              "uname": "肝里藏石",
+              "awardName": "电池"
+            },
+            {
+              "uid": "12303230",
+              "uname": "メルカトル鮎",
+              "awardName": "电池"
+            },
+            {
+              "uid": "1030520441",
+              "uname": "hybb__",
+              "awardName": "电池"
+            },
+            {
+              "uid": "19701610",
+              "uname": "鸣潮代肝-暮远",
+              "awardName": "电池"
+            },
+            {
+              "uid": "685227",
+              "uname": "Xiaolin_利物浦争四中",
+              "awardName": "电池"
+            },
+            {
+              "uid": "24110468",
+              "uname": "闇之芒",
+              "awardName": "电池"
+            },
+            {
+              "uid": "266869342",
+              "uname": "再也不碰心动盲盒",
+              "awardName": "电池"
+            },
+            {
+              "uid": "1344902",
+              "uname": "北柚香的大影境",
+              "awardName": "电池"
+            },
+            {
+              "uid": "80563",
+              "uname": "EntryPlug",
+              "awardName": "电池"
+            },
+            {
+              "uid": "19941777",
+              "uname": "凝霜雪莲",
+              "awardName": "电池"
+            },
+            {
+              "uid": "12860698",
+              "uname": "1231232024",
+              "awardName": "电池"
+            },
+            {
+              "uid": "420444026",
+              "uname": "奥西克",
+              "awardName": "电池"
+            },
+            {
+              "uid": "674636",
+              "uname": "Y_M_N",
+              "awardName": "电池"
+            },
+            {
+              "uid": "261649000",
+              "uname": "-博丽灵梦_",
+              "awardName": "电池"
+            },
+            {
+              "uid": "93672377",
+              "uname": "不断黑听的向日葵",
+              "awardName": "电池"
+            },
+            {
+              "uid": "1183138184",
+              "uname": "呆呆待呆呆玲",
+              "awardName": "电池"
+            }
+          ]
+        },
+        "pocket": {
+          "lotId": 28877957
+        }
+      }
+    },
+    {
+      "key": "native-009",
+      "source": {
+        "eventKey": "session-22381346-1793580018679-1:archive-event:interact-v2:354011297:1:1793583349007878675",
+        "sessionId": "session-22381346-1793580018679-1",
+        "eventId": "INTERACT_WORD_V2-1793583349898-3077"
+      },
+      "kind": "互动",
+      "features": [
+        "type:10",
+        "interaction:entry"
+      ],
+      "event": {
+        "id": "INTERACT_WORD_V2-1793583349898-3077",
+        "msgType": 10,
+        "roomId": 22381346,
+        "ts": 1793583350000,
+        "interactKind": "entry",
+        "user": {
+          "uid": "354011297",
+          "uname": "Servent_ARCHER",
+          "avatar": "/media/native-preview/asset-014.jpg",
+          "guardLevel": 0,
+          "wealthLevel": 2
+        },
+        "text": "进入直播间"
+      }
+    },
+    {
+      "key": "native-010",
+      "source": {
+        "eventKey": "session-545068-1793471440979-1:archive-event:RECALL_DANMU_MSG-1793472933564-8513",
+        "sessionId": "session-545068-1793471440979-1",
+        "eventId": "RECALL_DANMU_MSG-1793472933564-8513"
+      },
+      "kind": "系统",
+      "features": [
+        "type:16"
+      ],
+      "event": {
+        "id": "RECALL_DANMU_MSG-1793472933564-8513",
+        "msgType": 16,
+        "roomId": 545068,
+        "ts": 1793472933564,
+        "user": {
+          "uid": "525273028",
+          "uname": "",
+          "avatar": "/media/native-preview/asset-023.jpg",
+          "guardLevel": 0,
+          "wealthLevel": 5
+        },
+        "text": "撤回了一条弹幕"
+      }
+    },
+    {
+      "key": "native-011",
+      "source": {
+        "eventKey": "session-32098296-1793459010765-1:archive-event:ROOM_CHANGE-1793459083119-170",
+        "sessionId": "session-32098296-1793459010765-1",
+        "eventId": "ROOM_CHANGE-1793459083119-170"
+      },
+      "kind": "系统",
+      "features": [
+        "type:21"
+      ],
+      "event": {
+        "id": "ROOM_CHANGE-1793459083119-170",
+        "msgType": 21,
+        "roomId": 32098296,
+        "ts": 1793459083119,
+        "text": "标题改为「舰礼全解锁就剩1小时！」/ 分区「虚拟声优」",
+        "stats": {
+          "roomTitle": "舰礼全解锁就剩1小时！",
+          "roomArea": "虚拟声优",
+          "roomChangedAt": 1793459083119
+        }
+      }
+    },
+    {
+      "key": "native-012",
+      "source": {
+        "eventKey": "[\"cloud-event\",\"019393c1-b489-459d-9f79-2147a70d8b51\",\"24125\",\"157479\",0]",
+        "sessionId": "[\"cloud-session\",\"019393c1-b489-459d-9f79-2147a70d8b51\",\"24125\",\"90d02eba-935b-4814-b269-0208a0eaa133\"]",
+        "eventId": "live:748279458691046973"
+      },
+      "kind": "系统",
+      "features": [
+        "type:22"
+      ],
+      "event": {
+        "id": "live:748279458691046973",
+        "msgType": 22,
+        "roomId": 24125,
+        "ts": 1792713228927,
+        "text": "直播开始",
+        "stats": {
+          "liveStatusChangedAt": 1792713228927
+        },
+        "liveIdentity": {
+          "liveKey": "748279458691046973",
+          "subSessionKey": "748279458691046973sub_time:1792713227"
+        }
+      }
+    },
+    {
+      "key": "native-013",
+      "source": {
+        "eventKey": "session-22381346-1793580018679-1:archive-event:PREPARING-1793583353761-3082",
+        "sessionId": "session-22381346-1793580018679-1",
+        "eventId": "PREPARING-1793583353761-3082"
+      },
+      "kind": "系统",
+      "features": [
+        "type:23"
+      ],
+      "event": {
+        "id": "PREPARING-1793583353761-3082",
+        "msgType": 23,
+        "roomId": 22381346,
+        "ts": 1793583353761,
+        "text": "直播结束",
+        "stats": {
+          "liveEndedAt": 1793583353761,
+          "liveStatusChangedAt": 1793583353761
+        }
+      }
+    },
+    {
+      "key": "native-014",
+      "source": {
+        "eventKey": "session-545068-1792726841779-1:archive-event:WARNING-1792734484861-29501",
+        "sessionId": "session-545068-1792726841779-1",
+        "eventId": "WARNING-1792734484861-29501"
+      },
+      "kind": "系统",
+      "features": [
+        "type:24"
+      ],
+      "event": {
+        "id": "WARNING-1792734484861-29501",
+        "msgType": 24,
+        "roomId": 545068,
+        "ts": 1792734484861,
+        "text": "请勿在直播中抽烟、喝酒，如：吸纸质香烟、电子烟、直播过程喝酒或展示醉酒状态；或请勿大面积裸露纹身"
+      }
+    },
+    {
+      "key": "native-015",
+      "source": {
+        "eventKey": "session-80397-1790501995346-1:archive-event:COVER_AUDIT_STATUS_CHANGED-1790506422790-17764",
+        "sessionId": "session-80397-1790501995346-1",
+        "eventId": "COVER_AUDIT_STATUS_CHANGED-1790506422790-17764"
+      },
+      "kind": "系统",
+      "features": [
+        "type:26"
+      ],
+      "event": {
+        "id": "COVER_AUDIT_STATUS_CHANGED-1790506422790-17764",
+        "msgType": 26,
+        "roomId": 80397,
+        "ts": 1790506422790,
+        "text": "直播封面状态发生变化"
+      }
+    },
+    {
+      "key": "native-016",
+      "source": {
+        "eventKey": "session-22381346-1793580018679-1:archive-event:-1400719818|12303230|看完北柚香直播我也黏黏的[捂脸]|1793583194979",
+        "sessionId": "session-22381346-1793580018679-1",
+        "eventId": "-1400719818"
+      },
+      "kind": "弹幕",
+      "features": [
+        "type:0",
+        "chat:small-emote",
+        "identity:captain",
+        "info:medal",
+        "info:wealth",
+        "info:rank"
+      ],
+      "event": {
+        "id": "-1400719818",
+        "msgType": 0,
+        "roomId": 22381346,
+        "ts": 1793583194979,
+        "user": {
+          "uid": "12303230",
+          "uname": "メルカトル鮎",
+          "avatar": "/media/native-preview/asset-016.jpg",
+          "guardLevel": 1,
+          "guardIconUrl": "/media/native-preview/asset-015.png",
+          "guardMilestone": "standard",
+          "guardIconSet": "base",
+          "wealthLevel": 32,
+          "wealthIconUrl": "/media/native-preview/asset-017.png",
+          "currentRank": 2,
+          "userLevel": 20,
+          "userLevelBorder": 0,
+          "phoneVerified": true,
+          "medal": {
+            "name": "羊柚串",
+            "level": 39,
+            "guardLevel": 1,
+            "type": 0,
+            "anchorName": "北柚香Yuka",
+            "guardIconUrl": "/media/native-preview/asset-015.png",
+            "anchorUid": "480248442",
+            "isCurrentRoom": true,
+            "isLighted": true
+          }
+        },
+        "text": "看完北柚香直播我也黏黏的[捂脸]",
+        "isAutoDanmaku": false,
+        "danmakuSendType": 0,
+        "emotes": {
+          "[捂脸]": {
+            "url": "/media/native-preview/asset-018.png",
+            "width": 20,
+            "height": 20
+          }
+        }
+      }
+    },
+    {
+      "key": "native-017",
+      "source": {
+        "eventKey": "session-22381346-1793580018679-1:archive-event:807706264|2776993|辛苦了|1793583346330",
+        "sessionId": "session-22381346-1793580018679-1",
+        "eventId": "807706264"
+      },
+      "kind": "弹幕",
+      "features": [
+        "type:0",
+        "chat:big-emote",
+        "identity:normal",
+        "info:medal",
+        "info:wealth"
+      ],
+      "event": {
+        "id": "807706264",
+        "msgType": 0,
+        "roomId": 22381346,
+        "ts": 1793583346330,
+        "user": {
+          "uid": "2776993",
+          "uname": "十七就是17",
+          "avatar": "/media/native-preview/asset-054.jpg",
+          "guardLevel": 0,
+          "wealthLevel": 15,
+          "wealthIconUrl": "/media/native-preview/asset-019.png",
+          "currentRank": 0,
+          "userLevel": 22,
+          "userLevelBorder": 0,
+          "phoneVerified": true,
+          "medal": {
+            "name": "羊柚串",
+            "level": 26,
+            "guardLevel": 0,
+            "type": 0,
+            "anchorName": "北柚香Yuka",
+            "anchorUid": "480248442",
+            "isCurrentRoom": true,
+            "isLighted": true
+          }
+        },
+        "text": "辛苦了",
+        "isAutoDanmaku": false,
+        "danmakuSendType": 0,
+        "emoticon": {
+          "url": "/media/native-preview/asset-020.png",
+          "width": 162,
+          "height": 162,
+          "unique": "room_22381346_19068"
+        }
+      }
+    },
+    {
+      "key": "native-018",
+      "source": {
+        "eventKey": "session-545068-1793471440979-1:archive-event:-1206654204|235745922|肯定直接打|1793471900892",
+        "sessionId": "session-545068-1793471440979-1",
+        "eventId": "-1206654204"
+      },
+      "kind": "弹幕",
+      "features": [
+        "type:0",
+        "chat:plain",
+        "chat:reply",
+        "identity:normal",
+        "info:medal",
+        "info:wealth"
+      ],
+      "event": {
+        "id": "-1206654204",
+        "msgType": 0,
+        "roomId": 545068,
+        "ts": 1793471900892,
+        "user": {
+          "uid": "235745922",
+          "uname": "角虫不可岌",
+          "avatar": "/media/native-preview/asset-021.jpg",
+          "guardLevel": 0,
+          "wealthLevel": 1,
+          "currentRank": 0,
+          "userLevel": 8,
+          "userLevelBorder": 0,
+          "phoneVerified": true,
+          "medal": {
+            "name": "德云色",
+            "level": 4,
+            "guardLevel": 0,
+            "type": 0,
+            "anchorName": "老实憨厚的笑笑",
+            "anchorUid": "8739477",
+            "isCurrentRoom": true,
+            "isLighted": true
+          }
+        },
+        "replyTo": {
+          "uid": "305307172",
+          "uname": "kanbekotor1",
+          "avatar": "/media/native-preview/asset-037.jpg",
+          "guardLevel": 0,
+          "wealthLevel": 26
+        },
+        "text": "肯定直接打",
+        "isAutoDanmaku": false,
+        "danmakuSendType": 0
+      }
+    },
+    {
+      "key": "native-019",
+      "source": {
+        "eventKey": "session-545068-1793471440979-1:archive-event:1793472319|310822611|los赢过lyonlos赢过lyonlos赢过lyonlos赢过lyonlos赢过lyonlos赢过lyonlos赢过lyonlos|1793472820765",
+        "sessionId": "session-545068-1793471440979-1",
+        "eventId": "1793472319"
+      },
+      "kind": "弹幕",
+      "features": [
+        "type:0",
+        "chat:plain",
+        "chat:long",
+        "identity:normal"
+      ],
+      "event": {
+        "id": "1793472319",
+        "msgType": 0,
+        "roomId": 545068,
+        "ts": 1793472820765,
+        "user": {
+          "uid": "310822611",
+          "uname": "-念旧-_-",
+          "avatar": "/media/native-preview/asset-024.jpg",
+          "guardLevel": 0,
+          "currentRank": 0,
+          "userLevel": 0,
+          "userLevelBorder": 0,
+          "phoneVerified": true
+        },
+        "text": "los赢过lyonlos赢过lyonlos赢过lyonlos赢过lyonlos赢过lyonlos赢过lyonlos赢过lyonlos",
+        "isAutoDanmaku": false,
+        "danmakuSendType": 0
+      }
+    },
+    {
+      "key": "native-020",
+      "source": {
+        "eventKey": "session-22381346-1793580018679-1:archive-event:786543527|12303230|拜拜，下次见|1793583344888",
+        "sessionId": "session-22381346-1793580018679-1",
+        "eventId": "786543527"
+      },
+      "kind": "弹幕",
+      "features": [
+        "type:0",
+        "chat:plain",
+        "identity:captain",
+        "info:medal",
+        "info:wealth",
+        "info:rank"
+      ],
+      "event": {
+        "id": "786543527",
+        "msgType": 0,
+        "roomId": 22381346,
+        "ts": 1793583344888,
+        "user": {
+          "uid": "12303230",
+          "uname": "メルカトル鮎",
+          "avatar": "/media/native-preview/asset-016.jpg",
+          "guardLevel": 1,
+          "guardIconUrl": "/media/native-preview/asset-015.png",
+          "guardMilestone": "standard",
+          "guardIconSet": "base",
+          "wealthLevel": 32,
+          "wealthIconUrl": "/media/native-preview/asset-017.png",
+          "currentRank": 2,
+          "userLevel": 20,
+          "userLevelBorder": 0,
+          "phoneVerified": true,
+          "medal": {
+            "name": "羊柚串",
+            "level": 39,
+            "guardLevel": 1,
+            "type": 0,
+            "anchorName": "北柚香Yuka",
+            "guardIconUrl": "/media/native-preview/asset-015.png",
+            "anchorUid": "480248442",
+            "isCurrentRoom": true,
+            "isLighted": true
+          }
+        },
+        "text": "拜拜，下次见",
+        "isAutoDanmaku": false,
+        "danmakuSendType": 0
+      }
+    },
+    {
+      "key": "native-021",
+      "source": {
+        "eventKey": "session-32098296-1793459010765-1:archive-event:129057486|499291525|猪咪猪咪|1793459919444",
+        "sessionId": "session-32098296-1793459010765-1",
+        "eventId": "129057486"
+      },
+      "kind": "弹幕",
+      "features": [
+        "type:0",
+        "chat:plain",
+        "chat:reply",
+        "identity:admiral",
+        "info:medal",
+        "info:wealth",
+        "info:enhanced-guard"
+      ],
+      "event": {
+        "id": "129057486",
+        "msgType": 0,
+        "roomId": 32098296,
+        "ts": 1793459919444,
+        "user": {
+          "uid": "499291525",
+          "uname": "吔包的葵花鹦鹉",
+          "avatar": "/media/native-preview/asset-033.jpg",
+          "guardLevel": 2,
+          "guardIconUrl": "/media/native-preview/asset-026.png",
+          "guardMilestone": "thousand",
+          "guardIconSet": "enhanced",
+          "wealthLevel": 33,
+          "wealthIconUrl": "/media/native-preview/asset-028.png",
+          "currentRank": 0,
+          "userLevel": 20,
+          "userLevelBorder": 0,
+          "phoneVerified": true,
+          "medal": {
+            "name": "叽咪花",
+            "level": 43,
+            "guardLevel": 2,
+            "type": 0,
+            "anchorName": "白水Jimmy",
+            "guardIconUrl": "/media/native-preview/asset-026.png",
+            "anchorUid": "3546635395139954",
+            "isCurrentRoom": true,
+            "isLighted": true
+          }
+        },
+        "replyTo": {
+          "uid": "3690998072871650",
+          "uname": "叽雨云_",
+          "avatar": "/media/native-preview/asset-027.jpg",
+          "guardLevel": 0,
+          "wealthLevel": 36
+        },
+        "text": "猪咪猪咪",
+        "isAutoDanmaku": false,
+        "danmakuSendType": 0
+      }
+    },
+    {
+      "key": "native-022",
+      "source": {
+        "eventKey": "session-32098296-1793459010765-1:archive-event:1793459720|1765787|那会有老佛爷主题的音声吗|1793459818804",
+        "sessionId": "session-32098296-1793459010765-1",
+        "eventId": "1793459720"
+      },
+      "kind": "弹幕",
+      "features": [
+        "type:0",
+        "chat:plain",
+        "identity:governor",
+        "identity:admin",
+        "identity:admin-guard",
+        "info:medal",
+        "info:wealth",
+        "info:rank",
+        "info:enhanced-guard"
+      ],
+      "event": {
+        "id": "1793459720",
+        "msgType": 0,
+        "roomId": 32098296,
+        "ts": 1793459818804,
+        "user": {
+          "uid": "1765787",
+          "uname": "叽米家的椒椒椒丶",
+          "avatar": "/media/native-preview/asset-031.jpg",
+          "guardLevel": 3,
+          "guardIconUrl": "/media/native-preview/asset-030.png",
+          "guardMilestone": "thousand",
+          "guardIconSet": "enhanced",
+          "wealthLevel": 55,
+          "wealthIconKey": "ChronosWealth_5.png",
+          "currentRank": 1,
+          "userLevel": 47,
+          "userLevelBorder": 0,
+          "phoneVerified": true,
+          "isAdmin": true,
+          "medal": {
+            "name": "叽咪花",
+            "level": 55,
+            "guardLevel": 3,
+            "type": 0,
+            "anchorName": "白水Jimmy",
+            "guardIconUrl": "/media/native-preview/asset-030.png",
+            "anchorUid": "3546635395139954",
+            "isCurrentRoom": true,
+            "isLighted": true
+          }
+        },
+        "text": "那会有老佛爷主题的音声吗",
+        "isAutoDanmaku": false,
+        "danmakuSendType": 0
+      }
+    },
+    {
+      "key": "native-023",
+      "source": {
+        "eventKey": "session-32098296-1793459010765-1:archive-event:869964259|448644436|以前的麻麻就不🔔了嘛|1793459911949",
+        "sessionId": "session-32098296-1793459010765-1",
+        "eventId": "869964259"
+      },
+      "kind": "弹幕",
+      "features": [
+        "type:0",
+        "chat:plain",
+        "identity:admiral",
+        "identity:admin",
+        "identity:admin-guard",
+        "info:medal",
+        "info:wealth",
+        "info:enhanced-guard"
+      ],
+      "event": {
+        "id": "869964259",
+        "msgType": 0,
+        "roomId": 32098296,
+        "ts": 1793459911949,
+        "user": {
+          "uid": "448644436",
+          "uname": "GF小哈",
+          "avatar": "/media/native-preview/asset-060.jpg",
+          "guardLevel": 2,
+          "guardIconUrl": "/media/native-preview/asset-026.png",
+          "guardMilestone": "thousand",
+          "guardIconSet": "enhanced",
+          "wealthLevel": 34,
+          "wealthIconUrl": "/media/native-preview/asset-032.png",
+          "currentRank": 0,
+          "userLevel": 20,
+          "userLevelBorder": 0,
+          "phoneVerified": true,
+          "isAdmin": true,
+          "medal": {
+            "name": "叽咪花",
+            "level": 41,
+            "guardLevel": 2,
+            "type": 0,
+            "anchorName": "白水Jimmy",
+            "guardIconUrl": "/media/native-preview/asset-026.png",
+            "anchorUid": "3546635395139954",
+            "isCurrentRoom": true,
+            "isLighted": true
+          }
+        },
+        "text": "以前的麻麻就不🔔了嘛",
+        "isAutoDanmaku": false,
+        "danmakuSendType": 0
+      }
+    },
+    {
+      "key": "native-024",
+      "source": {
+        "eventKey": "session-32098296-1793459010765-1:archive-event:1793459325025|3546635395139954|jimihua.fun|1793459324579",
+        "sessionId": "session-32098296-1793459010765-1",
+        "eventId": "1793459325025"
+      },
+      "kind": "弹幕",
+      "features": [
+        "type:0",
+        "chat:plain",
+        "identity:captain",
+        "identity:anchor",
+        "info:medal",
+        "info:wealth",
+        "info:enhanced-guard"
+      ],
+      "event": {
+        "id": "1793459325025",
+        "msgType": 0,
+        "roomId": 32098296,
+        "ts": 1793459324579,
+        "user": {
+          "uid": "3546635395139954",
+          "uname": "白水Jimmy",
+          "avatar": "/media/native-preview/asset-034.jpg",
+          "guardLevel": 1,
+          "guardIconUrl": "/media/native-preview/asset-035.png",
+          "guardMilestone": "thousand",
+          "guardIconSet": "enhanced",
+          "wealthLevel": 8,
+          "currentRank": 0,
+          "userLevel": 0,
+          "userLevelBorder": 0,
+          "phoneVerified": true,
+          "isAnchor": true,
+          "medal": {
+            "name": "叽咪花",
+            "level": 26,
+            "guardLevel": 1,
+            "type": 0,
+            "anchorName": "白水Jimmy",
+            "guardIconUrl": "/media/native-preview/asset-035.png",
+            "anchorUid": "3546635395139954",
+            "isCurrentRoom": true,
+            "isLighted": true
+          }
+        },
+        "text": "jimihua.fun",
+        "isAutoDanmaku": false,
+        "danmakuSendType": 0
+      }
+    },
+    {
+      "key": "native-025",
+      "source": {
+        "eventKey": "session-545068-1793471440979-1:archive-event:SEND_GIFT_V2-1793471944941-3354",
+        "sessionId": "session-545068-1793471440979-1",
+        "eventId": "SEND_GIFT_V2-1793471944941-3354"
+      },
+      "kind": "礼物",
+      "features": [
+        "type:1",
+        "gift:free"
+      ],
+      "event": {
+        "id": "SEND_GIFT_V2-1793471944941-3354",
+        "msgType": 1,
+        "roomId": 545068,
+        "ts": 1793471944000,
+        "user": {
+          "uid": "34678579",
+          "uname": "菲欧妮zzz",
+          "avatar": "/media/native-preview/asset-043.jpg",
+          "guardLevel": 3,
+          "guardIconUrl": "/media/native-preview/asset-036.png",
+          "guardMilestone": "standard",
+          "guardIconSet": "base",
+          "medal": {
+            "name": "德云色",
+            "level": 53,
+            "guardLevel": 3,
+            "anchorUid": "8739477",
+            "isCurrentRoom": true,
+            "isLighted": true
+          }
+        },
+        "gift": {
+          "id": 3,
+          "name": "B坷垃",
+          "count": 10,
+          "price": 9900,
+          "coinType": "silver",
+          "total": 99000,
+          "icon": "/media/native-preview/asset-039.png",
+          "webp": "/media/native-preview/asset-038.webp",
+          "gif": "/media/native-preview/asset-040.gif",
+          "effect": 0,
+          "effectId": 0,
+          "hasImagedGift": 0,
+          "isFree": true,
+          "priceRmb": 0,
+          "totalRmb": 0,
+          "paymentRmb": 0
+        }
+      }
+    },
+    {
+      "key": "native-026",
+      "source": {
+        "eventKey": "session-22381346-1793580018679-1:archive-event:gift-v2:906359d3-cb4b-44f7-a5e9-5d176bd0a2ee",
+        "sessionId": "session-22381346-1793580018679-1",
+        "eventId": "gift-v2:906359d3-cb4b-44f7-a5e9-5d176bd0a2ee"
+      },
+      "kind": "礼物",
+      "features": [
+        "type:1",
+        "gift:blind"
+      ],
+      "event": {
+        "id": "gift-v2:906359d3-cb4b-44f7-a5e9-5d176bd0a2ee",
+        "msgType": 1,
+        "roomId": 22381346,
+        "ts": 1793581299000,
+        "user": {
+          "uid": "315986815",
+          "uname": "潁川戲志才",
+          "avatar": "/media/native-preview/asset-045.jpg",
+          "guardLevel": 0,
+          "wealthLevel": 13,
+          "wealthIconUrl": "/media/native-preview/asset-041.png",
+          "medal": {
+            "name": "羊柚串",
+            "level": 22,
+            "guardLevel": 0,
+            "anchorUid": "480248442",
+            "isCurrentRoom": true,
+            "isLighted": false
+          }
+        },
+        "gift": {
+          "id": 35207,
+          "name": "幸运泡泡",
+          "count": 1,
+          "price": 1500,
+          "coinType": "gold",
+          "total": 5000,
+          "icon": "/media/native-preview/asset-044.png",
+          "webp": "/media/native-preview/asset-042.webp",
+          "gif": "/media/native-preview/asset-046.gif",
+          "effect": 0,
+          "effectId": 0,
+          "hasImagedGift": 0,
+          "blindGiftName": "幸运盲盒",
+          "blindWebp": "/media/native-preview/asset-048.webp",
+          "blindGif": "/media/native-preview/asset-047.gif",
+          "blindIcon": "/media/native-preview/asset-049.png",
+          "isFree": false,
+          "priceRmb": 1.5,
+          "totalRmb": 5,
+          "blindPriceRmb": 5,
+          "blindHitPriceRmb": 1.5,
+          "paymentRmb": 5
+        }
+      }
+    },
+    {
+      "key": "native-027",
+      "source": {
+        "eventKey": "session-22381346-1793580018679-1:archive-event:interact-v2:3989847:2:1793582881897002667",
+        "sessionId": "session-22381346-1793580018679-1",
+        "eventId": "INTERACT_WORD_V2-1793582883223-2635"
+      },
+      "kind": "互动",
+      "features": [
+        "type:10",
+        "interaction:follow"
+      ],
+      "event": {
+        "id": "INTERACT_WORD_V2-1793582883223-2635",
+        "msgType": 10,
+        "roomId": 22381346,
+        "ts": 1793582883000,
+        "interactKind": "follow",
+        "user": {
+          "uid": "3989847",
+          "uname": "公子当如是_",
+          "avatar": "/media/native-preview/asset-051.jpg",
+          "guardLevel": 0,
+          "wealthLevel": 23,
+          "wealthIconUrl": "/media/native-preview/asset-013.png"
+        },
+        "text": "关注了主播"
+      }
+    },
+    {
+      "key": "native-028",
+      "source": {
+        "eventKey": "session-545068-1793471440979-1:archive-event:interact-v2:109347267:3:1793473321798585191",
+        "sessionId": "session-545068-1793471440979-1",
+        "eventId": "INTERACT_WORD_V2-1793473322934-10197"
+      },
+      "kind": "互动",
+      "features": [
+        "type:10",
+        "interaction:share"
+      ],
+      "event": {
+        "id": "INTERACT_WORD_V2-1793473322934-10197",
+        "msgType": 10,
+        "roomId": 545068,
+        "ts": 1793473321000,
+        "interactKind": "share",
+        "user": {
+          "uid": "109347267",
+          "uname": "闹心OwO",
+          "avatar": "/media/native-preview/asset-050.jpg",
+          "guardLevel": 0,
+          "medal": {
+            "name": "德云色",
+            "level": 30,
+            "guardLevel": 0,
+            "anchorUid": "8739477",
+            "isCurrentRoom": true
+          }
+        },
+        "text": "分享了直播间"
+      }
+    },
+    {
+      "key": "native-029",
+      "source": {
+        "eventKey": "session-22381346-1793580018679-1:archive-event:LIKE_INFO_V3_CLICK-1793583210795-2943",
+        "sessionId": "session-22381346-1793580018679-1",
+        "eventId": "LIKE_INFO_V3_CLICK-1793583210795-2943"
+      },
+      "kind": "互动",
+      "features": [
+        "type:10",
+        "interaction:like"
+      ],
+      "event": {
+        "id": "LIKE_INFO_V3_CLICK-1793583210795-2943",
+        "msgType": 10,
+        "roomId": 22381346,
+        "ts": 1793583210795,
+        "interactKind": "like",
+        "user": {
+          "uid": "162976890",
+          "uname": "D-awn",
+          "avatar": "/media/native-preview/asset-053.jpg",
+          "guardLevel": 0,
+          "wealthLevel": 26,
+          "wealthIconUrl": "/media/native-preview/asset-052.png",
+          "medal": {
+            "name": "羊柚串",
+            "level": 25,
+            "guardLevel": 0,
+            "isLighted": true
+          }
+        },
+        "text": "为主播点赞了"
+      }
+    },
+    {
+      "key": "native-030",
+      "source": {
+        "eventKey": "session-545068-1792963612429-1:archive-event:19970341",
+        "sessionId": "session-545068-1792963612429-1",
+        "eventId": "19970341"
+      },
+      "kind": "醒目留言",
+      "features": [
+        "type:2",
+        "sc-price:30",
+        "sc:deleted"
+      ],
+      "event": {
+        "id": "19970341",
+        "msgType": 2,
+        "roomId": 545068,
+        "ts": 1792966521000,
+        "user": {
+          "uid": "14678977",
+          "uname": "itchdee083",
+          "avatar": "/media/native-preview/asset-058.jpg",
+          "guardLevel": 0,
+          "wealthLevel": 30,
+          "userLevel": 24,
+          "medal": {
+            "name": "德云色",
+            "level": 35,
+            "guardLevel": 0,
+            "isLighted": true
+          }
+        },
+        "text": "不是，搞效果搞你冯二十多分钟？节奏起来还不是因为你俩搁那娘念？你嘴硬那打完看录播",
+        "sc": {
+          "price": 30,
+          "message": "不是，搞效果搞你冯二十多分钟？节奏起来还不是因为你俩搁那娘念？你嘴硬那打完看录播",
+          "duration": 60
+        },
+        "scDeleted": true
+      }
+    },
+    {
+      "key": "native-031",
+      "source": {
+        "eventKey": "session-545068-1793471440979-1:archive-event:20102496",
+        "sessionId": "session-545068-1793471440979-1",
+        "eventId": "20102496"
+      },
+      "kind": "醒目留言",
+      "features": [
+        "type:2",
+        "sc-price:30",
+        "sc:translation"
+      ],
+      "event": {
+        "id": "20102496",
+        "msgType": 2,
+        "roomId": 545068,
+        "ts": 1793471551000,
+        "user": {
+          "uid": "119170162",
+          "uname": "Jay方",
+          "avatar": "/media/native-preview/asset-071.jpg",
+          "guardLevel": 0,
+          "userLevel": 20,
+          "medal": {
+            "name": "德云色",
+            "level": 22,
+            "guardLevel": 0,
+            "isLighted": true
+          }
+        },
+        "text": "山上座位的现在150一张。选手通道的300。人民币",
+        "sc": {
+          "price": 30,
+          "message": "山上座位的现在150一张。选手通道的300。人民币",
+          "duration": 60,
+          "trans": "山の上席の現在150枚。選手通路の300。人民元"
+        }
+      }
+    },
+    {
+      "key": "native-032",
+      "source": {
+        "eventKey": "[\"cloud-event\",\"019393c1-b489-459d-9f79-2147a70d8b51\",\"24125\",\"167250\",0]",
+        "sessionId": "[\"cloud-session\",\"019393c1-b489-459d-9f79-2147a70d8b51\",\"24125\",\"15ea2984-95bb-47e4-97bf-5e884f9234f5\"]",
+        "eventId": "[\"cloud-fallback\",\"019393c1-b489-459d-9f79-2147a70d8b51\",\"24125\",\"167250\",\"USER_TOAST_MSG_V2\",0]"
+      },
+      "kind": "大航海",
+      "features": [
+        "type:3",
+        "purchase:2",
+        "purchase-action:续费",
+        "purchase-unit:月"
+      ],
+      "event": {
+        "id": "[\"cloud-fallback\",\"019393c1-b489-459d-9f79-2147a70d8b51\",\"24125\",\"167250\",\"USER_TOAST_MSG_V2\",0]",
+        "msgType": 3,
+        "roomId": 24125,
+        "ts": 1792759054000,
+        "user": {
+          "uid": "92439132",
+          "uname": "冻鳗糕守",
+          "avatar": "/media/native-preview/asset-055.jpg",
+          "guardLevel": 2,
+          "guardIconUrl": "/media/native-preview/asset-057.png",
+          "guardMilestone": "standard",
+          "guardIconSet": "base",
+          "wealthLevel": 57,
+          "wealthIconKey": "ChronosWealth_5.png",
+          "wealthIconUrl": "/media/native-preview/asset-056.png"
+        },
+        "text": "<%冻鳗糕守%> 在主播鲸落落raku的直播间续费了提督，今天是TA陪伴主播的第1465天",
+        "guard": {
+          "level": 2,
+          "count": 1,
+          "unit": "月",
+          "price": 1598000,
+          "priceRmb": 1598,
+          "opType": 2,
+          "action": "续费"
+        }
+      }
+    },
+    {
+      "key": "native-033",
+      "source": {
+        "eventKey": "session-545068-1793515351254-1:archive-event:1793515422|3690995732449567|打call|1793515461677",
+        "sessionId": "session-545068-1793515351254-1",
+        "eventId": "1793515422"
+      },
+      "kind": "弹幕",
+      "features": [
+        "type:0",
+        "chat:big-emote",
+        "identity:normal",
+        "info:medal",
+        "info:wealth",
+        "chat:banner"
+      ],
+      "event": {
+        "id": "1793515422",
+        "msgType": 0,
+        "roomId": 545068,
+        "ts": 1793515461677,
+        "user": {
+          "uid": "3690995732449567",
+          "uname": "路途与旅人",
+          "avatar": "/media/native-preview/asset-081.jpg",
+          "guardLevel": 0,
+          "wealthLevel": 5,
+          "currentRank": 0,
+          "userLevel": 0,
+          "userLevelBorder": 0,
+          "phoneVerified": true,
+          "medal": {
+            "name": "德云色",
+            "level": 25,
+            "guardLevel": 0,
+            "type": 0,
+            "anchorName": "老实憨厚的笑笑",
+            "anchorUid": "8739477",
+            "isCurrentRoom": true,
+            "isLighted": true
+          }
+        },
+        "text": "打call",
+        "isAutoDanmaku": false,
+        "danmakuSendType": 0,
+        "emoticon": {
+          "url": "/media/native-preview/asset-080.png",
+          "width": 195,
+          "height": 60,
+          "unique": "official_146"
+        }
+      }
+    },
+    {
+      "key": "native-034",
+      "source": {
+        "eventKey": "session-545068-1792963612429-1:archive-event:0|103086|加餐|1792967857787",
+        "sessionId": "session-545068-1792963612429-1",
+        "eventId": "0"
+      },
+      "kind": "弹幕",
+      "features": [
+        "type:0",
+        "chat:plain",
+        "identity:normal",
+        "info:medal",
+        "info:wealth",
+        "chat:auto"
+      ],
+      "event": {
+        "id": "0",
+        "msgType": 0,
+        "roomId": 545068,
+        "ts": 1792967857787,
+        "user": {
+          "uid": "103086",
+          "uname": "立立姆",
+          "avatar": "/media/native-preview/asset-088.jpg",
+          "guardLevel": 0,
+          "wealthLevel": 7,
+          "currentRank": 0,
+          "userLevel": 21,
+          "userLevelBorder": 0,
+          "phoneVerified": true,
+          "medal": {
+            "name": "德云色",
+            "level": 31,
+            "guardLevel": 0,
+            "type": 0,
+            "anchorName": "老实憨厚的笑笑",
+            "anchorUid": "8739477",
+            "isCurrentRoom": true,
+            "isLighted": true
+          }
+        },
+        "text": "加餐",
+        "isAutoDanmaku": true,
+        "danmakuSendType": 2
+      }
+    },
+    {
+      "key": "native-035",
+      "source": {
+        "eventKey": "session-1852504554-1793311653031-1:archive-event:gift-v2:200818e7-e4f0-44f8-ac98-2161dadb255a",
+        "sessionId": "session-1852504554-1793311653031-1",
+        "eventId": "gift-v2:200818e7-e4f0-44f8-ac98-2161dadb255a"
+      },
+      "kind": "礼物",
+      "features": [
+        "type:1",
+        "gift:blind-profit",
+        "gift:blind"
+      ],
+      "event": {
+        "id": "gift-v2:200818e7-e4f0-44f8-ac98-2161dadb255a",
+        "msgType": 1,
+        "roomId": 1852504554,
+        "ts": 1793313935670,
+        "user": {
+          "uid": "269261982",
+          "uname": "聋提灯",
+          "avatar": "/media/native-preview/asset-082.jpg",
+          "guardLevel": 0,
+          "wealthLevel": 20,
+          "wealthIconUrl": "/media/native-preview/asset-079.png"
+        },
+        "gift": {
+          "id": 36049,
+          "name": "古堡之夜",
+          "count": 1,
+          "price": 100000,
+          "coinType": "gold",
+          "total": 9000,
+          "icon": "/media/native-preview/asset-078.png",
+          "webp": "/media/native-preview/asset-084.webp",
+          "gif": "/media/native-preview/asset-083.gif",
+          "effect": 2,
+          "effectId": 6367,
+          "hasImagedGift": 1,
+          "blindGiftName": "假面盲盒",
+          "blindWebp": "/media/native-preview/asset-086.webp",
+          "blindGif": "/media/native-preview/asset-089.gif",
+          "blindIcon": "/media/native-preview/asset-085.png",
+          "isFree": false,
+          "priceRmb": 100,
+          "totalRmb": 9,
+          "blindPriceRmb": 9,
+          "blindHitPriceRmb": 100,
+          "paymentRmb": 9
+        }
+      }
+    },
+    {
+      "key": "native-036",
+      "source": {
+        "eventKey": "session-31999413-1790136278417-1:archive-event:pocket-start:28620670",
+        "sessionId": "session-31999413-1790136278417-1",
+        "eventId": "pocket-start:28620670"
+      },
+      "kind": "红包/天选",
+      "features": [
+        "type:6",
+        "redpocket:command",
+        "redpocket:multiple-awards"
+      ],
+      "event": {
+        "id": "pocket-start:28620670",
+        "msgType": 6,
+        "roomId": 31999413,
+        "ts": 1790139748000,
+        "user": {
+          "uid": "9617619",
+          "uname": "哔哩哔哩直播",
+          "avatar": "/media/native-preview/asset-090.jpg",
+          "guardLevel": 0
+        },
+        "lottery": {
+          "id": 28620670,
+          "awardName": "",
+          "awardNum": 0,
+          "awards": [
+            {
+              "id": 31872,
+              "name": "粉玫瑰",
+              "count": 2
+            },
+            {
+              "id": 33300,
+              "name": "666",
+              "count": 2
+            }
+          ],
+          "totalPrice": 10000,
+          "waitTime": 300
+        },
+        "pocket": {
+          "lotId": 28620670,
+          "danmu": "老板大气！点点红包抽礼物！"
+        }
+      }
+    },
+    {
+      "key": "native-guard-redpocket",
+      "source": {
+        "eventId": "1704478414:5252461:2763:16556580",
+        "file": "tests/fixtures/compat/laplace/original-samples.json"
+      },
+      "kind": "红包/天选",
+      "features": [
+        "type:6",
+        "redpocket:guard",
+        "redpocket:command"
+      ],
+      "event": {
+        "id": "1704478414:5252461:2763:16556580",
+        "msgType": 6,
+        "roomId": 5252461,
+        "ts": 1710942296000,
+        "user": {
+          "uid": "2763",
+          "uname": "アイノラパス",
+          "avatar": "/media/native-preview/guard-redpocket-sender.jpg",
+          "guardLevel": 0
+        },
+        "pocket": {
+          "lotId": 16556580,
+          "rpType": 2,
+          "danmu": "老板大气，抽到红包就上舰！"
+        },
+        "lottery": {
+          "id": 16556580,
+          "awardName": "",
+          "awardNum": 0,
+          "awards": [
+            {
+              "id": 0,
+              "name": "1折上舰",
+              "count": 5
+            }
+          ],
+          "totalPrice": 891000,
+          "waitTime": 600
+        }
+      }
+    },
+    {
+      "key": "native-037",
+      "source": {
+        "eventKey": "session-21696950-1791115239942-1:archive-event:ANCHOR_LOT_AWARD-1791127004628-1060",
+        "sessionId": "session-21696950-1791115239942-1",
+        "eventId": "ANCHOR_LOT_AWARD-1791127004628-1060"
+      },
+      "kind": "红包/天选",
+      "features": [
+        "type:5",
+        "info:default-avatar",
+        "lottery:single-winner"
+      ],
+      "event": {
+        "id": "ANCHOR_LOT_AWARD-1791127004628-1060",
+        "msgType": 5,
+        "roomId": 21696950,
+        "ts": 1791127004628,
+        "user": {
+          "uid": "1484400751",
+          "uname": "睡觉还是树",
+          "guardLevel": 0
+        },
+        "lottery": {
+          "id": 16199583,
+          "awardName": "阿萨10月舰回馈",
+          "awardNum": 1,
+          "winners": [
+            {
+              "uid": "1484400751",
+              "uname": "睡觉还是树"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "key": "native-038",
+      "source": {
+        "eventKey": "session-1852504554-1793311653031-1:archive-event:1793317072|282935753|(=⌒‿‿⌒=)|1793317072772",
+        "sessionId": "session-1852504554-1793311653031-1",
+        "eventId": "1793317072"
+      },
+      "kind": "弹幕",
+      "features": [
+        "type:0",
+        "chat:plain",
+        "identity:normal",
+        "info:medal",
+        "info:wealth",
+        "info:other-room-medal"
+      ],
+      "event": {
+        "id": "1793317072",
+        "msgType": 0,
+        "roomId": 1852504554,
+        "ts": 1793317072772,
+        "user": {
+          "uid": "282935753",
+          "uname": "傲雪酱OvO",
+          "avatar": "/media/native-preview/asset-087.jpg",
+          "guardLevel": 0,
+          "wealthLevel": 8,
+          "currentRank": 0,
+          "userLevel": 17,
+          "userLevelBorder": 0,
+          "phoneVerified": true,
+          "medal": {
+            "name": "雨烛灵",
+            "level": 25,
+            "guardLevel": 0,
+            "type": 0,
+            "anchorName": "柚雨Kioi",
+            "anchorUid": "1096820127",
+            "isCurrentRoom": false,
+            "isLighted": true
+          }
+        },
+        "text": "(=⌒‿‿⌒=)",
+        "isAutoDanmaku": false,
+        "danmakuSendType": 0
+      }
+    },
+    {
+      "key": "native-039",
+      "source": {
+        "eventKey": "session-22381346-1793580018679-1:archive-event:-642792556|14244|拜拜|1793583325339",
+        "sessionId": "session-22381346-1793580018679-1",
+        "eventId": "-642792556"
+      },
+      "kind": "弹幕",
+      "features": [
+        "type:0",
+        "chat:plain",
+        "identity:normal",
+        "info:medal",
+        "info:wealth",
+        "info:rank",
+        "info:rank-three"
+      ],
+      "event": {
+        "id": "-642792556",
+        "msgType": 0,
+        "roomId": 22381346,
+        "ts": 1793583325339,
+        "user": {
+          "uid": "14244",
+          "uname": "突击の咸鱼王",
+          "avatar": "/media/native-preview/asset-059.jpg",
+          "guardLevel": 0,
+          "wealthLevel": 13,
+          "wealthIconUrl": "/media/native-preview/asset-041.png",
+          "currentRank": 3,
+          "userLevel": 9,
+          "userLevelBorder": 0,
+          "phoneVerified": true,
+          "medal": {
+            "name": "羊柚串",
+            "level": 17,
+            "guardLevel": 0,
+            "type": 0,
+            "anchorName": "北柚香Yuka",
+            "anchorUid": "480248442",
+            "isCurrentRoom": true,
+            "isLighted": true
+          }
+        },
+        "text": "拜拜",
+        "isAutoDanmaku": false,
+        "danmakuSendType": 0
+      }
+    },
+    {
+      "key": "native-040",
+      "source": {
+        "eventKey": "[\"cloud-event\",\"019393c1-b489-459d-9f79-2147a70d8b51\",\"24125\",\"165526\",0]",
+        "sessionId": "[\"cloud-session\",\"019393c1-b489-459d-9f79-2147a70d8b51\",\"24125\",\"15ea2984-95bb-47e4-97bf-5e884f9234f5\"]",
+        "eventId": "[\"cloud-fallback\",\"019393c1-b489-459d-9f79-2147a70d8b51\",\"24125\",\"165526\",\"USER_TOAST_MSG_V2\",0]"
+      },
+      "kind": "大航海",
+      "features": [
+        "type:3",
+        "info:default-avatar",
+        "purchase:1",
+        "purchase-action:续费",
+        "purchase-unit:月"
+      ],
+      "event": {
+        "id": "[\"cloud-fallback\",\"019393c1-b489-459d-9f79-2147a70d8b51\",\"24125\",\"165526\",\"USER_TOAST_MSG_V2\",0]",
+        "msgType": 3,
+        "roomId": 24125,
+        "ts": 1792752645000,
+        "user": {
+          "uid": "5889055",
+          "uname": "高天亮拿下第二冠",
+          "guardLevel": 1,
+          "guardMilestone": "standard",
+          "guardIconSet": "base"
+        },
+        "text": "<%高天亮拿下第二冠%> 在主播鲸落落raku的直播间续费了舰长，今天是TA陪伴主播的第1561天",
+        "guard": {
+          "level": 1,
+          "count": 1,
+          "unit": "月",
+          "price": 168000,
+          "priceRmb": 168,
+          "opType": 2,
+          "action": "续费"
+        }
+      }
+    },
+    {
+      "key": "native-041",
+      "source": {
+        "eventKey": "session-22381346-1793580018679-1:archive-event:20127504",
+        "sessionId": "session-22381346-1793580018679-1",
+        "eventId": "20127504"
+      },
+      "kind": "醒目留言",
+      "features": [
+        "type:2",
+        "sc-price:30"
+      ],
+      "event": {
+        "id": "20127504",
+        "msgType": 2,
+        "roomId": 22381346,
+        "ts": 1793582254000,
+        "user": {
+          "uid": "14244",
+          "uname": "突击の咸鱼王",
+          "avatar": "/media/native-preview/asset-059.jpg",
+          "guardLevel": 0,
+          "wealthLevel": 13,
+          "wealthIconUrl": "/media/native-preview/asset-041.png",
+          "userLevel": 9,
+          "medal": {
+            "name": "羊柚串",
+            "level": 15,
+            "guardLevel": 0,
+            "isLighted": true
+          }
+        },
+        "text": "1 刚下夜班，好累，又睡不着...",
+        "sc": {
+          "price": 30,
+          "message": "1 刚下夜班，好累，又睡不着...",
+          "duration": 60
+        }
+      }
+    },
+    {
+      "key": "native-042",
+      "source": {
+        "eventKey": "session-545068-1793471440979-1:archive-event:20102577",
+        "sessionId": "session-545068-1793471440979-1",
+        "eventId": "20102577"
+      },
+      "kind": "醒目留言",
+      "features": [
+        "type:2",
+        "sc-price:100"
+      ],
+      "event": {
+        "id": "20102577",
+        "msgType": 2,
+        "roomId": 545068,
+        "ts": 1793472266000,
+        "user": {
+          "uid": "449133831",
+          "uname": "nobug77",
+          "avatar": "/media/native-preview/asset-062.jpg",
+          "guardLevel": 0,
+          "userLevel": 10,
+          "medal": {
+            "name": "德云色",
+            "level": 32,
+            "guardLevel": 0,
+            "isLighted": true
+          }
+        },
+        "text": "李哥最近看库里比赛了吗，爽连胜",
+        "sc": {
+          "price": 100,
+          "message": "李哥最近看库里比赛了吗，爽连胜",
+          "duration": 300
+        }
+      }
+    },
+    {
+      "key": "native-043",
+      "source": {
+        "eventKey": "session-545068-1793471440979-1:archive-event:20102511",
+        "sessionId": "session-545068-1793471440979-1",
+        "eventId": "20102511"
+      },
+      "kind": "醒目留言",
+      "features": [
+        "type:2",
+        "sc-price:50"
+      ],
+      "event": {
+        "id": "20102511",
+        "msgType": 2,
+        "roomId": 545068,
+        "ts": 1793471669000,
+        "user": {
+          "uid": "55003288",
+          "uname": "画甲z",
+          "avatar": "/media/native-preview/asset-077.jpg",
+          "guardLevel": 0,
+          "userLevel": 26,
+          "medal": {
+            "name": "德云色",
+            "level": 25,
+            "guardLevel": 0,
+            "isLighted": true
+          }
+        },
+        "text": "我看纽约山顶票1200刀",
+        "sc": {
+          "price": 50,
+          "message": "我看纽约山顶票1200刀",
+          "duration": 120
+        }
+      }
+    },
+    {
+      "key": "native-044",
+      "source": {
+        "eventKey": "session-545068-1792726841779-1:archive-event:19902233",
+        "sessionId": "session-545068-1792726841779-1",
+        "eventId": "19902233"
+      },
+      "kind": "醒目留言",
+      "features": [
+        "type:2",
+        "sc-price:2000"
+      ],
+      "event": {
+        "id": "19902233",
+        "msgType": 2,
+        "roomId": 545068,
+        "ts": 1792753574000,
+        "user": {
+          "uid": "630146024",
+          "uname": "喵喵的凯",
+          "avatar": "/media/native-preview/asset-063.jpg",
+          "guardLevel": 1,
+          "guardIconUrl": "/media/native-preview/asset-015.png",
+          "guardMilestone": "standard",
+          "guardIconSet": "base",
+          "wealthLevel": 50,
+          "wealthIconKey": "ChronosWealth_5.png",
+          "wealthIconUrl": "/media/native-preview/asset-061.png",
+          "userLevel": 41,
+          "medal": {
+            "name": "德云色",
+            "level": 43,
+            "guardLevel": 1,
+            "isLighted": true
+          }
+        },
+        "text": "挑拨在哪，就问你现在包狗是不是不可能是下个飞的了",
+        "sc": {
+          "price": 2000,
+          "message": "挑拨在哪，就问你现在包狗是不是不可能是下个飞的了",
+          "duration": 7200
+        }
+      }
+    },
+    {
+      "key": "native-045",
+      "source": {
+        "eventKey": "session-545068-1792726841779-1:archive-event:19901967",
+        "sessionId": "session-545068-1792726841779-1",
+        "eventId": "19901967"
+      },
+      "kind": "醒目留言",
+      "features": [
+        "type:2",
+        "sc-price:500"
+      ],
+      "event": {
+        "id": "19901967",
+        "msgType": 2,
+        "roomId": 545068,
+        "ts": 1792753083000,
+        "user": {
+          "uid": "630146024",
+          "uname": "喵喵的凯",
+          "avatar": "/media/native-preview/asset-063.jpg",
+          "guardLevel": 1,
+          "guardIconUrl": "/media/native-preview/asset-015.png",
+          "guardMilestone": "standard",
+          "guardIconSet": "base",
+          "wealthLevel": 50,
+          "wealthIconKey": "ChronosWealth_5.png",
+          "wealthIconUrl": "/media/native-preview/asset-061.png",
+          "userLevel": 41,
+          "medal": {
+            "name": "德云色",
+            "level": 43,
+            "guardLevel": 1,
+            "isLighted": true
+          }
+        },
+        "text": "包包你真要学习一下鱼哥吃赛博铁饭碗的精神",
+        "sc": {
+          "price": 500,
+          "message": "包包你真要学习一下鱼哥吃赛博铁饭碗的精神",
+          "duration": 1800
+        }
+      }
+    },
+    {
+      "key": "native-046",
+      "source": {
+        "eventKey": "session-545068-1792726841779-1:archive-event:19901940",
+        "sessionId": "session-545068-1792726841779-1",
+        "eventId": "19901940"
+      },
+      "kind": "醒目留言",
+      "features": [
+        "type:2",
+        "sc-price:200"
+      ],
+      "event": {
+        "id": "19901940",
+        "msgType": 2,
+        "roomId": 545068,
+        "ts": 1792753073000,
+        "user": {
+          "uid": "687178313",
+          "uname": "wudaiyuan",
+          "avatar": "/media/native-preview/asset-062.jpg",
+          "guardLevel": 1,
+          "guardMilestone": "standard",
+          "guardIconSet": "base",
+          "wealthLevel": 44,
+          "wealthIconKey": "ChronosWealth_4.png",
+          "wealthIconUrl": "/media/native-preview/asset-065.png",
+          "userLevel": 32,
+          "medal": {
+            "name": "德云色",
+            "level": 34,
+            "guardLevel": 1,
+            "isLighted": true
+          }
+        },
+        "text": "什么情况，包包来抱一个",
+        "sc": {
+          "price": 200,
+          "message": "什么情况，包包来抱一个",
+          "duration": 300
+        }
+      }
+    },
+    {
+      "key": "native-047",
+      "source": {
+        "eventKey": "session-545068-1792726841779-1:archive-event:19901807",
+        "sessionId": "session-545068-1792726841779-1",
+        "eventId": "19901807"
+      },
+      "kind": "醒目留言",
+      "features": [
+        "type:2",
+        "sc-price:1000"
+      ],
+      "event": {
+        "id": "19901807",
+        "msgType": 2,
+        "roomId": 545068,
+        "ts": 1792752778000,
+        "user": {
+          "uid": "630146024",
+          "uname": "喵喵的凯",
+          "avatar": "/media/native-preview/asset-063.jpg",
+          "guardLevel": 1,
+          "guardIconUrl": "/media/native-preview/asset-015.png",
+          "guardMilestone": "standard",
+          "guardIconSet": "base",
+          "wealthLevel": 50,
+          "wealthIconKey": "ChronosWealth_5.png",
+          "wealthIconUrl": "/media/native-preview/asset-061.png",
+          "userLevel": 41,
+          "medal": {
+            "name": "德云色",
+            "level": 43,
+            "guardLevel": 1,
+            "isLighted": true
+          }
+        },
+        "text": "鱼出你就害吧，不给包包说话什么意思",
+        "sc": {
+          "price": 1000,
+          "message": "鱼出你就害吧，不给包包说话什么意思",
+          "duration": 3600
+        }
+      }
+    },
+    {
+      "key": "native-048",
+      "source": {
+        "eventKey": "session-21696950-1791115239942-1:archive-event:19469374",
+        "sessionId": "session-21696950-1791115239942-1",
+        "eventId": "19469374"
+      },
+      "kind": "醒目留言",
+      "features": [
+        "type:2",
+        "sc-price:888"
+      ],
+      "event": {
+        "id": "19469374",
+        "msgType": 2,
+        "roomId": 21696950,
+        "ts": 1791129469000,
+        "user": {
+          "uid": "9565733",
+          "uname": "绒球喵喵咪",
+          "avatar": "/media/native-preview/asset-070.jpg",
+          "guardLevel": 2,
+          "guardMilestone": "thousand",
+          "guardIconSet": "enhanced",
+          "userLevel": 15,
+          "medal": {
+            "name": "酷萨",
+            "level": 39,
+            "guardLevel": 2,
+            "isCurrentRoom": true,
+            "isLighted": true
+          }
+        },
+        "text": "主播主播还记得唱ロミオ吗？不记得的话许愿一首明日、僕は君に会いに行く",
+        "sc": {
+          "price": 888,
+          "message": "主播主播还记得唱ロミオ吗？不记得的话许愿一首明日、僕は君に会いに行く",
+          "duration": 1800
+        }
+      }
+    },
+    {
+      "key": "native-049",
+      "source": {
+        "eventKey": "session-21696950-1791115239942-1:archive-event:19469302",
+        "sessionId": "session-21696950-1791115239942-1",
+        "eventId": "19469302"
+      },
+      "kind": "醒目留言",
+      "features": [
+        "type:2",
+        "sc-price:20"
+      ],
+      "event": {
+        "id": "19469302",
+        "msgType": 2,
+        "roomId": 21696950,
+        "ts": 1791129339000,
+        "user": {
+          "uid": "483430447",
+          "uname": "桉荞_",
+          "avatar": "/media/native-preview/asset-066.jpg",
+          "guardLevel": 0,
+          "userLevel": 10,
+          "medal": {
+            "name": "酷萨",
+            "level": 30,
+            "guardLevel": 0,
+            "isCurrentRoom": true,
+            "isLighted": true
+          }
+        },
+        "text": "哥能不能来首带我去找夜生活👋👋",
+        "sc": {
+          "price": 20,
+          "message": "哥能不能来首带我去找夜生活👋👋",
+          "duration": 5
+        }
+      }
+    },
+    {
+      "key": "native-050",
+      "source": {
+        "eventKey": "session-21696950-1791115239942-1:archive-event:19461971",
+        "sessionId": "session-21696950-1791115239942-1",
+        "eventId": "19461971"
+      },
+      "kind": "醒目留言",
+      "features": [
+        "type:2",
+        "sc-price:10000"
+      ],
+      "event": {
+        "id": "19461971",
+        "msgType": 2,
+        "roomId": 21696950,
+        "ts": 1791119471000,
+        "user": {
+          "uid": "16423196",
+          "uname": "某人专用の猫薄荷灬",
+          "avatar": "/media/native-preview/asset-064.jpg",
+          "guardLevel": 3,
+          "guardMilestone": "thousand",
+          "guardIconSet": "enhanced",
+          "userLevel": 50,
+          "medal": {
+            "name": "酷萨",
+            "level": 59,
+            "guardLevel": 3,
+            "isCurrentRoom": true,
+            "isLighted": true
+          }
+        },
+        "text": "莉❤️",
+        "sc": {
+          "price": 10000,
+          "message": "莉❤️",
+          "duration": 7200
+        }
+      }
+    },
+    {
+      "key": "native-051",
+      "source": {
+        "eventKey": "session-21696950-1791115239942-1:archive-event:19460249",
+        "sessionId": "session-21696950-1791115239942-1",
+        "eventId": "19460249"
+      },
+      "kind": "醒目留言",
+      "features": [
+        "type:2",
+        "sc-price:520"
+      ],
+      "event": {
+        "id": "19460249",
+        "msgType": 2,
+        "roomId": 21696950,
+        "ts": 1791117095000,
+        "user": {
+          "uid": "664078221",
+          "uname": "艾夢_",
+          "avatar": "/media/native-preview/asset-067.jpg",
+          "guardLevel": 2,
+          "guardIconUrl": "/media/native-preview/asset-026.png",
+          "guardMilestone": "thousand",
+          "guardIconSet": "enhanced",
+          "wealthLevel": 28,
+          "wealthIconUrl": "/media/native-preview/asset-074.png",
+          "userLevel": 14,
+          "medal": {
+            "name": "酷萨",
+            "level": 37,
+            "guardLevel": 2,
+            "isCurrentRoom": true,
+            "isLighted": true
+          }
+        },
+        "text": "啊啊啊新衣服好萌呀好萌呀宝宝🤏🤏🤏🤏🤏🤏宝宝可不可以叫我艾夢姐姐呀 萌死了我亲亲你诶呀诶呀",
+        "sc": {
+          "price": 520,
+          "message": "啊啊啊新衣服好萌呀好萌呀宝宝🤏🤏🤏🤏🤏🤏宝宝可不可以叫我艾夢姐姐呀 萌死了我亲亲你诶呀诶呀",
+          "duration": 1800
+        }
+      }
+    },
+    {
+      "key": "native-052",
+      "source": {
+        "eventKey": "session-21696950-1791115239942-1:archive-event:19459592",
+        "sessionId": "session-21696950-1791115239942-1",
+        "eventId": "19459592"
+      },
+      "kind": "醒目留言",
+      "features": [
+        "type:2",
+        "sc-price:10"
+      ],
+      "event": {
+        "id": "19459592",
+        "msgType": 2,
+        "roomId": 21696950,
+        "ts": 1791116166000,
+        "user": {
+          "uid": "1406529855",
+          "uname": "o东东东东东o",
+          "avatar": "/media/native-preview/asset-069.jpg",
+          "guardLevel": 0,
+          "userLevel": 1,
+          "medal": {
+            "name": "酷萨",
+            "level": 18,
+            "guardLevel": 0,
+            "isCurrentRoom": true,
+            "isLighted": true
+          }
+        },
+        "text": "晚上好阿莉宝贝",
+        "sc": {
+          "price": 10,
+          "message": "晚上好阿莉宝贝",
+          "duration": 5
+        }
+      }
+    },
+    {
+      "key": "native-053",
+      "source": {
+        "eventKey": "session-21696950-1791115239942-1:archive-event:19459496",
+        "sessionId": "session-21696950-1791115239942-1",
+        "eventId": "19459496"
+      },
+      "kind": "醒目留言",
+      "features": [
+        "type:2",
+        "sc-price:300"
+      ],
+      "event": {
+        "id": "19459496",
+        "msgType": 2,
+        "roomId": 21696950,
+        "ts": 1791116063000,
+        "user": {
+          "uid": "1135651151",
+          "uname": "無寻咕咕",
+          "avatar": "/media/native-preview/asset-068.jpg",
+          "guardLevel": 2,
+          "guardIconUrl": "/media/native-preview/asset-026.png",
+          "guardMilestone": "thousand",
+          "guardIconSet": "enhanced",
+          "wealthLevel": 30,
+          "wealthIconUrl": "/media/native-preview/asset-006.png",
+          "userLevel": 16,
+          "medal": {
+            "name": "酷萨",
+            "level": 39,
+            "guardLevel": 2,
+            "isCurrentRoom": true,
+            "isLighted": true
+          }
+        },
+        "text": "莉宝！球想你了天气冷了记得保暖你是世界上最萌的宝宝！上次叫了姐姐这次能不能叫妹妹再给个亲亲！你哥还说你不给我亲亲TT哭哭",
+        "sc": {
+          "price": 300,
+          "message": "莉宝！球想你了天气冷了记得保暖你是世界上最萌的宝宝！上次叫了姐姐这次能不能叫妹妹再给个亲亲！你哥还说你不给我亲亲TT哭哭",
+          "duration": 300
+        }
+      }
+    },
+    {
+      "key": "native-054",
+      "source": {
+        "eventKey": "session-26872684-1790943010462-1:archive-event:19413188",
+        "sessionId": "session-26872684-1790943010462-1",
+        "eventId": "19413188"
+      },
+      "kind": "醒目留言",
+      "features": [
+        "type:2",
+        "sc-price:6"
+      ],
+      "event": {
+        "id": "19413188",
+        "msgType": 2,
+        "roomId": 26872684,
+        "ts": 1790945738000,
+        "user": {
+          "uid": "487276153",
+          "uname": "江心见夜月",
+          "avatar": "/media/native-preview/asset-076.jpg",
+          "guardLevel": 1,
+          "guardIconUrl": "/media/native-preview/asset-015.png",
+          "guardMilestone": "standard",
+          "guardIconSet": "base",
+          "wealthLevel": 11,
+          "wealthIconUrl": "/media/native-preview/asset-072.png",
+          "userLevel": 3,
+          "medal": {
+            "name": "垫饭煲",
+            "level": 25,
+            "guardLevel": 1,
+            "isCurrentRoom": true,
+            "isLighted": true
+          }
+        },
+        "text": "好听，三倍工资",
+        "sc": {
+          "price": 6,
+          "message": "好听，三倍工资",
+          "duration": 5
+        }
+      }
+    },
+    {
+      "key": "native-055",
+      "source": {
+        "eventKey": "session-26872684-1790943010462-1:archive-event:19410632",
+        "sessionId": "session-26872684-1790943010462-1",
+        "eventId": "19410632"
+      },
+      "kind": "醒目留言",
+      "features": [
+        "type:2",
+        "sc-price:138"
+      ],
+      "event": {
+        "id": "19410632",
+        "msgType": 2,
+        "roomId": 26872684,
+        "ts": 1790943138000,
+        "user": {
+          "uid": "12146170",
+          "uname": "pseudoAD",
+          "avatar": "/media/native-preview/asset-075.jpg",
+          "guardLevel": 1,
+          "guardMilestone": "standard",
+          "guardIconSet": "base",
+          "userLevel": 39,
+          "medal": {
+            "name": "垫饭煲",
+            "level": 42,
+            "guardLevel": 1,
+            "isCurrentRoom": true,
+            "isLighted": true
+          }
+        },
+        "text": "\\钢板同盟/\\钢板同盟/\\钢板同盟/\\钢板同盟/",
+        "sc": {
+          "price": 138,
+          "message": "\\钢板同盟/\\钢板同盟/\\钢板同盟/\\钢板同盟/",
+          "duration": 300
+        }
+      }
+    },
+    {
+      "key": "native-056",
+      "source": {
+        "eventKey": "session-24125-1790033397266-3:archive-event:19182797",
+        "sessionId": "session-24125-1790033397266-3",
+        "eventId": "19182797"
+      },
+      "kind": "醒目留言",
+      "features": [
+        "type:2",
+        "sc-price:14"
+      ],
+      "event": {
+        "id": "19182797",
+        "msgType": 2,
+        "roomId": 24125,
+        "ts": 1790035085000,
+        "user": {
+          "uid": "6869",
+          "uname": "疯狂偷菜的维花",
+          "avatar": "/media/native-preview/asset-073.jpg",
+          "guardLevel": 0,
+          "medal": {
+            "name": "烦人鲸",
+            "level": 3,
+            "isCurrentRoom": true,
+            "isLighted": true
+          }
+        },
+        "text": "感谢缘分   唱的很棒！上舰碎片1/10 ",
+        "sc": {
+          "price": 14,
+          "message": "感谢缘分   唱的很棒！上舰碎片1/10 ",
+          "duration": 5
+        }
+      }
+    },
+    {
+      "key": "native-057",
+      "source": {
+        "eventKey": "session-31999413-1790136278417-1:archive-event:pocket-win:28620670",
+        "sessionId": "session-31999413-1790136278417-1",
+        "eventId": "pocket-win:28620670"
+      },
+      "kind": "红包/天选",
+      "features": [
+        "type:7",
+        "info:default-avatar"
+      ],
+      "event": {
+        "id": "pocket-win:28620670",
+        "msgType": 7,
+        "roomId": 31999413,
+        "ts": 1790140049219,
+        "user": {
+          "uid": "415397394",
+          "uname": "啾啾甜甜糖糖酱",
+          "guardLevel": 0
+        },
+        "lottery": {
+          "id": 28620670,
+          "awardName": "粉玫瑰、666",
+          "awardNum": 4,
+          "winners": [
+            {
+              "uid": "415397394",
+              "uname": "啾啾甜甜糖糖酱",
+              "awardName": "粉玫瑰"
+            },
+            {
+              "uid": "304751627",
+              "uname": "米雷娅",
+              "awardName": "粉玫瑰"
+            },
+            {
+              "uid": "13908969",
+              "uname": "虚拟轰炸姬_断手版",
+              "awardName": "666"
+            },
+            {
+              "uid": "4114619",
+              "uname": "凌凌凌潇凌",
+              "awardName": "666"
+            }
+          ]
+        },
+        "pocket": {
+          "lotId": 28620670
+        }
+      }
+    },
+    {
+      "key": "native-recalled-example",
+      "source": {
+        "eventKey": "session-1727074031-1790230383154-6:archive-event:1790229902|380401266|一生有爱何惧风飞沙|1790233335192",
+        "sessionId": "session-1727074031-1790230383154-6",
+        "eventId": "1790229902"
+      },
+      "kind": "弹幕",
+      "features": [
+        "type:0",
+        "chat:recalled-preview"
+      ],
+      "event": {
+        "id": "1790229902",
+        "msgType": 0,
+        "roomId": 1727074031,
+        "ts": 1790233335192,
+        "dedupe": "1790229902|380401266|一生有爱何惧风飞沙|1790233335192",
+        "user": {
+          "uid": "380401266",
+          "uname": "稳健的G",
+          "guardLevel": 0,
+          "wealthLevel": 7,
+          "medal": {
+            "name": "宇宙猫",
+            "level": 23,
+            "anchorName": "羽啾chu2u",
+            "isCurrentRoom": true,
+            "isLighted": true
+          }
+        },
+        "text": "一生有爱何惧风飞沙",
+        "danmuDeleted": true
+      }
+    }
+  ],
+  "orders": {
+    "static": [
+      "native-001",
+      "native-009",
+      "native-002",
+      "native-003",
+      "native-004",
+      "native-005",
+      "native-010",
+      "native-006",
+      "native-007",
+      "native-008",
+      "native-011",
+      "native-012",
+      "native-013",
+      "native-014",
+      "native-015",
+      "native-016",
+      "native-017",
+      "native-018",
+      "native-019",
+      "native-020",
+      "native-021",
+      "native-022",
+      "native-023",
+      "native-024",
+      "native-025",
+      "native-026",
+      "native-027",
+      "native-028",
+      "native-029",
+      "native-030",
+      "native-031",
+      "native-032",
+      "native-033",
+      "native-034",
+      "native-035",
+      "native-036",
+      "native-guard-redpocket",
+      "native-037",
+      "native-038",
+      "native-039",
+      "native-040",
+      "native-041",
+      "native-042",
+      "native-043",
+      "native-044",
+      "native-045",
+      "native-046",
+      "native-047",
+      "native-048",
+      "native-049",
+      "native-050",
+      "native-051",
+      "native-052",
+      "native-053",
+      "native-054",
+      "native-055",
+      "native-056",
+      "native-057",
+      "native-recalled-example"
+    ],
+    "design": [
+      "native-001",
+      "native-016",
+      "native-017",
+      "native-018",
+      "native-019",
+      "native-020",
+      "native-021",
+      "native-022",
+      "native-023",
+      "native-024",
+      "native-033",
+      "native-034",
+      "native-038",
+      "native-039",
+      "native-009",
+      "native-027",
+      "native-028",
+      "native-029",
+      "native-002",
+      "native-025",
+      "native-026",
+      "native-035",
+      "native-003",
+      "native-054",
+      "native-052",
+      "native-056",
+      "native-049",
+      "native-030",
+      "native-031",
+      "native-041",
+      "native-043",
+      "native-042",
+      "native-055",
+      "native-046",
+      "native-053",
+      "native-045",
+      "native-051",
+      "native-048",
+      "native-047",
+      "native-044",
+      "native-050",
+      "native-004",
+      "native-040",
+      "native-032",
+      "native-005",
+      "native-006",
+      "native-037",
+      "native-007",
+      "native-036",
+      "native-guard-redpocket",
+      "native-008",
+      "native-057",
+      "native-010",
+      "native-011",
+      "native-012",
+      "native-013",
+      "native-014",
+      "native-015",
+      "native-recalled-example"
+    ]
+  },
+  "gaps": [
+    "type:9",
+    "type:18",
+    "type:19",
+    "type:20",
+    "type:25",
+    "interaction:specialFollow",
+    "interaction:mutualFollow",
+    "purchase:3",
+    "purchase-unit:*5天"
+  ],
+  "resources": [
+    {
+      "url": "https://i0.hdslb.com/bfs/live/6613b195feb091aae8e2c3225ee0b9b087922796.png",
+      "path": "/media/native-preview/asset-001.png",
+      "bytes": 2349
+    },
+    {
+      "url": "https://i2.hdslb.com/bfs/face/eac982038a24ef646dddb4e1b5d67bf2aa44ae7d.jpg",
+      "path": "/media/native-preview/asset-002.jpg",
+      "bytes": 76351
+    },
+    {
+      "url": "https://i0.hdslb.com/bfs/live/816f8b7aa2132888fce928cdfb17b9cf21cc0823.gif",
+      "path": "/media/native-preview/asset-005.gif",
+      "bytes": 47891
+    },
+    {
+      "url": "https://i2.hdslb.com/bfs/face/aa0f6a31fc28fb6345f81cf882534c93ac12c8e0.jpg",
+      "path": "/media/native-preview/asset-004.jpg",
+      "bytes": 60223
+    },
+    {
+      "url": "https://i0.hdslb.com/bfs/live/32b799120e1614fa6275b6d15da7a52b21dd019d.webp",
+      "path": "/media/native-preview/asset-003.webp",
+      "bytes": 38440
+    },
+    {
+      "url": "https://i0.hdslb.com/bfs/live/a33f6d3e7c49f1c48cd04711d41d37423edc64b1.png",
+      "path": "/media/native-preview/asset-006.png",
+      "bytes": 2590
+    },
+    {
+      "url": "https://i0.hdslb.com/bfs/live/70c26e99737de722d1cd40fc796655fad3d97d8f.png",
+      "path": "/media/native-preview/asset-007.png",
+      "bytes": 2228
+    },
+    {
+      "url": "https://i0.hdslb.com/bfs/live/257f76917abd25d1012ab71c3f3de4ef9b78e735.png",
+      "path": "/media/native-preview/asset-008.png",
+      "bytes": 2233
+    },
+    {
+      "url": "https://s1.hdslb.com/bfs/live/e051dfd4557678f8edcac4993ed00a0935cbd9cc.png",
+      "path": "/media/native-preview/asset-009.png",
+      "bytes": 7786
+    },
+    {
+      "url": "https://i2.hdslb.com/bfs/face/73037acdfe1a1230b1be9d3e467f6bb13ff53410.jpg",
+      "path": "/media/native-preview/asset-010.jpg",
+      "bytes": 44570
+    },
+    {
+      "url": "https://i0.hdslb.com/bfs/live/15f21f0c7f5f391148ac1a52df9d1bc1b1190835.png",
+      "path": "/media/native-preview/asset-011.png",
+      "bytes": 2751
+    },
+    {
+      "url": "https://i0.hdslb.com/bfs/face/da159d5012f8c0fe85dbc32b8014c2996992b1a5.jpg",
+      "path": "/media/native-preview/asset-012.jpg",
+      "bytes": 35466
+    },
+    {
+      "url": "https://i0.hdslb.com/bfs/live/caeb95e67eb8f447d55e526a67fb065eb01a9fb7.png",
+      "path": "/media/native-preview/asset-013.png",
+      "bytes": 2478
+    },
+    {
+      "url": "https://i2.hdslb.com/bfs/face/2a439a1cdf276f2077e2cdfc9b9b4ec9126faa39.jpg",
+      "path": "/media/native-preview/asset-014.jpg",
+      "bytes": 104885
+    },
+    {
+      "url": "https://i0.hdslb.com/bfs/live/48360c8f3b7de8031e86ff1ef4a2dfc0ec2a61c2.png",
+      "path": "/media/native-preview/asset-015.png",
+      "bytes": 5019
+    },
+    {
+      "url": "https://i2.hdslb.com/bfs/face/f89cf5926d3b4c9c15fd5721048567e63aa28288.jpg",
+      "path": "/media/native-preview/asset-016.jpg",
+      "bytes": 71842
+    },
+    {
+      "url": "https://i0.hdslb.com/bfs/live/8dac191a14bdef6bb28cd2465b9f58bc3719e072.png",
+      "path": "/media/native-preview/asset-017.png",
+      "bytes": 2484
+    },
+    {
+      "url": "http://i0.hdslb.com/bfs/live/e6073c6849f735ae6cb7af3a20ff7dcec962b4c5.png",
+      "path": "/media/native-preview/asset-018.png",
+      "bytes": 2732
+    },
+    {
+      "url": "https://i0.hdslb.com/bfs/live/97cfaab2e9586d0f71d9620ffc583262d7f16fab.png",
+      "path": "/media/native-preview/asset-019.png",
+      "bytes": 2134
+    },
+    {
+      "url": "http://i0.hdslb.com/bfs/live/943cf5b80ab5b52fae85a2717905fb224886e03d.png",
+      "path": "/media/native-preview/asset-020.png",
+      "bytes": 12559
+    },
+    {
+      "url": "https://i0.hdslb.com/bfs/face/a2c8a4322ccab0f4a442e12572fb8073e4d83e62.jpg",
+      "path": "/media/native-preview/asset-021.jpg",
+      "bytes": 84105
+    },
+    {
+      "url": "https://i1.hdslb.com/bfs/face/db8273dcde9f5c12f5ad7bc2ba77a132840f96a9.jpg",
+      "path": "/media/native-preview/asset-022.jpg",
+      "bytes": 37039
+    },
+    {
+      "url": "https://i1.hdslb.com/bfs/face/07d4dd7f8b13fb8b5620b65792413d489df07b5e.jpg",
+      "path": "/media/native-preview/asset-023.jpg",
+      "bytes": 47971
+    },
+    {
+      "url": "https://i0.hdslb.com/bfs/face/b331c0a54489c31e0cfb18ad1a2a44ce3ba35787.jpg",
+      "path": "/media/native-preview/asset-024.jpg",
+      "bytes": 256868
+    },
+    {
+      "url": "https://i1.hdslb.com/bfs/face/910d6999b18448e886990399b6ee981d119bfa57.jpg",
+      "path": "/media/native-preview/asset-025.jpg",
+      "bytes": 70629
+    },
+    {
+      "url": "https://i0.hdslb.com/bfs/live/7cb7dfb5a2e652eb939585ddfd269238868cc5de.png",
+      "path": "/media/native-preview/asset-026.png",
+      "bytes": 8799
+    },
+    {
+      "url": "https://i2.hdslb.com/bfs/face/2873c4bd05ba01a6e8f33b0f65938be86aa95e59.jpg",
+      "path": "/media/native-preview/asset-027.jpg",
+      "bytes": 110158
+    },
+    {
+      "url": "https://i0.hdslb.com/bfs/live/8d0656d3a7a74480b2faf6c9488794e54d0da026.png",
+      "path": "/media/native-preview/asset-028.png",
+      "bytes": 2162
+    },
+    {
+      "url": "https://i1.hdslb.com/bfs/face/f0a19550a2f3aa99c48b32961445e488e93dc3e0.webp",
+      "path": "/media/native-preview/asset-029.webp",
+      "bytes": 167818
+    },
+    {
+      "url": "https://i0.hdslb.com/bfs/live/ffcd832b5d7b84ea851cb8156ec0a71940439511.png",
+      "path": "/media/native-preview/asset-030.png",
+      "bytes": 9045
+    },
+    {
+      "url": "https://i0.hdslb.com/bfs/live/6c8e9dcc45d287ddcacf3ce173adb0e2efae4766.png",
+      "path": "/media/native-preview/asset-032.png",
+      "bytes": 2335
+    },
+    {
+      "url": "https://i2.hdslb.com/bfs/face/da0b8cbf92ea24003ce64995f7c41a38339fed3f.jpg",
+      "path": "/media/native-preview/asset-031.jpg",
+      "bytes": 201719
+    },
+    {
+      "url": "https://i1.hdslb.com/bfs/face/78fca5db2af1e7400a1c1627480df5a5548f7b98.jpg",
+      "path": "/media/native-preview/asset-033.jpg",
+      "bytes": 72933
+    },
+    {
+      "url": "https://i2.hdslb.com/bfs/face/2ece99b59a1bb1f2ffa61bd1f4d3a7e2e2283b2b.jpg",
+      "path": "/media/native-preview/asset-034.jpg",
+      "bytes": 82085
+    },
+    {
+      "url": "https://i0.hdslb.com/bfs/live/fd26e0053f3d24672ffdabcb1f6d2545e26b1e33.png",
+      "path": "/media/native-preview/asset-035.png",
+      "bytes": 7006
+    },
+    {
+      "url": "https://i0.hdslb.com/bfs/live/bf4f5ea4b54ca7bb358dec4e6c4afcc300c12eb9.png",
+      "path": "/media/native-preview/asset-036.png",
+      "bytes": 6019
+    },
+    {
+      "url": "https://i1.hdslb.com/bfs/face/90efc4bef75b2f0e48563b0ee2e5476acfe84a64.jpg",
+      "path": "/media/native-preview/asset-037.jpg",
+      "bytes": 96719
+    },
+    {
+      "url": "https://i0.hdslb.com/bfs/live/ad01f5b786fa6272adf0e985576b20a93ea11c6c.webp",
+      "path": "/media/native-preview/asset-038.webp",
+      "bytes": 42828
+    },
+    {
+      "url": "https://s1.hdslb.com/bfs/live/cc8bfcbc24c8b65937f62ce0d16b31ab987dce47.png",
+      "path": "/media/native-preview/asset-039.png",
+      "bytes": 8269
+    },
+    {
+      "url": "https://i0.hdslb.com/bfs/live/ae2d28fabcd773869d954e780f5c1252ec07ea47.gif",
+      "path": "/media/native-preview/asset-040.gif",
+      "bytes": 54308
+    },
+    {
+      "url": "https://i0.hdslb.com/bfs/live/bdcf04886c2989982ce7099aba62d0a54696d8f7.png",
+      "path": "/media/native-preview/asset-041.png",
+      "bytes": 2201
+    },
+    {
+      "url": "https://i0.hdslb.com/bfs/live/00bd9e97756f17d92f78291af1cc3c5fe4e6a202.webp",
+      "path": "/media/native-preview/asset-042.webp",
+      "bytes": 40148
+    },
+    {
+      "url": "https://i1.hdslb.com/bfs/face/5825570b76f4bc7247d532cb9f47e1c1c7a4f5a1.jpg",
+      "path": "/media/native-preview/asset-043.jpg",
+      "bytes": 280614
+    },
+    {
+      "url": "https://s1.hdslb.com/bfs/live/3ffb357cca0d74346148b96d80d01ec492a82b61.png",
+      "path": "/media/native-preview/asset-044.png",
+      "bytes": 7480
+    },
+    {
+      "url": "https://i1.hdslb.com/bfs/face/6436ee26a3e6e9face47a772fed06937de1333c2.jpg",
+      "path": "/media/native-preview/asset-045.jpg",
+      "bytes": 50471
+    },
+    {
+      "url": "https://i0.hdslb.com/bfs/live/b44e3444fa68059a571320ef0709cd732bf0f172.gif",
+      "path": "/media/native-preview/asset-046.gif",
+      "bytes": 51811
+    },
+    {
+      "url": "https://i0.hdslb.com/bfs/live/0f196445f8284a7d684ac358f38cb65099798cd6.gif",
+      "path": "/media/native-preview/asset-047.gif",
+      "bytes": 53682
+    },
+    {
+      "url": "https://i0.hdslb.com/bfs/live/36d30796ec582c5bc4f83badd5a59a11e5e4d956.webp",
+      "path": "/media/native-preview/asset-048.webp",
+      "bytes": 18682
+    },
+    {
+      "url": "https://s1.hdslb.com/bfs/live/d9bf4b2234e854b0badbd509edf59b5bf0361b7f.png",
+      "path": "/media/native-preview/asset-049.png",
+      "bytes": 37560
+    },
+    {
+      "url": "https://i0.hdslb.com/bfs/face/7a10d025a30d03a94eabf8e2e5f7d8874d24811b.jpg",
+      "path": "/media/native-preview/asset-050.jpg",
+      "bytes": 63092
+    },
+    {
+      "url": "https://i0.hdslb.com/bfs/face/81fa248f7c6b06eabb1f4d035a3e74a79ac7d5a8.jpg",
+      "path": "/media/native-preview/asset-051.jpg",
+      "bytes": 472310
+    },
+    {
+      "url": "https://i0.hdslb.com/bfs/live/eb0eb470781f40cc0b89744d957fd7691b3c82fb.png",
+      "path": "/media/native-preview/asset-052.png",
+      "bytes": 2516
+    },
+    {
+      "url": "https://i0.hdslb.com/bfs/face/f8b1866b41a853d7f2750518489fe92185c1618e.jpg",
+      "path": "/media/native-preview/asset-053.jpg",
+      "bytes": 62881
+    },
+    {
+      "url": "https://i1.hdslb.com/bfs/face/4f586e10f4dc5f3244ba17b1d93ab1c74a3fecd9.jpg",
+      "path": "/media/native-preview/asset-054.jpg",
+      "bytes": 245149
+    },
+    {
+      "url": "https://i0.hdslb.com/bfs/face/09ff454eb5f653a836bf98eb5ed7367f968be6b1.jpg",
+      "path": "/media/native-preview/asset-055.jpg",
+      "bytes": 88123
+    },
+    {
+      "url": "https://i0.hdslb.com/bfs/live/127f155cd574e6f9dbadf005d950ed50824ce7dc.png",
+      "path": "/media/native-preview/asset-056.png",
+      "bytes": 2982
+    },
+    {
+      "url": "https://i0.hdslb.com/bfs/live/62ac06fd72b05fe22be26426b9e1a8e1fc2c6b89.png",
+      "path": "/media/native-preview/asset-057.png",
+      "bytes": 4924
+    },
+    {
+      "url": "https://i1.hdslb.com/bfs/face/08505abecf5088ed661a55f3abe089f8fda46875.jpg",
+      "path": "/media/native-preview/asset-058.jpg",
+      "bytes": 72729
+    },
+    {
+      "url": "https://i0.hdslb.com/bfs/face/9298dbd746a42a3cd2e95c47a8547045d9ab6293.jpg",
+      "path": "/media/native-preview/asset-059.jpg",
+      "bytes": 162477
+    },
+    {
+      "url": "https://i1.hdslb.com/bfs/face/344cfec236ee0b316aff4e92e14c8a971d4de933.jpg",
+      "path": "/media/native-preview/asset-060.jpg",
+      "bytes": 418220
+    },
+    {
+      "url": "https://i0.hdslb.com/bfs/live/251c195061fd9ca573cb9e6207ca05c3cebc1def.png",
+      "path": "/media/native-preview/asset-061.png",
+      "bytes": 3190
+    },
+    {
+      "url": "https://i0.hdslb.com/bfs/face/member/noface.jpg",
+      "path": "/media/native-preview/asset-062.jpg",
+      "bytes": 3719
+    },
+    {
+      "url": "https://i2.hdslb.com/bfs/face/68fb51a7e5f7d72480e3d7a58b1cf0a7ab00229f.jpg",
+      "path": "/media/native-preview/asset-063.jpg",
+      "bytes": 207975
+    },
+    {
+      "url": "https://i2.hdslb.com/bfs/face/e1e4e1cada8a686f7930c17c4162b913483a955c.jpg",
+      "path": "/media/native-preview/asset-064.jpg",
+      "bytes": 234839
+    },
+    {
+      "url": "https://i0.hdslb.com/bfs/live/f2e514f40d81133b5195a340e74b9183efa888ec.png",
+      "path": "/media/native-preview/asset-065.png",
+      "bytes": 2090
+    },
+    {
+      "url": "https://i1.hdslb.com/bfs/face/7d04b129648deab02816015edc1f6581fc7546aa.jpg",
+      "path": "/media/native-preview/asset-066.jpg",
+      "bytes": 113642
+    },
+    {
+      "url": "https://i0.hdslb.com/bfs/face/37ead6f0da992cc5b2c0decc55860032ae9c1a1d.jpg",
+      "path": "/media/native-preview/asset-067.jpg",
+      "bytes": 195347
+    },
+    {
+      "url": "https://i2.hdslb.com/bfs/face/40bc442c12196b7e72c5ea62150817277f10844a.jpg",
+      "path": "/media/native-preview/asset-068.jpg",
+      "bytes": 72027
+    },
+    {
+      "url": "https://i0.hdslb.com/bfs/face/5a603066ac3b62d9d8e2fb0bef026a51ab1a7cf2.jpg",
+      "path": "/media/native-preview/asset-069.jpg",
+      "bytes": 46850
+    },
+    {
+      "url": "https://i2.hdslb.com/bfs/face/9a0a0b8eb327287067b1c2e88abe94398cdb66a5.jpg",
+      "path": "/media/native-preview/asset-070.jpg",
+      "bytes": 366227
+    },
+    {
+      "url": "https://i1.hdslb.com/bfs/face/318b27f9c88711b42cefc5dda3a192238650c111.jpg",
+      "path": "/media/native-preview/asset-071.jpg",
+      "bytes": 230714
+    },
+    {
+      "url": "https://i0.hdslb.com/bfs/live/47ca74b4068ee8ffaee37b3bf3b9590d7ffcb303.png",
+      "path": "/media/native-preview/asset-072.png",
+      "bytes": 1800
+    },
+    {
+      "url": "https://i2.hdslb.com/bfs/face/0b246936143a7d4873cb953859d37331ff94b004.jpg",
+      "path": "/media/native-preview/asset-073.jpg",
+      "bytes": 101085
+    },
+    {
+      "url": "https://i0.hdslb.com/bfs/live/62fe89aef112353cfd97016b4b2cc653438642ac.png",
+      "path": "/media/native-preview/asset-074.png",
+      "bytes": 2656
+    },
+    {
+      "url": "https://i1.hdslb.com/bfs/face/e3293c4d3a96e71f4f948b5bee10ed867e93e742.jpg",
+      "path": "/media/native-preview/asset-075.jpg",
+      "bytes": 52644
+    },
+    {
+      "url": "https://i1.hdslb.com/bfs/face/7feefb7c75ac5b4e3068cb95968e5c0f539b02f6.jpg",
+      "path": "/media/native-preview/asset-076.jpg",
+      "bytes": 76123
+    },
+    {
+      "url": "https://i1.hdslb.com/bfs/face/33663310e8a64466009438474e998ed39db110d9.jpg",
+      "path": "/media/native-preview/asset-077.jpg",
+      "bytes": 282590
+    },
+    {
+      "url": "https://s1.hdslb.com/bfs/live/cb2b9e0244f8d099010651ed022793083629b18d.png",
+      "path": "/media/native-preview/asset-078.png",
+      "bytes": 5405
+    },
+    {
+      "url": "https://i0.hdslb.com/bfs/live/f2e9bb8c425fe5676274ad53d94bf09f2e64ec15.png",
+      "path": "/media/native-preview/asset-079.png",
+      "bytes": 2520
+    },
+    {
+      "url": "http://i0.hdslb.com/bfs/live/fa1eb4dce3ad198bb8650499830560886ce1116c.png",
+      "path": "/media/native-preview/asset-080.png",
+      "bytes": 13106
+    },
+    {
+      "url": "https://i1.hdslb.com/bfs/face/18419704fd6f9862dcc65124cb1930798a1ccab0.jpg",
+      "path": "/media/native-preview/asset-081.jpg",
+      "bytes": 25101
+    },
+    {
+      "url": "https://i0.hdslb.com/bfs/face/607d39c2d84a16ba36a0df4b60f283613e024c3c.jpg",
+      "path": "/media/native-preview/asset-082.jpg",
+      "bytes": 50598
+    },
+    {
+      "url": "https://i0.hdslb.com/bfs/live/d7ed8e530b3b81a4eff9cab4a910f8fbcc6bdb60.gif",
+      "path": "/media/native-preview/asset-083.gif",
+      "bytes": 39002
+    },
+    {
+      "url": "https://i0.hdslb.com/bfs/live/6626d235bf185ac98f5ff9de570f8def0384c9eb.webp",
+      "path": "/media/native-preview/asset-084.webp",
+      "bytes": 22586
+    },
+    {
+      "url": "https://s1.hdslb.com/bfs/live/c06c859ca7833cd966739c7fc7e6af2aea126704.png",
+      "path": "/media/native-preview/asset-085.png",
+      "bytes": 39946
+    },
+    {
+      "url": "https://i0.hdslb.com/bfs/live/b1dcf1078f555313ce418f2bb621fe6ab368cd53.webp",
+      "path": "/media/native-preview/asset-086.webp",
+      "bytes": 32768
+    },
+    {
+      "url": "https://i2.hdslb.com/bfs/face/98fd54e3946a09583416aa7fd46aa3bdcc4a1606.jpg",
+      "path": "/media/native-preview/asset-087.jpg",
+      "bytes": 48857
+    },
+    {
+      "url": "https://i0.hdslb.com/bfs/face/0f29040ba3b1cf960de644c43736ae2d976085a9.jpg",
+      "path": "/media/native-preview/asset-088.jpg",
+      "bytes": 228824
+    },
+    {
+      "url": "https://i0.hdslb.com/bfs/live/c82bf92a3341ff7bd1a71f27e1c90202263c1b23.gif",
+      "path": "/media/native-preview/asset-089.gif",
+      "bytes": 71064
+    },
+    {
+      "url": "https://i0.hdslb.com/bfs/face/8f6a614a48a3813d90da7a11894ae56a59396fcd.jpg",
+      "path": "/media/native-preview/asset-090.jpg",
+      "bytes": 423599
+    },
+    {
+      "url": "https://i0.hdslb.com/bfs/face/c2c8a54bcf428f88f3af91cf5f04c387fdf822c9.jpg",
+      "path": "/media/native-preview/guard-redpocket-sender.jpg",
+      "bytes": 58852
+    }
+  ]
+}

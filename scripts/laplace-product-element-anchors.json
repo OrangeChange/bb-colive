@@ -1,0 +1,275 @@
+[
+  {
+    "function": "uu",
+    "kind": "avatar",
+    "depth": 0,
+    "original": "(0,U.jsx)(Z,{avatar:x,uid:e.uid,guard:e.guardType,className:`avatar--sender avatar-alt-outer hidden`,perkLevel:Q(i,{roomId:e.origin}),guardLeader:e.guardLeader})",
+    "functionSha256": "72f17f9541921efec08eb73c9ad36258a472a43fdc420eb27ef198ab4d6983dc"
+  },
+  {
+    "function": "uu",
+    "kind": "avatar",
+    "depth": 0,
+    "original": "(0,U.jsx)(Z,{avatar:x,uid:e.uid,guard:e.guardType,className:`sender-avatar avatar--sender`,perkLevel:Q(i,{roomId:e.origin}),guardLeader:e.guardLeader})",
+    "functionSha256": "72f17f9541921efec08eb73c9ad36258a472a43fdc420eb27ef198ab4d6983dc"
+  },
+  {
+    "function": "uu",
+    "kind": "avatar",
+    "depth": 0,
+    "original": "(0,U.jsx)(Z,{avatar:x,uid:e.uid,guard:e.guardType,className:`avatar--sender avatar-alt-top hidden`,perkLevel:Q(i,{roomId:e.origin}),guardLeader:e.guardLeader})",
+    "functionSha256": "72f17f9541921efec08eb73c9ad36258a472a43fdc420eb27ef198ab4d6983dc"
+  },
+  {
+    "function": "uu",
+    "kind": "username",
+    "depth": 0,
+    "original": "(0,U.jsxs)(`div`,{className:`username`,children:[t===`obs`&&(0,U.jsx)(`div`,{className:`username-text line-clamp-1`,children:e.username}),t===`dashboard`&&(0,U.jsx)($,{event:e,children:(0,U.jsx)(`div`,{className:`username-text line-clamp-1 cursor-pointer`,children:e.username})})]})",
+    "functionSha256": "72f17f9541921efec08eb73c9ad36258a472a43fdc420eb27ef198ab4d6983dc"
+  },
+  {
+    "function": "uu",
+    "kind": "avatar",
+    "depth": 0,
+    "original": "(0,U.jsx)(Z,{uid:e.reply.uid||0,className:`reply-avatar avatar--reply inline-flex`})",
+    "functionSha256": "72f17f9541921efec08eb73c9ad36258a472a43fdc420eb27ef198ab4d6983dc"
+  },
+  {
+    "function": "uu",
+    "kind": "username",
+    "depth": 0,
+    "original": "(0,U.jsxs)(`span`,{className:`reply-username`,children:[t===`obs`&&(0,U.jsx)(U.Fragment,{children:e.reply.uname}),t===`dashboard`&&(0,U.jsx)($,{event:{...e,uid:e.reply.uid||0,username:e.reply.uname,wealthMedalLevel:0,avatar:``},children:(0,U.jsx)(`span`,{className:`cursor-pointer`,children:e.reply.uname})})]})",
+    "functionSha256": "72f17f9541921efec08eb73c9ad36258a472a43fdc420eb27ef198ab4d6983dc"
+  },
+  {
+    "function": "uu",
+    "kind": "avatar",
+    "depth": 0,
+    "original": "(0,U.jsx)(Z,{avatar:x,uid:e.uid,guard:e.guardType,className:`avatar--sender avatar-alt-bottom hidden`,perkLevel:Q(i,{roomId:e.origin}),guardLeader:e.guardLeader})",
+    "functionSha256": "72f17f9541921efec08eb73c9ad36258a472a43fdc420eb27ef198ab4d6983dc"
+  },
+  {
+    "function": "du",
+    "kind": "avatar",
+    "depth": 0,
+    "original": "(0,U.jsx)(Z,{avatar:g,uid:e.uid,guard:e.guardType,className:`sender-avatar avatar--sender`,perkLevel:Q(r,{roomId:e.origin})})",
+    "functionSha256": "79cf475f8e9423954534a1160496416b9debdff2e09f6898c0d72b200af98f48"
+  },
+  {
+    "function": "du",
+    "kind": "username",
+    "depth": 0,
+    "original": "(0,U.jsxs)(`div`,{className:`username`,children:[t===`obs`&&(0,U.jsx)(`div`,{className:`username-text line-clamp-1`,children:e.username}),t===`dashboard`&&(0,U.jsx)($,{event:e,children:(0,U.jsx)(`div`,{className:`username-text line-clamp-1 cursor-pointer`,children:e.username})})]})",
+    "functionSha256": "79cf475f8e9423954534a1160496416b9debdff2e09f6898c0d72b200af98f48"
+  },
+  {
+    "function": "mu",
+    "kind": "avatar",
+    "depth": 0,
+    "original": "(0,U.jsx)(Z,{uid:e.uid,avatar:b,guard:e.guardType,perkLevel:Q(c,{roomId:e.origin}),className:`sender-avatar avatar--sender`})",
+    "functionSha256": "cf6730fa26e19e85699d8e3feb3b6f328b2484d77757f6f63fa451af554e3cf1"
+  },
+  {
+    "function": "mu",
+    "kind": "avatar",
+    "depth": 0,
+    "original": "(0,U.jsx)(Z,{uid:e.uid,avatar:b,guard:e.guardType,perkLevel:Q(c,{roomId:e.origin}),className:`avatar--sender avatar-alt-top hidden`})",
+    "functionSha256": "cf6730fa26e19e85699d8e3feb3b6f328b2484d77757f6f63fa451af554e3cf1"
+  },
+  {
+    "function": "mu",
+    "kind": "username",
+    "depth": 0,
+    "original": "(0,U.jsxs)(`div`,{className:`username`,children:[t===`obs`&&(0,U.jsx)(`div`,{className:`username-text line-clamp-1`,children:e.username}),t===`dashboard`&&(0,U.jsx)($,{event:e,children:(0,U.jsx)(`div`,{className:`username-text line-clamp-1 cursor-pointer`,children:e.username})})]})",
+    "functionSha256": "cf6730fa26e19e85699d8e3feb3b6f328b2484d77757f6f63fa451af554e3cf1"
+  },
+  {
+    "function": "mu",
+    "kind": "avatar",
+    "depth": 0,
+    "original": "(0,U.jsx)(Z,{uid:e.receiver.uid,className:`receiver-avatar avatar--receiver`,perkLevel:Q(c,{roomId:e.origin})})",
+    "functionSha256": "cf6730fa26e19e85699d8e3feb3b6f328b2484d77757f6f63fa451af554e3cf1"
+  },
+  {
+    "function": "mu",
+    "kind": "username",
+    "depth": 0,
+    "original": "(0,U.jsx)(`b`,{className:`gift-receiver-username`,children:e.receiver.uname})",
+    "functionSha256": "cf6730fa26e19e85699d8e3feb3b6f328b2484d77757f6f63fa451af554e3cf1"
+  },
+  {
+    "function": "mu",
+    "kind": "avatar",
+    "depth": 0,
+    "original": "(0,U.jsx)(Z,{uid:e.uid,avatar:b,guard:e.guardType,perkLevel:Q(c,{roomId:e.origin}),className:`avatar--sender avatar-alt-bottom hidden`})",
+    "functionSha256": "cf6730fa26e19e85699d8e3feb3b6f328b2484d77757f6f63fa451af554e3cf1"
+  },
+  {
+    "function": "hu",
+    "kind": "avatar",
+    "depth": 0,
+    "original": "(0,U.jsx)(Z,{avatar:d,uid:e.uid,guard:e.guardType,perkLevel:e?.medal?.resolvedPerkLevel||Q(i,{uid:e.medal.uid})})",
+    "functionSha256": "8a7196aa0f9ba92e2a0fbdc7ff6b1988e957de5b79ecf7716c30e405b7e7c52b"
+  },
+  {
+    "function": "hu",
+    "kind": "username",
+    "depth": 0,
+    "original": "(0,U.jsxs)(`div`,{className:`username`,children:[t===`obs`&&(0,U.jsx)(`div`,{className:`username-text line-clamp-1`,children:e.username}),t===`dashboard`&&(0,U.jsx)($,{event:e,children:(0,U.jsx)(`div`,{className:`username-text line-clamp-1 cursor-pointer`,children:e.username})})]})",
+    "functionSha256": "8a7196aa0f9ba92e2a0fbdc7ff6b1988e957de5b79ecf7716c30e405b7e7c52b"
+  },
+  {
+    "function": "gu",
+    "kind": "avatar",
+    "depth": 0,
+    "original": "(0,U.jsx)(Z,{uid:e.uid,avatar:l,guard:e.guardType,perkLevel:Q(o,{roomId:e.origin})})",
+    "functionSha256": "064f20ed87e62707fdb5dbf5860619de5bc5e0ed0d929106300954e49702b11f"
+  },
+  {
+    "function": "gu",
+    "kind": "username",
+    "depth": 0,
+    "original": "(0,U.jsxs)(`div`,{className:`username`,children:[t===`obs`&&(0,U.jsx)(`div`,{className:`username-text line-clamp-1`,children:e.username}),t===`dashboard`&&(0,U.jsx)($,{event:e,children:(0,U.jsx)(`div`,{className:`username-text line-clamp-1 cursor-pointer`,children:e.username})})]})",
+    "functionSha256": "064f20ed87e62707fdb5dbf5860619de5bc5e0ed0d929106300954e49702b11f"
+  },
+  {
+    "function": "Su",
+    "kind": "avatar",
+    "depth": 1,
+    "original": "(0,U.jsx)(Z,{uid:n.uid})",
+    "functionSha256": "2417d51ee63b4959f64bbd58dff0b693270e7d499cb8b91f3f5a0d6a59ade515"
+  },
+  {
+    "function": "Su",
+    "kind": "avatar",
+    "depth": 1,
+    "original": "(0,U.jsx)(Z,{uid:n.uid})",
+    "functionSha256": "2417d51ee63b4959f64bbd58dff0b693270e7d499cb8b91f3f5a0d6a59ade515"
+  },
+  {
+    "function": "Cu",
+    "kind": "avatar",
+    "depth": 0,
+    "original": "(0,U.jsx)(Z,{uid:e.origin,isRoom:!0})",
+    "functionSha256": "c8967b3e8e3ac6b113e0e78da4dfa3c0aac3d9e760b5f95e08bc2dfc3a2e63d6"
+  },
+  {
+    "function": "Cu",
+    "kind": "avatar",
+    "depth": 0,
+    "original": "(0,U.jsx)(Z,{uid:e.origin,isRoom:!0,className:`avatar-alt-top hidden`})",
+    "functionSha256": "c8967b3e8e3ac6b113e0e78da4dfa3c0aac3d9e760b5f95e08bc2dfc3a2e63d6"
+  },
+  {
+    "function": "Cu",
+    "kind": "avatar",
+    "depth": 0,
+    "original": "(0,U.jsx)(Z,{uid:e.origin,isRoom:!0,className:`avatar-alt-bottom hidden`})",
+    "functionSha256": "c8967b3e8e3ac6b113e0e78da4dfa3c0aac3d9e760b5f95e08bc2dfc3a2e63d6"
+  },
+  {
+    "function": "Ou",
+    "kind": "avatar",
+    "depth": 1,
+    "original": "(0,U.jsx)(Z,{uid:n[0]})",
+    "functionSha256": "67300b6bbb1fa67a4ce39609a0f819dafe9a27c86f656a98a7d025c0565722c2"
+  },
+  {
+    "function": "Ou",
+    "kind": "avatar",
+    "depth": 1,
+    "original": "(0,U.jsx)(Z,{uid:n[0]})",
+    "functionSha256": "67300b6bbb1fa67a4ce39609a0f819dafe9a27c86f656a98a7d025c0565722c2"
+  },
+  {
+    "function": "ku",
+    "kind": "avatar",
+    "depth": 0,
+    "original": "(0,U.jsx)(Z,{uid:e.uid,avatar:f})",
+    "functionSha256": "a4158e4b53d763841f388032df4a0c8692a52bd9c6a99efe72916633cb3cb450"
+  },
+  {
+    "function": "ku",
+    "kind": "avatar",
+    "depth": 0,
+    "original": "(0,U.jsx)(Z,{uid:e.uid,avatar:f,className:`avatar-alt-top hidden`})",
+    "functionSha256": "a4158e4b53d763841f388032df4a0c8692a52bd9c6a99efe72916633cb3cb450"
+  },
+  {
+    "function": "ku",
+    "kind": "username",
+    "depth": 0,
+    "original": "(0,U.jsxs)(`div`,{className:`username`,children:[t===`obs`&&(0,U.jsx)(`div`,{className:`username-text line-clamp-1`,children:e.username}),t===`dashboard`&&(0,U.jsx)($,{event:e,children:(0,U.jsx)(`div`,{className:`username-text line-clamp-1 cursor-pointer`,children:e.username})})]})",
+    "functionSha256": "a4158e4b53d763841f388032df4a0c8692a52bd9c6a99efe72916633cb3cb450"
+  },
+  {
+    "function": "ku",
+    "kind": "avatar",
+    "depth": 0,
+    "original": "(0,U.jsx)(Z,{uid:e.uid,avatar:f,className:`avatar-alt-top hidden`})",
+    "functionSha256": "a4158e4b53d763841f388032df4a0c8692a52bd9c6a99efe72916633cb3cb450"
+  },
+  {
+    "function": "Vu",
+    "kind": "avatar",
+    "depth": 0,
+    "original": "(0,U.jsx)(Z,{uid:e.uid,avatar:m,guard:e.guardType,perkLevel:Q(d,{roomId:e.origin})})",
+    "functionSha256": "946d67e97b4ba42f2f30495d26773be43ebca9d10e5357bec1aeba05a0c3d83f"
+  },
+  {
+    "function": "Vu",
+    "kind": "avatar",
+    "depth": 0,
+    "original": "(0,U.jsx)(Z,{uid:e.uid,avatar:m,guard:e.guardType,perkLevel:Q(d,{roomId:e.origin}),className:`avatar-alt-top hidden`})",
+    "functionSha256": "946d67e97b4ba42f2f30495d26773be43ebca9d10e5357bec1aeba05a0c3d83f"
+  },
+  {
+    "function": "Vu",
+    "kind": "username",
+    "depth": 0,
+    "original": "(0,U.jsxs)(`div`,{className:`username`,children:[t===`obs`&&(0,U.jsx)(`div`,{className:`username-text line-clamp-1`,children:e.username}),t===`dashboard`&&(0,U.jsx)($,{event:e,children:(0,U.jsx)(`div`,{className:`username-text line-clamp-1 cursor-pointer`,children:e.username})})]})",
+    "functionSha256": "946d67e97b4ba42f2f30495d26773be43ebca9d10e5357bec1aeba05a0c3d83f"
+  },
+  {
+    "function": "Vu",
+    "kind": "avatar",
+    "depth": 0,
+    "original": "(0,U.jsx)(Z,{uid:e.uid,avatar:m,guard:e.guardType,perkLevel:Q(d,{roomId:e.origin}),className:`avatar-alt-bottom hidden`})",
+    "functionSha256": "946d67e97b4ba42f2f30495d26773be43ebca9d10e5357bec1aeba05a0c3d83f"
+  },
+  {
+    "function": "Uu",
+    "kind": "avatar",
+    "depth": 0,
+    "original": "(0,U.jsx)(Z,{uid:e.uid,avatar:m,guard:e.toastType,perkLevel:o})",
+    "functionSha256": "fb030bc7b1dedf6d9bc6904a7e493d118cfcc6d76bb750e37a27c2fc499be181"
+  },
+  {
+    "function": "Uu",
+    "kind": "avatar",
+    "depth": 0,
+    "original": "(0,U.jsx)(Z,{uid:e.uid,avatar:m,guard:e.toastType,perkLevel:o,className:`avatar-alt-top hidden`})",
+    "functionSha256": "fb030bc7b1dedf6d9bc6904a7e493d118cfcc6d76bb750e37a27c2fc499be181"
+  },
+  {
+    "function": "Uu",
+    "kind": "username",
+    "depth": 0,
+    "original": "(0,U.jsxs)(`div`,{className:`username`,children:[t===`obs`&&(0,U.jsx)(`div`,{className:`username-text line-clamp-1`,children:e.username}),t===`dashboard`&&(0,U.jsx)($,{event:e,children:(0,U.jsx)(`div`,{className:`username-text line-clamp-1 cursor-pointer`,children:e.username})})]})",
+    "functionSha256": "fb030bc7b1dedf6d9bc6904a7e493d118cfcc6d76bb750e37a27c2fc499be181"
+  },
+  {
+    "function": "Uu",
+    "kind": "avatar",
+    "depth": 0,
+    "original": "(0,U.jsx)(Z,{uid:e.uid,avatar:m,guard:e.toastType,perkLevel:o,className:`avatar-alt-bottom hidden`})",
+    "functionSha256": "fb030bc7b1dedf6d9bc6904a7e493d118cfcc6d76bb750e37a27c2fc499be181"
+  },
+  {
+    "function": "Wu",
+    "kind": "username",
+    "depth": 0,
+    "original": "(0,U.jsxs)(`span`,{className:`username`,children:[t===`obs`&&(0,U.jsx)(`span`,{className:`username-text`,children:e.username}),t===`dashboard`&&(0,U.jsx)($,{event:e,children:(0,U.jsx)(`span`,{className:`username-text cursor-pointer`,children:e.username})})]})",
+    "functionSha256": "fd26cc6d151f5731991266da9084b6abccaaf981985987f66b2399cb678e0fb1"
+  }
+]

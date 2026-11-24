@@ -1,0 +1,35 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:ns1="http://www.inkscape.org/namespaces/inkscape" id="colive-rest-_图层_1" data-name="图层_1" version="1.1" viewBox="211 86.609 920 979.391" width="920" height="979.391" role="img" aria-label="未开播">
+
+  <defs>
+    <style>.rest-primary{fill:var(--colive-frame-color,#f34b79)} .rest-character{fill:var(--colive-character-color,#fff)} .rest-none{fill:none} .rest-clip{clip-path:url(#colive-rest-clippath)} .rest-face{fill:var(--colive-face-color,#f34b79)}</style>
+    <clipPath id="colive-rest-clippath">
+      <rect class="rest-none" x="312" y="352" width="715" height="604" rx="90" ry="90" />
+    </clipPath>
+  </defs>
+  <g id="colive-rest-tv-layer">
+    <rect id="colive-rest-tv" class="rest-primary" x="211" y="252" width="920" height="814" rx="158" ry="158" />
+  </g>
+  <g id="colive-rest-antennas-layer">
+    <path id="colive-rest-ant-left" class="rest-primary" d="M469.27,86.85c45.45-1.66,65.73,46.01,89.37,76.86,11.01,20.14,74.62,86.19,55.39,104.53-8.37,4.22-21.52.4-31.27,1.08-16.35-.09-32.61.76-48.91.1-12.03-2.38-57.78,6.08-60.17-5.31-1-9.76-2.56-20.98-10.05-28.69-10.45-11.63-18.91-24.71-27.77-37.54-9.12-12.37-21.51-23.07-25.75-38.33-11.91-37.1,22.62-72.63,59.15-72.71Z" />
+    <path id="colive-rest-ant-right" class="rest-primary" d="M868.04,86.72c36.32-2.28,72.61,30.91,63.73,68.46-6.16,25.45-28.79,42.48-42.05,64.25-5.91,8.4-11.6,16.92-17.15,25.53-2.76,4.28-6.48,8.09-6.36,13.76,2.31,15.02-11.53,10.58-21.13,10.92-10.97-.49-21.97-.36-32.91-.1-16.29.59-32.39-.21-48.69-.43-10.22-1-23.18,3.05-32.67.84-26.43-14.94,39.82-84.91,49.76-103.1,24.14-30.65,42.61-78.34,87.45-80.13Z" />
+  </g>
+  <g class="rest-clip">
+    <g id="colive-rest-character-layer">
+      <g id="colive-rest-head-layer">
+        <path id="colive-rest-character-full-contour" class="rest-character" d="M473.5,986.86c-97.76-93.8-77.82-207.04-40.18-299.09,33.97-82.47,105.89-145.51,184.61-184.55,82.27-39.79,179.54-46.02,266.42-17.9,48.95,16.04,116.31,53.89,140.06,99.85,204.77,396.4-311.78,650.05-550.9,401.68Z" />
+      </g>
+      <g id="colive-rest-leaf-layer">
+        <path id="colive-rest-leaf" class="rest-character" d="M586.98,420.24c11.91,9.56,23.25,30.79,28.83,49.08,2.49,9.53,8.79,26.08-5.46,26.53-47.78,1.51-84.49-10.47-114.29-34.12-20.55-16.9-31.7-31.64-38.47-57.34-2.55-9.7,13.96-10.6,32.97-11.36,38.75-1.54,74.02,9.21,96.42,27.21Z" />
+      </g>
+      <g id="colive-rest-expression-layer">
+        <g id="colive-rest-eye-left-layer">
+          <g id="colive-rest-eye-left" transform="translate(577.907 779.6315) rotate(-26.682705)"><path fill="none" stroke="var(--colive-face-color,#f34b79)" stroke-linecap="round" stroke-linejoin="round" d="M -35 0 L 35 0" stroke-width="38" /></g></g>
+        <g id="colive-rest-eye-right-layer">
+          <g id="colive-rest-eye-right" transform="translate(854.23 640.76) rotate(-26.682705)"><path fill="none" stroke="var(--colive-face-color,#f34b79)" stroke-linecap="round" stroke-linejoin="round" d="M -35 0 L 35 0" stroke-width="38" /></g></g>
+        <g id="colive-rest-mouth-layer">
+          <path id="colive-rest-mouth" class="rest-face" d="M763.16,690.52c18.75-5.33,32.35,16.67,35.09,32.6,4.95,27.65-26.42,53.46-52.49,42.52-4.77-2.1-4.95,4.32-7.19,7.06-2.22,3.85-5.02,7.56-8.36,10.53-23.44,21.86-62.12,5.41-65.19-25.83-4.87-19.43,16.58-39.81,30.19-19.09,4.21,6.47-2.19,12.73.08,19.38,1.58,4.71,6.35,6.81,11.02,5.8,19.74-4.94-.63-29.82,12.87-39.86,22.99-15.86,23.14,13.26,38.19,15.56,8.82,1.99,17.2-11.72,9.25-17.58-13.82-6.9-19.39-22.91-3.46-31.09Z" />
+        </g>
+      </g>
+    </g>
+  </g>
+</svg>

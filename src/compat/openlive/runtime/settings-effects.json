@@ -1,0 +1,112 @@
+{
+  "scope": "开放版现有设置与运行时消费关系",
+  "settings": [
+    {
+      "key": "skin",
+      "consumer": "entry named stylesheet link",
+      "retainedEffect": "Old and new nodes share the selected renderer ordinary default CSS; none and default remain distinct."
+    },
+    {
+      "key": "minGiftPrice",
+      "consumer": "Room SC admission plus renderer main-price filter",
+      "retainedEffect": "Re-evaluate cached SC admission and aggregate gift/member main threshold without removing independently eligible ticker."
+    },
+    {
+      "key": "minTickerPrice",
+      "consumer": "renderer paid-list threshold",
+      "retainedEffect": "Re-evaluate cached final aggregate price for ticker while main stays independent."
+    },
+    {
+      "key": "showDanmaku",
+      "consumer": "Room text admission",
+      "retainedEffect": "Hide/re-admit retained text; Like admission remains independent."
+    },
+    {
+      "key": "showSuperchat",
+      "consumer": "Room SC admission",
+      "retainedEffect": "Hide/re-admit retained nondeleted SC; deleted IDs remain tombstoned."
+    },
+    {
+      "key": "showNewMember",
+      "consumer": "Room member admission",
+      "retainedEffect": "Hide/re-admit retained membership messages with BB actual amount."
+    },
+    {
+      "key": "showGift",
+      "consumer": "Room gift admission",
+      "retainedEffect": "Hide/re-admit retained gifts; preserve group identities and original clock."
+    },
+    {
+      "key": "showGiftInfo",
+      "consumer": "main PaidMessage content helper",
+      "retainedEffect": "Old/new main gift description changes; fixed ticker giftName x count does not."
+    },
+    {
+      "key": "mergeSimilarDanmaku",
+      "consumer": "frozen recent-five merge methods",
+      "retainedEffect": "Recompute retained grouping; ordinary text cannot merge into real Like; queue controls consume candidate budget."
+    },
+    {
+      "key": "mergeGift",
+      "consumer": "frozen authorName + giftName merge method",
+      "retainedEffect": "Split/recombine retained raw gift inputs while retaining original group timestamps and final-tier ticker expiry."
+    },
+    {
+      "key": "danmakuAtBottom",
+      "consumer": "ChatRenderer root boolean attribute / CSS",
+      "retainedEffect": "Old/new nodes use changed layout attribute; arrays do not reverse."
+    },
+    {
+      "key": "tickerAtButtom",
+      "consumer": "ChatRenderer root boolean attribute / CSS",
+      "retainedEffect": "Old/new ticker placement changes via original misspelled attribute."
+    },
+    {
+      "key": "maxNumber",
+      "consumer": "renderer old-list trim / batch flush",
+      "retainedEffect": "Reapply changed capacity to retained main rows; keep approved full-batch overflow semantics."
+    },
+    {
+      "key": "fadeOutNum",
+      "consumer": "renderer fade marking and old-list trim",
+      "retainedEffect": "Reapply changed retained fade count without changing ticker ownership."
+    },
+    {
+      "key": "pinTime",
+      "consumer": "renderer main-list age in seconds",
+      "retainedEffect": "Re-evaluate old main rows from unchanged addTime; zero stops timed removal and never restores expired rows."
+    },
+    {
+      "key": "showLike",
+      "consumer": "independent Room Like admission",
+      "retainedEffect": "Re-admit valid retained Like and admit future Like with real count; text switch does not control it."
+    },
+    {
+      "key": "blockMedalLevel",
+      "consumer": "Room text medal-level filter",
+      "retainedEffect": "Re-evaluate known medal levels on old/new text; do not infer missing facts or filter SC/Like."
+    },
+    {
+      "key": "minDanmakuInterval",
+      "consumer": "original fixture preview scheduler only",
+      "retainedEffect": "No semantic old-row change is expected; change only future fixture intervals."
+    },
+    {
+      "key": "maxDanmakuInterval",
+      "consumer": "original fixture preview scheduler only",
+      "retainedEffect": "No semantic old-row change is expected; max is constructed no lower than min for future fixture intervals."
+    },
+    {
+      "key": "emoticonSize",
+      "consumer": "TextMessage reactive prop to img#emoticon width",
+      "retainedEffect": "Old/new large emoticon nodes consume the updated size; inline emoji unchanged."
+    }
+  ],
+  "cssPrecedenceCaveat": "emoticonSize 更新 img#emoticon 的 width 属性；显式 CSS 尺寸继续按既有层叠规则覆盖。",
+  "sourceCommit": "0da8c94d40a8791bb212985f6ac0ae55765c3a03",
+  "validation": {
+    "document": "tests/openlive-runtime-document.test.mjs",
+    "appearance": "tests/openliveMitParity.browser.mjs",
+    "program": "tests/openliveMitProgram.browser.mjs"
+  }
+}

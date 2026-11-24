@@ -1,0 +1,45 @@
+/*
+  @title        LAPLACE 气泡 × 明前奶绿（冬日限定版 Winter Snow Limited Edition）
+  @description  通用气泡样式 + 积雪效果，必须激活「LAPLACE 气泡」模版后方可使用
+  @author       LAPLACE Chat
+  @updated      Apr 1, 2026, 12:18:01 PM GMT+8
+  @version      1.1.9
+  @thumbnail    https://rsrc.laplace.cn/assets/chat-templates/thumbnails/laplace-snow.png
+  @parent       bubble, bubble-next, bubble-rhea
+*/
+
+@layer remote-css {
+  /* 雪堆特效开始 */
+  .event {
+    --snow-image: url(https://rsrc.laplace.cn/assets/chat-templates/snowL.svg) no-repeat 0 0,
+      url(https://rsrc.laplace.cn/assets/chat-templates/snowC.svg) no-repeat 50% 0,
+      url(https://rsrc.laplace.cn/assets/chat-templates/snowR.svg) no-repeat 100% 0;
+    --snow-image-single: url(https://rsrc.laplace.cn/assets/chat-templates/snowAlt.svg) no-repeat 50% 0;
+
+    position: relative;
+  }
+
+  .avatar-wrap::after,
+  .event.event--superchat::after,
+  .event.event--gift.event-size--highlight::after,
+  .event.event--mvp::after,
+  .event.event--toast::after,
+  .event.event--message:not(.has-emotes) .message::after {
+    content: '';
+    display: block;
+    position: absolute;
+    top: calc(var(--1px) * -5);
+    left: 0;
+    right: 0;
+    height: calc(var(--1px) * 16);
+    background: var(--snow-image);
+    background-size: contain;
+  }
+
+  .avatar-wrap::after {
+    top: calc(var(--1px) * -4);
+    left: 0;
+    background: var(--snow-image-single);
+    background-size: contain;
+  }
+}

@@ -1,0 +1,28 @@
+yt-live-chat-membership-item-renderer #header-subtext::before {
+  content: '欢迎';
+}
+yt-live-chat-ticker-paid-message-item-renderer #content[type='2']::after {
+  content: '上舰';
+}
+#item-scroller.yt-live-chat-item-list-renderer {
+  overflow-y: hidden;
+}
+yt-live-chat-text-message-renderer #image-and-message #message {
+  overflow: visible;
+}
+html,
+body,
+#app {
+  margin: 0;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+}
+body {
+  background: transparent;
+}
+html {
+  font-family:
+    'Helvetica Neue', Helvetica, 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei', '微软雅黑',
+    微软雅黑, Arial, sans-serif;
+}

@@ -1,0 +1,41 @@
+import {connect,home,edit,node,field,frame,save,assert}from'./compatibleVisualAcceptanceSupport.mjs';
+const{browser,page:p}=await connect(),rows=[],reference=new Map();
+const modes=[['blivechat','BLC 原版默认'],['blivechat-open','BLC 开放版默认'],['laplace','LAPLACE 默认']];
+const actions=['part','media','event','identity','scheme','preview-scheme','purpose-live','purpose-obs','basic','advanced','static','dynamic','theme','back','escape'];
+async function keyClick(t){await t.focus();await p.keyboard.press('Enter')}
+async function keySelect(label,value){const t=p.getByRole('combobox',{name:label,exact:true});await t.focus();await p.keyboard.press('Space');const item=p.getByRole('option',{name:value,exact:true});await item.waitFor();await item.focus();await p.keyboard.press('Enter')}
+async function snapshot(f,s){const h=await f.waitForFunction(s=>{const e=document.querySelector(s);if(!e)return false;const c=getComputedStyle(e);return c.color&&c.fontSize?{color:c.color,font:c.fontSize}:false},s,{timeout:8000});return await h.jsonValue()}
+async function stored(){return p.evaluate(async()=>{const{invoke}=await import('/node_modules/@tauri-apps/api/core.js');const{load}=await import('/node_modules/@tauri-apps/plugin-store/dist-js/index.js');return{themes:await invoke('list_theme_summaries'),bindings:await(await load('native-theme-bindings.local.json',{autoSave:false,defaults:{}})).get('bindings')}})}
+async function code(){await p.keyboard.press('Escape');await p.getByRole('tab',{name:'高级编辑'}).click();await p.getByRole('button',{name:'可视化 CSS',exact:true}).click();const lines=p.locator('.monaco-editor .view-lines');await lines.waitFor();await p.waitForTimeout(350);return await lines.innerText()}
+const before=await stored();await p.reload();
+try{for(const[mode,name]of modes){if(process.env.PROGRAM_MODE&&mode!==process.env.PROGRAM_MODE)continue;for(const input of['color','size']){if(process.env.PROGRAM_INPUT&&input!==process.env.PROGRAM_INPUT)continue;for(const action of actions){if(process.env.PROGRAM_ACTION&&!process.env.PROGRAM_ACTION.split(',').includes(action))continue;const row={mode,input,action};let onNavigate;try{
+ await edit(p,name);await node(p,'message');await node(p,'avatar');await node(p,'username');await p.locator('.native-event-scope-primary').getByRole('button',{name:'弹幕',exact:true}).click();await p.waitForTimeout(250);if(action==='dynamic'){const all=p.getByRole('switch',{name:'显示全部部件',exact:true});if(await all.getAttribute('aria-checked')==='true')await all.click();await p.waitForTimeout(150);}
+ const primary=mode==='laplace'?'.event-list .event--message .username':'yt-live-chat-text-message-renderer #author-name';let f=await frame(p);const initial=await snapshot(f,primary);if(!reference.has(mode))reference.set(mode,initial);row.before=initial;
+ let reloads=0;onNavigate=f=>{if(f!==p.mainFrame())reloads++};p.on('framenavigated',onNavigate);
+ if(input==='color'){await p.getByRole('button',{name:'颜色',exact:true}).click();const r=await p.locator('.react-colorful__saturation').boundingBox();assert.ok(r);await p.mouse.move(r.x+10,r.y+10);await p.mouse.down();for(let i=0;i<6;i++){await p.mouse.move(r.x+20+i*8,r.y+20+i*5);await p.waitForTimeout(30)}await f.waitForFunction(({s,color})=>getComputedStyle(document.querySelector(s)).color!==color,{s:primary,color:initial.color});row.dragColor=(await snapshot(f,primary)).color}
+ else{const c=await field(p,'fontSize'),el=await c.input.elementHandle();await c.input.focus();await p.keyboard.press('ControlOrMeta+A');await p.keyboard.type('22',{delay:90});assert.equal(await el.evaluate(e=>e.isConnected&&document.activeElement===e),true);assert.equal(await c.input.inputValue(),'22');row.inputFocusRetained=true;await f.waitForFunction(s=>getComputedStyle(document.querySelector(s)).fontSize==='22px',primary)}
+ if(action==='part')await keyClick(p.locator('[data-navigation-id=message]'));
+ if(action==='media')await keyClick(p.locator('[data-navigation-id=avatar]'));
+ if(action==='event')await keyClick(p.locator('.native-event-scope-primary').getByRole('button',{name:'礼物',exact:true}));
+ if(action==='identity')await keyClick(p.locator('.native-identity-scope').getByRole('button',{name:'舰长',exact:true}));
+ if(action==='scheme')await keySelect('编辑配色','深色');
+ if(action==='preview-scheme')await keySelect('预览主题','浅色主题');
+ if(action.startsWith('purpose-'))await keySelect('预览目标',action==='purpose-live'?'现场':'OBS');
+ if(['basic','advanced'].includes(action))await keyClick(p.getByRole('tab',{name:action==='basic'?'基础设置':'高级编辑',exact:true}));
+ if(['static','dynamic'].includes(action))await keyClick(p.getByRole('button',{name:action==='static'?'静态':'动态',exact:true}));
+ if(action==='escape')await p.keyboard.press('Escape');
+ if(['theme','back'].includes(action)){await keyClick(p.getByRole('button',{name:'返回样式',exact:true}));await p.locator('.theme-library-card').first().waitFor();if(action==='theme'){const other=await p.evaluate(async mode=>{const{invoke}=await import('/node_modules/@tauri-apps/api/core.js');return(await invoke('list_theme_summaries')).find(t=>t.mode===mode&&t.name.startsWith('验收-尺寸-'))?.name},mode);assert.ok(other);await keyClick(p.locator('.theme-library-card').filter({has:p.locator('strong',{hasText:other,exact:true})}).getByRole('button',{name:'编辑',exact:true}));await p.getByRole('tab',{name:'可视化编辑'}).waitFor();await keyClick(p.getByRole('tab',{name:'可视化编辑'}));row.nextTheme=other;}}
+ if(input==='color')await p.mouse.up();await p.waitForTimeout(120);p.off('framenavigated',onNavigate);row.iframeNavigations=reloads;
+ if(action==='back')await edit(p,name);
+ // Inspect rendered state immediately after the requested transition, before Escape or any extra page change.
+ f=await frame(p);await f.waitForSelector(primary);const expected=action==='theme'?reference.get(mode):input==='color'?initial:{...initial,font:'22px'};
+ if(input==='color'&&['static','dynamic'].includes(action)){await f.waitForFunction(()=>![...document.querySelectorAll('style')].some(e=>e.textContent.includes('compat-visual:')));row.sourceManagedStylesCleared=true;}else await f.waitForFunction(({s,expected,input})=>{const e=document.querySelector(s);return e&&(input==='color'?getComputedStyle(e).color===expected.color:getComputedStyle(e).fontSize===expected.font)},{s:primary,expected,input},{timeout:4000});row.after=await snapshot(f,primary);row.renderCheckedBeforeCleanup=true;
+ const currentFont=p.locator('.native-property-field.is-fontSize input');if(await currentFont.isVisible().catch(()=>false)){
+ const owner=await f.frameElement();await p.waitForFunction(iframe=>{const input=document.querySelector('.native-property-field.is-fontSize input'),doc=iframe.contentDocument;if(!input||!input.value)return true;if(!doc)return false;return [...doc.querySelectorAll('[data-compatible-editor-selected]')].some(e=>Math.abs(Number(input.value)-parseFloat(doc.defaultView.getComputedStyle(e).fontSize))<.1)},owner,{timeout:4000});
+ row.fontReadback=await currentFont.inputValue();
+ }
+
+ const text=await code(),keys=[...text.matchAll(/compat-visual:([^*\n]+)/g)].map(x=>x[1].trim());if(action==='theme'){assert.ok(!keys.some(k=>k.includes('danmaku|all|main|username')));row.otherThemeUnchanged=true}else if(input==='color')assert.equal(keys.length,0,`旧颜色进入了 ${keys.join(',')}`);else{assert.equal(keys.length,1);assert.equal(keys[0],'common|danmaku|all|main|username');assert.match(text,mode==='laplace'?/1\.1/:/22/)}row.managedKeys=keys;
+ await p.getByRole('tab',{name:'基础设置'}).click();await f.waitForFunction(()=>!document.querySelector('[data-compatible-editor-selected],[data-compatible-editor-reveal]'));row.cleanup=true;row.result='通过';await home(p);
+ }catch(e){if(onNavigate)p.off('framenavigated',onNavigate);await p.mouse.up().catch(()=>{});row.result='失败';row.error=String(e.stack||e).slice(0,1800);row.controlDiagnostic=await p.locator('.native-property-field.is-fontSize').innerText().catch(()=>null)}rows.push(row);save(process.env.PROGRAM_ARTIFACT||'program-switch-matrix',rows);console.log(row.mode,row.input,row.action,row.result,row.error??'');if(row.result==='失败'&&process.env.FAIL_FAST==='1')throw Error(row.error);
+ }}}const after=await stored();assert.deepEqual(after,before);save('program-switch-storage',{unchanged:true,before,after});}finally{await browser.close()}assert.ok(rows.every(r=>r.result==='通过'));

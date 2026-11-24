@@ -1,0 +1,36 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:ns1="http://www.inkscape.org/namespaces/inkscape" id="colive-idle-_图层_1" data-name="图层_1" version="1.1" viewBox="211 86.609 920 979.391" width="920" height="979.391" role="img" aria-label="未连接">
+
+  <defs>
+    <style>.idle-primary{fill:var(--colive-frame-color,#f34b79)} .idle-character{fill:var(--colive-character-color,#fff)} .idle-none{fill:none} .idle-clip{clip-path:url(#colive-idle-clippath)} .idle-face{fill:var(--colive-face-color,#f34b79)}</style>
+    <clipPath id="colive-idle-clippath">
+      <rect class="idle-none" x="312" y="352" width="715" height="604" rx="90" ry="90" />
+    </clipPath>
+  </defs>
+  <g id="colive-idle-tv-layer">
+    <rect id="colive-idle-tv" class="idle-primary" x="211" y="252" width="920" height="814" rx="158" ry="158" />
+  </g>
+  <g id="colive-idle-antennas-layer">
+    <path id="colive-idle-ant-left" class="idle-primary" d="M469.27,86.85c45.45-1.66,65.73,46.01,89.37,76.86,11.01,20.14,74.62,86.19,55.39,104.53-8.37,4.22-21.52.4-31.27,1.08-16.35-.09-32.61.76-48.91.1-12.03-2.38-57.78,6.08-60.17-5.31-1-9.76-2.56-20.98-10.05-28.69-10.45-11.63-18.91-24.71-27.77-37.54-9.12-12.37-21.51-23.07-25.75-38.33-11.91-37.1,22.62-72.63,59.15-72.71Z" />
+    <path id="colive-idle-ant-right" class="idle-primary" d="M868.04,86.72c36.32-2.28,72.61,30.91,63.73,68.46-6.16,25.45-28.79,42.48-42.05,64.25-5.91,8.4-11.6,16.92-17.15,25.53-2.76,4.28-6.48,8.09-6.36,13.76,2.31,15.02-11.53,10.58-21.13,10.92-10.97-.49-21.97-.36-32.91-.1-16.29.59-32.39-.21-48.69-.43-10.22-1-23.18,3.05-32.67.84-26.43-14.94,39.82-84.91,49.76-103.1,24.14-30.65,42.61-78.34,87.45-80.13Z" />
+  </g>
+  <g class="idle-clip">
+    <g id="colive-idle-character-layer">
+      <g id="colive-idle-head-layer">
+        <path id="colive-idle-character-full-contour" class="idle-character" d="M473.5,986.86c-97.76-93.8-77.82-207.04-40.18-299.09,33.97-82.47,105.89-145.51,184.61-184.55,82.27-39.79,179.54-46.02,266.42-17.9,48.95,16.04,116.31,53.89,140.06,99.85,204.77,396.4-311.78,650.05-550.9,401.68Z" />
+      </g>
+      <g id="colive-idle-leaf-layer">
+        <path id="colive-idle-leaf" class="idle-character" d="M586.98,420.24c11.91,9.56,23.25,30.79,28.83,49.08,2.49,9.53,8.79,26.08-5.46,26.53-47.78,1.51-84.49-10.47-114.29-34.12-20.55-16.9-31.7-31.64-38.47-57.34-2.55-9.7,13.96-10.6,32.97-11.36,38.75-1.54,74.02,9.21,96.42,27.21Z" />
+      </g>
+      <g id="colive-idle-expression-layer">
+        <g id="colive-idle-eye-left-layer">
+          <path id="colive-idle-eye-left" class="idle-face" d="M565.73,726.73c67.88-13.5,92.73,83.02,27.57,104.92-71.74,18.32-97.57-84.7-27.57-104.92Z" />
+        </g>
+        <g id="colive-idle-eye-right-layer">
+          <path id="colive-idle-eye-right" class="idle-face" d="M847.38,586.75c67.71-5.82,83.71,92.35,16.91,107.52-73.01,10.54-87.28-93.39-16.91-107.52Z" />
+        </g>
+        <g id="colive-idle-mouth-layer">
+          <g id="colive-idle-mouth" transform="translate(731.542 741.4625) rotate(-26.682705)"><path fill="none" stroke="var(--colive-face-color,#f34b79)" stroke-linecap="round" stroke-linejoin="round" d="M -32 0 L 32 0" stroke-width="36" /></g></g>
+      </g>
+    </g>
+  </g>
+</svg>

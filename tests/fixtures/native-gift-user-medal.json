@@ -1,0 +1,28 @@
+{
+  "context": {
+    "roomId": 25034104,
+    "anchorUid": "2132180406"
+  },
+  "message": {
+    "cmd": "SEND_GIFT_V2",
+    "danmu": {
+      "area": 1
+    },
+    "data": {
+      "dmscore": 238,
+      "pb": "CIvAogISDVBoaWxMZWFmU3BhY2UaSmh0dHBzOi8vaTAuaGRzbGIuY29tL2Jmcy9mYWNlLzU5ZDVjMDdmN2VhYzI3MGM1MGEzZjlmNzBhNGIxYzU0ODg2ZDk3MWEuanBnIgcjMDBEMUYxKANCIQjz9k0oGzIG5Lyv54i1OMyqGEDMqhhI8ZGiA1DMqhhYAVKIBQjTiQISCeS6uuawlOelqBgBIAEoZDBkOGRCBGdvbGRKEzQ4Mzk0Njg3MzAxNzYxMjAzMjBQqdfn1wZYAWI8YmF0Y2g6Z2lmdDpjb21ib19pZDo0NzU5NTYzOjIxMzIxODA0MDY6MzQwMDM6MTc5NDc2MzY4OS4yODY4aApwZHgFhQEAAIA/iAEBkgEG5oqV5ZaCwAGC7/Qm6gEUCgzmmI7liY3lpbbnu78QtvvZ+Af6AQQIARBkigLfAQi2+9n4BxLWAQoM5piO5YmN5aW257u/EkpodHRwczovL2kwLmhkc2xiLmNvbS9iZnMvZmFjZS9kM2VhYzRmOTljZWE3NTc3ZWZhZDM3OWIxMzhiNmEzYmZmYWJhYjlmLmpwZzJaCgzmmI7liY3lpbbnu78SSmh0dHBzOi8vaTAuaGRzbGIuY29tL2Jmcy9mYWNlL2QzZWFjNGY5OWNlYTc1NzdlZmFkMzc5YjEzOGI2YTNiZmZhYmFiOWYuanBnOh4IBxIaYmlsaWJpbGnnm7Tmkq3pq5jog73kuLvmkq2SAgCaAuUBCkpodHRwczovL3MxLmhkc2xiLmNvbS9iZnMvbGl2ZS83ZDc4NjQ2ZWU0ZWNjOTAwY2ViYmU0NmNiOTYzZjQyMTA3OTU0OGYwLnBuZxJLaHR0cHM6Ly9pMC5oZHNsYi5jb20vYmZzL2xpdmUvNGQ1MjE1ZGE0N2QyNWIzZGI3ODdkMmJhNTQ0OTAxNmVlMTQyZGM4MC53ZWJwKkpodHRwczovL2kwLmhkc2xiLmNvbS9iZnMvbGl2ZS83MGQ5MmFmMGE4MzdhZTY2ZTI1ZjIzNDkzYTU2ZTE2OTBmNzZlYmJhLmdpZqoCAFgBagIIBHqsAgiLwKICEsUBCg1QaGlsTGVhZlNwYWNlEkpodHRwczovL2kwLmhkc2xiLmNvbS9iZnMvZmFjZS81OWQ1YzA3ZjdlYWMyNzBjNTBhM2Y5ZjcwYTRiMWM1NDg4NmQ5NzFhLmpwZzJbCg1QaGlsTGVhZlNwYWNlEkpodHRwczovL2kwLmhkc2xiLmNvbS9iZnMvZmFjZS81OWQ1YzA3ZjdlYWMyNzBjNTBhM2Y5ZjcwYTRiMWM1NDg4NmQ5NzFhLmpwZzoLIP///////////wEaXQoG5Lyv54i1EBsYzKoYIPGRogMozKoYMMyqGEgBUPP2TWD0anoJIzNGQjRGNjk5ggEJIzNGQjRGNjk5igEJIzNGQjRGNjk5kgEHI0ZGRkZGRpoBCSMzRkI0RjZFNg=="
+    }
+  },
+  "expected": {
+    "uid": "4759563",
+    "medal": {
+      "name": "伯爵",
+      "level": 27,
+      "guardLevel": 0,
+      "type": 0,
+      "anchorUid": "1276787",
+      "isCurrentRoom": false,
+      "isLighted": true
+    }
+  }
+}

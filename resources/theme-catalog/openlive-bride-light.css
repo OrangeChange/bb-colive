@@ -1,0 +1,455 @@
+
+@font-face {
+font-family: 'fonts';
+src: url(https://i1.xuehusang.cn/font/SourceHanSansSC-Regular-2.otf);
+}
+body,
+yt-live-chat-ticker-renderer,
+yt-live-chat-renderer,
+#item-scroller,
+#author-name{
+overflow:hidden !important;
+background: transparent !important;
+}
+yt-live-chat-text-message-renderer[author-type=""] #author-photo,
+#chat-badges,
+yt-live-chat-text-message-renderer:not([author-type="member"]) #chat-medal,
+yt-live-chat-ticker-renderer{
+display:none;
+}
+yt-live-chat-text-message-renderer,
+yt-live-chat-membership-item-renderer,
+yt-live-chat-paid-message-renderer{
+animation-name: slideInUp;
+animation-duration:0.7s;
+animation-fill-mode: both;
+}
+@keyframes slideInUp{
+0% {
+transform: translateY(100%);
+visibility: visible;
+}
+100% {
+transform: translateY(0);
+}
+}
+yt-live-chat-membership-item-renderer *,
+yt-live-chat-paid-message-renderer *{
+background-color: transparent !important;
+box-shadow:none !important;
+}
+yt-live-chat-text-message-renderer{
+overflow:visible !important;
+position:relative;
+margin:20px 0px;
+}
+yt-live-chat-text-message-renderer[author-type="member"]:not([is-owner="true"]):not([is-admin="true"]) #image-and-message,yt-live-chat-text-message-renderer[author-type=""]:not([is-owner="true"]):not([is-admin="true"]) #image-and-message{
+margin:30px 120px 0px 120px;
+padding:3px;
+z-index:2;
+}
+#chat-medal *{
+background:none !important;
+border:none !important;
+font-size:10pt !important;
+overflow:visible !important;
+color:white !important;
+font-style:italic;
+}
+yt-live-chat-author-medal-renderer{
+position:absolute;
+right:83px;
+top:20%;
+transform:translatey(-50%);
+z-index:2;
+}
+#medal-level{
+font-size:25pt !important;
+position:absolute;
+left:55px;
+top:-6px;
+}
+/* 通用设置 */
+yt-live-chat-renderer *{
+font-size:20pt !important;
+font-family: 'fonts' !important;
+}d
+yt-live-chat-text-message-renderer{
+margin:50px 0;
+position:relative !important;
+}
+#author-photo img,
+#author-photo{
+width:60px !important;
+height:60px !important;
+z-index:1;
+}
+#author-photo img{
+border-radius:50%;
+}
+yt-live-chat-text-message-renderer #author-photo{
+position:absolute;
+left:75px;
+top:50%;
+transform:translatey(-50%);
+}
+yt-live-chat-text-message-renderer #card,yt-live-chat-text-message-renderer #content{
+width:100%;
+}
+yt-live-chat-text-message-renderer[author-type="member"]:not([is-owner="true"]):not([is-admin="true"]) #content,yt-live-chat-text-message-renderer[author-type=""]:not([is-owner="true"]):not([is-admin="true"]) #content{
+text-align:center;
+display:flex !important;
+align-items:center !important;
+justify-content:center;
+}
+yt-live-chat-text-message-renderer[author-type="member"]:not([is-owner="true"]):not([is-admin="true"]) #author-name,yt-live-chat-text-message-renderer[author-type=""]:not([is-owner="true"]):not([is-admin="true"]) #author-name{
+position:absolute;
+top:-2px;
+left:50%;
+transform:translatex(-50%);
+font-size:15pt !important;
+}
+yt-live-chat-text-message-renderer #image-and-message .emoji[id^=official],
+yt-live-chat-text-message-renderer #image-and-message .emoji[id^=room],
+yt-live-chat-text-message-renderer #image-and-message .emoji[id^=upower],
+#image-and-message img[display=block],
+#image-and-message img[display=inline]{
+height:60px;
+width:auto;
+}
+::before,::after{
+position:absolute;
+}
+#message{
+color:white !important;
+}
+/* 舰长 */
+yt-live-chat-text-message-renderer[author-type="member"]:not([is-owner="true"]):not([is-admin="true"]) #author-name{
+color:#7059a4 !important;
+background: linear-gradient(90deg, rgba(255, 255, 255, 0) 0%,#FFFFFF 40%,#FFFFFF 50%,#FFFFFF 60%,rgba(255, 255, 255, 0) 100%) !important;
+padding:0 110px;
+width:max-content;
+}
+yt-live-chat-text-message-renderer[author-type="member"]:not([is-owner="true"]):not([is-admin="true"]) #author-name::before{
+content:"";
+width:23px;
+height:23px;
+background:url(https://css.pandamiao.com/DM/LF/A45%E9%AD%94%E5%A5%B3%E8%8A%B1%E5%AB%81/picture/name-side2.png) no-repeat;
+background-size:contain;
+top:50%;
+transform:translatey(-50%);
+left:50px;
+}
+yt-live-chat-text-message-renderer[author-type="member"] #author-name::after{
+content:"";
+width:23px;
+height:23px;
+background:url(https://css.pandamiao.com/DM/LF/A45%E9%AD%94%E5%A5%B3%E8%8A%B1%E5%AB%81/picture/name-side2.png) no-repeat;
+background-size:contain;
+top:50%;
+transform:translatey(-50%);
+right:50px;
+}
+yt-live-chat-text-message-renderer[author-type="member"] #author-photo img{
+border:2px solid #dd9ced;
+}
+yt-live-chat-text-message-renderer[author-type="member"]:not([is-owner="true"]):not([is-admin="true"]) #card::before{
+content:"";
+width:323px;
+height:90px;
+background:url(https://css.pandamiao.com/DM/LF/A45%E9%AD%94%E5%A5%B3%E8%8A%B1%E5%AB%81/picture/2mem-left.png) no-repeat;
+background-size:contain;
+z-index:2;
+left:20px;
+bottom:0px;
+}
+yt-live-chat-text-message-renderer[author-type="member"]:not([is-owner="true"]):not([is-admin="true"]) #card::after{
+content:"";
+width:323px;
+height:100px;
+background:url(https://css.pandamiao.com/DM/LF/A45%E9%AD%94%E5%A5%B3%E8%8A%B1%E5%AB%81/picture/2mem-right.png) no-repeat;
+background-size:contain;
+z-index:2;
+right:-20px;
+bottom:-16px;
+}
+/* 普通 */
+yt-live-chat-text-message-renderer[author-type=""] #author-name{
+color:#557dd0 !important;
+background: linear-gradient(90deg, rgba(255, 255, 255, 0) 0%,#FFFFFF 40%,#FFFFFF 50%,#FFFFFF 60%,rgba(255, 255, 255, 0) 100%) !important;
+padding:0 110px;
+width:max-content;
+}
+yt-live-chat-text-message-renderer[author-type=""] #author-name::before{
+content:"";
+width:23px;
+height:23px;
+background:url(https://css.pandamiao.com/DM/LF/A45%E9%AD%94%E5%A5%B3%E8%8A%B1%E5%AB%81/picture/name-side2.png) no-repeat;
+background-size:contain;
+top:50%;
+transform:translatey(-50%);
+left:50px;
+}
+yt-live-chat-text-message-renderer[author-type=""] #author-name::after{
+content:"";
+width:23px;
+height:23px;
+background:url(https://css.pandamiao.com/DM/LF/A45%E9%AD%94%E5%A5%B3%E8%8A%B1%E5%AB%81/picture/name-side2.png) no-repeat;
+background-size:contain;
+top:50%;
+transform:translatey(-50%);
+right:50px;
+}
+/* 房管主播 */
+yt-live-chat-text-message-renderer[is-owner="true"] #author-photo,
+yt-live-chat-text-message-renderer[is-admin="true"] #author-photo{
+margin-top:-20px;
+}
+yt-live-chat-text-message-renderer[is-owner="true"] #author-name,
+yt-live-chat-text-message-renderer[is-admin="true"] #author-name{
+color:#7a789e !important;
+font-size:13pt !important;
+position:relative;
+overflow:visible !important;
+}
+yt-live-chat-text-message-renderer[is-owner="true"] #author-name::after,
+yt-live-chat-text-message-renderer[is-admin="true"] #author-name::after{
+content:"";
+width:15px;
+height:15px;
+background:url(https://css.pandamiao.com/DM/LF/A45%E9%AD%94%E5%A5%B3%E8%8A%B1%E5%AB%81/picture/2admin-icon.png) no-repeat;
+background-size:contain;
+right:-30px;
+
+}
+yt-live-chat-text-message-renderer[is-owner="true"] #author-photo::After,
+yt-live-chat-text-message-renderer[is-admin="true"] #author-photo::After{
+content:"";
+width:123px;
+height:120px;
+background:url(https://css.pandamiao.com/DM/LF/A45%E9%AD%94%E5%A5%B3%E8%8A%B1%E5%AB%81/picture/2admin-avatar.png) no-repeat;
+background-size:contain;
+left:-38px;
+top:-20px;
+}
+yt-live-chat-text-message-renderer[is-admin="true"] #content,
+yt-live-chat-text-message-renderer[is-owner="true"] #content{
+-webkit-mask-image:linear-gradient(90deg, #2c3e50 0%,#000000 80%,rgba(0, 0, 0, 0) 100%);;
+-webkit-mask-repeat:no-repeat !important;
+-webkit-mask-position:center;
+-webkit-mask-size:100% 100% !important;
+background:url(https://css.pandamiao.com/DM/LF/A45%E9%AD%94%E5%A5%B3%E8%8A%B1%E5%AB%81/picture/2admin-pattern.png) no-repeat,rgb(225,225,225,0.6);
+background-position:right;
+border-radius:10px 0 0 10px !important;
+margin:0 0 0 70px;
+padding:0 0 10px 90px
+}
+yt-live-chat-text-message-renderer[is-admin="true"] #content::before,
+yt-live-chat-text-message-renderer[is-owner="true"] #content::before{
+content:"";
+width:5px;
+height:60%;
+background:url(https://css.pandamiao.com/DM/LF/A45%E9%AD%94%E5%A5%B3%E8%8A%B1%E5%AB%81/picture/admin-dot.png) repeat;
+background-size:contain;
+top:50%;
+transform:translatey(-50%);
+left:160px;
+}
+yt-live-chat-text-message-renderer[is-admin="true"] yt-live-chat-author-medal-renderer,
+yt-live-chat-text-message-renderer[is-owner="true"] yt-live-chat-author-medal-renderer{
+display:none;
+}
+/* 免费礼物 */
+yt-live-chat-paid-message-renderer[price-level="0"]{
+background:rgb(186,189,231,0.6);
+margin:20px 40px;
+border-radius:10px;
+}
+yt-live-chat-paid-message-renderer[price-level="0"] #content,
+yt-live-chat-paid-message-renderer[price-level="0"] #author-photo{
+display:none;
+}
+yt-live-chat-paid-message-renderer[price-level="0"] #purchase-amount{
+position:absolute;
+right:0px;
+border:2px solid #6e57b8;
+padding:0px 10px;
+border-radius:10px;
+color: #6e57b8;
+}
+yt-live-chat-paid-message-renderer[price-level="0"] #author-name::before{
+content:"";
+width:23px;
+height:23px;
+background:url(https://css.pandamiao.com/DM/LF/A45%E9%AD%94%E5%A5%B3%E8%8A%B1%E5%AB%81/picture/name-side2.png) no-repeat;
+background-size:contain;
+top:50%;
+transform:translatey(-50%);
+margin-left:-30px;
+}
+/* 上舰 */
+yt-live-chat-membership-item-renderer{
+display:flex !important;
+justify-content:center !important;
+margin-top:30px;
+}
+yt-live-chat-membership-item-renderer #card{
+overflow:visible !important;
+}
+yt-live-chat-membership-item-renderer #author-photo img{
+border-radius:50%;
+width:80px !important;
+height:80px !important;
+}
+yt-live-chat-membership-item-renderer #author-photo{
+position:absolute;
+top:0px;
+left:50%;
+transform:translatex(-50%);
+width:120px !important;
+height:120px !important;
+overflow:visible !important;
+}
+#header-subtext{
+display:none !important;
+}
+yt-live-chat-membership-item-renderer yt-live-chat-author-chip{
+margin-top:110px;
+background:rgb(225,225,225,0.6) !important;
+border-radius:10px;
+padding:0 20px;
+}
+yt-live-chat-membership-item-renderer yt-live-chat-author-chip::before{
+content:"";
+width:43px;
+height:23px;
+background:url(https://css.pandamiao.com/DM/LF/A45%E9%AD%94%E5%A5%B3%E8%8A%B1%E5%AB%81/picture/new-mem-name-side.png) no-repeat;
+background-size:contain;
+right:-22px;
+}
+yt-live-chat-membership-item-renderer yt-live-chat-author-chip::after{
+content:"";
+width:43px;
+height:23px;
+background:url(https://css.pandamiao.com/DM/LF/A45%E9%AD%94%E5%A5%B3%E8%8A%B1%E5%AB%81/picture/new-mem-name-side.png) no-repeat;
+background-size:contain;
+left:-22px;
+transform:scalex(-1);
+}
+yt-live-chat-membership-item-renderer #author-name::before{
+position:static !important;
+content:"新的信徒·";
+color:#8b83d1;
+}
+yt-live-chat-membership-item-renderer #author-photo::before{
+content:"";
+width:415px;
+height:221px;
+background:url(https://css.pandamiao.com/DM/LF/A45%E9%AD%94%E5%A5%B3%E8%8A%B1%E5%AB%81/picture/2new-mem.png) no-repeat;
+background-size:contain;
+top:-48px;
+left:50%;
+transform:translatex(-50%);
+}
+/* 礼物 */
+yt-live-chat-paid-message-renderer:not([price-level="0"]){
+-webkit-mask-image:linear-gradient(90deg, #2c3e50 0%,#000000 80%,rgba(0, 0, 0, 0) 100%);;
+-webkit-mask-repeat:no-repeat !important;
+-webkit-mask-position:center;
+-webkit-mask-size:100% 100% !important;
+background:url(https://css.pandamiao.com/DM/LF/A45%E9%AD%94%E5%A5%B3%E8%8A%B1%E5%AB%81/picture/gift-pattern.png) no-repeat,linear-gradient(359deg, #aaafdd 26%,#aa9aca 74%);
+background-position:right;
+border-radius:10px 0 0 10px !important;
+margin:20px 0 20px 20px;
+}
+yt-live-chat-paid-message-renderer:not([price-level="0"]) #purchase-amount{
+position:absolute;
+right:80px;
+top:0px;
+color:#e1bff4;
+text-shadow:0 0 5px black;
+}
+yt-live-chat-paid-message-renderer:not([price-level="0"]) #author-name{
+margin-left:29px;
+color:white !important;
+}
+yt-live-chat-paid-message-renderer:not([price-level="0"]) #author-name::after{
+content:"";
+width:18px;
+height:18px;
+background:url(https://css.pandamiao.com/DM/LF/A45%E9%AD%94%E5%A5%B3%E8%8A%B1%E5%AB%81/picture/gift-icon.png) no-repeat;
+background-size:contain;
+margin:12px 0 0 7px;
+}
+yt-live-chat-paid-message-renderer:not([price-level="0"]) #message{
+text-shadow:0 0 5px black;
+margin:-30px 0px 10px 105px;
+}
+yt-live-chat-paid-message-renderer:not([price-level="0"]) #content::before{
+content:"";
+width:5px;
+height:60%;
+background:url(https://css.pandamiao.com/DM/LF/A45%E9%AD%94%E5%A5%B3%E8%8A%B1%E5%AB%81/picture/admin-dot.png) repeat;
+background-size:contain;
+top:50%;
+transform:translatey(-50%);
+left:120px;
+}
+yt-live-chat-paid-message-renderer:not([price-level="0"]) #content::after{
+content:"";
+width:100%;
+height:10px;
+background:url(https://css.pandamiao.com/DM/LF/A45%E9%AD%94%E5%A5%B3%E8%8A%B1%E5%AB%81/picture/gift-star.png) repeat;
+background-size:contain;
+left:130px;
+}
+yt-live-chat-paid-message-renderer:not([price-level="0"]):not([giftname="superchat"]) #author-photo::before{
+content:"";
+width:123px;
+height:120px;
+background:url(https://css.pandamiao.com/DM/LF/A45%E9%AD%94%E5%A5%B3%E8%8A%B1%E5%AB%81/picture/2gift-avatar.png) no-repeat;
+background-size:contain;
+left:-23px;
+top:-12px;
+}
+yt-live-chat-paid-message-renderer:not([price-level="0"])[giftname="superchat"] #author-photo::before{
+content:"";
+width:123px;
+height:120px;
+background:url(https://css.pandamiao.com/DM/LF/A45%E9%AD%94%E5%A5%B3%E8%8A%B1%E5%AB%81/picture/2sc-avatar.png) no-repeat;
+background-size:contain;
+left:-23px;
+top:-12px;
+}
+/* 互动 */
+yt-live-chat-interact-message-renderer{
+background:rgb(225,225,225,0.6);
+margin:20px 40px;
+border-radius:10px;
+padding:10px 60px;
+}
+yt-live-chat-interact-message-renderer::before{
+content:"";
+width:23px;
+height:23px;
+background:url(https://css.pandamiao.com/DM/LF/A45%E9%AD%94%E5%A5%B3%E8%8A%B1%E5%AB%81/picture/nor-name-side.png) no-repeat;
+background-size:contain;
+top:50%;
+transform:translatey(-50%);
+left:25px;
+}
+yt-live-chat-interact-message-renderer *{
+color:white !important;
+}
+yt-live-chat-interact-message-renderer #message{
+position:absolute;
+right:50px;
+color:#88a6e7 !important;
+border:2px solid #88a6e7;
+border-radius:10px;
+padding:0 20px;
+}
+yt-live-chat-interact-message-renderer yt-live-chat-author-medal-renderer,
+yt-live-chat-interact-message-renderer #author-photo{
+display:none !important;
+}

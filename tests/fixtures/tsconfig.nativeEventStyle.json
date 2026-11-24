@@ -1,0 +1,5 @@
+{
+  "extends": "../../tsconfig.json",
+  "include": ["../../src", "./nativeEventStyle.tsx", "./task4EventStyle.tsx", "./nativeEventSamples.ts"],
+  "references": []
+}

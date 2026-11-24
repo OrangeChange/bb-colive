@@ -1,0 +1,8 @@
+import {mockIPC,mockWindows} from '@tauri-apps/api/mocks';
+import React from 'react';import{createRoot}from'react-dom/client';import '../../src/App.css';
+const target=new URLSearchParams(location.search).get('target')??'live';mockWindows(target==='windows'?'display':'main');mockIPC((command,args)=>(window as any).__realInvoke(command,args));
+await import('../../src/compat/blivechat/register.tsx');await import('../../src/compat/openlive/register.tsx');await import('../../src/compat/laplace/register.tsx');
+const{createStylePreviewEvents}=await import('../../src/components/stylePreviewEvents.ts');const events=createStylePreviewEvents('混合流').map(e=>({...e,roomId:24125,__roomGeneration:1}));(window as any).__outputEvents=events;
+const{EventList}=await import('../../src/components/EventList.tsx');const{useCompatibleEventRender}=await import('../../src/compat/CompatibleEventRenderer.tsx');const{createFeedScrollSession}=await import('../../src/events/feedScroll.ts');const{DEFAULT_EVENT_DISPLAY_PREFERENCES}=await import('../../src/eventDisplaySettings.ts');const session=createFeedScrollSession(events.length);
+function Live(){const render=useCompatibleEventRender({target:'live',targetId:'live',roomId:24125,placement:'main'});return <main style={{height:'100vh',position:'relative'}}><EventList events={events} visibleIndices={events.map((_,i)=>i)} viewKey="theme-library" feedKey="theme-library" feedSession={session} liveLayout displayPreferences={DEFAULT_EVENT_DISPLAY_PREFERENCES} compatibleEventRender={render}/></main>}
+const{FloatingEventWindow}=await import('../../src/windows/FloatingEventWindow.tsx');createRoot(document.getElementById('root')!).render(target==='windows'?<FloatingEventWindow kind="display"/>:<Live/>);

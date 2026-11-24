@@ -1,0 +1,151 @@
+/* 奶绿气泡样式 by LAPLACE Chat */
+/* 引入 Google Fonts 字体，理论上国内可以直接访问 */
+@import url('https://fonts.googleapis.com/css2?family=Jost:ital,wght@0,400;0,600;1,400;1,600&display=swap');
+
+@layer template {
+  /* 全局背景透明，可保证 OBS 载入弹幕机的过程中背景全程透明 */
+  body { background-color: rgba(0, 0, 0, 0); }
+
+  /* 全局事件变量 */
+  .event {
+    /* 应用全局自定义字体 */
+    /* --font-sans 为 LAPLACE Chat 内置变量，可调用非衬线字体 */
+    --event-font-family: 'Jost', var(--font-sans);
+  }
+
+  /* 雪堆特效开始 */
+  .event {
+    --snow-image: url(https://rsrc.laplace.cn/assets/chat-templates/snowL.svg) no-repeat 0 0,
+      url(https://rsrc.laplace.cn/assets/chat-templates/snowC.svg) no-repeat 50% 0,
+      url(https://rsrc.laplace.cn/assets/chat-templates/snowR.svg) no-repeat 100% 0;
+    --snow-image-single: url(https://rsrc.laplace.cn/assets/chat-templates/snowAlt.svg) no-repeat 50% 0;
+
+    position: relative;
+  }
+
+  .avatar-wrap::after,
+  .event.event--superchat::after,
+  .event.event--gift.event-size--highlight::after,
+  .event.event--mvp::after,
+  .event.event--toast::after,
+  .event.event--message:not(.has-emotes) .message::after {
+    content: '';
+    display: block;
+    position: absolute;
+    top: calc(var(--1px) * -5);
+    left: 0;
+    right: 0;
+    height: calc(var(--1px) * 16);
+    background: var(--snow-image);
+    background-size: contain;
+  }
+
+  .avatar-wrap::after {
+    top: calc(var(--1px) * -4);
+    left: 0;
+    background: var(--snow-image-single);
+    background-size: contain;
+  }
+  /* 雪堆特效结束 */
+
+  /* 弹幕自定义样式 */
+  .event--message {
+    --text: #213d2b;
+    --bg: #f1fbf5;
+  }
+
+  /* 总督变量 */
+  .event--message.guard-level--1 {
+    --text: rgb(61, 24, 23);
+    --bg: rgb(253, 213, 186);
+  }
+
+  /* 提督变量 */
+  .event--message.guard-level--2 {
+    --text: rgb(74, 29, 95);
+    --bg: rgb(233, 204, 240);
+  }
+
+  /* 舰长变量 */
+  .event--message.guard-level--3 {
+    --text: rgb(26, 24, 85);
+    --bg: rgb(200, 221, 252);
+  }
+
+  /* 主播变量 */
+  .event--message.user-type--streamer {
+    --text: rgb(255, 255, 255);
+    --bg: rgb(65, 159, 120);
+  }
+
+  /* 为事件增加一个全局的渐变，可在调用 OBS API 时增加颜色渐变效果，使场景切换时看上去没那么突兀 */
+  .event {
+    transition: .4s color ease, .4s background-color ease;
+  }
+
+  /* 当主题为暗色时，为用户名增加一个阴影，以保证在大部分深色背景的游戏场景遇到白色背景时依然可以看清用户名 */
+  .scheme-dark .event--system,
+  .scheme-dark .event--superchat,
+  .scheme-dark .event--user-block,
+  .scheme-dark .event--live-warning,
+  .scheme-dark .event--live-cutoff,
+  .scheme-dark .event--toast .content,
+  .scheme-dark .event--gift .content,
+  .scheme-dark .event--like-click .username,
+  .scheme-dark .event--interaction .username,
+  .scheme-dark .event--message .username {
+    text-shadow: 0 0 2px var(--bg-color), 0 0 2px var(--bg-color), 0 0 2px var(--bg-color);
+  }
+
+  /* 防止深色模式下礼物事件中的粉丝勋章出现阴影 */
+  .fans-medal {
+    text-shadow: none;
+  }
+
+  /* 弹幕正文改为聊天泡泡样式 */
+  .event--message .message {
+    position: relative;
+    display: block;
+    margin-left: calc(var(--1px) * 30);
+    margin-top: calc(var(--1px) * 2);
+    padding: calc(var(--1px) * 8) calc(var(--1px) * 14);
+    color: var(--text);
+    background-color: var(--bg);
+    width: fit-content;
+    min-width: 3em;
+    border-radius: calc(var(--1px) * 18);
+    filter: drop-shadow(0 0 1px currentColor);
+    font-weight: bold;
+  }
+
+  /* 去掉大表情消息边框 */
+  .event--message.has-emotes .message {
+    background-color: transparent;
+    padding: 0;
+    filter: none;
+  }
+
+  /* 为聊天泡泡增加尾巴 */
+  .event--message:not(.has-emotes) .message::before {
+    content: "";
+    display: inline-block;
+    position: absolute;
+    top: -5px;
+    left: -12px;
+    border: 10px solid transparent;
+    border-right: 18px solid var(--bg);
+    transform: rotate(40deg);
+  }
+
+  /* 放大表情尺寸 */
+  .event--message .emote {
+    max-height: calc(var(--event-line-height) * 2);
+  }
+
+  /* 一个简易的渐变淡出效果，可以让组件边缘看起来没那么突兀 */
+  .event-list {
+    --offset: 30px;
+    -webkit-mask-image: linear-gradient(to bottom, rgba(0, 0, 0, 0), rgba(0, 0, 0, 1) var(--offset), rgba(0, 0, 0, 1) calc(100% - var(--offset)), rgba(0, 0, 0, 0));
+            mask-image: linear-gradient(to bottom, rgba(0, 0, 0, 0), rgba(0, 0, 0, 1) var(--offset), rgba(0, 0, 0, 1) calc(100% - var(--offset)), rgba(0, 0, 0, 0));
+  }
+}

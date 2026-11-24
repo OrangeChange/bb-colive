@@ -1,0 +1,13 @@
+import assert from 'node:assert/strict';
+import {createRequire} from 'node:module';
+const {chromium}=createRequire(import.meta.url)(process.env.PLAYWRIGHT_MODULE || 'playwright');
+const b=await chromium.launch({channel:'chrome',headless:true});
+const p=await b.newPage({viewport:{width:1280,height:900}});
+await p.goto((process.env.FEED_TEST_URL || 'http://127.0.0.1:1437') + '/tests/fixtures/nativeEventIntegration.html');
+await p.getByText('现场列表',{exact:true}).click();
+await p.getByText('顶部追加',{exact:true}).click();
+await p.waitForTimeout(1200);
+const n=p.locator('.scene-live-list');await n.hover();await p.mouse.wheel(0,350);await p.waitForTimeout(1000);
+const read=()=>n.evaluate(e=>{let t=e.getBoundingClientRect().top;return [...e.querySelectorAll('[data-event-id]')].map(r=>({id:r.dataset.eventId,offset:r.getBoundingClientRect().top-t,height:r.getBoundingClientRect().height})).filter(x=>x.offset+x.height>0)});
+const before=await read();for(let i=0;i<3;i++){await p.getByText('追加十条',{exact:true}).click();await p.waitForTimeout(1000)}const after=await read();const anchor=after.find(row=>row.id===before[0].id); console.log(JSON.stringify({before:before[0],after:anchor})); assert.ok(anchor && Math.abs(anchor.offset-before[0].offset)<=4, '顶部可见事件应保持原位');await p.getByText('底部追加',{exact:true}).click(); await p.waitForTimeout(1000); await n.hover(); await p.mouse.wheel(0,100000); await p.waitForTimeout(500); await p.mouse.wheel(0,-350); await p.waitForTimeout(700);
+const filterBefore=(await read())[0]; await p.getByLabel('现场关键词').fill('不会匹配的关键词'); await p.waitForTimeout(700); await p.getByText('清除筛选',{exact:true}).click(); await p.waitForTimeout(1500); const filterAfter=(await read()).find(row=>row.id===filterBefore.id); console.log(JSON.stringify({filterBefore,filterAfter})); assert.ok(filterAfter && Math.abs(filterAfter.offset-filterBefore.offset)<=4, '退出筛选后顶部可见事件应保持原位'); await b.close();

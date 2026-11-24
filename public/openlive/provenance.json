@@ -1,0 +1,22 @@
+{
+  "repository": "https://github.com/DoodleBears/blivechat",
+  "commit": "0da8c94d40a8791bb212985f6ac0ae55765c3a03",
+  "license": "MIT",
+  "renderer": "vendor/openlive/frontend/src/components/ChatRenderer",
+  "host": "vendor/openlive/host",
+  "excluded": [
+    "chat transport",
+    "translation service",
+    "sponsor rights",
+    "same-user threads",
+    "random layout",
+    "custom HTML"
+  ],
+  "adaptations": [
+    "single-message DOM",
+    "existing gift copy and currency precision",
+    "ticker detail and progress",
+    "medal wearing and room ownership",
+    "actual opened gift value"
+  ]
+}

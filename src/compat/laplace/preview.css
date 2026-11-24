@@ -1,0 +1,92 @@
+@import '../previewSurface.css';
+/* Editor chrome uses BB's semantic tokens. Original Laplace CSS remains in its own document. */
+.laplace-preview { min-height: 100%; padding: 20px; color: var(--text-1); background: var(--bg); font: 14px/1.45 var(--font-ui); overflow: auto; }
+.laplace-preview[data-scheme=dark] { --bg: #151b19; --surface: #1d2522; --surface-raised: #27312d; --text-1: #edf2ef; --text-2: #b2bfb8; --border: #425149; }
+.laplace-preview[data-scheme=light] { --bg: #f7f9f8; --surface: #fff; --surface-raised: #f1f4f3; --text-1: #161a19; --text-2: #4f5a57; --border: #d0d9d4; }
+.laplace-heading { display: flex; flex-wrap: wrap; align-items: baseline; gap: 8px 20px; margin-bottom: 20px; }
+.laplace-heading h1, .laplace-heading p { margin: 0; }
+.laplace-heading p { color: var(--text-2); }
+.laplace-workspace { display: grid; grid-template-columns: minmax(360px, 1.35fr) minmax(285px, 1fr); align-items: start; gap: 24px; }
+.laplace-editor-column, .laplace-preview-column { min-width: 0; }
+.laplace-preview-column { position: sticky; top: 0; }
+.laplace-template-row, .laplace-scene-controls { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; }
+.laplace-field { min-width: 0; }
+.laplace-field > label { display: block; margin-bottom: 6px; }
+.laplace-field .ui-select-trigger { width: 100%; }
+.laplace-preview input:not([type=checkbox]):not([type=range]):not([type=color]), .laplace-preview textarea { width: 100%; min-width: 0; color: var(--text-1); background: var(--surface); border: 1px solid var(--border); border-radius: 6px; padding: 6px 8px; font: inherit; }
+.laplace-preview input:not([type=checkbox]):not([type=range]):not([type=color]) { min-height: 32px; }
+.laplace-preview input::placeholder, .laplace-preview textarea::placeholder { color: var(--text-2); opacity: 1; }
+.laplace-preview input[aria-invalid=true] { border-color: var(--status-danger); }
+.laplace-preview input:disabled { opacity: .55; cursor: not-allowed; }
+.laplace-preview input[readonly] { color: var(--text-2); background: var(--surface-raised); }
+.laplace-preview :focus-visible { outline: 2px solid var(--laplace-page-accent, var(--accent)); outline-offset: 3px; }
+.laplace-preview input, .laplace-preview textarea { caret-color: var(--laplace-page-accent, var(--accent)); }
+.laplace-preview ::selection { color: var(--text-1); background: var(--accent-subtle); }
+.laplace-preview button:not(.ui-select-trigger) { min-height: 32px; border: 1px solid var(--border); background: var(--surface); border-radius: 6px; color: var(--text-1); font: inherit; padding: 5px 10px; cursor: pointer; transition: background-color 120ms ease, border-color 120ms ease; }
+.laplace-preview button:not(.ui-select-trigger):not(:disabled):hover { background: var(--surface-raised); border-color: var(--laplace-page-accent, var(--accent)); }
+.laplace-preview button:not(.ui-select-trigger):not(:disabled):active { background: var(--accent-subtle); }
+.laplace-preview button:disabled { cursor: not-allowed; opacity: .5; }
+.laplace-preview button[aria-pressed=true] { color: var(--laplace-page-accent, var(--accent)); border-color: currentColor; }
+.laplace-actions { display: flex; align-items: center; gap: 6px; flex-wrap: wrap; }
+.laplace-preview details { margin-top: 16px; }
+.laplace-preview summary { cursor: pointer; padding: 8px 0; color: var(--text-1); font-weight: 500; border-bottom: 1px solid var(--border); }
+.laplace-preview summary:hover { color: var(--laplace-page-accent, var(--accent)); }
+.laplace-preview summary:active { color: var(--accent-active); }
+.laplace-remote-picker form { padding-top: 12px; }
+.laplace-remote-picker form > label { display: block; margin-bottom: 6px; }
+.laplace-remote-picker form > .laplace-actions { margin-top: 8px; }
+.laplace-history-row { display: flex; align-items: center; gap: 6px; margin-top: 6px; }
+.laplace-history-row > button:first-child { min-width: 0; flex: 1; text-align: left; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.laplace-history-row > button:last-child { flex: none; }
+.laplace-history { max-height: 280px; overflow: auto; scrollbar-gutter: stable; }
+.laplace-remote-picker h3 { margin: 16px 0 8px; }
+.laplace-source { overflow-wrap: anywhere; color: var(--text-2); font-size: 12px; }
+.laplace-css-editor { margin-top: 20px; }
+.laplace-editor-toolbar { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 8px; margin-bottom: 8px; }
+.laplace-editor-toolbar > label { font-weight: 500; }
+.laplace-editor-toolbar .laplace-actions { gap: 4px; }
+.laplace-editor-toolbar button { font-size: 12px !important; padding-inline: 8px !important; }
+.laplace-preview textarea { height: 400px; resize: none; font: 13px/1.6 var(--font-mono); white-space: pre; tab-size: 2; overflow: auto; scrollbar-gutter: stable; }
+.laplace-css-editor.is-fullscreen { position: fixed; inset: 0; z-index: 60; display: flex; flex-direction: column; margin: 0; padding: 12px 16px; background: var(--bg); }
+.laplace-css-editor.is-fullscreen textarea { flex: 1; min-height: 0; height: auto; }
+.laplace-css-editor.is-fullscreen .laplace-editor-toolbar { flex: none; }
+.laplace-help { font-size: 12px; line-height: 1.5; color: var(--text-2); margin: 8px 0; }
+.laplace-status { min-height: 20px; margin: 8px 0 0; font-size: 12px; color: var(--text-2); }
+.laplace-error { color: var(--status-danger); font-size: 12px; margin: 6px 0; overflow-wrap: anywhere; }
+.laplace-settings fieldset { border: 0; margin: 16px 0 0; padding: 0; min-width: 0; }
+.laplace-settings legend { width: 100%; padding: 0 0 8px; border-bottom: 1px solid var(--border); margin-bottom: 10px; font-weight: 500; }
+.laplace-interaction-group { margin-top: 16px; }
+.laplace-settings-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(190px, 1fr)); gap: 10px 16px; }
+.laplace-check { display: flex; align-items: center; min-height: 32px; gap: 8px; line-height: 20px; cursor: pointer; }
+.laplace-check:has(input:disabled) { cursor: not-allowed; color: var(--text-2); }
+.laplace-check input { width: 16px; height: 16px; flex: 0 0 16px; accent-color: var(--laplace-page-accent, var(--accent)); cursor: inherit; }
+.laplace-number { display: flex; align-items: center; gap: 8px; }
+.laplace-number input { max-width: 140px; font-variant-numeric: tabular-nums; }
+.laplace-number span { font-size: 12px; color: var(--text-2); }
+.laplace-settings > .laplace-field { margin-top: 16px; }
+.laplace-preview-controls { display: flex; align-items: center; justify-content: space-between; gap: 12px; margin-bottom: 12px; }
+.laplace-width { color: var(--text-2); font-family: var(--font-mono); flex: none; }
+.laplace-color-row { display: flex; gap: 8px; align-items: center; }
+.laplace-preview input[type=color] { width: 44px; height: 32px; padding: 2px; background: var(--surface); border: 1px solid var(--border); border-radius: 6px; cursor: pointer; }
+.laplace-preview-canvas { position: relative; height: 66vh; min-height: 360px; margin-top: 12px; }
+.laplace-renderer-host { position: relative; width: 100%; height: 100%; min-height: 0; }
+.laplace-renderer-frame { width: 100%; height: 100%; display: block; border: 0; }
+.laplace-frame-status, .laplace-frame-error { position: absolute; z-index: 1; left: 8px; right: 8px; top: 8px; margin: 0; padding: 8px; font-size: 12px; line-height: 1.5; background: var(--surface, #fff); color: var(--text-1, #161a19); border: 1px solid var(--border, #d0d9d4); overflow-wrap: anywhere; }
+.laplace-frame-error { max-height: 100px; overflow: auto; }
+.laplace-simulation > label { display: flex; align-items: center; justify-content: space-between; margin-top: 8px; }
+.laplace-simulation input[type=range] { width: 100%; margin: 8px 0; accent-color: var(--accent); cursor: pointer; }
+.laplace-speed-marks { display: flex; justify-content: space-between; gap: 6px; color: var(--text-2); font-size: 12px; }
+.laplace-type-grid { display: grid; grid-template-columns: repeat(2, minmax(0,1fr)); gap: 4px 8px; max-height: 224px; overflow: auto; margin: 8px 0; }
+.laplace-appearance .laplace-template-row { margin-top: 10px; }
+@media (max-width: 760px) {
+  .laplace-preview { padding: 12px; }
+  .laplace-workspace { grid-template-columns: minmax(0, 1fr); gap: 20px; }
+  .laplace-preview-column { position: static; }
+  .laplace-preview-canvas { height: 65vh; }
+}
+@media (max-width: 380px) { .laplace-template-row, .laplace-scene-controls { grid-template-columns: 1fr; } .laplace-speed-marks { flex-wrap: wrap; } }
+@media (prefers-reduced-motion: reduce) { .laplace-preview button { transition: none !important; } }
+/* Shared primitives portal outside the editor. Match this route's chosen scheme
+   only while it is mounted, without changing BB's saved theme or root attributes. */
+:root:has(.laplace-preview[data-scheme=dark]) :is(.ui-select-content, .settings-confirm-dialog) { --bg: #151b19; --surface: #1d2522; --surface-raised: #27312d; --text-1: #edf2ef; --text-2: #b2bfb8; --border: #425149; }
+:root:has(.laplace-preview[data-scheme=light]) :is(.ui-select-content, .settings-confirm-dialog) { --bg: #f7f9f8; --surface: #fff; --surface-raised: #f1f4f3; --text-1: #161a19; --text-2: #4f5a57; --border: #d0d9d4; }

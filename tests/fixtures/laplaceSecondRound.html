@@ -1,0 +1,45 @@
+<!doctype html>
+<html lang="zh-CN">
+<head><meta charset="UTF-8"><title>Laplace 第二轮验收</title></head>
+<body><pre id="result">running</pre><script type="module">
+  import React from "react";
+  import { createRoot } from "react-dom/client";
+  import { LaplaceEvent, LaplaceEventSurface } from "/src/compat/laplace/components.tsx";
+  import { createLaplaceBaseCss } from "/src/compat/laplace/theme.ts";
+  import { scopeBlivechatCss } from "/src/compat/blivechat/cssScope.ts";
+  import { createDefaultCompatibleThemeSettings } from "/src/themes/compatThemeSettings.ts";
+  import "/src/compat/laplace/register.tsx";
+  import { getCompatibleThemeEditingSurface } from "/src/components/CompatibleThemePreview.tsx";
+  import sourceCss from "/src/compat/laplace/source.css?raw";
+
+  const settings = createDefaultCompatibleThemeSettings("laplace");
+  const base = { roomId: 1, ts: 1700000000000, user: { uid: "1", uname: "用户", avatar: "", guardLevel: 0 } };
+  const style = document.createElement("style");
+  const scopeId = "laplace:formal-edge";
+  style.textContent = scopeBlivechatCss(`${sourceCss}\n${createLaplaceBaseCss({ ...settings, baseFontSize: 24 })}`, scopeId);
+  document.head.append(style);
+  const mount = document.createElement("div");
+  mount.className = "laplace-theme-root";
+  mount.dataset.blivechatScope = scopeId;
+  mount.dataset.showTimestamp = "true";
+  document.body.append(mount);
+  const root = createRoot(mount);
+  const render = async (event, props = {}) => {
+    root.render(React.createElement(props.surface ? LaplaceEventSurface : LaplaceEvent, { event, placement: props.placement ?? "main", settings: { ...settings, baseFontSize: 24, ...props.settings }, mode: props.mode ?? "obs" }));
+    await new Promise(resolve => setTimeout(resolve, 60));
+  };
+  await render({ ...base, id: "dashboard", msgType: 0, text: "正文" }, { mode: "dashboard", surface: true });
+  const dashboardText = mount.textContent;
+  const formalScene = Boolean(mount.querySelector(".events-list-wrap.scene-default .event--message"));
+  await render({ ...base, id: "gift", msgType: 1, gift: { id: 1, name: "礼物", count: 1, total: 30000, coinType: "gold" } });
+  const giftAvatar = getComputedStyle(mount.querySelector("[data-slot='avatar']")).width;
+  const giftTime = getComputedStyle(mount.querySelector(".timestamp")).display;
+  await render({ ...base, id: "sc", msgType: 2, sc: { price: 30, message: "醒目留言", duration: 60 } });
+  const scAvatar = getComputedStyle(mount.querySelector("[data-slot='avatar']")).width;
+  const registeredSurface = Boolean(getCompatibleThemeEditingSurface("laplace"));
+  await render({ ...base, id: "red", msgType: 6, lottery: { id: "r", awardName: "红包", awards: [] } });
+  const result = { dashboardText, formalScene, giftAvatar, giftTime, scAvatar, registeredSurface, registeredRedStart: Boolean(mount.querySelector(".event--red-envelope-start")) };
+  document.querySelector("#result").textContent = JSON.stringify(result);
+  document.body.dataset.status = "done";
+</script></body>
+</html>

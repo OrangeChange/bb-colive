@@ -1,0 +1,72 @@
+{
+  "1": {
+    "image": "/media/laplace-preview/gifts/1.webp",
+    "sourceUrl": "https://i0.hdslb.com/bfs/live/07d4dad91d7f68d92cb6a324ad9395ae2adefd47.webp",
+    "roomId": 25034104,
+    "source": "giftConfig"
+  },
+  "25": {
+    "image": "/media/laplace-preview/gifts/25.webp",
+    "sourceUrl": "https://i0.hdslb.com/bfs/live/29e01d47ca7584754a682171e3644fcec3669280.webp",
+    "roomId": 25034104,
+    "source": "giftConfig"
+  },
+  "30004": {
+    "image": "/laplace/gifts/gift-fallback.png",
+    "roomId": 25034104,
+    "source": "unavailable"
+  },
+  "30047": {
+    "image": "/media/laplace-preview/gifts/30047.webp",
+    "sourceUrl": "https://i0.hdslb.com/bfs/live/24a007b0299c5e7f652d9eec0e0a51afd5a652f3.webp",
+    "roomId": 25034104,
+    "source": "giftConfig"
+  },
+  "30607": {
+    "image": "/media/laplace-preview/gifts/30607.webp",
+    "sourceUrl": "https://i0.hdslb.com/bfs/live/cce60fd908e4910a340a1a4a061a3d4d4a1a123d.webp",
+    "roomId": 25034104,
+    "source": "giftConfig"
+  },
+  "30732": {
+    "image": "/media/laplace-preview/gifts/30732.webp",
+    "sourceUrl": "https://i0.hdslb.com/bfs/live/182e990a43dc1f6b9b03fb77d478856cdb5410e9.webp",
+    "roomId": 25034104,
+    "source": "giftConfig"
+  },
+  "31036": {
+    "image": "/media/laplace-preview/gifts/31036.webp",
+    "sourceUrl": "https://i0.hdslb.com/bfs/live/28357ba4cd566418730ca29da2c552efa7e4a390.webp",
+    "roomId": 25034104,
+    "source": "giftConfig"
+  },
+  "31115": {
+    "image": "/media/laplace-preview/gifts/31115.webp",
+    "sourceUrl": "https://i0.hdslb.com/bfs/live/5a02f041d03912d589b8abba6b8680c6b52bc09b.webp",
+    "roomId": 25034104,
+    "source": "giftConfig"
+  },
+  "32188": {
+    "image": "/media/laplace-preview/gifts/32188.webp",
+    "sourceUrl": "https://i0.hdslb.com/bfs/live/0d7faf51c139766865e942039426a84abb3713b7.webp",
+    "roomId": 25034104,
+    "source": "giftConfig"
+  },
+  "32313": {
+    "image": "/media/laplace-preview/gifts/32313.webp",
+    "sourceUrl": "https://i0.hdslb.com/bfs/live/facc4b0b4b2cdd52b8130e9f73b564a1be911971.webp",
+    "roomId": 25034104,
+    "source": "giftConfig"
+  },
+  "32762": {
+    "image": "/laplace/gifts/gift-fallback.png",
+    "roomId": 25034104,
+    "source": "unavailable"
+  },
+  "34762": {
+    "image": "/laplace/files/workers.laplace.cn/room-gift-config/25034104/34762.webp",
+    "sourceUrl": "https://workers.laplace.cn/bilibili/room-gift-config/25034104?gift=34762&size=960",
+    "roomId": 25034104,
+    "source": "captured"
+  }
+}

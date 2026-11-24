@@ -1,0 +1,310 @@
+{
+  "INTERACT_WORD_V2": [
+    {
+      "cmd": "INTERACT_WORD_V2",
+      "data": {
+        "dmscore": 9,
+        "pb": "CNnEpQ8SDOibi+m7hOeCvOS5syIBASgBMLWLoQ84nqis1AZAwa6a+oI0SjEImZGAuJOkmgYQARoJ5qKo56eR55SfII6t8gIowIGDBjDAgYMGOMCBgwZg1N6qDmgBYgB459CvleqrnucYmgEAsgHSAQjZxKUPEloKDOibi+m7hOeCvOS5sxJKaHR0cHM6Ly9pMS5oZHNsYi5jb20vYmZzL2ZhY2UvYjVmYTYzY2E4ZTY2M2Y5M2ZmNzE0NGM3MDNhYTEwMTBiMmMwOWQxZS5qcGcaaQoJ5qKo56eR55SfEAEYwIGDBiDAgYMGKMCBgwYwjq3yAjjTqkVQmZGAuJOkmgZgAXoJIzkxOTI5OENDggEJIzkxOTI5OENDigEJIzkxOTI5OENDkgEHI0ZGRkZGRpoBCSM5MTkyOThFNiICCBYyALoBAMIBAA=="
+      }
+    },
+    {
+      "cmd": "INTERACT_WORD_V2",
+      "data": {
+        "dmscore": 119,
+        "pb": "CKOAnAQSB+iLjy3mpLQaByMwMEQxRjEiAgYBKAEwtYuhDzimqKzUBkDF6Zr6gjRiAHjB1Mn+haye5xiAAQOaAQCyAZsBCKOAnAQSYgoH6IuPLeaktBJOaHR0cHM6Ly9pMi5oZHNsYi5jb20vYmZzL2Jhc2VsYWJzLzk1NzlhMTdkYjdhYjAyNDMxYWNjYWY2MDFhOTc5MDFiZDJmZGQ2MGQucG5nQgcjMDBEMUYxIhcIPRITQ2hyb25vc1dlYWx0aF82LnBuZzIXCAMSEzIwMjYtMDktMDMgMjM6NTk6NTm6AQDCAQA="
+      }
+    },
+    {
+      "cmd": "INTERACT_WORD_V2",
+      "data": {
+        "dmscore": 68,
+        "pb": "COi5tLYBEhTmqZjlrZDoirHnk6NvZmZpY2lhbCIDBgMBKAEwtYuhDzjKqKzUBkCmnpGQgzRKMQi41cASEB8aCee7v+eMq+mFsSDVkLQBKNWQtAEw/7f2BDjVkLQBQAFgl4K9BWjomAJiAHjl09Cqja2e5xiAAQOaAQCyAc0CCOi5tLYBEmsKFOapmOWtkOiKseeTo29mZmljaWFsEkpodHRwczovL2kxLmhkc2xiLmNvbS9iZnMvZmFjZS9jM2FlNjFlZGU1OTk3NTdjYWUxODNmOTNiZWRlZmM1ZGUwMGU2NWEyLmpwZ0IHIzAwRDFGMRpqCgnnu7/njKvphbEQHxjVkLQBIP+39gQo1ZC0ATDVkLQBOIm5igFIAVC41cASYOiYAnoJIzRDN0RGRjk5ggEJIzRDN0RGRjk5igEJIzRDN0RGRjk5kgEHI0ZGRkZGRpoBCSM0QzdERkZFNiICCCAyFwgDEhMyMDI3LTA2LTA5IDIzOjU5OjU5Ok8I7g0SSmh0dHBzOi8vaTAuaGRzbGIuY29tL2Jmcy9saXZlLzNiYzY4MjA3OTMyZWFiZjk4MGNkNmEwZGQwOWY0ZDI0ZjljYzI2ZGEucG5nugEAwgEA"
+      }
+    },
+    {
+      "cmd": "INTERACT_WORD_V2",
+      "data": {
+        "dmscore": 66,
+        "pb": "CKyIhwESHVJF5q+P5pyI5rCq6LaF5LiA5Y2D5bCx5piv54uXIgEBKAEwtYuhDzjKqKzUBkD3iZ36gjRKNAjtkoD2p7ymBhAjGgnnq6Xor53ln44go4joAyjAgYMGMMCBgwY4wIGDBmChhqCoB2iDuwdiAHjS2d2yj62e5xiaAQCyAcwCCKyIhwESawodUkXmr4/mnIjmsKrotoXkuIDljYPlsLHmmK/ni5cSSmh0dHBzOi8vaTAuaGRzbGIuY29tL2Jmcy9mYWNlLzllY2RhZGNlNmZjZjI3Mjk0MDdjYWNlNTExOTVkODZjNDViYTQwZWYuanBnGmwKCeerpeivneWfjhAjGMCBgwYgwIGDBijAgYMGMKOI6AM4tr7/AlDtkoD2p7ymBmCDuwd6CSM5MTkyOThDQ4IBCSM5MTkyOThDQ4oBCSM5MTkyOThDQ5IBByNGRkZGRkaaAQkjOTE5Mjk4RTYiFwgzEhNDaHJvbm9zV2VhbHRoXzUucG5nMgA6TwiKIRJKaHR0cHM6Ly9pMC5oZHNsYi5jb20vYmZzL2xpdmUvYjlhZTRhZDMzMTcyOWM2YTJhNzZmNzBlYjc1NmYzNmI4ZWY4NzljMC5wbme6AQDCAQA="
+      }
+    }
+  ],
+  "ENTRY_EFFECT": [
+    {
+      "cmd": "ENTRY_EFFECT",
+      "data": {
+        "id": 385,
+        "uid": 8847395,
+        "target_id": 3546626599684797,
+        "mock_effect": 0,
+        "face": "https://i2.hdslb.com/bfs/baselabs/9579a17db7ab02431accaf601a97901bd2fdd60d.png",
+        "privilege_type": 3,
+        "copy_writing": "<%苏-椴%> 来了",
+        "copy_color": "#F7F7F7",
+        "highlight_color": "#FFFFFF",
+        "priority": 1,
+        "basemap_url": "",
+        "show_avatar": 0,
+        "effective_time": 0,
+        "web_basemap_url": "https://i0.hdslb.com/bfs/live/mlive/8e260bc7ddbbf51a750ad8954dde1c05d0eb7c05.vnd.mozilla.apng",
+        "web_effective_time": 0,
+        "web_effect_close": 1,
+        "web_close_time": 900,
+        "business": 6,
+        "copy_writing_v2": "<%苏-椴%> 来了",
+        "icon_list": [],
+        "max_delay_time": 7,
+        "trigger_time": 1787499556944112000,
+        "identities": 6,
+        "effect_silent_time": 0,
+        "effective_time_new": 0,
+        "web_dynamic_url_webp": "https://i0.hdslb.com/bfs/live/mlive/1b91c4cd7b76ef48998280a0c57b89b9729e9cfd.webp",
+        "web_dynamic_url_apng": "https://i0.hdslb.com/bfs/live/mlive/8e260bc7ddbbf51a750ad8954dde1c05d0eb7c05.vnd.mozilla.apng",
+        "mobile_dynamic_url_webp": "",
+        "wealthy_info": {
+          "uid": 0,
+          "level": 61,
+          "level_total_score": 0,
+          "cur_score": 0,
+          "upgrade_need_score": 0,
+          "status": 0,
+          "dm_icon_key": ""
+        },
+        "new_style": 1,
+        "is_mystery": false,
+        "uinfo": {
+          "uid": 8847395,
+          "base": {
+            "name": "苏-椴",
+            "face": "https://i2.hdslb.com/bfs/baselabs/9579a17db7ab02431accaf601a97901bd2fdd60d.png",
+            "name_color": 0,
+            "is_mystery": false,
+            "risk_ctrl_info": null,
+            "origin_info": null,
+            "official_info": null,
+            "name_color_str": "#00D1F1"
+          },
+          "medal": null,
+          "wealth": {
+            "level": 61,
+            "dm_icon_key": "ChronosWealth_6.png"
+          },
+          "title": null,
+          "guard": {
+            "level": 3,
+            "expired_str": "2026-09-03 23:59:59"
+          },
+          "uhead_frame": null,
+          "guard_leader": null,
+          "anon": null,
+          "bubble_box": null,
+          "dm_config": null,
+          "name_color": null
+        },
+        "full_cartoon_id": 1796,
+        "priority_level": 0,
+        "wealth_style_info": {
+          "url": "https://i0.hdslb.com/bfs/live/a40f6e3616e4ae545ca64467687366fddc701c39.png"
+        }
+      }
+    },
+    {
+      "cmd": "ENTRY_EFFECT",
+      "data": {
+        "id": 382,
+        "uid": 382541032,
+        "target_id": 3546626599684797,
+        "mock_effect": 0,
+        "face": "https://i1.hdslb.com/bfs/face/c3ae61ede599757cae183f93bedefc5de00e65a2.jpg",
+        "privilege_type": 3,
+        "copy_writing": "<%橘子花瓣off...%> 来了",
+        "copy_color": "#F7F7F7",
+        "highlight_color": "#FFFFFF",
+        "priority": 1,
+        "basemap_url": "",
+        "show_avatar": 0,
+        "effective_time": 0,
+        "web_basemap_url": "https://i0.hdslb.com/bfs/live/mlive/5b14d1fc398f891c01f18e54a3384e75914d9333.png",
+        "web_effective_time": 4,
+        "web_effect_close": 1,
+        "web_close_time": 900,
+        "business": 6,
+        "copy_writing_v2": "<%橘子花瓣offi…%> 来了",
+        "icon_list": [],
+        "max_delay_time": 7,
+        "trigger_time": 1787499593275288000,
+        "identities": 6,
+        "effect_silent_time": 0,
+        "effective_time_new": 0,
+        "web_dynamic_url_webp": "",
+        "web_dynamic_url_apng": "",
+        "mobile_dynamic_url_webp": "",
+        "wealthy_info": {
+          "uid": 0,
+          "level": 32,
+          "level_total_score": 0,
+          "cur_score": 0,
+          "upgrade_need_score": 0,
+          "status": 0,
+          "dm_icon_key": ""
+        },
+        "new_style": 1,
+        "is_mystery": false,
+        "uinfo": {
+          "uid": 382541032,
+          "base": {
+            "name": "橘子花瓣official",
+            "face": "https://i1.hdslb.com/bfs/face/c3ae61ede599757cae183f93bedefc5de00e65a2.jpg",
+            "name_color": 0,
+            "is_mystery": false,
+            "risk_ctrl_info": null,
+            "origin_info": null,
+            "official_info": null,
+            "name_color_str": "#00D1F1"
+          },
+          "medal": {
+            "name": "绿猫酱",
+            "level": 31,
+            "color_start": 2951253,
+            "color_end": 10329087,
+            "color_border": 2951253,
+            "color": 2951253,
+            "id": 2268297,
+            "typ": 0,
+            "is_light": 1,
+            "ruid": 38808248,
+            "guard_level": 0,
+            "score": 35944,
+            "guard_icon": "",
+            "honor_icon": "",
+            "v2_medal_color_start": "#4C7DFF99",
+            "v2_medal_color_end": "#4C7DFF99",
+            "v2_medal_color_border": "#4C7DFF99",
+            "v2_medal_color_text": "#FFFFFF",
+            "v2_medal_color_level": "#4C7DFFE6",
+            "user_receive_count": 0
+          },
+          "wealth": {
+            "level": 32,
+            "dm_icon_key": ""
+          },
+          "title": null,
+          "guard": {
+            "level": 3,
+            "expired_str": "2027-06-09 23:59:59"
+          },
+          "uhead_frame": {
+            "id": 1774,
+            "frame_img": "https://i0.hdslb.com/bfs/live/3bc68207932eabf980cd6a0dd09f4d24f9cc26da.png",
+            "frame_dynamic_img": ""
+          },
+          "guard_leader": null,
+          "anon": null,
+          "bubble_box": null,
+          "dm_config": null,
+          "name_color": null
+        },
+        "full_cartoon_id": 1800,
+        "priority_level": 0,
+        "wealth_style_info": {
+          "url": "https://i0.hdslb.com/bfs/live/8dac191a14bdef6bb28cd2465b9f58bc3719e072.png"
+        }
+      }
+    },
+    {
+      "cmd": "ENTRY_EFFECT",
+      "data": {
+        "id": 635,
+        "uid": 2212908,
+        "target_id": 3546626599684797,
+        "mock_effect": 0,
+        "face": "https://i0.hdslb.com/bfs/face/9ecdadce6fcf2729407cace51195d86c45ba40ef.jpg",
+        "privilege_type": 0,
+        "copy_writing": "欢迎<%RE每月氪超一...%>进入房间",
+        "copy_color": "#ffffff",
+        "highlight_color": "#ffffff",
+        "priority": 0,
+        "basemap_url": "",
+        "show_avatar": 1,
+        "effective_time": 0,
+        "web_basemap_url": "https://i0.hdslb.com/bfs/live/mlive/e2ddd5896dbe9366fb6c115736120019116c27bf.png",
+        "web_effective_time": 0,
+        "web_effect_close": 1,
+        "web_close_time": 900,
+        "business": 2,
+        "copy_writing_v2": "欢迎<%RE每月氪超一…%>进入房间",
+        "icon_list": [],
+        "max_delay_time": 7,
+        "trigger_time": 1787499593829150000,
+        "identities": 1,
+        "effect_silent_time": 0,
+        "effective_time_new": 0,
+        "web_dynamic_url_webp": "https://i0.hdslb.com/bfs/live/mlive/4357311a65e8abb9726ef0081a16e3df2607e3d5.webp",
+        "web_dynamic_url_apng": "https://i0.hdslb.com/bfs/live/mlive/fcf379006f5b26d305328a18f39da996a4c0ac48.vnd.mozilla.apng",
+        "mobile_dynamic_url_webp": "",
+        "wealthy_info": null,
+        "new_style": 0,
+        "is_mystery": false,
+        "uinfo": {
+          "uid": 2212908,
+          "base": {
+            "name": "RE每月氪超一千就是狗",
+            "face": "https://i0.hdslb.com/bfs/face/9ecdadce6fcf2729407cace51195d86c45ba40ef.jpg",
+            "name_color": 0,
+            "is_mystery": false,
+            "risk_ctrl_info": null,
+            "origin_info": null,
+            "official_info": null,
+            "name_color_str": ""
+          },
+          "medal": {
+            "name": "童话城",
+            "level": 35,
+            "color_start": 12632256,
+            "color_end": 12632256,
+            "color_border": 12632256,
+            "color": 7996451,
+            "id": 6283062,
+            "typ": 0,
+            "is_light": 0,
+            "ruid": 3546897788701037,
+            "guard_level": 0,
+            "score": 122243,
+            "guard_icon": "",
+            "honor_icon": "",
+            "v2_medal_color_start": "#919298CC",
+            "v2_medal_color_end": "#919298CC",
+            "v2_medal_color_border": "#919298CC",
+            "v2_medal_color_text": "#FFFFFF",
+            "v2_medal_color_level": "#919298E6",
+            "user_receive_count": 0
+          },
+          "wealth": {
+            "level": 51,
+            "dm_icon_key": "ChronosWealth_5.png"
+          },
+          "title": null,
+          "guard": {
+            "level": 0,
+            "expired_str": ""
+          },
+          "uhead_frame": {
+            "id": 4234,
+            "frame_img": "https://i0.hdslb.com/bfs/live/b9ae4ad331729c6a2a76f70eb756f36b8ef879c0.png",
+            "frame_dynamic_img": ""
+          },
+          "guard_leader": null,
+          "anon": null,
+          "bubble_box": null,
+          "dm_config": null,
+          "name_color": null
+        },
+        "full_cartoon_id": 2270,
+        "priority_level": 100,
+        "wealth_style_info": {
+          "url": "https://i0.hdslb.com/bfs/live/cc327f1dcfecfd333f93c28ac9fa0588ac90e118.png"
+        }
+      }
+    }
+  ]
+}

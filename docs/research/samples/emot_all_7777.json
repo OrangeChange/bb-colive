@@ -1,0 +1,1937 @@
+[
+  {
+    "cmd": "DANMU_MSG",
+    "dm_v2": "",
+    "info": [
+      [
+        0,
+        1,
+        25,
+        16777215,
+        1787561236290,
+        -1490965121,
+        0,
+        "aa223cb5",
+        0,
+        0,
+        0,
+        "",
+        1,
+        {
+          "bulge_display": 1,
+          "emoticon_unique": "room_545068_80482",
+          "height": 162,
+          "in_player_area": 1,
+          "is_dynamic": 0,
+          "url": "http://i0.hdslb.com/bfs/live/e76e9c4e80733037da5c0d0bff99c85bf212832b.png",
+          "width": 162
+        },
+        "{}",
+        {
+          "extra": "{\"send_from_me\":false,\"master_player_hidden\":false,\"mode\":0,\"color\":16777215,\"dm_type\":1,\"font_size\":25,\"player_mode\":1,\"show_player_type\":0,\"content\":\"懦番薯\",\"user_hash\":\"2854370485\",\"emoticon_unique\":\"room_545068_80482\",\"bulge_display\":1,\"recommend_score\":0,\"dm_score\":0,\"chronos_force_display\":0,\"main_state_dm_color\":\"\",\"objective_state_dm_color\":\"\",\"direction\":0,\"pk_direction\":0,\"quartet_direction\":0,\"anniversary_crowd\":0,\"yeah_space_type\":\"\",\"yeah_space_url\":\"\",\"jump_to_url\":\"\",\"space_type\":\"\",\"space_url\":\"\",\"animation\":{},\"emots\":null,\"is_audited\":false,\"id_str\":\"737540587f256f622a870101c36a8c0589\",\"icon\":null,\"show_reply\":true,\"reply_mid\":0,\"reply_uname\":\"\",\"reply_uname_color\":\"\",\"reply_is_mystery\":false,\"reply_type_enum\":0,\"hit_combo\":0,\"esports_jump_url\":\"\",\"is_mirror\":false,\"is_collaboration_member\":false,\"card\":{\"card_type\":0,\"oid_str\":\"\",\"oid_str_1\":\"\",\"origin_oid_str\":\"\",\"share_id\":\"\",\"share_origin\":\"\",\"from\":\"\",\"card_content\":null},\"voice\":null,\"background_type\":0}",
+          "mode": 0,
+          "show_player_type": 0,
+          "user": {
+            "anon": null,
+            "base": {
+              "face": "https://i1.hdslb.com/bfs/face/ace4e502aacbe568ac1d5d092bf290132e89dc93.jpg",
+              "is_mystery": false,
+              "name": "鱼缸高于计划",
+              "name_color": 0,
+              "name_color_str": "",
+              "official_info": {
+                "desc": "",
+                "role": 0,
+                "title": "",
+                "type": -1
+              },
+              "origin_info": {
+                "face": "https://i1.hdslb.com/bfs/face/ace4e502aacbe568ac1d5d092bf290132e89dc93.jpg",
+                "name": "鱼缸高于计划"
+              },
+              "risk_ctrl_info": null
+            },
+            "bubble_box": null,
+            "dm_config": {
+              "color": 16777215,
+              "length": 40,
+              "mode": 1
+            },
+            "guard": null,
+            "guard_leader": null,
+            "medal": {
+              "color": 13081892,
+              "color_border": 13081892,
+              "color_end": 13081892,
+              "color_start": 13081892,
+              "guard_icon": "",
+              "guard_level": 0,
+              "honor_icon": "",
+              "id": 29121,
+              "is_light": 1,
+              "level": 20,
+              "name": "德云色",
+              "ruid": 8739477,
+              "score": 1780,
+              "typ": 0,
+              "user_receive_count": 0,
+              "v2_medal_color_border": "#C770A499",
+              "v2_medal_color_end": "#C770A499",
+              "v2_medal_color_level": "#C770A4E6",
+              "v2_medal_color_start": "#C770A499",
+              "v2_medal_color_text": "#FFFFFF"
+            },
+            "name_color": null,
+            "title": {
+              "old_title_css_id": "",
+              "title_css_id": ""
+            },
+            "uhead_frame": null,
+            "uid": 535645678,
+            "wealth": null
+          }
+        },
+        {
+          "activity_identity": "",
+          "activity_source": 0,
+          "not_show": 0
+        },
+        0
+      ],
+      "懦番薯",
+      [
+        535645678,
+        "鱼缸高于计划",
+        0,
+        0,
+        0,
+        10000,
+        1,
+        ""
+      ],
+      [
+        20,
+        "德云色",
+        "老实憨厚的笑笑",
+        545068,
+        13081892,
+        "",
+        0,
+        13081892,
+        13081892,
+        13081892,
+        0,
+        1,
+        8739477
+      ],
+      [
+        0,
+        0,
+        9868950,
+        ">50000",
+        0
+      ],
+      [
+        "",
+        ""
+      ],
+      0,
+      0,
+      null,
+      {
+        "ct": "243F57FB",
+        "ts": 1787561236
+      },
+      0,
+      0,
+      null,
+      null,
+      0,
+      110,
+      [
+        6
+      ],
+      null
+    ]
+  },
+  {
+    "cmd": "DANMU_MSG",
+    "dm_v2": "",
+    "info": [
+      [
+        0,
+        1,
+        25,
+        16777215,
+        1787561351810,
+        -1397947349,
+        0,
+        "cce34322",
+        0,
+        0,
+        0,
+        "",
+        1,
+        {
+          "bulge_display": 1,
+          "emoticon_unique": "room_545068_9733",
+          "height": 162,
+          "in_player_area": 1,
+          "is_dynamic": 1,
+          "url": "http://i0.hdslb.com/bfs/garb/9c8ad88064a5a70be6006508960a4ed8dddd076c.png",
+          "width": 162
+        },
+        "{}",
+        {
+          "extra": "{\"send_from_me\":false,\"master_player_hidden\":false,\"mode\":0,\"color\":16777215,\"dm_type\":1,\"font_size\":25,\"player_mode\":1,\"show_player_type\":0,\"content\":\"突突突\",\"user_hash\":\"3437445922\",\"emoticon_unique\":\"room_545068_9733\",\"bulge_display\":1,\"recommend_score\":0,\"dm_score\":0,\"chronos_force_display\":0,\"main_state_dm_color\":\"\",\"objective_state_dm_color\":\"\",\"direction\":0,\"pk_direction\":0,\"quartet_direction\":0,\"anniversary_crowd\":0,\"yeah_space_type\":\"\",\"yeah_space_url\":\"\",\"jump_to_url\":\"\",\"space_type\":\"\",\"space_url\":\"\",\"animation\":{},\"emots\":null,\"is_audited\":false,\"id_str\":\"1c74dc90771284517fb12f809e6a8c053378\",\"icon\":null,\"show_reply\":true,\"reply_mid\":0,\"reply_uname\":\"\",\"reply_uname_color\":\"\",\"reply_is_mystery\":false,\"reply_type_enum\":0,\"hit_combo\":0,\"esports_jump_url\":\"\",\"is_mirror\":false,\"is_collaboration_member\":false,\"card\":{\"card_type\":0,\"oid_str\":\"\",\"oid_str_1\":\"\",\"origin_oid_str\":\"\",\"share_id\":\"\",\"share_origin\":\"\",\"from\":\"\",\"card_content\":null},\"voice\":null,\"background_type\":0}",
+          "mode": 0,
+          "show_player_type": 0,
+          "user": {
+            "anon": null,
+            "base": {
+              "face": "https://i1.hdslb.com/bfs/face/6216b51d97e3377a24d39b2fcee544428052d32a.webp",
+              "is_mystery": false,
+              "name": "小缘喵从小就很可爱",
+              "name_color": 0,
+              "name_color_str": "",
+              "official_info": {
+                "desc": "",
+                "role": 0,
+                "title": "",
+                "type": -1
+              },
+              "origin_info": {
+                "face": "https://i1.hdslb.com/bfs/face/6216b51d97e3377a24d39b2fcee544428052d32a.webp",
+                "name": "小缘喵从小就很可爱"
+              },
+              "risk_ctrl_info": null
+            },
+            "bubble_box": null,
+            "dm_config": {
+              "color": 16777215,
+              "length": 40,
+              "mode": 1
+            },
+            "guard": null,
+            "guard_leader": null,
+            "medal": {
+              "color": 1725515,
+              "color_border": 12632256,
+              "color_end": 12632256,
+              "color_start": 12632256,
+              "guard_icon": "",
+              "guard_level": 0,
+              "honor_icon": "",
+              "id": 29121,
+              "is_light": 0,
+              "level": 23,
+              "name": "德云色",
+              "ruid": 8739477,
+              "score": 3806,
+              "typ": 0,
+              "user_receive_count": 0,
+              "v2_medal_color_border": "#919298CC",
+              "v2_medal_color_end": "#919298CC",
+              "v2_medal_color_level": "#919298E6",
+              "v2_medal_color_start": "#919298CC",
+              "v2_medal_color_text": "#FFFFFF"
+            },
+            "name_color": null,
+            "title": {
+              "old_title_css_id": "",
+              "title_css_id": ""
+            },
+            "uhead_frame": null,
+            "uid": 11396080,
+            "wealth": null
+          }
+        },
+        {
+          "activity_identity": "",
+          "activity_source": 0,
+          "not_show": 0
+        },
+        0
+      ],
+      "突突突",
+      [
+        11396080,
+        "小缘喵从小就很可爱",
+        0,
+        0,
+        0,
+        10000,
+        1,
+        ""
+      ],
+      [
+        23,
+        "德云色",
+        "老实憨厚的笑笑",
+        545068,
+        1725515,
+        "",
+        0,
+        12632256,
+        12632256,
+        12632256,
+        0,
+        0,
+        8739477
+      ],
+      [
+        17,
+        0,
+        6406234,
+        ">50000",
+        0
+      ],
+      [
+        "",
+        ""
+      ],
+      0,
+      0,
+      null,
+      {
+        "ct": "37D89066",
+        "ts": 1787561351
+      },
+      0,
+      0,
+      null,
+      null,
+      0,
+      330,
+      [
+        26
+      ],
+      null
+    ]
+  },
+  {
+    "cmd": "DANMU_MSG",
+    "dm_v2": "",
+    "info": [
+      [
+        0,
+        1,
+        25,
+        16777215,
+        1787561353919,
+        1980835285,
+        0,
+        "cce34322",
+        0,
+        0,
+        0,
+        "",
+        0,
+        "{}",
+        "{}",
+        {
+          "extra": "{\"send_from_me\":false,\"master_player_hidden\":false,\"mode\":0,\"color\":16777215,\"dm_type\":0,\"font_size\":25,\"player_mode\":1,\"show_player_type\":0,\"content\":\"[dog]\",\"user_hash\":\"3437445922\",\"emoticon_unique\":\"\",\"bulge_display\":0,\"recommend_score\":8,\"dm_score\":0,\"chronos_force_display\":0,\"main_state_dm_color\":\"\",\"objective_state_dm_color\":\"\",\"direction\":0,\"pk_direction\":0,\"quartet_direction\":0,\"anniversary_crowd\":0,\"yeah_space_type\":\"\",\"yeah_space_url\":\"\",\"jump_to_url\":\"\",\"space_type\":\"\",\"space_url\":\"\",\"animation\":{},\"emots\":{\"[dog]\":{\"count\":1,\"descript\":\"[dog]\",\"emoji\":\"[dog]\",\"emoticon_id\":208,\"emoticon_unique\":\"emoji_208\",\"height\":20,\"url\":\"http://i0.hdslb.com/bfs/live/4428c84e694fbf4e0ef6c06e958d9352c3582740.png\",\"width\":20}},\"is_audited\":false,\"id_str\":\"53bffdadaf58f7973105afcb746a8c057797\",\"icon\":null,\"show_reply\":true,\"reply_mid\":0,\"reply_uname\":\"\",\"reply_uname_color\":\"\",\"reply_is_mystery\":false,\"reply_type_enum\":0,\"hit_combo\":0,\"esports_jump_url\":\"\",\"is_mirror\":false,\"is_collaboration_member\":false,\"card\":{\"card_type\":0,\"oid_str\":\"\",\"oid_str_1\":\"\",\"origin_oid_str\":\"\",\"share_id\":\"\",\"share_origin\":\"\",\"from\":\"\",\"card_content\":null},\"voice\":null,\"background_type\":0}",
+          "mode": 0,
+          "show_player_type": 0,
+          "user": {
+            "anon": null,
+            "base": {
+              "face": "https://i1.hdslb.com/bfs/face/6216b51d97e3377a24d39b2fcee544428052d32a.webp",
+              "is_mystery": false,
+              "name": "小缘喵从小就很可爱",
+              "name_color": 0,
+              "name_color_str": "",
+              "official_info": {
+                "desc": "",
+                "role": 0,
+                "title": "",
+                "type": -1
+              },
+              "origin_info": {
+                "face": "https://i1.hdslb.com/bfs/face/6216b51d97e3377a24d39b2fcee544428052d32a.webp",
+                "name": "小缘喵从小就很可爱"
+              },
+              "risk_ctrl_info": null
+            },
+            "bubble_box": null,
+            "dm_config": {
+              "color": 16777215,
+              "length": 40,
+              "mode": 1
+            },
+            "guard": null,
+            "guard_leader": null,
+            "medal": {
+              "color": 1725515,
+              "color_border": 12632256,
+              "color_end": 12632256,
+              "color_start": 12632256,
+              "guard_icon": "",
+              "guard_level": 0,
+              "honor_icon": "",
+              "id": 29121,
+              "is_light": 0,
+              "level": 23,
+              "name": "德云色",
+              "ruid": 8739477,
+              "score": 3806,
+              "typ": 0,
+              "user_receive_count": 0,
+              "v2_medal_color_border": "#919298CC",
+              "v2_medal_color_end": "#919298CC",
+              "v2_medal_color_level": "#919298E6",
+              "v2_medal_color_start": "#919298CC",
+              "v2_medal_color_text": "#FFFFFF"
+            },
+            "name_color": null,
+            "title": {
+              "old_title_css_id": "",
+              "title_css_id": ""
+            },
+            "uhead_frame": null,
+            "uid": 11396080,
+            "wealth": null
+          }
+        },
+        {
+          "activity_identity": "",
+          "activity_source": 0,
+          "not_show": 0
+        },
+        0
+      ],
+      "[dog]",
+      [
+        11396080,
+        "小缘喵从小就很可爱",
+        0,
+        0,
+        0,
+        10000,
+        1,
+        ""
+      ],
+      [
+        23,
+        "德云色",
+        "老实憨厚的笑笑",
+        545068,
+        1725515,
+        "",
+        0,
+        12632256,
+        12632256,
+        12632256,
+        0,
+        0,
+        8739477
+      ],
+      [
+        17,
+        0,
+        6406234,
+        ">50000",
+        0
+      ],
+      [
+        "",
+        ""
+      ],
+      0,
+      0,
+      null,
+      {
+        "ct": "644E453E",
+        "ts": 1787561353
+      },
+      0,
+      0,
+      null,
+      null,
+      0,
+      300,
+      [
+        26
+      ],
+      null
+    ]
+  },
+  {
+    "cmd": "DANMU_MSG",
+    "dm_v2": "",
+    "info": [
+      [
+        0,
+        1,
+        25,
+        16777215,
+        1787561356739,
+        -87809701,
+        0,
+        "cce34322",
+        0,
+        0,
+        0,
+        "",
+        0,
+        "{}",
+        "{}",
+        {
+          "extra": "{\"send_from_me\":false,\"master_player_hidden\":false,\"mode\":0,\"color\":16777215,\"dm_type\":0,\"font_size\":25,\"player_mode\":1,\"show_player_type\":0,\"content\":\"[花]\",\"user_hash\":\"3437445922\",\"emoticon_unique\":\"\",\"bulge_display\":0,\"recommend_score\":6,\"dm_score\":0,\"chronos_force_display\":0,\"main_state_dm_color\":\"\",\"objective_state_dm_color\":\"\",\"direction\":0,\"pk_direction\":0,\"quartet_direction\":0,\"anniversary_crowd\":0,\"yeah_space_type\":\"\",\"yeah_space_url\":\"\",\"jump_to_url\":\"\",\"space_type\":\"\",\"space_url\":\"\",\"animation\":{},\"emots\":{\"[花]\":{\"count\":1,\"descript\":\"[花]\",\"emoji\":\"[花]\",\"emoticon_id\":209,\"emoticon_unique\":\"emoji_209\",\"height\":20,\"url\":\"http://i0.hdslb.com/bfs/live/7dd2ef03e13998575e4d8a803c6e12909f94e72b.png\",\"width\":20}},\"is_audited\":false,\"id_str\":\"4723fb93426108c533d5d8e4f76a8c058290\",\"icon\":null,\"show_reply\":true,\"reply_mid\":0,\"reply_uname\":\"\",\"reply_uname_color\":\"\",\"reply_is_mystery\":false,\"reply_type_enum\":0,\"hit_combo\":0,\"esports_jump_url\":\"\",\"is_mirror\":false,\"is_collaboration_member\":false,\"card\":{\"card_type\":0,\"oid_str\":\"\",\"oid_str_1\":\"\",\"origin_oid_str\":\"\",\"share_id\":\"\",\"share_origin\":\"\",\"from\":\"\",\"card_content\":null},\"voice\":null,\"background_type\":0}",
+          "mode": 0,
+          "show_player_type": 0,
+          "user": {
+            "anon": null,
+            "base": {
+              "face": "https://i1.hdslb.com/bfs/face/6216b51d97e3377a24d39b2fcee544428052d32a.webp",
+              "is_mystery": false,
+              "name": "小缘喵从小就很可爱",
+              "name_color": 0,
+              "name_color_str": "",
+              "official_info": {
+                "desc": "",
+                "role": 0,
+                "title": "",
+                "type": -1
+              },
+              "origin_info": {
+                "face": "https://i1.hdslb.com/bfs/face/6216b51d97e3377a24d39b2fcee544428052d32a.webp",
+                "name": "小缘喵从小就很可爱"
+              },
+              "risk_ctrl_info": null
+            },
+            "bubble_box": null,
+            "dm_config": {
+              "color": 16777215,
+              "length": 40,
+              "mode": 1
+            },
+            "guard": null,
+            "guard_leader": null,
+            "medal": {
+              "color": 1725515,
+              "color_border": 12632256,
+              "color_end": 12632256,
+              "color_start": 12632256,
+              "guard_icon": "",
+              "guard_level": 0,
+              "honor_icon": "",
+              "id": 29121,
+              "is_light": 0,
+              "level": 23,
+              "name": "德云色",
+              "ruid": 8739477,
+              "score": 3806,
+              "typ": 0,
+              "user_receive_count": 0,
+              "v2_medal_color_border": "#919298CC",
+              "v2_medal_color_end": "#919298CC",
+              "v2_medal_color_level": "#919298E6",
+              "v2_medal_color_start": "#919298CC",
+              "v2_medal_color_text": "#FFFFFF"
+            },
+            "name_color": null,
+            "title": {
+              "old_title_css_id": "",
+              "title_css_id": ""
+            },
+            "uhead_frame": null,
+            "uid": 11396080,
+            "wealth": null
+          }
+        },
+        {
+          "activity_identity": "",
+          "activity_source": 0,
+          "not_show": 0
+        },
+        0
+      ],
+      "[花]",
+      [
+        11396080,
+        "小缘喵从小就很可爱",
+        0,
+        0,
+        0,
+        10000,
+        1,
+        ""
+      ],
+      [
+        23,
+        "德云色",
+        "老实憨厚的笑笑",
+        545068,
+        1725515,
+        "",
+        0,
+        12632256,
+        12632256,
+        12632256,
+        0,
+        0,
+        8739477
+      ],
+      [
+        17,
+        0,
+        6406234,
+        ">50000",
+        0
+      ],
+      [
+        "",
+        ""
+      ],
+      0,
+      0,
+      null,
+      {
+        "ct": "9B71472E",
+        "ts": 1787561356
+      },
+      0,
+      0,
+      null,
+      null,
+      0,
+      300,
+      [
+        26
+      ],
+      null
+    ]
+  },
+  {
+    "cmd": "DANMU_MSG",
+    "dm_v2": "",
+    "info": [
+      [
+        0,
+        1,
+        25,
+        16777215,
+        1787561367820,
+        -886713278,
+        0,
+        "aa223cb5",
+        0,
+        0,
+        0,
+        "",
+        0,
+        "{}",
+        "{}",
+        {
+          "extra": "{\"send_from_me\":false,\"master_player_hidden\":false,\"mode\":0,\"color\":16777215,\"dm_type\":0,\"font_size\":25,\"player_mode\":1,\"show_player_type\":0,\"content\":\"那就是上中野问题[汤圆]\",\"user_hash\":\"2854370485\",\"emoticon_unique\":\"\",\"bulge_display\":0,\"recommend_score\":2,\"dm_score\":0,\"chronos_force_display\":0,\"main_state_dm_color\":\"\",\"objective_state_dm_color\":\"\",\"direction\":0,\"pk_direction\":0,\"quartet_direction\":0,\"anniversary_crowd\":0,\"yeah_space_type\":\"\",\"yeah_space_url\":\"\",\"jump_to_url\":\"\",\"space_type\":\"\",\"space_url\":\"\",\"animation\":{},\"emots\":{\"[汤圆]\":{\"count\":1,\"descript\":\"[汤圆]\",\"emoji\":\"[汤圆]\",\"emoticon_id\":281,\"emoticon_unique\":\"emoji_281\",\"height\":20,\"url\":\"http://i0.hdslb.com/bfs/live/23ae12d3a71b9d7a22c8773343969fcbb94b20d0.png\",\"width\":20}},\"is_audited\":false,\"id_str\":\"57cc733716df1f5362d7e1c4c36a8c053971\",\"icon\":null,\"show_reply\":true,\"reply_mid\":0,\"reply_uname\":\"\",\"reply_uname_color\":\"\",\"reply_is_mystery\":false,\"reply_type_enum\":0,\"hit_combo\":0,\"esports_jump_url\":\"\",\"is_mirror\":false,\"is_collaboration_member\":false,\"card\":{\"card_type\":0,\"oid_str\":\"\",\"oid_str_1\":\"\",\"origin_oid_str\":\"\",\"share_id\":\"\",\"share_origin\":\"\",\"from\":\"\",\"card_content\":null},\"voice\":null,\"background_type\":0}",
+          "mode": 0,
+          "show_player_type": 0,
+          "user": {
+            "anon": null,
+            "base": {
+              "face": "https://i1.hdslb.com/bfs/face/ace4e502aacbe568ac1d5d092bf290132e89dc93.jpg",
+              "is_mystery": false,
+              "name": "鱼缸高于计划",
+              "name_color": 0,
+              "name_color_str": "",
+              "official_info": {
+                "desc": "",
+                "role": 0,
+                "title": "",
+                "type": -1
+              },
+              "origin_info": {
+                "face": "https://i1.hdslb.com/bfs/face/ace4e502aacbe568ac1d5d092bf290132e89dc93.jpg",
+                "name": "鱼缸高于计划"
+              },
+              "risk_ctrl_info": null
+            },
+            "bubble_box": null,
+            "dm_config": {
+              "color": 16777215,
+              "length": 40,
+              "mode": 1
+            },
+            "guard": null,
+            "guard_leader": null,
+            "medal": {
+              "color": 13081892,
+              "color_border": 13081892,
+              "color_end": 13081892,
+              "color_start": 13081892,
+              "guard_icon": "",
+              "guard_level": 0,
+              "honor_icon": "",
+              "id": 29121,
+              "is_light": 1,
+              "level": 20,
+              "name": "德云色",
+              "ruid": 8739477,
+              "score": 1780,
+              "typ": 0,
+              "user_receive_count": 0,
+              "v2_medal_color_border": "#C770A499",
+              "v2_medal_color_end": "#C770A499",
+              "v2_medal_color_level": "#C770A4E6",
+              "v2_medal_color_start": "#C770A499",
+              "v2_medal_color_text": "#FFFFFF"
+            },
+            "name_color": null,
+            "title": {
+              "old_title_css_id": "",
+              "title_css_id": ""
+            },
+            "uhead_frame": null,
+            "uid": 535645678,
+            "wealth": null
+          }
+        },
+        {
+          "activity_identity": "",
+          "activity_source": 0,
+          "not_show": 0
+        },
+        0
+      ],
+      "那就是上中野问题[汤圆]",
+      [
+        535645678,
+        "鱼缸高于计划",
+        0,
+        0,
+        0,
+        10000,
+        1,
+        ""
+      ],
+      [
+        20,
+        "德云色",
+        "老实憨厚的笑笑",
+        545068,
+        13081892,
+        "",
+        0,
+        13081892,
+        13081892,
+        13081892,
+        0,
+        1,
+        8739477
+      ],
+      [
+        0,
+        0,
+        9868950,
+        ">50000",
+        0
+      ],
+      [
+        "",
+        ""
+      ],
+      0,
+      0,
+      null,
+      {
+        "ct": "64D1030B",
+        "ts": 1787561367
+      },
+      0,
+      0,
+      null,
+      null,
+      0,
+      130,
+      [
+        6
+      ],
+      null
+    ]
+  },
+  {
+    "cmd": "DANMU_MSG",
+    "dm_v2": "",
+    "info": [
+      [
+        0,
+        1,
+        25,
+        16777215,
+        1787561371312,
+        -1310494089,
+        0,
+        "cce34322",
+        0,
+        0,
+        0,
+        "",
+        0,
+        "{}",
+        "{}",
+        {
+          "extra": "{\"send_from_me\":false,\"master_player_hidden\":false,\"mode\":0,\"color\":16777215,\"dm_type\":0,\"font_size\":25,\"player_mode\":1,\"show_player_type\":0,\"content\":\"[妙]\",\"user_hash\":\"3437445922\",\"emoticon_unique\":\"\",\"bulge_display\":0,\"recommend_score\":8,\"dm_score\":0,\"chronos_force_display\":0,\"main_state_dm_color\":\"\",\"objective_state_dm_color\":\"\",\"direction\":0,\"pk_direction\":0,\"quartet_direction\":0,\"anniversary_crowd\":0,\"yeah_space_type\":\"\",\"yeah_space_url\":\"\",\"jump_to_url\":\"\",\"space_type\":\"\",\"space_url\":\"\",\"animation\":{},\"emots\":{\"[妙]\":{\"count\":1,\"descript\":\"[妙]\",\"emoji\":\"[妙]\",\"emoticon_id\":210,\"emoticon_unique\":\"emoji_210\",\"height\":20,\"url\":\"http://i0.hdslb.com/bfs/live/08f735d950a0fba267dda140673c9ab2edf6410d.png\",\"width\":20}},\"is_audited\":false,\"id_str\":\"1a01bb0b4f43f8f47fa4e123ed6a8c058179\",\"icon\":null,\"show_reply\":true,\"reply_mid\":0,\"reply_uname\":\"\",\"reply_uname_color\":\"\",\"reply_is_mystery\":false,\"reply_type_enum\":0,\"hit_combo\":0,\"esports_jump_url\":\"\",\"is_mirror\":false,\"is_collaboration_member\":false,\"card\":{\"card_type\":0,\"oid_str\":\"\",\"oid_str_1\":\"\",\"origin_oid_str\":\"\",\"share_id\":\"\",\"share_origin\":\"\",\"from\":\"\",\"card_content\":null},\"voice\":null,\"background_type\":0}",
+          "mode": 0,
+          "show_player_type": 0,
+          "user": {
+            "anon": null,
+            "base": {
+              "face": "https://i1.hdslb.com/bfs/face/6216b51d97e3377a24d39b2fcee544428052d32a.webp",
+              "is_mystery": false,
+              "name": "小缘喵从小就很可爱",
+              "name_color": 0,
+              "name_color_str": "",
+              "official_info": {
+                "desc": "",
+                "role": 0,
+                "title": "",
+                "type": -1
+              },
+              "origin_info": {
+                "face": "https://i1.hdslb.com/bfs/face/6216b51d97e3377a24d39b2fcee544428052d32a.webp",
+                "name": "小缘喵从小就很可爱"
+              },
+              "risk_ctrl_info": null
+            },
+            "bubble_box": null,
+            "dm_config": {
+              "color": 16777215,
+              "length": 40,
+              "mode": 1
+            },
+            "guard": null,
+            "guard_leader": null,
+            "medal": {
+              "color": 1725515,
+              "color_border": 12632256,
+              "color_end": 12632256,
+              "color_start": 12632256,
+              "guard_icon": "",
+              "guard_level": 0,
+              "honor_icon": "",
+              "id": 29121,
+              "is_light": 0,
+              "level": 23,
+              "name": "德云色",
+              "ruid": 8739477,
+              "score": 3806,
+              "typ": 0,
+              "user_receive_count": 0,
+              "v2_medal_color_border": "#919298CC",
+              "v2_medal_color_end": "#919298CC",
+              "v2_medal_color_level": "#919298E6",
+              "v2_medal_color_start": "#919298CC",
+              "v2_medal_color_text": "#FFFFFF"
+            },
+            "name_color": null,
+            "title": {
+              "old_title_css_id": "",
+              "title_css_id": ""
+            },
+            "uhead_frame": null,
+            "uid": 11396080,
+            "wealth": null
+          }
+        },
+        {
+          "activity_identity": "",
+          "activity_source": 0,
+          "not_show": 0
+        },
+        0
+      ],
+      "[妙]",
+      [
+        11396080,
+        "小缘喵从小就很可爱",
+        0,
+        0,
+        0,
+        10000,
+        1,
+        ""
+      ],
+      [
+        23,
+        "德云色",
+        "老实憨厚的笑笑",
+        545068,
+        1725515,
+        "",
+        0,
+        12632256,
+        12632256,
+        12632256,
+        0,
+        0,
+        8739477
+      ],
+      [
+        17,
+        0,
+        6406234,
+        ">50000",
+        0
+      ],
+      [
+        "",
+        ""
+      ],
+      0,
+      0,
+      null,
+      {
+        "ct": "5CA57D77",
+        "ts": 1787561371
+      },
+      0,
+      0,
+      null,
+      null,
+      0,
+      300,
+      [
+        26
+      ],
+      null
+    ]
+  },
+  {
+    "cmd": "DANMU_MSG",
+    "dm_v2": "",
+    "info": [
+      [
+        0,
+        1,
+        25,
+        16777215,
+        1787561374226,
+        1279460459,
+        0,
+        "cce34322",
+        0,
+        0,
+        0,
+        "",
+        0,
+        "{}",
+        "{}",
+        {
+          "extra": "{\"send_from_me\":false,\"master_player_hidden\":false,\"mode\":0,\"color\":16777215,\"dm_type\":0,\"font_size\":25,\"player_mode\":1,\"show_player_type\":0,\"content\":\"[花]\",\"user_hash\":\"3437445922\",\"emoticon_unique\":\"\",\"bulge_display\":0,\"recommend_score\":3,\"dm_score\":0,\"chronos_force_display\":0,\"main_state_dm_color\":\"\",\"objective_state_dm_color\":\"\",\"direction\":0,\"pk_direction\":0,\"quartet_direction\":0,\"anniversary_crowd\":0,\"yeah_space_type\":\"\",\"yeah_space_url\":\"\",\"jump_to_url\":\"\",\"space_type\":\"\",\"space_url\":\"\",\"animation\":{},\"emots\":{\"[花]\":{\"count\":1,\"descript\":\"[花]\",\"emoji\":\"[花]\",\"emoticon_id\":209,\"emoticon_unique\":\"emoji_209\",\"height\":20,\"url\":\"http://i0.hdslb.com/bfs/live/7dd2ef03e13998575e4d8a803c6e12909f94e72b.png\",\"width\":20}},\"is_audited\":false,\"id_str\":\"490d957402ca016d397d344f0f6a8c054284\",\"icon\":null,\"show_reply\":true,\"reply_mid\":0,\"reply_uname\":\"\",\"reply_uname_color\":\"\",\"reply_is_mystery\":false,\"reply_type_enum\":0,\"hit_combo\":0,\"esports_jump_url\":\"\",\"is_mirror\":false,\"is_collaboration_member\":false,\"card\":{\"card_type\":0,\"oid_str\":\"\",\"oid_str_1\":\"\",\"origin_oid_str\":\"\",\"share_id\":\"\",\"share_origin\":\"\",\"from\":\"\",\"card_content\":null},\"voice\":null,\"background_type\":0}",
+          "mode": 0,
+          "show_player_type": 0,
+          "user": {
+            "anon": null,
+            "base": {
+              "face": "https://i1.hdslb.com/bfs/face/6216b51d97e3377a24d39b2fcee544428052d32a.webp",
+              "is_mystery": false,
+              "name": "小缘喵从小就很可爱",
+              "name_color": 0,
+              "name_color_str": "",
+              "official_info": {
+                "desc": "",
+                "role": 0,
+                "title": "",
+                "type": -1
+              },
+              "origin_info": {
+                "face": "https://i1.hdslb.com/bfs/face/6216b51d97e3377a24d39b2fcee544428052d32a.webp",
+                "name": "小缘喵从小就很可爱"
+              },
+              "risk_ctrl_info": null
+            },
+            "bubble_box": null,
+            "dm_config": {
+              "color": 16777215,
+              "length": 40,
+              "mode": 1
+            },
+            "guard": null,
+            "guard_leader": null,
+            "medal": {
+              "color": 1725515,
+              "color_border": 12632256,
+              "color_end": 12632256,
+              "color_start": 12632256,
+              "guard_icon": "",
+              "guard_level": 0,
+              "honor_icon": "",
+              "id": 29121,
+              "is_light": 0,
+              "level": 23,
+              "name": "德云色",
+              "ruid": 8739477,
+              "score": 3806,
+              "typ": 0,
+              "user_receive_count": 0,
+              "v2_medal_color_border": "#919298CC",
+              "v2_medal_color_end": "#919298CC",
+              "v2_medal_color_level": "#919298E6",
+              "v2_medal_color_start": "#919298CC",
+              "v2_medal_color_text": "#FFFFFF"
+            },
+            "name_color": null,
+            "title": {
+              "old_title_css_id": "",
+              "title_css_id": ""
+            },
+            "uhead_frame": null,
+            "uid": 11396080,
+            "wealth": null
+          }
+        },
+        {
+          "activity_identity": "",
+          "activity_source": 0,
+          "not_show": 0
+        },
+        0
+      ],
+      "[花]",
+      [
+        11396080,
+        "小缘喵从小就很可爱",
+        0,
+        0,
+        0,
+        10000,
+        1,
+        ""
+      ],
+      [
+        23,
+        "德云色",
+        "老实憨厚的笑笑",
+        545068,
+        1725515,
+        "",
+        0,
+        12632256,
+        12632256,
+        12632256,
+        0,
+        0,
+        8739477
+      ],
+      [
+        17,
+        0,
+        6406234,
+        ">50000",
+        0
+      ],
+      [
+        "",
+        ""
+      ],
+      0,
+      0,
+      null,
+      {
+        "ct": "15D742E2",
+        "ts": 1787561374
+      },
+      0,
+      0,
+      null,
+      null,
+      0,
+      300,
+      [
+        26
+      ],
+      null
+    ]
+  },
+  {
+    "cmd": "DANMU_MSG",
+    "dm_v2": "",
+    "info": [
+      [
+        0,
+        1,
+        25,
+        16777215,
+        1787561377117,
+        1343314951,
+        0,
+        "cce34322",
+        0,
+        0,
+        0,
+        "",
+        0,
+        "{}",
+        "{}",
+        {
+          "extra": "{\"send_from_me\":false,\"master_player_hidden\":false,\"mode\":0,\"color\":16777215,\"dm_type\":0,\"font_size\":25,\"player_mode\":1,\"show_player_type\":0,\"content\":\"[爱]\",\"user_hash\":\"3437445922\",\"emoticon_unique\":\"\",\"bulge_display\":0,\"recommend_score\":1,\"dm_score\":0,\"chronos_force_display\":0,\"main_state_dm_color\":\"\",\"objective_state_dm_color\":\"\",\"direction\":0,\"pk_direction\":0,\"quartet_direction\":0,\"anniversary_crowd\":0,\"yeah_space_type\":\"\",\"yeah_space_url\":\"\",\"jump_to_url\":\"\",\"space_type\":\"\",\"space_url\":\"\",\"animation\":{},\"emots\":{\"[爱]\":{\"count\":1,\"descript\":\"[爱]\",\"emoji\":\"[爱]\",\"emoticon_id\":212,\"emoticon_unique\":\"emoji_212\",\"height\":20,\"url\":\"http://i0.hdslb.com/bfs/live/1daaa5d284dafaa16c51409447da851ff1ec557f.png\",\"width\":20}},\"is_audited\":false,\"id_str\":\"0e3a3f004a34a13f20434195af6a8c057591\",\"icon\":null,\"show_reply\":true,\"reply_mid\":0,\"reply_uname\":\"\",\"reply_uname_color\":\"\",\"reply_is_mystery\":false,\"reply_type_enum\":0,\"hit_combo\":0,\"esports_jump_url\":\"\",\"is_mirror\":false,\"is_collaboration_member\":false,\"card\":{\"card_type\":0,\"oid_str\":\"\",\"oid_str_1\":\"\",\"origin_oid_str\":\"\",\"share_id\":\"\",\"share_origin\":\"\",\"from\":\"\",\"card_content\":null},\"voice\":null,\"background_type\":0}",
+          "mode": 0,
+          "show_player_type": 0,
+          "user": {
+            "anon": null,
+            "base": {
+              "face": "https://i1.hdslb.com/bfs/face/6216b51d97e3377a24d39b2fcee544428052d32a.webp",
+              "is_mystery": false,
+              "name": "小缘喵从小就很可爱",
+              "name_color": 0,
+              "name_color_str": "",
+              "official_info": {
+                "desc": "",
+                "role": 0,
+                "title": "",
+                "type": -1
+              },
+              "origin_info": {
+                "face": "https://i1.hdslb.com/bfs/face/6216b51d97e3377a24d39b2fcee544428052d32a.webp",
+                "name": "小缘喵从小就很可爱"
+              },
+              "risk_ctrl_info": null
+            },
+            "bubble_box": null,
+            "dm_config": {
+              "color": 16777215,
+              "length": 40,
+              "mode": 1
+            },
+            "guard": null,
+            "guard_leader": null,
+            "medal": {
+              "color": 1725515,
+              "color_border": 12632256,
+              "color_end": 12632256,
+              "color_start": 12632256,
+              "guard_icon": "",
+              "guard_level": 0,
+              "honor_icon": "",
+              "id": 29121,
+              "is_light": 0,
+              "level": 23,
+              "name": "德云色",
+              "ruid": 8739477,
+              "score": 3806,
+              "typ": 0,
+              "user_receive_count": 0,
+              "v2_medal_color_border": "#919298CC",
+              "v2_medal_color_end": "#919298CC",
+              "v2_medal_color_level": "#919298E6",
+              "v2_medal_color_start": "#919298CC",
+              "v2_medal_color_text": "#FFFFFF"
+            },
+            "name_color": null,
+            "title": {
+              "old_title_css_id": "",
+              "title_css_id": ""
+            },
+            "uhead_frame": null,
+            "uid": 11396080,
+            "wealth": null
+          }
+        },
+        {
+          "activity_identity": "",
+          "activity_source": 0,
+          "not_show": 0
+        },
+        0
+      ],
+      "[爱]",
+      [
+        11396080,
+        "小缘喵从小就很可爱",
+        0,
+        0,
+        0,
+        10000,
+        1,
+        ""
+      ],
+      [
+        23,
+        "德云色",
+        "老实憨厚的笑笑",
+        545068,
+        1725515,
+        "",
+        0,
+        12632256,
+        12632256,
+        12632256,
+        0,
+        0,
+        8739477
+      ],
+      [
+        17,
+        0,
+        6406234,
+        ">50000",
+        0
+      ],
+      [
+        "",
+        ""
+      ],
+      0,
+      0,
+      null,
+      {
+        "ct": "266F99A0",
+        "ts": 1787561377
+      },
+      0,
+      0,
+      null,
+      null,
+      0,
+      300,
+      [
+        26
+      ],
+      null
+    ]
+  },
+  {
+    "cmd": "DANMU_MSG",
+    "dm_v2": "",
+    "info": [
+      [
+        0,
+        1,
+        25,
+        16777215,
+        1787561381549,
+        1730493300,
+        0,
+        "cce34322",
+        0,
+        0,
+        0,
+        "",
+        0,
+        "{}",
+        "{}",
+        {
+          "extra": "{\"send_from_me\":false,\"master_player_hidden\":false,\"mode\":0,\"color\":16777215,\"dm_type\":0,\"font_size\":25,\"player_mode\":1,\"show_player_type\":0,\"content\":\"[撇嘴]\",\"user_hash\":\"3437445922\",\"emoticon_unique\":\"\",\"bulge_display\":0,\"recommend_score\":9,\"dm_score\":0,\"chronos_force_display\":0,\"main_state_dm_color\":\"\",\"objective_state_dm_color\":\"\",\"direction\":0,\"pk_direction\":0,\"quartet_direction\":0,\"anniversary_crowd\":0,\"yeah_space_type\":\"\",\"yeah_space_url\":\"\",\"jump_to_url\":\"\",\"space_type\":\"\",\"space_url\":\"\",\"animation\":{},\"emots\":{\"[撇嘴]\":{\"count\":1,\"descript\":\"[撇嘴]\",\"emoji\":\"[撇嘴]\",\"emoticon_id\":214,\"emoticon_unique\":\"emoji_214\",\"height\":20,\"url\":\"http://i0.hdslb.com/bfs/live/4255ce6ed5d15b60311728a803d03dd9a24366b2.png\",\"width\":20}},\"is_audited\":false,\"id_str\":\"2fecd1ca6f85f51b686fdc09186a8c056941\",\"icon\":null,\"show_reply\":true,\"reply_mid\":0,\"reply_uname\":\"\",\"reply_uname_color\":\"\",\"reply_is_mystery\":false,\"reply_type_enum\":0,\"hit_combo\":0,\"esports_jump_url\":\"\",\"is_mirror\":false,\"is_collaboration_member\":false,\"card\":{\"card_type\":0,\"oid_str\":\"\",\"oid_str_1\":\"\",\"origin_oid_str\":\"\",\"share_id\":\"\",\"share_origin\":\"\",\"from\":\"\",\"card_content\":null},\"voice\":null,\"background_type\":0}",
+          "mode": 0,
+          "show_player_type": 0,
+          "user": {
+            "anon": null,
+            "base": {
+              "face": "https://i1.hdslb.com/bfs/face/6216b51d97e3377a24d39b2fcee544428052d32a.webp",
+              "is_mystery": false,
+              "name": "小缘喵从小就很可爱",
+              "name_color": 0,
+              "name_color_str": "",
+              "official_info": {
+                "desc": "",
+                "role": 0,
+                "title": "",
+                "type": -1
+              },
+              "origin_info": {
+                "face": "https://i1.hdslb.com/bfs/face/6216b51d97e3377a24d39b2fcee544428052d32a.webp",
+                "name": "小缘喵从小就很可爱"
+              },
+              "risk_ctrl_info": null
+            },
+            "bubble_box": null,
+            "dm_config": {
+              "color": 16777215,
+              "length": 40,
+              "mode": 1
+            },
+            "guard": null,
+            "guard_leader": null,
+            "medal": {
+              "color": 1725515,
+              "color_border": 12632256,
+              "color_end": 12632256,
+              "color_start": 12632256,
+              "guard_icon": "",
+              "guard_level": 0,
+              "honor_icon": "",
+              "id": 29121,
+              "is_light": 0,
+              "level": 23,
+              "name": "德云色",
+              "ruid": 8739477,
+              "score": 3806,
+              "typ": 0,
+              "user_receive_count": 0,
+              "v2_medal_color_border": "#919298CC",
+              "v2_medal_color_end": "#919298CC",
+              "v2_medal_color_level": "#919298E6",
+              "v2_medal_color_start": "#919298CC",
+              "v2_medal_color_text": "#FFFFFF"
+            },
+            "name_color": null,
+            "title": {
+              "old_title_css_id": "",
+              "title_css_id": ""
+            },
+            "uhead_frame": null,
+            "uid": 11396080,
+            "wealth": null
+          }
+        },
+        {
+          "activity_identity": "",
+          "activity_source": 0,
+          "not_show": 0
+        },
+        0
+      ],
+      "[撇嘴]",
+      [
+        11396080,
+        "小缘喵从小就很可爱",
+        0,
+        0,
+        0,
+        10000,
+        1,
+        ""
+      ],
+      [
+        23,
+        "德云色",
+        "老实憨厚的笑笑",
+        545068,
+        1725515,
+        "",
+        0,
+        12632256,
+        12632256,
+        12632256,
+        0,
+        0,
+        8739477
+      ],
+      [
+        17,
+        0,
+        6406234,
+        ">50000",
+        0
+      ],
+      [
+        "",
+        ""
+      ],
+      0,
+      0,
+      null,
+      {
+        "ct": "6CB1A05",
+        "ts": 1787561381
+      },
+      0,
+      0,
+      null,
+      null,
+      0,
+      300,
+      [
+        26
+      ],
+      null
+    ]
+  },
+  {
+    "cmd": "DANMU_MSG",
+    "dm_v2": "",
+    "info": [
+      [
+        0,
+        1,
+        25,
+        16777215,
+        1787561385262,
+        -266163016,
+        0,
+        "cce34322",
+        0,
+        0,
+        0,
+        "",
+        0,
+        "{}",
+        "{}",
+        {
+          "extra": "{\"send_from_me\":false,\"master_player_hidden\":false,\"mode\":0,\"color\":16777215,\"dm_type\":0,\"font_size\":25,\"player_mode\":1,\"show_player_type\":0,\"content\":\"[妙]\",\"user_hash\":\"3437445922\",\"emoticon_unique\":\"\",\"bulge_display\":0,\"recommend_score\":2,\"dm_score\":0,\"chronos_force_display\":0,\"main_state_dm_color\":\"\",\"objective_state_dm_color\":\"\",\"direction\":0,\"pk_direction\":0,\"quartet_direction\":0,\"anniversary_crowd\":0,\"yeah_space_type\":\"\",\"yeah_space_url\":\"\",\"jump_to_url\":\"\",\"space_type\":\"\",\"space_url\":\"\",\"animation\":{},\"emots\":{\"[妙]\":{\"count\":1,\"descript\":\"[妙]\",\"emoji\":\"[妙]\",\"emoticon_id\":210,\"emoticon_unique\":\"emoji_210\",\"height\":20,\"url\":\"http://i0.hdslb.com/bfs/live/08f735d950a0fba267dda140673c9ab2edf6410d.png\",\"width\":20}},\"is_audited\":false,\"id_str\":\"678d93a4b88fad61509084bf9b6a8c058328\",\"icon\":null,\"show_reply\":true,\"reply_mid\":0,\"reply_uname\":\"\",\"reply_uname_color\":\"\",\"reply_is_mystery\":false,\"reply_type_enum\":0,\"hit_combo\":0,\"esports_jump_url\":\"\",\"is_mirror\":false,\"is_collaboration_member\":false,\"card\":{\"card_type\":0,\"oid_str\":\"\",\"oid_str_1\":\"\",\"origin_oid_str\":\"\",\"share_id\":\"\",\"share_origin\":\"\",\"from\":\"\",\"card_content\":null},\"voice\":null,\"background_type\":0}",
+          "mode": 0,
+          "show_player_type": 0,
+          "user": {
+            "anon": null,
+            "base": {
+              "face": "https://i1.hdslb.com/bfs/face/6216b51d97e3377a24d39b2fcee544428052d32a.webp",
+              "is_mystery": false,
+              "name": "小缘喵从小就很可爱",
+              "name_color": 0,
+              "name_color_str": "",
+              "official_info": {
+                "desc": "",
+                "role": 0,
+                "title": "",
+                "type": -1
+              },
+              "origin_info": {
+                "face": "https://i1.hdslb.com/bfs/face/6216b51d97e3377a24d39b2fcee544428052d32a.webp",
+                "name": "小缘喵从小就很可爱"
+              },
+              "risk_ctrl_info": null
+            },
+            "bubble_box": null,
+            "dm_config": {
+              "color": 16777215,
+              "length": 40,
+              "mode": 1
+            },
+            "guard": null,
+            "guard_leader": null,
+            "medal": {
+              "color": 1725515,
+              "color_border": 12632256,
+              "color_end": 12632256,
+              "color_start": 12632256,
+              "guard_icon": "",
+              "guard_level": 0,
+              "honor_icon": "",
+              "id": 29121,
+              "is_light": 0,
+              "level": 23,
+              "name": "德云色",
+              "ruid": 8739477,
+              "score": 3806,
+              "typ": 0,
+              "user_receive_count": 0,
+              "v2_medal_color_border": "#919298CC",
+              "v2_medal_color_end": "#919298CC",
+              "v2_medal_color_level": "#919298E6",
+              "v2_medal_color_start": "#919298CC",
+              "v2_medal_color_text": "#FFFFFF"
+            },
+            "name_color": null,
+            "title": {
+              "old_title_css_id": "",
+              "title_css_id": ""
+            },
+            "uhead_frame": null,
+            "uid": 11396080,
+            "wealth": null
+          }
+        },
+        {
+          "activity_identity": "",
+          "activity_source": 0,
+          "not_show": 0
+        },
+        0
+      ],
+      "[妙]",
+      [
+        11396080,
+        "小缘喵从小就很可爱",
+        0,
+        0,
+        0,
+        10000,
+        1,
+        ""
+      ],
+      [
+        23,
+        "德云色",
+        "老实憨厚的笑笑",
+        545068,
+        1725515,
+        "",
+        0,
+        12632256,
+        12632256,
+        12632256,
+        0,
+        0,
+        8739477
+      ],
+      [
+        17,
+        0,
+        6406234,
+        ">50000",
+        0
+      ],
+      [
+        "",
+        ""
+      ],
+      0,
+      0,
+      null,
+      {
+        "ct": "54A95B00",
+        "ts": 1787561385
+      },
+      0,
+      0,
+      null,
+      null,
+      0,
+      300,
+      [
+        26
+      ],
+      null
+    ]
+  },
+  {
+    "cmd": "DANMU_MSG",
+    "dm_v2": "",
+    "info": [
+      [
+        0,
+        1,
+        25,
+        16777215,
+        1787561390743,
+        -41976562,
+        0,
+        "cce34322",
+        0,
+        0,
+        0,
+        "",
+        0,
+        "{}",
+        "{}",
+        {
+          "extra": "{\"send_from_me\":false,\"master_player_hidden\":false,\"mode\":0,\"color\":16777215,\"dm_type\":0,\"font_size\":25,\"player_mode\":1,\"show_player_type\":0,\"content\":\"[花]\",\"user_hash\":\"3437445922\",\"emoticon_unique\":\"\",\"bulge_display\":0,\"recommend_score\":4,\"dm_score\":0,\"chronos_force_display\":0,\"main_state_dm_color\":\"\",\"objective_state_dm_color\":\"\",\"direction\":0,\"pk_direction\":0,\"quartet_direction\":0,\"anniversary_crowd\":0,\"yeah_space_type\":\"\",\"yeah_space_url\":\"\",\"jump_to_url\":\"\",\"space_type\":\"\",\"space_url\":\"\",\"animation\":{},\"emots\":{\"[花]\":{\"count\":1,\"descript\":\"[花]\",\"emoji\":\"[花]\",\"emoticon_id\":209,\"emoticon_unique\":\"emoji_209\",\"height\":20,\"url\":\"http://i0.hdslb.com/bfs/live/7dd2ef03e13998575e4d8a803c6e12909f94e72b.png\",\"width\":20}},\"is_audited\":false,\"id_str\":\"6997f7cbaebfff6b4115f551886a8c056818\",\"icon\":null,\"show_reply\":true,\"reply_mid\":0,\"reply_uname\":\"\",\"reply_uname_color\":\"\",\"reply_is_mystery\":false,\"reply_type_enum\":0,\"hit_combo\":0,\"esports_jump_url\":\"\",\"is_mirror\":false,\"is_collaboration_member\":false,\"card\":{\"card_type\":0,\"oid_str\":\"\",\"oid_str_1\":\"\",\"origin_oid_str\":\"\",\"share_id\":\"\",\"share_origin\":\"\",\"from\":\"\",\"card_content\":null},\"voice\":null,\"background_type\":0}",
+          "mode": 0,
+          "show_player_type": 0,
+          "user": {
+            "anon": null,
+            "base": {
+              "face": "https://i1.hdslb.com/bfs/face/6216b51d97e3377a24d39b2fcee544428052d32a.webp",
+              "is_mystery": false,
+              "name": "小缘喵从小就很可爱",
+              "name_color": 0,
+              "name_color_str": "",
+              "official_info": {
+                "desc": "",
+                "role": 0,
+                "title": "",
+                "type": -1
+              },
+              "origin_info": {
+                "face": "https://i1.hdslb.com/bfs/face/6216b51d97e3377a24d39b2fcee544428052d32a.webp",
+                "name": "小缘喵从小就很可爱"
+              },
+              "risk_ctrl_info": null
+            },
+            "bubble_box": null,
+            "dm_config": {
+              "color": 16777215,
+              "length": 40,
+              "mode": 1
+            },
+            "guard": null,
+            "guard_leader": null,
+            "medal": {
+              "color": 1725515,
+              "color_border": 12632256,
+              "color_end": 12632256,
+              "color_start": 12632256,
+              "guard_icon": "",
+              "guard_level": 0,
+              "honor_icon": "",
+              "id": 29121,
+              "is_light": 0,
+              "level": 23,
+              "name": "德云色",
+              "ruid": 8739477,
+              "score": 3806,
+              "typ": 0,
+              "user_receive_count": 0,
+              "v2_medal_color_border": "#919298CC",
+              "v2_medal_color_end": "#919298CC",
+              "v2_medal_color_level": "#919298E6",
+              "v2_medal_color_start": "#919298CC",
+              "v2_medal_color_text": "#FFFFFF"
+            },
+            "name_color": null,
+            "title": {
+              "old_title_css_id": "",
+              "title_css_id": ""
+            },
+            "uhead_frame": null,
+            "uid": 11396080,
+            "wealth": null
+          }
+        },
+        {
+          "activity_identity": "",
+          "activity_source": 0,
+          "not_show": 0
+        },
+        0
+      ],
+      "[花]",
+      [
+        11396080,
+        "小缘喵从小就很可爱",
+        0,
+        0,
+        0,
+        10000,
+        1,
+        ""
+      ],
+      [
+        23,
+        "德云色",
+        "老实憨厚的笑笑",
+        545068,
+        1725515,
+        "",
+        0,
+        12632256,
+        12632256,
+        12632256,
+        0,
+        0,
+        8739477
+      ],
+      [
+        17,
+        0,
+        6406234,
+        ">50000",
+        0
+      ],
+      [
+        "",
+        ""
+      ],
+      0,
+      0,
+      null,
+      {
+        "ct": "F5CCF434",
+        "ts": 1787561390
+      },
+      0,
+      0,
+      null,
+      null,
+      0,
+      300,
+      [
+        26
+      ],
+      null
+    ]
+  },
+  {
+    "cmd": "DANMU_MSG",
+    "dm_v2": "",
+    "info": [
+      [
+        0,
+        1,
+        25,
+        16777215,
+        1787561394804,
+        216960016,
+        0,
+        "cce34322",
+        0,
+        0,
+        0,
+        "",
+        0,
+        "{}",
+        "{}",
+        {
+          "extra": "{\"send_from_me\":false,\"master_player_hidden\":false,\"mode\":0,\"color\":16777215,\"dm_type\":0,\"font_size\":25,\"player_mode\":1,\"show_player_type\":0,\"content\":\"[妙]\",\"user_hash\":\"3437445922\",\"emoticon_unique\":\"\",\"bulge_display\":0,\"recommend_score\":5,\"dm_score\":0,\"chronos_force_display\":0,\"main_state_dm_color\":\"\",\"objective_state_dm_color\":\"\",\"direction\":0,\"pk_direction\":0,\"quartet_direction\":0,\"anniversary_crowd\":0,\"yeah_space_type\":\"\",\"yeah_space_url\":\"\",\"jump_to_url\":\"\",\"space_type\":\"\",\"space_url\":\"\",\"animation\":{},\"emots\":{\"[妙]\":{\"count\":1,\"descript\":\"[妙]\",\"emoji\":\"[妙]\",\"emoticon_id\":210,\"emoticon_unique\":\"emoji_210\",\"height\":20,\"url\":\"http://i0.hdslb.com/bfs/live/08f735d950a0fba267dda140673c9ab2edf6410d.png\",\"width\":20}},\"is_audited\":false,\"id_str\":\"628814fdcb91005047c4a2731e6a8c058689\",\"icon\":null,\"show_reply\":true,\"reply_mid\":0,\"reply_uname\":\"\",\"reply_uname_color\":\"\",\"reply_is_mystery\":false,\"reply_type_enum\":0,\"hit_combo\":0,\"esports_jump_url\":\"\",\"is_mirror\":false,\"is_collaboration_member\":false,\"card\":{\"card_type\":0,\"oid_str\":\"\",\"oid_str_1\":\"\",\"origin_oid_str\":\"\",\"share_id\":\"\",\"share_origin\":\"\",\"from\":\"\",\"card_content\":null},\"voice\":null,\"background_type\":0}",
+          "mode": 0,
+          "show_player_type": 0,
+          "user": {
+            "anon": null,
+            "base": {
+              "face": "https://i1.hdslb.com/bfs/face/6216b51d97e3377a24d39b2fcee544428052d32a.webp",
+              "is_mystery": false,
+              "name": "小缘喵从小就很可爱",
+              "name_color": 0,
+              "name_color_str": "",
+              "official_info": {
+                "desc": "",
+                "role": 0,
+                "title": "",
+                "type": -1
+              },
+              "origin_info": {
+                "face": "https://i1.hdslb.com/bfs/face/6216b51d97e3377a24d39b2fcee544428052d32a.webp",
+                "name": "小缘喵从小就很可爱"
+              },
+              "risk_ctrl_info": null
+            },
+            "bubble_box": null,
+            "dm_config": {
+              "color": 16777215,
+              "length": 40,
+              "mode": 1
+            },
+            "guard": null,
+            "guard_leader": null,
+            "medal": {
+              "color": 1725515,
+              "color_border": 1725515,
+              "color_end": 5414290,
+              "color_start": 1725515,
+              "guard_icon": "",
+              "guard_level": 0,
+              "honor_icon": "",
+              "id": 29121,
+              "is_light": 1,
+              "level": 23,
+              "name": "德云色",
+              "ruid": 8739477,
+              "score": 3806,
+              "typ": 0,
+              "user_receive_count": 0,
+              "v2_medal_color_border": "#3FB4F699",
+              "v2_medal_color_end": "#3FB4F699",
+              "v2_medal_color_level": "#3FB4F6E6",
+              "v2_medal_color_start": "#3FB4F699",
+              "v2_medal_color_text": "#FFFFFF"
+            },
+            "name_color": null,
+            "title": {
+              "old_title_css_id": "",
+              "title_css_id": ""
+            },
+            "uhead_frame": null,
+            "uid": 11396080,
+            "wealth": null
+          }
+        },
+        {
+          "activity_identity": "",
+          "activity_source": 0,
+          "not_show": 0
+        },
+        0
+      ],
+      "[妙]",
+      [
+        11396080,
+        "小缘喵从小就很可爱",
+        0,
+        0,
+        0,
+        10000,
+        1,
+        ""
+      ],
+      [
+        23,
+        "德云色",
+        "老实憨厚的笑笑",
+        545068,
+        1725515,
+        "",
+        0,
+        1725515,
+        1725515,
+        5414290,
+        0,
+        1,
+        8739477
+      ],
+      [
+        17,
+        0,
+        6406234,
+        ">50000",
+        0
+      ],
+      [
+        "",
+        ""
+      ],
+      0,
+      0,
+      null,
+      {
+        "ct": "13FA59E6",
+        "ts": 1787561394
+      },
+      0,
+      0,
+      null,
+      null,
+      0,
+      300,
+      [
+        26
+      ],
+      null
+    ]
+  },
+  {
+    "cmd": "DANMU_MSG",
+    "dm_v2": "",
+    "info": [
+      [
+        0,
+        1,
+        25,
+        16777215,
+        1787561404140,
+        1435035375,
+        0,
+        "cce34322",
+        0,
+        0,
+        0,
+        "",
+        1,
+        {
+          "bulge_display": 1,
+          "emoticon_unique": "room_545068_9736",
+          "height": 162,
+          "in_player_area": 1,
+          "is_dynamic": 1,
+          "url": "http://i0.hdslb.com/bfs/garb/ba953c52c41c1d0934ee3698d6878e8a3310db99.png",
+          "width": 162
+        },
+        "{}",
+        {
+          "extra": "{\"send_from_me\":false,\"master_player_hidden\":false,\"mode\":0,\"color\":16777215,\"dm_type\":1,\"font_size\":25,\"player_mode\":1,\"show_player_type\":0,\"content\":\"泪目\",\"user_hash\":\"3437445922\",\"emoticon_unique\":\"room_545068_9736\",\"bulge_display\":1,\"recommend_score\":0,\"dm_score\":0,\"chronos_force_display\":0,\"main_state_dm_color\":\"\",\"objective_state_dm_color\":\"\",\"direction\":0,\"pk_direction\":0,\"quartet_direction\":0,\"anniversary_crowd\":0,\"yeah_space_type\":\"\",\"yeah_space_url\":\"\",\"jump_to_url\":\"\",\"space_type\":\"\",\"space_url\":\"\",\"animation\":{},\"emots\":null,\"is_audited\":false,\"id_str\":\"5c046df98238cfc53eb26757c36a8c056243\",\"icon\":null,\"show_reply\":true,\"reply_mid\":0,\"reply_uname\":\"\",\"reply_uname_color\":\"\",\"reply_is_mystery\":false,\"reply_type_enum\":0,\"hit_combo\":0,\"esports_jump_url\":\"\",\"is_mirror\":false,\"is_collaboration_member\":false,\"card\":{\"card_type\":0,\"oid_str\":\"\",\"oid_str_1\":\"\",\"origin_oid_str\":\"\",\"share_id\":\"\",\"share_origin\":\"\",\"from\":\"\",\"card_content\":null},\"voice\":null,\"background_type\":0}",
+          "mode": 0,
+          "show_player_type": 0,
+          "user": {
+            "anon": null,
+            "base": {
+              "face": "https://i1.hdslb.com/bfs/face/6216b51d97e3377a24d39b2fcee544428052d32a.webp",
+              "is_mystery": false,
+              "name": "小缘喵从小就很可爱",
+              "name_color": 0,
+              "name_color_str": "",
+              "official_info": {
+                "desc": "",
+                "role": 0,
+                "title": "",
+                "type": -1
+              },
+              "origin_info": {
+                "face": "https://i1.hdslb.com/bfs/face/6216b51d97e3377a24d39b2fcee544428052d32a.webp",
+                "name": "小缘喵从小就很可爱"
+              },
+              "risk_ctrl_info": null
+            },
+            "bubble_box": null,
+            "dm_config": {
+              "color": 16777215,
+              "length": 40,
+              "mode": 1
+            },
+            "guard": null,
+            "guard_leader": null,
+            "medal": {
+              "color": 1725515,
+              "color_border": 1725515,
+              "color_end": 5414290,
+              "color_start": 1725515,
+              "guard_icon": "",
+              "guard_level": 0,
+              "honor_icon": "",
+              "id": 29121,
+              "is_light": 1,
+              "level": 23,
+              "name": "德云色",
+              "ruid": 8739477,
+              "score": 3806,
+              "typ": 0,
+              "user_receive_count": 0,
+              "v2_medal_color_border": "#3FB4F699",
+              "v2_medal_color_end": "#3FB4F699",
+              "v2_medal_color_level": "#3FB4F6E6",
+              "v2_medal_color_start": "#3FB4F699",
+              "v2_medal_color_text": "#FFFFFF"
+            },
+            "name_color": null,
+            "title": {
+              "old_title_css_id": "",
+              "title_css_id": ""
+            },
+            "uhead_frame": null,
+            "uid": 11396080,
+            "wealth": null
+          }
+        },
+        {
+          "activity_identity": "",
+          "activity_source": 0,
+          "not_show": 0
+        },
+        0
+      ],
+      "泪目",
+      [
+        11396080,
+        "小缘喵从小就很可爱",
+        0,
+        0,
+        0,
+        10000,
+        1,
+        ""
+      ],
+      [
+        23,
+        "德云色",
+        "老实憨厚的笑笑",
+        545068,
+        1725515,
+        "",
+        0,
+        1725515,
+        1725515,
+        5414290,
+        0,
+        1,
+        8739477
+      ],
+      [
+        17,
+        0,
+        6406234,
+        ">50000",
+        0
+      ],
+      [
+        "",
+        ""
+      ],
+      0,
+      0,
+      null,
+      {
+        "ct": "73F833DC",
+        "ts": 1787561404
+      },
+      0,
+      0,
+      null,
+      null,
+      0,
+      330,
+      [
+        26
+      ],
+      null
+    ]
+  }
+]

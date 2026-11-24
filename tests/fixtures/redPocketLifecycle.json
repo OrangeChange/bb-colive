@@ -1,0 +1,34 @@
+{
+  "roomId": 22381346,
+  "new": {
+    "cmd": "POPULARITY_RED_POCKET_V2_NEW",
+    "data": {
+      "lot_id": 28877957,
+      "start_time": 1793580326,
+      "current_time": 1793580326,
+      "uid": 53720432,
+      "uname": "红包用户",
+      "action": "送出",
+      "num": 1,
+      "gift_name": "红包",
+      "gift_id": 13000,
+      "price": 20,
+      "rp_type": 3
+    }
+  },
+  "start": {
+    "cmd": "POPULARITY_RED_POCKET_V2_START",
+    "data": {
+      "lot_id": 28877957,
+      "sender_uid": 53720432,
+      "sender_name": "红包用户",
+      "current_time": 1793580327,
+      "start_time": 1793580327,
+      "last_time": 600,
+      "total_price": 2000,
+      "rp_type": 3,
+      "danmu": "",
+      "awards": [{ "gift_id": 0, "gift_name": "电池红包", "num": 20 }]
+    }
+  }
+}

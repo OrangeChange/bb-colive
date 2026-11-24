@@ -1,0 +1,169 @@
+import { useEffect, useMemo, useRef, useState } from 'react'
+import { useVirtualizer } from '@tanstack/react-virtual'
+import { useRoomInsights } from '../hooks/useRoomInsights'
+import { applyObservedGuardIcons, type RankUser } from '../protocol/roomInsights'
+import { useConnection } from '../stores/connection'
+import { RankList, RankUserRow } from './RoomInsightsView'
+import { RankTopThree } from './RankTopThree'
+import { useGeneralSettings } from '../generalSettings'
+import type { GuardIdentityDisplayMode } from '../eventDisplaySettings'
+
+const focusClass = 'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent-ring'
+
+function RankRows({
+  users,
+  kind,
+  hasMore,
+  loadingMore,
+  loadMoreError,
+  onLoadMore,
+  guardIdentityDisplayMode,
+  showGuardIdentity,
+  onUserFilter,
+}: {
+  users: RankUser[]
+  kind: 'contribution' | 'guard'
+  hasMore: boolean
+  loadingMore: boolean
+  loadMoreError: boolean
+  onLoadMore?: () => void
+  guardIdentityDisplayMode: GuardIdentityDisplayMode
+  showGuardIdentity: boolean
+  onUserFilter?: (user: Pick<RankUser, 'uid' | 'name'>) => void
+}) {
+  const scrollRef = useRef<HTMLDivElement>(null)
+  const sentinelRef = useRef<HTMLDivElement>(null)
+  const loadMoreRef = useRef(onLoadMore)
+  const virtual = useVirtualizer({ count: users.length, getScrollElement: () => scrollRef.current, estimateSize: () => 56, overscan: 6 })
+  useEffect(() => { loadMoreRef.current = onLoadMore }, [onLoadMore])
+  useEffect(() => {
+    const root = scrollRef.current
+    const sentinel = sentinelRef.current
+    if (!root || !sentinel || !hasMore || !onLoadMore || loadMoreError) return
+    const observer = new IntersectionObserver(
+      entries => { if (entries.some(entry => entry.isIntersecting)) loadMoreRef.current?.() },
+      { root, rootMargin: '96px 0px' },
+    )
+    observer.observe(sentinel)
+    return () => observer.disconnect()
+  }, [hasMore, loadMoreError, onLoadMore])
+  return <div ref={scrollRef} tabIndex={0} aria-label="滚动查看榜单" className={`min-h-0 flex-1 overflow-y-auto overscroll-contain ${focusClass}`} style={{ scrollbarGutter: 'stable' }}>
+    {users.length <= 100 ? <RankList users={users} kind={kind} guardIdentityDisplayMode={guardIdentityDisplayMode} showGuardIdentity={showGuardIdentity} onUserFilter={onUserFilter} /> : <ol aria-label={kind === 'guard' ? '大航海陪伴总榜' : '观众榜'} className="relative" style={{ height: virtual.getTotalSize() }}>
+      {virtual.getVirtualItems().map(row => <li key={users[row.index].uid} aria-posinset={row.index + 1} aria-setsize={users.length}
+        className="absolute left-0 top-0 w-full" style={{ height: row.size, transform: `translateY(${row.start}px)` }}>
+        <RankUserRow user={users[row.index]} kind={kind} guardIdentityDisplayMode={guardIdentityDisplayMode} showGuardIdentity={showGuardIdentity} onUserFilter={onUserFilter} />
+      </li>)}
+    </ol>}
+    {(hasMore || loadingMore || loadMoreError) && <div ref={sentinelRef} role={loadMoreError ? 'alert' : 'status'} className="flex min-h-8 items-center justify-center border-t border-line/50 px-3 py-2 ui-type-meta text-t3">
+      {loadingMore ? '正在加载下一页…' : loadMoreError ? <button type="button" onClick={() => loadMoreRef.current?.()} className={`cursor-pointer rounded px-2 py-1 ui-type-control text-accent-text hover:bg-accent-subtle ${focusClass}`}>重试</button> : '继续下滑'}
+    </div>}
+  </div>
+}
+
+function Ranking({ kind, onUserFilter }: { kind: 'contribution' | 'guard'; onUserFilter?: (user: Pick<RankUser, 'uid' | 'name'>) => void }) {
+  const { roomId, enabled, refreshRank, overview, contribution, guardFirst, guardRest, guardUsers, guardSort, setGuardSort, openRank, open, dismiss, hasMoreGuards, loadingMore, loadMoreGuards } = useRoomInsights()
+  const guardIdentityDisplayMode = useGeneralSettings(state => state.eventDisplayPreferences.guardIdentityDisplayMode)
+  const showGuardIdentity = useGeneralSettings(state => state.eventDisplayPreferences.showGuardIdentity)
+  const observedGuardIconUrls = useConnection(state => state.guardIconUrlsByUid)
+  const roomGuardProfile = useConnection(state => state.state.roomGuardProfile)
+  const root = useRef<HTMLDivElement>(null)
+  const trigger = useRef<HTMLButtonElement>(null)
+  const closeTimer = useRef<ReturnType<typeof setTimeout> | undefined>(undefined)
+  const [pinned, setPinned] = useState(false)
+  const expanded = openRank === kind
+  const guard = kind === 'guard'
+  const query = guard ? guardFirst : contribution
+  const sourceUsers = guard ? guardUsers : contribution.data?.users ?? []
+  const users = useMemo(() => applyObservedGuardIcons(sourceUsers, observedGuardIconUrls, roomGuardProfile), [sourceUsers, observedGuardIconUrls, roomGuardProfile])
+  const top3 = applyObservedGuardIcons(guard ? guardUsers.slice(0, 3) : contribution.data?.users.slice(0, 3) ?? overview.data?.topContributors ?? [], observedGuardIconUrls, roomGuardProfile)
+  const label = guard ? '大航海' : '观众榜'
+  const ready = !!overview.data?.anchorUid
+  const error = query.isError || overview.isError && !ready
+  const pending = enabled && (overview.isPending || ready && query.isPending)
+  const cancelClose = () => { clearTimeout(closeTimer.current) }
+  const close = (restoreFocus = false) => {
+    cancelClose()
+    dismiss(kind)
+    setPinned(false)
+    if (restoreFocus) trigger.current?.focus()
+  }
+  useEffect(() => () => clearTimeout(closeTimer.current), [])
+  useEffect(() => { setPinned(false) }, [roomId])
+  useEffect(() => { if (!expanded) setPinned(false) }, [expanded])
+  useEffect(() => {
+    if (!expanded) return
+    const outside = (event: PointerEvent) => { if (!root.current?.contains(event.target as Node)) close() }
+    const escape = (event: KeyboardEvent) => { if (event.key === 'Escape') { event.preventDefault(); close(true) } }
+    window.addEventListener('pointerdown', outside)
+    window.addEventListener('keydown', escape)
+    return () => { window.removeEventListener('pointerdown', outside); window.removeEventListener('keydown', escape) }
+  })
+  const refresh = () => refreshRank(kind)
+  const filterUser = (user: Pick<RankUser, 'uid' | 'name'>) => {
+    onUserFilter?.(user)
+    close(true)
+  }
+
+  return <div ref={root} className="relative min-w-0"
+    onMouseEnter={() => { cancelClose(); if (roomId) open(kind) }}
+    onMouseLeave={() => {
+      if (!pinned && !root.current?.contains(document.activeElement)) closeTimer.current = setTimeout(() => dismiss(kind), 180)
+    }}>
+    <button ref={trigger} type="button" aria-label={`${label}，展开榜单`} aria-expanded={expanded} aria-haspopup="dialog" aria-controls={`room-rank-${kind}`}
+      disabled={!roomId}
+      onClick={() => { cancelClose(); setPinned(true); open(kind) }}
+      onKeyDown={event => { if (event.key === 'ArrowDown') { event.preventDefault(); setPinned(true); open(kind) } }}
+      className={`inline-flex h-8 cursor-pointer items-center gap-2 rounded-md border px-2 transition-colors disabled:cursor-default disabled:opacity-50 ${focusClass} ${expanded ? 'border-accent/50 bg-accent-subtle' : 'border-transparent enabled:hover:border-line enabled:hover:bg-raised'}`}>
+      <span className="whitespace-nowrap ui-type-control text-t2">{label}</span>
+      <RankTopThree users={top3} pending={pending} />
+    </button>
+    {expanded && <div className="ui-motion-enter absolute right-0 top-full z-50 pt-2">
+      <section id={`room-rank-${kind}`} role="dialog" aria-label={guard ? '大航海陪伴总榜' : '观众榜'}
+        className="flex h-[400px] max-h-[calc(100dvh-110px)] w-[360px] max-w-[calc(100vw-100px)] flex-col overflow-hidden rounded-lg border border-line bg-surface shadow-xl shadow-black/20">
+        <header className="flex shrink-0 items-center gap-2 border-b border-line px-3 py-2">
+          <div className="min-w-0 flex-1">
+            <div className="flex items-baseline gap-2 whitespace-nowrap">
+            <h2 className="ui-type-section-title font-semibold text-t1">{label}</h2>
+            <span className="ui-type-meta tabular-nums text-t3">已显示 {users.length}{guard && guardFirst.data?.total !== undefined ? ` / ${guardFirst.data.total}` : ''} 人</span>
+            </div>
+          </div>
+              <button type="button" onClick={refresh} disabled={!enabled || query.isFetching || overview.isFetching} className={`cursor-pointer rounded px-2 py-1 ui-type-control text-t2 enabled:hover:bg-raised disabled:cursor-wait disabled:opacity-50 ${focusClass}`}>刷新</button>
+        </header>
+        {guard ? <div role="group" aria-label="大航海排序方式" className="flex shrink-0 gap-1 border-b border-line px-3 py-2">
+          {(['intimacy', 'accompany'] as const).map(sort => <button key={sort} type="button" aria-pressed={guardSort === sort}
+            onPointerDown={event => { event.stopPropagation(); cancelClose(); setPinned(true) }}
+            onClick={() => { cancelClose(); setPinned(true); setGuardSort(sort) }} className={`cursor-pointer rounded px-2.5 py-1 ui-type-control ${focusClass} ${guardSort === sort ? 'bg-accent-subtle text-accent-text' : 'text-t2 hover:bg-raised'}`}>
+            {sort === 'intimacy' ? '亲密度' : '陪伴天数'}
+          </button>)}
+        </div> : <p className="shrink-0 border-b border-line px-3 py-2 ui-type-meta text-t3">贡献值 · 最多展示前100名</p>}
+        {error && <div role="status" className="flex shrink-0 items-center justify-between gap-2 border-b border-line px-3 py-2 ui-type-control text-warning">
+          <span>{users.length ? '更新失败，保留上次榜单' : '榜单读取失败'}</span>
+          <button type="button" onClick={refresh} disabled={!enabled || query.isFetching || overview.isFetching} className={`cursor-pointer rounded px-2 py-1 enabled:hover:bg-raised ${focusClass}`}>重试</button>
+        </div>}
+        {users.length ? <RankRows
+          key={guard ? guardSort : kind}
+          users={users}
+          kind={kind}
+          hasMore={guard && enabled && hasMoreGuards}
+          loadingMore={guard && loadingMore}
+          loadMoreError={guard && enabled && guardRest.isError}
+          onLoadMore={guard && enabled ? loadMoreGuards : undefined}
+          guardIdentityDisplayMode={guardIdentityDisplayMode}
+          showGuardIdentity={showGuardIdentity}
+          onUserFilter={onUserFilter ? filterUser : undefined}
+              /> : <div role="status" className="flex min-h-0 flex-1 items-center justify-center ui-type-control text-t2">
+          {!enabled ? '连接直播间后读取榜单' : pending ? '正在读取榜单…' : error ? '稍后重试即可重新读取' : guard ? '暂无大航海成员' : '暂无观众榜用户'}
+        </div>}
+      </section>
+    </div>}
+  </div>
+}
+
+export function RoomRankings({ onUserFilter }: { onUserFilter?: (user: Pick<RankUser, 'uid' | 'name'>) => void }) {
+  const { roomId } = useRoomInsights()
+  return <div className="ml-auto flex shrink-0 items-center gap-1" key={roomId ?? 'none'}>
+    <Ranking kind="contribution" onUserFilter={onUserFilter} />
+    <span className="h-5 w-px bg-line" aria-hidden="true" />
+    <Ranking kind="guard" onUserFilter={onUserFilter} />
+  </div>
+}

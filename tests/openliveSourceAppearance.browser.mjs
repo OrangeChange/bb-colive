@@ -1,0 +1,48 @@
+import assert from 'node:assert/strict';
+import {createRequire} from 'node:module';
+import {readFileSync} from 'node:fs';
+import {createServer} from 'vite';
+const {chromium}=createRequire(import.meta.url)(process.env.PLAYWRIGHT_MODULE || 'playwright');
+const server=await createServer({configFile:false,server:{host:'127.0.0.1',port:0,watch:null},optimizeDeps:{noDiscovery:true},logLevel:'error'});await server.listen();
+const browser=await chromium.launch({channel:'chrome',headless:true});
+const failures=[];
+const check=(label,actual,expected)=>{try{assert.deepEqual(actual,expected,label);console.log('通过',label);}catch(error){failures.push(error);console.error(label,{actual,expected});}};
+try{
+ const {createOpenLiveDocumentCss}=await server.ssrLoadModule('/src/compat/openlive/css.ts');
+ const {DEFAULT_OPENLIVE_THEME_SETTINGS}=await server.ssrLoadModule('/src/compat/openlive/theme.ts');
+ const {createStylePreviewEvents}=await server.ssrLoadModule('/src/components/stylePreviewEvents.ts');
+ const {projectOpenLiveCallback}=await server.ssrLoadModule('/src/compat/openlive/projection.ts');
+ const records=createStylePreviewEvents('混合流').map((e,i)=>projectOpenLiveCallback(e,i)).filter(Boolean);
+ const page=await browser.newPage({viewport:{width:400,height:800}});
+ await page.goto(`http://127.0.0.1:${server.httpServer.address().port}/openlive/renderer.html?qa=1`);
+ await page.waitForFunction(()=>window.__bbOpenLiveQA);
+ const doc={mode:'blivechat-open',settings:{...DEFAULT_OPENLIVE_THEME_SETTINGS},styles:{baseCss:'',visualCss:'',customCss:''}};
+ const load=async(file,custom='')=>{
+  doc.styles.baseCss=readFileSync('resources/theme-catalog/'+file+'.css','utf8').replace(/url\(["']?(assets\/[^)"']+)["']?\)/g,(_,path)=>`url("data:application/octet-stream;base64,${readFileSync('resources/theme-catalog/'+path).toString('base64')}")`);doc.styles.customCss=custom;
+  const css=createOpenLiveDocumentCss(doc);
+  await page.evaluate(({css,records})=>{const send=(command,data)=>window.postMessage({type:'bb-openlive',command,data},location.origin);send('css',css);send('host',{managed:true,direction:'bottom',scale:1,tickerEnabled:true});const now=Date.now();send('hydrate',{records,presentation:{layout:records.map(r=>({kind:'source',eventId:r.payload.id})),stickyRecords:records.filter(r=>r.method!=='onAddText').map(record=>({record,startedAt:now,expiresAt:now+60000})),direction:'bottom',contentAlignment:'top',position:'top',animation:{preset:'slide',durationMs:300}}});},{css,records});
+  await page.waitForSelector('yt-live-chat-text-message-renderer',{state:'attached'});
+  await page.waitForFunction(css=>document.querySelector('#bb-openlive-custom-css').textContent.includes(css),custom?'userPulse':'@layer');
+  await page.evaluate(()=>document.fonts.ready);
+ };
+ await load('openlive-candy');
+ const candy=await page.evaluate(()=>{const size=selector=>{const s=getComputedStyle(document.querySelector(selector));return[s.width,s.height,s.marginLeft,s.marginRight];};return{language:document.documentElement.lang,text:size('yt-live-chat-text-message-renderer #author-photo img'),paid:size('yt-live-chat-paid-message-renderer #author-photo img'),animation:getComputedStyle(document.querySelector('yt-live-chat-text-message-renderer')).animationName};});
+ check('来源文档语言',candy.language,'en');
+ check('糖果色普通头像与间距',candy.text,['30px','30px','0px','0px']);
+ check('糖果色付费头像与间距',candy.paid,['30px','30px','5px','5px']);
+ check('来源入场动画不与公共过渡叠加',candy.animation,'none');
+ await load('openlive-candy','@keyframes userPulse { from { opacity: .8 } to { opacity: 1 } } yt-live-chat-text-message-renderer { animation: userPulse 2s infinite; }');
+ check('自定义动画继续生效',await page.locator('yt-live-chat-text-message-renderer').first().evaluate(n=>getComputedStyle(n).animationName),'userPulse');
+ await load('openlive-bubble');
+ await page.evaluate(async()=>{const r=window.__bbOpenLiveQA.getRenderer(),sample=r.paidMessages.find(m=>m.type===3);r.paidMessages=[{...sample,id:'natural-width-regression',price:30,addTime:new Date()},...r.paidMessages];await r.$nextTick();});
+ await page.waitForSelector('[data-compatible-event-id="natural-width-regression"]',{state:'attached'});
+ await page.waitForTimeout(350);
+ await page.evaluate(async()=>{const r=window.__bbOpenLiveQA.getRenderer();r.paidMessages.find(m=>m.id==='natural-width-regression').price=123456789;await r.$nextTick();});
+ const widths=await page.locator('yt-live-chat-ticker-paid-message-item-renderer').evaluateAll(nodes=>nodes.map(n=>{const width=n.getBoundingClientRect().width;const inline=n.style.width;n.style.width='auto';const natural=n.getBoundingClientRect().width;n.style.width=inline;return{width,natural,inline};}));
+ check('置顶项目入场后使用自然宽度',widths.every(n=>Math.abs(n.width-n.natural)<1),true);
+ await page.evaluate(()=>{const r=window.__bbOpenLiveQA.getRenderer();r.paidMessages=r.paidMessages.filter(m=>m.id!=='natural-width-regression');});
+ await page.waitForFunction(()=>document.querySelector('[data-compatible-event-id="natural-width-regression"]')?.classList.contains('collapsing'));
+ check('置顶项目保留宽度收缩退出',await page.locator('[data-compatible-event-id="natural-width-regression"]').evaluate(n=>n.style.width),'0px');
+ await page.waitForSelector('[data-compatible-event-id="natural-width-regression"]',{state:'detached'});
+ if(failures.length)throw new AggregateError(failures,'开放版来源外观回归失败');
+}finally{await browser.close();await server.close();}

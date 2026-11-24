@@ -1,0 +1,6 @@
+<!doctype html><html><head><meta charset="utf-8"><title>BLC SDK fixture</title><style>html,body{margin:0;background:transparent;color:#fff;font:14px sans-serif}.message{margin:6px;padding:8px 10px;border-radius:8px;background:#29405dcc}</style></head><body><main id="messages"></main><script>
+const messages=new Map();const root=document.querySelector('#messages');
+function draw(){root.replaceChildren(...[...messages.values()].map(value=>{const node=document.createElement('div');node.className='message';node.dataset.id=value.id;node.textContent=`${value.authorName||''} ${value.content||value.giftName||value.title||''}`;return node}))}
+addEventListener('message',event=>{const {type,data}=event.data||{};if(type==='blcInit')return;if(type==='blcAddMsg'){messages.set(data.id,data);draw()}if(type==='blcUpdateMsg'){messages.set(data.id,{...messages.get(data.id),...data.newValuesObj});draw()}if(type==='blcDelMsgs'){data.ids.forEach(id=>messages.delete(id));draw()}if(type==='blcInjectCss'){let style=document.getElementById('blivechat-theme-css');if(!style){style=document.createElement('style');style.id='blivechat-theme-css';document.head.append(style)}style.textContent=data.injectCss}});
+parent.postMessage({type:'blcTemplateConnect'},'*');
+</script></body></html>

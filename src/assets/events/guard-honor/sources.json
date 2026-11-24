@@ -1,0 +1,45 @@
+{
+  "source": "https://api.live.bilibili.com/xlive/guard-interface/v1/guard/GuardActiveWithFansClub?ruid=401315430&room_id=22886883&platform=pc",
+  "assets": [
+    {
+      "count": 100,
+      "url": "https://i0.hdslb.com/bfs/activity-plat/static/20260606/c31a4577a69abdaaa682b5fafb573293/BoupJy0ZWG.png",
+      "file": "100.png"
+    },
+    {
+      "count": 666,
+      "url": "https://i0.hdslb.com/bfs/activity-plat/static/20260606/c31a4577a69abdaaa682b5fafb573293/GsOyMS32K1.png",
+      "file": "666.png"
+    },
+    {
+      "count": 888,
+      "url": "https://i0.hdslb.com/bfs/activity-plat/static/20260606/c31a4577a69abdaaa682b5fafb573293/JUAhFEcbwg.png",
+      "file": "888.png"
+    },
+    {
+      "count": 1000,
+      "url": "https://i0.hdslb.com/bfs/activity-plat/static/20260606/c31a4577a69abdaaa682b5fafb573293/YBxIQ5I5dH.png",
+      "file": "1000.png"
+    },
+    {
+      "count": 1314,
+      "url": "https://i0.hdslb.com/bfs/activity-plat/static/20260606/c31a4577a69abdaaa682b5fafb573293/nvHs7bzpXL.png",
+      "file": "1314.png"
+    },
+    {
+      "count": 2233,
+      "url": "https://i0.hdslb.com/bfs/activity-plat/static/20260606/c31a4577a69abdaaa682b5fafb573293/nJ37T8ofTl.png",
+      "file": "2233.png"
+    },
+    {
+      "count": 5200,
+      "url": "https://i0.hdslb.com/bfs/activity-plat/static/20260606/c31a4577a69abdaaa682b5fafb573293/tUzmnYwkGY.png",
+      "file": "5200.png"
+    },
+    {
+      "count": 10000,
+      "url": "https://i0.hdslb.com/bfs/activity-plat/static/20260606/c31a4577a69abdaaa682b5fafb573293/UIjRvJroTp.png",
+      "file": "10000.png"
+    }
+  ]
+}

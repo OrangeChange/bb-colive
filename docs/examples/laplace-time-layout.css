@@ -1,0 +1,9 @@
+/* 简洁清晰风弹幕样式 v2：追加到自定义CSS末尾。 */
+@layer remote-css {
+  :root[data-show-timestamp="false"] .event--message .message {
+    margin-top: calc(var(--1px) * -12);
+  }
+  :root[data-show-timestamp="false"] .event--red-envelope-start.event-show-as--normal .price-alt {
+    margin-top: 0;
+  }
+}

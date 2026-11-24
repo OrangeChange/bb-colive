@@ -1,0 +1,22 @@
+{
+  "name": "bb-blivechat-original-renderer",
+  "version": "1.10.4-bb.1",
+  "private": true,
+  "description": "Isolated build dependencies for pinned upstream renderer, not BB application dependencies",
+  "scripts": {
+    "build": "node ../../scripts/build-blivechat.cjs"
+  },
+  "dependencies": {
+    "vue": "2.7.16",
+    "vue-i18n": "8.28.2",
+    "element-ui": "2.15.14",
+    "lodash": "4.18.1",
+    "webpack": "5.111.1",
+    "css-loader": "6.11.0",
+    "mini-css-extract-plugin": "2.10.2",
+    "@vue/vue-loader-v15": "npm:vue-loader@15.11.1"
+  },
+  "devDependencies": {
+    "jsdom": "26.1.0"
+  }
+}
