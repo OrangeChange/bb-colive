@@ -1436,7 +1436,7 @@ function App() {
                     <StylePanel active={mainView === "style"} previewTarget={stylePreviewTarget} previewHeaderTarget={stylePreviewHeaderTarget} previewGeometry={stylePreviewGeometry} onEditingChange={setStyleEditorActive} onPreviewTitleChange={setStylePreviewTitle} />
                   </div>
                 </div>
-                <StatusBar />
+                <StatusBar onOpenUpdate={() => {settingsRequestId.current += 1;setSettingsRequest({requestId:settingsRequestId.current,sectionId:"about"});}} />
                 <CloudRecoveryProgress />
               </RoomInsightsProvider>
             ) : (

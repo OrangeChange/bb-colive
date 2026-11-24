@@ -1,5 +1,8 @@
+import { useUpdatePreferences } from "../updates/store";
+import { SwitchButton } from "./SettingsSwitch";
+import { SoftwareUpdateSettings } from "../updates/SoftwareUpdateSettings";
 import { useCompatibleOutputScheme } from "../themes/compatPreviewScheme.ts";
-import { X, RotateCcw, GripVertical as LucideGripVertical, ChevronDown as LucideChevronDown, Search as LucideSearch, Palette as PaletteIcon, Sun, Moon, Monitor, Power, ArrowUp, ArrowDown, SlidersHorizontal, AlignStartVertical, Layers, Wallet, MapPin, Info } from "lucide-react";
+import { X, RotateCcw, GripVertical as LucideGripVertical, ChevronDown as LucideChevronDown, Search as LucideSearch, Palette as PaletteIcon, Sun, Moon, Monitor, Power, ArrowUp, ArrowDown, SlidersHorizontal, AlignStartVertical, Layers, Wallet, MapPin } from "lucide-react";
 import {
   useCallback,
   useEffect,
@@ -222,7 +225,7 @@ const SETTINGS_SEARCH_ENTRIES: readonly SettingsSearchEntry[] = [
   { id: "voice-audience-device", label: "观众设备", keywords: "声音 输出 音频", sectionId: "voice" },
   { id: "window-layout", label: "窗口布局", keywords: "恢复 主窗口 弹幕窗 收益窗", sectionId: "other" },
   { id: "diagnostics", label: "诊断", keywords: "问题 日志 导出", sectionId: "other" },
-  { id: "about", label: "关于", keywords: "版本 BB CoLive", sectionId: "about" },
+  { id: "about", label: "关于", keywords: "版本 更新 检查 下载 国内 国外 线路 BB CoLive", sectionId: "about" },
 ];
 
 function Segmented<T extends string | number>({
@@ -256,21 +259,6 @@ function Segmented<T extends string | number>({
   );
 }
 
-function SwitchButton({ label, checked, onChange, disabled = false }: { label: string; checked: boolean; onChange: () => void; disabled?: boolean }) {
-  return (
-    <button
-      type="button"
-      role="switch"
-      aria-checked={checked}
-      aria-label={label}
-      disabled={disabled}
-      onClick={onChange}
-      className={`relative h-5 w-9 shrink-0 rounded-full border transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent-ring ${checked ? "border-accent bg-accent-solid" : "border-line bg-bg"}`}
-    >
-      <span className={`absolute left-0.5 top-0.5 size-3.5 rounded-full bg-white shadow-sm transition-transform ${checked ? "translate-x-[17px]" : "translate-x-0"}`} />
-    </button>
-  );
-}
 
 function SettingSwitch({ label, checked, onChange, searchId, disabled = false, hint, icon }: { label: string; checked: boolean; onChange: () => void; searchId?: string; disabled?: boolean; hint?: string; icon?: ReactNode }) {
   return (
@@ -1209,6 +1197,7 @@ export function SettingsPanel({
     resetWindowsSettings();
   };
   const resetAll = () => {
+    useUpdatePreferences.setState({automatic:true,route:"auto"});
     resetGeneral();
     resetDisplay();
     resetFilters();
@@ -1933,10 +1922,7 @@ export function SettingsPanel({
 
         <section ref={(node) => { if (node) sectionRefs.current.set("about", node); }} className="settings-section" data-settings-section="about">
           <SectionTitle title="关于" />
-          <button type="button" onClick={() => setAboutOpen(true)} className="settings-control-row settings-about-entry" data-settings-search="about" aria-label="关于 BB CoLive">
-            <span className="settings-control-label ui-type-control text-t2"><Info size={16} aria-hidden="true" />BB CoLive</span>
-            <span className="font-mono ui-type-meta text-t3">v{version}</span>
-          </button>
+          <SoftwareUpdateSettings version={version} onOpenAbout={() => setAboutOpen(true)} />
         </section>
       </WorkbenchScroll>
       {aboutOpen && <AboutDialog version={version} onClose={() => setAboutOpen(false)} />}

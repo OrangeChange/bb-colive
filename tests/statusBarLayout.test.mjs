@@ -12,14 +12,14 @@ test('登录后的共享主工作区在页面切换之外固定挂载唯一底�
   const providerStart = appShell.indexOf('<RoomInsightsProvider>');
   const providerEnd = appShell.indexOf('</RoomInsightsProvider>', providerStart);
   const providerContent = appShell.slice(providerStart, providerEnd);
-  const statusBarIndex = providerContent.indexOf('<StatusBar />');
+  const statusBarIndex = providerContent.indexOf('<StatusBar ');
   const mainViews = ['scene', 'voice', 'personal', 'review', 'style'];
 
   assert.ok(providerStart >= 0, '四个主页面与底栏应共享直播概览上下文');
-  assert.equal((providerContent.match(/<StatusBar \/>/g) ?? []).length, 1);
+  assert.equal((providerContent.match(/<StatusBar\b/g) ?? []).length, 1);
   assert.match(
     providerContent,
-    /<div className="relative min-h-0 flex-1">[\s\S]*?<div hidden=\{mainView !== "style"\}[\s\S]*?<StylePanel[^>]*\/>\s*<\/div>\s*<\/div>\s*<StatusBar \/>/,
+    /<div className="relative min-h-0 flex-1">[\s\S]*?<div hidden=\{mainView !== "style"\}[\s\S]*?<StylePanel[^>]*\/>\s*<\/div>\s*<\/div>\s*<StatusBar\b/,
     '底栏应作为页面切换容器的固定同级元素',
   );
   assert.ok(statusBarIndex >= 0);
@@ -61,7 +61,7 @@ test('底栏窄现场列按优先级隐藏版本和事件数', () => {
 test('系统提醒位于共享底栏右侧，连接状态不重复显示为实时记录', () => {
   const source = readFileSync(join(projectRoot, 'src/components/StatusBar.tsx'), 'utf8');
   assert.match(source, /status-bar-actions ml-auto/);
-  assert.match(source, /<SystemReminderBell events=\{events\} placement="top" \/>/);
+  assert.match(source, /<SystemReminderBell events=\{events\} placement="top">/);
   assert.match(source, /overflow-visible/);
   assert.doesNotMatch(source, /实时记录中/);
 });

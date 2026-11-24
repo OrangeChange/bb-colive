@@ -43,10 +43,12 @@ export const PRODUCTION_FEATURE_IDS = [
   "review-archive",
   "cloud-recovery",
   "session",
+  "software-updates",
 ] as const;
 
 /** 新功能或新面板必须先在这里登记自己的诊断覆盖契约。 */
 export const FEATURE_DIAGNOSTIC_CATALOG: FeatureDiagnosticContract[] = [
+  { id: "software-updates", panel: "软件更新", streams: ["app"], stages: FULL_FEATURE_STAGES, snapshotSchema: { version: 1, keys: ["environment.appVersion"] }, failureHooks: COMMON_FAILURE_HOOKS },
   {
     id: "scene",
     panel: "现场",

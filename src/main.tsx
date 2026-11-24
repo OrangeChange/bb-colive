@@ -24,7 +24,10 @@ if (isEventWindowKind(windowType) && windowType !== 'display') document.document
 
 async function mount() {
   let Component: React.ComponentType;
-  if (isEventWindowKind(windowType)) {
+  if (windowType === "app-update") {
+    (await import("./theme.ts")).initTheme();
+    Component = (await import("./updates/UpdateProgressWindow")).UpdateProgressWindow;
+  } else if (isEventWindowKind(windowType)) {
     (await import("./theme.ts")).initTheme();
     await installWindowDiagnosticSender(windowType);
     const { FloatingEventWindow } = await import("./windows/FloatingEventWindow");
@@ -54,6 +57,7 @@ async function mount() {
     });
     await (await import("./obs/obsService.ts")).startObsHost();
     Component = (await import("./App")).default;
+    (await import("./updates/store")).initializeSoftwareUpdates();
   }
   ReactDOM.createRoot(document.getElementById("root") as HTMLElement).render(
     <React.StrictMode>

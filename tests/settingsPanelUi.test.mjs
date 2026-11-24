@@ -39,7 +39,7 @@ test("设置开关不应被普通输入控件的宽度规则拉伸", () => {
   assert.match(source, /settings-control-field/);
   assert.match(css, /\.settings-control-row\s*>\s*\.settings-control-field/);
   assert.doesNotMatch(css, /\.settings-control-row\s*>\s*\.relative\s*,/);
-  assert.match(source, /className=\{`relative h-5 w-9/);
+  assert.match(read("src/components/SettingsSwitch.tsx"), /className=\{`relative h-5 w-9/);
 });
 
 test("顶部设置分类下拉的箭头、提示和定位不应干扰菜单", () => {
@@ -77,7 +77,8 @@ test("其他设置与关于行复用统一标签布局", () => {
   assert.match(otherSection, /settings-control-label[^>]*>收益窗布局/);
   assert.match(otherSection, /settings-control-label[^>]*>全部窗口布局/);
   assert.match(otherSection, /settings-control-label[^>]*>设置页默认/);
-  assert.match(source.slice(aboutStart), /settings-control-label[^>]*>[\s\S]*BB CoLive/);
+  assert.match(source.slice(aboutStart), /SoftwareUpdateSettings/);
+  assert.match(read("src/updates/SoftwareUpdateSettings.tsx"), /aria-label="关于 BB CoLive"/);
 });
 
 test("设置页渲染已经接入真实状态的分类", () => {
@@ -93,7 +94,7 @@ test("设置面板提供主题、事件显示和副窗口真实控件", () => {
   assert.match(source, /双区/);
   assert.match(source, /多区/);
   assert.match(source, /GiftThresholdInput/);
-  assert.match(source, /role="switch"/);
+  assert.match(read("src/components/SettingsSwitch.tsx"), /role="switch"/);
   assert.match(source, /弹幕窗/);
   assert.match(source, /礼物窗/);
   assert.match(source, /恢复本分类默认/);
@@ -492,8 +493,8 @@ test("设置页移除普通解释性备注且不承载样式入口", () => {
 });
 
 test("设置开关滑块以轨道左边缘为定位基准", () => {
-  assert.match(source, /absolute left-0\.5 top-0\.5/);
-  assert.match(source, /translate-x-\[17px\]/);
+  assert.match(read("src/components/SettingsSwitch.tsx"), /absolute left-0\.5 top-0\.5/);
+  assert.match(read("src/components/SettingsSwitch.tsx"), /translate-x-\[17px\]/);
 });
 
 test("设置内框沿用主区域底色并给正文保留十六像素横向留白", () => {

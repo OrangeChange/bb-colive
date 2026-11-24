@@ -10,7 +10,7 @@ import animation from '../assets/colive/about-animation.svg?raw';
 
 const sources = { live, rest, idle, connecting, error };
 
-export function CoLiveLogo({ state = 'live', animated = false, className = '' }: { state?: CoLiveState; animated?: boolean; className?: string }) {
+export function CoLiveLogo({ state = 'live', animated = false, className = '', transition = false }: { state?: CoLiveState; animated?: boolean; className?: string; transition?: boolean }) {
   const instance = 'colive' + useId().replace(/[^a-zA-Z0-9_-]/g, '');
   const { palette, customColor } = useTheme();
   const [dark, setDark] = useState(() => document.documentElement.classList.contains('dark'));
@@ -24,8 +24,25 @@ export function CoLiveLogo({ state = 'live', animated = false, className = '' }:
     return () => { observer.disconnect(); media.removeEventListener('change', update); };
   }, []);
   const colors = resolveCoLiveColors(palette === 'custom' ? customColor : palette === 'pine' ? '#4c9a8d' : '#fb7299', dark ? 'dark' : 'light');
+  const displayedState = transition ? 'idle' : state;
   const markup = useMemo(() => {
-    let source = animated && !reduced ? animation : sources[state];
+    let source = animated && !reduced ? animation : sources[displayedState];
+    if (transition) {
+      const parser = new DOMParser();
+      const base = parser.parseFromString(idle, 'image/svg+xml');
+      const face = base.querySelector('[id$="expression-layer"]')!;
+      face.setAttribute('data-face', 'idle');
+      for (const [name, svg] of Object.entries(sources)) {
+        if (name === 'idle') continue;
+        const next = parser.parseFromString(svg, 'image/svg+xml');
+        const expression = next.querySelector('[id$="expression-layer"]')!;
+        expression.setAttribute('data-face', name);
+        face.parentElement!.appendChild(base.importNode(expression, true));
+        const style = next.querySelector('style');
+        if (style) base.documentElement.appendChild(base.importNode(style, true));
+      }
+      source = new XMLSerializer().serializeToString(base.documentElement);
+    }
     const ids = [...source.matchAll(/\bid="([^"]+)"/g)].map(match => match[1]);
     for (const id of ids.sort((a, b) => b.length - a.length)) {
       source = source.split(`id="${id}"`).join(`id="${instance}-${id}"`)
@@ -33,9 +50,9 @@ export function CoLiveLogo({ state = 'live', animated = false, className = '' }:
     }
     source = source.replace(/<style>([\s\S]*?)<\/style>/g, (_match, css: string) => `<style>${css.replace(/(^|})\s*([^{}]+)\{/g, '$1#' + instance + ' $2{')}</style>`);
     return source.replace(/ role="img"/, ' aria-hidden="true"');
-  }, [animated, reduced, state, instance]);
+  }, [animated, reduced, displayedState, instance, transition]);
   const svgContent = useMemo(() => ({ __html: markup }), [markup]);
-  return <span id={instance} aria-hidden="true" className={`colive-logo ${className}`} style={{
+  return <span id={instance} data-state={state} data-transition={transition || undefined} aria-hidden="true" className={`colive-logo ${className}`} style={{
     '--colive-frame-color': colors.frame, '--colive-character-color': colors.character, '--colive-face-color': colors.face,
   } as CSSProperties} dangerouslySetInnerHTML={svgContent} />;
 }

@@ -1,3 +1,4 @@
+import { UpdateNotification } from "../updates/UpdateNotification";
 /**
  * 底栏：直播间概览 · 当前房间事件数 · 版本 · 系统提醒；始终保持单行。
  */
@@ -7,7 +8,7 @@ import { useConnection } from "../stores/connection";
 import { RoomOverviewBar } from "./RoomOverviewBar";
 import { SystemReminderBell } from "./SystemReminderBell";
 
-export function StatusBar() {
+export function StatusBar({onOpenUpdate}:{onOpenUpdate?:()=>void}) {
   const listCount = useConnection((s) => s.listCount);
   const events = useConnection((s) => s.events);
   const [version, setVersion] = useState("0.1.2");
@@ -26,7 +27,7 @@ export function StatusBar() {
           事件 <span className="font-mono">{listCount.toLocaleString('zh-CN')}</span>
         </span>
         <span className="status-bar-version shrink-0 whitespace-nowrap font-mono">v{version}</span>
-        <SystemReminderBell events={events} placement="top" />
+        <SystemReminderBell events={events} placement="top">{onOpenUpdate&&<UpdateNotification onOpen={onOpenUpdate}/>}</SystemReminderBell>
       </div>
     </footer>
   );

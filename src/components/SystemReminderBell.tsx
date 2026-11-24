@@ -1,5 +1,5 @@
 import { Bell as LucideBell } from "lucide-react";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState, type ReactNode } from "react";
 import { MsgType, type DanmakuEvent } from "../protocol/types";
 import { formatSystemReminderText, getSystemReminderEvents } from "./systemReminder";
 
@@ -11,7 +11,7 @@ function IconBell() {
   );
 }
 
-export function SystemReminderBell({ events, placement = "bottom" }: { events: DanmakuEvent[]; placement?: "top" | "bottom" }) {
+export function SystemReminderBell({ events, placement = "bottom", children }: { events: DanmakuEvent[]; placement?: "top" | "bottom"; children?: ReactNode }) {
   const [open, setOpen] = useState(false);
   const [readCount, setReadCount] = useState(0);
   const rootRef = useRef<HTMLDivElement>(null);
@@ -62,6 +62,7 @@ export function SystemReminderBell({ events, placement = "bottom" }: { events: D
           </span>
         )}
       </button>
+      {children && <div hidden={open}>{children}</div>}
       {open && (
         <div
           role="dialog"
