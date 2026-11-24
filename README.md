@@ -45,6 +45,10 @@
 
 ## 界面预览
 
+![BB CoLive 主界面与弹幕窗、收益窗](docs/images/live-and-auxiliary-windows.png)
+
+左侧为直播现场，右侧分别为弹幕窗和收益窗，可独立摆放并设置外观。
+
 ![BB CoLive 完整主窗口：浅映卡片与内置付费事件预览](docs/images/style-editor-light.png)
 
 浅映卡片的完整编辑窗口，右侧为软件内置的付费事件样例；标题栏、侧栏、底栏与样式预览均保留。
