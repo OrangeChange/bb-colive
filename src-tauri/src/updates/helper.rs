@@ -150,7 +150,7 @@ pub fn run_if_requested() -> bool {
         error: None,
         release_url: plan.release_url.clone(),
     };
-    let mut context = tauri::generate_context!();
+    let mut context = crate::application_context();
     for window in &mut context.config_mut().app.windows {
         window.create = false;
     }

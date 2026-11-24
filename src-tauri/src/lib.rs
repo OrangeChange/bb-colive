@@ -2482,6 +2482,10 @@ fn set_tray_window_state(
     tray.set_menu(Some(menu)).map_err(|error| error.to_string())
 }
 
+pub(crate) fn application_context() -> tauri::Context<tauri::Wry> {
+    tauri::generate_context!()
+}
+
 #[cfg_attr(mobile, tauri::mobile_entry_point)]
 pub fn run() {
     if updates::helper::run_if_requested() { return; }
@@ -2498,7 +2502,7 @@ pub fn run() {
             return;
         }
     };
-    let mut context = tauri::generate_context!();
+    let mut context = application_context();
     for window in &mut context.config_mut().app.windows {
         window.create = false;
     }
