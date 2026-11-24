@@ -6,7 +6,7 @@
 
 **懂你的直播伙伴。**
 
-B站直播弹幕、互动与收益记录桌面工具。
+面向 B站直播的弹幕展示、语音播报、样式定制与记录回看工具。
 
 ![版本 1.0.0](https://img.shields.io/badge/版本-1.0.0-D43870?style=flat)
 ![Windows 10 / 11 x64](https://img.shields.io/badge/Windows-10%20%2F%2011%20x64-4C9A8D?style=flat)
@@ -137,9 +137,7 @@ npm run tauri -- build --bundles nsis   # 生成 Windows 安装包
 - [当前架构](docs/architecture.md) · [目录职责](docs/development/repository-structure.md)。
 - [产品与界面规范](docs/specifications/README.md) · [原生事件样式契约](docs/development/native-event-style-contract.md)。
 
-<h2 align="center">作者与相关项目</h2>
-
-<div align="center">
+## 作者与相关项目
 
 <p>
 <picture><source media="(prefers-color-scheme: dark)" srcset="docs/images/badges/compatible-label-dark.png" /><img src="docs/images/badges/compatible-label-light.png" alt="兼容样式" width="54" height="20" /></picture>
@@ -159,8 +157,6 @@ npm run tauri -- build --bundles nsis   # 生成 Windows 安装包
 <a href="https://afdian.com/a/orangeee"><picture><source media="(prefers-color-scheme: dark)" srcset="docs/images/badges/afdian-dark.png" /><img src="docs/images/badges/afdian-light.png" alt="爱发电主页" width="77" height="24" /></picture></a>
 </p>
 
-</div>
-
 ## 许可
 
 项目自有代码采用 [BB CoLive 软件与源码使用许可协议](LICENSE)，属于**源码可用许可**，不属于 OSI 定义的开源许可。
@@ -169,4 +165,4 @@ npm run tauri -- build --bundles nsis   # 生成 Windows 安装包
 
 依赖、字体、兼容主题及素材遵循各自授权，详见[第三方许可](THIRD_PARTY_NOTICES.md)。安装版和便携版附带完整离线许可声明，位于程序旁的 `licenses/`。
 
-<p align="center">© 2026 橙橙子君 Orange</p>
+© 2026 橙橙子君 Orange
