@@ -1553,14 +1553,6 @@ html[data-window="gift"] body {
   transform: translateX(-100%);
 }
 
-.theme-surface.live .event.event-row-with-menu:is(.lottery-result, .redpocket-result):has(.winner-list) {
-  min-height: calc(var(--native-line-height) + var(--type-event-size, 16px) * 1.5 + var(--event-padding, var(--event-config-padding, calc(var(--event-font-size, calc(var(--review-main, 14px) * 16 / 14)) * 8 / 16))));
-}
-
-.theme-surface.live .event:is(.lottery-result, .redpocket-result):has(.winner-list) .event-row-actions {
-  align-items: flex-end;
-}
-
 .event-row-with-menu .event-quick-actions {
   position: relative;
   width: 0;
