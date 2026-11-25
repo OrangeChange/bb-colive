@@ -317,6 +317,8 @@ export interface DanmakuEvent {
   honor?: HonorInfo
   /** 房管任命、撤销或名单更新；由对应协议命令确定。 */
   adminAction?: "appoint" | "revoke" | "list"
+  /** 平台明确提供的直播间封禁期限，Unix 毫秒。 */
+  roomLock?: { endsAt?: number; source?: "expire" | "room-info" }
   roomSilent?: RoomSilentInfo
   roomBlock?: RoomBlockInfo
   stats?: StatsInfo
@@ -422,6 +424,7 @@ export const MsgTypeName: Record<MsgType, string> = {
   [MsgType.LiveEnd]: '下播',
   [MsgType.Warning]: '超管警告',
   [MsgType.CutOff]: '直播切断',
+  [MsgType.RoomLock]: '直播封禁',
   [MsgType.CoverAudit]: '直播封面状态',
   [MsgType.Unknown]: '未识别',
 }

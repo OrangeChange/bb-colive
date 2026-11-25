@@ -76,7 +76,7 @@ export function isCompatibleThemeEventVisible(mode: CompatibleThemeMode, visibil
     case MsgType.RoomBlock: return mode !== "laplace" || allows("system", "userMute");
     case MsgType.RoomSilent: return mode !== "laplace" || allows("system", "roomMute");
     case MsgType.RoomChange: return mode !== "laplace" || allows("system", "roomChange");
-    case MsgType.Warning: case MsgType.CutOff: return mode !== "laplace" || allows("system", "warning");
+    case MsgType.Warning: case MsgType.CutOff: case MsgType.RoomLock: return mode !== "laplace" || allows("system", "warning");
     default: return true;
   }
 }

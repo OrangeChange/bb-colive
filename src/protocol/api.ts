@@ -217,6 +217,8 @@ export interface RoomInitData {
   /** 当前直播开播时间，Unix 秒；未开播或接口未提供时可能缺失。 */
   live_time?: number
   locked?: boolean
+  is_locked?: boolean
+  lock_till?: number
   encrypted?: boolean
 }
 

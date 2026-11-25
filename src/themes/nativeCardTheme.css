@@ -690,7 +690,7 @@
     flex: 1;
     min-width: 0;
   }
-  .event-list .event .system-message-detail {
+  .event-list .event :is(.system-message-detail, .system-message-expiry) {
     margin-top: calc(var(--event-font-size) * 0.125);
     font-size: calc(var(--event-font-size) * 0.875);
     line-height: calc(var(--event-font-size) * 1.5);
@@ -736,36 +736,36 @@
   .event-list .event:is(.system-admin-revoked, .system-admin-list-updated, .system-room-change) .system-message-title {
     color: var(--message-color, var(--text-body));
   }
-  .event-list .event:is(.live-warning, .live-cutoff) .system-message {
+  .event-list .event:is(.live-warning, .live-cutoff, .live-locked) .system-message {
     color: var(--text-body);
   }
-  .event-list .event:is(.live-warning, .live-cutoff) .system-message-title {
+  .event-list .event:is(.live-warning, .live-cutoff, .live-locked) .system-message-title {
     color: var(--message-color, #7e4f05);
   }
-  .dark .event-list .event:is(.live-warning, .live-cutoff) .system-message-title {
+  .dark .event-list .event:is(.live-warning, .live-cutoff, .live-locked) .system-message-title {
     color: var(--message-color, #e6bb78);
   }
-  .event-list .event:is(.live-warning, .live-cutoff) .system-message-detail {
+  .event-list .event:is(.live-warning, .live-cutoff, .live-locked) :is(.system-message-detail, .system-message-expiry) {
     color: var(--message-color, var(--text-secondary));
   }
   .event.live-warning {
     --card-tone: #7e4f05;
   }
-  .event.live-cutoff {
+  .event:is(.live-cutoff, .live-locked) {
     --card-tone: #a02c2c;
   }
   .dark .event.live-warning {
     --card-tone: #e6bb78;
   }
-  .dark .event.live-cutoff {
+  .dark .event:is(.live-cutoff, .live-locked) {
     --card-tone: #ee8f8f;
   }
-  .event-list .event:is(.live-warning, .live-cutoff) {
+  .event-list .event:is(.live-warning, .live-cutoff, .live-locked) {
     --card-fill: color-mix(in srgb, var(--card-tone) 6%, var(--card-surface));
     box-shadow: inset 0 0 0 calc(var(--event-font-size) / 16)
       color-mix(in srgb, var(--card-tone) 18%, var(--card-edge));
   }
-  .event-list .event:is(.live-warning, .live-cutoff) .system-message {
+  .event-list .event:is(.live-warning, .live-cutoff, .live-locked) .system-message {
     font-size: inherit;
     font-weight: 700;
   }

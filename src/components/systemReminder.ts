@@ -1,3 +1,4 @@
+import { formatRoomLockExpiry } from '../protocol/roomLock.ts';
 import { MsgType, MsgTypeName, type DanmakuEvent } from "../protocol/types.ts";
 
 /** 由独立提醒模块收束的系统事件；不再混入互动信息流。 */
@@ -10,11 +11,13 @@ export const SYSTEM_REMINDER_TYPES = new Set<MsgType>([
   MsgType.LiveEnd,
   MsgType.Warning,
   MsgType.CutOff,
+  MsgType.RoomLock,
 ]);
 
 export const URGENT_SYSTEM_TYPES = new Set<MsgType>([
   MsgType.Warning,
   MsgType.CutOff,
+  MsgType.RoomLock,
 ]);
 
 export function isSystemReminderEvent(event: DanmakuEvent): boolean {
@@ -30,7 +33,7 @@ function stripSystemPrefix(text: string): string {
 }
 
 /** 原生事件行与系统提醒共用内容；缺少的范围、原因和期限不补写。 */
-export function getSystemMessage(event: DanmakuEvent): { title: string; detail?: string; user?: boolean } {
+export function getSystemMessage(event: DanmakuEvent): { title: string; detail?: string; expiry?: string; user?: boolean } {
   const text = stripSystemPrefix(event.text ?? "");
   switch (event.msgType) {
     case MsgType.RoomBlock:
@@ -55,6 +58,9 @@ export function getSystemMessage(event: DanmakuEvent): { title: string; detail?:
       return { title: text === "被设为房管" ? "已被设为房管" : text === "房管被撤销" ? "的房管身份已被撤销" : text.replace(/^房管名单更新（(\d+) 人）$/, "房管名单已更新，共 $1 人"), user: Boolean(event.user) };
     case MsgType.LiveStart: return { title: "直播开始" };
     case MsgType.LiveEnd: return { title: "直播结束" };
+    case MsgType.RoomLock:
+      return { title: "直播间被封禁", detail: text && text !== "直播间被封禁" ? text : undefined,
+        expiry: event.roomLock?.endsAt ? `解禁时间：${formatRoomLockExpiry(event.roomLock.endsAt)}` : "解禁时间未提供" };
     case MsgType.Warning:
     case MsgType.CutOff: {
       const action = event.msgType === MsgType.Warning ? "被警告" : "被切断";
@@ -73,7 +79,7 @@ export function getSystemMessage(event: DanmakuEvent): { title: string; detail?:
 export function formatSystemReminderText(event: DanmakuEvent): string {
   const message = getSystemMessage(event);
   const name = message.user && event.user ? event.user.uname?.trim() || `UID ${event.user.uid}` : "";
-  return [name ? `${name} ${message.title}` : message.title, message.detail].filter(Boolean).join("\n");
+  return [name ? `${name} ${message.title}` : message.title, message.detail, message.expiry].filter(Boolean).join("\n");
 }
 
 export function isUrgentSystemEvent(event: DanmakuEvent): boolean {
@@ -81,8 +87,13 @@ export function isUrgentSystemEvent(event: DanmakuEvent): boolean {
 }
 
 export function getLatestUrgentSystemEvent(events: readonly DanmakuEvent[]): DanmakuEvent | null {
+  const latestStart = events.reduce((time, event) => event.msgType === MsgType.LiveStart ? Math.max(time, event.ts) : time, -Infinity);
+  let latest: DanmakuEvent | null = null;
   for (let index = events.length - 1; index >= 0; index -= 1) {
-    if (isUrgentSystemEvent(events[index])) return events[index];
+    const event = events[index];
+    if (event.ts <= latestStart) continue;
+    if (event.msgType === MsgType.RoomLock) return event;
+    if (!latest && isUrgentSystemEvent(event)) latest = event;
   }
-  return null;
+  return latest;
 }

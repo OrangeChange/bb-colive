@@ -72,6 +72,8 @@ export function publicEventClass(event: DanmakuEvent): string {
       return "type-live-status live-end";
     case MsgType.Warning:
       return "type-live-status live-warning";
+    case MsgType.RoomLock:
+      return "type-live-status live-locked";
     case MsgType.CutOff:
       return "type-live-status live-cutoff";
     case MsgType.Unknown:

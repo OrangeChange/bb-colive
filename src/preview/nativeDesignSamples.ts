@@ -198,6 +198,7 @@ export function createNativeDesignSamples(input: readonly DanmakuEvent[], priceM
   for (const action of ['on', 'off'] as const) add(`room-silent-${action}`, '系统', silent, ['roomSilent.action'], event => { event.roomSilent = { ...event.roomSilent!, action }; });
   for (const action of ['appoint', 'revoke', 'list'] as const) add(`admin-${action}`, '系统', first(MsgType.AdminChange, event => event.adminAction === action));
   add('room-change', '系统', first(MsgType.RoomChange));
+  add('room-lock', '系统', pool.find(event => event.msgType === MsgType.RoomLock) ?? { id: 'native-supplement:room-lock', msgType: MsgType.RoomLock, roomId: 870004, ts: 1700000000000, text: '直播间被封禁', roomLock: { endsAt: 1795719600000, source: 'expire' } });
   for (const [key, type] of [['warning-captured', MsgType.Warning], ['cutoff', MsgType.CutOff]] as const) {
     const source = staticMaterials.samples.find(sample => sample.event.msgType === type)!;
     add(key, '系统', source.event as unknown as DanmakuEvent);

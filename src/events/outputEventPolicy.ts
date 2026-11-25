@@ -55,7 +55,7 @@ export function createNativeEventVisibilityPredicate(visibility?: Partial<Native
       case MsgType.RoomSilent: category = 'system'; child = 'roomMute'; break;
       case MsgType.AdminChange: category = 'system'; child = 'admin'; break;
       case MsgType.RoomChange: category = 'system'; child = 'roomChange'; break;
-      case MsgType.Warning: case MsgType.CutOff: category = 'system'; child = 'warning'; break;
+      case MsgType.Warning: case MsgType.CutOff: case MsgType.RoomLock: category = 'system'; child = 'warning'; break;
       case MsgType.Recall: return false;
     }
     return (!category || categories[category] !== false) && (!child || children[child] !== false);

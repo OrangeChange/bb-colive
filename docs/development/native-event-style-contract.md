@@ -39,7 +39,7 @@
 - 醒目留言：event 直接包含 info、content 和可选 time。原生默认仅在交界两侧添加 padding：info 底部0.25B、content 顶部0.25B；info 顶部、content 底部及左右均不额外填充。两部分之间不叠加 margin，事件外层内边距沿用原值。卡片、轻量气泡及置顶沿用各自原有填充。info 内 avatar-wrap、user、price、event-icon 同级；content 内 message、bili-translation、status.deleted 按条件生成。info 使用 flex 并允许换行，价格与图标保持独立部件。
 - 成就：event 直接组合头像、真实成就图片与 content；原生默认上下内边距0.5B、左右0.75B，显式 event-padding 优先；图标尺寸和双边框位置保持独立。正文保留 honor-message、honor-heading、honor-summary 和高亮片段。不生成空 user。
 - 活动：event 直接组合现有头像、标题或用户、图标、content、activity-status 与时间。开奖不生成头像和首位中奖用户摘要；winner-list 与 content 同属 event，名单与倒计时保持对应位置，展开项保留真实列表语义。`winner-list.is-expanded` 跟随原生 details 展开状态；`event-row-slot-content.event-spacing-enabled` 表示槽位包含事件间距。
-- 系统：content 同时带 system-message，包含可选 event-icon.system-message-icon 和 system-message-copy；文字组内为 system-message-title 与可选 message.system-message-detail。标题含 message，涉及用户时另有头像、user；开播／下播时间在标题内。
+- 系统：content 同时带 system-message，包含可选 event-icon.system-message-icon 和 system-message-copy；文字组内为 system-message-title 与可选 message.system-message-detail。标题含 message，涉及用户时另有头像、user；开播／下播时间在标题内。封禁期限使用 time.system-message-expiry，与标题和详情同属 system-message-copy，不受事件时间开关控制。
 - 回看：event 内头像、event-body、右侧 time 并列；event-body 直接组合原有用户、正文与名单，正文主体使用块级盒。
 - 置顶：event.event-sticky 内依次为可选头像、content、可选末尾图标；动画宿主保留在事件外。
 
@@ -69,7 +69,7 @@
 | AdminChange | `type-system` | `system-admin-change` |
 | RoomChange | `type-system` | `system-room-change` |
 | CoverAudit | 不生成可见行 | 保留原始协议和归档 |
-| LiveStart / LiveEnd / Warning / CutOff | `type-live-status` | `live-start` / `live-end` / `live-warning` / `live-cutoff` |
+| LiveStart / LiveEnd / Warning / CutOff / RoomLock | `type-live-status` | `live-start` / `live-end` / `live-warning` / `live-cutoff` / `live-locked` |
 | Unknown | `type-unknown` | — |
 
 WatchedChange、OnlineRank、LikeUpdate、FansUpdate 更新统计；ScDeleted 更新原醒目留言，不新增显示行。根类型来自标准事件投影，协议枚举、内部身份等级与数据库结构保持原口径。
@@ -297,6 +297,7 @@ EventRowSlot 承载背景外间隔并参与测量；末行由宿主决定是否�
 | honorMilestone | 成就里程碑 | .event .honor-milestone | text | display, typography, surface, spacing, border |
 | systemTitle | 系统标题 | .event .system-message-title | text | display, typography, surface, spacing, border |
 | systemDetail | 系统详情 | .event .system-message-detail | text | display, typography, surface, spacing, border |
+| systemExpiry | 解禁时间 | .event .system-message-expiry | text | display, typography, surface, spacing, border |
 | card | 事件卡片 | .event:not(.event-sticky) | container | display, surface, spacing, border, typography, layout |
 | header | 信息组 | .event > .info, .event > .user, .event > .activity-title, .event > .result-title | container | display, surface, spacing, border, typography, layout |
 | activityStatus | 活动状态 | .event .activity-status | text | display, typography, surface, spacing, border |
@@ -691,3 +692,9 @@ EventRowSlot 承载背景外间隔并参与测量；末行由宿主决定是否�
 浅映卡片与轻语气泡的主题 CSS 位于 default 层，直接使用 --event-font-size 计算长度，不另设主题字号别名。公共文字色、表面材质及复用状态保留变量，单个事件的独有配色写在对应规则中。可视化默认值与价格梯度通过主题已有的 --card-surface、--bubble-surface 识别配色，时间布局同样识别轻语的表面变量。
 
 轻语的礼物与大航海首行使用自然行流，头像浮动在左侧，用户名保留头像和两处间隔的宽度；盲盒来源及陪伴说明另起一行并对齐头像后的文字列。窄幅购买信息使用 flex / wrap，第二行通栏，头像与用户名仍从同一行开始。关闭头像后不保留文字列缩进。主题内自然行流的 content 需要 CSS 调序时可改为 inline-flex / wrap；默认底座及 DOM 部件关系不变。两套主题的置顶事件使用 flex / nowrap，避免普通付费事件与活动事件的排版覆盖单行胶囊。
+
+### 直播间封禁
+
+`ROOM_LOCK` 对应 `RoomLock=28`，`Unknown=27` 及已有事件编号不变；与 `CUT_OFF` 分别记录。`roomLock.endsAt` 为明确解禁时间的 Unix 毫秒，`source` 为 `expire` 或 `room-info`。原始日期按北京时间解释；缺少有效期限时仅查询一次房间信息，只有 `is_locked=true` 且 `lock_till` 有效才补齐，不将零值或非法日期解释为永久封禁。
+
+原生消息复用 SystemMessage 和 LockKeyhole 图标，沿用切断的危险色和主题质感。有原因时展示原文，有期限时展示北京时间完整日期；未提供则说明解禁时间未提供。现场顶部封禁状态优先于切断，显示完整期限和精简剩余时长；年、天、小时、分钟、秒省略零值，精简格式最多两个非零单位，年按365天换算。到期后等待平台状态确认，不自行宣布解禁。重新开播结束此前的紧急提示；小铃铛和历史记录保留，不显示动态倒计时。封禁共用警告、切断的显示及播报分组。兼容输出没有封禁组件时使用通用系统消息。

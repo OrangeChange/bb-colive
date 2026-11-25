@@ -1,3 +1,4 @@
+import { completeRoomLock } from './roomLock.ts'
 import { uiText } from "../i18n/index.ts";
 /**
  * 弹幕连接生命周期：room_init -> getDanmuInfo(wbi) -> finger(buvid) -> KeepLiveWS
@@ -602,7 +603,12 @@ export class DanmuConnection {
           this.liveStatus = 0
         }
         if (this.anchorInfo) this.anchorInfo.liveStatus = this.liveStatus
-        if (event.msgType === MsgType.GuardBuy && event.user && !event.user.avatar) {
+        if (event.msgType === MsgType.RoomLock && !event.roomLock?.endsAt) {
+          const ctx = this.ctx;
+          void completeRoomLock(event, () => getRealRoomId(roomId, cookie)).then(completed => {
+            if (!this.closedByUser && this.live === live && this.ctx === ctx) this.cb.onEvent(completed)
+          })
+        } else if (event.msgType === MsgType.GuardBuy && event.user && !event.user.avatar) {
           const ctx = this.ctx;
           void completeGuardAvatar(event, ctx, async id => {
             try {

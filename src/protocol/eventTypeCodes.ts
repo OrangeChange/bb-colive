@@ -30,4 +30,5 @@ export enum MsgType {
   CutOff,         // 切断（CUT_OFF）
   CoverAudit,     // 直播封面状态变化（COVER_AUDIT_STATUS_CHANGED）
   Unknown = UNKNOWN_MSG_TYPE_CODE, // 未识别 cmd（保留 raw，便于发现新事件）
+  RoomLock = 28,  // 直播间封禁（ROOM_LOCK）；追加编号，保留历史事件编号
 }

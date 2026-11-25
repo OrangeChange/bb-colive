@@ -403,7 +403,7 @@
       .blind-profit,
       .activity-title,
       .result-title,
-      .system-message-detail,
+      .system-message-detail, .system-message-expiry,
       .winner-list-toggle
     ),
   .event .gift > .gift-name,
@@ -1062,7 +1062,7 @@
   .event .system-message-title:has(> .lifecycle-time) > .message {
     margin-inline-end: var(--event-gap, var(--native-space));
   }
-  .event .system-message-detail {
+  .event :is(.system-message-detail, .system-message-expiry) {
     display: block;
     color: var(--native-muted);
     margin-top: var(--native-space);
@@ -1105,7 +1105,7 @@
     --native-system-tone: #a76519;
     --native-system-ink: #623b10;
   }
-  .event.live-cutoff {
+  .event:is(.live-cutoff, .live-locked) {
     --native-system-tone: #bf3e4b;
     --native-system-ink: #742431;
   }
@@ -1113,16 +1113,16 @@
     --native-system-tone: #bf8c48;
     --native-system-ink: #fff5e4;
   }
-  .dark .event.live-cutoff {
+  .dark .event:is(.live-cutoff, .live-locked) {
     --native-system-tone: #cb7181;
     --native-system-ink: #ffeef1;
   }
-  .event:is(.live-warning, .live-cutoff)
+  .event:is(.live-warning, .live-cutoff, .live-locked)
     :is(.system-message-icon, .system-message-title) {
     color: var(--native-system-ink);
     font-weight: 700;
   }
-  .event:is(.live-warning, .live-cutoff) .system-message-detail {
+  .event:is(.live-warning, .live-cutoff, .live-locked) :is(.system-message-detail, .system-message-expiry) {
     color: var(--native-system-ink);
   }
   /* 大航海荣誉：数字跟随正文，官方勋章使用独立列。 */
@@ -1657,7 +1657,7 @@
       .winner-list-toggle,
       .winner-list-count,
       .system-message-title,
-      .system-message-detail
+      .system-message-detail, .system-message-expiry
     ) {
     font-weight: var(--weight-normal);
   }
@@ -1719,7 +1719,7 @@
   .event :is(.activity-title, .result-title, .result-description),
   .event:is(.lottery-result, .redpocket-result)
     :is(.result-title, .result-description),
-  .event:is(.live-start, .live-end, .live-warning, .live-cutoff)
+  .event:is(.live-start, .live-end, .live-warning, .live-cutoff, .live-locked)
     .system-message-title {
     font-weight: var(--weight-bold);
   }
@@ -1759,8 +1759,8 @@
       .lifecycle-time
     ),
   .event:is(.type-gift, .type-guard, .type-lottery, .type-redpocket) .action,
-  .event:is(.live-start, .live-end, .live-warning, .live-cutoff)
-    :is(.message, .system-message-title, .system-message-detail),
+  .event:is(.live-start, .live-end, .live-warning, .live-cutoff, .live-locked)
+    :is(.message, .system-message-title, .system-message-detail, .system-message-expiry),
   .event:is(.type-lottery, .type-redpocket)
     :is(.result-description, .winner-count),
   .event.type-guard-honor
@@ -1826,7 +1826,7 @@
   .event.live-warning {
     background: var(--event-background, #fac73b80);
   }
-  .event.live-cutoff {
+  .event:is(.live-cutoff, .live-locked) {
     background: var(--event-background, #ef475880);
   }
   .dark .event.type-chat {
@@ -1872,7 +1872,7 @@
   .dark .event.live-warning {
     background: var(--event-background, rgba(140, 110, 35, 0.5));
   }
-  .dark .event.live-cutoff {
+  .dark .event:is(.live-cutoff, .live-locked) {
     background: var(--event-background, rgba(164, 57, 75, 0.5));
   }
   .event .activity-status,
@@ -1972,7 +1972,7 @@
   .event.live-warning .system-message-icon {
     color: rgb(98, 59, 16);
   }
-  .event.live-cutoff .system-message-icon {
+  .event:is(.live-cutoff, .live-locked) .system-message-icon {
     color: rgb(116, 36, 49);
   }
   .dark .event.type-system .system-message-icon {
@@ -1998,7 +1998,7 @@
   .dark .event.live-warning .system-message-icon {
     color: rgb(230, 190, 100);
   }
-  .dark .event.live-cutoff .system-message-icon {
+  .dark .event:is(.live-cutoff, .live-locked) .system-message-icon {
     color: rgb(239, 148, 163);
   }
   .event:is(.live-start, .live-end)

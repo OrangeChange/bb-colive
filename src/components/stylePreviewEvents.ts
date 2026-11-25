@@ -16,6 +16,7 @@ const systemFallbacks: DanmakuEvent[] = [
   { msgType: MsgType.AdminChange, adminAction: "appoint", text: "已被设为房管", user: previewUser("冰泠秋没在画") },
   { msgType: MsgType.AdminChange, adminAction: "revoke", text: "的房管身份已被撤销", user: previewUser("妖刀静刃") },
   { msgType: MsgType.AdminChange, adminAction: "list", text: "房管名单已更新，共 6 人" },
+  { msgType: MsgType.RoomLock, text: "直播间被封禁", roomLock: { endsAt: 1795719600000, source: "expire" } },
   { msgType: MsgType.CutOff, text: "违反直播言论规范，请立即调整" },
 ].map((event, index) => ({ ...event, id: `native-preview:system-${event.msgType}-${index}`, roomId: 22381346, ts: 1700000000000 } as DanmakuEvent));
 const samples = new Map(materials.samples.map(sample => [sample.key, sample]));
@@ -56,9 +57,10 @@ function eventsInOrder(kind: PreviewEventKind, order: readonly string[]): Danmak
 }
 
 export function createStylePreviewEvents(kind: PreviewEventKind): DanmakuEvent[] {
-  return staticMaterials.samples
+  const events = staticMaterials.samples
     .filter(sample => kind === "混合流" || sample.kind === kind)
     .map(sample => structuredClone(sample.event) as unknown as DanmakuEvent);
+  return kind === "系统" || kind === "混合流" ? [...events, ...systemFallbacks.filter(event => event.msgType === MsgType.RoomLock).map(event => structuredClone(event))] : events;
 }
 /** 动态预览沿用独立的捕获集合，不受静态选样影响。 */
 export function createStylePreviewSimulationEvents(kind: PreviewEventKind): DanmakuEvent[] {

@@ -13,6 +13,7 @@ const SYSTEM_EVENT_TYPES = new Set<MsgType>([
   MsgType.LiveEnd,
   MsgType.Warning,
   MsgType.CutOff,
+  MsgType.RoomLock,
   MsgType.CoverAudit,
   MsgType.GuardHonor,
 ]);

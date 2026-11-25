@@ -81,7 +81,7 @@ export function SystemReminderBell({ events, placement = "bottom", children }: {
               {latest.map((event) => (
                 <li key={event.reactKey ?? event.id} className="flex gap-2 border-b border-line/60 px-3 py-2 last:border-b-0">
                   <time className="shrink-0 pt-0.5 font-mono ui-type-micro text-t3">{hhmmss(event.ts)}</time>
-                  <span className={event.msgType === MsgType.Warning || event.msgType === MsgType.CutOff ? "ui-type-control font-medium text-danger" : event.msgType === MsgType.RoomBlock ? "min-w-0 break-words ui-type-control font-medium text-ev-red" : "min-w-0 break-words ui-type-control text-t2"}>
+                  <span className={event.msgType === MsgType.Warning || (event.msgType === MsgType.CutOff || event.msgType === MsgType.RoomLock) ? "min-w-0 break-words whitespace-pre-line ui-type-control font-medium text-danger" : event.msgType === MsgType.RoomBlock ? "min-w-0 break-words ui-type-control font-medium text-ev-red" : "min-w-0 break-words ui-type-control text-t2"}>
                     {formatSystemReminderText(event)}
                   </span>
                 </li>

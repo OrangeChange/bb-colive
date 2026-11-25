@@ -19,7 +19,7 @@ export function nativeFallbackPreviewCandidates(options: {
     if (!scope || scope === 'all' || categories.includes(scope)) return true;
     if (['normal','blind','free','redpocket','lottery'].includes(scope)) return createNativeEventVisibilityPredicate({categories:{danmaku:false,interaction:false,superchat:false,guard:false,system:false},children:Object.fromEntries(['normal','blind','free','redpocket','lottery'].map(child=>[child,child===scope]))})(event);
     if (['enter','follow','share','specialFollow','mutualFollow','like'].includes(scope)) return event.msgType===MsgType.Interact && (event.interactKind==='entry'?'enter':event.interactKind)===scope;
-    const types: Record<string,MsgType[]> = {liveStatus:[MsgType.LiveStart,MsgType.LiveEnd],userMute:[MsgType.RoomBlock],roomMute:[MsgType.RoomSilent],roomChange:[MsgType.RoomChange],warning:[MsgType.Warning,MsgType.CutOff]};
+    const types: Record<string,MsgType[]> = {liveStatus:[MsgType.LiveStart,MsgType.LiveEnd],userMute:[MsgType.RoomBlock],roomMute:[MsgType.RoomSilent],roomChange:[MsgType.RoomChange],warning:[MsgType.Warning,MsgType.CutOff,MsgType.RoomLock]};
     return (types[scope]??[]).includes(event.msgType);
   };
   return nativePreviewCandidates('混合流').map(event=>scopeStylePreviewSample(event,options.policy.targetRoomId))

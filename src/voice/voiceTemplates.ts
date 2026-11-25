@@ -1,3 +1,4 @@
+import { formatSystemReminderText } from '../components/systemReminder.ts';
 import { MsgType, type DanmakuEvent } from "../protocol/types.ts";
 import {
   DEFAULT_VOICE_TEMPLATES,
@@ -73,6 +74,7 @@ function getFieldValue(field: VoiceTemplateField, event: DanmakuEvent, nicknames
       if (!speakUsername) return undefined;
       return resolveUserDisplayName(event.user, nicknames) || event.lottery?.winners?.[0]?.uname;
     case "content":
+      if (event.msgType === MsgType.RoomLock) return formatSystemReminderText(event);
       return event.text || event.sc?.message || event.lottery?.danmu || event.pocket?.danmu;
     case "giftName":
       return normalizeGiftName(

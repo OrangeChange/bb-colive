@@ -413,7 +413,7 @@
       .blind-profit,
       .activity-title,
       .result-title,
-      .system-message-detail,
+      .system-message-detail, .system-message-expiry,
       .winner-list-toggle
     )),
       :where(.theme-surface) :is(.event .gift > .gift-name),
@@ -428,7 +428,7 @@
       .blind-profit,
       .activity-title,
       .result-title,
-      .system-message-detail,
+      .system-message-detail, .system-message-expiry,
       .winner-list-toggle
     )),
       :where(.theme-surface):is(.event .gift > .gift-name),
@@ -1150,7 +1150,7 @@
   :where(.theme-surface) :is(.event .system-message-title:has(> .lifecycle-time) > .message), :where(.theme-surface):is(.event .system-message-title:has(> .lifecycle-time) > .message) {
     margin-inline-end: var(--event-gap, var(--native-space));
   }
-  :where(.theme-surface) :is(.event .system-message-detail), :where(.theme-surface):is(.event .system-message-detail) {
+  :where(.theme-surface) :is(.event :is(.system-message-detail, .system-message-expiry)), :where(.theme-surface):is(.event :is(.system-message-detail, .system-message-expiry)) {
     display: block;
     color: var(--native-muted);
     margin-top: var(--native-space);
@@ -1194,7 +1194,7 @@
     --native-system-tone: #a76519;
     --native-system-ink: #623b10;
   }
-  :where(.theme-surface) :is(.event.live-cutoff), :where(.theme-surface):is(.event.live-cutoff) {
+  :where(.theme-surface) :is(.event:is(.live-cutoff, .live-locked)), :where(.theme-surface):is(.event:is(.live-cutoff, .live-locked)) {
     --native-system-tone: #bf3e4b;
     --native-system-ink: #742431;
   }
@@ -1202,17 +1202,17 @@
     --native-system-tone: #bf8c48;
     --native-system-ink: #fff5e4;
   }
-  :where(.theme-surface) :is(.dark .event.live-cutoff), :where(.theme-surface):is(.dark .event.live-cutoff) {
+  :where(.theme-surface) :is(.dark .event:is(.live-cutoff, .live-locked)), :where(.theme-surface):is(.dark .event:is(.live-cutoff, .live-locked)) {
     --native-system-tone: #cb7181;
     --native-system-ink: #ffeef1;
   }
-  :where(.theme-surface) :is(.event:is(.live-warning, .live-cutoff)
-    :is(.system-message-icon, .system-message-title)), :where(.theme-surface):is(.event:is(.live-warning, .live-cutoff)
+  :where(.theme-surface) :is(.event:is(.live-warning, .live-cutoff, .live-locked)
+    :is(.system-message-icon, .system-message-title)), :where(.theme-surface):is(.event:is(.live-warning, .live-cutoff, .live-locked)
     :is(.system-message-icon, .system-message-title)) {
     color: var(--native-system-ink);
     font-weight: 700;
   }
-  :where(.theme-surface) :is(.event:is(.live-warning, .live-cutoff) .system-message-detail), :where(.theme-surface):is(.event:is(.live-warning, .live-cutoff) .system-message-detail) {
+  :where(.theme-surface) :is(.event:is(.live-warning, .live-cutoff, .live-locked) :is(.system-message-detail, .system-message-expiry)), :where(.theme-surface):is(.event:is(.live-warning, .live-cutoff, .live-locked) :is(.system-message-detail, .system-message-expiry)) {
     color: var(--native-system-ink);
   }
   /* 大航海荣誉：数字跟随正文，官方勋章使用独立列。 */
@@ -1777,7 +1777,7 @@
       .winner-list-toggle,
       .winner-list-count,
       .system-message-title,
-      .system-message-detail
+      .system-message-detail, .system-message-expiry
     )),
       :where(.theme-surface):is(.event
     :is(
@@ -1799,7 +1799,7 @@
       .winner-list-toggle,
       .winner-list-count,
       .system-message-title,
-      .system-message-detail
+      .system-message-detail, .system-message-expiry
     )) {
     font-weight: var(--weight-normal);
   }
@@ -1875,7 +1875,7 @@
       .honor-highlight,
       .honor-milestone
     )), :where(.theme-surface) :is(.event :is(.activity-title, .result-title, .result-description)), :where(.theme-surface) :is(.event:is(.lottery-result, .redpocket-result)
-    :is(.result-title, .result-description)), :where(.theme-surface) :is(.event:is(.live-start, .live-end, .live-warning, .live-cutoff)
+    :is(.result-title, .result-description)), :where(.theme-surface) :is(.event:is(.live-start, .live-end, .live-warning, .live-cutoff, .live-locked)
     .system-message-title), :where(.theme-surface):is(.event :is(.quantity, .guard-duration)), :where(.theme-surface):is(.event
     :is(
       .username,
@@ -1888,7 +1888,7 @@
       .honor-highlight,
       .honor-milestone
     )), :where(.theme-surface):is(.event :is(.activity-title, .result-title, .result-description)), :where(.theme-surface):is(.event:is(.lottery-result, .redpocket-result)
-    :is(.result-title, .result-description)), :where(.theme-surface):is(.event:is(.live-start, .live-end, .live-warning, .live-cutoff)
+    :is(.result-title, .result-description)), :where(.theme-surface):is(.event:is(.live-start, .live-end, .live-warning, .live-cutoff, .live-locked)
     .system-message-title) {
     font-weight: var(--weight-bold);
   }
@@ -1934,8 +1934,8 @@
       .lifecycle-time
     )),
       :where(.theme-surface) :is(.event:is(.type-gift, .type-guard, .type-lottery, .type-redpocket) .action),
-      :where(.theme-surface) :is(.event:is(.live-start, .live-end, .live-warning, .live-cutoff)
-    :is(.message, .system-message-title, .system-message-detail)),
+      :where(.theme-surface) :is(.event:is(.live-start, .live-end, .live-warning, .live-cutoff, .live-locked)
+    :is(.message, .system-message-title, .system-message-detail, .system-message-expiry)),
       :where(.theme-surface) :is(.event:is(.type-lottery, .type-redpocket)
     :is(.result-description, .winner-count)),
       :where(.theme-surface) :is(.event.type-guard-honor
@@ -1963,8 +1963,8 @@
       .lifecycle-time
     )),
       :where(.theme-surface):is(.event:is(.type-gift, .type-guard, .type-lottery, .type-redpocket) .action),
-      :where(.theme-surface):is(.event:is(.live-start, .live-end, .live-warning, .live-cutoff)
-    :is(.message, .system-message-title, .system-message-detail)),
+      :where(.theme-surface):is(.event:is(.live-start, .live-end, .live-warning, .live-cutoff, .live-locked)
+    :is(.message, .system-message-title, .system-message-detail, .system-message-expiry)),
       :where(.theme-surface):is(.event:is(.type-lottery, .type-redpocket)
     :is(.result-description, .winner-count)),
       :where(.theme-surface):is(.event.type-guard-honor
@@ -2039,7 +2039,7 @@
   :where(.theme-surface) :is(.event.live-warning), :where(.theme-surface):is(.event.live-warning) {
     background: var(--event-background, #fac73b80);
   }
-  :where(.theme-surface) :is(.event.live-cutoff), :where(.theme-surface):is(.event.live-cutoff) {
+  :where(.theme-surface) :is(.event:is(.live-cutoff, .live-locked)), :where(.theme-surface):is(.event:is(.live-cutoff, .live-locked)) {
     background: var(--event-background, #ef475880);
   }
   :where(.theme-surface) :is(.dark .event.type-chat), :where(.theme-surface):is(.dark .event.type-chat) {
@@ -2085,7 +2085,7 @@
   :where(.theme-surface) :is(.dark .event.live-warning), :where(.theme-surface):is(.dark .event.live-warning) {
     background: var(--event-background, rgba(140, 110, 35, 0.5));
   }
-  :where(.theme-surface) :is(.dark .event.live-cutoff), :where(.theme-surface):is(.dark .event.live-cutoff) {
+  :where(.theme-surface) :is(.dark .event:is(.live-cutoff, .live-locked)), :where(.theme-surface):is(.dark .event:is(.live-cutoff, .live-locked)) {
     background: var(--event-background, rgba(164, 57, 75, 0.5));
   }
   :where(.theme-surface) :is(.event .activity-status),
@@ -2212,7 +2212,7 @@
   :where(.theme-surface) :is(.event.live-warning .system-message-icon), :where(.theme-surface):is(.event.live-warning .system-message-icon) {
     color: rgb(98, 59, 16);
   }
-  :where(.theme-surface) :is(.event.live-cutoff .system-message-icon), :where(.theme-surface):is(.event.live-cutoff .system-message-icon) {
+  :where(.theme-surface) :is(.event:is(.live-cutoff, .live-locked) .system-message-icon), :where(.theme-surface):is(.event:is(.live-cutoff, .live-locked) .system-message-icon) {
     color: rgb(116, 36, 49);
   }
   :where(.theme-surface) :is(.dark .event.type-system .system-message-icon), :where(.theme-surface):is(.dark .event.type-system .system-message-icon) {
@@ -2242,7 +2242,7 @@
   :where(.theme-surface) :is(.dark .event.live-warning .system-message-icon), :where(.theme-surface):is(.dark .event.live-warning .system-message-icon) {
     color: rgb(230, 190, 100);
   }
-  :where(.theme-surface) :is(.dark .event.live-cutoff .system-message-icon), :where(.theme-surface):is(.dark .event.live-cutoff .system-message-icon) {
+  :where(.theme-surface) :is(.dark .event:is(.live-cutoff, .live-locked) .system-message-icon), :where(.theme-surface):is(.dark .event:is(.live-cutoff, .live-locked) .system-message-icon) {
     color: rgb(239, 148, 163);
   }
   :where(.theme-surface) :is(.event:is(.live-start, .live-end)

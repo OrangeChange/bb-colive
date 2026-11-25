@@ -8,7 +8,7 @@ export const NATIVE_EVENT_SCOPE_SELECTORS: Record<string, string> = {
   redpocketStart: ".redpocket-start", redpocketResult: ".redpocket-result", lotteryStart: ".lottery-start", lotteryResult: ".lottery-result",
   liveStatus: ".live-start, .live-end", liveStart: ".live-start", liveEnd: ".live-end", userMute: ".system-user-block", roomMute: ".system-room-silent",
   admin: ".system-admin-change", roomChange: ".system-room-change", coverAudit: ".system-cover-audit",
-  warning: ".live-warning, .live-cutoff",
+  warning: ".live-warning, .live-cutoff, .live-locked",
 };
 
 export const NATIVE_ROLE_SELECTORS = {
@@ -23,7 +23,7 @@ export const NATIVE_ROLE_SELECTORS = {
 /** Stable public selectors consumed by the visual editor and user CSS. */
 export const NATIVE_PART_SELECTORS = {
   quantityPrefix:".event .quantity-prefix", quantityNumber:".event .quantity-number", quantityUnit:".event .quantity-unit",
-  winnerAvatar:".event .winner-avatar", honorHeading:".event .honor-heading > :not(.honor-highlight)", honorSummary:".event .honor-summary > :not(.honor-highlight)", honorMilestone:".event .honor-milestone", systemTitle:".event .system-message-title", systemDetail:".event .system-message-detail",
+  winnerAvatar:".event .winner-avatar", honorHeading:".event .honor-heading > :not(.honor-highlight)", honorSummary:".event .honor-summary > :not(.honor-highlight)", honorMilestone:".event .honor-milestone", systemTitle:".event .system-message-title", systemDetail:".event .system-message-detail", systemExpiry:".event .system-message-expiry",
   card: ".event:not(.event-sticky)", header: ".event > .info, .event > .user, .event > .activity-title, .event > .result-title", activityStatus: ".event .activity-status",
   whole: ".event-area", canvas: ".event-area", list: ".event-list",
   row: ".event-list .event", event: ".event", sticky: ".sticky-area", stickyEvent: ".sticky-area .event.event-sticky", user: ".event .user", identity: ".event .user",

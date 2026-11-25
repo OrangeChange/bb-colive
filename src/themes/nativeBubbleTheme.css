@@ -529,7 +529,7 @@
   .event-list .event .system-message-title {
     font-weight: inherit;
   }
-  .event-list .event .system-message-detail {
+  .event-list .event :is(.system-message-detail, .system-message-expiry) {
     font-size: inherit;
     font-weight: inherit;
     margin-top: calc(var(--event-font-size) * 0.25);
@@ -545,7 +545,7 @@
     color: var(--message-color, #754000);
     border-color: #d99a30;
   }
-  .event-list .event.live-cutoff {
+  .event-list .event:is(.live-cutoff, .live-locked) {
     --bubble-fill: #ffe1df;
     color: var(--message-color, #a52626);
     border-color: #d76767;
@@ -555,16 +555,16 @@
     color: var(--message-color, #ffda8a);
     border-color: #b68c43;
   }
-  .dark .event-list .event.live-cutoff {
+  .dark .event-list .event:is(.live-cutoff, .live-locked) {
     --bubble-fill: #542c34;
     color: var(--message-color, #ffc0bc);
     border-color: #bb6570;
   }
-  .event-list .event:is(.live-warning, .live-cutoff) {
+  .event-list .event:is(.live-warning, .live-cutoff, .live-locked) {
     padding-top: calc(var(--event-font-size) * 0.5);
     padding-bottom: calc(var(--event-font-size) * 0.5);
   }
-  .event-list .event:is(.live-warning, .live-cutoff) .system-message {
+  .event-list .event:is(.live-warning, .live-cutoff, .live-locked) .system-message {
     color: inherit;
     font-weight: 700;
   }

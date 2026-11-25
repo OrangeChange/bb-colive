@@ -23,6 +23,7 @@ import { getGiftIcon } from './gifts'
 import { onlineRankStats } from './roomInsights'
 import { captureLaplaceSourceMetadata } from '../compat/laplace/sourceMetadata'
 import { NON_EVENT_PROTOCOL_COMMANDS } from './nonEventCommands'
+import { parseRoomLockExpiry } from './roomLock.ts'
 import { activityTimingFromPayload } from '../events/activityTiming'
 import { GUARD_HONOR_TIERS, guardHonorThreshold } from './guardHonor.ts'
 
@@ -1076,6 +1077,14 @@ function adaptCanonical(msg: any, ctx: AdapterContext, runtime?: AdapterRuntime)
 
     case 'WARNING':
       return base({ msgType: MsgType.Warning, text: msg.msg ?? '直播间被超管警告' })
+
+    case 'ROOM_LOCK': {
+      const roomId = Number(msg.roomid ?? msg.room_id)
+      if (roomId !== ctx.roomId) return null
+      const endsAt = parseRoomLockExpiry(msg.expire)
+      return base({ msgType: MsgType.RoomLock, text: typeof msg.msg === 'string' && msg.msg.trim() ? msg.msg : '直播间被封禁',
+        roomLock: { endsAt, ...(endsAt ? { source: 'expire' as const } : {}) } })
+    }
 
     case 'CUT_OFF':
       return base({ msgType: MsgType.CutOff, text: msg.msg ?? '直播间被超管切断' })

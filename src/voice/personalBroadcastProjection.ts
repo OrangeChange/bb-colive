@@ -35,6 +35,7 @@ export function getPersonalBroadcastRuleKey(
       }
     case MsgType.Warning:
       return "system-warning";
+    case MsgType.RoomLock:
     case MsgType.CutOff:
       return "system-cut-off";
     default:

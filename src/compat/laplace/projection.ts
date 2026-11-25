@@ -1,3 +1,4 @@
+import { formatSystemReminderText } from '../../components/systemReminder.ts';
 import { captureLaplaceNativeGuardEntry } from './nativeGuardEntry.ts';
 import { captureLaplaceNativePaidSticky } from './nativePaidStickyFact.ts';
 import { readLaplaceActivity } from './activity.ts';
@@ -122,6 +123,7 @@ export function projectLaplaceEvent(event: DanmakuEvent, scope: LaplaceInputScop
     else if (event.msgType === MsgType.LiveStart) projected = { ...common, type: 'live-start', message: event.text ?? '' };
     else if (event.msgType === MsgType.LiveEnd) projected = { ...common, type: 'live-end', message: event.text ?? '' };
     else if (event.msgType === MsgType.Warning) projected = { ...common, type: 'live-warning', roomId: scope.roomId, message: event.text ?? '' };
+    else if (event.msgType === MsgType.RoomLock) projected = { ...common, type: 'system', message: formatSystemReminderText(event) };
     else if (event.msgType === MsgType.CutOff) projected = { ...common, type: 'live-cutoff', roomId: scope.roomId, message: event.text ?? '' };
     else return null;
   }

@@ -1,8 +1,9 @@
+import { RoomLockExpiry } from './RoomLockExpiry';
 import { ReviewInlineItems } from './ReviewInlineItems.tsx';
 import { Gift as LucideGift, Heart as LucideHeart } from 'lucide-react';
 import { useGeneralSettings } from '../generalSettings.ts';
 import { reviewDisplayPreferences, REVIEW_PRICE_GRADIENT } from '../reviewStyleSettings.ts';
-import { Clock3 as LucideClock3, Play as LucidePlay, Square as LucideSquare, UserRoundX as LucideUserRoundX, Volume2 as LucideVolume2, VolumeX as LucideVolumeX, ShieldCheck as LucideShieldCheck, TriangleAlert as LucideTriangleAlert, Ban as LucideBan, SquarePen as LucideSquarePen } from "lucide-react";
+import { Clock3 as LucideClock3, Play as LucidePlay, Square as LucideSquare, UserRoundX as LucideUserRoundX, Volume2 as LucideVolume2, VolumeX as LucideVolumeX, ShieldCheck as LucideShieldCheck, TriangleAlert as LucideTriangleAlert, Ban as LucideBan, LockKeyhole as LucideLockKeyhole, SquarePen as LucideSquarePen } from "lucide-react";
 import { NativeRoleIcon } from "./NativeRoleIcon.tsx";
 import { GuardHonorWatermark } from "./GuardHonorWatermark.tsx";
 import { maskDisplayName } from "../events/displayNameProjection.ts";
@@ -703,12 +704,13 @@ function SystemMessage({ ev, onUserFilter }: { ev: DanmakuEvent; onUserFilter?: 
     [MsgType.AdminChange]: LucideShieldCheck,
     [MsgType.Warning]: LucideTriangleAlert,
     [MsgType.CutOff]: LucideBan,
+    [MsgType.RoomLock]: LucideLockKeyhole,
     [MsgType.RoomChange]: LucideSquarePen,
     [MsgType.CoverAudit]: LucideSquarePen,
   };
   const Icon = icons[ev.msgType as keyof typeof icons];
   const tone = ev.msgType === MsgType.Warning || ev.msgType === MsgType.RoomBlock ? "var(--status-warning)"
-    : ev.msgType === MsgType.CutOff ? "var(--status-danger)"
+    : (ev.msgType === MsgType.CutOff || ev.msgType === MsgType.RoomLock) ? "var(--status-danger)"
     : ev.msgType === MsgType.LiveStart ? "var(--status-success)" : undefined;
   const user = ev.user && !ev.user.uname && !maskUsername ? { ...ev.user, uname: `UID ${ev.user.uid}` } : ev.user;
   return <Content className="system-message" style={tone ? { "--local-system-message-tone": tone } as CSSProperties : undefined}>
@@ -716,6 +718,7 @@ function SystemMessage({ ev, onUserFilter }: { ev: DanmakuEvent; onUserFilter?: 
     <span className="system-message-copy">
       <span className="system-message-title">{message.user && <><Avatar user={user} plain /><Uname user={user} onUserFilter={onUserFilter} plain inline />{" "}</>}<span className="message">{message.title}</span>{!archiveLayout && (ev.msgType === MsgType.LiveStart || ev.msgType === MsgType.LiveEnd) && <NativeEventTime ts={ev.ts} className="time lifecycle-time" />}</span>
       {message.detail && <span className="message system-message-detail">{message.detail}</span>}
+      {message.expiry && <RoomLockExpiry className="system-message-expiry" endsAt={ev.roomLock?.endsAt} />}
     </span>
   </Content>;
 }
@@ -1068,6 +1071,7 @@ function Body({ ev, onUserFilter, giftEffectResource, onPlayGiftEffect, allowMan
 
     case MsgType.Warning:
     case MsgType.CutOff:
+    case MsgType.RoomLock:
     case MsgType.LiveStart:
     case MsgType.LiveEnd:
     case MsgType.RoomBlock:
