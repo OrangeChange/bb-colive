@@ -59,4 +59,3 @@ try {
  }
  console.log('搜索、菜单、确认框、数值组合、头像和四类图片编辑器符合界面约定');
 } finally {await browser.close();}
-

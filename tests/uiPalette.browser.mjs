@@ -16,6 +16,3 @@ for(const dark of [false,true]){
  await p.waitForTimeout(180); await p.screenshot({path:`.superpowers/palette-menu-${dark?'dark':'light'}.png`});await p.keyboard.press('Escape');
 }
 await b.close();console.log('Light and dark settings: off/on/focus switches and menu text/surfaces match palette roles.');
-
-
-
