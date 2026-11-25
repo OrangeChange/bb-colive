@@ -96,26 +96,9 @@ fn install(app: &tauri::AppHandle, state: &Helper) -> Result<(), String> {
                 }
             }
         }
-        match plan.kind {
-            super::model::PackageKind::Portable => apply_portable(plan, |done, total| {
-                publish(app, state, "installing", done, total, None)
-            })?,
-            super::model::PackageKind::Installer => {
-                let mut command=std::process::Command::new(&plan.package);
-                command.args(["/S","/UPDATE","/NS"]);
-                #[cfg(windows)] {
-                    use std::os::windows::process::CommandExt;
-                    command.raw_arg(format!("/D={}",plan.target.display()));
-                }
-                #[cfg(not(windows))]
-                command.arg(format!("/D={}",plan.target.display()));
-                let status=command.status().map_err(|e|ui_format!("backend.helper.install2", e = e))?;
-                if !status.success() {
-                    return Err(ui_format!("backend.helper.install3",
-                        status.code().unwrap_or(-1)));
-                }
-            }
-        }
+        install_package(plan, |done, total| {
+            publish(app, state, "installing", done, total, None)
+        })?;
         state.installed.store(true, Ordering::Relaxed);
     }
     publish(app, state, "launching", 0, 0, None);
@@ -125,6 +108,29 @@ fn install(app: &tauri::AppHandle, state: &Helper) -> Result<(), String> {
         .map_err(|e| ui_format!("backend.helper.install4", e = e))?;
     Ok(())
 }
+fn install_package(plan: &InstallPlan, progress: impl FnMut(usize, usize)) -> Result<(), String> {
+    plan.verify_package()?;
+    match plan.kind {
+        super::model::PackageKind::Portable => apply_portable(plan, progress)?,
+        super::model::PackageKind::Installer => {
+            let mut command=std::process::Command::new(&plan.package);
+            command.args(["/S","/UPDATE","/NS"]);
+            #[cfg(windows)] {
+                use std::os::windows::process::CommandExt;
+                command.raw_arg(format!("/D={}",plan.target.display()));
+            }
+            #[cfg(not(windows))]
+            command.arg(format!("/D={}",plan.target.display()));
+            let status=command.status().map_err(|e|ui_format!("backend.helper.install2", e = e))?;
+            if !status.success() {
+                return Err(ui_format!("backend.helper.install3",
+                    status.code().unwrap_or(-1)));
+            }
+        }
+    }
+    Ok(())
+}
+
 pub fn run_if_requested() -> bool {
     let mut args = std::env::args_os();
     if !args.any(|v| v == "--apply-update") {
@@ -183,4 +189,45 @@ pub fn run_if_requested() -> bool {
         ])
         .run(context);
     true
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    #[test]
+    fn rejected_packages_do_not_install_or_extract() {
+        for kind in ["installer", "portable"] {
+            let root = std::env::temp_dir().join(format!("bb-colive-install-gate-{}", uuid::Uuid::new_v4()));
+            let target = root.join("program");
+            std::fs::create_dir_all(&target).unwrap();
+            std::fs::write(target.join("bb-colive.exe"), b"original").unwrap();
+            let package = root.join("package");
+            let bytes = include_bytes!("../../../tests/fixtures/software-update/payload.txt");
+            std::fs::write(&package, bytes).unwrap();
+            let mut plan: InstallPlan = serde_json::from_value(serde_json::json!({
+                "parentPid": 0, "target": target, "executable": "bb-colive.exe",
+                "package": package, "kind": kind, "version": "1.1.1", "releaseUrl": "",
+                "signature": include_str!("../../../tests/fixtures/software-update/payload.txt.sig"),
+                "size": bytes.len()
+            })).unwrap();
+            plan.size = Some(bytes.len() as u64 + 1);
+            let error = install_package(&plan, |_, _| panic!("must not install")).unwrap_err();
+            assert!(error.contains("不完整"), "{error}");
+            plan.size = Some(bytes.len() as u64);
+            let mut changed = bytes.to_vec();
+            changed[0] ^= 1;
+            std::fs::write(&package, changed).unwrap();
+            let mut progress = false;
+            let error = install_package(&plan, |_, _| progress = true).unwrap_err();
+            assert!(error.contains("签名"), "{error}");
+            assert!(!progress);
+            assert!(!root.join("unpacked").exists());
+            assert!(!root.join("previous").exists());
+            assert_eq!(std::fs::read(target.join("bb-colive.exe")).unwrap(), b"original");
+            plan.signature = None;
+            plan.size = None;
+            assert!(install_package(&plan, |_, _| {}).is_err());
+        }
+    }
 }

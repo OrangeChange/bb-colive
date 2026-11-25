@@ -1,4 +1,4 @@
-use super::model::PackageKind;
+use super::model::{PackageKind, UpdatePackage};
 use serde::{Deserialize, Serialize};
 use std::{
     fs, io,
@@ -24,9 +24,48 @@ pub struct InstallPlan {
     pub target: PathBuf,
     pub executable: String,
     pub package: PathBuf,
+    #[serde(default)]
+    pub signature: Option<String>,
+    #[serde(default)]
+    pub size: Option<u64>,
     pub kind: PackageKind,
     pub version: String,
     pub release_url: String,
+}
+
+impl InstallPlan {
+    pub fn verify_package(&self) -> Result<(), String> {
+        let (Some(signature), Some(size)) = (&self.signature, self.size) else {
+            return Err(ui_text!("backend.install.verification_missing").into());
+        };
+        super::transport::verify_file(
+            &self.package,
+            size,
+            include_str!("../../update-public.key"),
+            signature,
+        )
+    }
+
+    pub fn restore_verification(&mut self, packages: &[UpdatePackage]) -> Result<(), String> {
+        if self.signature.is_some() || self.size.is_some() {
+            return self.verify_package();
+        }
+        for package in packages {
+            if super::transport::verify_file(
+                &self.package,
+                package.size,
+                include_str!("../../update-public.key"),
+                &package.signature,
+            )
+            .is_ok()
+            {
+                self.signature = Some(package.signature.clone());
+                self.size = Some(package.size);
+                return Ok(());
+            }
+        }
+        Err(ui_text!("backend.transport.download3").into())
+    }
 }
 
 fn protected(path: &Path, target: &Path) -> bool {
@@ -148,6 +187,52 @@ pub fn apply_portable(
 #[cfg(test)]
 mod tests {
     use super::*;
+
+    fn signed_plan() -> InstallPlan {
+        let root = std::env::temp_dir().join(format!("bb-colive-plan-{}", uuid::Uuid::new_v4()));
+        fs::create_dir_all(&root).unwrap();
+        let package = root.join("package");
+        fs::write(&package, include_bytes!("../../../tests/fixtures/software-update/payload.txt")).unwrap();
+        serde_json::from_value(serde_json::json!({
+            "parentPid": 0, "target": root.join("program"), "executable": "bb-colive.exe",
+            "package": package, "kind": "portable", "version": "1.1.1", "releaseUrl": ""
+        })).unwrap()
+    }
+
+    fn signed_package() -> super::super::model::UpdatePackage {
+        super::super::model::UpdatePackage {
+            source: super::super::model::UpdateSource::Foreign,
+            url: String::new(),
+            signature: include_str!("../../../tests/fixtures/software-update/payload.txt.sig").into(),
+            size: include_bytes!("../../../tests/fixtures/software-update/payload.txt").len() as u64,
+        }
+    }
+
+    #[test]
+    fn legacy_plan_recovers_verification_from_matching_alternate() {
+        let mut plan = signed_plan();
+        assert!(plan.verify_package().is_err());
+        let valid = signed_package();
+        let mut wrong = valid.clone();
+        wrong.size += 1;
+        plan.restore_verification(&[wrong, valid.clone()]).unwrap();
+        plan.verify_package().unwrap();
+        let saved: InstallPlan = serde_json::from_slice(&serde_json::to_vec(&plan).unwrap()).unwrap();
+        saved.verify_package().unwrap();
+        fs::write(&plan.package, b"changed").unwrap();
+        assert!(plan.restore_verification(&[valid]).is_err());
+    }
+
+    #[test]
+    fn partial_or_invalid_verification_cannot_fall_back_to_offer() {
+        let mut plan = signed_plan();
+        let valid = signed_package();
+        plan.signature = Some(valid.signature.clone());
+        assert!(plan.restore_verification(std::slice::from_ref(&valid)).is_err());
+        plan.size = Some(valid.size + 1);
+        assert!(plan.restore_verification(&[valid]).is_err());
+        assert!(signed_plan().restore_verification(&[]).is_err());
+    }
     #[test]
     fn portable_preserves_user_data_and_theme_adjustments() {
         let target = Path::new("C:/example");
@@ -191,6 +276,8 @@ mod tests {
         }
         zip.finish().unwrap();
         let plan = InstallPlan {
+            signature: None,
+            size: None,
             ui_language: None,
             parent_pid: 0,
             appearance: None,
@@ -241,6 +328,8 @@ mod tests {
         }
         zip.finish().unwrap();
         let plan = InstallPlan {
+            signature: None,
+            size: None,
             ui_language: None,
             parent_pid: 0,
             appearance: None,

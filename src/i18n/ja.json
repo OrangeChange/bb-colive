@@ -4505,5 +4505,6 @@
   "uiControls.alpha": "不透明度",
   "uiControls.colorValue": "彩度 {saturation}%、明度 {brightness}%",
   "nativePriceGradientControls.fixedColor": "固定配色",
-  "nativePriceGradientControls.baseTierHint": "基本帯（次の帯未満。次の帯がない場合は上限なし）"
+  "nativePriceGradientControls.baseTierHint": "基本帯（次の帯未満。次の帯がない場合は上限なし）",
+  "backend.install.verification_missing": "更新パッケージの検証情報がありません。再ダウンロードしてください。"
 }

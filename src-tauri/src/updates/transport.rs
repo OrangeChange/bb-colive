@@ -3,7 +3,7 @@ use base64::{engine::general_purpose::STANDARD, Engine};
 use minisign_verify::{PublicKey, Signature};
 use serde_json::Value;
 use std::{
-    io::Write,
+    io::{Read, Write},
     path::Path,
     sync::atomic::{AtomicBool, Ordering},
     time::{Duration, SystemTime, UNIX_EPOCH},
@@ -185,6 +185,29 @@ pub fn verify_bytes(bytes: &[u8], public: &str, signature: &str) -> Result<(), S
         )
         .map_err(|e| e.to_string())
 }
+pub fn verify_file(path: &Path, size: u64, public: &str, signature: &str) -> Result<(), String> {
+    let key = PublicKey::decode(&decode(public)?).map_err(|e| e.to_string())?;
+    let signature = Signature::decode(&decode(signature)?).map_err(|e| e.to_string())?;
+    let mut verifier = key.verify_stream(&signature).map_err(|e| e.to_string())?;
+    let mut file = std::fs::File::open(path).map_err(|e| e.to_string())?;
+    let mut received = 0u64;
+    let mut buffer = [0u8; 64 * 1024];
+    loop {
+        let count = file.read(&mut buffer).map_err(|e| e.to_string())?;
+        if count == 0 {
+            break;
+        }
+        verifier.update(&buffer[..count]);
+        received += count as u64;
+    }
+    if received != size {
+        return Err(ui_text!("backend.transport.download2").into());
+    }
+    verifier
+        .finalize()
+        .map_err(|_| ui_text!("backend.transport.download3").into())
+}
+
 pub async fn download(
     package: &UpdatePackage,
     destination: &Path,
@@ -248,6 +271,25 @@ async fn cancelled(cancel: &AtomicBool, signal: &tokio::sync::Notify) {
 #[cfg(test)]
 mod tests {
     use super::*;
+    #[test]
+    fn cached_file_rechecks_signature_and_size() {
+        let root = std::env::temp_dir().join(format!("bb-colive-recheck-{}", uuid::Uuid::new_v4()));
+        std::fs::create_dir_all(&root).unwrap();
+        let path = root.join("package");
+        let bytes = include_bytes!("../../../tests/fixtures/software-update/payload.txt");
+        let public = include_str!("../../update-public.key");
+        let signature = include_str!("../../../tests/fixtures/software-update/payload.txt.sig");
+        std::fs::write(&path, bytes).unwrap();
+        verify_file(&path, bytes.len() as u64, public, signature).unwrap();
+        assert!(verify_file(&path, bytes.len() as u64 + 1, public, signature).is_err());
+        let mut changed = bytes.to_vec();
+        changed[0] ^= 1;
+        std::fs::write(&path, &changed).unwrap();
+        assert!(verify_file(&path, bytes.len() as u64, public, signature).is_err());
+        std::fs::write(&path, &bytes[..bytes.len() - 1]).unwrap();
+        assert!(verify_file(&path, bytes.len() as u64, public, signature).is_err());
+        assert!(verify_file(&root.join("missing"), bytes.len() as u64, public, signature).is_err());
+    }
     #[test]
     fn signed_fixture_accepts_original_and_rejects_modified_content() {
         let public = include_str!("../../update-public.key");

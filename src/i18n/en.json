@@ -4505,5 +4505,6 @@
   "uiControls.alpha": "Opacity",
   "uiControls.colorValue": "Saturation {saturation}%, Brightness {brightness}%",
   "nativePriceGradientControls.fixedColor": "Fixed color",
-  "nativePriceGradientControls.baseTierHint": "Base tier (below next tier; no upper limit if there is no next tier)"
+  "nativePriceGradientControls.baseTierHint": "Base tier (below next tier; no upper limit if there is no next tier)",
+  "backend.install.verification_missing": "Update package verification information is missing. Please download again."
 }

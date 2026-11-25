@@ -86,6 +86,8 @@ async fn download_inner(app: &tauri::AppHandle, state: &UpdateManager) -> Result
                     .unwrap()
                     .to_path_buf();
                 let plan = InstallPlan {
+                    signature: Some(source.signature.clone()),
+                    size: Some(source.size),
                     parent_pid: std::process::id(),
                     appearance: None,
                     ui_language: None,
@@ -154,6 +156,8 @@ pub fn restore_software_update(
     app: tauri::AppHandle,
     state: tauri::State<'_, UpdateManager>,
 ) -> Result<Option<UpdateOffer>, String> {
+    *state.ready.lock().map_err(|e| e.to_string())? = None;
+    *state.offer.lock().map_err(|e| e.to_string())? = None;
     let path = crate::data_paths::root()?.join("update-ready.json");
     if !path.is_file() {
         return Ok(None);
@@ -161,7 +165,7 @@ pub fn restore_software_update(
     let value: serde_json::Value =
         serde_json::from_slice(&std::fs::read(path).map_err(|e| e.to_string())?)
             .map_err(|e| e.to_string())?;
-    let plan: InstallPlan =
+    let mut plan: InstallPlan =
         serde_json::from_value(value["plan"].clone()).map_err(|e| e.to_string())?;
     let offer: UpdateOffer =
         serde_json::from_value(value["offer"].clone()).map_err(|e| e.to_string())?;
@@ -178,6 +182,7 @@ pub fn restore_software_update(
     if plan.target != target {
         return Ok(None);
     }
+    plan.restore_verification(&offer.packages)?;
     *state.offer.lock().map_err(|e| e.to_string())? = Some(offer.clone());
     *state.ready.lock().map_err(|e| e.to_string())? = Some(plan);
     Ok(Some(offer))

@@ -4505,5 +4505,6 @@
   "uiControls.alpha": "不透明度",
   "uiControls.colorValue": "饱和度 {saturation}%，亮度 {brightness}%",
   "nativePriceGradientControls.fixedColor": "固定配色",
-  "nativePriceGradientControls.baseTierHint": "基础档（不足下一档；没有下一档时无上限）"
+  "nativePriceGradientControls.baseTierHint": "基础档（不足下一档；没有下一档时无上限）",
+  "backend.install.verification_missing": "更新包缺少验证信息，请重新下载"
 }
