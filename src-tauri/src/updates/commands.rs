@@ -88,6 +88,7 @@ async fn download_inner(app: &tauri::AppHandle, state: &UpdateManager) -> Result
                 let plan = InstallPlan {
                     parent_pid: std::process::id(),
                     appearance: None,
+                    ui_language: None,
                     executable: std::env::current_exe()
                         .map_err(|e| e.to_string())?
                         .file_name()
@@ -131,6 +132,7 @@ pub fn install_software_update(
         .ok_or(ui_text!("backend.commands.install_software_update"))?;
     plan.parent_pid = std::process::id();
     plan.appearance = appearance;
+    plan.ui_language = Some(crate::ui_messages::language().to_string());
     let directory = plan.package.parent().unwrap();
     let helper = directory.join("bb-colive-update.exe");
     std::fs::copy(std::env::current_exe().map_err(|e| e.to_string())?, &helper)

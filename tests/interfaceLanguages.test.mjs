@@ -1,3 +1,4 @@
+import fs from "node:fs";
 import test from "node:test";
 import assert from "node:assert/strict";
 import * as messages from "../src/i18n/index.ts";
@@ -44,4 +45,12 @@ test("切换语言保留兼容主题的注册选择器及身份标识", async ()
     assert.deepEqual(capability.identityPriority, identityPriority);
     assert.equal(capability.identityLabels.streamer, "配信者");
   } finally { messages.setUiLanguage("zh-CN"); }
+});
+
+test("独立更新窗口可读取界面语言，安装计划传递所选语言", () => {
+  const helper = fs.readFileSync("src-tauri/src/updates/helper.rs", "utf8");
+  const commands = fs.readFileSync("src-tauri/src/updates/commands.rs", "utf8");
+  assert.match(helper, /generate_handler!\[[\s\S]*crate::get_ui_language/);
+  assert.match(helper, /set_language\(plan\.ui_language/);
+  assert.match(commands, /plan\.ui_language = Some\(crate::ui_messages::language\(\)/);
 });

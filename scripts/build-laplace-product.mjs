@@ -15,6 +15,9 @@ const fixedLabels = {
       const tree = ts.createSourceFile(file, source, ts.ScriptTarget.Latest, true);
       const edits = [];
       function visit(node) {
+        if (ts.isCallExpression(node) && node.expression.getText(tree) === 'localized') {
+          edits.push({ start: node.expression.getStart(tree), end: node.expression.end, text: '/* @__PURE__ */ ((create) => create())' });
+        }
         if (ts.isCallExpression(node) && node.expression.getText(tree) === 'uiText' && node.arguments.length === 1 && ts.isStringLiteral(node.arguments[0])) {
           const key = node.arguments[0].text;
           if (key in messages) edits.push({ start: node.getStart(tree), end: node.end, text: JSON.stringify(messages[key]) });

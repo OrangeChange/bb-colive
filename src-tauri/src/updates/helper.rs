@@ -139,6 +139,7 @@ pub fn run_if_requested() -> bool {
     let Ok(plan) = serde_json::from_slice::<InstallPlan>(&bytes) else {
         return true;
     };
+    crate::ui_messages::set_language(plan.ui_language.as_deref().unwrap_or("zh-CN"));
     let status = Progress {
         appearance: plan.appearance.clone(),
         phase: "waiting".into(),
@@ -176,6 +177,7 @@ pub fn run_if_requested() -> bool {
             Ok(())
         })
         .invoke_handler(tauri::generate_handler![
+            crate::get_ui_language,
             update_helper_status,
             run_update_helper
         ])

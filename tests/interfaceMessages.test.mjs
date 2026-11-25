@@ -32,4 +32,5 @@ test("兼容事件展示包不引入操作界面的语言资源", () => {
   const renderer = fs.readFileSync("public/laplace/product/renderer.js", "utf8");
   assert.ok(!renderer.includes("src/i18n/zh-CN.json"));
   assert.ok(!renderer.includes('"common.cancel"'));
+  assert.ok(!renderer.includes("subscribeUiLanguage"));
 });

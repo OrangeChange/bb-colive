@@ -8029,15 +8029,15 @@
         return value;
       }
       var AbortControllerLocal = "undefined" !== typeof AbortController ? AbortController : function() {
-        var listeners2 = [], signal = this.signal = {
+        var listeners = [], signal = this.signal = {
           aborted: false,
           addEventListener: function(type, listener) {
-            listeners2.push(listener);
+            listeners.push(listener);
           }
         };
         this.abort = function() {
           signal.aborted = true;
-          listeners2.forEach(function(listener) {
+          listeners.forEach(function(listener) {
             return listener();
           });
         };
@@ -8089,33 +8089,33 @@
       function pingEngtangledActionScope() {
         if (0 === --currentEntangledPendingCount && null !== currentEntangledListeners) {
           null !== currentEntangledActionThenable && (currentEntangledActionThenable.status = "fulfilled");
-          var listeners2 = currentEntangledListeners;
+          var listeners = currentEntangledListeners;
           currentEntangledListeners = null;
           currentEntangledLane = 0;
           currentEntangledActionThenable = null;
-          for (var i = 0; i < listeners2.length; i++) (0, listeners2[i])();
+          for (var i = 0; i < listeners.length; i++) (0, listeners[i])();
         }
       }
       function chainThenableValue(thenable, result) {
-        var listeners2 = [], thenableWithOverride = {
+        var listeners = [], thenableWithOverride = {
           status: "pending",
           value: null,
           reason: null,
           then: function(resolve) {
-            listeners2.push(resolve);
+            listeners.push(resolve);
           }
         };
         thenable.then(
           function() {
             thenableWithOverride.status = "fulfilled";
             thenableWithOverride.value = result;
-            for (var i = 0; i < listeners2.length; i++) (0, listeners2[i])(result);
+            for (var i = 0; i < listeners.length; i++) (0, listeners[i])(result);
           },
           function(error) {
             thenableWithOverride.status = "rejected";
             thenableWithOverride.reason = error;
-            for (error = 0; error < listeners2.length; error++)
-              (0, listeners2[error])(void 0);
+            for (error = 0; error < listeners.length; error++)
+              (0, listeners[error])(void 0);
           }
         );
         return thenableWithOverride;
@@ -15126,15 +15126,15 @@
         };
       }
       function accumulateTwoPhaseListeners(targetFiber, reactName) {
-        for (var captureName = reactName + "Capture", listeners2 = []; null !== targetFiber; ) {
+        for (var captureName = reactName + "Capture", listeners = []; null !== targetFiber; ) {
           var _instance2 = targetFiber, stateNode = _instance2.stateNode;
           _instance2 = _instance2.tag;
-          5 !== _instance2 && 26 !== _instance2 && 27 !== _instance2 || null === stateNode || (_instance2 = getListener(targetFiber, captureName), null != _instance2 && listeners2.unshift(
+          5 !== _instance2 && 26 !== _instance2 && 27 !== _instance2 || null === stateNode || (_instance2 = getListener(targetFiber, captureName), null != _instance2 && listeners.unshift(
             createDispatchListener(targetFiber, _instance2, stateNode)
-          ), _instance2 = getListener(targetFiber, reactName), null != _instance2 && listeners2.push(
+          ), _instance2 = getListener(targetFiber, reactName), null != _instance2 && listeners.push(
             createDispatchListener(targetFiber, _instance2, stateNode)
           ));
-          if (3 === targetFiber.tag) return listeners2;
+          if (3 === targetFiber.tag) return listeners;
           targetFiber = targetFiber.return;
         }
         return [];
@@ -15147,18 +15147,18 @@
         return inst ? inst : null;
       }
       function accumulateEnterLeaveListenersForEvent(dispatchQueue, event, target, common, inCapturePhase) {
-        for (var registrationName = event._reactName, listeners2 = []; null !== target && target !== common; ) {
+        for (var registrationName = event._reactName, listeners = []; null !== target && target !== common; ) {
           var _instance3 = target, alternate = _instance3.alternate, stateNode = _instance3.stateNode;
           _instance3 = _instance3.tag;
           if (null !== alternate && alternate === common) break;
-          5 !== _instance3 && 26 !== _instance3 && 27 !== _instance3 || null === stateNode || (alternate = stateNode, inCapturePhase ? (stateNode = getListener(target, registrationName), null != stateNode && listeners2.unshift(
+          5 !== _instance3 && 26 !== _instance3 && 27 !== _instance3 || null === stateNode || (alternate = stateNode, inCapturePhase ? (stateNode = getListener(target, registrationName), null != stateNode && listeners.unshift(
             createDispatchListener(target, stateNode, alternate)
-          )) : inCapturePhase || (stateNode = getListener(target, registrationName), null != stateNode && listeners2.push(
+          )) : inCapturePhase || (stateNode = getListener(target, registrationName), null != stateNode && listeners.push(
             createDispatchListener(target, stateNode, alternate)
           )));
           target = target.return;
         }
-        0 !== listeners2.length && dispatchQueue.push({ event, listeners: listeners2 });
+        0 !== listeners.length && dispatchQueue.push({ event, listeners });
       }
       var NORMALIZE_NEWLINES_REGEX = /\r\n?/g;
       var NORMALIZE_NULL_AND_REPLACEMENT_REGEX = /\u0000|\uFFFD/g;
@@ -18278,8 +18278,8 @@
     const options = useOptions();
     const time = new Intl.DateTimeFormat("en-GB", { timeZone: options.useCst ? "Asia/Shanghai" : void 0, hour: "2-digit", minute: "2-digit", second: "2-digit", hour12: false }).format(new Date(numeric(value))).split(":");
     return /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("span", { className: classes("_wrap_2euit_2 timestamp tabular-nums", force && "inline", !force && !options.showTimestamp && "hidden"), children: [
-      time.map((part2, index) => /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("span", { className: classes("time", ["hour", "minute", "second"][index]), children: [
-        /* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", { className: "figure", children: part2 }),
+      time.map((part, index) => /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("span", { className: classes("time", ["hour", "minute", "second"][index]), children: [
+        /* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", { className: "figure", children: part }),
         index < 2 && /* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", { className: "separator", children: ":" })
       ] }, index)),
       " "
@@ -18328,11 +18328,11 @@
       return /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Picture, { src: data.emote.url, alt: data.emote.emoticon_unique, className: classes("emote-wrap", large && "emote-wrap--large"), imageClass: classes("emote", large && "emote--large") });
     }
     const text2 = String(data.message ?? "");
-    const renderText = (value) => value.split(/(\[[^\]]+\])/g).map((part2, index) => data.bmotes?.[part2]?.url ? /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Picture, { src: data.bmotes[part2].url, alt: part2, className: "bmote-wrap inline-flex", imageClass: "bmote" }, index) : part2);
+    const renderText = (value) => value.split(/(\[[^\]]+\])/g).map((part, index) => data.bmotes?.[part]?.url ? /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Picture, { src: data.bmotes[part].url, alt: part, className: "bmote-wrap inline-flex", imageClass: "bmote" }, index) : part);
     if (options.showSpoiler === false) return /* @__PURE__ */ (0, import_jsx_runtime.jsx)(import_jsx_runtime.Fragment, { children: renderText(text2) });
     const fragments = text2.split(/(\|\|[\s\S]*?\|\|)/g);
     if (fragments.length === 1 && text2.startsWith("||")) return /* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", { className: "spoiler", children: renderText(text2.slice(2)) });
-    return /* @__PURE__ */ (0, import_jsx_runtime.jsx)(import_jsx_runtime.Fragment, { children: fragments.map((part2, index) => part2.startsWith("||") && part2.endsWith("||") ? /* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", { className: "spoiler", children: renderText(part2.slice(2, -2)) }, index) : /* @__PURE__ */ (0, import_jsx_runtime.jsx)(import_react2.Fragment, { children: renderText(part2) }, index)) });
+    return /* @__PURE__ */ (0, import_jsx_runtime.jsx)(import_jsx_runtime.Fragment, { children: fragments.map((part, index) => part.startsWith("||") && part.endsWith("||") ? /* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", { className: "spoiler", children: renderText(part.slice(2, -2)) }, index) : /* @__PURE__ */ (0, import_jsx_runtime.jsx)(import_react2.Fragment, { children: renderText(part) }, index)) });
   }
 
   // src/compat/laplace/renderer/independent/message.tsx
@@ -18816,21 +18816,21 @@
   var contains = (box, point) => box.width > 0 && box.height > 0 && point.x >= box.left && point.x <= box.right && point.y >= box.top && point.y <= box.bottom;
   function pickPreviewEditorPart(target, selectors, point, accepts = () => true) {
     const candidates = [];
-    for (const [part2, branches] of Object.entries(selectors ?? {})) for (const selector of branches) {
+    for (const [part, branches] of Object.entries(selectors ?? {})) for (const selector of branches) {
       let node;
       try {
         node = target.closest(selector);
       } catch {
         continue;
       }
-      if (!node || !accepts(part2, node)) continue;
+      if (!node || !accepts(part, node)) continue;
       const box = node.getBoundingClientRect();
       if (point && !contains(box, point)) continue;
       let distance = 0;
       for (let current = target; current && current !== node; current = current.parentElement) distance++;
       const specificity = (selector.match(/#[\w-]+/g) ?? []).length * 100 + (selector.match(/\.[\w-]+|\[[^\]]+\]|:[\w-]+/g) ?? []).length * 10;
-      const priority = part2 === "stickyEvent" ? 3 : part2 === "message" ? 2 : part2 === "event" ? 0 : 1;
-      candidates.push({ part: part2, node, distance, specificity, priority, box });
+      const priority = part === "stickyEvent" ? 3 : part === "message" ? 2 : part === "event" ? 0 : 1;
+      candidates.push({ part, node, distance, specificity, priority, box });
     }
     candidates.sort((a, b) => a.distance - b.distance || b.priority - a.priority || b.specificity - a.specificity);
     const best = candidates[0];
@@ -18975,36 +18975,6 @@
   // src/themes/nativeIdentityCss.ts
   var import_postcss_safe_parser = __toESM(require_safe_parse(), 1);
 
-  // src/i18n/index.ts
-  var listeners = /* @__PURE__ */ new Set();
-  function subscribeUiLanguage(listener) {
-    listeners.add(listener);
-    return () => {
-      listeners.delete(listener);
-    };
-  }
-  function localized(create) {
-    const value = create();
-    const snapshot = (object) => object instanceof Map ? new Map(object) : JSON.parse(JSON.stringify(object));
-    let previous = snapshot(value);
-    const update = (target, before, after) => {
-      if (after instanceof Map) {
-        for (const [key, text2] of after) if (text2 !== before.get(key)) target.set(key, text2);
-        return;
-      }
-      for (const [key, next] of Object.entries(after)) {
-        if (typeof next === "string" && next !== before?.[key]) target[key] = next;
-        else if (next && typeof next === "object" && target[key] && before?.[key]) update(target[key], before[key], next);
-      }
-    };
-    subscribeUiLanguage(() => {
-      const next = create();
-      update(value, previous, next);
-      previous = snapshot(next);
-    });
-    return value;
-  }
-
   // src/protocol/eventTypeCodes.ts
   var UNKNOWN_MSG_TYPE_CODE = 27;
   var MsgType = /* @__PURE__ */ ((MsgType2) => {
@@ -19085,18 +19055,6 @@
   // src/eventStyleSettings.ts
   var DEFAULT_EVENT_STYLE_ROLE_PRIORITY = ["viceroy", "admiral", "captain", "anchor", "admin", "normal"];
   var EVENT_STYLE_TYPES = ["danmu", "interact", "gift", "redPocket", "lottery", "superChat", "guardCaptain", "guardAdmiral", "guardViceroy", "system"];
-  var EVENT_STYLE_TYPE_LABELS = localized(() => ({
-    danmu: "\u5F39\u5E55",
-    interact: "\u4E92\u52A8",
-    gift: "\u793C\u7269",
-    redPocket: "\u7EA2\u5305",
-    lottery: "\u5929\u9009",
-    superChat: "\u9192\u76EE\u7559\u8A00",
-    guardCaptain: "\u8230\u957F",
-    guardAdmiral: "\u63D0\u7763",
-    guardViceroy: "\u603B\u7763",
-    system: "\u7CFB\u7EDF"
-  }));
   var DEFAULT_EVENT_FONT_FAMILY = "MiSans";
   var DEFAULT_AVATAR_SIZE = 24;
   var DEFAULT_TEXT_STROKE_WIDTH = 1;
@@ -19130,31 +19088,6 @@
     };
   }
   var DEFAULT_EVENT_STYLE_SETTINGS = createDefaultEventStyleSettings();
-
-  // src/eventDisplaySettings.ts
-  var EVENT_ANIMATION_PRESET_OPTIONS = localized(() => [
-    { value: "none", label: "\u65E0\u52A8\u753B" },
-    { value: "fade", label: "\u6DE1\u5165\u6DE1\u51FA" },
-    { value: "lift", label: "\u8F7B\u5FAE\u4E0A\u79FB" },
-    { value: "scale", label: "\u8F7B\u5FAE\u7F29\u653E" },
-    { value: "slide", label: "\u6A2A\u5411\u8F7B\u6ED1" }
-  ]);
-
-  // src/themes/nativeComponentAppearance.ts
-  var NATIVE_COMPONENT_LABELS = localized(() => ({
-    event: "\u4E8B\u4EF6",
-    identity: "\u8EAB\u4EFD\u4FE1\u606F",
-    avatar: "\u5934\u50CF",
-    avatarFrame: "\u5934\u50CF\u6846",
-    username: "\u7528\u6237\u540D",
-    medal: "\u7C89\u4E1D\u724C",
-    guardBadge: "\u5927\u822A\u6D77\u8EAB\u4EFD",
-    message: "\u6B63\u6587",
-    translation: "\u8BD1\u6587",
-    giftImage: "\u793C\u7269\u56FE\u7247",
-    eventIcon: "\u4E8B\u4EF6\u56FE\u6807",
-    sticky: "\u7F6E\u9876\u680F"
-  }));
 
   // node_modules/postcss/lib/postcss.mjs
   var import_postcss = __toESM(require_postcss(), 1);
@@ -19341,44 +19274,6 @@
   });
 
   // src/themes/nativeThemeCapabilities.ts
-  var NATIVE_EVENT_SCOPES = localized(() => [
-    { id: "all", label: "\u5168\u90E8\u4E8B\u4EF6" },
-    { id: "danmaku", label: "\u5F39\u5E55" },
-    { id: "interaction", label: "\u4E92\u52A8", children: [
-      { id: "enter", label: "\u8FDB\u5165\u76F4\u64AD\u95F4" },
-      { id: "follow", label: "\u5173\u6CE8" },
-      { id: "share", label: "\u5206\u4EAB" },
-      { id: "specialFollow", label: "\u7279\u522B\u5173\u6CE8" },
-      { id: "mutualFollow", label: "\u4E92\u76F8\u5173\u6CE8" },
-      { id: "like", label: "\u70B9\u8D5E" }
-    ] },
-    { id: "gift", label: "\u793C\u7269", children: [
-      { id: "free", label: "\u514D\u8D39\u793C\u7269" },
-      { id: "normal", label: "\u666E\u901A\u793C\u7269" },
-      { id: "blind", label: "\u76F2\u76D2\u793C\u7269" },
-      { id: "redpocket", label: "\u7EA2\u5305", children: [{ id: "redpocketStart", label: "\u7EA2\u5305\u5F00\u59CB" }, { id: "redpocketResult", label: "\u7EA2\u5305\u5F00\u5956" }] },
-      { id: "lottery", label: "\u5929\u9009", children: [{ id: "lotteryStart", label: "\u5929\u9009\u5F00\u59CB" }, { id: "lotteryResult", label: "\u5929\u9009\u5F00\u5956" }] }
-    ] },
-    { id: "superchat", label: "\u9192\u76EE\u7559\u8A00" },
-    { id: "guard", label: "\u5927\u822A\u6D77" },
-    { id: "system", label: "\u7CFB\u7EDF", children: [
-      { id: "liveStatus", label: "\u5F00\u64AD\u4E0E\u4E0B\u64AD" },
-      { id: "userMute", label: "\u7528\u6237\u7981\u8A00" },
-      { id: "roomMute", label: "\u5168\u5458\u7981\u8A00" },
-      { id: "admin", label: "\u623F\u7BA1\u53D8\u66F4" },
-      { id: "roomChange", label: "\u623F\u95F4\u4FE1\u606F\u53D8\u66F4" },
-      { id: "warning", label: "\u76F4\u64AD\u8B66\u544A\u4E0E\u5207\u65AD" }
-    ] }
-  ]);
-  var NATIVE_IDENTITY_SCOPES = localized(() => [
-    { id: "all", label: "\u6240\u6709\u7528\u6237" },
-    { id: "ordinary", label: "\u666E\u901A\u7528\u6237" },
-    { id: "captain", label: "\u8230\u957F" },
-    { id: "admiral", label: "\u63D0\u7763" },
-    { id: "viceroy", label: "\u603B\u7763" },
-    { id: "anchor", label: "\u4E3B\u64AD" },
-    { id: "admin", label: "\u623F\u7BA1" }
-  ]);
   var capability = (shape, ...groups) => ({ shape, groups });
   var text = () => capability("text", "display", "typography", "surface", "spacing", "border");
   var badge = () => capability("text-badge", "display", "typography", "surface", "spacing", "border");
@@ -19507,155 +19402,6 @@
     winnerToggle: text(),
     winnerList: container()
   };
-  var part = (id, label, group) => ({
-    id,
-    label,
-    group,
-    selector: NATIVE_PART_SELECTORS[id],
-    capability: NATIVE_PART_CAPABILITIES[id]
-  });
-  var NATIVE_SEMANTIC_PARTS = localized(() => [
-    part("quantityPrefix", "\u6570\u91CF\u7B26\u53F7", "common"),
-    part("quantityNumber", "\u6570\u91CF\u6570\u503C", "common"),
-    part("quantityUnit", "\u6570\u91CF\u5355\u4F4D", "common"),
-    part("winnerAvatar", "\u4E2D\u5956\u5934\u50CF", "redpocket"),
-    part("honorHeading", "\u6210\u5C31\u6807\u9898", "guard"),
-    part("honorSummary", "\u6210\u5C31\u8BF4\u660E", "guard"),
-    part("honorMilestone", "\u6210\u5C31\u91CC\u7A0B\u7891", "guard"),
-    part("systemTitle", "\u7CFB\u7EDF\u6807\u9898", "common"),
-    part("systemDetail", "\u7CFB\u7EDF\u8BE6\u60C5", "common"),
-    part("card", "\u4E8B\u4EF6\u5361\u7247", "common"),
-    part("header", "\u4FE1\u606F\u7EC4", "common"),
-    part("activityStatus", "\u6D3B\u52A8\u72B6\u6001", "message"),
-    part("whole", "\u4E8B\u4EF6\u533A", "common"),
-    part("list", "\u4E8B\u4EF6\u5217\u8868", "common"),
-    part("event", "\u4E8B\u4EF6", "common"),
-    part("row", "\u666E\u901A\u4E8B\u4EF6", "common"),
-    part("sticky", "\u7F6E\u9876\u680F", "common"),
-    part("stickyEvent", "\u7F6E\u9876\u4E8B\u4EF6", "common"),
-    part("user", "\u7528\u6237\u4FE1\u606F", "identity"),
-    part("avatarWrap", "\u5934\u50CF\u533A\u57DF", "identity"),
-    part("avatarPlaceholder", "\u5934\u50CF\u5360\u4F4D", "identity"),
-    part("avatarFrame", "\u5934\u50CF\u6846", "identity"),
-    part("avatar", "\u5934\u50CF", "identity"),
-    part("username", "\u7528\u6237\u540D", "identity"),
-    part("medal", "\u7C89\u4E1D\u724C", "identity"),
-    part("medalName", "\u7C89\u4E1D\u724C\u540D\u79F0", "identity"),
-    part("medalLevel", "\u7C89\u4E1D\u724C\u7B49\u7EA7", "identity"),
-    part("guardBadge", "\u5927\u822A\u6D77\u8EAB\u4EFD", "identity"),
-    part("anchorBadge", "\u4E3B\u64AD\u8EAB\u4EFD", "identity"),
-    part("adminBadge", "\u623F\u7BA1\u8EAB\u4EFD", "identity"),
-    part("honor", "\u8363\u8000\u52CB\u7AE0", "identity"),
-    part("rank", "\u5F53\u524D\u6392\u884C", "identity"),
-    part("badges", "\u8EAB\u4EFD\u5FBD\u7AE0", "identity"),
-    part("price", "\u4EF7\u683C\u6574\u4F53", "message"),
-    part("priceUnit", "\u8D27\u5E01\u7B26\u53F7", "message"),
-    part("priceValue", "\u91D1\u989D\u6570\u503C", "message"),
-    part("repeatCount", "\u5408\u5E76\u6570\u91CF", "message"),
-    part("blindGiftCount", "\u76F2\u76D2\u6570\u91CF", "gift"),
-    part("reply", "\u56DE\u590D\u5BF9\u8C61", "message"),
-    part("translation", "\u5E73\u53F0\u8BD1\u6587", "message"),
-    part("message", "\u6B63\u6587", "message"),
-    part("action", "\u52A8\u4F5C\u6587\u5B57", "message"),
-    part("content", "\u5185\u5BB9\u533A\u57DF", "message"),
-    part("timestamp", "\u65F6\u95F4", "message"),
-    part("deletedStatus", "\u5220\u9664\u72B6\u6001", "message"),
-    part("eventIcon", "\u4E8B\u4EF6\u56FE\u6807", "message"),
-    part("honorWatermark", "\u6210\u5C31\u6C34\u5370", "guard"),
-    part("blindGiftName", "\u76F2\u76D2\u540D\u79F0", "gift"),
-    part("giftProfitPositive", "\u76F2\u76D2\u76C8\u5229", "gift"),
-    part("giftProfitNegative", "\u76F2\u76D2\u4E8F\u635F", "gift"),
-    part("blindGiftImage", "\u76F2\u76D2\u56FE\u7247", "gift"),
-    part("giftImage", "\u793C\u7269\u56FE\u7247", "gift"),
-    part("giftCount", "\u793C\u7269\u6570\u91CF", "gift"),
-    part("giftName", "\u793C\u7269\u540D\u79F0", "gift"),
-    part("giftPrice", "\u793C\u7269\u91D1\u989D", "gift"),
-    part("giftProfit", "\u76F2\u76D2\u76C8\u4E8F", "gift"),
-    part("giftSourcePrice", "\u76F2\u76D2\u539F\u4EF7", "gift"),
-    part("blindGiftGroup", "\u76F2\u76D2\u4FE1\u606F", "gift"),
-    part("giftGroup", "\u793C\u7269\u4FE1\u606F", "gift"),
-    part("inlineEmote", "\u884C\u5185\u8868\u60C5", "gift"),
-    part("bigEmote", "\u5927\u8868\u60C5", "gift"),
-    part("bannerEmote", "\u6A2A\u5E45\u8868\u60C5", "gift"),
-    part("guardDurationPrefix", "\u65F6\u957F\u524D\u7F00", "guard"),
-    part("guardDurationNumber", "\u65F6\u957F\u6570\u503C", "guard"),
-    part("guardDurationUnit", "\u65F6\u957F\u5355\u4F4D", "guard"),
-    part("guardDaysPrefix", "\u966A\u4F34\u524D\u7F00", "guard"),
-    part("guardDaysNumber", "\u966A\u4F34\u6570\u503C", "guard"),
-    part("guardDaysUnit", "\u966A\u4F34\u5355\u4F4D", "guard"),
-    part("guardDuration", "\u5927\u822A\u6D77\u65F6\u957F", "guard"),
-    part("guardDays", "\u966A\u4F34\u5929\u6570", "guard"),
-    part("guardName", "\u5927\u822A\u6D77\u540D\u79F0", "guard"),
-    part("guardContent", "\u5927\u822A\u6D77\u5185\u5BB9", "guard"),
-    part("guardHighlight", "\u5927\u822A\u6D77\u9AD8\u4EAE", "guard"),
-    part("lotteryRequirementPrefix", "\u6761\u4EF6\u524D\u7F00", "lottery"),
-    part("lotteryRequirementText", "\u6761\u4EF6\u6B63\u6587", "lottery"),
-    part("redpocketAwardsPrefix", "\u5956\u52B1\u524D\u7F00", "redpocket"),
-    part("redpocketCount", "\u7EA2\u5305\u5956\u52B1\u6570\u91CF", "redpocket"),
-    part("resultDescription", "\u5F00\u5956\u6458\u8981", "redpocket"),
-    part("winnerListCount", "\u540D\u5355\u63A5\u6536\u63D0\u793A", "redpocket"),
-    part("lotteryCommandPrefix", "\u53E3\u4EE4\u524D\u7F00", "lottery"),
-    part("lotteryCommandText", "\u53E3\u4EE4\u6B63\u6587", "lottery"),
-    part("lotteryGiftPrefix", "\u793C\u7269\u524D\u7F00", "lottery"),
-    part("lotteryGiftName", "\u53C2\u4E0E\u793C\u7269\u540D\u79F0", "lottery"),
-    part("lotteryPrize", "\u5929\u9009\u5956\u54C1", "lottery"),
-    part("lotteryCount", "\u5929\u9009\u540D\u989D", "lottery"),
-    part("lotteryCommand", "\u5929\u9009\u53E3\u4EE4", "lottery"),
-    part("lotteryGift", "\u53C2\u4E0E\u793C\u7269", "lottery"),
-    part("lotteryWait", "\u5F00\u5956\u65F6\u95F4", "lottery"),
-    part("lotteryRequirement", "\u53C2\u4E0E\u6761\u4EF6", "lottery"),
-    part("lotteryGroup", "\u5929\u9009\u5185\u5BB9", "lottery"),
-    part("redpocketCommandPrefix", "\u53E3\u4EE4\u524D\u7F00", "redpocket"),
-    part("redpocketCommandText", "\u53E3\u4EE4\u6B63\u6587", "redpocket"),
-    part("redpocketAwards", "\u7EA2\u5305\u5956\u52B1", "redpocket"),
-    part("redpocketCommand", "\u7EA2\u5305\u53E3\u4EE4", "redpocket"),
-    part("redpocketWait", "\u5F00\u5956\u65F6\u95F4", "redpocket"),
-    part("redpocketName", "\u7EA2\u5305\u540D\u79F0", "redpocket"),
-    part("redpocketGroup", "\u7EA2\u5305\u5185\u5BB9", "redpocket"),
-    part("winnerCount", "\u4E2D\u5956\u4EBA\u6570", "redpocket"),
-    part("winnerUser", "\u4E2D\u5956\u7528\u6237", "redpocket"),
-    part("winnerItem", "\u4E2D\u5956\u9879", "redpocket"),
-    part("winnerItems", "\u4E2D\u5956\u5185\u5BB9", "redpocket"),
-    part("winnerToggle", "\u540D\u5355\u5C55\u5F00", "redpocket"),
-    part("winnerList", "\u4E2D\u5956\u540D\u5355", "redpocket")
-  ]);
-  var navItem = (id, children, label) => ({
-    id,
-    part: id,
-    ...label ? { label } : {},
-    ...children ? { children: children.map((child) => ({ id: child })) } : {}
-  });
-  var navBranch = (id, label, children, part2, event) => ({
-    id,
-    label,
-    children,
-    ...part2 ? { part: part2 } : {},
-    ...event ? { event } : {}
-  });
-  var NATIVE_VISUAL_NAVIGATION = localized(() => [
-    { id: "display", label: "\u663E\u793A\u533A\u57DF", defaultExpanded: true, items: [navItem("whole"), navBranch("events", "\u4E8B\u4EF6", [navItem("event", void 0, "\u6240\u6709\u4E8B\u4EF6"), navBranch("row", "\u666E\u901A\u4E8B\u4EF6", [navItem("card"), navItem("header")], "row"), navItem("stickyEvent")]), navItem("list"), navItem("sticky")] },
-    { id: "identity", label: "\u7528\u6237\u4FE1\u606F", defaultExpanded: true, items: [navItem("user", void 0, "\u7528\u6237\u4FE1\u606F\u6574\u4F53"), navBranch("avatarWrap", "\u5934\u50CF\u533A\u57DF", [navItem("avatarPlaceholder"), navItem("avatarFrame"), navItem("avatar")], "avatarWrap"), navItem("username"), navBranch("medal", "\u7C89\u4E1D\u724C", [navItem("medalName"), navItem("medalLevel")], "medal"), navBranch("badges", "\u8EAB\u4EFD\u5FBD\u7AE0", [navItem("guardBadge"), navItem("anchorBadge"), navItem("adminBadge")], "badges"), navItem("honor"), navItem("rank")] },
-    { id: "content", label: "\u4E8B\u4EF6\u5185\u5BB9", defaultExpanded: true, items: [navItem("content"), navItem("message"), navItem("action"), navItem("timestamp"), navItem("eventIcon"), navItem("activityStatus"), navItem("systemTitle"), navItem("systemDetail"), navBranch("quantity", "\u6570\u91CF", [navItem("quantityPrefix"), navItem("quantityNumber"), navItem("quantityUnit")]), navItem("price", ["price", "priceUnit", "priceValue"], "\u4EF7\u683C")] },
-    { id: "emote", label: "\u8868\u60C5", defaultExpanded: true, items: ["inlineEmote", "bigEmote", "bannerEmote"].map((id) => navItem(id)) },
-    { id: "danmaku", label: "\u5F39\u5E55", defaultExpanded: false, event: "danmaku", items: [navItem("deletedStatus"), navItem("reply"), navItem("repeatCount")] },
-    { id: "gift", label: "\u793C\u7269", defaultExpanded: false, event: "gift", items: [navItem("giftImage"), navBranch("giftGroup", "\u793C\u7269\u4FE1\u606F", [navItem("giftName"), navItem("giftCount")], "giftGroup"), navItem("giftPrice"), navItem("blindGiftImage"), navBranch("blindGiftGroup", "\u76F2\u76D2\u4FE1\u606F", [navItem("blindGiftName"), navItem("blindGiftCount"), navBranch("giftProfit", "\u76F2\u76D2\u76C8\u4E8F", [navItem("giftProfitPositive"), navItem("giftProfitNegative")], "giftProfit"), navItem("giftSourcePrice")], "blindGiftGroup")] },
-    { id: "superchat", label: "\u9192\u76EE\u7559\u8A00", defaultExpanded: false, event: "superchat", items: [navItem("message"), navItem("price", ["price", "priceUnit", "priceValue"], "\u4EF7\u683C"), navItem("translation"), navItem("deletedStatus")] },
-    { id: "guard", label: "\u5927\u822A\u6D77", defaultExpanded: false, event: "guard", items: [navBranch("guardContent", "\u5927\u822A\u6D77\u5185\u5BB9", [navItem("guardName"), navBranch("guardDuration", "\u5927\u822A\u6D77\u65F6\u957F", [navItem("guardDurationPrefix"), navItem("guardDurationNumber"), navItem("guardDurationUnit")], "guardDuration")], "guardContent"), navBranch("guardDays", "\u966A\u4F34\u5929\u6570", [navItem("guardDaysPrefix"), navItem("guardDaysNumber"), navItem("guardDaysUnit")], "guardDays"), navItem("guardHighlight"), navItem("honorHeading"), navItem("honorSummary"), navItem("honorMilestone"), navItem("honorWatermark"), navItem("price")] },
-    { id: "lotteryRedpocket", label: "\u7EA2\u5305\u4E0E\u5929\u9009", defaultExpanded: false, items: [
-      navBranch("redpocketGroup", "\u7EA2\u5305", [navItem("redpocketName"), navBranch("redpocketAwards", "\u7EA2\u5305\u5956\u52B1", [navItem("redpocketAwardsPrefix"), navItem("redpocketCount")], "redpocketAwards"), navBranch("redpocketCommand", "\u7EA2\u5305\u53E3\u4EE4", [navItem("redpocketCommandPrefix"), navItem("redpocketCommandText")], "redpocketCommand"), navItem("redpocketWait"), { ...navItem("activityStatus"), event: "redpocketStart" }], "redpocketGroup", "redpocket"),
-      navBranch("lotteryGroup", "\u5929\u9009", [navItem("lotteryPrize"), navItem("lotteryCount"), navBranch("lotteryCommand", "\u5929\u9009\u53E3\u4EE4", [navItem("lotteryCommandPrefix"), navItem("lotteryCommandText")], "lotteryCommand"), navBranch("lotteryGift", "\u53C2\u4E0E\u793C\u7269", [navItem("lotteryGiftPrefix"), navItem("lotteryGiftName")], "lotteryGift"), navItem("lotteryWait"), { ...navItem("activityStatus"), event: "lotteryStart" }, navBranch("lotteryRequirement", "\u53C2\u4E0E\u6761\u4EF6", [navItem("lotteryRequirementPrefix"), navItem("lotteryRequirementText")], "lotteryRequirement")], "lotteryGroup", "lottery"),
-      navBranch("winnerList", "\u4E2D\u5956", [navItem("resultDescription"), navItem("winnerCount"), navItem("winnerListCount"), navBranch("winnerItems", "\u4E2D\u5956\u5185\u5BB9", [navItem("winnerItem"), navItem("winnerAvatar"), navItem("winnerUser")], "winnerItems"), navItem("winnerToggle")], "winnerList", "all")
-    ] }
-  ]);
-  var PROPERTY_SECTION_LABELS = localized(() => ({
-    display: "\u663E\u793A",
-    typography: "\u6587\u5B57",
-    surface: "\u989C\u8272\u4E0E\u80CC\u666F",
-    spacing: "\u95F4\u8DDD",
-    border: "\u8FB9\u6846",
-    layout: "\u6392\u7248",
-    media: "\u5A92\u4F53"
-  }));
 
   // src/themes/nativePriceGradient.ts
   var OFFICIAL_SC_PALETTE = [
@@ -26404,7 +26150,7 @@
     }
     return prepared;
   }
-  function getOriginalSamples(mode, identity, part2) {
+  function getOriginalSamples(mode, identity, part) {
     const samples = (mode === "design" ? originalDesignSamples : originalStaticSamples).filter((sample) => !excludedSampleTypes.has(sample.type)).map((sample) => preparePreviewSample(sample));
     if (mode === "static") return samples;
     const userType = identity === "streamer" ? 100 : identity === "moderator" ? 1 : void 0;
@@ -26414,14 +26160,14 @@
     }
     const supplement = (type, values) => {
       const source = samples.find((sample) => sample.type === type);
-      if (source) samples.push({ ...source, ...values, id: `editor-part-${part2}-${type}`, originIdx: 700002 + samples.length });
+      if (source) samples.push({ ...source, ...values, id: `editor-part-${part}-${type}`, originIdx: 700002 + samples.length });
     };
-    if (part2 === "smallEmote" || part2 === "smallEmoteWrap") supplement("message", { message: "[\u5C0F\u8868\u60C5]", bmotes: { "[\u5C0F\u8868\u60C5]": { url: "/media/style-preview-small-emote.png" } } });
-    if (part2 === "spoiler") for (const type of ["message", "superchat"]) supplement(type, { message: "\u6B63\u6587 ||\u5267\u900F\u5185\u5BB9||" });
-    if (part2 === "deleted") supplement("superchat", { deleted: true });
-    if (part2 === "translation" && !samples.some((sample) => sample.messageTrans)) supplement("superchat", { messageTrans: "\u5E73\u53F0\u63D0\u4F9B\u7684\u8BD1\u6587\u6837\u4F8B", transMark: 1 });
-    if (part2 && ["guardSymbol", "guardFigure", "guardUnit"].includes(part2)) supplement("toast", { toastAmount: 3, toastAmountUnit: "\u6708" });
-    if (part2 === "winnerToggle") for (const type of ["red-envelope-result", "lottery-result"]) {
+    if (part === "smallEmote" || part === "smallEmoteWrap") supplement("message", { message: "[\u5C0F\u8868\u60C5]", bmotes: { "[\u5C0F\u8868\u60C5]": { url: "/media/style-preview-small-emote.png" } } });
+    if (part === "spoiler") for (const type of ["message", "superchat"]) supplement(type, { message: "\u6B63\u6587 ||\u5267\u900F\u5185\u5BB9||" });
+    if (part === "deleted") supplement("superchat", { deleted: true });
+    if (part === "translation" && !samples.some((sample) => sample.messageTrans)) supplement("superchat", { messageTrans: "\u5E73\u53F0\u63D0\u4F9B\u7684\u8BD1\u6587\u6837\u4F8B", transMark: 1 });
+    if (part && ["guardSymbol", "guardFigure", "guardUnit"].includes(part)) supplement("toast", { toastAmount: 3, toastAmountUnit: "\u6708" });
+    if (part === "winnerToggle") for (const type of ["red-envelope-result", "lottery-result"]) {
       const source = samples.find((sample) => sample.type === type && Array.isArray(sample.list) && sample.list.length);
       if (source) supplement(type, { list: Array.from({ length: 20 }, (_, index) => source.list[index % source.list.length]) });
     }
@@ -26741,15 +26487,15 @@
       while (walker.nextNode()) if (!walker.currentNode.parentElement?.closest("a")) nodes.push(walker.currentNode);
       for (const node of nodes) {
         const parts = splitBilibiliVideoText(node.data);
-        if (!parts.some((part2) => part2.type === "video")) continue;
+        if (!parts.some((part) => part.type === "video")) continue;
         const decoration = document.createElement("span");
         decoration.dataset.laplaceVideoDecoration = "";
         decoratedVideoText.set(decoration, node);
-        for (const part2 of parts) if (part2.type === "text") decoration.append(part2.value);
+        for (const part of parts) if (part.type === "text") decoration.append(part.value);
         else {
           const link = document.createElement("a");
-          link.href = part2.href;
-          link.textContent = part2.value;
+          link.href = part.href;
+          link.textContent = part.value;
           link.dataset.laplaceVideoLink = "";
           link.className = "bilibili-video-link";
           decoration.append(link);
@@ -27046,9 +26792,9 @@
           }
           return result;
         };
-        const scopeFor = (node, part2) => {
+        const scopeFor = (node, part) => {
           const scope = selection.scopeSelectors, placement = matchScope(node, scope.placements, "main");
-          return { part: part2, eventType: matchScope(node, scope.eventsByPlacement?.[placement], "all"), identity: laplaceEditorIdentity(node, selection), placement };
+          return { part, eventType: matchScope(node, scope.eventsByPlacement?.[placement], "all"), identity: laplaceEditorIdentity(node, selection), placement };
         };
         const inspect = (picked, refresh = false) => {
           const scope = refresh ? selection.scope : scopeFor(picked.node, picked.part), nodes = [];
@@ -27073,7 +26819,7 @@
           for (const property of Object.keys(computed)) computed[property] = inspectEditorProperty(nodes, property, computed[property]);
           send({ type: "editor-inspected", scope, computed, layoutSupported: nodes.every((node) => /flex|grid/.test(getComputedStyle(node).display)), mode: role, ...refresh ? { refresh: true } : {} });
         };
-        const pickedAt = (event) => selection.readOnly || selection.pickEnabled === false ? null : pickPreviewEditorPart(event.target, selection.selectors, { x: event.clientX, y: event.clientY }, (part2, node) => !selection.partPlacements?.[part2] || selection.partPlacements[part2].includes(scopeFor(node, part2).placement));
+        const pickedAt = (event) => selection.readOnly || selection.pickEnabled === false ? null : pickPreviewEditorPart(event.target, selection.selectors, { x: event.clientX, y: event.clientY }, (part, node) => !selection.partPlacements?.[part] || selection.partPlacements[part].includes(scopeFor(node, part).placement));
         const disposeHover = installPreviewEditorHover(rootNode, pickedAt);
         const pick = (event) => {
           const best = pickedAt(event);

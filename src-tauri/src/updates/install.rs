@@ -18,6 +18,8 @@ pub struct UpdateAppearance {
 pub struct InstallPlan {
     pub parent_pid: u32,
     #[serde(default)]
+    pub ui_language: Option<String>,
+    #[serde(default)]
     pub appearance: Option<UpdateAppearance>,
     pub target: PathBuf,
     pub executable: String,
@@ -189,6 +191,7 @@ mod tests {
         }
         zip.finish().unwrap();
         let plan = InstallPlan {
+            ui_language: None,
             parent_pid: 0,
             appearance: None,
             target: target.clone(),
@@ -238,6 +241,7 @@ mod tests {
         }
         zip.finish().unwrap();
         let plan = InstallPlan {
+            ui_language: None,
             parent_pid: 0,
             appearance: None,
             target: target.clone(),
