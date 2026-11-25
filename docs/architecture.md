@@ -6,9 +6,15 @@
 
 回看仍复用事件内容与公共身份组件，但由`reviewStyleSettings.ts`和`archiveEventStyle.css`独立控制外观；不加载已应用主题。软件配色由`theme.ts`持久化选择，`customPalette.ts`生成自定义明暗色，传递到主窗、副窗口和预览环境。
 
-技术栈：Tauri 2、React 19、TypeScript、Zustand、WebView2。直播连接由主程序管理，副窗口消费已适配事件；OBS 同房间复用连接，不同房间由独立房间会话管理，浏览器页本身不另建采集器。
+技术栈：Tauri 2、React 19、TypeScript、Zustand、Tailwind CSS、shadcn/ui（Radix UI）、WebView2。直播连接由主程序管理，副窗口消费已适配事件；OBS 同房间复用连接，不同房间由独立房间会话管理，浏览器页本身不另建采集器。
 
 兼容实现按来源分工：BLC 原版使用固定上游组件，BLC 开放版使用 DoodleBears/blivechat 的 MIT 组件，LAPLACE 使用自行实现的渲染组件。投影、编辑和预览由本项目宿主协调；上游连接、登录和采集不接入。入口、构建产物和素材关系见[目录职责](development/repository-structure.md)。
+
+## 宿主界面与多语言
+
+`src/components/shadcn/` 维护官方组件及项目适配，`components.json` 声明接入配置，`src/shadcn.css` 映射软件颜色与控件令牌。`src/components/ui/` 和设置控件保留现有业务接口，组合共享组件；页面负责布局，不重复定义基础控件外观。颜色、渐变、图片和日期时间编辑保留专用交互。
+
+`src/i18n/` 管理四种界面语言、格式化与设置搜索；宿主及连接的展示窗口同步语言。事件正文、播报语言和导出数据不随界面语言改写。组件职责不延伸到原生或兼容事件 DOM，回看外观继续独立。
 
 ## 数据流
 

@@ -5,6 +5,10 @@
 | 路径 | 职责 |
 | --- | --- |
 | src/ | 应用、事件投影、主题、编辑器、预览及兼容宿主 |
+| src/components/shadcn/ | shadcn/ui 注册表组件及项目适配，许可独立保留 |
+| src/components/ui/ | 共享控件的业务接口与组合 |
+| src/shadcn.css、components.json | 宿主控件令牌与组件接入配置 |
+| src/i18n/、docs/translations/ | 四语言运行文案、格式化、术语及翻译清单 |
 | src-tauri/src/ | 原生窗口、存储、HTTP、音频与本机输出 |
 | src-tauri/native/ | 正式液态玻璃实现及着色器 |
 | resources/theme-catalog/ | 内置主题CSS、素材定义与来源映射 |

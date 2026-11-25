@@ -4,18 +4,22 @@
 
 # BB CoLive
 
+[简体中文](README.md) · [繁體中文](README.zh-Hant.md) · [English](README.en.md) · [日本語](README.ja.md)
+
 **懂你的直播伙伴。**
 
 面向 B站直播的弹幕展示、语音播报、样式定制与记录回看工具。
 
-[![GitHub 版本 1.1.0](https://img.shields.io/badge/GitHub-1.1.0-D43870?style=flat)](https://github.com/OrangeChange/bb-colive/releases/tag/v1.1.0)
-[![Gitee 版本 1.1.0](https://img.shields.io/badge/Gitee-1.1.0-D43870?style=flat)](https://gitee.com/orange-chan/bb-colive/releases/tag/v1.1.0)
-![Windows 10 / 11 x64](https://img.shields.io/badge/Windows-10%20%2F%2011%20x64-4C9A8D?style=flat)
-[![源码可用许可](https://img.shields.io/badge/许可-源码可用-706A75?style=flat)](LICENSE)
+<a href="https://github.com/OrangeChange/bb-colive/releases/tag/v1.1.0"><picture><source media="(prefers-color-scheme: dark)" srcset="docs/images/badges/github-version-dark.svg" /><img src="docs/images/badges/github-version-light.svg" alt="GitHub 版本 1.1.0" width="132" height="24" /></picture></a>
+<a href="https://gitee.com/orange-chan/bb-colive/releases/tag/v1.1.0"><picture><source media="(prefers-color-scheme: dark)" srcset="docs/images/badges/gitee-version-dark.svg" /><img src="docs/images/badges/gitee-version-light.svg" alt="Gitee 版本 1.1.0" width="126" height="24" /></picture></a>
+<picture><source media="(prefers-color-scheme: dark)" srcset="docs/images/badges/windows-dark.svg" /><img src="docs/images/badges/windows-light.svg" alt="Windows 10 / 11 x64" width="193" height="24" /></picture>
+<a href="LICENSE"><picture><source media="(prefers-color-scheme: dark)" srcset="docs/images/badges/license-dark.svg" /><img src="docs/images/badges/license-light.svg" alt="源码可用许可" width="130" height="24" /></picture></a>
 
 [功能特性](#功能特性) · [界面预览](#界面预览) · [快速开始](#快速开始) · [使用文档](#使用文档) · [开发与构建](#开发与构建)
 
 </div>
+
+> 下载徽章指向已发布的 1.1.0。本文说明当前主分支；尚未随安装包发布的更新见[项目状态](docs/project-status.md)。
 
 ## 功能特性
 
@@ -34,7 +38,7 @@
 ### 让展示适合自己的直播间
 
 - **三种原生主题**：原生默认、浅映卡片、轻语气泡。
-- **可视化调整**：编辑文字、身份标记、价格梯度、背景、渐变、装饰图片和头像框，也可以直接编写 CSS。
+- **可视化调整**：编辑文字、身份标记、价格梯度和渐变；独立设置图片背景、装饰图、图片边框与头像框，支持部件及事件效果预览，也可以直接编写 CSS。
 - **不同输出分别设置**：现场、副窗口和 OBS 可以使用不同主题；副窗口支持统一主题或分别配置。
 - **随时预览**：静态、点选与动态预览共用软件实际渲染组件，回看外观独立设置。
 - **软件配色**：樱花粉、青瓷绿及自定义配色，支持浅色、深色与跟随系统。
@@ -122,7 +126,7 @@ OBS 输出由本机程序提供，使用期间需保持 BB CoLive 运行。详�
 
 ## 开发与构建
 
-基于 **Tauri 2 · React 19 · TypeScript · Tailwind CSS · shadcn/ui（Radix UI）**。
+基于 **Tauri 2 · React 19 · TypeScript · Tailwind CSS · shadcn/ui · Radix UI**。
 
 开发环境：Windows 10 / 11 x64、Node.js 24、Rust MSVC 工具链、Microsoft C++ Build Tools 和 WebView2；确保 `~/.cargo/bin` 已加入 `PATH`。
 
@@ -140,6 +144,8 @@ npm run tauri -- build --bundles nsis   # 生成 Windows 安装包
 
 - [开发文档](docs/README.md)：功能约定、架构与维护说明。
 - [调试与验收](docs/development/debugging-and-testing.md)：开发入口、运行约束与验证方法。
+- [界面组件](src/components/shadcn/README.md)：shadcn/ui 接入、共享控件与样式职责。
+- [多语言适配](docs/development/interface-localization.md)：翻译边界、用语确认与验收要求。
 - [构建与发布](docs/development/build-and-release.md)：安装版、便携版与源码包。
 - [当前架构](docs/architecture.md) · [目录职责](docs/development/repository-structure.md)。
 - [产品与界面规范](docs/specifications/README.md) · [原生事件样式契约](docs/development/native-event-style-contract.md)。
@@ -156,6 +162,7 @@ npm run tauri -- build --bundles nsis   # 生成 Windows 安装包
 <a href="https://react.dev/"><picture><source media="(prefers-color-scheme: dark)" srcset="docs/images/badges/react-dark.png" /><img src="docs/images/badges/react-light.png" alt="React" width="72" height="24" /></picture></a>
 <a href="https://tauri.app/"><picture><source media="(prefers-color-scheme: dark)" srcset="docs/images/badges/tauri-dark.png" /><img src="docs/images/badges/tauri-light.png" alt="Tauri" width="68" height="24" /></picture></a>
 <a href="https://tailwindcss.com/"><picture><source media="(prefers-color-scheme: dark)" srcset="docs/images/badges/tailwind-dark.png" /><img src="docs/images/badges/tailwind-light.png" alt="Tailwind CSS" width="117" height="24" /></picture></a>
+<a href="https://ui.shadcn.com/"><picture><source media="(prefers-color-scheme: dark)" srcset="docs/images/badges/shadcn-dark.svg" /><img src="docs/images/badges/shadcn-light.svg" alt="shadcn/ui" width="104" height="24" /></picture></a>
 <a href="https://www.radix-ui.com/"><picture><source media="(prefers-color-scheme: dark)" srcset="docs/images/badges/radix-dark.png" /><img src="docs/images/badges/radix-light.png" alt="Radix UI" width="88" height="24" /></picture></a>
 </p>
 

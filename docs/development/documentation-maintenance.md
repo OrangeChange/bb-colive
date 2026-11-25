@@ -15,11 +15,18 @@
 | docs/features/ | 按功能维护当前行为、设置与金额口径 |
 | docs/development/ | 构建、开发、兼容、资源与维护契约 |
 | docs/development/interface-localization.md | 界面翻译边界、开发流程、用语确认与多语言完成条件 |
+| src/components/shadcn/README.md | 共享组件用法、项目适配及交互边界 |
 | docs/translations/ | 统一术语与当前界面翻译清单 |
 | docs/research/ | 必要字段依据、协议样本与调查结论 |
 | docs/roadmap/ | 尚未实现的后续方案 |
 
+根目录 README.md 为简体中文入口，README.zh-Hant.md、README.en.md、README.ja.md 为对应译文，顶部语言链接相互连通。功能、版本、下载链接和操作入口变更时同步四份 README；相对路径、HTML、图片和代码命令保持有效，主题标识与界面术语遵循现有约定。
+
 同一规则只在所属文档维护，其他文档链接引用。公共事件语义由native-event-style-contract.md维护，视觉规则与交互规则分别归 docs/specifications/DESIGN.md、docs/specifications/UX-CONTRACT.md。旧计划不能替代当前代码和契约。
+
+## 版本与状态
+
+README 和功能文档描述当前主分支；下载徽章与分发说明保留实际已发布版本。尚未发布的合入内容集中记录在 `docs/project-status.md`，不通过修改文档版本号暗示安装包已更新。历史版本、迁移范围和有日期的验收记录保留其原始版本含义。组件规则以组件说明及视觉、交互规范为准，多语言用语确认以界面语言适配文档为准。
 
 ## 本地历史
 

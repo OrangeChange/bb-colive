@@ -10,6 +10,8 @@
 - [当前架构](architecture.md)：模块职责、数据流及共享边界。
 - [产品与界面规范](specifications/README.md)：产品目标、视觉与文案、跨功能交互。
 
+主分支后续更新与已发布版本分别记录在[项目状态](project-status.md)。宿主控件用法见[shadcn/ui 组件](../src/components/shadcn/README.md)，翻译与用语确认见[界面语言适配](development/interface-localization.md)。
+
 ## 功能文档
 
 | 功能 | 内容 |

@@ -14,7 +14,7 @@ import { Input } from "@/components/shadcn/input"
 <Input aria-label="主题名称" />
 ```
 
-工具栏使用 `sm`（28px）或默认（32px），标准表单使用 `lg`（36px）的按钮；普通输入与选择器以32px为当前试作基线。`Tooltip` 在页面根部使用共享 `TooltipProvider`。
+普通表单控件使用默认32px高度，紧凑工具栏使用 `sm`（28px），较大操作使用 `lg`（36px）；输入与选择器遵循同组尺寸。`Tooltip` 在页面根部使用共享 `TooltipProvider`。
 
 新增组件使用 `npx shadcn add <组件名>`，依赖本地锁定的 CLI。更新前使用 `npx shadcn add <组件名> --diff` 核对差异，不直接覆盖项目适配。
 
@@ -32,5 +32,9 @@ import { Input } from "@/components/shadcn/input"
 宿主界面的共享选择器、开关、单选、复选、按钮、输入、菜单、确认及任务弹窗采用此组件库。`ui/Select`、`ui/Combobox` 等现有入口保留业务接口，内部组合注册表组件；搜索建议保留输入焦点与中文输入法，并关联实际生成的选项 ID。
 
 字体字段限制宽度；字重采用数字步进框加连体分段，步长100。日期时间由 InputGroup、Calendar、Popover、RadioGroup 与 ScrollArea 组合，日期采用 YYYY-MM-DD、时间采用24小时 HH:mm；支持键盘输入和光标所在日期时间段的方向键调整，同组显示日历与时分列，使用软件四种语言及本地时间。颜色、渐变和图片保留专用编辑逻辑，通用控件使用本目录组件。不改变弹幕主题及事件渲染契约。
+
+选择器的首字母查找只打开并定位选项，确认前不改值；Escape 取消。输入法组合期间的 Escape 不关闭选择器、Popover 或 Dialog。嵌套菜单与弹窗按层关闭并恢复焦点，短窗口中的长表单独立滚动，底部操作保持可达。
+
+组件自带文案使用项目四语言模块，不引入固定英文提示；新增文案按[界面语言适配](../../../docs/development/interface-localization.md)同步维护。
 
 外部按钮打开的 Dialog 在共享内容组件中保存并恢复焦点；有显式关闭焦点处理的调用方优先。复选框以横线表示部分选中。页面 CSS 不给 `[data-slot]` 控件重复施加默认按钮外观。
