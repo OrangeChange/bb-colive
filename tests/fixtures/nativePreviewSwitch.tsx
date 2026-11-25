@@ -12,7 +12,7 @@ import { createStylePreviewEvents } from "../../src/components/stylePreviewEvent
 import { NativeObsRenderer } from "../../src/obs/NativeObsRenderer";
 import { buildNativeObsThemeSnapshot } from "../../src/obs/nativeObsTheme";
 import { projectNativeTheme } from "../../src/themes/nativeThemeProjection";
-import "../../src/App.css";
+import "../../src/shadcn.css";
 import "../../src/components/nativeThemeEditor.css";
 
 function Fixture() {

@@ -1,6 +1,9 @@
+import { Input } from "./shadcn/input";
+import { Checkbox } from "./shadcn/checkbox";
+import { Button } from "./shadcn/button";
 import { useUiLanguage } from "../i18n/react.ts";
 import { uiText } from "../i18n/index.ts";
-import * as Popover from "@radix-ui/react-popover";
+import { Popover, PopoverTrigger, PopoverContent, PopoverArrow } from "./shadcn/popover";
 import { Filter, Sun, Moon, Pause, Play, RotateCcw, Check } from "lucide-react";
 import "./stylePreviewToolbar.css";
 import { UiSelect, type UiSelectOption } from "./ui/Select.tsx";
@@ -58,7 +61,7 @@ export function StylePreviewToolbar(props: StylePreviewToolbarProps) {
               ["dynamic", uiText("stylePreviewToolbar.StylePreviewToolbar3")],
             ] as const
           ).map(([value, label]) => (
-            <button
+            <Button variant="outline"
               type="button"
               key={value}
               disabled={!supportedMotions.includes(value)}
@@ -67,7 +70,7 @@ export function StylePreviewToolbar(props: StylePreviewToolbarProps) {
               onClick={() => props.onMotionChange(value)}
             >
               {label}
-            </button>
+            </Button>
           ))}
         </div>
         {props.motion === "dynamic" && (
@@ -76,7 +79,7 @@ export function StylePreviewToolbar(props: StylePreviewToolbarProps) {
             role="group"
             aria-label={uiText("stylePreviewToolbar.aria_label2")}
           >
-            <button
+            <Button variant="ghost"
               type="button"
               className="preview-icon-button"
               title={props.playing ? uiText("stylePreviewToolbar.title") : uiText("stylePreviewToolbar.title2")}
@@ -84,8 +87,8 @@ export function StylePreviewToolbar(props: StylePreviewToolbarProps) {
               onClick={props.onPlayingChange}
             >
               {props.playing ? <Pause size={16} /> : <Play size={16} />}
-            </button>
-            <button
+            </Button>
+            <Button variant="ghost"
               type="button"
               className="preview-icon-button"
               title={uiText("stylePreviewToolbar.title3")}
@@ -93,7 +96,7 @@ export function StylePreviewToolbar(props: StylePreviewToolbarProps) {
               onClick={props.onRestart}
             >
               <RotateCcw size={16} />
-            </button>
+            </Button>
             <UiSelect
               ariaLabel={uiText("stylePreviewToolbar.ariaLabel")}
               size="compact"
@@ -106,9 +109,9 @@ export function StylePreviewToolbar(props: StylePreviewToolbarProps) {
             />
           </div>
         )}
-        <Popover.Root>
-          <Popover.Trigger asChild>
-            <button
+        <Popover>
+          <PopoverTrigger asChild>
+            <Button variant="ghost"
               type="button"
               className={`preview-icon-button preview-event-filter${selected.length ? " is-active" : ""}`}
               title={
@@ -121,10 +124,10 @@ export function StylePreviewToolbar(props: StylePreviewToolbarProps) {
             >
               <Filter size={16} />
               {selected.length > 0 && <span className="preview-filter-dot" />}
-            </button>
-          </Popover.Trigger>
-          <Popover.Portal>
-            <Popover.Content
+            </Button>
+          </PopoverTrigger>
+
+            <PopoverContent
               className="preview-event-popover"
               sideOffset={6}
               align="end"
@@ -132,21 +135,21 @@ export function StylePreviewToolbar(props: StylePreviewToolbarProps) {
             >
               <div className="preview-event-filter-heading">
                 <span>{uiText("stylePreviewToolbar.StylePreviewToolbar4")}</span>
-                <button
+                <Button variant="outline"
                   type="button"
                   aria-pressed={!selected.length}
                   className={`preview-filter-all${!selected.length ? " is-active" : ""}`}
                   onClick={() => changeEvents([])}
                 >
                   {!selected.length && <Check size={14} aria-hidden="true" />}
-                  {uiText("stylePreviewToolbar.StylePreviewToolbar5")}</button>
+                  {uiText("stylePreviewToolbar.StylePreviewToolbar5")}</Button>
               </div>
               {choices.map((option) => (
                 <label key={option.value}>
-                  <input
-                    type="checkbox"
+                  <Checkbox
+
                     checked={selected.includes(option.value)}
-                    onChange={() => {
+                    onCheckedChange={() => {
                       const current = [...selected];
                       const next = current.includes(option.value)
                         ? current.filter((value) => value !== option.value)
@@ -157,10 +160,10 @@ export function StylePreviewToolbar(props: StylePreviewToolbarProps) {
                   {option.label}
                 </label>
               ))}
-              <Popover.Arrow className="preview-event-popover-arrow" />
-            </Popover.Content>
-          </Popover.Portal>
-        </Popover.Root>
+              <PopoverArrow className="preview-event-popover-arrow" />
+            </PopoverContent>
+
+        </Popover>
       </div>
       <div className="native-preview-toolbar-row is-canvas">
         <div className="native-preview-canvas-color" title={uiText("stylePreviewToolbar.title6")}>
@@ -170,7 +173,7 @@ export function StylePreviewToolbar(props: StylePreviewToolbarProps) {
             onChange={props.onBackgroundChange}
           />
         </div>
-        <button
+        <Button variant="ghost"
           type="button"
           className="preview-icon-button preview-scheme-toggle"
           title={
@@ -185,9 +188,9 @@ export function StylePreviewToolbar(props: StylePreviewToolbarProps) {
           }
         >
           {props.scheme === "dark" ? <Moon size={16} /> : <Sun size={16} />}
-        </button>
+        </Button>
         <label className="native-preview-width" title={uiText("stylePreviewToolbar.title9")}>
-          <input
+          <Input
             aria-label={uiText("stylePreviewToolbar.aria_label9")}
             type="number"
             min="160"

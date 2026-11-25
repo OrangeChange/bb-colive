@@ -1,3 +1,6 @@
+import { Input } from "./shadcn/input";
+import { Checkbox } from "./shadcn/checkbox";
+import { Button } from "./shadcn/button";
 import { useUiLanguage } from "../i18n/react.ts";
 import { uiText } from "../i18n/index.ts";
 import { ThemeImagePicker } from "./ThemeImagePicker.tsx";
@@ -136,28 +139,28 @@ export function ThemeImageBorderField({
   };
   return (
     <div className="theme-image-field">
-      <button
+      <Button variant="outline"
         type="button"
         aria-label={uiText("themeImageBorderField.aria_label")}
         onClick={start}
         disabled={disabled}
       >
         <ImagePlus size={18} />
-        {uiText("themeImageBorderField.ThemeImageBorderField")}</button>
+        {uiText("themeImageBorderField.ThemeImageBorderField")}</Button>
       {open && (
         <ThemeImageDialog
           title={uiText("themeImageBorderField.title")}
           onClose={() => setOpen(false)}
           actions={
             <>
-              <button type="button" onClick={() => setOpen(false)}>
-                {uiText("common.cancel")}</button>
-              <button
+              <Button variant="outline" type="button" onClick={() => setOpen(false)}>
+                {uiText("common.cancel")}</Button>
+              <Button variant="outline"
                 type="button"
                 disabled={!source && (!value || value === "none")}
                 onClick={apply}
               >
-                {uiText("themeImageBorderField.actions")}</button>
+                {uiText("themeImageBorderField.actions")}</Button>
             </>
           }
         >
@@ -168,14 +171,14 @@ export function ThemeImageBorderField({
             onReplace={source ? chooseImage : undefined}
           />
           {source && (
-            <button
+            <Button variant="outline"
               type="button"
               onClick={() => {
                 setSource("");
               }}
             >
               <X size={18} />
-              {uiText("themeImageBorderField.ThemeImageBorderField2")}</button>
+              {uiText("themeImageBorderField.ThemeImageBorderField2")}</Button>
           )}
           {!source && (
             <section>
@@ -214,7 +217,7 @@ export function ThemeImageBorderField({
                           ? cut
                           : (cut / dimension) * 100;
                     return (
-                      <button
+                      <Button variant="outline"
                         key={index}
                         type="button"
                         aria-label={uiText("themeImageBorderField.aria_label2", { value: [uiText("themeImageBorderField.aria_label.value"), uiText("themeImageBorderField.aria_label.value2"), uiText("themeImageBorderField.aria_label.value3"), uiText("themeImageBorderField.aria_label.value4")][index] })}
@@ -289,7 +292,7 @@ export function ThemeImageBorderField({
                         onPointerUp={(e) =>
                           e.currentTarget.releasePointerCapture(e.pointerId)
                         }
-                      ></button>
+                      ></Button>
                     );
                   })}
                 </div>
@@ -298,10 +301,10 @@ export function ThemeImageBorderField({
                   aria-label={uiText("themeImageBorderField.aria_label3")}
                 >
                   <label>
-                    {uiText("themeImageBorderField.ThemeImageBorderField7")}<input
-                      type="checkbox"
+                    {uiText("themeImageBorderField.ThemeImageBorderField7")}<Checkbox
+
                       checked={linked}
-                      onChange={(e) => setLinked(e.target.checked)}
+                      onCheckedChange={(e) => setLinked((e === true))}
                     />
                   </label>
                   {[uiText("themeImageBorderField.ThemeImageBorderField8"), uiText("themeImageBorderField.ThemeImageBorderField9"), uiText("themeImageBorderField.ThemeImageBorderField10"), uiText("themeImageBorderField.ThemeImageBorderField11")].map((label, index) => (
@@ -358,7 +361,7 @@ export function ThemeImageBorderField({
             </div>
           )}
           <label>
-            {uiText("themeImageBorderField.ThemeImageBorderField12")}<input
+            {uiText("themeImageBorderField.ThemeImageBorderField12")}<Input
               aria-label={uiText("themeImageBorderField.aria_label4")}
               type="number"
               min="0"
@@ -387,16 +390,16 @@ export function ThemeImageBorderField({
             />
           </label>
           <label>
-            {uiText("themeImageBorderField.ThemeImageBorderField14")}<input
-              type="checkbox"
+            {uiText("themeImageBorderField.ThemeImageBorderField14")}<Checkbox
+
               checked={fill}
-              onChange={(e) => setFill(e.target.checked)}
+              onCheckedChange={(e) => setFill((e === true))}
             />
           </label>
           <details>
             <summary>{uiText("themeImageBorderField.ThemeImageBorderField15")}</summary>
             <p className="theme-image-hint">{uiText("themeImageBorderField.ThemeImageBorderField16")}</p>
-            <input
+            <Input
               aria-label={uiText("themeImageBorderField.aria_label5")}
               type="number"
               min="0"

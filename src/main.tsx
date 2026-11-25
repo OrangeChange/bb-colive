@@ -3,7 +3,7 @@ import React from "react";
 import { initializeUiLanguage } from "./i18n/runtime.ts";
 import { ObsExternalValidation } from "./obs/ObsExternalValidation.tsx";
 import ReactDOM from "react-dom/client";
-import "./App.css";
+import "./shadcn.css";
 import { invoke } from "@tauri-apps/api/core";
 import { installInteractionPolicy } from "./uiInteraction";
 import { createDiagnosticContext, flushAllDiagnosticLogs, getDiagnosticContext } from "./diagnostics/diagnosticLogger.ts";

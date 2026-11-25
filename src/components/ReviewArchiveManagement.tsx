@@ -1,3 +1,6 @@
+import { DateTimeField, localDateTimeValue } from "./DateTimeField";
+import { Input } from "./shadcn/input";
+import { Button } from "./shadcn/button";
 import { useUiLanguage } from "../i18n/react.ts";
 import { localized, uiText } from "../i18n/index.ts";
 import { useEffect, useMemo, useState } from "react";
@@ -409,13 +412,13 @@ export function ReviewArchiveManagement({
           <h3 className="ui-type-control text-t1">{uiText("reviewArchiveManagement.ReviewArchiveManagement5")}</h3>
           <p className="mt-1 ui-type-meta text-t3">{uiText("reviewArchiveManagement.ReviewArchiveManagement6")}</p>
           <div className="mt-3 flex flex-wrap gap-2">
-            {!sessionOnly && <button type="button" disabled={busy} className="ui-type-control rounded-md border border-line px-3 py-1.5 enabled:hover:border-accent disabled:opacity-50" onClick={exportOwner}>{uiText("reviewArchiveManagement.ReviewArchiveManagement7")}</button>}
-            <button type="button" disabled={busy || !selectedSessionId} className="ui-type-control rounded-md border border-line px-3 py-1.5 enabled:hover:border-accent disabled:opacity-50" onClick={exportSession}>{uiText("reviewArchiveManagement.ReviewArchiveManagement8")}</button>
+            {!sessionOnly && <Button variant="outline" type="button" disabled={busy} className="ui-type-control rounded-md border border-line px-3 py-1.5 enabled:hover:border-accent disabled:opacity-50" onClick={exportOwner}>{uiText("reviewArchiveManagement.ReviewArchiveManagement7")}</Button>}
+            <Button variant="outline" type="button" disabled={busy || !selectedSessionId} className="ui-type-control rounded-md border border-line px-3 py-1.5 enabled:hover:border-accent disabled:opacity-50" onClick={exportSession}>{uiText("reviewArchiveManagement.ReviewArchiveManagement8")}</Button>
             {sessionOnly && onExportResult && <>
-              <button type="button" disabled={busy || resultExportBusy} className="ui-type-control rounded-md border border-line px-3 py-1.5 enabled:hover:border-accent disabled:opacity-50" onClick={() => onExportResult(false)}>{uiText("reviewArchiveManagement.ReviewArchiveManagement9")}</button>
-              <button type="button" disabled={busy || resultExportBusy} className="ui-type-control rounded-md border border-line px-3 py-1.5 enabled:hover:border-accent disabled:opacity-50" onClick={() => onExportResult(true)}>{uiText("reviewArchiveManagement.ReviewArchiveManagement10")}</button>
+              <Button variant="outline" type="button" disabled={busy || resultExportBusy} className="ui-type-control rounded-md border border-line px-3 py-1.5 enabled:hover:border-accent disabled:opacity-50" onClick={() => onExportResult(false)}>{uiText("reviewArchiveManagement.ReviewArchiveManagement9")}</Button>
+              <Button variant="outline" type="button" disabled={busy || resultExportBusy} className="ui-type-control rounded-md border border-line px-3 py-1.5 enabled:hover:border-accent disabled:opacity-50" onClick={() => onExportResult(true)}>{uiText("reviewArchiveManagement.ReviewArchiveManagement10")}</Button>
             </>}
-            {!sessionOnly && <button type="button" disabled={busy} className="ui-type-control rounded-md border border-line px-3 py-1.5 enabled:hover:border-accent disabled:opacity-50" onClick={importOwner}>{uiText("reviewArchiveManagement.ReviewArchiveManagement11")}</button>}
+            {!sessionOnly && <Button variant="outline" type="button" disabled={busy} className="ui-type-control rounded-md border border-line px-3 py-1.5 enabled:hover:border-accent disabled:opacity-50" onClick={importOwner}>{uiText("reviewArchiveManagement.ReviewArchiveManagement11")}</Button>}
           </div>
           {importPreview && (
             <div className="mt-3 rounded-lg border border-accent/40 bg-accent/5 px-3 py-2 ui-type-meta text-t2">
@@ -430,8 +433,8 @@ export function ReviewArchiveManagement({
               </dl>
               {importPreview.unmatched > 0 && <div className="mt-1">{uiText("reviewArchiveManagement.ReviewArchiveManagement22")}{importPreview.unmatched} {uiText("reviewArchiveManagement.ReviewArchiveManagement23")}</div>}
               <div className="mt-2 flex flex-wrap gap-2">
-                <button type="button" disabled={busy} className="rounded-md bg-accent-solid px-3 py-1.5 ui-type-control text-accent-fg disabled:opacity-50" onClick={confirmImport}>{uiText("reviewArchiveManagement.ReviewArchiveManagement24")}</button>
-                <button type="button" disabled={busy} className="rounded-md border border-line px-3 py-1.5 ui-type-control enabled:hover:border-accent disabled:opacity-50" onClick={cancelImport}>{uiText("common.cancel")}</button>
+                <Button variant="default" type="button" disabled={busy} className="rounded-md bg-accent-solid px-3 py-1.5 ui-type-control text-accent-fg disabled:opacity-50" onClick={confirmImport}>{uiText("reviewArchiveManagement.ReviewArchiveManagement24")}</Button>
+                <Button variant="outline" type="button" disabled={busy} className="rounded-md border border-line px-3 py-1.5 ui-type-control enabled:hover:border-accent disabled:opacity-50" onClick={cancelImport}>{uiText("common.cancel")}</Button>
               </div>
             </div>
           )}
@@ -457,21 +460,21 @@ export function ReviewArchiveManagement({
             ) : deleteMode === "before" ? (
               <>
                 <label className="ui-type-meta text-t3" htmlFor="review-delete-date">{uiText("reviewArchiveManagement.ReviewArchiveManagement33")}</label>
-                <input id="review-delete-date" type="date" value={deleteDate} onChange={(event) => setDeleteDate(event.target.value)} className="rounded-md border border-line bg-surface px-2 py-1.5 ui-type-control text-t1" />
+                <DateTimeField id="review-delete-date" showTime={false} label={uiText("reviewArchiveManagement.ReviewArchiveManagement33")} value={deleteDate ? new Date(deleteDate+"T00:00") : undefined} onChange={date=>setDeleteDate(localDateTimeValue(date).slice(0,10))} />
               </>
             ) : (
               <>
                 <label className="ui-type-meta text-t3" htmlFor="review-retention-days">{uiText("reviewArchiveManagement.ReviewArchiveManagement34")}</label>
-                <input id="review-retention-days" type="number" min="1" value={retentionDays} onChange={(event) => setRetentionDays(event.target.value)} className="rounded-md border border-line bg-surface px-2 py-1.5 ui-type-control text-t1" />
+                <Input id="review-retention-days" type="number" min="1" value={retentionDays} onChange={(event) => setRetentionDays(event.target.value)} className="rounded-md border border-line bg-surface px-2 py-1.5 ui-type-control text-t1" />
               </>
             )}
           </div>
           <div className="mt-3 flex flex-wrap gap-2">
-            <button type="button" disabled={busy || (deleteMode === "single" && (!selectedSessionId || selectedSessionRecording))} className="ui-type-control rounded-md border border-line px-3 py-1.5 enabled:hover:border-accent disabled:opacity-50" onClick={previewDelete}>{uiText("reviewArchiveManagement.ReviewArchiveManagement35")}</button>
+            <Button variant="outline" type="button" disabled={busy || (deleteMode === "single" && (!selectedSessionId || selectedSessionRecording))} className="ui-type-control rounded-md border border-line px-3 py-1.5 enabled:hover:border-accent disabled:opacity-50" onClick={previewDelete}>{uiText("reviewArchiveManagement.ReviewArchiveManagement35")}</Button>
             {deletePreview && (
               <>
-                <button type="button" disabled={busy} className={dangerSolidButtonClass} onClick={() => setDeleteConfirmOpen(true)}>{uiText("reviewArchiveManagement.ReviewArchiveManagement36")}</button>
-                <button type="button" disabled={busy} className={actionButtonClass} onClick={cancelDelete}>{uiText("common.cancel")}</button>
+                <Button variant="destructive" type="button" disabled={busy} className={dangerSolidButtonClass} onClick={() => setDeleteConfirmOpen(true)}>{uiText("reviewArchiveManagement.ReviewArchiveManagement36")}</Button>
+                <Button variant="outline" type="button" disabled={busy} className={actionButtonClass} onClick={cancelDelete}>{uiText("common.cancel")}</Button>
               </>
             )}
           </div>
@@ -498,7 +501,7 @@ export function ReviewArchiveManagement({
           />
           {Object.prototype.hasOwnProperty.call(useGeneralSettings.getState().reviewOwnerRetentionDays, ownerId) && ownerRetentionDays !== null && (
             <label className="flex items-center gap-1 ui-type-control text-t2">
-              <input type="number" min="1" value={ownerRetentionDraft} aria-label={uiText("reviewArchiveManagement.aria_label6")} className="w-24 rounded-md border border-line bg-surface px-2 py-1.5 text-right ui-type-control text-t1" onChange={(event) => { setOwnerRetentionDraft(event.target.value); const value = Number(event.target.value); if (Number.isFinite(value) && value > 0) setReviewOwnerRetentionDays(ownerId, value); }} />
+              <Input type="number" min="1" value={ownerRetentionDraft} aria-label={uiText("reviewArchiveManagement.aria_label6")} className="w-24 rounded-md border border-line bg-surface px-2 py-1.5 text-right ui-type-control text-t1" onChange={(event) => { setOwnerRetentionDraft(event.target.value); const value = Number(event.target.value); if (Number.isFinite(value) && value > 0) setReviewOwnerRetentionDays(ownerId, value); }} />
               <span className="ui-type-meta text-t3">{uiText("reviewArchiveManagement.ReviewArchiveManagement40")}</span>
             </label>
           )}

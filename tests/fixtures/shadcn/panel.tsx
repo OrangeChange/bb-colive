@@ -10,22 +10,22 @@ import {
   X,
   SlidersHorizontal,
 } from "lucide-react";
-import { ThemeActionMenu } from "../../../src/components/ThemeActionMenu";
+import { ThemeActionMenu } from "./baseline/ThemeActionMenu";
 import "../../../src/components/nativeThemeEditor.css";
-import { UiSelect } from "../../../src/components/ui/Select";
-import { UiSearchInput } from "../../../src/components/ui/SearchInput";
-import { SwitchButton } from "../../../src/components/SettingsSwitch";
+import { UiSelect } from "./baseline/Select";
+import { UiSearchInput } from "./baseline/SearchInput";
+import { SwitchButton } from "./baseline/SettingsSwitch";
 import {
   PanelSwitch,
   controlClass,
-} from "../../../src/components/voicePanelPrimitives";
-import { SettingsChoiceControl } from "../../../src/components/SettingsChoiceControl";
-import { ConfirmDialog } from "../../../src/components/ConfirmDialog";
+} from "./baseline/voicePanelPrimitives";
+import { SettingsChoiceControl } from "./baseline/SettingsChoiceControl";
+import { ConfirmDialog } from "./baseline/ConfirmDialog";
 import {
   actionButtonClass,
   accentSolidButtonClass,
   dangerActionButtonClass,
-} from "../../../src/components/actionButtonStyles";
+} from "./baseline/actionButtonStyles";
 import { Button } from "../../../src/components/shadcn/button";
 import { Input } from "../../../src/components/shadcn/input";
 import { Label } from "../../../src/components/shadcn/label";

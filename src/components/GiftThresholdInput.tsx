@@ -1,3 +1,5 @@
+import { Button } from "./shadcn/button";
+import { Input } from "./shadcn/input";
 import { useUiLanguage } from "../i18n/react.ts";
 import { uiCurrencyUnit } from "../i18n/format.ts";
 import { uiText } from "../i18n/index.ts";
@@ -30,7 +32,7 @@ export function GiftThresholdInput({
       <span className="gift-threshold-input-label">{label}</span>
       <span className="gift-threshold-input-control">
         <span aria-hidden="true">{uiCurrencyUnit()}</span>
-        <input
+        <Input
           aria-label={inputLabel}
           type="number"
           min="0"
@@ -44,7 +46,7 @@ export function GiftThresholdInput({
           className="gift-threshold-input-field"
         />
         <span className="gift-threshold-input-steppers" data-step={GIFT_THRESHOLD_INPUT_STEP}>
-          <button
+          <Button variant="outline"
             type="button"
             aria-label={uiText("giftThresholdInput.aria_label", { inputLabel: inputLabel })}
             title={uiText("giftThresholdInput.title", { inputLabel: inputLabel })}
@@ -53,8 +55,8 @@ export function GiftThresholdInput({
             className="gift-threshold-input-step"
           >
             <LucideChevronUp aria-hidden="true" />
-          </button>
-          <button
+          </Button>
+          <Button variant="outline"
             type="button"
             aria-label={uiText("giftThresholdInput.aria_label2", { inputLabel: inputLabel })}
             title={uiText("giftThresholdInput.title2", { inputLabel: inputLabel })}
@@ -64,7 +66,7 @@ export function GiftThresholdInput({
             className="gift-threshold-input-step"
           >
             <LucideChevronDown aria-hidden="true" />
-          </button>
+          </Button>
         </span>
       </span>
     </label>

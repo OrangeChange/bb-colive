@@ -1,3 +1,4 @@
+import { Button } from "./shadcn/button";
 import { useUiLanguage } from "../i18n/react.ts";
 import { uiText } from "../i18n/index.ts";
 import { useEffect, useRef } from "react";
@@ -36,11 +37,11 @@ export function SettingsFlowPreview({ alignment, direction, preset, duration }: 
   return <section className="settings-flow-preview" aria-label={uiText("uiControls.flowRegion")}>
     <div className="settings-flow-preview-header ui-type-meta text-t3">
       <span>{uiText("uiControls.flowPreview")}</span>
-      <button type="button" className="settings-inline-button settings-flow-play" onClick={replay}
+      <Button variant="outline" type="button" className="settings-inline-button settings-flow-play" onClick={replay}
         disabled={alignment === undefined || getEventAnimationDuration(preset, duration) === 0}
         title={preset === "none" ? uiText("uiControls.noAnimation") : duration === 0 ? uiText("uiControls.zeroDuration") : uiText("uiControls.previewOnly")}>
         <Play size={14} aria-hidden="true" />{uiText("uiControls.playAnimation")}
-      </button>
+      </Button>
     </div>
     {alignment === undefined ? <p className="settings-hint">{uiText("uiControls.selectAlignment")}</p> :
       <div className="settings-flow-preview-events" data-alignment={alignment}>

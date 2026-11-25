@@ -1,3 +1,5 @@
+import { DateTimeField } from "./DateTimeField";
+import { Button } from "./shadcn/button";
 import { useUiLanguage } from "../i18n/react.ts";
 import { localized, uiText } from "../i18n/index.ts";
 import { UiSearchInput } from "./ui/SearchInput.tsx";
@@ -14,22 +16,7 @@ import { ReviewFilterShell } from "./ReviewFilterShell";
 import { UiSelect } from "./ui/Select";
 import { formatArchiveSessionStatus, formatArchiveQuality, formatArchiveSortDirection } from "../archive/archiveDisplay.ts";
 
-const controlClass = "h-8 min-w-0 rounded-md border border-line bg-bg px-2 ui-type-control text-t1 outline-none focus:border-accent focus:ring-2 focus:ring-accent-ring";
 const buttonClass = "inline-flex h-8 items-center rounded-md border px-2.5 ui-type-control transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent-ring";
-
-function dateValue(timestamp: number | undefined): string {
-  if (timestamp === undefined) return "";
-  const date = new Date(timestamp);
-  if (!Number.isFinite(date.getTime())) return "";
-  const pad = (value: number) => String(value).padStart(2, "0");
-  return `${date.getFullYear()}-${pad(date.getMonth() + 1)}-${pad(date.getDate())}T${pad(date.getHours())}:${pad(date.getMinutes())}`;
-}
-
-function parseDateValue(value: string): number | undefined {
-  if (!value) return undefined;
-  const timestamp = new Date(value).getTime();
-  return Number.isFinite(timestamp) ? timestamp : undefined;
-}
 
 const sortOptions: readonly { value: ArchiveSessionSort; label: string }[] = localized(() => ([
   { value: "startedAt", label: uiText("reviewOwnerSessionFilters.sortOptions.label") },
@@ -147,11 +134,11 @@ export function ReviewOwnerSessionFilters({
         <div className="flex min-w-0 flex-wrap items-center gap-1.5">
           <label className="flex items-center gap-1 ui-type-meta text-t2">
             <span>{uiText("reviewOwnerSessionFilters.ReviewOwnerSessionFilters3")}</span>
-            <input type="datetime-local" step="60" aria-label={uiText("reviewOwnerSessionFilters.aria_label2")} className={controlClass} value={dateValue(query.startedFromTs)} onChange={(event) => onChange({ startedFromTs: parseDateValue(event.target.value) })} />
+            <DateTimeField label={uiText("reviewOwnerSessionFilters.aria_label2")} value={query.startedFromTs === undefined ? undefined : new Date(query.startedFromTs)} onChange={date => onChange({ startedFromTs: date?.getTime() })} />
           </label>
           <label className="flex items-center gap-1 ui-type-meta text-t2">
             <span>{uiText("reviewOwnerSessionFilters.ReviewOwnerSessionFilters4")}</span>
-            <input type="datetime-local" step="60" aria-label={uiText("reviewOwnerSessionFilters.aria_label3")} className={controlClass} value={dateValue(query.startedToTs)} onChange={(event) => onChange({ startedToTs: parseDateValue(event.target.value) })} />
+            <DateTimeField label={uiText("reviewOwnerSessionFilters.aria_label3")} value={query.startedToTs === undefined ? undefined : new Date(query.startedToTs)} onChange={date => onChange({ startedToTs: date?.getTime() })} />
           </label>
         </div>
       )}
@@ -165,12 +152,12 @@ export function ReviewOwnerSessionFilters({
           <span>{uiText("reviewOwnerSessionFilters.ReviewOwnerSessionFilters6")}</span>
           <UiSelect ariaLabel={uiText("reviewOwnerSessionFilters.ariaLabel4")} options={qualityOptions} value={selectedQuality(query)} onValueChange={setQuality} />
         </div>
-        <button
+        <Button variant="outline"
           type="button"
           aria-pressed={query.favoriteOnly}
           className={`${buttonClass} ${query.favoriteOnly ? "border-accent bg-accent-subtle text-accent-text" : "border-line bg-bg text-t2 hover:border-accent/50 hover:bg-raised hover:text-t1"}`}
           onClick={() => onChange({ favoriteOnly: !query.favoriteOnly })}
-        >{uiText("reviewOwnerSessionFilters.ReviewOwnerSessionFilters7")}</button>
+        >{uiText("reviewOwnerSessionFilters.ReviewOwnerSessionFilters7")}</Button>
         <div className="ml-auto flex items-center gap-1 ui-type-meta text-t2">
           <span>{uiText("reviewOwnerSessionFilters.ReviewOwnerSessionFilters8")}</span>
           <UiSelect ariaLabel={uiText("reviewOwnerSessionFilters.ariaLabel5")} options={sortOptions} value={query.sort} onValueChange={(value) => onChange({ sort: value as ArchiveSessionSort })} />

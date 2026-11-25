@@ -1,7 +1,10 @@
+import { RadioGroup, RadioGroupItem } from "./shadcn/radio-group";
+import { Checkbox } from "./shadcn/checkbox";
+import { Button } from "./shadcn/button";
 import { useUiLanguage } from "../i18n/react.ts";
 import { localized, uiText } from "../i18n/index.ts";
-import { useEffect, useMemo, useRef, useState } from "react";
-import { bindUiDismissableLayer } from "./ui/layer";
+import { useMemo, useRef, useState } from "react";
+import { Dialog, DialogContent, DialogTitle, DialogDescription } from "./shadcn/dialog";
 import { invoke } from "@tauri-apps/api/core";
 import { save } from "@tauri-apps/plugin-dialog";
 import type {
@@ -141,15 +144,6 @@ export function ReviewDataExportDialog({ repository, scopeOptions, defaultScopeI
   const [notice, setNotice] = useState<string | null>(null);
   const [error, setError] = useState<string | null>(null);
   const abortRef = useRef<AbortController | null>(null);
-  const dialogRef = useRef<HTMLElement>(null);
-  const busyRef = useRef(busy);
-  const onCloseRef = useRef(onClose);
-  busyRef.current = busy;
-  onCloseRef.current = onClose;
-  useEffect(() => {
-    if (!dialogRef.current) return;
-    return bindUiDismissableLayer(dialogRef.current, () => onCloseRef.current(), { canClose: () => !busyRef.current, modal: true });
-  }, []);
   const selectedScope = scopeOptions.find((option) => option.id === scopeId) ?? scopeOptions[0];
   const selectedCategoryList = useMemo(() => CATEGORIES.filter(({ id }) => categories.has(id)), [categories]);
 
@@ -294,62 +288,60 @@ export function ReviewDataExportDialog({ repository, scopeOptions, defaultScopeI
   };
 
   return (
-    <div className="ui-modal-overlay fixed inset-0 z-50 flex items-center justify-center bg-black/45 p-5" role="presentation" onMouseDown={(event) => { if (event.target === event.currentTarget && !busy) onClose(); }}>
-      <section ref={dialogRef} tabIndex={-1} className="ui-modal-surface flex max-h-[min(720px,calc(100vh-40px))] w-full max-w-2xl flex-col overflow-hidden rounded-xl border border-line bg-surface shadow-2xl" role="dialog" aria-modal="true" aria-labelledby="review-data-export-title">
+    <Dialog open onOpenChange={open=>{if(!open&&!busy)onClose();}}><DialogContent asChild showCloseButton={false} onEscapeKeyDown={event=>{if(busy)event.preventDefault();}} onInteractOutside={event=>{if(busy)event.preventDefault();}} className="max-w-none gap-0 p-0"><section className="ui-modal-surface flex max-h-[min(720px,calc(100vh-40px))] w-[min(672px,calc(100vw-32px))] flex-col overflow-hidden rounded-xl border border-line bg-surface">
         <header className="flex shrink-0 items-center justify-between border-b border-line px-5 py-4">
           <div>
-            <h2 id="review-data-export-title" className="ui-type-section-title text-t1">{uiText("reviewDataExportDialog.ReviewDataExportDialog")}</h2>
-            <p className="mt-1 ui-type-meta text-t3">{uiText("reviewDataExportDialog.ReviewDataExportDialog2")}</p>
+            <DialogTitle asChild><h2 id="review-data-export-title" className="ui-type-section-title text-t1">{uiText("reviewDataExportDialog.ReviewDataExportDialog")}</h2></DialogTitle>
+            <DialogDescription asChild><p className="mt-1 ui-type-meta text-t3">{uiText("reviewDataExportDialog.ReviewDataExportDialog2")}</p></DialogDescription>
           </div>
-          <button type="button" className="h-8 rounded-md px-2 ui-type-control text-t2 enabled:hover:bg-raised enabled:hover:text-t1 disabled:opacity-40" disabled={busy} onClick={onClose}>{uiText("common.close")}</button>
+          <Button variant="outline" type="button" className="h-8 rounded-md px-2 ui-type-control text-t2 enabled:hover:bg-raised enabled:hover:text-t1 disabled:opacity-40" disabled={busy} onClick={onClose}>{uiText("common.close")}</Button>
         </header>
         <div className="min-h-0 flex-1 space-y-5 overflow-y-auto px-5 py-4">
-          <fieldset className="space-y-2">
+          <RadioGroup asChild value={scopeId} onValueChange={setScopeId}><fieldset className="space-y-2">
             <legend className="ui-type-control text-t1">{uiText("reviewDataExportDialog.ReviewDataExportDialog3")}</legend>
             <div className="grid gap-2 sm:grid-cols-2">
               {scopeOptions.map((option) => (
                 <label key={option.id} className={`cursor-pointer rounded-lg border px-3 py-2 transition-colors ${scopeId === option.id ? "border-accent bg-accent-subtle" : "border-line bg-bg hover:border-accent/50"}`}>
-                  <span className="flex items-center gap-2 ui-type-control text-t1"><input type="radio" name="review-export-scope" checked={scopeId === option.id} onChange={() => setScopeId(option.id)} />{option.label}</span>
+                  <span className="flex items-center gap-2 ui-type-control text-t1"><RadioGroupItem value={option.id} />{option.label}</span>
                   <span className="mt-1 block pl-5 ui-type-meta text-t3">{option.description}</span>
                 </label>
               ))}
             </div>
-          </fieldset>
-          <fieldset className="space-y-2">
+          </fieldset></RadioGroup>
+          <RadioGroup asChild value={format} onValueChange={next=>setFormat(next as typeof format)}><fieldset className="space-y-2">
             <legend className="ui-type-control text-t1">{uiText("reviewDataExportDialog.ReviewDataExportDialog4")}</legend>
             <div className="grid gap-2 sm:grid-cols-3">
-              <label className={`cursor-pointer rounded-lg border px-3 py-2 ${format === "excel" ? "border-accent bg-accent-subtle" : "border-line bg-bg"}`}><span className="flex items-center gap-2 ui-type-control text-t1"><input type="radio" name="review-export-format" checked={format === "excel"} onChange={() => setFormat("excel")} />Excel</span><span className="mt-1 block pl-5 ui-type-meta text-t3">{uiText("reviewDataExportDialog.ReviewDataExportDialog5")}</span></label>
-              <label className={`cursor-pointer rounded-lg border px-3 py-2 ${format === "csv" ? "border-accent bg-accent-subtle" : "border-line bg-bg"}`}><span className="flex items-center gap-2 ui-type-control text-t1"><input type="radio" name="review-export-format" checked={format === "csv"} onChange={() => setFormat("csv")} />CSV</span><span className="mt-1 block pl-5 ui-type-meta text-t3">{uiText("reviewDataExportDialog.ReviewDataExportDialog6")}</span></label>
-              <label className={`cursor-pointer rounded-lg border px-3 py-2 ${format === "ai-json" ? "border-accent bg-accent-subtle" : "border-line bg-bg"}`}><span className="flex items-center gap-2 ui-type-control text-t1"><input type="radio" name="review-export-format" checked={format === "ai-json"} onChange={() => setFormat("ai-json")} />JSON</span><span className="mt-1 block pl-5 ui-type-meta text-t3">{uiText("reviewDataExportDialog.ReviewDataExportDialog7")}</span></label>
+              <label className={`cursor-pointer rounded-lg border px-3 py-2 ${format === "excel" ? "border-accent bg-accent-subtle" : "border-line bg-bg"}`}><span className="flex items-center gap-2 ui-type-control text-t1"><RadioGroupItem value={"excel"} />Excel</span><span className="mt-1 block pl-5 ui-type-meta text-t3">{uiText("reviewDataExportDialog.ReviewDataExportDialog5")}</span></label>
+              <label className={`cursor-pointer rounded-lg border px-3 py-2 ${format === "csv" ? "border-accent bg-accent-subtle" : "border-line bg-bg"}`}><span className="flex items-center gap-2 ui-type-control text-t1"><RadioGroupItem value={"csv"} />CSV</span><span className="mt-1 block pl-5 ui-type-meta text-t3">{uiText("reviewDataExportDialog.ReviewDataExportDialog6")}</span></label>
+              <label className={`cursor-pointer rounded-lg border px-3 py-2 ${format === "ai-json" ? "border-accent bg-accent-subtle" : "border-line bg-bg"}`}><span className="flex items-center gap-2 ui-type-control text-t1"><RadioGroupItem value={"ai-json"} />JSON</span><span className="mt-1 block pl-5 ui-type-meta text-t3">{uiText("reviewDataExportDialog.ReviewDataExportDialog7")}</span></label>
             </div>
-          </fieldset>
+          </fieldset></RadioGroup>
           {format === "ai-json" && <p className="ui-type-meta text-t3">{uiText("reviewDataExportDialog.ReviewDataExportDialog8")}</p>}
           {format === "csv" && (
             <fieldset className="space-y-2">
               <legend className="ui-type-control text-t1">{uiText("reviewDataExportDialog.ReviewDataExportDialog9")}</legend>
               <div className="flex flex-wrap gap-2">
-                {CATEGORIES.map(({ id, label }) => <label key={id} className="inline-flex items-center gap-2 py-1 ui-type-control text-t2"><input type="checkbox" checked={categories.has(id)} onChange={() => toggleCategory(id)} />{label}</label>)}
+                {CATEGORIES.map(({ id, label }) => <label key={id} className="inline-flex items-center gap-2 py-1 ui-type-control text-t2"><Checkbox  checked={categories.has(id)} onCheckedChange={() => toggleCategory(id)} />{label}</label>)}
               </div>
             </fieldset>
           )}
           {format !== "ai-json" && (
-            <fieldset className="space-y-2">
+            <RadioGroup asChild value={direction} onValueChange={next=>setDirection(next as typeof direction)}><fieldset className="space-y-2">
               <legend className="ui-type-control text-t1">{uiText("reviewDataExportDialog.ReviewDataExportDialog10")}</legend>
               <div className="flex gap-2">
-                {(["asc", "desc"] as const).map((value) => <label key={value} className="inline-flex items-center gap-2 ui-type-control text-t2"><input type="radio" name="review-export-direction" checked={direction === value} onChange={() => setDirection(value)} />{value === "asc" ? uiText("reviewDataExportDialog.ReviewDataExportDialog11") : uiText("reviewDataExportDialog.ReviewDataExportDialog12")}</label>)}
+                {(["asc", "desc"] as const).map((value) => <label key={value} className="inline-flex items-center gap-2 ui-type-control text-t2"><RadioGroupItem value={value} />{value === "asc" ? uiText("reviewDataExportDialog.ReviewDataExportDialog11") : uiText("reviewDataExportDialog.ReviewDataExportDialog12")}</label>)}
               </div>
-            </fieldset>
+            </fieldset></RadioGroup>
           )}
           {phase && <p role="status" className="rounded-lg border border-line bg-bg px-3 py-2 ui-type-control text-t2">{phase}</p>}
           {notice && <p role="status" className="rounded-lg border border-accent/40 bg-accent-subtle px-3 py-2 ui-type-control text-accent-text">{notice}</p>}
           {error && <p role="alert" className="rounded-lg border border-danger/40 bg-danger/10 px-3 py-2 ui-type-control text-danger">{uiText("reviewDataExportDialog.ReviewDataExportDialog13")}{error}</p>}
         </div>
         <footer className="flex shrink-0 items-center justify-end gap-2 border-t border-line px-5 py-3">
-          {busy && cancelable && <button type="button" className="h-8 rounded-md border border-danger/50 px-3 ui-type-control text-danger hover:bg-danger/10" onClick={cancel}>{uiText("reviewDataExportDialog.ReviewDataExportDialog14")}</button>}
-          <button type="button" className="h-8 rounded-md border border-line px-3 ui-type-control text-t2 enabled:hover:bg-raised disabled:opacity-40" disabled={busy} onClick={onClose}>{uiText("common.close")}</button>
-          <button type="button" className="h-8 rounded-md bg-accent-solid px-3 ui-type-control text-accent-fg enabled:hover:bg-accent-solid-hover enabled:active:bg-accent-solid-active disabled:cursor-not-allowed disabled:opacity-50" disabled={busy || !selectedScope} onClick={() => void exportData()}>{busy ? uiText("reviewDataExportDialog.ReviewDataExportDialog15") : uiText("reviewDataExportDialog.ReviewDataExportDialog16")}</button>
+          {busy && cancelable && <Button variant="outline" type="button" className="h-8 rounded-md border border-danger/50 px-3 ui-type-control text-danger hover:bg-danger/10" onClick={cancel}>{uiText("reviewDataExportDialog.ReviewDataExportDialog14")}</Button>}
+          <Button variant="outline" type="button" className="h-8 rounded-md border border-line px-3 ui-type-control text-t2 enabled:hover:bg-raised disabled:opacity-40" disabled={busy} onClick={onClose}>{uiText("common.close")}</Button>
+          <Button variant="default" type="button" className="h-8 rounded-md bg-accent-solid px-3 ui-type-control text-accent-fg enabled:hover:bg-accent-solid-hover enabled:active:bg-accent-solid-active disabled:cursor-not-allowed disabled:opacity-50" disabled={busy || !selectedScope} onClick={() => void exportData()}>{busy ? uiText("reviewDataExportDialog.ReviewDataExportDialog15") : uiText("reviewDataExportDialog.ReviewDataExportDialog16")}</Button>
         </footer>
-      </section>
-    </div>
+      </section></DialogContent></Dialog>
   );
 }

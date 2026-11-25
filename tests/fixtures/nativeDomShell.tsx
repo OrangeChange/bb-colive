@@ -1,4 +1,4 @@
-import '../../src/App.css';
+import '../../src/shadcn.css';
 import '../../src/components/nativeThemeEditor.css';
 import '../../src/obs/obs.css';
 import {createRoot} from 'react-dom/client';

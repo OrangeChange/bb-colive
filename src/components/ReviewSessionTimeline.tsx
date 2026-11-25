@@ -1,3 +1,4 @@
+import { Button } from "./shadcn/button";
 import { useUiLanguage } from "../i18n/react.ts";
 import { uiText } from "../i18n/index.ts";
 import { ChevronDown as LucideChevronDown } from "lucide-react";
@@ -76,13 +77,13 @@ function ArchiveNotice({ notice, onDismiss }: {
   return (
     <div className={`flex shrink-0 items-start gap-2 border-b px-3 py-1.5 ui-type-meta ${warning ? "border-warning/30 bg-warning/5 text-warning" : "border-line bg-raised text-t2"}`}>
       <span className="min-w-0 flex-1">{notice.label}：{notice.message}</span>
-      <button
+      <Button variant="outline"
         type="button"
         className="-my-0.5 shrink-0 rounded px-1 text-lg leading-5 opacity-70 transition-opacity hover:opacity-100 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent-ring"
         aria-label={uiText("reviewSessionTimeline.aria_label", { label: notice.label })}
         title={uiText("reviewSessionTimeline.title")}
         onClick={() => onDismiss(notice.code)}
-      >×</button>
+      >×</Button>
     </div>
   );
 }
@@ -929,7 +930,7 @@ export function ReviewSessionTimeline({
           </div>
           <div className="review-timeline-actions" aria-label={uiText("reviewSessionTimeline.aria_label3")}>
             <div ref={displayMenuRef} className="review-timeline-display-wrap">
-              <button
+              <Button variant="outline"
                 ref={displayTriggerRef}
                 type="button"
                 aria-label={uiText("reviewSessionTimeline.aria_label4")}
@@ -939,13 +940,13 @@ export function ReviewSessionTimeline({
                 onClick={() => setDisplayMenuOpen((value) => !value)}
               >
                 {uiText("common.show")}<LucideChevronDown aria-hidden="true" className="ml-1 inline-block h-3 w-3" />
-              </button>
+              </Button>
               {displayMenuOpen && displayMenuPosition && createPortal(
                 <div ref={displayPanelRef} id="review-display-menu" role="menu" aria-label={uiText("reviewSessionTimeline.aria_label5")} className="ui-motion-enter review-timeline-display-menu" style={displayMenuPosition}>
                   <div className="review-timeline-menu-label ui-type-meta text-t3">{uiText("reviewSessionTimeline.ReviewSessionTimeline9")}</div>
                   <div role="group" aria-label={uiText("reviewSessionTimeline.aria_label6")} className="review-timeline-menu-group">
                     {(["asc", "desc"] as const).map((sortDirection) => (
-                      <button
+                      <Button variant="outline"
                         key={sortDirection}
                         type="button"
                         role="menuitemradio"
@@ -953,29 +954,29 @@ export function ReviewSessionTimeline({
                         aria-checked={direction === sortDirection}
                         className={`review-timeline-menu-item ui-type-control ${direction === sortDirection ? "is-selected" : ""}`}
                         onClick={() => onChangeSortDirection?.(sortDirection)}
-                      >{direction === sortDirection ? "✓ " : ""}{sortDirection === "asc" ? uiText("reviewSessionTimeline.ReviewSessionTimeline10") : uiText("reviewSessionTimeline.ReviewSessionTimeline11")}</button>
+                      >{direction === sortDirection ? "✓ " : ""}{sortDirection === "asc" ? uiText("reviewSessionTimeline.ReviewSessionTimeline10") : uiText("reviewSessionTimeline.ReviewSessionTimeline11")}</Button>
                     ))}
                   </div>
                   <div className="review-timeline-menu-divider" />
                   <div className="review-timeline-menu-label ui-type-meta text-t3">{uiText("reviewSessionTimeline.ReviewSessionTimeline12")}</div>
-                  <button
+                  <Button variant="outline"
                     type="button"
                     role="menuitemcheckbox"
                     aria-label={uiText("reviewSessionTimeline.aria_label9")}
                     aria-checked={archiveFilters.showBigEmote !== false}
                     className={`review-timeline-menu-item ui-type-control ${archiveFilters.showBigEmote !== false ? "is-selected" : ""}`}
                     onClick={() => { onToggleShowBigEmote?.(archiveFilters.showBigEmote === false); setDisplayMenuOpen(false); }}
-                  >{archiveFilters.showBigEmote !== false ? "✓ " : ""}{uiText("reviewSessionTimeline.ReviewSessionTimeline13")}</button>
+                  >{archiveFilters.showBigEmote !== false ? "✓ " : ""}{uiText("reviewSessionTimeline.ReviewSessionTimeline13")}</Button>
                 </div>,
                 document.body,
               )}
             </div>
-            <button
+            <Button variant="outline"
               type="button"
               className="review-timeline-action rounded-md border border-line bg-bg px-2 py-1 ui-type-meta text-t2 enabled:hover:border-accent/60 enabled:hover:text-accent-text disabled:cursor-not-allowed disabled:opacity-50"
               disabled={loading || projected.length === 0}
               onClick={() => { void jumpToLatest(); }}
-            >{uiText("reviewSessionTimeline.ReviewSessionTimeline14")}</button>
+            >{uiText("reviewSessionTimeline.ReviewSessionTimeline14")}</Button>
           </div>
         </div>
       </header>
@@ -1011,7 +1012,7 @@ export function ReviewSessionTimeline({
                     <span className="shrink-0">{formatArchiveDateTime(entry.startedAt)}</span>
                     <span className="min-w-0 flex-1 truncate text-t1">{entry.title ?? uiText("reviewSessionTimeline.ReviewSessionTimeline16")}</span>
                     <span>{formatArchiveSessionStatus(entry.status)} · {formatArchiveRecordingStatus(entry.recordingStatus)}</span>
-                    <button
+                    <Button variant="outline"
                       type="button"
                       className="shrink-0 text-accent-text hover:text-t1"
                       title={boundaryNoticeLabel(entry) || undefined}
@@ -1023,7 +1024,7 @@ export function ReviewSessionTimeline({
                         else next.add(entry.sessionId);
                         return next;
                       })}
-                    >{formatArchiveQuality(entry.quality)} {uiText("reviewSessionTimeline.ReviewSessionTimeline17")}{entry.hitCount} {uiText("reviewSessionTimeline.ReviewSessionTimeline5")}</button>
+                    >{formatArchiveQuality(entry.quality)} {uiText("reviewSessionTimeline.ReviewSessionTimeline17")}{entry.hitCount} {uiText("reviewSessionTimeline.ReviewSessionTimeline5")}</Button>
                   </div>
                 );
               }

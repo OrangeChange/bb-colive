@@ -1,3 +1,6 @@
+import { Slider } from "./shadcn/slider";
+import { Input } from "./shadcn/input";
+import { Button } from "./shadcn/button";
 import { useUiLanguage } from "../i18n/react.ts";
 import { localized, uiText, uiSearchText, UI_LANGUAGE_OPTIONS } from "../i18n/index.ts";
 import { changeUiLanguage } from "../i18n/runtime.ts";
@@ -14,7 +17,6 @@ import {
   useMemo,
   useRef,
   useState,
-  type CSSProperties,
   type ReactNode,
   type Dispatch,
   type KeyboardEvent,
@@ -446,7 +448,7 @@ function ShortcutMenuPicker({ value, onChange }: { value: readonly VoiceShortcut
               <LucideGripVertical className="size-4 shrink-0 text-t3" aria-hidden="true" /><MenuActionIcon name={option.icon} active />
               <span className="truncate">{option.label}</span>
             </div>
-            <button
+            <Button variant="outline"
               type="button"
               data-shortcut-delete
               aria-label={uiText("settingsPanel.aria_label3", { label: option.label })}
@@ -456,7 +458,7 @@ function ShortcutMenuPicker({ value, onChange }: { value: readonly VoiceShortcut
               className="size-6 rounded text-t3 hover:bg-surface hover:text-danger focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent-ring"
             >
               ×
-            </button>
+            </Button>
           </div>
         ))}
       </div>
@@ -466,7 +468,7 @@ function ShortcutMenuPicker({ value, onChange }: { value: readonly VoiceShortcut
           {availableOptions.map((option) => {
             const disabled = selectedCount >= MAX_VOICE_SHORTCUT_ACTIONS;
             return (
-              <button
+              <Button variant="outline"
                 key={option.value}
                 type="button"
                 aria-pressed={false}
@@ -480,7 +482,7 @@ function ShortcutMenuPicker({ value, onChange }: { value: readonly VoiceShortcut
               >
                 <MenuActionIcon name={option.icon} />
                 <span>{uiText("common.add")}{option.label}</span>
-              </button>
+              </Button>
             );
           })}
         </div>
@@ -529,7 +531,7 @@ function PixelInput({
     <div className="settings-control-row settings-number-row" data-settings-search={searchId}>
       <span className="settings-control-label ui-type-control text-t2">{label}</span>
       <label className="settings-font-size-control">
-        <input
+        <Input
           type="number"
           min={min}
           max={max}
@@ -593,7 +595,7 @@ function SurfaceColorInput({ value, onChange, searchId, automatic = false, onRes
     <div className="settings-control-row settings-number-row" data-settings-search={searchId}>
       <span className="settings-control-label ui-type-control text-t2">{uiText("settingsPanel.SurfaceColorInput")}</span>
       <div className="settings-control-field relative flex min-w-0 flex-1 items-center gap-2">
-        <button
+        <Button variant="outline"
           type="button"
           ref={triggerRef}
           aria-expanded={open}
@@ -606,8 +608,8 @@ function SurfaceColorInput({ value, onChange, searchId, automatic = false, onRes
         >
           <span className="size-4 shrink-0 rounded border border-line" style={{ backgroundColor: rgbaToCss(value) }} aria-hidden="true" />
           <span className="truncate font-mono text-t2">{automatic ? uiText("settingsPanel.SurfaceColorInput2") : `${rgbaToHex(value)} · ${Math.round(value.a * 100)}%`}</span>
-        </button>
-        {onReset && <button type="button" className="settings-surface-auto" disabled={automatic} onClick={onReset} title={uiText("settingsPanel.title5")} aria-label={uiText("settingsPanel.aria_label7")}><RotateCcw size={14} /></button>}
+        </Button>
+        {onReset && <Button variant="outline" type="button" className="settings-surface-auto" disabled={automatic} onClick={onReset} title={uiText("settingsPanel.title5")} aria-label={uiText("settingsPanel.aria_label7")}><RotateCcw size={14} /></Button>}
         {open && createPortal(
           <div
             ref={popoverRef}
@@ -633,7 +635,7 @@ function SecondsInput({ label, value, onChange, min = MIN_EVENT_EXPIRY_SECONDS, 
     <div className="settings-control-row settings-number-row" data-settings-search={searchId}>
       <span className="settings-control-label ui-type-control text-t2">{label}</span>
       <label className="settings-font-size-control">
-        <input
+        <Input
           type="number"
           min={min}
           max={max}
@@ -657,7 +659,7 @@ function DurationInput({ value, onChange }: { value: number; onChange: (value: n
   return <div className="settings-control-row settings-number-row" data-settings-search="event-animation">
     <span className="settings-control-label ui-type-control text-t2">{uiText("settingsPanel.DurationInput")}</span>
     <label className="settings-font-size-control">
-      <input type="number" min={0} step={EVENT_ANIMATION_DURATION_STEP_MS} value={value} aria-label={uiText("settingsPanel.aria_label8")}
+      <Input type="number" min={0} step={EVENT_ANIMATION_DURATION_STEP_MS} value={value} aria-label={uiText("settingsPanel.aria_label8")}
         className="settings-font-size-input font-mono ui-type-control text-t1"
         onChange={event => { const next = Number(event.target.value); if (Number.isFinite(next)) onChange(next); }} />
       <span className="settings-font-size-unit ui-type-control text-t3">ms</span>
@@ -670,7 +672,7 @@ function SectionTitle({ title, onReset, iconName }: { title: string; iconName?: 
   return (
     <header className="settings-section-title" data-settings-level="1">
       <h3 className="settings-experience-heading ui-type-section-title font-medium text-t1"><SettingsIcon name={iconName ?? ""} />{title}</h3>
-      {onReset && <button type="button" className={`${resetButtonClass} settings-reset-button settings-icon-action`} title={uiText("settingsPanel.title6")} aria-label={uiText("settingsPanel.aria_label9")} onClick={onReset}><RotateCcw size={16} aria-hidden="true" /></button>}
+      {onReset && <Button variant="ghost" type="button" className={`${resetButtonClass} settings-reset-button settings-icon-action`} title={uiText("settingsPanel.title6")} aria-label={uiText("settingsPanel.aria_label9")} onClick={onReset}><RotateCcw size={16} aria-hidden="true" /></Button>}
     </header>
   );
 }
@@ -716,7 +718,7 @@ function SettingsFilterRow({
   return (
     <div ref={surface} className="settings-filter-submenu" onKeyDown={event=>{const items=[...event.currentTarget.querySelectorAll<HTMLButtonElement>('[role="menuitemcheckbox"]')];const index=items.indexOf(document.activeElement as HTMLButtonElement);const next=event.key==="Home"?0:event.key==="End"?items.length-1:event.key==="ArrowDown"?(index+1)%items.length:event.key==="ArrowUp"?(index+items.length-1)%items.length:-1;if(next>=0){event.preventDefault();items[next]?.focus();}}}>
       <div className={`settings-filter-row settings-control-surface ${active ? "is-active" : ""}`}>
-        <button
+        <Button variant="outline"
           type="button"
           aria-pressed={active}
           aria-label={`${label}${active ? uiText("settingsPanel.aria_label10") : uiText("settingsPanel.aria_label11")}`}
@@ -725,9 +727,9 @@ function SettingsFilterRow({
         >
           <span className="settings-filter-row-label">{label}</span>
           <span className="settings-filter-row-state">{active ? uiText("common.show") : uiText("common.hide")}</span>
-        </button>
+        </Button>
         {hasSubmenu && (
-          <button
+          <Button variant="outline"
             type="button"
             className="settings-filter-row-disclosure"
             aria-label={uiText("settingsPanel.aria_label12", { label: label })}
@@ -735,7 +737,7 @@ function SettingsFilterRow({
             onClick={() => setOpen((current) => !current)}
           >
             <LucideChevronDown className={`size-4 transition-transform ${open ? "rotate-180" : ""}`} aria-hidden="true" />
-          </button>
+          </Button>
         )}
       </div>
       {open && selected && onToggle && (
@@ -743,7 +745,7 @@ function SettingsFilterRow({
           {INTERACT_KIND_OPTIONS.map((option) => {
             const checked = selected[option.key] !== false;
             return (
-              <button
+              <Button variant="outline"
                 key={option.key}
                 type="button"
                 role="menuitemcheckbox"
@@ -753,7 +755,7 @@ function SettingsFilterRow({
               >
                 <span className={checked ? "size-1.5 rounded-full bg-accent" : "size-1.5 rounded-full border border-line"} aria-hidden="true" />
                 {option.label}
-              </button>
+              </Button>
             );
           })}
         </div>
@@ -1299,7 +1301,7 @@ export function SettingsPanel({
       <div ref={directoryRef} className="settings-panel-header relative z-20 flex h-11 shrink-0 items-center gap-2 border-b border-line px-4 pr-11">
         <h2 className="ui-type-section-title font-medium text-t1">{uiText("common.settings")}</h2>
         <div ref={settingsSearchShellRef} className="settings-search-shell relative ml-auto">
-          <button
+          <Button variant="outline"
             ref={settingsSearchTriggerRef}
             type="button"
             aria-label={uiText("settingsPanel.aria_label14")}
@@ -1310,7 +1312,7 @@ export function SettingsPanel({
             onClick={() => settingsSearchOpen ? closeSettingsSearch() : openSettingsSearch()}
           >
             <LucideSearch className="size-4" aria-hidden="true" />
-          </button>
+          </Button>
           {settingsSearchOpen && (
             createPortal(
               <div
@@ -1327,7 +1329,7 @@ export function SettingsPanel({
               >
               <div className="settings-search-input-wrap settings-control-surface flex items-center gap-2 px-2">
                 <LucideSearch className="size-4 shrink-0 text-t3" aria-hidden="true" />
-                <input
+                <Input
                   ref={settingsSearchInputRef}
                   value={settingsSearchQuery}
                   onChange={(event) => setSettingsSearchQuery(event.target.value)}
@@ -1337,7 +1339,7 @@ export function SettingsPanel({
                   className="min-w-0 flex-1 bg-transparent py-1.5 ui-type-control text-t1 outline-none placeholder:text-t3"
                 />
                 {settingsSearchQuery && (
-                  <button type="button" aria-label={uiText("settingsPanel.aria_label15")} className="rounded p-0.5 ui-type-control text-t3 hover:bg-raised hover:text-t1" onClick={() => { setSettingsSearchQuery(""); settingsSearchInputRef.current?.focus(); }}><X size={14} aria-hidden="true" /></button>
+                  <Button variant="outline" type="button" aria-label={uiText("settingsPanel.aria_label15")} className="rounded p-0.5 ui-type-control text-t3 hover:bg-raised hover:text-t1" onClick={() => { setSettingsSearchQuery(""); settingsSearchInputRef.current?.focus(); }}><X size={14} aria-hidden="true" /></Button>
                 )}
               </div>
               <div className="settings-search-results mt-2" aria-live="polite">
@@ -1347,7 +1349,7 @@ export function SettingsPanel({
                   <div className="px-2 py-2 ui-type-meta text-t3">{uiText("settingsPanel.SettingsPanel2")}</div>
                 ) : (
                   settingsSearchResults.map((entry) => (
-                    <button
+                    <Button variant="outline"
                       key={entry.id}
                       type="button"
                       className="settings-search-result flex w-full items-center justify-between gap-3 rounded-md px-2 py-1.5 text-left transition-colors hover:bg-raised focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent-ring"
@@ -1355,7 +1357,7 @@ export function SettingsPanel({
                     >
                       <span className="min-w-0 truncate ui-type-control text-t1">{entry.label}</span>
                       <span className="shrink-0 ui-type-micro text-t3">{SETTINGS_SECTIONS.find((section) => section.id === entry.sectionId)?.label}</span>
-                    </button>
+                    </Button>
                   ))
                 )}
               </div>
@@ -1365,7 +1367,7 @@ export function SettingsPanel({
           )}
         </div>
         <div className="settings-section-navigator-shell">
-          <button
+          <Button variant="ghost"
             type="button"
             className="settings-section-navigator settings-control-surface ml-0 flex h-8 min-w-0 items-center justify-start gap-1 px-2 text-left ui-type-control text-t2"
             aria-label={uiText("settingsPanel.aria_label16", { currentLabel: currentLabel })}
@@ -1377,11 +1379,11 @@ export function SettingsPanel({
           >
             <span className="settings-section-navigator-label truncate">{currentLabel}</span>
             <LucideChevronDown className={`size-4 shrink-0 transition-transform ${directoryOpen ? "rotate-180" : ""}`} aria-hidden="true" />
-          </button>
+          </Button>
           {directoryOpen && (
             <div role="listbox" aria-label={uiText("settingsPanel.aria_label17")} className="settings-control-menu settings-section-navigator-menu absolute">
             {SETTINGS_SECTIONS.map((section) => (
-              <button
+              <Button variant="outline"
                 key={section.id}
                 type="button"
                 role="option"
@@ -1390,7 +1392,7 @@ export function SettingsPanel({
                 className={`flex h-8 w-full items-center rounded-md px-2 text-left ui-type-control transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent-ring ${section.id === currentSection ? "bg-accent-subtle font-medium text-accent-text" : "text-t2 hover:bg-raised hover:text-t1"}`}
               >
                 <SettingsIcon name={section.id} />{section.label}
-              </button>
+              </Button>
             ))}
             </div>
           )}
@@ -1445,17 +1447,7 @@ export function SettingsPanel({
               <span>{uiText("settingsPanel.SettingsPanel4")}</span>
               <span className="font-mono text-t1">{Math.round(uiScale * 100)}%</span>
             </span>
-            <input
-              type="range"
-              min={MIN_UI_SCALE * 100}
-              max={MAX_UI_SCALE * 100}
-              step="5"
-              value={Math.round(uiScale * 100)}
-              onChange={(event) => setUiScale(Number(event.target.value) / 100)}
-              aria-label={uiText("settingsPanel.aria_label18")}
-              className="settings-range"
-              style={{ "--settings-range-progress": `${((uiScale - MIN_UI_SCALE) / (MAX_UI_SCALE - MIN_UI_SCALE)) * 100}%` } as CSSProperties}
-            />
+            <Slider min={MIN_UI_SCALE*100} max={MAX_UI_SCALE*100} step={5} value={[Math.round(uiScale*100)]} onValueChange={([value])=>setUiScale(value/100)} aria-label={uiText("settingsPanel.aria_label18")} />
           </label>
           <SettingsSubsectionTitle title={uiText("settingsPanel.title10")} icon={<Power size={16} />} />
           <SettingSwitch
@@ -1659,17 +1651,7 @@ export function SettingsPanel({
               <span>{windowAppearance.material === 'glass' ? uiText("settingsPanel.SettingsPanel9") : uiText("settingsPanel.SettingsPanel10")}</span>
               <span className="font-mono text-t1">{Math.round((windowAppearance.material === 'glass' ? windowAppearance.glassTint : windowAppearance.solidOpacity) * 100)}%</span>
             </span>
-            <input
-              type="range"
-              min={MIN_WINDOW_OPACITY * 100}
-              max={MAX_WINDOW_OPACITY * 100}
-              step="1"
-              value={Math.round((windowAppearance.material === 'glass' ? windowAppearance.glassTint : windowAppearance.solidOpacity) * 100)}
-              onChange={(event) => setWindowAppearance((current) => ({ ...current, [current.material === 'glass' ? 'glassTint' : 'solidOpacity']: Number(event.target.value) / 100 }))}
-              aria-label={windowAppearance.material === 'glass' ? uiText("settingsPanel.aria_label19") : uiText("settingsPanel.aria_label20")}
-              className="settings-range"
-              style={{ "--settings-range-progress": `${(((windowAppearance.material === 'glass' ? windowAppearance.glassTint : windowAppearance.solidOpacity) - MIN_WINDOW_OPACITY) / (MAX_WINDOW_OPACITY - MIN_WINDOW_OPACITY)) * 100}%` } as CSSProperties}
-            />
+            <Slider min={MIN_WINDOW_OPACITY*100} max={MAX_WINDOW_OPACITY*100} step={1} value={[Math.round((windowAppearance.material === 'glass' ? windowAppearance.glassTint : windowAppearance.solidOpacity)*100)]} onValueChange={([value])=>setWindowAppearance(current=>({...current,[current.material === 'glass' ? 'glassTint' : 'solidOpacity']:value/100}))} aria-label={windowAppearance.material === 'glass' ? uiText("settingsPanel.aria_label19") : uiText("settingsPanel.aria_label20")} />
           </label>
           <SurfaceColorInput
             value={resolveWindowSurfaceColor(windowAppearance, resolveWindowScheme(windowAppearance.scheme, softwareScheme))}
@@ -1692,7 +1674,7 @@ export function SettingsPanel({
           <Segmented label={uiText("settingsPanel.label37")} value={windowScheme} onChange={setWindowScheme} options={[{value:"follow",label:uiText("settingsPanel.options.label16")},{value:"light",label:uiText("common.light")},{value:"dark",label:uiText("common.dark")}]} decoration={value => value === "follow" ? <Monitor size={15} /> : value === "light" ? <Sun size={15} /> : <Moon size={15} />} />
           <div ref={(node) => { if (node) anchorRefs.current.set("display", node); }} data-settings-anchor="display" data-settings-search="display-window" className="settings-window-group">
             <SettingsSubsectionTitle iconName="chatWindow" title={uiText("common.chatWindow")} />
-            <div className="settings-window-toggle"><SettingSwitch label={uiText("settingsPanel.label38")} checked={displayOpen} onChange={onToggleDisplay} searchId="display-window-open" /><button type="button" disabled={!displayOpen} onClick={onLocateDisplay} title={uiText("settingsPanel.title24")} aria-label={uiText("settingsPanel.aria_label21")} className="settings-locate-button"><MapPin size={16} /></button></div>
+            <div className="settings-window-toggle"><SettingSwitch label={uiText("settingsPanel.label38")} checked={displayOpen} onChange={onToggleDisplay} searchId="display-window-open" /><Button variant="outline" type="button" disabled={!displayOpen} onClick={onLocateDisplay} title={uiText("settingsPanel.title24")} aria-label={uiText("settingsPanel.aria_label21")} className="settings-locate-button"><MapPin size={16} /></Button></div>
             <SettingSwitch label={uiText("settingsPanel.label39")} checked={displayLocked} onChange={onToggleDisplayLock} searchId="display-window-lock" />
             <SettingsSubsectionTitle iconName="filters" title={uiText("settingsPanel.title18")} level={3} />
             <div className="settings-tertiary-content">
@@ -1714,7 +1696,7 @@ export function SettingsPanel({
           </div>
           <div ref={(node) => { if (node) anchorRefs.current.set("gift", node); }} data-settings-anchor="gift" data-settings-search="gift-window" className="settings-window-group">
             <SettingsSubsectionTitle iconName="revenueWindow" title={uiText("common.revenueWindow")} />
-            <div className="settings-window-toggle"><SettingSwitch label={uiText("settingsPanel.label42")} checked={giftOpen} onChange={onToggleGift} searchId="gift-window-open" /><button type="button" disabled={!giftOpen} onClick={onLocateGift} title={uiText("settingsPanel.title25")} aria-label={uiText("settingsPanel.aria_label22")} className="settings-locate-button"><MapPin size={16} /></button></div>
+            <div className="settings-window-toggle"><SettingSwitch label={uiText("settingsPanel.label42")} checked={giftOpen} onChange={onToggleGift} searchId="gift-window-open" /><Button variant="outline" type="button" disabled={!giftOpen} onClick={onLocateGift} title={uiText("settingsPanel.title25")} aria-label={uiText("settingsPanel.aria_label22")} className="settings-locate-button"><MapPin size={16} /></Button></div>
             <SettingSwitch label={uiText("settingsPanel.label39")} checked={giftLocked} onChange={onToggleGiftLock} disabled={!giftOpen} searchId="gift-window-lock" />
             <Segmented<RevenueWindowMode> label={uiText("settingsPanel.label43")} searchId="gift-window-mode" value={revenueSelection?.mode ?? 'combined'}
               options={[{ value: 'combined', label: uiText("settingsPanel.options.label17") }, { value: 'split', label: uiText("settingsPanel.options.label18") }]}
@@ -1754,7 +1736,7 @@ export function SettingsPanel({
               <div className="ui-type-control text-t2">{uiText("settingsPanel.SettingsPanel14")}</div>
               <div className="ui-type-meta text-t3">{uiText("settingsPanel.SettingsPanel15")}{nicknameEntries.length} {uiText("settingsPanel.SettingsPanel16")}</div>
             </div>
-            <button
+            <Button variant="outline"
               ref={nicknameManagerTriggerRef}
               type="button"
               aria-expanded={nicknameManagerOpen}
@@ -1768,7 +1750,7 @@ export function SettingsPanel({
                 setNicknameManagerOpen((current) => !current);
               }}
             >
-              {uiText("settingsPanel.SettingsPanel17")}</button>
+              {uiText("settingsPanel.SettingsPanel17")}</Button>
           </div>
           {nicknameManagerOpen && createPortal(
             <div
@@ -1786,7 +1768,7 @@ export function SettingsPanel({
             >
               <div className="flex items-center justify-between gap-3">
                 <div className="ui-type-control font-medium text-t1" title={uiText("settingsPanel.title30")}>{uiText("settingsPanel.SettingsPanel14")}</div>
-                <button
+                <Button variant="outline"
                   type="button"
                   aria-label={uiText("settingsPanel.aria_label25")}
                   className="rounded px-1.5 py-0.5 ui-type-control text-t3 transition-colors hover:bg-raised hover:text-t1 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent-ring"
@@ -1798,7 +1780,7 @@ export function SettingsPanel({
                   }}
                 >
                   ×
-                </button>
+                </Button>
               </div>
               {nicknameNotice && <div className="mt-2 ui-type-meta text-t3" role="status">{nicknameNotice}</div>}
               {nicknameEntries.length === 0 ? (
@@ -1810,7 +1792,7 @@ export function SettingsPanel({
                       {editingNicknameUid === uid ? (
                         <div className="settings-user-nickname-entry-editor">
                           <div className="font-mono ui-type-micro text-t3">{uid}</div>
-                          <input
+                          <Input
                             autoFocus
                             value={editingNicknameValue}
                             onChange={(event) => setEditingNicknameValue(event.target.value)}
@@ -1818,18 +1800,18 @@ export function SettingsPanel({
                             aria-label={uiText("settingsPanel.aria_label27", { uid: uid })}
                           />
                           <div className="mt-1.5 flex justify-end gap-1.5">
-                            <button
+                            <Button variant="outline"
                               type="button"
                               className="rounded px-1.5 py-1 ui-type-micro text-t3 transition-colors hover:bg-raised hover:text-t1 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent-ring"
                               onClick={() => { setEditingNicknameUid(null); setEditingNicknameValue(""); setNicknameNotice(""); }}
                             >
-                              {uiText("common.cancel")}</button>
-                            <button
+                              {uiText("common.cancel")}</Button>
+                            <Button variant="default"
                               type="button"
                               className="rounded border border-accent/60 bg-accent-subtle px-2 py-1 ui-type-micro font-medium text-accent-text transition-colors hover:border-accent hover:bg-accent-solid hover:text-accent-fg focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent-ring"
                               onClick={() => saveNicknameEntry(uid)}
                             >
-                              {uiText("common.save")}</button>
+                              {uiText("common.save")}</Button>
                           </div>
                         </div>
                       ) : (
@@ -1838,19 +1820,19 @@ export function SettingsPanel({
                             <span className="font-medium text-t1">{nickname}</span>
                             <span className="ml-2 font-mono ui-type-micro text-t3">{uid}</span>
                           </span>
-                          <button
+                          <Button variant="outline"
                             type="button"
                             className="shrink-0 rounded px-1.5 py-1 ui-type-micro text-t3 transition-colors hover:bg-raised hover:text-t1 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent-ring"
                             onClick={() => { setEditingNicknameUid(uid); setEditingNicknameValue(nickname); setNicknameNotice(""); }}
                           >
-                            {uiText("common.edit")}</button>
-                          <button
+                            {uiText("common.edit")}</Button>
+                          <Button variant="outline"
                             type="button"
                             aria-label={uiText("settingsPanel.aria_label28", { nickname: nickname })}
                             className="shrink-0 rounded px-1.5 py-1 ui-type-micro text-t3 transition-colors hover:bg-danger/10 hover:text-danger focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent-ring"
                             onClick={() => deleteNickname(uid)}
                           >
-                            {uiText("common.delete")}</button>
+                            {uiText("common.delete")}</Button>
                         </div>
                       )}
                     </div>
@@ -1907,23 +1889,23 @@ export function SettingsPanel({
           <SectionTitle iconName="other" title={uiText("settingsPanel.title33")} />
           <div className="settings-control-row" data-settings-search="window-layout">
             <span className="settings-control-label ui-type-control text-t2">{uiText("settingsPanel.SettingsPanel21")}</span>
-            <button type="button" onClick={() => requestReset(uiText("settingsPanel.onClick"), uiText("settingsPanel.onClick2"), onResetWindowLayout)} className="h-8 rounded-md border border-line bg-bg px-2.5 ui-type-control text-t2 transition-colors hover:border-accent/50 hover:bg-surface hover:text-t1 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent-ring">{uiText("settingsPanel.SettingsPanel22")}</button>
+            <Button variant="outline" type="button" onClick={() => requestReset(uiText("settingsPanel.onClick"), uiText("settingsPanel.onClick2"), onResetWindowLayout)} className="h-8 rounded-md border border-line bg-bg px-2.5 ui-type-control text-t2 transition-colors hover:border-accent/50 hover:bg-surface hover:text-t1 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent-ring">{uiText("settingsPanel.SettingsPanel22")}</Button>
           </div>
           <div className="settings-control-row">
             <span className="settings-control-label ui-type-control text-t2">{uiText("settingsPanel.SettingsPanel23")}</span>
-            <button type="button" onClick={() => requestReset(uiText("settingsPanel.onClick3"), uiText("settingsPanel.onClick4"), onResetDisplayWindowLayout)} className="h-8 rounded-md border border-line bg-bg px-2.5 ui-type-control text-t2 transition-colors hover:border-accent/50 hover:bg-surface hover:text-t1 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent-ring">{uiText("settingsPanel.SettingsPanel22")}</button>
+            <Button variant="outline" type="button" onClick={() => requestReset(uiText("settingsPanel.onClick3"), uiText("settingsPanel.onClick4"), onResetDisplayWindowLayout)} className="h-8 rounded-md border border-line bg-bg px-2.5 ui-type-control text-t2 transition-colors hover:border-accent/50 hover:bg-surface hover:text-t1 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent-ring">{uiText("settingsPanel.SettingsPanel22")}</Button>
           </div>
           <div className="settings-control-row">
             <span className="settings-control-label ui-type-control text-t2">{uiText("settingsPanel.SettingsPanel24")}</span>
-            <button type="button" onClick={() => requestReset(uiText("settingsPanel.onClick5"), uiText("settingsPanel.onClick6"), onResetGiftWindowLayout)} className="h-8 rounded-md border border-line bg-bg px-2.5 ui-type-control text-t2 transition-colors hover:border-accent/50 hover:bg-surface hover:text-t1 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent-ring">{uiText("settingsPanel.SettingsPanel22")}</button>
+            <Button variant="outline" type="button" onClick={() => requestReset(uiText("settingsPanel.onClick5"), uiText("settingsPanel.onClick6"), onResetGiftWindowLayout)} className="h-8 rounded-md border border-line bg-bg px-2.5 ui-type-control text-t2 transition-colors hover:border-accent/50 hover:bg-surface hover:text-t1 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent-ring">{uiText("settingsPanel.SettingsPanel22")}</Button>
           </div>
           <div className="settings-control-row">
             <span className="settings-control-label ui-type-control text-t2">{uiText("settingsPanel.SettingsPanel25")}</span>
-            <button type="button" onClick={() => requestReset(uiText("settingsPanel.onClick7"), uiText("settingsPanel.onClick8"), onResetAllWindowLayout)} className="h-8 rounded-md border border-line bg-bg px-2.5 ui-type-control text-t2 transition-colors hover:border-accent/50 hover:bg-surface hover:text-t1 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent-ring">{uiText("settingsPanel.SettingsPanel26")}</button>
+            <Button variant="outline" type="button" onClick={() => requestReset(uiText("settingsPanel.onClick7"), uiText("settingsPanel.onClick8"), onResetAllWindowLayout)} className="h-8 rounded-md border border-line bg-bg px-2.5 ui-type-control text-t2 transition-colors hover:border-accent/50 hover:bg-surface hover:text-t1 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent-ring">{uiText("settingsPanel.SettingsPanel26")}</Button>
           </div>
           <div className="settings-control-row">
             <span className="settings-control-label ui-type-control text-t2">{uiText("settingsPanel.SettingsPanel27")}</span>
-            <button type="button" onClick={() => requestReset(uiText("settingsPanel.onClick9"), uiText("settingsPanel.onClick10"), resetAll)} className="h-8 rounded-md border border-line bg-bg px-2.5 ui-type-control text-t2 transition-colors hover:border-accent/50 hover:bg-surface hover:text-t1 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent-ring">{uiText("settingsPanel.SettingsPanel28")}</button>
+            <Button variant="outline" type="button" onClick={() => requestReset(uiText("settingsPanel.onClick9"), uiText("settingsPanel.onClick10"), resetAll)} className="h-8 rounded-md border border-line bg-bg px-2.5 ui-type-control text-t2 transition-colors hover:border-accent/50 hover:bg-surface hover:text-t1 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent-ring">{uiText("settingsPanel.SettingsPanel28")}</Button>
           </div>
           <div ref={(node) => { if (node) anchorRefs.current.set("diagnostics", node); }} data-settings-search="diagnostics">
             <DiagnosticSettings

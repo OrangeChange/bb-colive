@@ -1,11 +1,24 @@
-import { useUiLanguage } from "../../i18n/react.ts";
-import { uiText } from "../../i18n/index.ts";
-import { Search as LucideSearch, Check as LucideCheck, X } from "lucide-react";
-import * as PopoverPrimitive from "@radix-ui/react-popover";
-import { useEffect, useId, useMemo, useRef, useState, type KeyboardEvent, type ReactNode } from "react";
+import {
+  useMemo,
+  useLayoutEffect,
+  useRef,
+  useState,
+  type KeyboardEvent,
+} from "react";
+import { Search, X } from "lucide-react";
+import { useUiLanguage } from "../../i18n/react";
+import { uiText } from "../../i18n";
+import { Popover, PopoverAnchor, PopoverContent } from "../shadcn/popover";
+import {
+  Command,
+  CommandList,
+  CommandGroup,
+  CommandItem,
+} from "../shadcn/command";
+import { Input } from "../shadcn/input";
+import { Button } from "../shadcn/button";
 import { filterComboboxOptions, type ComboboxOption } from "./comboboxOptions";
 import { moveComboboxHighlight } from "./comboboxState";
-
 type UiComboboxProps = {
   id: string;
   ariaLabel: string;
@@ -18,26 +31,6 @@ type UiComboboxProps = {
   disabled?: boolean;
 };
 
-function joinClassNames(...classNames: Array<string | undefined>): string {
-  return classNames.filter(Boolean).join(" ");
-}
-
-function groupLabel(group: ComboboxOption["group"]): string {
-  return group === "recent" ? uiText("combobox.groupLabel") : uiText("combobox.groupLabel2");
-}
-
-function SearchIcon(): ReactNode {
-  return (
-    <LucideSearch width="15" height="15" aria-hidden="true" />
-  );
-}
-
-function CheckIcon(): ReactNode {
-  return (
-    <LucideCheck width="14" height="14" aria-hidden="true" />
-  );
-}
-
 export function UiCombobox({
   id,
   ariaLabel,
@@ -46,131 +39,170 @@ export function UiCombobox({
   options,
   onValueChange,
   onKeyDown,
-  className,
+  className = "",
   disabled = false,
 }: UiComboboxProps) {
   useUiLanguage();
-  const [open, setOpen] = useState(false);
-  const [highlightedIndex, setHighlightedIndex] = useState(0);
-  const anchorRef = useRef<HTMLDivElement>(null);
-  const inputRef = useRef<HTMLInputElement>(null);
-  const listboxId = `${id}-listbox-${useId().replace(/:/g, "")}`;
-  const filteredOptions = useMemo(() => filterComboboxOptions(options, value), [options, value]);
-
-  useEffect(() => {
-    setHighlightedIndex((current) => Math.min(current, Math.max(0, filteredOptions.length - 1)));
-  }, [filteredOptions.length]);
-
-  const openIfOptionsExist = (nextValue = value) => {
-    setOpen(filterComboboxOptions(options, nextValue).length > 0);
-  };
-
-  const selectOption = (option: ComboboxOption) => {
+  const [open, setOpen] = useState(false),
+    [highlight, setHighlight] = useState(0);
+  const [relationship, setRelationship] = useState<{
+    list?: string;
+    active?: string;
+  }>({});
+  const anchor = useRef<HTMLDivElement>(null);
+  const [list, setList] = useState<HTMLDivElement | null>(null);
+  const matches = useMemo(
+    () => filterComboboxOptions(options, value),
+    [options, value],
+  );
+  useLayoutEffect(() => {
+    const node = list;
+    const selected = [
+      ...(node?.querySelectorAll<HTMLElement>("[cmdk-item]") ?? []),
+    ].find(
+      (item) => item.getAttribute("data-value") === matches[highlight]?.value,
+    );
+    const next = { list: node?.id, active: selected?.id };
+    setRelationship((current) =>
+      current.list === next.list && current.active === next.active
+        ? current
+        : next,
+    );
+  }, [list, open, matches, highlight]);
+  const choose = (option: ComboboxOption) => {
     onValueChange(option.value);
     setOpen(false);
-    inputRef.current?.focus();
+    anchor.current?.querySelector("input")?.focus();
   };
-
-  const handleKeyDown = (event: KeyboardEvent<HTMLInputElement>) => {
-    if (event.key === "ArrowDown" || event.key === "ArrowUp") {
-      event.preventDefault();
-      if (!open) {
-        openIfOptionsExist();
-        return;
-      }
-      setHighlightedIndex((current) => moveComboboxHighlight(filteredOptions.length, current, event.key as "ArrowDown" | "ArrowUp"));
-      return;
-    }
-    if (event.key === "Home" || event.key === "End") {
-      if (!open) return;
-      event.preventDefault();
-      setHighlightedIndex((current) => moveComboboxHighlight(filteredOptions.length, current, event.key as "Home" | "End"));
-      return;
-    }
-    if (event.key === "Escape" && open) {
-      event.preventDefault();
-      setOpen(false);
-      return;
-    }
-    if (event.key === "Enter" && !event.nativeEvent.isComposing && open && filteredOptions[highlightedIndex]) {
-      event.preventDefault();
-      selectOption(filteredOptions[highlightedIndex]);
-      return;
-    }
-    onKeyDown?.(event);
-  };
-
   return (
-    <PopoverPrimitive.Root open={open} onOpenChange={setOpen}>
-      <PopoverPrimitive.Anchor asChild>
-        <div ref={anchorRef} className={joinClassNames("ui-combobox-anchor", className)}>
-          <span className="ui-combobox-icon" aria-hidden="true">{SearchIcon()}</span>
-          <input
-            ref={inputRef}
+    <Popover open={open && matches.length > 0} onOpenChange={setOpen}>
+      <PopoverAnchor asChild>
+        <div ref={anchor} className={`ui-combobox-anchor ${className}`}>
+          <Search size={15} className="shrink-0 text-t3" aria-hidden />
+          <Input
             id={id}
-            type="search"
             role="combobox"
-            aria-label={ariaLabel}
             aria-autocomplete="list"
-            aria-controls={open ? listboxId : undefined}
-            aria-expanded={open}
-            aria-activedescendant={open && filteredOptions[highlightedIndex] ? `${listboxId}-option-${highlightedIndex}` : undefined}
+            aria-controls={open ? relationship.list : undefined}
+            aria-activedescendant={open ? relationship.active : undefined}
+            aria-label={ariaLabel}
+            aria-expanded={open && matches.length > 0}
             placeholder={placeholder}
-            value={value}
             disabled={disabled}
-            onFocus={() => openIfOptionsExist()}
+            value={value}
+            className="ui-combobox-input h-full border-0 bg-transparent p-0 shadow-none focus-visible:ring-0"
+            onFocus={() => setOpen(matches.length > 0)}
             onChange={(event) => {
               onValueChange(event.target.value);
-              setHighlightedIndex(0);
-              openIfOptionsExist(event.target.value);
-            }}
-            onKeyDown={handleKeyDown}
-            className="ui-combobox-input ui-type-control"
-          />
-          {value && <button type="button" className="ui-combobox-clear" aria-label={uiText("combobox.aria_label", { ariaLabel: ariaLabel })} title={uiText("combobox.title")} disabled={disabled} onClick={() => { onValueChange(""); setHighlightedIndex(0); anchorRef.current?.querySelector("input")?.focus(); }}><X size={14} aria-hidden="true" /></button>}
-        </div>
-      </PopoverPrimitive.Anchor>
-      <PopoverPrimitive.Portal>
-        <PopoverPrimitive.Content
-          align="start"
-          sideOffset={4}
-          collisionPadding={8}
-          data-ui-overlay="true"
-          onInteractOutside={(event) => {
-            if (anchorRef.current?.contains(event.target as Node)) event.preventDefault();
-          }}
-          onPointerDown={(event) => event.stopPropagation()}
-          onOpenAutoFocus={(event) => event.preventDefault()}
-          onCloseAutoFocus={(event) => event.preventDefault()}
-          className="ui-combobox-content"
-        >
-          <div id={listboxId} role="listbox" aria-label={uiText("combobox.aria_label2", { ariaLabel: ariaLabel })} className="ui-combobox-list">
-            {filteredOptions.map((option, index) => {
-              const previous = filteredOptions[index - 1];
-              const showGroupLabel = !previous || previous.group !== option.group;
-              return (
-                <div key={`${option.group}:${option.value}`}>
-                  {showGroupLabel && <div className="ui-combobox-group-label">{groupLabel(option.group)}</div>}
-                  <button
-                    id={`${listboxId}-option-${index}`}
-                    type="button"
-                    role="option"
-                    aria-selected={option.value === value}
-                    tabIndex={-1}
-                    className={`ui-combobox-option ${index === highlightedIndex ? "is-highlighted" : ""}`}
-                    onMouseDown={(event) => event.preventDefault()}
-                    onMouseEnter={() => setHighlightedIndex(index)}
-                    onClick={() => selectOption(option)}
-                  >
-                    <span className="min-w-0 flex-1 truncate">{option.label}</span>
-                    {option.value === value && <span className="ui-combobox-check" aria-hidden="true">{CheckIcon()}</span>}
-                  </button>
-                </div>
+              setHighlight(0);
+              setOpen(
+                filterComboboxOptions(options, event.target.value).length > 0,
               );
-            })}
-          </div>
-        </PopoverPrimitive.Content>
-      </PopoverPrimitive.Portal>
-    </PopoverPrimitive.Root>
+            }}
+            onKeyDown={(event) => {
+              if (event.nativeEvent.isComposing) {
+                event.stopPropagation();
+                return;
+              }
+              if (event.key === "Escape" && open) {
+                event.preventDefault();
+                event.stopPropagation();
+                setOpen(false);
+                return;
+              }
+              if (
+                ["ArrowDown", "ArrowUp", "Home", "End"].includes(event.key) &&
+                (open || event.key.startsWith("Arrow"))
+              ) {
+                event.preventDefault();
+                if (!open) setOpen(matches.length > 0);
+                else
+                  setHighlight((current) =>
+                    moveComboboxHighlight(
+                      matches.length,
+                      current,
+                      event.key as "ArrowDown" | "ArrowUp" | "Home" | "End",
+                    ),
+                  );
+                return;
+              }
+              if (event.key === "Enter" && open && matches[highlight]) {
+                event.preventDefault();
+                choose(matches[highlight]);
+                return;
+              }
+              onKeyDown?.(event);
+            }}
+          />
+          {value && (
+            <Button
+              variant="ghost"
+              size="icon-xs"
+              disabled={disabled}
+              aria-label={uiText("combobox.aria_label", { ariaLabel })}
+              title={uiText("combobox.title")}
+              onClick={() => {
+                onValueChange("");
+                setHighlight(0);
+                anchor.current?.querySelector("input")?.focus();
+              }}
+            >
+              <X size={14} aria-hidden />
+            </Button>
+          )}
+        </div>
+      </PopoverAnchor>
+      <PopoverContent
+        align="start"
+        collisionPadding={8}
+        data-ui-overlay="true"
+        className="ui-combobox-content p-1"
+        onInteractOutside={(event) => {
+          if (anchor.current?.contains(event.target as Node))
+            event.preventDefault();
+        }}
+        onOpenAutoFocus={(event) => event.preventDefault()}
+        onCloseAutoFocus={(event) => event.preventDefault()}
+        onPointerDown={(event) => event.stopPropagation()}
+      >
+        <Command
+          shouldFilter={false}
+          disablePointerSelection
+          value={matches[highlight]?.value ?? ""}
+        >
+          <CommandList
+            ref={setList}
+            label={uiText("combobox.aria_label2", { ariaLabel })}
+          >
+            {(["recent", "suggestion"] as const).map((group) => (
+              <CommandGroup
+                key={group}
+                heading={
+                  group === "recent"
+                    ? uiText("combobox.groupLabel")
+                    : uiText("combobox.groupLabel2")
+                }
+              >
+                {matches.map(
+                  (option, index) =>
+                    option.group === group && (
+                      <CommandItem
+                        key={`${group}:${option.value}`}
+                        value={option.value}
+                        data-checked={option.value === value}
+                        onMouseEnter={() => setHighlight(index)}
+                        onMouseDown={(event) => event.preventDefault()}
+                        onSelect={() => choose(option)}
+                      >
+                        {option.label}
+                      </CommandItem>
+                    ),
+                )}
+              </CommandGroup>
+            ))}
+          </CommandList>
+        </Command>
+      </PopoverContent>
+    </Popover>
   );
 }

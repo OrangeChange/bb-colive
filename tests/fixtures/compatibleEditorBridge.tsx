@@ -14,7 +14,7 @@ import { createThemeSessionHost } from "../../src/themes/themeEditorSession.ts";
 import { normalizeNativeVisualModel } from "../../src/themes/nativeComponentAppearance.ts";
 import { patchCompatibleManagedCss } from "../../src/themes/compatManagedCss.ts";
 import { reverseSyncCompatibleCss } from "../../src/themes/compatCssReverseSync.ts";
-import "../../src/App.css";
+import "../../src/shadcn.css";
 import "../../src/compat/blivechat/register.tsx";
 import "../../src/compat/openlive/register.tsx";
 import "../../src/compat/laplace/register.tsx";

@@ -1,3 +1,4 @@
+import { Input } from "../../components/shadcn/input";
 import { uiText } from "../../i18n/index.ts";
 import { useUiLanguage } from "../../i18n/react.ts";
 import { resolveThemeEventVisibility } from "../../themes/themeEventVisibility.ts";
@@ -61,8 +62,8 @@ function BlivechatBasicControls({ document, onSettingsChange }: { document: Them
   const row = (key: "showGiftName" | "showTimestamp" | "maskUsername" | "showAvatar" | "showUsername" | "showGuardBadge" | "showModBadge", label: string) => <div className="native-theme-setting-row" key={key}><PanelSwitch label={label} checked={Boolean(settings[key])} onChange={() => update({ [key]: !settings[key] })} /><span>{label}</span></div>;
   return <>
     <section className="native-editor-section"><header><h3>{uiText("uiControls.basic")}</h3><p>{uiText("uiControls.scaleHelp")}</p></header>
-      <div className="native-theme-inline-fields"><label className="native-theme-number-field"><span>{uiText("uiControls.overallScale")}</span><input type="number" min="0.5" max="3" step="0.05" value={settings.globalScale} onChange={event => update({ globalScale: Number(event.target.value) })} /></label>
-      <label className="native-theme-number-field"><span>{uiText("uiControls.fontScale")}</span><input type="number" min="0.5" max="3" step="0.05" value={settings.fontScale} onChange={event => update({ fontScale: Number(event.target.value) })} /></label></div>
+      <div className="native-theme-inline-fields"><label className="native-theme-number-field"><span>{uiText("uiControls.overallScale")}</span><Input type="number" min="0.5" max="3" step="0.05" value={settings.globalScale} onChange={event => update({ globalScale: Number(event.target.value) })} /></label>
+      <label className="native-theme-number-field"><span>{uiText("uiControls.fontScale")}</span><Input type="number" min="0.5" max="3" step="0.05" value={settings.fontScale} onChange={event => update({ fontScale: Number(event.target.value) })} /></label></div>
     </section>
     <CompatibleThemeEventSettings document={document} onSettingsChange={onSettingsChange} />
     <section className="native-editor-section"><header><h3>{uiText("uiControls.elements")}</h3><p>{uiText("uiControls.outputHelp")}</p></header><div className="native-theme-toggle-grid native-theme-element-grid">{row("showAvatar", uiText("uiControls.avatar"))}{row("showUsername", uiText("uiControls.username"))}{row("showGuardBadge", uiText("uiControls.membershipBadge"))}{row("showModBadge", uiText("uiControls.modBadge"))}{row("showTimestamp", uiText("uiControls.time"))}{row("maskUsername", uiText("uiControls.mask"))}</div></section>

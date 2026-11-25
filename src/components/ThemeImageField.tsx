@@ -1,3 +1,4 @@
+import { Button } from "./shadcn/button";
 import { useUiLanguage } from "../i18n/react.ts";
 import { uiText } from "../i18n/index.ts";
 import { ThemeImagePicker } from "./ThemeImagePicker.tsx";
@@ -298,9 +299,9 @@ export function ThemeImageField({
   };
   return (
     <div className="theme-image-field">
-      <button type="button" onClick={start} disabled={disabled}>
+      <Button variant="outline" type="button" onClick={start} disabled={disabled}>
         <ImagePlus size={18} />
-        {uiText("themeImageField.ThemeImageField")}</button>
+        {uiText("themeImageField.ThemeImageField")}</Button>
       {error && <p role="status">{error}</p>}
       {draft && (
         <ThemeImageDialog
@@ -308,9 +309,9 @@ export function ThemeImageField({
           onClose={() => setDraft(null)}
           actions={
             <>
-              <button type="button" onClick={() => setDraft(null)}>
-                {uiText("common.cancel")}</button>
-              <button
+              <Button variant="outline" type="button" onClick={() => setDraft(null)}>
+                {uiText("common.cancel")}</Button>
+              <Button variant="default"
                 type="button"
                 className="is-primary"
                 onClick={() => {
@@ -366,7 +367,7 @@ export function ThemeImageField({
                   setDraft(null);
                 }}
               >
-                {uiText("themeImageField.actions")}</button>
+                {uiText("themeImageField.actions")}</Button>
             </>
           }
         >
@@ -425,7 +426,7 @@ export function ThemeImageField({
                     })(),
                   }}
                 />
-                <button
+                <Button variant="outline"
                   type="button"
                   className="theme-image-layer-name"
                   onClick={() => {
@@ -476,9 +477,9 @@ export function ThemeImageField({
                       ? uiText("themeImageField.ThemeImageField4")
                       : uiText("themeImageField.ThemeImageField5")}{" "}
                   {index + 1}
-                </button>
+                </Button>
                 {/\burl\(/i.test(item.image) && (
-                  <button
+                  <Button variant="outline"
                     type="button"
                     aria-label={uiText("themeImageField.aria_label", { value: index + 1 })}
                     onClick={() =>
@@ -497,9 +498,9 @@ export function ThemeImageField({
                     ) : (
                       <Eye size={18} />
                     )}
-                  </button>
+                  </Button>
                 )}
-                <button
+                <Button variant="outline"
                   type="button"
                   title={uiText("themeImageField.title3")}
                   aria-label={uiText("themeImageField.aria_label2", { value: index + 1 })}
@@ -510,8 +511,8 @@ export function ThemeImageField({
                   }}
                 >
                   <ArrowUp size={18} />
-                </button>
-                <button
+                </Button>
+                <Button variant="outline"
                   type="button"
                   title={uiText("themeImageField.title4")}
                   aria-label={uiText("themeImageField.aria_label3", { value: index + 1 })}
@@ -522,8 +523,8 @@ export function ThemeImageField({
                   }}
                 >
                   <ArrowDown size={18} />
-                </button>
-                <button
+                </Button>
+                <Button variant="outline"
                   type="button"
                   title={uiText("themeImageField.title5")}
                   aria-label={uiText("themeImageField.aria_label4", { value: index + 1 })}
@@ -537,7 +538,7 @@ export function ThemeImageField({
                   }}
                 >
                   <X size={18} />
-                </button>
+                </Button>
               </div>
             ))}
           </div>
@@ -548,7 +549,7 @@ export function ThemeImageField({
               ) && (
                 <div className="theme-image-dimensions">
                   {[true, false].map((front) => (
-                    <button
+                    <Button variant="outline"
                       key={String(front)}
                       type="button"
                       onClick={() => {
@@ -569,7 +570,7 @@ export function ThemeImageField({
                       }}
                     >
                       {front ? uiText("themeImageField.ThemeImageField6") : uiText("themeImageField.ThemeImageField7")}
-                    </button>
+                    </Button>
                   ))}
                 </div>
               )}
@@ -644,7 +645,7 @@ export function ThemeImageField({
                     />
                     px
                   </label>
-                  <button
+                  <Button variant="outline"
                     type="button"
                     title={locked ? uiText("themeImageField.title6") : uiText("themeImageField.title7")}
                     aria-label={locked ? uiText("themeImageField.aria_label5") : uiText("themeImageField.aria_label6")}
@@ -654,7 +655,7 @@ export function ThemeImageField({
                     }}
                   >
                     {locked ? <Link size={18} /> : <Link2Off size={18} />}
-                  </button>
+                  </Button>
                   <label>
                     {uiText("themeImageField.ThemeImageField10")}<ThemeNumberInput
                       label={uiText("themeImageField.label3")}
@@ -672,7 +673,7 @@ export function ThemeImageField({
                 </div>
               )}
               {size && (
-                <button
+                <Button variant="outline"
                   type="button"
                   onClick={() => {
                     const path = /^url\(["']?(.*?)["']?\)$/.exec(
@@ -698,7 +699,7 @@ export function ThemeImageField({
                   }}
                 >
                   <RotateCcw size={18} />
-                  {uiText("themeImageField.ThemeImageField11")}</button>
+                  {uiText("themeImageField.ThemeImageField11")}</Button>
               )}
               <label>
                 {uiText("themeImageField.ThemeImageField12")}<div className="theme-image-grid">
@@ -717,7 +718,7 @@ export function ThemeImageField({
                         uiText("themeImageField.ThemeImageField.label9"),
                       ][y * 3 + i];
                       return (
-                        <button
+                        <Button variant="outline"
                           type="button"
                           key={position}
                           aria-label={label}
@@ -743,7 +744,7 @@ export function ThemeImageField({
                               style={{ left: `${i * 50}%`, top: `${y * 50}%` }}
                             />
                           </span>
-                        </button>
+                        </Button>
                       );
                     }),
                   )}

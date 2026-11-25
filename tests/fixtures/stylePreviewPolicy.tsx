@@ -14,7 +14,7 @@ import type { ThemeMode } from "../../src/themes/themeTypes.ts";
 import "../../src/compat/blivechat/register.tsx";
 import "../../src/compat/openlive/register.tsx";
 import "../../src/compat/laplace/register.tsx";
-import "../../src/App.css";
+import "../../src/shadcn.css";
 const q = new URLSearchParams(location.search), mode = (q.get('mode') || 'native') as ThemeMode;
 const accentCss='[data-compatible-event-id],.event[data-event-id],.event-row-slot{outline:2px solid rgb(17, 99, 177)!important}';
 const role = q.get('role') || 'editor', channel = new BroadcastChannel(q.get('session') || 'preview-policy-fixture');

@@ -1,3 +1,4 @@
+import { Button } from "./shadcn/button";
 import { formatUiNumber } from "../i18n/format.ts";
 import { useUiLanguage } from "../i18n/react.ts";
 import { uiText } from "../i18n/index.ts";
@@ -26,9 +27,9 @@ export function RoomOverviewBar() {
       guards={guards}
       duration={duration}
     />
-    {!enabled ? <span className="ui-type-meta text-t2">{uiText("roomOverviewBar.RoomOverviewBar2")}</span> : overview.isError ? <button type="button" onClick={refreshOverview} disabled={overview.isFetching}
+    {!enabled ? <span className="ui-type-meta text-t2">{uiText("roomOverviewBar.RoomOverviewBar2")}</span> : overview.isError ? <Button variant="outline" type="button" onClick={refreshOverview} disabled={overview.isFetching}
       className="cursor-pointer rounded px-1 ui-type-meta text-warning enabled:hover:bg-raised focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent-ring disabled:cursor-wait"
-      title={uiText("roomOverviewBar.title")}>{uiText("common.retry")}</button>
+      title={uiText("roomOverviewBar.title")}>{uiText("common.retry")}</Button>
       : overview.isPending && <span role="status" className="ui-type-meta text-t2">{uiText("roomOverviewBar.RoomOverviewBar3")}</span>}
   </div>
 }

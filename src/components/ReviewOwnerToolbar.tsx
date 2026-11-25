@@ -1,3 +1,4 @@
+import { Button } from "./shadcn/button";
 import { useUiLanguage } from "../i18n/react.ts";
 import { uiText } from "../i18n/index.ts";
 import type { ReviewOwnerMode } from "../archive/archiveTypes.ts";
@@ -14,18 +15,18 @@ export function ReviewOwnerToolbar({
 
   return (
     <div role="group" aria-label={uiText("reviewOwnerToolbar.aria_label")} className="review-owner-toolbar inline-flex w-fit flex-wrap items-center rounded-md border border-line bg-bg p-0.5">
-      <button
+      <Button variant="outline"
         type="button"
         aria-pressed={mode === "sessions"}
         className={`${buttonClass} ${mode === "sessions" ? "border-accent bg-accent-subtle text-accent-text" : "text-t2 hover:bg-raised hover:text-t1"}`}
         onClick={() => onModeChange("sessions")}
-      >{uiText("reviewOwnerToolbar.ReviewOwnerToolbar")}</button>
-      <button
+      >{uiText("reviewOwnerToolbar.ReviewOwnerToolbar")}</Button>
+      <Button variant="outline"
         type="button"
         aria-pressed={mode === "events"}
         className={`${buttonClass} ${mode === "events" ? "border-accent bg-accent-subtle text-accent-text" : "text-t2 hover:bg-raised hover:text-t1"}`}
         onClick={() => onModeChange("events")}
-      >{uiText("reviewOwnerToolbar.ReviewOwnerToolbar2")}</button>
+      >{uiText("reviewOwnerToolbar.ReviewOwnerToolbar2")}</Button>
     </div>
   );
 }

@@ -48,3 +48,107 @@
     transition-duration: 0s !important;
   }
 }
+
+.date-time-field-footer {
+  display: grid;
+  gap: 12px;
+  padding: 12px;
+  border-top: 1px solid var(--border);
+}
+.date-time-field-label {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.date-time-field-label input {
+  width: 120px;
+  margin-inline-start: auto;
+}
+.date-time-field-actions {
+  display: flex;
+  justify-content: space-between;
+  gap: 8px;
+}
+
+.native-property-field.is-fontWeight [data-slot="toggle-group"] {
+  gap: 0;
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  overflow: hidden;
+}
+.native-property-field.is-fontWeight [data-slot="toggle-group-item"] {
+  height: 32px;
+  border: 0;
+  border-radius: 0;
+  box-shadow: none;
+}
+.native-property-field.is-fontWeight
+  [data-slot="toggle-group-item"]
+  + [data-slot="toggle-group-item"] {
+  border-left: 1px solid var(--border);
+}
+.native-property-field.is-fontWeight
+  [data-slot="toggle-group-item"][data-state="on"] {
+  background: var(--accent-solid);
+  color: white;
+}
+.native-property-field.is-fontWeight .native-number-control {
+  width: 96px;
+}
+
+.date-time-field-trigger {
+  width: 224px;
+  max-width: 100%;
+}
+.native-property-field.is-fontFamily > div {
+  max-width: 320px;
+}
+.native-property-field.is-fontFamily [data-slot="select-trigger"] {
+  width: 100%;
+  min-width: 0;
+}
+.native-number-control [data-slot="input"] {
+  width: 104px;
+  max-width: 100%;
+}
+.settings-choice-control[data-slot="radio-group"] {
+  display: inline-flex;
+  width: fit-content;
+  gap: 0;
+}
+.settings-choice-option[data-slot="radio-group-item"] {
+  width: auto;
+  height: auto;
+  border-radius: 0;
+  border-block: 0;
+  border-inline-end: 0;
+}
+
+.ui-combobox-anchor > [data-slot="command-input-wrapper"] {
+  flex: 1;
+  min-width: 0;
+  padding: 0;
+}
+.ui-combobox-anchor [data-slot="input-group"] {
+  border: 0;
+  background: transparent;
+  box-shadow: none;
+}
+[data-slot="progress"][data-state="indeterminate"]
+  [data-slot="progress-indicator"] {
+  width: 35%;
+  flex: none;
+  animation: shadcn-progress-pulse 1.4s ease-in-out infinite alternate;
+}
+@keyframes shadcn-progress-pulse {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(185%);
+  }
+}
+
+.date-time-field-trigger.is-date-only {
+  width: 160px;
+}

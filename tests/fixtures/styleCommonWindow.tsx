@@ -12,7 +12,7 @@ import {resolvePublishedLaplaceRender} from '../../src/compat/laplace/runtime.ts
 import '../../src/compat/blivechat/register.tsx';
 import '../../src/compat/openlive/register.tsx';
 import '../../src/compat/laplace/register.tsx';
-import '../../src/App.css';
+import '../../src/shadcn.css';
 const q=new URLSearchParams(location.search),mode=q.get('mode')??'native';
 const kind=ports.label as channels.EventWindowKind,c=kind==='display'?{readyEvent:channels.DISPLAY_READY_EVENT,readyAckEvent:channels.DISPLAY_READY_ACK_EVENT,roomChangedEvent:channels.DISPLAY_ROOM_CHANGED_EVENT,eventName:channels.DISPLAY_EVENT_NAME}:channels.revenueWindowChannels(kind);
 const room={roomId:1,generation:1};

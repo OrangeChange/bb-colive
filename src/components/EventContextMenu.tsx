@@ -1,3 +1,5 @@
+import { Input } from "./shadcn/input";
+import { Button } from "./shadcn/button";
 import { formatUiDateTime } from "../i18n/format.ts";
 import { useUiLanguage } from "../i18n/react.ts";
 import { uiText } from "../i18n/index.ts";
@@ -478,7 +480,7 @@ export function EventContextMenu({ event, nickname, eventFontSize, shortcutActio
             : 0;
           const shortcutHoverOffset = visibleShortcutActions.length - 1 - index;
           return (
-            <button
+            <Button variant="outline"
               key={shortcutAction}
               type="button"
               className={`event-quick-action inline-flex items-center justify-center rounded-md border border-transparent bg-transparent text-t2 shadow-none transition-[opacity,transform,color,border-color,background-color] enabled:hover:border-accent/60 enabled:hover:bg-raised enabled:hover:text-accent-text focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent-ring disabled:cursor-not-allowed disabled:opacity-45 ${persistent ? "event-quick-action-persistent" : ""} ${actionToneClass(QUICK_ACTION_ICON[shortcutAction], active)}`}
@@ -518,11 +520,11 @@ export function EventContextMenu({ event, nickname, eventFontSize, shortcutActio
               }}
             >
               <MenuActionIcon name={QUICK_ACTION_ICON[shortcutAction]} active={active} />
-            </button>
+            </Button>
           );
         })}
         </div>
-        <button
+        <Button variant="outline"
           ref={triggerRef}
           type="button"
           className="event-menu-trigger inline-flex items-center justify-center rounded-md border border-transparent bg-transparent text-t2 shadow-none transition-[opacity,transform,color,border-color,background-color] hover:border-accent/60 hover:bg-raised hover:text-accent-text focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent-ring"
@@ -547,7 +549,7 @@ export function EventContextMenu({ event, nickname, eventFontSize, shortcutActio
           }}
         >
           <LucideEllipsis className="event-menu-glyph" aria-hidden="true" />
-        </button>
+        </Button>
       </div>
       {open && createPortal(
         <div
@@ -572,7 +574,7 @@ export function EventContextMenu({ event, nickname, eventFontSize, shortcutActio
               </div>
               <div className="event-context-menu-meta flex w-full shrink-0 items-center justify-start gap-2">
                 {user?.avatar && (
-                  <button
+                  <Button variant="outline"
                     type="button"
                     className="shrink-0 rounded-full focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent-ring"
                     aria-label={uiText("eventContextMenu.aria_label3", { userName: userName })}
@@ -583,7 +585,7 @@ export function EventContextMenu({ event, nickname, eventFontSize, shortcutActio
                     }}
                   >
                     <img src={user.avatar} alt="" className="size-6 rounded-full object-cover" />
-                  </button>
+                  </Button>
                 )}
                 <div className="event-context-menu-time flex min-w-0 flex-col whitespace-nowrap font-mono ui-type-meta text-t3">
                   <span>{formatEventAge(event.ts, ageNow)}</span>
@@ -597,7 +599,7 @@ export function EventContextMenu({ event, nickname, eventFontSize, shortcutActio
           <div className="mt-1 flex flex-col" role="none">
             {favoriteError && <div role="status" className="px-2.5 py-1 ui-type-micro text-danger">{favoriteError}</div>}
             {actions.map((action) => (
-              <button
+              <Button variant="ghost"
                 key={action.label}
                 type="button"
                 role="menuitem"
@@ -630,7 +632,7 @@ export function EventContextMenu({ event, nickname, eventFontSize, shortcutActio
                   <span className="truncate">{action.label}</span>
                 </span>
                 {action.pressed && <span className="ui-type-micro text-current" aria-hidden="true">●</span>}
-              </button>
+              </Button>
             ))}
           </div>
         </div>,
@@ -670,7 +672,7 @@ export function EventContextMenu({ event, nickname, eventFontSize, shortcutActio
             onPointerCancel={handleNicknameDragEnd}
           >
             <div className="ui-type-control font-medium text-t1">{userNickname ? uiText("eventContextMenu.EventContextMenu") : uiText("eventContextMenu.EventContextMenu2")}</div>
-            <button
+            <Button variant="outline"
               type="button"
               aria-label={uiText("eventContextMenu.aria_label6")}
               className="rounded px-1.5 py-0.5 ui-type-control text-t3 transition-colors hover:bg-raised hover:text-t1 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent-ring"
@@ -681,12 +683,12 @@ export function EventContextMenu({ event, nickname, eventFontSize, shortcutActio
               }}
             >
               ×
-            </button>
+            </Button>
           </div>
           <p className="mt-1.5 whitespace-nowrap ui-type-meta text-t3" title={uiText("eventContextMenu.title5")}>{uiText("eventContextMenu.EventContextMenu3")}</p>
           <label className="mt-3 block">
             <span className="ui-type-micro text-t3">{uiText("eventContextMenu.EventContextMenu4")}</span>
-            <input
+            <Input
               ref={nicknameInputRef}
               value={nicknameDraft}
               onChange={(inputEvent) => setNicknameDraft(inputEvent.target.value)}
@@ -696,7 +698,7 @@ export function EventContextMenu({ event, nickname, eventFontSize, shortcutActio
             />
           </label>
           <div className="mt-3 flex items-center justify-end gap-1.5">
-            <button
+            <Button variant="outline"
               type="button"
               className="rounded-md px-2 py-1.5 ui-type-control text-t3 transition-colors hover:bg-raised hover:text-t1 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent-ring"
               onClick={() => {
@@ -704,9 +706,9 @@ export function EventContextMenu({ event, nickname, eventFontSize, shortcutActio
                 triggerRef.current?.focus();
               }}
             >
-              {uiText("common.cancel")}</button>
+              {uiText("common.cancel")}</Button>
             {userNickname && handlers.onDeleteNickname && (
-              <button
+              <Button variant="outline"
                 type="button"
                 className="rounded-md px-2 py-1.5 ui-type-control text-danger transition-colors hover:bg-danger/10 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent-ring"
                 onClick={() => {
@@ -716,9 +718,9 @@ export function EventContextMenu({ event, nickname, eventFontSize, shortcutActio
                   triggerRef.current?.focus();
                 }}
               >
-                {uiText("eventContextMenu.EventContextMenu5")}</button>
+                {uiText("eventContextMenu.EventContextMenu5")}</Button>
             )}
-            <button
+            <Button variant="default"
               type="button"
               disabled={!nicknameDraft.trim() || !handlers.onSaveNickname}
               className="rounded-md border border-accent/60 bg-accent-subtle px-2.5 py-1.5 ui-type-control font-medium text-accent-text transition-colors enabled:hover:border-accent enabled:hover:bg-accent-solid enabled:hover:text-accent-fg focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent-ring disabled:cursor-not-allowed disabled:opacity-45"
@@ -730,7 +732,7 @@ export function EventContextMenu({ event, nickname, eventFontSize, shortcutActio
                 triggerRef.current?.focus();
               }}
             >
-              {uiText("common.save")}</button>
+              {uiText("common.save")}</Button>
           </div>
         </div>,
         document.body,

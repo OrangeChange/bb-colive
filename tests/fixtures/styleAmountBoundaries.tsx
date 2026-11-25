@@ -11,7 +11,7 @@ import {DEFAULT_EVENT_WINDOW_PREFERENCES} from "../../src/windows/eventWindowPre
 import type {DanmakuEvent} from "../../src/protocol/types.ts";
 import type {CompatibleThemeMode} from "../../src/themes/themeTypes.ts";
 import "../../src/compat/blivechat/register.tsx";import "../../src/compat/openlive/register.tsx";import "../../src/compat/laplace/register.tsx";
-import "../../src/App.css";import "../../src/obs/obs.css";
+import "../../src/shadcn.css";import "../../src/obs/obs.css";
 const q=new URLSearchParams(location.search),mode=q.get('mode')??'native',scenario=q.get('scenario')??'low',now=Date.now();
 const document=mode==='native'?createBuiltinNativeTheme('native-default'):createCompatibleThemeModeAdapter(mode as CompatibleThemeMode).createBuiltinTheme();
 if(mode==='laplace')document.settings.showGiftHighlightAbove=Number(q.get('highlight')??30);

@@ -12,11 +12,11 @@
 .settings-choice-option { position: relative; display: inline-flex; flex: 1 0 auto; align-items: center; justify-content: center; gap: 5px; min-width: 0; min-height: 30px; padding: 3px 10px; border-inline-start: 1px solid var(--border); color: var(--text-2); font: inherit; cursor: pointer; white-space: nowrap; }
 .settings-choice-option:first-child { border-inline-start: 0; }
 .settings-choice-option > input[type="radio"] { position: absolute; clip-path: inset(50%); overflow: hidden; width: 1px; height: 1px; min-height: 0; margin: -1px; padding: 0; border: 0; white-space: nowrap; }
-.settings-choice-option:has(input:checked) { color: var(--accent-text); background: var(--accent-subtle); font-weight: 600; }
-.settings-choice-option:has(input:disabled) { cursor: not-allowed; opacity: .5; }
-.settings-choice-option:has(input:focus-visible) { outline: 2px solid var(--accent-text); outline-offset: -2px; z-index: 1; }
-.settings-choice-option:not(:has(input:disabled)):hover { background: var(--surface-raised); }
-.settings-choice-option:has(input:checked):hover { background: var(--accent-subtle); }
+.settings-choice-option[data-state="checked"] { color: var(--accent-text); background: var(--accent-subtle); font-weight: 600; }
+.settings-choice-option:disabled { cursor: not-allowed; opacity: .5; }
+.settings-choice-option:focus-visible { outline: 2px solid var(--accent-text); outline-offset: -2px; z-index: 1; }
+.settings-choice-option:not(:disabled):hover { background: var(--surface-raised); }
+.settings-choice-option[data-state="checked"]:hover { background: var(--accent-subtle); }
 .settings-choice-control svg { flex: none; }
 .settings-choice-control .settings-choice-decoration { margin-inline-end: 0; }
 .settings-task-group { min-width: 0; padding: 12px; border: 1px solid var(--border); border-radius: 7px; background: var(--bg); }

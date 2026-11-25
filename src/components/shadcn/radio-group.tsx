@@ -17,8 +17,10 @@ function RadioGroup({
 
 function RadioGroupItem({
   className,
+  children,
   ...props
 }: React.ComponentProps<typeof RadioGroupPrimitive.Item>) {
+  if (children) return <RadioGroupPrimitive.Item data-slot="radio-group-item" className={cn("inline-flex h-8 items-center justify-center gap-1.5 rounded-md border border-input px-3 text-sm outline-none focus-visible:ring-2 focus-visible:ring-ring disabled:opacity-50 data-checked:border-primary data-checked:bg-secondary data-checked:text-secondary-foreground", className)} {...props}>{children}</RadioGroupPrimitive.Item>;
   return (
     <RadioGroupPrimitive.Item
       data-slot="radio-group-item"

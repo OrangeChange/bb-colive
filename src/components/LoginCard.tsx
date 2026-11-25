@@ -1,3 +1,4 @@
+import { Button } from "./shadcn/button";
 import { useUiLanguage } from "../i18n/react.ts";
 import { uiText } from "../i18n/index.ts";
 /**
@@ -41,8 +42,8 @@ export function SessionUnavailablePanel({ message, onRetry, onRelogin }: {
     <p className="ui-type-control text-t3">{uiText("loginCard.SessionUnavailablePanel")}</p>
     <p className="ui-type-control text-danger">{message}</p>
     <div className="flex items-center gap-2">
-      <button type="button" className="rounded-lg bg-accent-solid px-4 py-2 ui-type-control font-medium text-accent-fg" onClick={onRetry}>{uiText("common.retry")}</button>
-      <button type="button" className="rounded-lg border border-line bg-bg px-4 py-2 ui-type-control text-t2" onClick={onRelogin}>{uiText("loginCard.SessionUnavailablePanel2")}</button>
+      <Button variant="default" type="button" className="rounded-lg bg-accent-solid px-4 py-2 ui-type-control font-medium text-accent-fg" onClick={onRetry}>{uiText("common.retry")}</Button>
+      <Button variant="outline" type="button" className="rounded-lg border border-line bg-bg px-4 py-2 ui-type-control text-t2" onClick={onRelogin}>{uiText("loginCard.SessionUnavailablePanel2")}</Button>
     </div>
   </>;
 }

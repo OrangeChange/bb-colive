@@ -1,3 +1,4 @@
+import { Input } from "../../components/shadcn/input";
 import { uiText } from "../../i18n/index.ts";
 import { useUiLanguage } from "../../i18n/react.ts";
 import { resolveThemeEventVisibility } from "../../themes/themeEventVisibility.ts";
@@ -231,7 +232,7 @@ function Basic({ document, onSettingsChange }: { document: ThemeDocument; onSett
   const row = (key: "showSpoiler" | "showAvatar" | "showUsername" | "showMedal" | "showTimestamp" | "maskUsername" | "classicElementScope" | "showAvatarFrame" | "showGuardBadge" | "showMedalLightenedOnly" | "showMedalCurrentRoomOnly" | "showWealthMedal" | "showCurrentRank" | "showModBadge" | "showAnchorBadge", label: string, disabled = false) => <div className="native-theme-setting-row" key={key}><PanelSwitch label={label} checked={Boolean(settings[key])} disabled={disabled} onChange={() => update({ [key]: !settings[key] })} /><span>{label}</span></div>;
   return <>
     <section className="native-editor-section"><header><h3>{uiText("uiControls.basic")}</h3><p>{uiText("uiControls.baseHelp")}</p></header>
-      <label className="native-theme-number-field"><span>{uiText("uiControls.baseFont")}</span><input aria-label={uiText("uiControls.baseFont")} type="number" min="12" max="64" step="0.5" value={settings.baseFontSize} onChange={event => update({ baseFontSize: Number(event.target.value) })} /><span>px</span></label>
+      <label className="native-theme-number-field"><span>{uiText("uiControls.baseFont")}</span><Input aria-label={uiText("uiControls.baseFont")} type="number" min="12" max="64" step="0.5" value={settings.baseFontSize} onChange={event => update({ baseFontSize: Number(event.target.value) })} /><span>px</span></label>
 
     </section>
     <CompatibleThemeEventSettings document={document} onSettingsChange={onSettingsChange} />
@@ -239,7 +240,7 @@ function Basic({ document, onSettingsChange }: { document: ThemeDocument; onSett
       <div className="native-theme-toggle-grid native-theme-element-grid">{row("showAvatar", uiText("uiControls.avatar"))}{row("showAvatarFrame", uiText("uiControls.avatarFrame"))}{row("showUsername", uiText("uiControls.username"))}{row("showGuardBadge", uiText("uiControls.membershipBadge"))}{row("showMedal", uiText("uiControls.medal"))}{row("showMedalLightenedOnly", uiText("uiControls.litMedal"), !settings.showMedal)}{row("showMedalCurrentRoomOnly", uiText("uiControls.roomMedal"), !settings.showMedal)}{row("showWealthMedal", uiText("uiControls.wealth"))}{row("showCurrentRank", uiText("uiControls.rank"))}{row("showModBadge", uiText("uiControls.modBadge"))}{row("showAnchorBadge", uiText("uiControls.anchorBadge"))}{row("showTimestamp", uiText("uiControls.time"))}{row("maskUsername", uiText("uiControls.mask"))}{row("classicElementScope", uiText("uiControls.classic"))}</div>
     </section>
     <section className="native-editor-section"><header><h3>{uiText("uiControls.features")}</h3></header>
-      <div className="native-theme-feature-grid native-theme-feature-inline">{row("showSpoiler", uiText("uiControls.spoiler"))}<label className="native-theme-number-field" title={uiText("uiControls.highlightHelp")}><span>{uiText("uiControls.highlight")}</span><input aria-label={uiText("uiControls.highlight")} type="number" min="0" max="99999999" step="0.01" value={settings.showGiftHighlightAbove} onChange={event => update({ showGiftHighlightAbove: Number(event.target.value) })} /><span>{uiText("uiControls.currency")}</span></label></div>
+      <div className="native-theme-feature-grid native-theme-feature-inline">{row("showSpoiler", uiText("uiControls.spoiler"))}<label className="native-theme-number-field" title={uiText("uiControls.highlightHelp")}><span>{uiText("uiControls.highlight")}</span><Input aria-label={uiText("uiControls.highlight")} type="number" min="0" max="99999999" step="0.01" value={settings.showGiftHighlightAbove} onChange={event => update({ showGiftHighlightAbove: Number(event.target.value) })} /><span>{uiText("uiControls.currency")}</span></label></div>
     </section>
   </>;
 }

@@ -4,7 +4,7 @@ import { mockIPC, mockWindows } from "@tauri-apps/api/mocks";
 import { setUiLanguage, uiText } from "../../src/i18n/index.ts";
 import { useUiLanguage } from "../../src/i18n/react.ts";
 import { applyThemeToDocument } from "../../src/theme.ts";
-import "../../src/App.css";
+import "../../src/shadcn.css";
 import "../../src/components/nativeThemeEditor.css";
 import "../../src/components/themeWorkspace.css";
 mockWindows("main");

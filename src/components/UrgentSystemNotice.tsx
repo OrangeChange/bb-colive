@@ -1,3 +1,4 @@
+import { Button } from "./shadcn/button";
 import { useUiLanguage } from "../i18n/react.ts";
 import { uiText } from "../i18n/index.ts";
 import { TriangleAlert as LucideTriangleAlert } from "lucide-react";
@@ -20,14 +21,14 @@ export function UrgentSystemNotice({ event, onDismiss }: { event: DanmakuEvent |
         <div className="font-semibold">{label}</div>
         <div className="break-words text-danger/90">{event.text || label}</div>
       </div>
-      <button
+      <Button variant="outline"
         type="button"
         aria-label={uiText("uiControls.closeNotice")}
         onClick={onDismiss}
         className="shrink-0 rounded px-1 text-danger/70 hover:bg-danger/10 hover:text-danger focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-danger"
       >
         ×
-      </button>
+      </Button>
     </div>
   );
 }

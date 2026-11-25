@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 import { SettingsPanel } from "../../src/components/SettingsPanel.tsx";
 import { createDefaultSceneSettings, loadSceneSettings, saveSceneSettings } from "../../src/components/sceneSettings.ts";
 import { useGeneralSettings } from "../../src/generalSettings.ts";
-import "../../src/App.css";
+import "../../src/shadcn.css";
 const noop = () => {};
 function App() {
   const persistence = new URLSearchParams(location.search).has("persist");

@@ -2,7 +2,7 @@ import { createRoot } from "react-dom/client";
 import { NativeEventPreview } from "./nativeEventPreview";
 import { NativeEventLive, NativeEventReview } from "./nativeEventFeeds";
 import { useEffect, useState } from "react";
-import "../../src/App.css";
+import "../../src/shadcn.css";
 import { Task1MediaFixture } from './task1EventMedia';
 import { Task2LotteryHosts } from './task2LotteryHosts';
 import { AvatarFrameStability } from './avatarFrameStability';

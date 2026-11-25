@@ -1,3 +1,4 @@
+import { Button } from "./shadcn/button";
 import { useUiLanguage } from "../i18n/react.ts";
 import { uiText } from "../i18n/index.ts";
 import { useRef } from "react";
@@ -33,7 +34,7 @@ export function ThemeAngleInput({
   return (
     <div className="theme-gradient-angle">
       <span>{uiText("themeAngleInput.ThemeAngleInput")}</span>
-      <button
+      <Button variant="outline"
         type="button"
         role="slider"
         aria-label={uiText("themeAngleInput.aria_label")}
@@ -81,7 +82,7 @@ export function ThemeAngleInput({
           className="theme-angle-pointer"
           style={{ transform: `rotate(${value}deg)` }}
         />
-      </button>
+      </Button>
       <ThemeNumberInput
         label={uiText("themeAngleInput.label")}
         value={value}

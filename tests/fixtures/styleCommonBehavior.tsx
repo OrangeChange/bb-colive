@@ -20,7 +20,7 @@ import type { GiftEffectNotice } from "../../src/windows/giftEffectBus.ts";
 import "../../src/compat/blivechat/register.tsx";
 import "../../src/compat/openlive/register.tsx";
 import "../../src/compat/laplace/register.tsx";
-import "../../src/App.css";
+import "../../src/shadcn.css";
 import "../../src/obs/obs.css";
 
 const query = new URLSearchParams(location.search);

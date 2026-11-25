@@ -1,3 +1,5 @@
+import { Input } from "./shadcn/input";
+import { Button } from "./shadcn/button";
 import { useUiLanguage } from "../i18n/react.ts";
 import { localized, uiText } from "../i18n/index.ts";
 import { AnchorMenuRow } from "./AnchorMenuRow.tsx";
@@ -183,7 +185,7 @@ export function ConnectBar({ onUserFilter }: { onUserFilter?: (user: Pick<RankUs
       {card && !showInput ? (
         // 主播卡（连接中=当前连接主播；未连接=回显最后使用的主播；点击弹主播列表）
         <div ref={menuRef} className="relative">
-          <button
+          <Button type="button" variant="outline"
             onClick={() => {
               setMenuOpen((v) => !v);
               refreshAnchors(); // 展开即懒刷新开播状态（store 内 60s 节流）
@@ -200,7 +202,7 @@ export function ConnectBar({ onUserFilter }: { onUserFilter?: (user: Pick<RankUs
               {card.uname ?? (card.roomId !== undefined ? uiText("connectBar.ConnectBar", { roomId: card.roomId }) : "…")}
             </span>
             <span className={`text-t3 transition-transform ${menuOpen ? "rotate-180" : ""}`}>▾</span>
-          </button>
+          </Button>
 
           {menuOpen && (
             <div className="ui-motion-enter absolute left-0 top-10 z-50 w-72 rounded-lg border border-line bg-surface p-1 shadow-xl shadow-black/20">
@@ -215,7 +217,7 @@ export function ConnectBar({ onUserFilter }: { onUserFilter?: (user: Pick<RankUs
                   onSelect={() => switchAnchor(a)} onRemove={() => {setMenuOpen(false);setRemovingAnchor(a);}} />)}
               </div>
               <div className="mt-1 border-t border-line pt-1">
-                <button
+                <Button type="button" variant="outline"
                   onClick={() => {
                     setMenuOpen(false);
                     setShowInput(true);
@@ -223,7 +225,7 @@ export function ConnectBar({ onUserFilter }: { onUserFilter?: (user: Pick<RankUs
                   className="flex w-full items-center gap-2.5 rounded-md px-2 py-1.5 ui-type-section-title text-t2 hover:bg-raised"
                 >
                   <span className="inline-flex size-[22px] items-center justify-center rounded-full border border-dashed border-t3 text-t3">＋</span>
-                  {uiText("connectBar.ConnectBar4")}</button>
+                  {uiText("connectBar.ConnectBar4")}</Button>
               </div>
             </div>
           )}
@@ -231,7 +233,7 @@ export function ConnectBar({ onUserFilter }: { onUserFilter?: (user: Pick<RankUs
       ) : (
         <>
           <div className="relative">
-            <input
+            <Input
               value={roomInput}
               onChange={(e) => setRoomInput(e.target.value)}
               onKeyDown={(e) => {
@@ -267,7 +269,7 @@ export function ConnectBar({ onUserFilter }: { onUserFilter?: (user: Pick<RankUs
             )}
           </div>
           {showInput && (
-            <button
+            <Button type="button" variant="outline"
               onClick={() => {
                 setRoomInput("");
                 setPreview({ status: "idle" });
@@ -277,13 +279,13 @@ export function ConnectBar({ onUserFilter }: { onUserFilter?: (user: Pick<RankUs
               title={uiText("connectBar.title6")}
             >
               ✕
-            </button>
+            </Button>
           )}
         </>
       )}
       {card && !showInput ? (
         active ? (
-          <button
+          <Button type="button" variant="default"
             onClick={() => {
               if (hasPendingSwitch && session && selectedAnchor) {
                 connect(selectedAnchor.roomIdInput, session.cookie, session.mid);
@@ -296,10 +298,10 @@ export function ConnectBar({ onUserFilter }: { onUserFilter?: (user: Pick<RankUs
             className="h-8 rounded-md bg-accent-solid px-4 ui-type-section-title font-semibold text-accent-fg transition-colors hover:bg-accent-solid-hover active:bg-accent-solid-active"
           >
             {hasPendingSwitch ? uiText("connectBar.ConnectBar7") : uiText("common.disconnect")}
-          </button>
+          </Button>
         ) : (
           // 未连接：连接当前选中的主播；未选择时连接最后使用的主播
-          <button
+          <Button type="button" variant="default"
             onClick={() => {
               if (session && selectedOrLastAnchor) {
                 connect(selectedOrLastAnchor.roomIdInput, session.cookie, session.mid);
@@ -307,15 +309,15 @@ export function ConnectBar({ onUserFilter }: { onUserFilter?: (user: Pick<RankUs
             }}
             className="h-8 rounded-md bg-accent-solid px-4 ui-type-section-title font-semibold text-accent-fg transition-colors hover:bg-accent-solid-hover active:bg-accent-solid-active"
           >
-            {uiText("common.connect")}</button>
+            {uiText("common.connect")}</Button>
         )
       ) : (
-        <button
+        <Button type="button" variant="default"
           onClick={onConnect}
           disabled={!canConnect}
           className="h-8 rounded-md bg-accent-solid px-4 ui-type-section-title font-semibold text-accent-fg transition-colors enabled:hover:bg-accent-solid-hover enabled:active:bg-accent-solid-active disabled:cursor-not-allowed disabled:opacity-40"
         >
-          {uiText("common.connect")}</button>
+          {uiText("common.connect")}</Button>
       )}
 
       <div className="flex items-center gap-1.5" title={state.message ?? meta.label}>

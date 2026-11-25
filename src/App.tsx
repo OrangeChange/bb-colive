@@ -1,3 +1,4 @@
+import { Button } from "./components/shadcn/button";
 import { useUiLanguage } from "./i18n/react.ts";
 import { uiText } from "./i18n/index.ts";
 /**
@@ -14,7 +15,7 @@ import { createDefaultWindowPair, toPhysicalWindowPlacement } from './windows/ev
 import { disable,enable } from "@tauri-apps/plugin-autostart";
 import { openUrl } from "@tauri-apps/plugin-opener";
 import { useCallback,useEffect,useMemo,useRef,useState,type Dispatch,type SetStateAction } from "react";
-import "./App.css";
+import "./shadcn.css";
 import { REVIEW_PRICE_GRADIENT_CSS } from "./reviewStyleSettings.ts";
 import { createArchiveFavoriteActions,flushArchiveWriter,notifyArchiveRevision,useArchiveRuntime } from "./archive/archiveRuntime.ts";
 import { bindFavoriteEvent, restoreFavoriteEvent, setFavoriteEvent } from "./eventAnnotations.ts";
@@ -1377,7 +1378,7 @@ function App() {
       data-diagnostic-dropped-records={diagnosticFlushResult?.droppedRecords ?? 0}
     >
       <TitleBar />
-      {windowMaterialNotice && <div role="alert" className="window-material-notice"><span>{windowMaterialNotice}</span><button type="button" onClick={() => openWindowSettings('display')}>{uiText("app.App")}</button><button type="button" onClick={() => setWindowMaterialNotice('')} aria-label={uiText("app.aria_label2")}>{uiText("common.close")}</button></div>}
+      {windowMaterialNotice && <div role="alert" className="window-material-notice"><span>{windowMaterialNotice}</span><Button variant="outline" type="button" onClick={() => openWindowSettings('display')}>{uiText("app.App")}</Button><Button variant="outline" type="button" onClick={() => setWindowMaterialNotice('')} aria-label={uiText("app.aria_label2")}>{uiText("common.close")}</Button></div>}
       <style>{REVIEW_PRICE_GRADIENT_CSS}</style>
       {revenueWindowFailure && <ConfirmDialog
         title={uiText("app.title4")}

@@ -20,7 +20,7 @@ import type { ObsMessage, ObsWireState } from "./obsProtocol.ts";
 import "../compat/blivechat/register.tsx";
 import "../compat/openlive/register.tsx";
 import "../compat/laplace/register.tsx";
-import "../App.css";
+import "../shadcn.css";
 import "../components/themeWorkspace.css";
 import "../components/nativeThemeEditor.css";
 import "./obs.css";
