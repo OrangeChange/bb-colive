@@ -19006,6 +19006,7 @@
     MsgType2[MsgType2["CutOff"] = 25] = "CutOff";
     MsgType2[MsgType2["CoverAudit"] = 26] = "CoverAudit";
     MsgType2[MsgType2["Unknown"] = UNKNOWN_MSG_TYPE_CODE] = "Unknown";
+    MsgType2[MsgType2["RoomLock"] = 28] = "RoomLock";
     return MsgType2;
   })(MsgType || {});
 
@@ -19037,6 +19038,7 @@
     [23 /* LiveEnd */]: "\u4E0B\u64AD",
     [24 /* Warning */]: "\u8D85\u7BA1\u8B66\u544A",
     [25 /* CutOff */]: "\u76F4\u64AD\u5207\u65AD",
+    [28 /* RoomLock */]: "\u76F4\u64AD\u5C01\u7981",
     [26 /* CoverAudit */]: "\u76F4\u64AD\u5C01\u9762\u72B6\u6001",
     [MsgType.Unknown]: "\u672A\u8BC6\u522B"
   };
@@ -19155,7 +19157,7 @@
     admin: ".system-admin-change",
     roomChange: ".system-room-change",
     coverAudit: ".system-cover-audit",
-    warning: ".live-warning, .live-cutoff"
+    warning: ".live-warning, .live-cutoff, .live-locked"
   };
   var NATIVE_PART_SELECTORS = {
     quantityPrefix: ".event .quantity-prefix",
@@ -19167,6 +19169,7 @@
     honorMilestone: ".event .honor-milestone",
     systemTitle: ".event .system-message-title",
     systemDetail: ".event .system-message-detail",
+    systemExpiry: ".event .system-message-expiry",
     card: ".event:not(.event-sticky)",
     header: ".event > .info, .event > .user, .event > .activity-title, .event > .result-title",
     activityStatus: ".event .activity-status",
@@ -19304,6 +19307,7 @@
     honorMilestone: text(),
     systemTitle: text(),
     systemDetail: text(),
+    systemExpiry: text(),
     card: container("typography", "layout"),
     header: container("typography", "layout"),
     activityStatus: text(),
