@@ -1,3 +1,4 @@
+import { useUiLanguage } from "../i18n/react.ts";
 import { uiText } from "../i18n/index.ts";
 import { useContext, useEffect, useLayoutEffect, useMemo, useRef, useState, type ReactNode } from 'react'
 import { QueryClient, QueryClientProvider, useInfiniteQuery, useQuery, useQueryClient } from '@tanstack/react-query'
@@ -116,11 +117,13 @@ function useInsightsState() {
 /** 独立Context只引用此类型，不反向加载Provider的运行时代码。 */
 export type RoomInsightsState = ReturnType<typeof useInsightsState>
 function InsightsSession({ children }: { children: ReactNode }) {
+  useUiLanguage();
   const state = useInsightsState()
   return <InsightsContext.Provider value={state}>{children}</InsightsContext.Provider>
 }
 
 export function RoomInsightsProvider({ children }: { children: ReactNode }) {
+  useUiLanguage();
   const [client] = useState(() => new QueryClient({ defaultOptions: { queries: {
     retry: 1, refetchOnWindowFocus: false, gcTime: Infinity,
   } } }))

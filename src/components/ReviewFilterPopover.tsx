@@ -1,3 +1,4 @@
+import { useUiLanguage } from "../i18n/react.ts";
 import { uiText } from "../i18n/index.ts";
 import * as PopoverPrimitive from "@radix-ui/react-popover";
 import { createContext, useLayoutEffect, useMemo, useRef, useState, type ReactNode, type RefObject } from "react";
@@ -16,6 +17,7 @@ export const ReviewFilterSubmenuLayerContext = createContext<{
 } | null>(null);
 
 export function ReviewFilterPopover({ open, onOpenChange, anchorRef, triggerRef, children }: ReviewFilterPopoverProps): ReactNode {
+  useUiLanguage();
   const [position, setPosition] = useState<ReviewFilterPopoverPosition | null>(null);
   const submenusRef = useRef(new Set<HTMLElement>());
   const childPointerEventsRef = useRef(new WeakSet<Event>());

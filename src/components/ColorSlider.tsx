@@ -1,9 +1,11 @@
+import { useUiLanguage } from "../i18n/react.ts";
 import { uiText } from "../i18n/index.ts";
 import { useEffect, useState } from "react";
 import { HslaColorPicker, RgbaColorPicker } from "react-colorful";
 import { hexToRgba, hslaToRgba, rgbaToHex, rgbaToHsla, type HslaColor, type RgbaColor } from "../eventStyleSettings";
 
 export function ColorSlider({ value, onChange, compact = false }: { value: RgbaColor; onChange: (value: RgbaColor) => void; compact?: boolean }) {
+  useUiLanguage();
   const [mode, setMode] = useState<"rgba" | "hsla" | "hex">("hex");
   const [hexDraft, setHexDraft] = useState(() => rgbaToHex(value));
   const hsla = rgbaToHsla(value);

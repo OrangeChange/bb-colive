@@ -1,3 +1,4 @@
+import { useUiLanguage } from "../i18n/react.ts";
 import { uiText } from "../i18n/index.ts";
 /**
  * 扫码登录卡片：二维码 + 状态反馈（待扫码/已扫码/过期自动刷新/成功过渡，ui-design §七）
@@ -9,6 +10,7 @@ import { useSession } from "../stores/session";
 import { DriftBackground } from "./DriftBackground";
 
 function QrCanvas({ url, dimmed }: { url: string | null; dimmed?: boolean }) {
+  useUiLanguage();
   const ref = useRef<HTMLCanvasElement>(null);
 
   useEffect(() => {
@@ -33,6 +35,7 @@ export function SessionUnavailablePanel({ message, onRetry, onRelogin }: {
   onRetry: () => void;
   onRelogin: () => void;
 }) {
+  useUiLanguage();
   return <>
     <h1 className="ui-type-display font-display font-medium tracking-tight text-t1">BB CoLive</h1>
     <p className="ui-type-control text-t3">{uiText("loginCard.SessionUnavailablePanel")}</p>
@@ -45,6 +48,7 @@ export function SessionUnavailablePanel({ message, onRetry, onRelogin }: {
 }
 
 export function LoginScreen() {
+  useUiLanguage();
   const phase = useSession((s) => s.phase);
   const qrUrl = useSession((s) => s.qrUrl);
   const qrStatus = useSession((s) => s.qrStatus);

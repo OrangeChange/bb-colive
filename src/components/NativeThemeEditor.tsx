@@ -1,3 +1,4 @@
+import { useUiLanguage } from "../i18n/react.ts";
 import { uiText } from "../i18n/index.ts";
 import type {ThemeImageDecorations} from "../themes/themeImageDecorations.ts";
 import {applyThemeAssetUrls} from "../themes/themeAssets.ts";
@@ -162,6 +163,7 @@ export function NativeThemeEditor({
   applyLabel?: string;
   applyTargets?: readonly { label: string; action: () => void }[];
 }) {
+  useUiLanguage();
   const persistedSettings = document.settings as NativeThemeSettings;
   const [transientSettings, setTransientSettings] = useState<NativeThemeSettings | null>(null);
   const [pricePreviewMin, setPricePreviewMin] = useState<number | undefined>(undefined);
@@ -328,8 +330,7 @@ export function NativeThemeEditor({
       contentAlignment,
       previewScheme,
       previewBackground,
-      previewTransparent,
-    ],
+      previewTransparent,],
   );
   const canvas=usePreviewCanvas(previewWidth,previewScheme);
   const sharedPreview=useMemo(()=>({kind:"native" as const,content:previewPayload,...canvas.geometry,frame:{epoch:0,selection:previewMotion==="design"?previewElementMark(previewSelectedElement.current):undefined,scroll:canvas.scroll,playing:previewPlaying,cursor:previewEvents.length,restart:playback.restart}}),[previewPayload,selection,section,previewMotion,canvas.geometry.width,canvas.geometry.height,canvas.geometry.nativeRowWidth,canvas.geometry.scrollbarWidth,canvas.geometry.scrollbarThumb,canvas.geometry.scrollbarTrack,canvas.geometry.palette,canvas.geometry.customColor,canvas.geometry.scheme,canvas.scroll,previewPlaying,previewEvents.length,playback.restart]);

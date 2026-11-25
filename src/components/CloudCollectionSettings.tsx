@@ -1,3 +1,4 @@
+import { useUiLanguage } from "../i18n/react.ts";
 import { uiText } from "../i18n/index.ts";
 import { useEffect, useState } from 'react';
 import { RefreshCw } from 'lucide-react';
@@ -49,6 +50,7 @@ const roomState = (state: string) => {
 };
 
 export function CloudCollectionSettings({ serviceVersion, serverId }: { serviceVersion: string; serverId: string }) {
+  useUiLanguage();
   const [health, setHealth] = useState<CloudServerHealth | null>(null);
   const [auth, setAuth] = useState<CloudAuthStatus | null>(null);
   const [rooms, setRooms] = useState<CloudRoomList | null>(null);

@@ -1,3 +1,4 @@
+import { useUiLanguage } from "../i18n/react.ts";
 import { uiText } from "../i18n/index.ts";
 import { useEffect, useId, useRef, useState } from 'react';
 import { createPortal } from 'react-dom';
@@ -8,6 +9,7 @@ import { CoLiveLogo } from './CoLiveLogo';
 import { AboutLinks } from './ThirdPartyNotices';
 
 export function AboutDialog({ version, onClose }: { version: string; onClose: () => void }) {
+  useUiLanguage();
   const dialog = useRef<HTMLDialogElement>(null);
   const title = useId();
   const [replay, setReplay] = useState(0);

@@ -1,3 +1,4 @@
+import { useUiLanguage } from "../i18n/react.ts";
 import { uiText } from "../i18n/index.ts";
 import { useState } from "react";
 import {
@@ -9,10 +10,12 @@ import {
 } from "../themes/nativeComponentAppearance.ts";
 
 function NumberField({ label, value, onChange, step = 1 }: { label: string; value?: number; onChange: (value?: number) => void; step?: number }) {
+  useUiLanguage();
   return <label><span>{label}</span><input type="number" min="0" step={step} value={value ?? ""} placeholder={uiText("nativeComponentAppearancePanel.placeholder")} onChange={event => onChange(event.target.value === "" ? undefined : Number(event.target.value))} /></label>;
 }
 
 function TextField({ label, value, onChange }: { label: string; value?: string; onChange: (value?: string) => void }) {
+  useUiLanguage();
   return <label><span>{label}</span><input value={value ?? ""} placeholder={uiText("nativeComponentAppearancePanel.placeholder")} onChange={event => onChange(event.target.value.trim() || undefined)} /></label>;
 }
 
@@ -21,6 +24,7 @@ export function NativeComponentAppearancePanel({ value, onChange, onClose }: {
   onChange: (value: NativeComponentAppearance) => void;
   onClose: () => void;
 }) {
+  useUiLanguage();
   const [part, setPart] = useState<NativeComponentPart>("event");
   const current = value[part];
   const update = (patch: Partial<NativeComponentStyle>) => onChange({ ...value, [part]: { ...current, ...patch } });

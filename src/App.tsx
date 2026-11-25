@@ -1,3 +1,4 @@
+import { useUiLanguage } from "./i18n/react.ts";
 import { uiText } from "./i18n/index.ts";
 /**
  * 主窗口（ui-design §四布局骨架）：
@@ -173,6 +174,7 @@ function MainArea({
   onDeleteNickname?: (user: DanmakuUser) => void;
   archiveRepository?: ArchiveRepositoryContract | null;
 }) {
+  useUiLanguage();
   const events = useConnection((s) => s.events);
   const status = useConnection((s) => s.state.status);
   const roomId = useConnection((s) => s.state.roomId);
@@ -760,6 +762,7 @@ function MainArea({
 }
 
 function App() {
+  useUiLanguage();
   useEffect(() => {
     let stop: (() => void) | undefined;
     let disposed = false;

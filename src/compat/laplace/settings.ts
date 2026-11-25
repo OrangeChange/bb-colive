@@ -1,4 +1,4 @@
-import { uiText } from "../../i18n/index.ts";
+import { localized, uiText } from "../../i18n/index.ts";
 /** Fixed Stable #238 defaults, restricted to the approved 35-setting contract.
  * roomIds is supplied by BB; the upstream sample room must never start a connection.
  */
@@ -43,7 +43,7 @@ export type LaplaceSettings = typeof DEFAULT_LAPLACE_SETTINGS;
 export type LaplaceSettingKey = keyof LaplaceSettings;
 export const LAPLACE_SETTING_KEYS = Object.keys(DEFAULT_LAPLACE_SETTINGS) as LaplaceSettingKey[];
 export const EXCLUDED_LAPLACE_SETTING_KEYS = ["showNotice", "useCst", "uiLang", "roomSearchHistory", "connectionMode", "danmakuFetcherApi", "eventFetcherAuth", "loginSyncToken", "remoteEmotesApi", "enableCloudTheme", "showGiftEffect", "showGiftEffectAbove"] as const;
-export const LAPLACE_SETTING_LABELS: Record<LaplaceSettingKey, string> = {
+export const LAPLACE_SETTING_LABELS: Record<LaplaceSettingKey, string> = localized(() => ({
   "showDanmaku": uiText("settings.LAPLACE_SETTING_LABELS.showDanmaku"),
   "showGift": uiText("settings.LAPLACE_SETTING_LABELS.showGift"),
   "showSuperChat": uiText("settings.LAPLACE_SETTING_LABELS.showSuperChat"),
@@ -79,10 +79,10 @@ export const LAPLACE_SETTING_LABELS: Record<LaplaceSettingKey, string> = {
   "roomIds": uiText("settings.LAPLACE_SETTING_LABELS.roomIds"),
   "cloudTheme": uiText("settings.LAPLACE_SETTING_LABELS.cloudTheme"),
   "remoteTheme": uiText("settings.LAPLACE_SETTING_LABELS.remoteTheme")
-};
+}));
 /** Source UI constraints, not upstream URL/runtime coercion constraints. Step is a
  * spinner increment, not an integer validator. Number(value) preserves decimals. */
-export const LAPLACE_NUMERIC_RULES = {
+export const LAPLACE_NUMERIC_RULES = localized(() => ({
   showGiftPriceAbove: { min: 0, max: 99999999, step: 1, unit: uiText("settings.LAPLACE_NUMERIC_RULES.showGiftPriceAbove.unit") },
   showGiftHighlightAbove: { min: 0, max: 99999999, step: 1, unit: uiText("settings.LAPLACE_NUMERIC_RULES.showGiftHighlightAbove.unit") },
   showGiftStickyAbove: { min: 0, max: 99999999, step: 1, unit: uiText("settings.LAPLACE_NUMERIC_RULES.showGiftStickyAbove.unit") },
@@ -90,7 +90,7 @@ export const LAPLACE_NUMERIC_RULES = {
   limitStickyAmount: { min: 1, max: 100, step: 1, unit: uiText("settings.LAPLACE_NUMERIC_RULES.limitStickyAmount.unit") },
   // Host-approved editor policy: finite 12–64, including decimals. Original UI uses step=1.
   baseFontSize: { min: 12, max: 64, step: 'any', unit: 'px' },
-} as const;
+} as const));
 export type LaplaceNumericKey = keyof typeof LAPLACE_NUMERIC_RULES;
 export function validateLaplaceSetting(key: LaplaceSettingKey, value: unknown): string | null {
   if (key in LAPLACE_NUMERIC_RULES) {

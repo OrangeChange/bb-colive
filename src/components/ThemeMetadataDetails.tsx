@@ -1,8 +1,10 @@
+import { useUiLanguage } from "../i18n/react.ts";
 import { uiText } from "../i18n/index.ts";
 import {formatThemeDate} from "../themes/themeDate.ts";
 import {useEffect,useState} from 'react';
 import type {ThemeDocument} from '../themes/themeTypes.ts';
 export function ThemeMetadataDetails({document,themeId,load}:{document?:ThemeDocument;themeId?:string;load(id:string):Promise<ThemeDocument>}) {
+  useUiLanguage();
  const [stored,setStored]=useState<ThemeDocument>();
  useEffect(()=>{let active=true;setStored(undefined);if(themeId)void load(themeId).then(d=>{if(active)setStored(d)}).catch(()=>{});return()=>{active=false}},[themeId,load]);
  const metadata=(document??stored)?.metadata;

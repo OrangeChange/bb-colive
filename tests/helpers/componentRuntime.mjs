@@ -56,6 +56,7 @@ export function componentRuntime(path, ports = {}, extraExports = []) {
   const module = { exports: {} };
   new Function("require", "module", "exports", "testImportMeta", code)((id) => {
     if (id.endsWith("i18n/index.ts")) return uiMessages;
+    if (id.endsWith("i18n/react.ts")) return { useUiLanguage: () => uiMessages.getUiLanguage() };
     if (id === "react") return hooks;
     if (id === "react/jsx-runtime") return require(id);
     if (id === "react-dom") return { createPortal: (children) => children };

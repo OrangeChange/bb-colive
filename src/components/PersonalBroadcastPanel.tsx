@@ -1,4 +1,5 @@
-import { uiText } from "../i18n/index.ts";
+import { useUiLanguage } from "../i18n/react.ts";
+import { localized, uiText } from "../i18n/index.ts";
 import { RotateCcw } from "lucide-react";
 import { useState, useSyncExternalStore } from "react";
 import { ConnectBar } from "./ConnectBar";
@@ -12,7 +13,7 @@ import { RuntimeQueueSummary, RuntimeQueueStatus } from "./RuntimeQueueSummary.t
 import { controlClass, sectionClass, PanelSwitch, SettingRow, SectionHeading, SectionToolbar } from "./voicePanelPrimitives.tsx";
 import { SettingsChoiceControl } from "./SettingsChoiceControl";
 
-const PERSONAL_BROADCAST_RULE_GROUPS: { title: string; rules: { key: PersonalBroadcastRuleKey; label: string }[] }[] = [
+const PERSONAL_BROADCAST_RULE_GROUPS: { title: string; rules: { key: PersonalBroadcastRuleKey; label: string }[] }[] = localized(() => ([
   {
     title: uiText("personalBroadcastPanel.PERSONAL_BROADCAST_RULE_GROUPS.title"),
     rules: [
@@ -45,14 +46,15 @@ const PERSONAL_BROADCAST_RULE_GROUPS: { title: string; rules: { key: PersonalBro
       { key: "system-cut-off", label: uiText("personalBroadcastPanel.PERSONAL_BROADCAST_RULE_GROUPS.rules.label17") },
     ],
   },
-];
+]));
 
-const personalBroadcastModeOptions = [
+const personalBroadcastModeOptions = localized(() => ([
   { value: "independent", label: uiText("personalBroadcastPanel.personalBroadcastModeOptions.label") },
   { value: "before-tts", label: uiText("personalBroadcastPanel.personalBroadcastModeOptions.label2") },
-] as const;
+] as const));
 
 export function PersonalBroadcastPanel() {
+  useUiLanguage();
   const settings = useVoiceSettings();
   const personalSnapshot = useSyncExternalStore(personalBroadcastController.subscribe, personalBroadcastController.getSnapshot, personalBroadcastController.getSnapshot);
   const voiceSnapshot = useSyncExternalStore(voiceController.subscribe, voiceController.getSnapshot, voiceController.getSnapshot);

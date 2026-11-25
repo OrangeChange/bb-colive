@@ -1,3 +1,4 @@
+import { useUiLanguage } from "../i18n/react.ts";
 import { uiText } from "../i18n/index.ts";
 import { UiSearchInput } from "./ui/SearchInput.tsx";
 import { ReviewStyleSettings } from './ReviewStyleSettings.tsx';
@@ -229,6 +230,7 @@ function OwnerSummary({
   owner: ArchiveOwnerSummary | null;
   sessions: readonly ArchiveSessionSummary[];
 }) {
+  useUiLanguage();
   const sessionCount = owner?.sessionCount ?? sessions.length;
   const eventCount = owner?.eventCount ?? sessions.reduce((total, session) => total + (session.eventCount ?? 0), 0);
   const paidTotal = owner?.paidTotal ?? sessions.reduce((total, session) => total + (session.paidTotal ?? 0), 0);
@@ -267,6 +269,7 @@ function OwnerSummary({
 }
 
 export function ReviewPanel({ repository, anchors, active, refreshKey, onOpenCloudRecoverySettings, onArchiveChanged }: ReviewPanelProps) {
+  const uiLanguage = useUiLanguage();
   const [route, setRoute] = useState<ReviewRoute>({ level: "home" });
   const [homeMode, setHomeMode] = useState<"owners" | "favorites">("owners");
   const [reviewQueryPreferences, setReviewQueryPreferences] = useState<ReviewQueryState>(() => loadReviewQueryPreferences());
@@ -567,7 +570,7 @@ export function ReviewPanel({ repository, anchors, active, refreshKey, onOpenClo
       });
     }
     return options;
-  }, [activeQuery.filters, activeQuery.searchScope, activeQuery.searchText, activeTimelineHasConditions, owner?.ownerId, ownerEventHasConditions, ownerEventQuery.filters, ownerSessionQuery, ownerState.mode, route, selectedSessionIds]);
+  }, [activeQuery.filters, activeQuery.searchScope, activeQuery.searchText, activeTimelineHasConditions, owner?.ownerId, ownerEventHasConditions, ownerEventQuery.filters, ownerSessionQuery, ownerState.mode, route, selectedSessionIds, uiLanguage]);
 
   const openDataExport = useCallback((scopeId?: string) => {
     setDataExportDefaultScopeId(scopeId ?? dataExportScopeOptions[0]?.id ?? "");

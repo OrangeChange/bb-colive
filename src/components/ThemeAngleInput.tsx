@@ -1,3 +1,4 @@
+import { useUiLanguage } from "../i18n/react.ts";
 import { uiText } from "../i18n/index.ts";
 import { useRef } from "react";
 import { ThemeNumberInput } from "./ThemeNumberInput.tsx";
@@ -15,6 +16,7 @@ export function ThemeAngleInput({
   onPreviewChange,
   onPreviewCancel,
 }: Props) {
+  useUiLanguage();
   const gesture = useRef<{ bounds: DOMRect; angle: number } | null>(null);
   const move = (x: number, y: number) => {
     if (!gesture.current) return;

@@ -1,4 +1,4 @@
-import { uiText } from "../../i18n/index.ts";
+import { localized, uiText } from "../../i18n/index.ts";
 import { installCompatiblePropertyCapabilities } from "../../themes/compatThemeCapabilities.ts";
 import { installCompatibleEventGroups } from "../../themes/compatThemeCapabilities.ts";
 import type { CompatibleThemeCapabilityMap } from "../../themes/compatThemeCapabilities.ts";
@@ -68,7 +68,7 @@ const boxDefaults = {
 };
 const pxLineHeight = { lineHeight: "px" } as const;
 
-export const OPENLIVE_CAPABILITY: CompatibleThemeCapabilityMap = {
+export const OPENLIVE_CAPABILITY: CompatibleThemeCapabilityMap = localized(() => ({
   mode: "blivechat-open",
   parts: {
     avatarFrame: {label:uiText("theme.parts.avatarFrame.label"),selector:"#author-photo",properties:[],placements:["main","sticky","detail"]},
@@ -387,7 +387,7 @@ export const OPENLIVE_CAPABILITY: CompatibleThemeCapabilityMap = {
     light: "[data-theme='light']",
     dark: "[data-theme='dark']",
   },
-};
+}));
 
 export function createOpenLiveBaseCss(
   settings: OpenLiveRuntimeSettings,

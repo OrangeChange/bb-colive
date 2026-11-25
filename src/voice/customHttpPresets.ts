@@ -1,3 +1,4 @@
+import { localized, uiText } from "../i18n/index.ts";
 import type { CustomHttpPreset, CustomHttpVoiceSettings } from "./voiceTypes.ts";
 
 type CustomHttpPresetDefaults = Omit<
@@ -5,12 +6,12 @@ type CustomHttpPresetDefaults = Omit<
   "endpoint" | "method" | "authType" | "apiKey" | "apiKeyHeader" | "voiceValues"
 > & Pick<Partial<CustomHttpVoiceSettings>, "endpoint">;
 
-export const CUSTOM_HTTP_PRESET_LABELS: Record<CustomHttpPreset, string> = {
-  "openai-compatible": "OpenAI 兼容",
+export const CUSTOM_HTTP_PRESET_LABELS: Record<CustomHttpPreset, string> = localized(() => ({
+  "openai-compatible": uiText("voice.customPreset.openai"),
   "gpt-sovits": "GPT-SoVITS",
   "index-tts": "IndexTTS",
-  "custom-json": "自定义 JSON",
-};
+  "custom-json": uiText("voice.customPreset.json"),
+}));
 
 export const CUSTOM_HTTP_PRESET_DEFAULTS: Record<CustomHttpPreset, CustomHttpPresetDefaults> = {
   "openai-compatible": {

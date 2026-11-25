@@ -1,4 +1,5 @@
-import { uiText } from "../i18n/index.ts";
+import { useUiLanguage } from "../i18n/react.ts";
+import { localized, uiText } from "../i18n/index.ts";
 import { ChevronDown as LucideChevronDown, X as LucideX } from "lucide-react";
 import { useCallback, useContext, useEffect, useLayoutEffect, useMemo, useRef, useState, type FocusEvent, type KeyboardEvent } from "react";
 import { createPortal } from "react-dom";
@@ -55,7 +56,7 @@ export interface ReviewSearchControlsProps {
   onClearUserFilter?: () => void;
 }
 
-export const CATEGORY_OPTIONS: readonly { value: string; label: string }[] = [
+export const CATEGORY_OPTIONS: readonly { value: string; label: string }[] = localized(() => ([
   { value: "danmu", label: uiText("reviewSearchControls.CATEGORY_OPTIONS.label") },
   { value: "interact", label: uiText("reviewSearchControls.CATEGORY_OPTIONS.label2") },
   { value: "gift", label: uiText("reviewSearchControls.CATEGORY_OPTIONS.label3") },
@@ -64,34 +65,34 @@ export const CATEGORY_OPTIONS: readonly { value: string; label: string }[] = [
   { value: "superChat", label: uiText("reviewSearchControls.CATEGORY_OPTIONS.label6") },
   { value: "guard", label: uiText("reviewSearchControls.CATEGORY_OPTIONS.label7") },
   { value: "system", label: uiText("reviewSearchControls.CATEGORY_OPTIONS.label8") },
-];
+]));
 
-export const GIFT_TYPE_OPTIONS: readonly { value: string; label: string }[] = [
+export const GIFT_TYPE_OPTIONS: readonly { value: string; label: string }[] = localized(() => ([
   { value: "normal", label: uiText("reviewSearchControls.GIFT_TYPE_OPTIONS.label") },
   { value: "blind", label: uiText("reviewSearchControls.GIFT_TYPE_OPTIONS.label2") },
   { value: "free", label: uiText("reviewSearchControls.GIFT_TYPE_OPTIONS.label3") },
-];
+]));
 
-export const INTERACT_TYPE_OPTIONS: readonly { value: string; label: string }[] = [
+export const INTERACT_TYPE_OPTIONS: readonly { value: string; label: string }[] = localized(() => ([
   { value: "entry", label: uiText("reviewSearchControls.INTERACT_TYPE_OPTIONS.label") },
   { value: "follow", label: uiText("reviewSearchControls.INTERACT_TYPE_OPTIONS.label2") },
   { value: "share", label: uiText("reviewSearchControls.INTERACT_TYPE_OPTIONS.label3") },
   { value: "specialFollow", label: uiText("reviewSearchControls.INTERACT_TYPE_OPTIONS.label4") },
   { value: "mutualFollow", label: uiText("reviewSearchControls.INTERACT_TYPE_OPTIONS.label5") },
   { value: "like", label: uiText("reviewSearchControls.INTERACT_TYPE_OPTIONS.label6") },
-];
+]));
 
 export const SECONDARY_OPTIONS = [...GIFT_TYPE_OPTIONS, ...INTERACT_TYPE_OPTIONS] as const;
 
-export const KEYWORD_FIELDS: readonly { value: ArchiveKeywordField; label: string }[] = [
+export const KEYWORD_FIELDS: readonly { value: ArchiveKeywordField; label: string }[] = localized(() => ([
   { value: "all", label: uiText("reviewSearchControls.KEYWORD_FIELDS.label") },
   { value: "user", label: uiText("reviewSearchControls.KEYWORD_FIELDS.label2") },
   { value: "fanMedal", label: uiText("reviewSearchControls.KEYWORD_FIELDS.label3") },
   { value: "gift", label: uiText("reviewSearchControls.KEYWORD_FIELDS.label4") },
   { value: "content", label: uiText("reviewSearchControls.KEYWORD_FIELDS.label5") },
-];
+]));
 
-export const USER_IDENTITY_OPTIONS: readonly { value: ArchiveUserIdentity | ""; label: string }[] = [
+export const USER_IDENTITY_OPTIONS: readonly { value: ArchiveUserIdentity | ""; label: string }[] = localized(() => ([
   { value: "", label: uiText("reviewSearchControls.USER_IDENTITY_OPTIONS.label") },
   { value: "normal", label: uiText("reviewSearchControls.USER_IDENTITY_OPTIONS.label2") },
   { value: "guard", label: uiText("reviewSearchControls.USER_IDENTITY_OPTIONS.label3") },
@@ -100,17 +101,17 @@ export const USER_IDENTITY_OPTIONS: readonly { value: ArchiveUserIdentity | ""; 
   { value: "viceroy", label: uiText("reviewSearchControls.USER_IDENTITY_OPTIONS.label6") },
   { value: "admin", label: uiText("reviewSearchControls.USER_IDENTITY_OPTIONS.label7") },
   { value: "anchor", label: uiText("reviewSearchControls.USER_IDENTITY_OPTIONS.label8") },
-];
+]));
 
-export const FAN_MEDAL_OPTIONS: readonly { value: ArchiveFanMedalFilter | ""; label: string }[] = [
+export const FAN_MEDAL_OPTIONS: readonly { value: ArchiveFanMedalFilter | ""; label: string }[] = localized(() => ([
   { value: "", label: uiText("reviewSearchControls.FAN_MEDAL_OPTIONS.label") },
   { value: "current", label: uiText("reviewSearchControls.FAN_MEDAL_OPTIONS.label2") },
   { value: "currentLighted", label: uiText("reviewSearchControls.FAN_MEDAL_OPTIONS.label3") },
-];
+]));
 
 export const REVIEW_SEARCH_HISTORY_KEY = "danmu-review-search-history";
-export const SEARCH_SUGGESTIONS = [uiText("reviewSearchControls.SEARCH_SUGGESTIONS"), uiText("reviewSearchControls.SEARCH_SUGGESTIONS2"), uiText("reviewSearchControls.SEARCH_SUGGESTIONS3"), uiText("reviewSearchControls.SEARCH_SUGGESTIONS4"), uiText("reviewSearchControls.SEARCH_SUGGESTIONS5"), uiText("reviewSearchControls.SEARCH_SUGGESTIONS6"), uiText("reviewSearchControls.SEARCH_SUGGESTIONS7")] as const;
-const REVIEW_DATE_OPTIONS: readonly { value: DatePreset; label: string }[] = [
+export const SEARCH_SUGGESTIONS = localized(() => ([uiText("reviewSearchControls.SEARCH_SUGGESTIONS"), uiText("reviewSearchControls.SEARCH_SUGGESTIONS2"), uiText("reviewSearchControls.SEARCH_SUGGESTIONS3"), uiText("reviewSearchControls.SEARCH_SUGGESTIONS4"), uiText("reviewSearchControls.SEARCH_SUGGESTIONS5"), uiText("reviewSearchControls.SEARCH_SUGGESTIONS6"), uiText("reviewSearchControls.SEARCH_SUGGESTIONS7")] as const));
+const REVIEW_DATE_OPTIONS: readonly { value: DatePreset; label: string }[] = localized(() => ([
   { value: "all", label: uiText("reviewSearchControls.REVIEW_DATE_OPTIONS.label") },
   { value: "2m", label: uiText("reviewSearchControls.REVIEW_DATE_OPTIONS.label2") },
   { value: "5m", label: uiText("reviewSearchControls.REVIEW_DATE_OPTIONS.label3") },
@@ -128,7 +129,7 @@ const REVIEW_DATE_OPTIONS: readonly { value: DatePreset; label: string }[] = [
   { value: "month", label: uiText("reviewSearchControls.REVIEW_DATE_OPTIONS.label15") },
   { value: "lastMonth", label: uiText("reviewSearchControls.REVIEW_DATE_OPTIONS.label16") },
   { value: "custom", label: uiText("reviewSearchControls.REVIEW_DATE_OPTIONS.label17") },
-];
+]));
 
 const selectClass = "h-8 rounded-md border border-line bg-bg px-2 ui-type-control text-t1 outline-none focus:border-accent focus:ring-2 focus:ring-accent-ring";
 const inputClass = "h-8 min-w-0 rounded-md border border-line bg-bg px-2 ui-type-control text-t1 outline-none placeholder:text-t3 focus:border-accent focus:ring-2 focus:ring-accent-ring";
@@ -279,6 +280,7 @@ export function ReviewFilterSubmenu({
   onPrimaryToggle: () => void;
   onToggle: (value: string) => void;
 }) {
+  useUiLanguage();
   const [open, setOpen] = useState(false);
   const triggerRef = useRef<HTMLButtonElement>(null);
   const submenuRef = useRef<HTMLDivElement>(null);
@@ -407,6 +409,7 @@ export function ReviewAdvancedFilters({
   onChangeFilters: (filters: ArchiveFilterState) => void;
   onChangeSearchScope?: (scope: ArchiveSearchScope) => void;
 }) {
+  useUiLanguage();
   const [datePreset, setDatePreset] = useState<DatePreset>(() => getReviewDatePreset(filters));
   const filterMode: ArchiveFilterMode = filters.filterMode === "exclude" ? "exclude" : "include";
   const visibleDatePreset: DatePreset = [
@@ -611,6 +614,7 @@ export function ReviewFilterPresetMenu({
   onRename: (id: string, name: string) => void;
   onDelete: (id: string) => void;
 }) {
+  useUiLanguage();
   const [addOpen, setAddOpen] = useState(false);
   const [manageOpen, setManageOpen] = useState(false);
   const [nameDraft, setNameDraft] = useState("");
@@ -736,6 +740,7 @@ export function ReviewFilterPresetMenu({
 }
 
 export function ReviewSearchControls({ level, query, onChange, onClearSearch, onClearFilters, onReplaceFilters, collapsed, onCollapsedChange, activeUserFilter, onClearUserFilter }: ReviewSearchControlsProps) {
+  const uiLanguage = useUiLanguage();
   const [keywordField, setKeywordField] = useState<ArchiveKeywordField>("content");
   const [keywordDraft, setKeywordDraft] = useState("");
   const [recentSearches, setRecentSearches] = useState<string[]>(loadReviewSearchHistory);
@@ -748,7 +753,7 @@ export function ReviewSearchControls({ level, query, onChange, onClearSearch, on
   const filters = query.filters;
   const activePresetId = filterPresets.find((preset) => isReviewFilterPresetActive(preset, filters))?.id ?? null;
   const keywordConditions = useMemo(() => filters.keywordConditions ?? [], [filters.keywordConditions]);
-  const suggestionOptions = useMemo(() => mergeComboboxOptions(recentSearches, SEARCH_SUGGESTIONS), [recentSearches]);
+  const suggestionOptions = useMemo(() => mergeComboboxOptions(recentSearches, SEARCH_SUGGESTIONS), [recentSearches, uiLanguage]);
   const legacyKeywordOperator: ArchiveKeywordOperator = filters.keywordOperator === "or" ? "or" : "and";
   const searchActive = isSearchActive(filters);
   const conditionCount = filterConditionCount(filters, keywordConditions.length) + (filters.searchText?.trim() ? 1 : 0);

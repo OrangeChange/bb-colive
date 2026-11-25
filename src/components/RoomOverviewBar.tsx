@@ -1,9 +1,11 @@
+import { useUiLanguage } from "../i18n/react.ts";
 import { uiText } from "../i18n/index.ts";
 import { useRoomInsights } from '../hooks/useRoomInsights'
 import { insightsDuration, resolveMetric } from '../protocol/roomInsights'
 import { OverviewMetrics } from './RoomInsightsView'
 
 export function RoomOverviewBar() {
+  useUiLanguage();
   const { roomId, stats, overview, guardFirst, viewers, timing, title, area, enabled, observedAt, refreshOverview } = useRoomInsights()
   if (!roomId) return <span className="py-2 ui-type-control text-t2">{uiText("roomOverviewBar.RoomOverviewBar")}</span>
   const base = overview.data

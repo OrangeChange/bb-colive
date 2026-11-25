@@ -1,4 +1,4 @@
-import { uiText } from "../i18n/index.ts";
+import { localized, uiText } from "../i18n/index.ts";
 import type { ArchiveFilterState } from "./archiveTypes.ts";
 import { getArchiveKeywordJoin } from "./archiveTypes.ts";
 import { cloneReviewFilters } from "./archiveState.ts";
@@ -7,10 +7,10 @@ export type ReviewQuickConditionId = "excludeInteract" | "revenue";
 
 export const REVIEW_REVENUE_CATEGORIES = ["gift", "lottery", "redPocket", "superChat", "guard"] as const;
 
-export const REVIEW_QUICK_CONDITIONS: readonly { value: ReviewQuickConditionId; label: string }[] = [
+export const REVIEW_QUICK_CONDITIONS: readonly { value: ReviewQuickConditionId; label: string }[] = localized(() => ([
   { value: "excludeInteract", label: uiText("reviewFilterPresets.REVIEW_QUICK_CONDITIONS.label") },
   { value: "revenue", label: uiText("reviewFilterPresets.REVIEW_QUICK_CONDITIONS.label2") },
-];
+]));
 
 export interface ReviewFilterPreset {
   id: string;

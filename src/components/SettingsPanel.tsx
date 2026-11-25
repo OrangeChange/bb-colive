@@ -1,4 +1,7 @@
-import { uiText } from "../i18n/index.ts";
+import { useUiLanguage } from "../i18n/react.ts";
+import { localized, uiText, UI_LANGUAGE_OPTIONS } from "../i18n/index.ts";
+import { changeUiLanguage } from "../i18n/runtime.ts";
+import { UiSelect } from "./ui/Select.tsx";
 import { useUpdatePreferences } from "../updates/store";
 import { SwitchButton } from "./SettingsSwitch";
 import { SoftwareUpdateSettings } from "../updates/SoftwareUpdateSettings";
@@ -177,7 +180,8 @@ type SettingsSearchEntry = {
   sectionId: SettingsSectionId;
 };
 
-const SETTINGS_SEARCH_ENTRIES: readonly SettingsSearchEntry[] = [
+const SETTINGS_SEARCH_ENTRIES: readonly SettingsSearchEntry[] = localized(() => ([
+  { id: "ui-language", label: uiText("settings.language"), keywords: uiText("settings.languageKeywords"), sectionId: "general" },
   { id: "palette", label: uiText("settingsPanel.SETTINGS_SEARCH_ENTRIES.label"), keywords: uiText("settingsPanel.SETTINGS_SEARCH_ENTRIES.keywords"), sectionId: "general" },
   { id: "mode", label: uiText("settingsPanel.SETTINGS_SEARCH_ENTRIES.label2"), keywords: uiText("settingsPanel.SETTINGS_SEARCH_ENTRIES.keywords2"), sectionId: "general" },
   { id: "ui-scale", label: uiText("settingsPanel.SETTINGS_SEARCH_ENTRIES.label3"), keywords: uiText("settingsPanel.SETTINGS_SEARCH_ENTRIES.keywords3"), sectionId: "general" },
@@ -227,7 +231,7 @@ const SETTINGS_SEARCH_ENTRIES: readonly SettingsSearchEntry[] = [
   { id: "window-layout", label: uiText("settingsPanel.SETTINGS_SEARCH_ENTRIES.label45"), keywords: uiText("settingsPanel.SETTINGS_SEARCH_ENTRIES.keywords44"), sectionId: "other" },
   { id: "diagnostics", label: uiText("settingsPanel.SETTINGS_SEARCH_ENTRIES.label46"), keywords: uiText("settingsPanel.SETTINGS_SEARCH_ENTRIES.keywords45"), sectionId: "other" },
   { id: "about", label: uiText("settingsPanel.SETTINGS_SEARCH_ENTRIES.label47"), keywords: uiText("settingsPanel.SETTINGS_SEARCH_ENTRIES.keywords46"), sectionId: "about" },
-];
+]));
 
 function Segmented<T extends string | number>({
   label,
@@ -248,6 +252,7 @@ function Segmented<T extends string | number>({
   decoration?: (value: T) => ReactNode;
   tiles?: boolean;
 }) {
+  useUiLanguage();
   const rowRef = useRef<HTMLDivElement>(null);
   const optionSignature = options.map((option) => `${String(option.value)}:${option.label}`).join("\u001f");
   const layout = useAdaptiveSettingsRowLayout(rowRef, `${label}\u001f${optionSignature}`, "data-segmented-layout");
@@ -262,6 +267,7 @@ function Segmented<T extends string | number>({
 
 
 function SettingSwitch({ label, checked, onChange, searchId, disabled = false, hint, icon }: { label: string; checked: boolean; onChange: () => void; searchId?: string; disabled?: boolean; hint?: string; icon?: ReactNode }) {
+  useUiLanguage();
   return (
     <div className={`settings-control-row settings-switch-row${disabled ? " is-disabled" : ""}`} data-settings-search={searchId} data-disabled={disabled || undefined}>
       <span className="settings-control-label ui-type-control text-t2" title={hint}>{icon}{label}</span>
@@ -270,14 +276,15 @@ function SettingSwitch({ label, checked, onChange, searchId, disabled = false, h
   );
 }
 
-const VOICE_SHORTCUT_ACTION_OPTIONS: readonly { value: VoiceShortcutAction; label: string; icon: MenuIconName }[] = [
+const VOICE_SHORTCUT_ACTION_OPTIONS: readonly { value: VoiceShortcutAction; label: string; icon: MenuIconName }[] = localized(() => ([
   { value: "speak", label: uiText("settingsPanel.VOICE_SHORTCUT_ACTION_OPTIONS.label"), icon: "voice" },
   { value: "filter", label: uiText("settingsPanel.VOICE_SHORTCUT_ACTION_OPTIONS.label2"), icon: "filter" },
   { value: "favorite", label: uiText("settingsPanel.VOICE_SHORTCUT_ACTION_OPTIONS.label3"), icon: "favorite" },
   { value: "mark", label: uiText("settingsPanel.VOICE_SHORTCUT_ACTION_OPTIONS.label4"), icon: "mark" },
-];
+]));
 
 function ShortcutMenuPicker({ value, onChange }: { value: readonly VoiceShortcutAction[]; onChange: (value: VoiceShortcutAction[]) => void }) {
+  useUiLanguage();
   const selectedCount = value.length;
   const [draggingAction, setDraggingAction] = useState<VoiceShortcutAction | null>(null);
   const [dragOverAction, setDragOverAction] = useState<VoiceShortcutAction | null>(null);
@@ -517,6 +524,7 @@ function PixelInput({
   unit?: string;
   searchId?: string;
 }) {
+  useUiLanguage();
   return (
     <div className="settings-control-row settings-number-row" data-settings-search={searchId}>
       <span className="settings-control-label ui-type-control text-t2">{label}</span>
@@ -541,6 +549,7 @@ function PixelInput({
 }
 
 function SurfaceColorInput({ value, onChange, searchId, automatic = false, onReset }: { value: RgbaColor; onChange: (value: RgbaColor) => void; searchId?: string; automatic?: boolean; onReset?: () => void }) {
+  useUiLanguage();
   const [open, setOpen] = useState(false);
   const [placement, setPlacement] = useState<"above" | "below">("below");
   const [position, setPosition] = useState({ left: 8, top: 8, ready: false });
@@ -619,6 +628,7 @@ function SurfaceColorInput({ value, onChange, searchId, automatic = false, onRes
 }
 
 function SecondsInput({ label, value, onChange, min = MIN_EVENT_EXPIRY_SECONDS, max = MAX_EVENT_EXPIRY_SECONDS, searchId }: { label: string; value: number; onChange: (value: number) => void; min?: number; max?: number; searchId?: string }) {
+  useUiLanguage();
   return (
     <div className="settings-control-row settings-number-row" data-settings-search={searchId}>
       <span className="settings-control-label ui-type-control text-t2">{label}</span>
@@ -643,6 +653,7 @@ function SecondsInput({ label, value, onChange, min = MIN_EVENT_EXPIRY_SECONDS, 
 }
 
 function DurationInput({ value, onChange }: { value: number; onChange: (value: number) => void }) {
+  useUiLanguage();
   return <div className="settings-control-row settings-number-row" data-settings-search="event-animation">
     <span className="settings-control-label ui-type-control text-t2">{uiText("settingsPanel.DurationInput")}</span>
     <label className="settings-font-size-control">
@@ -655,6 +666,7 @@ function DurationInput({ value, onChange }: { value: number; onChange: (value: n
 }
 
 function SectionTitle({ title, onReset, iconName }: { title: string; iconName?: string; onReset?: () => void }) {
+  useUiLanguage();
   return (
     <header className="settings-section-title" data-settings-level="1">
       <h3 className="settings-experience-heading ui-type-section-title font-medium text-t1"><SettingsIcon name={iconName ?? ""} />{title}</h3>
@@ -664,6 +676,7 @@ function SectionTitle({ title, onReset, iconName }: { title: string; iconName?: 
 }
 
 function SettingsSubsectionTitle({ title, level = 2, hint, icon, iconName }: { title: string; iconName?: string; level?: 2 | 3; hint?: string; icon?: ReactNode }) {
+  useUiLanguage();
   return (
     <div
       className={level === 3 ? "settings-tertiary-title" : "settings-subsection-title"}
@@ -694,6 +707,7 @@ function SettingsFilterRow({
   selected?: DisplayEventFilters["interactKinds"];
   onToggle?: (key: keyof DisplayEventFilters["interactKinds"]) => void;
 }) {
+  useUiLanguage();
   const [open, setOpen] = useState(false);
   const hasSubmenu = Boolean(selected && onToggle);
   const surface=useRef<HTMLDivElement>(null);
@@ -780,7 +794,9 @@ export function SettingsPanel({
   onArchiveChanged,
   request,
 }: SettingsPanelProps) {
+  const uiLanguage = useUiLanguage();
   const [aboutOpen, setAboutOpen] = useState(false);
+  const [languageError, setLanguageError] = useState("");
   const palette = useTheme((state) => state.palette);
   const customColor = useTheme(state => state.customColor);
   const setCustomColor = useTheme(state => state.setCustomColor);
@@ -892,7 +908,7 @@ export function SettingsPanel({
     return SETTINGS_SEARCH_ENTRIES
       .filter((entry) => `${entry.label} ${entry.keywords}`.toLocaleLowerCase().includes(query))
       .slice(0, 8);
-  }, [settingsSearchQuery]);
+  }, [settingsSearchQuery, uiLanguage]);
 
 
   useEffect(() => {
@@ -1395,6 +1411,12 @@ export function SettingsPanel({
         <section ref={(node) => { if (node) sectionRefs.current.set("general", node); }} className="settings-section" data-settings-section="general">
           <SectionTitle iconName="general" title={uiText("settingsPanel.title8")} onReset={() => requestSectionReset(uiText("settingsPanel.onReset"), resetGeneral)} />
           <SettingsSubsectionTitle title={uiText("settingsPanel.title9")} icon={<PaletteIcon size={16} />} />
+          <div className="settings-control-row" data-settings-search="ui-language">
+            <label htmlFor="ui-language" className="settings-control-label ui-type-control text-t2">{uiText("settings.language")}</label>
+            <UiSelect id="ui-language" ariaLabel={uiText("settings.language")} value={uiLanguage}
+              options={UI_LANGUAGE_OPTIONS} onValueChange={value => { setLanguageError(""); void changeUiLanguage(value).catch(cause => setLanguageError(uiText("settings.languageChangeFailed", { detail: String(cause) }))); }} />
+          </div>
+          {languageError && <p role="alert" className="text-danger">{languageError}</p>}
           <Segmented<Palette>
             label={uiText("settingsPanel.label")}
             value={palette}

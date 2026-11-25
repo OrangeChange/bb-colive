@@ -1,3 +1,4 @@
+import { useUiLanguage } from "../i18n/react.ts";
 import { uiText } from "../i18n/index.ts";
 import { useEffect, useRef, useState } from "react";
 import { createPortal } from "react-dom";
@@ -26,6 +27,7 @@ export function FavoriteOrganizationEditor({
   onSave,
   onCancel,
 }: FavoriteOrganizationEditorProps) {
+  useUiLanguage();
   const [note, setNote] = useState(initialNote);
   const [selectedTags, setSelectedTags] = useState<string[]>([...initialTags]);
   const [availableTags, setAvailableTags] = useState<ArchiveFavoriteTag[]>([...tags]);

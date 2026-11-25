@@ -1,4 +1,4 @@
-import { uiText } from "../i18n/index.ts";
+import { getUiLanguage, subscribeUiLanguage, uiText } from "../i18n/index.ts";
 import { resolveOutputScheme } from "./obsConfigurationIdentity.ts";
 import { getEventEffect } from "../protocol/giftEffects.ts";
 import { createNativeEventVisibilityPredicate } from '../events/outputEventPolicy.ts';
@@ -92,6 +92,7 @@ const scheme = () => {
     : mode;
 };
 const send = async (clientId: string, message: unknown) => {
+  message = { ...(message as object), uiLanguage: getUiLanguage() };
   if (clientId.startsWith("preview:"))
     await emit("obs:state", { clientId, message });
   else
@@ -398,6 +399,9 @@ export async function startObsHost() {
   };
   const stopGeneral = useGeneralSettings.subscribe(refreshSettings);
   const stopTheme = useTheme.subscribe(refreshSettings);
+  const stopLanguage = subscribeUiLanguage(() => {
+    for (const id of [...clients.keys(), ...previewClients.keys()]) void send(id, { type: "ui-language" });
+  });
   const stopVoice = useVoiceSettings.subscribe((state, previous) => {
     if (state.userNicknames !== previous.userNicknames) refreshSettings();
   });
@@ -455,6 +459,7 @@ export async function startObsHost() {
     clearInterval(timer);
     stopGeneral();
     stopTheme();
+    stopLanguage();
     stopVoice();
     stopConnection();
     media.removeEventListener("change", refreshSettings);

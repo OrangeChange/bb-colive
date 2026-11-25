@@ -1,4 +1,5 @@
-import { uiText } from "../i18n/index.ts";
+import { useUiLanguage } from "../i18n/react.ts";
+import { localized, uiText } from "../i18n/index.ts";
 import { Fragment, useRef, type RefObject } from "react";
 import type { DanmakuEvent, DanmakuUser } from "../protocol/types";
 import type { GiftEffectNotice } from "../windows/giftEffectBus";
@@ -13,13 +14,13 @@ import type { EventMenuHandlers } from "./EventContextMenu";
 import type { GiftEffectResource } from "../protocol/giftEffects";
 import type { CompatibleEventRender } from "../compat/CompatibleEventRenderer.tsx";
 
-const REGION_LABEL: Record<SceneRegionId, { title: string; emptyLabel: string }> = {
+const REGION_LABEL: Record<SceneRegionId, { title: string; emptyLabel: string }> = localized(() => ({
   danmu: { title: uiText("partitionColumn.REGION_LABEL.danmu.title"), emptyLabel: uiText("partitionColumn.REGION_LABEL.danmu.emptyLabel") },
   interact: { title: uiText("partitionColumn.REGION_LABEL.interact.title"), emptyLabel: uiText("partitionColumn.REGION_LABEL.interact.emptyLabel") },
   gift: { title: uiText("partitionColumn.REGION_LABEL.gift.title"), emptyLabel: uiText("partitionColumn.REGION_LABEL.gift.emptyLabel") },
   superChat: { title: uiText("partitionColumn.REGION_LABEL.superChat.title"), emptyLabel: uiText("partitionColumn.REGION_LABEL.superChat.emptyLabel") },
   guard: { title: uiText("partitionColumn.REGION_LABEL.guard.title"), emptyLabel: uiText("partitionColumn.REGION_LABEL.guard.emptyLabel") },
-};
+}));
 
 interface PartitionColumnProps {
   regions: SceneRegionId[];
@@ -69,6 +70,7 @@ function HorizontalSeparator({
   previousBoundary: number;
   nextBoundary: number;
 }) {
+  useUiLanguage();
   const updateFromPointer = (clientY: number) => {
     const rect = columnRef.current?.getBoundingClientRect();
     if (!rect || rect.height <= 0) return;
@@ -143,6 +145,7 @@ export function PartitionColumn({
   roomGuardProfile,
   compatibleEventRender,
 }: PartitionColumnProps) {
+  useUiLanguage();
   const columnRef = useRef<HTMLDivElement>(null);
   if (regions.length === 0) return null;
 

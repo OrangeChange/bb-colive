@@ -24,14 +24,14 @@ function isRecord(value: unknown): value is Record<string, unknown> {
 
 function getVoiceGroup(locale: string, shortName: string): { group: string; multilingual: boolean } | null {
   const multilingual = shortName.includes("Multilingual");
-  if (multilingual && locale === "en-US") return { group: uiText("edgeOnlineProvider.getVoiceGroup.group"), multilingual: true };
-  if (locale === "zh-CN") return { group: uiText("edgeOnlineProvider.getVoiceGroup.group2"), multilingual };
-  if (locale === "zh-HK") return { group: uiText("edgeOnlineProvider.getVoiceGroup.group3"), multilingual };
-  if (locale === "zh-TW") return { group: uiText("edgeOnlineProvider.getVoiceGroup.group4"), multilingual };
-  if (locale.startsWith("zh-CN-")) return { group: uiText("edgeOnlineProvider.getVoiceGroup.group5"), multilingual };
-  if (locale === "en-US") return { group: uiText("edgeOnlineProvider.getVoiceGroup.group6"), multilingual };
-  if (locale === "en-GB") return { group: uiText("edgeOnlineProvider.getVoiceGroup.group7"), multilingual };
-  if (locale === "ja-JP") return { group: uiText("edgeOnlineProvider.getVoiceGroup.group8"), multilingual };
+  if (multilingual && locale === "en-US") return { group: "multilingual", multilingual: true };
+  if (locale === "zh-CN") return { group: "zh-CN", multilingual };
+  if (locale === "zh-HK") return { group: "zh-HK", multilingual };
+  if (locale === "zh-TW") return { group: "zh-TW", multilingual };
+  if (locale.startsWith("zh-CN-")) return { group: "zh-dialect", multilingual };
+  if (locale === "en-US") return { group: "en-US", multilingual };
+  if (locale === "en-GB") return { group: "en-GB", multilingual };
+  if (locale === "ja-JP") return { group: "ja-JP", multilingual };
   return null;
 }
 

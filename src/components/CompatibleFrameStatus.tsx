@@ -1,3 +1,4 @@
+import { useUiLanguage } from "../i18n/react.ts";
 import { uiText } from "../i18n/index.ts";
 import { useCallback, useEffect, useState } from "react";
 
@@ -18,6 +19,7 @@ export function useCompatibleFrameLoad() {
 }
 
 export function CompatibleFrameStatus({ ready, error, onRetry }: { ready: boolean; error: string | null; onRetry(): void }) {
+  useUiLanguage();
   if (ready && !error) return null;
   return <div className="compatible-frame-status" role={error ? "alert" : "status"}>
     <span>{error || uiText("compatibleFrameStatus.CompatibleFrameStatus")}</span>

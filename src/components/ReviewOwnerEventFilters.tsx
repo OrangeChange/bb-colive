@@ -1,3 +1,4 @@
+import { useUiLanguage } from "../i18n/react.ts";
 import { uiText } from "../i18n/index.ts";
 import { useEffect, useMemo, useRef, useState, type KeyboardEvent } from "react";
 import type {
@@ -58,6 +59,7 @@ export function ReviewOwnerEventFilters({
   collapsed: boolean;
   onCollapsedChange: (collapsed: boolean) => void;
 }) {
+  const uiLanguage = useUiLanguage();
   const filters = query.filters;
   const [keywordField, setKeywordField] = useState<ArchiveKeywordField>("content");
   const [keywordDraft, setKeywordDraft] = useState("");
@@ -68,7 +70,7 @@ export function ReviewOwnerEventFilters({
   const [filterPresets, setFilterPresets] = useState<ReviewFilterPreset[]>(loadReviewFilterPresets);
 
   const keywordConditions = useMemo(() => filters.keywordConditions ?? [], [filters.keywordConditions]);
-  const suggestionOptions = useMemo(() => mergeComboboxOptions(recentSearches, SEARCH_SUGGESTIONS), [recentSearches]);
+  const suggestionOptions = useMemo(() => mergeComboboxOptions(recentSearches, SEARCH_SUGGESTIONS), [recentSearches, uiLanguage]);
   const legacyKeywordOperator: ArchiveKeywordOperator = filters.keywordOperator === "or" ? "or" : "and";
   const activePresetId = filterPresets.find((preset) => isReviewFilterPresetActive(preset, filters))?.id ?? null;
   const hasConditions = filterConditionCount(filters, keywordConditions.length) > 0

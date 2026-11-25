@@ -1,4 +1,4 @@
-import { uiText } from "../i18n/index.ts";
+import { localized, uiText } from "../i18n/index.ts";
 export type FeatureDiagnosticStream = "app" | "source" | "render" | "tts" | "markers";
 
 export type FeatureDiagnosticStage =
@@ -48,7 +48,7 @@ export const PRODUCTION_FEATURE_IDS = [
 ] as const;
 
 /** 新功能或新面板必须先在这里登记自己的诊断覆盖契约。 */
-export const FEATURE_DIAGNOSTIC_CATALOG: FeatureDiagnosticContract[] = [
+export const FEATURE_DIAGNOSTIC_CATALOG: FeatureDiagnosticContract[] = localized(() => ([
   { id: "software-updates", panel: uiText("featureCatalog.FEATURE_DIAGNOSTIC_CATALOG.panel"), streams: ["app"], stages: FULL_FEATURE_STAGES, snapshotSchema: { version: 1, keys: ["environment.appVersion"] }, failureHooks: COMMON_FAILURE_HOOKS },
   {
     id: "scene",
@@ -167,7 +167,7 @@ export const FEATURE_DIAGNOSTIC_CATALOG: FeatureDiagnosticContract[] = [
     snapshotSchema: { version: 1, keys: ["environment.appVersion"] },
     failureHooks: COMMON_FAILURE_HOOKS,
   },
-];
+]));
 
 /** 测试和 CI 使用；运行时诊断不调用此断言，仍保持旁路和非阻断。 */
 export function assertProductionFeatureCoverage(

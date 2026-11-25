@@ -1,3 +1,4 @@
+import { useUiLanguage } from "../i18n/react.ts";
 import { uiText } from "../i18n/index.ts";
 import { ChevronDown as LucideChevronDown } from "lucide-react";
 import { useReviewTimelineRefresh } from "../archive/useReviewTimelineRefresh.ts";
@@ -70,6 +71,7 @@ function ArchiveNotice({ notice, onDismiss }: {
   notice: ReturnType<typeof getArchiveRecordNotices>[number];
   onDismiss: (code: string) => void;
 }) {
+  useUiLanguage();
   const warning = notice.tone === "warning";
   return (
     <div className={`flex shrink-0 items-start gap-2 border-b px-3 py-1.5 ui-type-meta ${warning ? "border-warning/30 bg-warning/5 text-warning" : "border-line bg-raised text-t2"}`}>
@@ -146,6 +148,7 @@ export function ReviewSessionTimeline({
   onToggleShowBigEmote,
   session,
 }: ReviewSessionTimelineProps) {
+  const uiLanguage = useUiLanguage();
   const scrollRef = useRef<HTMLDivElement>(null);
   const {
     navigationState,
@@ -897,7 +900,7 @@ export function ReviewSessionTimeline({
   }), [favoriteEditOnAdd, favoriteErrors, isUserFiltered, onClearUserFilter, onDeleteNickname, onEditFavorite, onOpenUser, onSaveNickname, onSpeakEvent, onUserFilter, onViewContext, sessionId, toggleFavorite]);
 
   const resolveGiftEffect = useCallback((event: DanmakuEvent) => event.gift ? getGiftEffect(event.gift, event.roomId) : null, []);
-  const recordNotices = useMemo(() => session && !ownerHistory ? getArchiveRecordNotices(session) : [], [ownerHistory, session]);
+  const recordNotices = useMemo(() => session && !ownerHistory ? getArchiveRecordNotices(session) : [], [ownerHistory, session, uiLanguage]);
   const visibleNotices = dismissedNoticeState.sessionId === sessionId
     ? recordNotices.filter((notice) => !dismissedNoticeState.codes.has(notice.code))
     : recordNotices;

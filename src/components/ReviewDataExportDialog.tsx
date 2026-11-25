@@ -1,4 +1,5 @@
-import { uiText } from "../i18n/index.ts";
+import { useUiLanguage } from "../i18n/react.ts";
+import { localized, uiText } from "../i18n/index.ts";
 import { useEffect, useMemo, useRef, useState } from "react";
 import { bindUiDismissableLayer } from "./ui/layer";
 import { invoke } from "@tauri-apps/api/core";
@@ -41,13 +42,13 @@ interface ReviewDataExportDialogProps {
   onCompleted?: (path: string) => void;
 }
 
-const CATEGORIES: readonly { id: ArchiveDataExportCategory; label: string }[] = [
+const CATEGORIES: readonly { id: ArchiveDataExportCategory; label: string }[] = localized(() => ([
   { id: "danmaku", label: uiText("reviewDataExportDialog.CATEGORIES.label") },
   { id: "interaction", label: uiText("reviewDataExportDialog.CATEGORIES.label2") },
   { id: "gift", label: uiText("reviewDataExportDialog.CATEGORIES.label3") },
   { id: "superchat", label: uiText("reviewDataExportDialog.CATEGORIES.label4") },
   { id: "guard", label: uiText("reviewDataExportDialog.CATEGORIES.label5") },
-];
+]));
 
 function formatError(reason: unknown): string {
   return reason instanceof Error ? reason.message : String(reason);
@@ -129,6 +130,7 @@ function defaultFileName(
 }
 
 export function ReviewDataExportDialog({ repository, scopeOptions, defaultScopeId, ownerName, sessionStartedAt, onClose, onCompleted }: ReviewDataExportDialogProps) {
+  useUiLanguage();
   const [format, setFormat] = useState<ArchiveDataExportFormat>("excel");
   const [scopeId, setScopeId] = useState(defaultScopeId);
   const [direction, setDirection] = useState<ArchiveSortDirection>("asc");

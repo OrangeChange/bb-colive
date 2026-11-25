@@ -8,7 +8,7 @@ import type { FavoriteActionChange } from "./archive/favoriteActions.ts";
 
 export const LEGACY_EVENT_ANNOTATIONS_STORAGE_KEY = "danmu-event-annotations";
 export const LEGACY_FAVORITES_MIGRATION_STORAGE_KEY = "danmu-event-annotations.archive-migration-v1";
-export const HISTORICAL_UNKNOWN_FAVORITE_LABEL = uiText("eventAnnotations.HISTORICAL_UNKNOWN_FAVORITE_LABEL");
+export const HISTORICAL_UNKNOWN_FAVORITE_LABEL = "历史收藏（场次未知）";
 const FAVORITES_MIGRATION_VERSION = "1";
 
 export interface FavoriteEventRecord {

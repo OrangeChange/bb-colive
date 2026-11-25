@@ -1,3 +1,4 @@
+import { useUiLanguage } from "../../i18n/react.ts";
 import { uiText } from "../../i18n/index.ts";
 import { Search as LucideSearch, Check as LucideCheck, X } from "lucide-react";
 import * as PopoverPrimitive from "@radix-ui/react-popover";
@@ -48,6 +49,7 @@ export function UiCombobox({
   className,
   disabled = false,
 }: UiComboboxProps) {
+  useUiLanguage();
   const [open, setOpen] = useState(false);
   const [highlightedIndex, setHighlightedIndex] = useState(0);
   const anchorRef = useRef<HTMLDivElement>(null);

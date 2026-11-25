@@ -1,4 +1,4 @@
-import { uiText } from "../../i18n/index.ts";
+import { localized, uiText } from "../../i18n/index.ts";
 import { installCompatiblePropertyCapabilities } from "../../themes/compatThemeCapabilities.ts";
 import type { CompatibleThemeCapabilityMap } from "../../themes/compatThemeCapabilities.ts";
 import type { BlivechatThemeSettings } from "../../themes/compatThemeSettings.ts";
@@ -74,7 +74,7 @@ const boxScale = {
   borderRadius: "global" as const,
 };
 
-export const BLIVECHAT_CAPABILITY: CompatibleThemeCapabilityMap = {
+export const BLIVECHAT_CAPABILITY: CompatibleThemeCapabilityMap = localized(() => ({
   mode: "blivechat",
   parts: {
     avatarFrame: {label:uiText("theme.parts.avatarFrame.label"),selector:"#author-photo",properties:[],placements:["main","sticky","detail"]},
@@ -450,7 +450,7 @@ export const BLIVECHAT_CAPABILITY: CompatibleThemeCapabilityMap = {
     light: "[data-theme='light']",
     dark: "[data-theme='dark']",
   },
-};
+}));
 
 const scaled = (value: number, scale: number) =>
   Number((value * scale).toFixed(3));

@@ -1,3 +1,4 @@
+import { useUiLanguage } from "../i18n/react.ts";
 import { uiText } from "../i18n/index.ts";
 import type { DanmakuEvent, DanmakuUser } from "../protocol/types";
 import type { RefObject } from "react";
@@ -76,6 +77,7 @@ export function EventPane({
   roomGuardProfile,
   compatibleEventRender,
 }: EventPaneProps) {
+  useUiLanguage();
   return (
     <section className={`flex min-w-0 flex-1 flex-col overflow-hidden bg-bg ${className}`} aria-label={title}>
       <header className="flex h-9 shrink-0 items-center justify-between border-b border-line px-3">

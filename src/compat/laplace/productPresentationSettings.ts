@@ -44,9 +44,9 @@ function decode(raw: string): LaplaceProductPresentationSettings | LegacyPresent
     return freeze({ version: 2, showCurrentRank: value.showCurrentRank, showGiftHighlightAbove: value.showGiftHighlightAbove, showAvatar: value.showAvatar, showUsername: value.showUsername, classicElementScope: value.classicElementScope });
   } catch { return null; }
 }
-const FUTURE = uiText("productPresentationSettings.FUTURE");
-const CORRUPT = uiText("productPresentationSettings.CORRUPT");
-const MEMORY = uiText("productPresentationSettings.MEMORY");
+const FUTURE = () => uiText("productPresentationSettings.FUTURE");
+const CORRUPT = () => uiText("productPresentationSettings.CORRUPT");
+const MEMORY = () => uiText("productPresentationSettings.MEMORY");
 /** One authority per realm. Reads/migration/storage notifications never write;
  * only an explicit setter persists, and future schemas lock setters entirely. */
 export function createLaplaceProductPresentationStore(getStorage: () => StorageAdapter) {
@@ -54,18 +54,18 @@ export function createLaplaceProductPresentationStore(getStorage: () => StorageA
   let diagnostic = '';
   function legacy() {
     try { return migrate(getStorage().getItem(LAPLACE_SETTINGS_STORAGE_KEY)); }
-    catch { diagnostic = MEMORY; return migrate(null); }
+    catch { diagnostic = MEMORY(); return migrate(null); }
   }
   let initial = legacy(), readOnly = false;
   try {
     const raw = getStorage().getItem(LAPLACE_PRODUCT_PRESENTATION_KEY);
     if (raw !== null) {
       const parsed = decode(raw);
-      if (parsed === 'future') { readOnly = true; diagnostic = FUTURE; }
+      if (parsed === 'future') { readOnly = true; diagnostic = FUTURE(); }
       else if (parsed) initial = freeze({ ...initial, ...parsed, version: 2 });
-      else diagnostic = CORRUPT;
+      else diagnostic = CORRUPT();
     }
-  } catch { diagnostic = MEMORY; }
+  } catch { diagnostic = MEMORY(); }
   let snapshot: LaplaceProductPresentationSnapshot = Object.freeze({ settings: initial, readOnly, diagnostic, externalRevision: 0 });
   function publish(settings: LaplaceProductPresentationSettings, locked: boolean, message: string, external = false) {
     snapshot = Object.freeze({ settings, readOnly: locked, diagnostic: message, externalRevision: snapshot.externalRevision + (external ? 1 : 0) });
@@ -74,7 +74,7 @@ export function createLaplaceProductPresentationStore(getStorage: () => StorageA
   function save(settings: LaplaceProductPresentationSettings) {
     if (snapshot.readOnly) return;
     let message = '';
-    try { getStorage().setItem(LAPLACE_PRODUCT_PRESENTATION_KEY, JSON.stringify(settings)); } catch { message = MEMORY; }
+    try { getStorage().setItem(LAPLACE_PRODUCT_PRESENTATION_KEY, JSON.stringify(settings)); } catch { message = MEMORY(); }
     publish(freeze(settings), false, message);
   }
   return {
@@ -94,16 +94,16 @@ export function createLaplaceProductPresentationStore(getStorage: () => StorageA
     handleStorageEvent(event: StorageChange) {
       if (event.key !== null && event.key !== LAPLACE_PRODUCT_PRESENTATION_KEY) return;
       if (event.storageArea) {
-        try { if (event.storageArea !== getStorage()) return; } catch { publish(snapshot.settings, snapshot.readOnly, MEMORY); return; }
+        try { if (event.storageArea !== getStorage()) return; } catch { publish(snapshot.settings, snapshot.readOnly, MEMORY()); return; }
       }
       if (event.newValue === null || event.key === null) {
         diagnostic = ''; const settings = legacy();
         publish(settings, false, diagnostic || uiText("productPresentationSettings.createLaplaceProductPresentationStore.handleStorageEvent"), true); return;
       }
       const parsed = decode(event.newValue);
-      if (parsed === 'future') publish(snapshot.settings, true, FUTURE);
+      if (parsed === 'future') publish(snapshot.settings, true, FUTURE());
       else if (parsed) publish(freeze({ ...snapshot.settings, ...parsed, version: 2 }), false, '', true);
-      else publish(snapshot.settings, false, CORRUPT);
+      else publish(snapshot.settings, false, CORRUPT());
     },
   };
 }

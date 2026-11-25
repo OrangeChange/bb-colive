@@ -1,3 +1,4 @@
+import { useUiLanguage } from "../i18n/react.ts";
 import { uiText } from "../i18n/index.ts";
 import { SettingsChoiceControl } from "./SettingsChoiceControl";
 import { useEffect, useRef, useState } from 'react';
@@ -14,6 +15,7 @@ export function NativePriceGradientControls({ event, model, selected, onSelect, 
   event: string; model: NativePriceGradient; selected: string; onSelect: (id:string)=>void;
   onChange: (model:NativePriceGradient)=>void; applied: boolean;
 }) {
+  useUiLanguage();
   const [manage,setManage]=useState(false),[error,setError]=useState('');
   const manager=useRef<HTMLElement>(null);
   useEffect(()=>manage&&manager.current?bindUiDismissableLayer(manager.current,()=>setManage(false),{modal:true}):undefined,[manage]);

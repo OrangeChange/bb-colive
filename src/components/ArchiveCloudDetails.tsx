@@ -1,4 +1,5 @@
-import { uiText } from "../i18n/index.ts";
+import { useUiLanguage } from "../i18n/react.ts";
+import { localized, uiText } from "../i18n/index.ts";
 import type { ArchiveCloudMetadata } from '../archive/archiveCloudMetadata';
 import { formatArchiveDateTime, formatArchiveRecordingStatus } from '../archive/archiveDisplay';
 import { recoveryTimestamp } from '../cloudSync/recoverySessionMetadata';
@@ -6,7 +7,7 @@ import { recoveryCoverReference } from '../cloudSync/recoveryCovers';
 import { ArchiveCoverThumbnail } from './ArchiveCoverThumbnail';
 
 const date = (value: string | null) => formatArchiveDateTime(recoveryTimestamp(value));
-const reasons: Record<string, string> = {
+const reasons: Record<string, string> = localized(() => ({
   late_join: uiText("archiveCloudDetails.reasons.late_join"), capture_interrupted: uiText("archiveCloudDetails.reasons.capture_interrupted"), websocket_disconnected: uiText("archiveCloudDetails.reasons.websocket_disconnected"),
   heartbeat_timeout: uiText("archiveCloudDetails.reasons.heartbeat_timeout"), login_invalid: uiText("archiveCloudDetails.reasons.login_invalid"), account_changed: uiText("archiveCloudDetails.reasons.account_changed"),
   opening_boundary_unknown: uiText("archiveCloudDetails.reasons.opening_boundary_unknown"), closing_boundary_unknown: uiText("archiveCloudDetails.reasons.closing_boundary_unknown"),
@@ -14,9 +15,10 @@ const reasons: Record<string, string> = {
   pending_writes: uiText("archiveCloudDetails.reasons.pending_writes"), state_query_unavailable: uiText("archiveCloudDetails.reasons.state_query_unavailable"),
   login_validity_unconfirmed: uiText("archiveCloudDetails.reasons.login_validity_unconfirmed"), session_assignment_unconfirmed: uiText("archiveCloudDetails.reasons.session_assignment_unconfirmed"),
   database_write_failure: uiText("archiveCloudDetails.reasons.database_write_failure"), queue_overflow: uiText("archiveCloudDetails.reasons.queue_overflow"), connection_prepare_failed: uiText("archiveCloudDetails.reasons.connection_prepare_failed"),
-};
+}));
 
 export function ArchiveCloudDetails({ metadata }: { metadata: ArchiveCloudMetadata }) {
+  useUiLanguage();
   const state = metadata.state;
   return <details className="shrink-0 border-b border-line px-3 py-2 ui-type-control text-t2">
     <summary className="cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent-ring">{uiText("archiveCloudDetails.ArchiveCloudDetails")}</summary>

@@ -1,3 +1,4 @@
+import { useUiLanguage } from "../i18n/react.ts";
 import { uiText } from "../i18n/index.ts";
 import { ChevronUp as LucideChevronUp, ChevronDown as LucideChevronDown } from "lucide-react";
 import { GIFT_THRESHOLD_INPUT_STEP, normalizeGiftThreshold, stepGiftThreshold, type GiftThresholdMode } from "../giftThreshold";
@@ -15,6 +16,7 @@ export function GiftThresholdInput({
   mode?: GiftThresholdMode;
   searchId?: string;
 }) {
+  useUiLanguage();
   const normalizedValue = normalizeGiftThreshold(value);
   const label = compact
     ? mode === "cumulative" ? uiText("giftThresholdInput.GiftThresholdInput.label") : uiText("giftThresholdInput.GiftThresholdInput.label2")

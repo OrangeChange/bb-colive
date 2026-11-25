@@ -1,3 +1,4 @@
+import { useUiLanguage } from "../i18n/react.ts";
 import { uiText } from "../i18n/index.ts";
 import { ThemeVisualScope } from "./ThemeVisualScope.tsx";
 import { SettingsIcon } from "./SettingsIcon";
@@ -190,7 +191,8 @@ export function CompatibleThemeEditor({
   applyLabel?: string;
   applyTargets?: readonly { label: string; action: () => void }[];
 }) {
-  const capability = useMemo(()=>compatibleCapabilityForSettings(baseCapability,document.settings),[baseCapability,document.settings]);
+  const uiLanguage = useUiLanguage();
+  const capability = useMemo(()=>compatibleCapabilityForSettings(baseCapability,document.settings),[baseCapability,document.settings, uiLanguage]);
   const [section, setSection] = useState<Section>("basic");
   const [previewMotion, setPreviewMotion] = useState<StylePreviewMotion>("static");
   const [previewPlaying, setPreviewPlaying] = useState(true);
@@ -333,10 +335,10 @@ export function CompatibleThemeEditor({
 
   const eventOptions = useMemo(
     () => compatibleEventOptions(capability, selection.placement ?? "main"),
-    [capability, selection.placement],
+    [capability, selection.placement, uiLanguage],
   );
-  const navigationGroups = useMemo(() => buildCompatibleVisualNavigation(document.mode as "blivechat" | "blivechat-open" | "laplace", capability.parts, capability.eventGroups?.[selection.event] ?? [selection.event]), [capability.parts, capability.eventGroups, document.mode, selection.event]);
-  const eventScopes = useMemo(() => compatibleVisualEventScopes(capability, selection.placement ?? "main"), [capability, selection.placement]);
+  const navigationGroups = useMemo(() => buildCompatibleVisualNavigation(document.mode as "blivechat" | "blivechat-open" | "laplace", capability.parts, capability.eventGroups?.[selection.event] ?? [selection.event]), [capability.parts, capability.eventGroups, document.mode, selection.event, uiLanguage]);
+  const eventScopes = useMemo(() => compatibleVisualEventScopes(capability, selection.placement ?? "main"), [capability, selection.placement, uiLanguage]);
   const activeEventScope = eventScopes.find(scope => scope.id === selection.event || scope.children?.some(child => child.id === selection.event || capability.eventGroups?.[child.id]?.includes(selection.event)));
   useEffect(() => {
     if (!eventOptions.some((option) => option.value === selection.event))
@@ -352,7 +354,7 @@ export function CompatibleThemeEditor({
           label: capability.identityLabels?.[value] ?? value,
         })),
     ],
-    [capability],
+    [capability, uiLanguage],
   );
   const applicable = Boolean(compatibleSelectorFor(capability, `${selection.event}|${selection.identity}|${selection.placement ?? "main"}|${selection.part}`, editScheme));
   const currentInspection = editorInspection?.scope.part === selection.part && editorInspection.scope.eventType === selection.event && editorInspection.scope.identity === selection.identity && editorInspection.scope.placement === (selection.placement ?? "main") ? editorInspection : null;

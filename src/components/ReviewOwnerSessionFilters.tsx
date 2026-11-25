@@ -1,4 +1,5 @@
-import { uiText } from "../i18n/index.ts";
+import { useUiLanguage } from "../i18n/react.ts";
+import { localized, uiText } from "../i18n/index.ts";
 import { UiSearchInput } from "./ui/SearchInput.tsx";
 import { useState } from "react";
 import type {
@@ -30,15 +31,15 @@ function parseDateValue(value: string): number | undefined {
   return Number.isFinite(timestamp) ? timestamp : undefined;
 }
 
-const sortOptions: readonly { value: ArchiveSessionSort; label: string }[] = [
+const sortOptions: readonly { value: ArchiveSessionSort; label: string }[] = localized(() => ([
   { value: "startedAt", label: uiText("reviewOwnerSessionFilters.sortOptions.label") },
   { value: "duration", label: uiText("reviewOwnerSessionFilters.sortOptions.label2") },
   { value: "eventCount", label: uiText("reviewOwnerSessionFilters.sortOptions.label3") },
   { value: "paidTotal", label: uiText("reviewOwnerSessionFilters.sortOptions.label4") },
   { value: "favoriteCount", label: uiText("reviewOwnerSessionFilters.sortOptions.label5") },
-];
+]));
 
-const dateOptions: readonly { value: ReviewDatePreset; label: string }[] = [
+const dateOptions: readonly { value: ReviewDatePreset; label: string }[] = localized(() => ([
   { value: "all", label: uiText("reviewOwnerSessionFilters.dateOptions.label") },
   { value: "today", label: uiText("reviewOwnerSessionFilters.dateOptions.label2") },
   { value: "yesterday", label: uiText("reviewOwnerSessionFilters.dateOptions.label3") },
@@ -47,17 +48,17 @@ const dateOptions: readonly { value: ReviewDatePreset; label: string }[] = [
   { value: "month", label: uiText("reviewOwnerSessionFilters.dateOptions.label6") },
   { value: "lastMonth", label: uiText("reviewOwnerSessionFilters.dateOptions.label7") },
   { value: "custom", label: uiText("reviewOwnerSessionFilters.dateOptions.label8") },
-];
+]));
 
-const statusOptions = [
+const statusOptions = localized(() => ([
   { value: "all", label: uiText("reviewOwnerSessionFilters.statusOptions.label") },
   ...(["active", "ended", "unclean"] as const).map(value => ({ value, label: formatArchiveSessionStatus(value) })),
-] as const;
+] as const));
 
-const qualityOptions = [
+const qualityOptions = localized(() => ([
   { value: "all", label: uiText("reviewOwnerSessionFilters.qualityOptions.label") },
   ...(["in-progress", "complete", "incomplete"] as const).map(value => ({ value, label: formatArchiveQuality(value) })),
-] as const;
+] as const));
 
 function selectedStatus(query: ReviewOwnerSessionQuery): "all" | ArchiveSessionStatus {
   if (!query.status || query.status.length === 0) return "all";
@@ -82,6 +83,7 @@ export function ReviewOwnerSessionFilters({
   collapsed: boolean;
   onCollapsedChange: (collapsed: boolean) => void;
 }) {
+  useUiLanguage();
   const [customDateOpen, setCustomDateOpen] = useState(false);
   const datePreset = customDateOpen
     ? "custom"

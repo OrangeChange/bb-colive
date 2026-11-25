@@ -1,3 +1,4 @@
+import { useUiLanguage } from "../i18n/react.ts";
 import { uiText } from "../i18n/index.ts";
 import {
   useEffect,
@@ -28,6 +29,7 @@ export function ThemeVisualNavigation({
   navigationRef?: RefObject<HTMLElement | null>;
   groups: readonly ThemeVisualNavigationGroup[];
 }) {
+  useUiLanguage();
   const localRef = useRef<HTMLElement>(null);
   const ref = navigationRef ?? localRef;
   const activePaths: string[] = [];

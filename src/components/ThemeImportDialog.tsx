@@ -1,14 +1,16 @@
-import { uiText } from "../i18n/index.ts";
+import { useUiLanguage } from "../i18n/react.ts";
+import { localized, uiText } from "../i18n/index.ts";
 import { useEffect, useRef, useState, type ReactNode } from "react";
 import { open } from "@tauri-apps/plugin-dialog";
 import type { ThemeMode } from "../themes/themeTypes.ts";
 import { bindUiDismissableLayer } from "./ui/layer";
 
-const FORMATS = [["native", uiText("themeImportDialog.FORMATS")], ["blivechat", uiText("themeImportDialog.FORMATS2")], ["blivechat-open", uiText("themeImportDialog.FORMATS3")], ["laplace", "LAPLACE"]] as const;
+const FORMATS = localized(() => ([["native", uiText("themeImportDialog.FORMATS")], ["blivechat", uiText("themeImportDialog.FORMATS2")], ["blivechat-open", uiText("themeImportDialog.FORMATS3")], ["laplace", "LAPLACE"]] as const));
 
 function ThemeTransferPanel({ title, description, busy, onClose, children, actions }: {
   title: string; description: string; busy: boolean; onClose(): void; children: ReactNode; actions: ReactNode;
 }) {
+  useUiLanguage();
   const ref = useRef<HTMLElement>(null);
   const close = useRef(onClose), pending = useRef(busy);
   close.current = onClose; pending.current = busy;
@@ -21,10 +23,12 @@ function ThemeTransferPanel({ title, description, busy, onClose, children, actio
 }
 
 function ThemeFormatOptions({ value, onChange, css = false }: { value: string; onChange(mode: ThemeMode): void; css?: boolean }) {
+  useUiLanguage();
   return <div className="theme-format-grid">{FORMATS.map(([mode, label]) => <label key={mode} className={value === mode ? "is-selected" : ""}><input type="radio" name="theme-format" checked={value === mode} onChange={() => onChange(mode)} /><span>{label}{css && mode !== "laplace" ? " CSS" : ""}</span></label>)}</div>;
 }
 
 export function ThemeCreateDialog({ onClose, onCreate }: { onClose(): void; onCreate(mode: ThemeMode): void }) {
+  useUiLanguage();
   const [mode, setMode] = useState<ThemeMode>("native");
   return <ThemeTransferPanel title={uiText("themeImportDialog.title")} description={uiText("themeImportDialog.description")} busy={false} onClose={onClose} actions={<button type="button" className="is-primary" onClick={() => onCreate(mode)}>{uiText("themeImportDialog.actions")}</button>}>
     <fieldset><legend>{uiText("themeImportDialog.ThemeCreateDialog")}</legend><ThemeFormatOptions value={mode} onChange={setMode} /></fieldset>
@@ -34,6 +38,7 @@ export function ThemeCreateDialog({ onClose, onCreate }: { onClose(): void; onCr
 export function ThemeImportDialog({ onClose, onTheme, onCss, onUrl }: {
   onClose(): void; onTheme(paths: string[]): Promise<void>; onCss(mode: ThemeMode, path: string, name: string, signal?: AbortSignal): Promise<void>; onUrl(url: string): void;
 }) {
+  useUiLanguage();
   const [kind, setKind] = useState<"package" | ThemeMode>("package");
   const [source, setSource] = useState<"file" | "url">("file");
   const [paths, setPaths] = useState<string[]>([]), [name, setName] = useState(""), [url, setUrl] = useState("");

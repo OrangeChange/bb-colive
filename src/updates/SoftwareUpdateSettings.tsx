@@ -1,3 +1,4 @@
+import { useUiLanguage } from "../i18n/react.ts";
 import { uiText } from "../i18n/index.ts";
 import { UpdateReleaseNotes } from './UpdateReleaseNotes';
 import { ChevronRight, ExternalLink } from 'lucide-react';
@@ -9,6 +10,7 @@ import { useSoftwareUpdate,useUpdatePreferences,updateReleasePage,type Route } f
 import './updates.css';
 const bytes=(value:number)=>`${(value/1048576).toFixed(1)} MB`;
 export function SoftwareUpdateSettings({version,onOpenAbout}:{version:string;onOpenAbout:()=>void}){
+  useUiLanguage();
   const state=useSoftwareUpdate(),prefs=useUpdatePreferences();
   const busy=['checking','downloading','installing'].includes(state.phase);
   const title=({idle:uiText("softwareUpdateSettings.SoftwareUpdateSettings.title.idle"),checking:uiText("softwareUpdateSettings.SoftwareUpdateSettings.title.checking"),current:state.manualVersion?uiText("softwareUpdateSettings.SoftwareUpdateSettings.title.current", { value: state.manualVersion.replace(/^v/,'') }):uiText("softwareUpdateSettings.SoftwareUpdateSettings.title.current2"),available:uiText("softwareUpdateSettings.SoftwareUpdateSettings.title.available", { value: state.offer?.version??'' }),downloading:uiText("softwareUpdateSettings.SoftwareUpdateSettings.title.downloading", { value: state.offer?.version??'' }),ready:uiText("softwareUpdateSettings.SoftwareUpdateSettings.title.ready"),failed:uiText("softwareUpdateSettings.SoftwareUpdateSettings.title.failed"),installing:uiText("softwareUpdateSettings.SoftwareUpdateSettings.title.installing")} as const)[state.phase];

@@ -1,3 +1,4 @@
+import { useUiLanguage } from "../i18n/react.ts";
 import { uiText } from "../i18n/index.ts";
 import { useState, type ReactNode } from 'react';
 import { openUrl } from '@tauri-apps/plugin-opener';
@@ -15,6 +16,7 @@ function BrandIcon({ source }: { source: string }) {
 }
 
 export function AboutLinks() {
+  useUiLanguage();
   const [error, setError] = useState('');
   function link(name: string, href: string, icon: ReactNode, brand: string) {
     return <a className={`about-badge about-badge-${brand}`} href={href} title={uiText("thirdPartyNotices.title", { name: name })} onClick={event => {

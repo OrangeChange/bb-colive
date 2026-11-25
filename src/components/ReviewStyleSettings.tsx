@@ -1,3 +1,4 @@
+import { useUiLanguage } from "../i18n/react.ts";
 import { uiText } from "../i18n/index.ts";
 import { useEffect, useRef, useState } from "react";
 import { createPortal } from "react-dom";
@@ -13,6 +14,7 @@ import {
 import type { ReviewStyleSettings as Preferences } from "../reviewStyleSettings.ts";
 
 export function ReviewStyleSettings() {
+  useUiLanguage();
   const [open, setOpen] = useState(false);
   const settings = useGeneralSettings((s) => s.reviewStyleSettings);
   const [fontInput, setFontInput] = useState(String(settings.fontSize));

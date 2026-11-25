@@ -1,4 +1,4 @@
-import { uiText } from "./i18n/index.ts";
+import { localized, uiText } from "./i18n/index.ts";
 import { MsgType } from "./protocol/types.ts";
 
 export const EVENT_STYLE_ROLES = ["normal", "captain", "admiral", "viceroy", "admin", "anchor"] as const;
@@ -8,7 +8,7 @@ export const DEFAULT_EVENT_STYLE_ROLE_PRIORITY: EventStyleRole[] = ["viceroy", "
 export const EVENT_STYLE_TYPES = ["danmu", "interact", "gift", "redPocket", "lottery", "superChat", "guardCaptain", "guardAdmiral", "guardViceroy", "system"] as const;
 export type EventStyleType = typeof EVENT_STYLE_TYPES[number];
 
-export const EVENT_STYLE_TYPE_LABELS: Record<EventStyleType, string> = {
+export const EVENT_STYLE_TYPE_LABELS: Record<EventStyleType, string> = localized(() => ({
   danmu: uiText("eventStyleSettings.EVENT_STYLE_TYPE_LABELS.danmu"),
   interact: uiText("eventStyleSettings.EVENT_STYLE_TYPE_LABELS.interact"),
   gift: uiText("eventStyleSettings.EVENT_STYLE_TYPE_LABELS.gift"),
@@ -19,7 +19,7 @@ export const EVENT_STYLE_TYPE_LABELS: Record<EventStyleType, string> = {
   guardAdmiral: uiText("eventStyleSettings.EVENT_STYLE_TYPE_LABELS.guardAdmiral"),
   guardViceroy: uiText("eventStyleSettings.EVENT_STYLE_TYPE_LABELS.guardViceroy"),
   system: uiText("eventStyleSettings.EVENT_STYLE_TYPE_LABELS.system"),
-};
+}));
 
 export const EVENT_COLOR_PARTS = ["username", "content", "background", "stroke"] as const;
 export type EventColorPart = typeof EVENT_COLOR_PARTS[number];

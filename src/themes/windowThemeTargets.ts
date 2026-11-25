@@ -1,14 +1,14 @@
-import { uiText } from "../i18n/index.ts";
+import { localized, uiText } from "../i18n/index.ts";
 import type { ThemeBinding } from "./themeBindings.ts";
 
 export type WindowThemeMode = "unified" | "separate";
-export const WINDOW_THEME_TARGETS = [
+export const WINDOW_THEME_TARGETS = localized(() => ([
   { id: "windows:display", label: uiText("common.chatWindow") },
   { id: "windows:gift", label: uiText("common.revenueWindow") },
   { id: "windows:gift-only", label: uiText("windowThemeTargets.WINDOW_THEME_TARGETS.label") },
   { id: "windows:superchat", label: uiText("windowThemeTargets.WINDOW_THEME_TARGETS.label2") },
   { id: "windows:guard", label: uiText("windowThemeTargets.WINDOW_THEME_TARGETS.label3") },
-] as const;
+] as const));
 
 export function windowThemeLabel(targetId: string): string {
   return WINDOW_THEME_TARGETS.find(target => target.id === targetId)?.label ?? uiText("windowThemeTargets.windowThemeLabel");

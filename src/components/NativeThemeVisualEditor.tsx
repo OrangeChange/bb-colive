@@ -1,4 +1,5 @@
-import { uiText } from "../i18n/index.ts";
+import { useUiLanguage } from "../i18n/react.ts";
+import { localized, uiText } from "../i18n/index.ts";
 import { ThemeVisualScope } from "./ThemeVisualScope.tsx";
 import { SettingsIcon } from "./SettingsIcon";
 import {resolveThemeImageDecorations,clearThemeImageDecorations} from "../themes/themeImageDecorations.ts";
@@ -22,7 +23,7 @@ import { NativePriceGradientControls, priceKindsForScope } from './NativePriceGr
 import { themePriceGradient, priceBandColor, setPriceBandColor, type NativePriceGradient, type PriceGradientScope } from '../themes/nativePriceGradient.ts';
 
 const NUMBER_FIELDS = THEME_NUMBER_FIELDS;
-const PROPERTY_LABELS: Partial<Record<NativeVisualProperty, string>> = { visible: uiText("common.show"), fontFamily: uiText("common.font"), color: uiText("common.color"), background: uiText("nativeThemeVisualEditor.PROPERTY_LABELS.background"), borderColor: uiText("nativeThemeVisualEditor.PROPERTY_LABELS.borderColor") };
+const PROPERTY_LABELS: Partial<Record<NativeVisualProperty, string>> = localized(() => ({ visible: uiText("common.show"), fontFamily: uiText("common.font"), color: uiText("common.color"), background: uiText("nativeThemeVisualEditor.PROPERTY_LABELS.background"), borderColor: uiText("nativeThemeVisualEditor.PROPERTY_LABELS.borderColor") }));
 
 export interface NativeVisualSelection { event: string; identity: string; part: NativeSemanticPartId }
 
@@ -67,6 +68,7 @@ export function NativeThemeVisualEditor({ dirty, settings, baseCss = "", selecti
   onDecorationsChange?: (value:ThemeImageDecorations)=>void;
   onDecorationsPreviewChange?: (value:ThemeImageDecorations)=>void;
 }) {
+  useUiLanguage();
   const [editScheme, setEditScheme] = useState<NativeVisualScheme>("common");
   const [priceBand,setPriceBand]=useState('');
   const gradient=themePriceGradient(settings.priceGradient,baseCss);

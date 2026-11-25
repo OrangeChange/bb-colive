@@ -1,3 +1,4 @@
+import { useUiLanguage } from "../i18n/react.ts";
 import { uiText } from "../i18n/index.ts";
 import { ExternalLink, Link, Radio, Check } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
@@ -15,6 +16,7 @@ export function StylePreviewActions({
   onRealtimeChange?: () => void;
   realtimeDisabled?: boolean;
 }) {
+  useUiLanguage();
   const [copied, setCopied] = useState(false);
   const [copying, setCopying] = useState(false);
   const copiedTimer = useRef<ReturnType<typeof setTimeout> | undefined>(undefined);

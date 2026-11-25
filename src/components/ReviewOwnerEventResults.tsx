@@ -1,4 +1,5 @@
-import { uiText } from "../i18n/index.ts";
+import { useUiLanguage } from "../i18n/react.ts";
+import { localized, uiText } from "../i18n/index.ts";
 import { useState } from "react";
 import { EventRowSlot } from "./EventRowSlot";
 import type { ArchiveOwnerEventGroupPage, ArchiveEventRecord } from "../archive/archiveTypes.ts";
@@ -14,11 +15,11 @@ import { UiSelect } from "./ui/Select";
 
 const toolbarButtonClass = "inline-flex h-8 items-center rounded-md border px-2.5 ui-type-control transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent-ring";
 
-const eventSortOptions: readonly { value: ReviewOwnerEventQuery["sort"]; label: string }[] = [
+const eventSortOptions: readonly { value: ReviewOwnerEventQuery["sort"]; label: string }[] = localized(() => ([
   { value: "latestMatch", label: uiText("reviewOwnerEventResults.eventSortOptions.label") },
   { value: "sessionStartedAt", label: uiText("reviewOwnerEventResults.eventSortOptions.label2") },
   { value: "matchCount", label: uiText("reviewOwnerEventResults.eventSortOptions.label3") },
-];
+]));
 
 export function ReviewOwnerEventResultsToolbar({
   sort,
@@ -35,6 +36,7 @@ export function ReviewOwnerEventResultsToolbar({
   onChangeDirection: (direction: ArchiveSortDirection) => void;
   onChangeShowBigEmote: (show: boolean) => void;
 }) {
+  useUiLanguage();
   return (
     <div aria-label={uiText("reviewOwnerEventResults.aria_label")} className="flex min-w-0 flex-wrap items-center gap-2 border-b border-line py-2">
       <span className="mr-auto ui-type-control text-t1">{uiText("reviewOwnerEventResults.ReviewOwnerEventResultsToolbar")}</span>
@@ -84,6 +86,7 @@ function EventMatchSummary({
   event: DanmakuEvent | null;
   onOpen: () => void;
 }) {
+  useUiLanguage();
 
   return (
     <div
@@ -141,6 +144,7 @@ export function ReviewOwnerEventResults({
   onRetry: () => void;
   onClear: () => void;
 }) {
+  useUiLanguage();
   const [collapsedGroups, setCollapsedGroups] = useState<Record<string, boolean>>({});
   const display = useGeneralSettings(state => state.eventDisplayPreferences);
   const groups = page?.items ?? [];

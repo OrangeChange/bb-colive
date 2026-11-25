@@ -1,3 +1,4 @@
+import { useUiLanguage } from "../i18n/react.ts";
 import { uiText } from "../i18n/index.ts";
 import { useEffect, useRef, useState, type CSSProperties, type ReactNode } from "react";
 import { createPortal } from "react-dom";
@@ -52,6 +53,7 @@ function DiagnosticDialog({
   confirmLabel?: string;
   busy?: boolean;
 }) {
+  useUiLanguage();
   const dialogRef = useRef<HTMLDivElement>(null);
   const onCancelRef = useRef(onCancel);
   const busyRef = useRef(busy);
@@ -111,6 +113,7 @@ function DiagnosticDialog({
 }
 
 export function DiagnosticSettings({ status, markers, openMarkRequest, onMarkIssue, onExport, onExportStateChange, onOpenDirectory }: DiagnosticSettingsProps) {
+  useUiLanguage();
   const [markOpen, setMarkOpen] = useState(false);
   const [fullConfirmOpen, setFullConfirmOpen] = useState(false);
   const [note, setNote] = useState("");

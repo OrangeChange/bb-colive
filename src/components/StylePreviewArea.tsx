@@ -1,3 +1,4 @@
+import { useUiLanguage } from "../i18n/react.ts";
 import { uiText } from "../i18n/index.ts";
 import { resolveThemeEventVisibility } from "../themes/themeEventVisibility.ts";
 import { projectNativePreviewActivities } from "../preview/nativePreviewActivities";
@@ -28,6 +29,7 @@ export function StylePreviewArea({ context, mode, events, eventStyleSettings, ar
   readingResetKey?: string | number;
   maskUsername?: boolean;
 }) {
+  useUiLanguage();
   const resolved = resolveStylePreviewContext(context, mode, input);
   const area = useEventAreaStyle({ settings: eventStyleSettings, layout: resolved.layout, fontSize: resolved.fontSize,
     padding: resolved.displayPreferences.eventPadding, spacing: resolved.displayPreferences.eventSpacing });

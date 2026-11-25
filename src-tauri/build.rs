@@ -10,19 +10,26 @@ fn main() {
 }
 
 fn build_ui_messages() {
-    let source = "../src/i18n/zh-CN.json";
-    println!("cargo:rerun-if-changed={source}");
-    let messages: std::collections::BTreeMap<String, String> =
-        serde_json::from_slice(&std::fs::read(source).expect("无法读取界面文案"))
-            .expect("界面文案格式无效");
+    let mut catalogs = Vec::new();
+    for language in ["zh-CN", "zh-Hant", "en", "ja"] {
+        let source = format!("../src/i18n/{language}.json");
+        println!("cargo:rerun-if-changed={source}");
+        let messages: std::collections::BTreeMap<String, String> =
+            serde_json::from_slice(&std::fs::read(source).expect("无法读取界面文案"))
+                .expect("界面文案格式无效");
+        catalogs.push(messages);
+    }
     let mut text = String::from("macro_rules! ui_text {\n");
     let mut formatted = String::from("macro_rules! ui_format {\n");
-    for (key, value) in messages.iter().filter(|(key, _)| key.starts_with("backend.")) {
-        let key = serde_json::to_string(key).unwrap();
-        let value = serde_json::to_string(value).unwrap();
-        text.push_str(&format!("    ({key}) => {{ {value} }};\n"));
-        formatted.push_str(&format!("    ({key}) => {{ format!({value}) }};\n"));
-        formatted.push_str(&format!("    ({key}, $($args:tt)*) => {{ format!({value}, $($args)*) }};\n"));
+    for (key, fallback) in catalogs[0].iter().filter(|(key, _)| key.starts_with("backend.")) {
+        let quoted_key = serde_json::to_string(key).unwrap();
+        let values: Vec<_> = catalogs.iter().map(|catalog| serde_json::to_string(catalog.get(key).unwrap_or(fallback)).unwrap()).collect();
+        let texts = values.iter().enumerate().map(|(index, value)| format!("{index} => {value},")).collect::<String>();
+        let formats = values.iter().enumerate().map(|(index, value)| format!("{index} => format!({value}),")).collect::<String>();
+        let arguments = values.iter().enumerate().map(|(index, value)| format!("{index} => format!({value}, $($args)*),")).collect::<String>();
+        text.push_str(&format!("    ({quoted_key}) => {{ match $crate::ui_messages::language_index() {{ {texts} _ => unreachable!() }} }};\n"));
+        formatted.push_str(&format!("    ({quoted_key}) => {{ match $crate::ui_messages::language_index() {{ {formats} _ => unreachable!() }} }};\n"));
+        formatted.push_str(&format!("    ({quoted_key}, $($args:tt)*) => {{ match $crate::ui_messages::language_index() {{ {arguments} _ => unreachable!() }} }};\n"));
     }
     text.push_str("}\n");
     formatted.push_str("}\n");

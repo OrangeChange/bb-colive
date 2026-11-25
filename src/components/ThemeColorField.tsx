@@ -1,4 +1,5 @@
-import { uiText } from "../i18n/index.ts";
+import { useUiLanguage } from "../i18n/react.ts";
+import { localized, uiText } from "../i18n/index.ts";
 import { X as LucideX, Check, Pipette, Eraser } from "lucide-react";
 import { useEffect, useMemo, useRef, useState } from "react";
 import { createPortal } from "react-dom";
@@ -11,16 +12,17 @@ import { STYLE_PREVIEW_POINTER_DOWN_EVENT } from "./stylePreviewInteraction.ts";
 import { createThemeColorDragInteraction } from "./themeColorInteraction.ts";
 
 type EyeDropperConstructor = new () => { open: () => Promise<{ sRGBHex: string }> };
-const COLOR_PRESETS = [
+const COLOR_PRESETS = localized(() => ([
   { label: uiText("themeColorField.COLOR_PRESETS.label"), value: "#ffffff" }, { label: uiText("themeColorField.COLOR_PRESETS.label2"), value: "#000000" },
   { label: uiText("themeColorField.COLOR_PRESETS.label3"), value: "#fb7299" }, { label: uiText("themeColorField.COLOR_PRESETS.label4"), value: "#7c3aed" },
   { label: uiText("themeColorField.COLOR_PRESETS.label5"), value: "#23ade5" }, { label: uiText("themeColorField.COLOR_PRESETS.label6"), value: "#6366f1" },
   { label: uiText("themeColorField.COLOR_PRESETS.label7"), value: "#4c9a8d" }, { label: uiText("themeColorField.COLOR_PRESETS.label8"), value: "#14b8a6" },
   { label: uiText("themeColorField.COLOR_PRESETS.label9"), value: "#f59e0b" }, { label: uiText("themeColorField.COLOR_PRESETS.label10"), value: "#f97316" },
   { label: uiText("themeColorField.COLOR_PRESETS.label11"), value: "#ef4444" }, { label: uiText("themeColorField.COLOR_PRESETS.label12"), value: "#64748b" },
-] as const;
+] as const));
 
 export function ThemeColorField({ value, onChange, onPreviewChange, onPreviewCancel, label, allowTransparent = true, opaque = false, mixed = false, inline = false }: { opaque?: boolean; inline?: boolean; value: string; onChange: (value: string) => void; onPreviewChange?: (value: string) => void; onPreviewCancel?: () => void; label: string; allowTransparent?: boolean; mixed?: boolean }) {
+  useUiLanguage();
   const trigger = useRef<HTMLButtonElement>(null);
   const panel = useRef<HTMLDivElement>(null);
   const presets = useRef<HTMLDivElement>(null);

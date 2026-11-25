@@ -1,3 +1,4 @@
+import { useUiLanguage } from "../i18n/react.ts";
 import { uiText } from "../i18n/index.ts";
 import { forwardRef, useEffect, useImperativeHandle, useRef, useState } from "react";
 import type * as Monaco from "monaco-editor";
@@ -20,6 +21,7 @@ export interface NativeCssCodeEditorHandle {
 }
 
 export const NativeCssCodeEditor = forwardRef<NativeCssCodeEditorHandle, { value: string; documentKey: string; readOnly: boolean; onChange: (value: string) => void; onSave: () => void; onFormat?: () => void; onCopy?: () => void; onClear?: () => void; label: string }>(function NativeCssCodeEditor({ value, documentKey, readOnly, onChange, onSave, onFormat, onCopy, onClear, label }, ref) {
+  useUiLanguage();
   const host = useRef<HTMLDivElement>(null);
   const monacoRef = useRef<typeof Monaco | null>(null);
   const editorRef = useRef<Monaco.editor.IStandaloneCodeEditor | null>(null);

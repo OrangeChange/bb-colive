@@ -1,4 +1,4 @@
-import { uiText } from "../i18n/index.ts";
+import { localized, uiText } from "../i18n/index.ts";
 export type SettingsSectionId = "general" | "display" | "filters" | "live" | "review" | "windows" | "interaction" | "voice" | "other" | "about";
 
 export type SettingsSection = {
@@ -15,7 +15,7 @@ export type SettingsOpenRequest = {
   action?: "mark-issue" | "connect-cloud-recovery";
 };
 
-export const SETTINGS_SECTIONS: readonly SettingsSection[] = [
+export const SETTINGS_SECTIONS: readonly SettingsSection[] = localized(() => ([
   { id: "general", label: uiText("settingsNavigation.SETTINGS_SECTIONS.label") },
   { id: "display", label: uiText("settingsNavigation.SETTINGS_SECTIONS.label2") },
   { id: "filters", label: uiText("settingsNavigation.SETTINGS_SECTIONS.label3") },
@@ -26,7 +26,7 @@ export const SETTINGS_SECTIONS: readonly SettingsSection[] = [
   { id: "voice", label: uiText("settingsNavigation.SETTINGS_SECTIONS.label6") },
   { id: "other", label: uiText("settingsNavigation.SETTINGS_SECTIONS.label7") },
   { id: "about", label: uiText("settingsNavigation.SETTINGS_SECTIONS.label8") },
-];
+]));
 
 /** 归一化后的累计滚轮位移阈值；持续输入可以一次跨越多个分类。 */
 export const SETTINGS_WHEEL_THRESHOLD = 80;

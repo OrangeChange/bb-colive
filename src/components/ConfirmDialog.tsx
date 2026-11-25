@@ -1,3 +1,4 @@
+import { useUiLanguage } from "../i18n/react.ts";
 import { uiText } from "../i18n/index.ts";
 import { useEffect, useId, useRef, useState, type ReactNode } from "react";
 import { createPortal } from "react-dom";
@@ -18,6 +19,7 @@ export type ConfirmDialogProps = {
 
 /** 应用内的确认对话框：不调用浏览器原生 confirm，并保留焦点与 Escape 语义。 */
 export function ConfirmDialog({ title, description, confirmLabel, confirmTone = "accent", errorMessage = uiText("confirmDialog.ConfirmDialog"), children, confirmDisabled = false, cancelAriaLabel = uiText("common.cancel"), onCancel, onConfirm }: ConfirmDialogProps) {
+  useUiLanguage();
   const dialogRef = useRef<HTMLDivElement>(null);
   const cancelRef = useRef<HTMLButtonElement>(null);
   const onCancelRef = useRef(onCancel);

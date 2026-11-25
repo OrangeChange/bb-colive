@@ -1,9 +1,11 @@
+import { useUiLanguage } from "../i18n/react.ts";
 import { uiText } from "../i18n/index.ts";
 import { useId, useState } from "react";
 import { Play } from "lucide-react";
 import { controlClass } from "./voicePanelPrimitives";
 
 export function VoiceTestPanel({ onTest, onBusyChange }: { onTest: (text: string) => Promise<void>; onBusyChange: (busy: boolean) => void }) {
+  useUiLanguage();
   const id = useId();
   const [text, setText] = useState("这是一条测试语音");
   const [status, setStatus] = useState<"idle" | "busy" | "ended" | "error">("idle");

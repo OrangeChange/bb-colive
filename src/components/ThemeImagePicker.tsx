@@ -1,3 +1,4 @@
+import { useUiLanguage } from "../i18n/react.ts";
 import { uiText } from "../i18n/index.ts";
 import { useEffect, useRef, useState } from "react";
 import { ImagePlus, ImageUp } from "lucide-react";
@@ -18,6 +19,7 @@ export function ThemeImagePicker({
   onReplace?: (asset: ThemeImageAsset) => void;
   single?: boolean;
 }) {
+  useUiLanguage();
   const assets = useThemeImageAssets();
   const [path, setPath] = useState("");
   const [pending, setPending] = useState<{

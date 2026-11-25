@@ -1,3 +1,4 @@
+import { useUiLanguage } from "../i18n/react.ts";
 import { uiText } from "../i18n/index.ts";
 import { Minus as LucideMinus, Square as LucideSquare, Copy as LucideCopy, X as LucideX } from "lucide-react";
 import { useEffect, useState } from "react";
@@ -36,6 +37,7 @@ const windowButton =
   "flex h-9 w-11 items-center justify-center text-t2 transition-colors hover:bg-raised hover:text-t1 focus-visible:z-10 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-accent-ring";
 
 export function TitleBar() {
+  const uiLanguage = useUiLanguage();
   const [appWindow] = useState(() => getCurrentWindow());
   const [maximized, setMaximized] = useState(false);
   const windowState = useConnection((s) => s.state);
@@ -45,7 +47,7 @@ export function TitleBar() {
 
   useEffect(() => {
     void appWindow.setTitle(getWindowTitle({ status, anchorName, roomId, liveStatus })).catch(() => {});
-  }, [appWindow, status, anchorName, roomId, liveStatus]);
+  }, [appWindow, status, anchorName, roomId, liveStatus, uiLanguage]);
 
   useEffect(() => {
     let disposed = false;

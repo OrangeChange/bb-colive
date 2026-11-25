@@ -1,3 +1,4 @@
+import { useUiLanguage } from "../i18n/react.ts";
 import { uiText } from "../i18n/index.ts";
 import type { ReviewOwnerMode } from "../archive/archiveTypes.ts";
 
@@ -8,6 +9,7 @@ export function ReviewOwnerToolbar({
   mode: ReviewOwnerMode;
   onModeChange: (mode: ReviewOwnerMode) => void;
 }) {
+  useUiLanguage();
   const buttonClass = "inline-flex h-7 items-center rounded border border-transparent px-3 ui-type-control transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent-ring";
 
   return (

@@ -1,3 +1,4 @@
+import { useUiLanguage } from "../i18n/react.ts";
 import { uiText } from "../i18n/index.ts";
 import { Funnel as LucideFunnel, LocateFixed as LucideLocateFixed, Volume2 as LucideVolume2, Tag as LucideTag, UserRound as LucideUserRound, Star as LucideStar, Bookmark as LucideBookmark, Copy as LucideCopy, Sparkles as LucideSparkles, Ellipsis as LucideEllipsis } from "lucide-react";
 import { useEffect, useLayoutEffect, useRef, useState, type PointerEvent as ReactPointerEvent, type RefObject } from "react";
@@ -158,6 +159,7 @@ function formatEventTime(ts: number): string {
 }
 
 export function EventContextMenu({ event, nickname, eventFontSize, shortcutActions, eventAreaRef, scope = "live", handlers, remoteOpenRequest, onInteractionChange, dismissRevision }: EventContextMenuProps) {
+  useUiLanguage();
   const [open, setOpen] = useState(false);
 
   const [nicknameDialogOpen, setNicknameDialogOpen] = useState(false);

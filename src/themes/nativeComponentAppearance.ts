@@ -1,4 +1,4 @@
-import { uiText } from "../i18n/index.ts";
+import { localized, uiText } from "../i18n/index.ts";
 import type { EventStyleSettings } from "../eventStyleSettings.ts";
 import { DEFAULT_EVENT_STYLE_ROLE_PRIORITY, EVENT_STYLE_ROLES, type EventStyleRole } from "../eventStyleSettings.ts";
 import {
@@ -17,11 +17,11 @@ export const NATIVE_COMPONENT_PARTS = [
 
 export type NativeComponentPart = (typeof NATIVE_COMPONENT_PARTS)[number];
 
-export const NATIVE_COMPONENT_LABELS: Record<NativeComponentPart, string> = {
+export const NATIVE_COMPONENT_LABELS: Record<NativeComponentPart, string> = localized(() => ({
   event: uiText("nativeComponentAppearance.NATIVE_COMPONENT_LABELS.event"), identity: uiText("nativeComponentAppearance.NATIVE_COMPONENT_LABELS.identity"), avatar: uiText("nativeComponentAppearance.NATIVE_COMPONENT_LABELS.avatar"), avatarFrame: uiText("nativeComponentAppearance.NATIVE_COMPONENT_LABELS.avatarFrame"),
   username: uiText("nativeComponentAppearance.NATIVE_COMPONENT_LABELS.username"), medal: uiText("nativeComponentAppearance.NATIVE_COMPONENT_LABELS.medal"), guardBadge: uiText("nativeComponentAppearance.NATIVE_COMPONENT_LABELS.guardBadge"), message: uiText("nativeComponentAppearance.NATIVE_COMPONENT_LABELS.message"),
   translation: uiText("nativeComponentAppearance.NATIVE_COMPONENT_LABELS.translation"), giftImage: uiText("nativeComponentAppearance.NATIVE_COMPONENT_LABELS.giftImage"), eventIcon: uiText("nativeComponentAppearance.NATIVE_COMPONENT_LABELS.eventIcon"), sticky: uiText("nativeComponentAppearance.NATIVE_COMPONENT_LABELS.sticky"),
-};
+}));
 
 export interface NativeComponentStyle {
   visible?: boolean;

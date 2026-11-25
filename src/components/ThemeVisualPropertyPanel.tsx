@@ -1,3 +1,4 @@
+import { useUiLanguage } from "../i18n/react.ts";
 import { uiText } from "../i18n/index.ts";
 import type { ReactNode } from "react";
 import { RotateCcw } from "lucide-react";
@@ -17,6 +18,7 @@ export function ThemeVisualPropertyPanel({ title, context, canRestore, onRestore
   children: ReactNode;
   imageTarget?: {root?: HTMLElement | null; selector: string};
 }) {
+  useUiLanguage();
   return <section className="native-property-panel">
     <header>
       <div>

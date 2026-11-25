@@ -1,3 +1,4 @@
+import { useUiLanguage } from "../i18n/react.ts";
 import { uiText } from "../i18n/index.ts";
 import { createPreviewResourceReceiver } from "../preview/stylePreviewResources.ts";
 import { useEffect, useState } from "react";
@@ -12,6 +13,7 @@ import { applyPreviewMessage } from "../preview/stylePreviewProtocol.ts";
 import { applyThemeToDocument } from "../theme.ts";
 import "./nativeThemeEditor.css";
 export function NativeStylePreviewWindow() {
+  useUiLanguage();
   const [state, setState] = useState<StylePreviewSnapshot | null>(null);
   useEffect(() => {
     let stop: (() => void) | undefined;

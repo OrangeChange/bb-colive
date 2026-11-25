@@ -1,3 +1,4 @@
+import { useUiLanguage } from "../i18n/react.ts";
 import { uiText } from "../i18n/index.ts";
 import { ThemeImagePicker } from "./ThemeImagePicker.tsx";
 import { ThemeImageDialog } from "./ThemeImageDialog.tsx";
@@ -30,6 +31,7 @@ export function ThemeImageBorderField({
   onPreviewChange?: (value: string) => void;
   onPreviewCancel?: () => void;
 }) {
+  useUiLanguage();
   const assets = useThemeImageAssets();
   const [originalWidth, setOriginalWidth] = useState<string | null>(null);
   const [originalOutset, setOriginalOutset] = useState<string | null>(null);

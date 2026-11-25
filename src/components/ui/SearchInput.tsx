@@ -1,3 +1,4 @@
+import { useUiLanguage } from "../../i18n/react.ts";
 import { uiText } from "../../i18n/index.ts";
 import { Search, X } from "lucide-react";
 import { useRef, type ComponentPropsWithoutRef } from "react";
@@ -9,6 +10,7 @@ type SearchInputProps = Omit<ComponentPropsWithoutRef<"input">, "type" | "value"
 };
 
 export function UiSearchInput({ value, onValueChange, className = "", ...props }: SearchInputProps) {
+  useUiLanguage();
   const input = useRef<HTMLInputElement>(null);
   return <div className={`ui-search-field flex h-8 min-w-0 items-center gap-2 rounded-md border border-line bg-bg px-2 text-t2 focus-within:border-accent focus-within:ring-2 focus-within:ring-accent-ring ${className}`}>
     <Search size={16} className="shrink-0 text-t3" aria-hidden="true" />

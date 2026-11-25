@@ -1,3 +1,4 @@
+import { useUiLanguage } from "../i18n/react.ts";
 import { uiText } from "../i18n/index.ts";
 import { useEffect, useId, useState } from "react";
 import type { Anchor } from "../protocol/anchors.ts";
@@ -15,6 +16,7 @@ export function AnchorRemovalDialog({ anchor, onRemove, onClose }: {
   onRemove: () => Promise<void>;
   onClose: () => void;
 }) {
+  useUiLanguage();
   const [includeArchive, setIncludeArchive] = useState(false);
   const [archive, setArchive] = useState<ArchiveState>({ status: "loading" });
   const [attempt, setAttempt] = useState(0);

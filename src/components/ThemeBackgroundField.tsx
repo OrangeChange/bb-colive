@@ -1,3 +1,4 @@
+import { useUiLanguage } from "../i18n/react.ts";
 import { uiText } from "../i18n/index.ts";
 import * as Popover from "@radix-ui/react-popover";
 import { Plus, Trash2, X } from "lucide-react";
@@ -51,6 +52,7 @@ export function ThemeBackgroundField({
   onPreviewChange,
   onPreviewCancel,
 }: Props) {
+  useUiLanguage();
   const [open, setOpen] = useState(false),
     [draft, setDraft] = useState(value),
     [layer, setLayer] = useState(0),

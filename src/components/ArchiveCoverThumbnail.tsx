@@ -1,3 +1,4 @@
+import { useUiLanguage } from "../i18n/react.ts";
 import { uiText } from "../i18n/index.ts";
 import { useEffect, useRef, useState } from "react";
 import { ImagePreviewOverlay } from "./ImagePreviewOverlay";
@@ -19,6 +20,7 @@ const sizeClass: Record<ArchiveCoverThumbnailSize, string> = {
 };
 
 export function ArchiveCoverThumbnail({ url, alt, size, cloudSessionId, previewEnabled = true }: ArchiveCoverThumbnailProps) {
+  useUiLanguage();
   const [failedUrl, setFailedUrl] = useState<string | null>(null);
   const [previewOpen, setPreviewOpen] = useState(false);
   const triggerRef = useRef<HTMLButtonElement>(null);

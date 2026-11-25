@@ -1,3 +1,4 @@
+import { useUiLanguage } from "../i18n/react.ts";
 import { uiText } from "../i18n/index.ts";
 import { useEffect, useRef, useState, type ReactNode } from "react";
 import { Trash2 } from "lucide-react";
@@ -12,6 +13,7 @@ export function AnchorMenuRow({ anchor, avatar, selected, current, onSelect, onR
   onSelect: () => void;
   onRemove: () => void;
 }) {
+  useUiLanguage();
   const [showRemove, setShowRemove] = useState(false);
   const timer = useRef<ReturnType<typeof setTimeout> | undefined>(undefined);
   const reset = () => {

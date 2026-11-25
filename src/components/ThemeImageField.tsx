@@ -1,3 +1,4 @@
+import { useUiLanguage } from "../i18n/react.ts";
 import { uiText } from "../i18n/index.ts";
 import { ThemeImagePicker } from "./ThemeImagePicker.tsx";
 import { ThemeImageDialog } from "./ThemeImageDialog.tsx";
@@ -50,6 +51,7 @@ export function ThemeImageField({
   onPreviewChange,
   onPreviewCancel,
 }: Props) {
+  useUiLanguage();
   const assets = useThemeImageAssets();
   const [draft, setDraft] = useState<ImageBackgroundDraft | null>(null);
   const previewCallbacks = useRef({ onPreviewChange, onPreviewCancel });

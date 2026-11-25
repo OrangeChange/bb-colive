@@ -1,4 +1,5 @@
-import { uiText } from "../i18n/index.ts";
+import { useUiLanguage } from "../i18n/react.ts";
+import { localized, uiText } from "../i18n/index.ts";
 import { ChevronLeft as LucideChevronLeft, Check, Save, MoreHorizontal } from "lucide-react";
 import type { ReactNode } from "react";
 import { ThemeActionMenu } from "./ThemeActionMenu.tsx";
@@ -17,6 +18,7 @@ export function ThemeEditorHeader({ document, description, dirty = false, saving
   applyLabel?: string; applyTargets?: readonly { label: string; action: () => void }[];
   onSaveAs?: () => void; onRestore?: (scope: string) => void;
 }) {
+  useUiLanguage();
   return <header className="native-editor-header">
     <div className="native-editor-heading">
       <button type="button" className="theme-editor-back" onClick={onBack}><ChevronLeftIcon /><span>{uiText("themeEditorChrome.ThemeEditorHeader")}</span></button>
@@ -33,9 +35,10 @@ export function ThemeEditorHeader({ document, description, dirty = false, saving
   </header>;
 }
 
-const SECTIONS: readonly [ThemeEditorSection, string][] = [["basic", uiText("themeEditorChrome.SECTIONS")], ["visual", uiText("themeEditorChrome.SECTIONS2")], ["advanced", uiText("themeEditorChrome.SECTIONS3")]];
+const SECTIONS: readonly [ThemeEditorSection, string][] = localized(() => ([["basic", uiText("themeEditorChrome.SECTIONS")], ["visual", uiText("themeEditorChrome.SECTIONS2")], ["advanced", uiText("themeEditorChrome.SECTIONS3")]]));
 
 export function ThemeEditorTabs({ section, onChange }: { section: ThemeEditorSection; onChange: (section: ThemeEditorSection) => void }) {
+  useUiLanguage();
   return <nav className="native-editor-tabs" role="tablist" aria-label={uiText("themeEditorChrome.aria_label")}>
     {SECTIONS.map(([id, label], index) => <button type="button" role="tab" id={`theme-editor-tab-${id}`} aria-controls={`theme-editor-panel-${id}`} tabIndex={section === id ? 0 : -1} aria-selected={section === id} className={section === id ? "is-active" : ""} onKeyDown={event => {
       const next = event.key === "Home" ? 0 : event.key === "End" ? SECTIONS.length - 1 : event.key === "ArrowRight" ? (index + 1) % SECTIONS.length : event.key === "ArrowLeft" ? (index + SECTIONS.length - 1) % SECTIONS.length : -1;
@@ -45,5 +48,6 @@ export function ThemeEditorTabs({ section, onChange }: { section: ThemeEditorSec
 }
 
 export function ThemeEditorContent({ section, children }: { section: ThemeEditorSection; children: ReactNode }) {
+  useUiLanguage();
   return <main role="tabpanel" id={`theme-editor-panel-${section}`} aria-labelledby={`theme-editor-tab-${section}`} className={`native-editor-content${section === "visual" ? " is-visual" : section === "advanced" ? " is-advanced" : ""}`}>{children}</main>;
 }

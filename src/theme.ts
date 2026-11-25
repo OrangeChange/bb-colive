@@ -1,4 +1,4 @@
-import { uiText } from "./i18n/index.ts";
+import { localized, uiText } from "./i18n/index.ts";
 /**
  * 主题状态：配色主题（樱花粉默认 / 青瓷绿 / 自定义）× 深浅色（默认跟随系统）
  *
@@ -12,7 +12,7 @@ import { isEventWindowKind } from './windows/eventWindowChannels';
 import { applyCustomPalette, DEFAULT_CUSTOM_COLOR, normalizeCustomColor } from './customPalette.ts';
 
 export type Palette = "pine" | "sakura" | "custom";
-export const PALETTE_OPTIONS = [{ value: "sakura" as const, label: uiText("theme.PALETTE_OPTIONS.label") }, { value: "pine" as const, label: uiText("theme.PALETTE_OPTIONS.label2") }, { value: "custom" as const, label: uiText("theme.PALETTE_OPTIONS.label3") }];
+export const PALETTE_OPTIONS = localized(() => ([{ value: "sakura" as const, label: uiText("theme.PALETTE_OPTIONS.label") }, { value: "pine" as const, label: uiText("theme.PALETTE_OPTIONS.label2") }, { value: "custom" as const, label: uiText("theme.PALETTE_OPTIONS.label3") }]));
 export type Mode = "system" | "light" | "dark";
 
 interface ThemeState {

@@ -1,4 +1,5 @@
-import { uiText } from "../i18n/index.ts";
+import { useUiLanguage } from "../i18n/react.ts";
+import { localized, uiText } from "../i18n/index.ts";
 import { useEffect, useMemo, useState } from "react";
 import { invoke } from "@tauri-apps/api/core";
 import { open, save } from "@tauri-apps/plugin-dialog";
@@ -45,17 +46,17 @@ function formatError(error: unknown): string {
   return error instanceof Error ? error.message : String(error);
 }
 
-const archiveManagementDeleteOptions = [
+const archiveManagementDeleteOptions = localized(() => ([
   { value: "single", label: uiText("reviewArchiveManagement.archiveManagementDeleteOptions.label") },
   { value: "owner", label: uiText("reviewArchiveManagement.archiveManagementDeleteOptions.label2") },
   { value: "before", label: uiText("reviewArchiveManagement.archiveManagementDeleteOptions.label3") },
   { value: "retention", label: uiText("reviewArchiveManagement.archiveManagementDeleteOptions.label4") },
-] as const;
-const ownerRetentionPolicyOptions = [
+] as const));
+const ownerRetentionPolicyOptions = localized(() => ([
   { value: "global", label: uiText("reviewArchiveManagement.ownerRetentionPolicyOptions.label") },
   { value: "permanent", label: uiText("reviewArchiveManagement.ownerRetentionPolicyOptions.label2") },
   { value: "custom", label: uiText("reviewArchiveManagement.ownerRetentionPolicyOptions.label3") },
-] as const;
+] as const));
 
 function selectedDeleteScope(
   mode: "single" | "owner" | "before" | "retention",
@@ -77,6 +78,7 @@ function selectedDeleteScope(
 }
 
 function DeletePreview({ preview }: { preview: ArchiveDeletePreview }) {
+  useUiLanguage();
   return <div className="archive-delete-preview mt-3 border-l-2 border-warning pl-3 ui-type-meta text-t2">
     <p>{uiText("reviewArchiveManagement.DeletePreview")}</p>
     <dl className="archive-summary mt-1">
@@ -87,7 +89,7 @@ function DeletePreview({ preview }: { preview: ArchiveDeletePreview }) {
       <div><dt>{uiText("reviewArchiveManagement.DeletePreview9")}</dt><dd>{preview.resourceReferenceCount} {uiText("reviewArchiveManagement.DeletePreview7")}</dd></div>
       <div><dt>{uiText("reviewArchiveManagement.DeletePreview10")}</dt><dd>{formatBytes(preview.bytes)}</dd></div>
     </dl>
-    {preview.blockedSessionCount > 0 && <p className="mt-2 text-warning">{uiText("reviewArchiveManagement.DeletePreview11")}{preview.blockedSessionCount} {uiText("reviewArchiveManagement.DeletePreview12")}</p>}
+    {preview.blockedSessionCount > 0 && <p className="mt-2 text-warning">{uiText("review.deleteBlockedSessions", { count: preview.blockedSessionCount })}</p>}
   </div>;
 }
 
@@ -103,6 +105,7 @@ export function ReviewArchiveManagement({
   resultExportBusy = false,
   onChanged,
 }: ReviewArchiveManagementProps) {
+  useUiLanguage();
   const service = useMemo(() => new ArchiveTransferService({
     repository,
     flushArchiveWriter,

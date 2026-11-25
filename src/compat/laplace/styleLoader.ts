@@ -1,4 +1,4 @@
-import { uiText } from "../../i18n/index.ts";
+import { localized, uiText } from "../../i18n/index.ts";
 import {invoke} from "@tauri-apps/api/core";
 import {parseThemeCssMetadata} from "../../themes/themeCssMetadata.ts";
 import { MAX_CSS_LENGTH, prependRemoteHistory, type RemoteTemplateHistoryEntry, type RemoteTemplateMetadata } from './styles.ts';
@@ -22,7 +22,7 @@ export const LAPLACE_TEMPLATE_HASHES: Readonly<Record<string, string>> = {
   "simple": "fe9c22b3a626d960324fb9bedaf4a87300c8fa0d735a248f7ac7b30bafa85403",
   "zelda": "23385098d7765fac2fdb16f540f35eac527cd999cd8c55b47a8543b25ae721c7"
 };
-export const LAPLACE_TEMPLATE_OPTIONS = [
+export const LAPLACE_TEMPLATE_OPTIONS = localized(() => ([
   { value: '', label: uiText("styleLoader.LAPLACE_TEMPLATE_OPTIONS.label"), group: "内置模板" },
   { value: 'bubble', label: "LAPLACE 气泡 × 明前奶绿", group: "内置模板" },
   { value: 'bubble-next', label: "LAPLACE 气泡 Next × 明前奶绿", group: "内置模板" },
@@ -37,7 +37,7 @@ export const LAPLACE_TEMPLATE_OPTIONS = [
   { value: 'shed', label: "SHED 气泡", group: "第三方模板" },
   { value: 'shed-bubble', label: "SHED 透明波动", group: "第三方模板" },
   { value: 'orange-block', label: "橙子色块", group: "第三方模板" },
-] as const;
+] as const));
 export const CURATED_REMOTE_TEMPLATES = [
   { url: 'https://pub-d4d706263dfc409fb4c0991a6f6ba4f1.r2.dev/gradient_chat/normal.css', title: "渐变弹幕" },
   { url: 'https://rsrc.laplace.cn/assets/bubble-snow.css', title: "雪色气泡" },

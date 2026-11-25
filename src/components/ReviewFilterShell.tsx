@@ -1,3 +1,4 @@
+import { useUiLanguage } from "../i18n/react.ts";
 import { uiText } from "../i18n/index.ts";
 import { useEffect, useRef, type ReactNode, type Ref } from "react";
 import { compactFilterActionButtonClass } from "./actionButtonStyles";
@@ -29,6 +30,7 @@ export function ReviewFilterShell({
   shellRef,
   dataAttributes,
 }: ReviewFilterShellProps) {
+  useUiLanguage();
   const contentRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {

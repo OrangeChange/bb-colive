@@ -1,3 +1,4 @@
+import { useUiLanguage } from "../i18n/react.ts";
 import { uiText } from "../i18n/index.ts";
 import { useGeneralSettings } from '../generalSettings'
 import type { RankUser } from '../protocol/roomInsights'
@@ -7,6 +8,7 @@ import { GuardIdentityBadge } from './GuardIdentityBadge'
 import { UserAvatar } from './UserAvatar'
 
 export function RankAvatar({ user, size = 28 }: { user?: Pick<RankUser, 'uid' | 'name' | 'face' | 'guardLevel' | 'guardMilestone' | 'guardIconSet'>; size?: number }) {
+  useUiLanguage();
   const showAvatarFrame = useGeneralSettings(state => state.eventDisplayPreferences.showAvatarFrame)
   const className = 'rounded-full bg-raised ui-type-control text-t2 ring-2 ring-surface'
   if (!user) return <span className={`inline-flex shrink-0 items-center justify-center ${className}`} style={{ width: size, height: size }}><span aria-hidden="true">—</span></span>
@@ -21,6 +23,7 @@ export function RankUserRow({ user, kind, guardIdentityDisplayMode = 'icon', sho
   showGuardIdentity?: boolean
   onUserFilter?: (user: Pick<RankUser, 'uid' | 'name'>) => void
 }) {
+  useUiLanguage();
   // 榜单保留线上等级：1总督、2提督、3舰长；现有主题token为模型等级，方向相反。
   const guard = user.guardLevel
   // 官方贡献榜对零贡献用户显示未排名；保留接口顺序和原始rank，大航海不套用此规则。
@@ -65,6 +68,7 @@ export function RankList({ users, kind, guardIdentityDisplayMode = 'icon', showG
   showGuardIdentity?: boolean
   onUserFilter?: (user: Pick<RankUser, 'uid' | 'name'>) => void
 }) {
+  useUiLanguage();
   return <ol aria-label={kind === 'guard' ? uiText("roomInsightsView.aria_label4") : uiText("roomInsightsView.aria_label5")}>
     {users.map(user => <li key={user.uid}><RankUserRow user={user} kind={kind} guardIdentityDisplayMode={guardIdentityDisplayMode} showGuardIdentity={showGuardIdentity} onUserFilter={onUserFilter} /></li>)}
   </ol>
@@ -75,6 +79,7 @@ export interface OverviewMetricsProps {
   medalName?: string; duration: string
 }
 export function OverviewMetrics({ viewers, watched, likes, fansClub, guards, medalName, duration }: OverviewMetricsProps) {
+  useUiLanguage();
   const number = (value?: number) => value?.toLocaleString('zh-CN') ?? '—'
   const metrics = [
     [uiText("roomInsightsView.OverviewMetrics.metrics"), viewers ?? '—', uiText("roomInsightsView.OverviewMetrics.metrics2")],

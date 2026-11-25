@@ -1,4 +1,4 @@
-import { uiText } from "../../i18n/index.ts";
+import { localized, uiText } from "../../i18n/index.ts";
 import { installCompatiblePropertyCapabilities } from "../../themes/compatThemeCapabilities.ts";
 import { installCompatibleEventGroups } from "../../themes/compatThemeCapabilities.ts";
 import type { CompatibleThemeCapabilityMap } from "../../themes/compatThemeCapabilities.ts";
@@ -72,7 +72,7 @@ const events = {
   system:
     ".event--system, .event--live-start, .event--live-end, .event--user-block, .event--room-mute-on, .event--room-mute-off, .event--room-name-update, .event--live-warning, .event--live-cutoff",
 };
-export const LAPLACE_CAPABILITY: CompatibleThemeCapabilityMap = {
+export const LAPLACE_CAPABILITY: CompatibleThemeCapabilityMap = localized(() => ({
   mode: "laplace",
   parts: {
     guardType: {label:uiText("theme.parts.guardType.label"),selector:".toast-details-type",properties:text,codeDefaults:textDefaults,placements:["main"],events:["guard"],units:{lineHeight:"number"}},
@@ -397,7 +397,7 @@ export const LAPLACE_CAPABILITY: CompatibleThemeCapabilityMap = {
     light: "[data-theme='light']",
     dark: "[data-theme='dark']",
   },
-};
+}));
 
 installCompatiblePropertyCapabilities(LAPLACE_CAPABILITY);
 

@@ -8029,15 +8029,15 @@
         return value;
       }
       var AbortControllerLocal = "undefined" !== typeof AbortController ? AbortController : function() {
-        var listeners = [], signal = this.signal = {
+        var listeners2 = [], signal = this.signal = {
           aborted: false,
           addEventListener: function(type, listener) {
-            listeners.push(listener);
+            listeners2.push(listener);
           }
         };
         this.abort = function() {
           signal.aborted = true;
-          listeners.forEach(function(listener) {
+          listeners2.forEach(function(listener) {
             return listener();
           });
         };
@@ -8089,33 +8089,33 @@
       function pingEngtangledActionScope() {
         if (0 === --currentEntangledPendingCount && null !== currentEntangledListeners) {
           null !== currentEntangledActionThenable && (currentEntangledActionThenable.status = "fulfilled");
-          var listeners = currentEntangledListeners;
+          var listeners2 = currentEntangledListeners;
           currentEntangledListeners = null;
           currentEntangledLane = 0;
           currentEntangledActionThenable = null;
-          for (var i = 0; i < listeners.length; i++) (0, listeners[i])();
+          for (var i = 0; i < listeners2.length; i++) (0, listeners2[i])();
         }
       }
       function chainThenableValue(thenable, result) {
-        var listeners = [], thenableWithOverride = {
+        var listeners2 = [], thenableWithOverride = {
           status: "pending",
           value: null,
           reason: null,
           then: function(resolve) {
-            listeners.push(resolve);
+            listeners2.push(resolve);
           }
         };
         thenable.then(
           function() {
             thenableWithOverride.status = "fulfilled";
             thenableWithOverride.value = result;
-            for (var i = 0; i < listeners.length; i++) (0, listeners[i])(result);
+            for (var i = 0; i < listeners2.length; i++) (0, listeners2[i])(result);
           },
           function(error) {
             thenableWithOverride.status = "rejected";
             thenableWithOverride.reason = error;
-            for (error = 0; error < listeners.length; error++)
-              (0, listeners[error])(void 0);
+            for (error = 0; error < listeners2.length; error++)
+              (0, listeners2[error])(void 0);
           }
         );
         return thenableWithOverride;
@@ -15126,15 +15126,15 @@
         };
       }
       function accumulateTwoPhaseListeners(targetFiber, reactName) {
-        for (var captureName = reactName + "Capture", listeners = []; null !== targetFiber; ) {
+        for (var captureName = reactName + "Capture", listeners2 = []; null !== targetFiber; ) {
           var _instance2 = targetFiber, stateNode = _instance2.stateNode;
           _instance2 = _instance2.tag;
-          5 !== _instance2 && 26 !== _instance2 && 27 !== _instance2 || null === stateNode || (_instance2 = getListener(targetFiber, captureName), null != _instance2 && listeners.unshift(
+          5 !== _instance2 && 26 !== _instance2 && 27 !== _instance2 || null === stateNode || (_instance2 = getListener(targetFiber, captureName), null != _instance2 && listeners2.unshift(
             createDispatchListener(targetFiber, _instance2, stateNode)
-          ), _instance2 = getListener(targetFiber, reactName), null != _instance2 && listeners.push(
+          ), _instance2 = getListener(targetFiber, reactName), null != _instance2 && listeners2.push(
             createDispatchListener(targetFiber, _instance2, stateNode)
           ));
-          if (3 === targetFiber.tag) return listeners;
+          if (3 === targetFiber.tag) return listeners2;
           targetFiber = targetFiber.return;
         }
         return [];
@@ -15147,18 +15147,18 @@
         return inst ? inst : null;
       }
       function accumulateEnterLeaveListenersForEvent(dispatchQueue, event, target, common, inCapturePhase) {
-        for (var registrationName = event._reactName, listeners = []; null !== target && target !== common; ) {
+        for (var registrationName = event._reactName, listeners2 = []; null !== target && target !== common; ) {
           var _instance3 = target, alternate = _instance3.alternate, stateNode = _instance3.stateNode;
           _instance3 = _instance3.tag;
           if (null !== alternate && alternate === common) break;
-          5 !== _instance3 && 26 !== _instance3 && 27 !== _instance3 || null === stateNode || (alternate = stateNode, inCapturePhase ? (stateNode = getListener(target, registrationName), null != stateNode && listeners.unshift(
+          5 !== _instance3 && 26 !== _instance3 && 27 !== _instance3 || null === stateNode || (alternate = stateNode, inCapturePhase ? (stateNode = getListener(target, registrationName), null != stateNode && listeners2.unshift(
             createDispatchListener(target, stateNode, alternate)
-          )) : inCapturePhase || (stateNode = getListener(target, registrationName), null != stateNode && listeners.push(
+          )) : inCapturePhase || (stateNode = getListener(target, registrationName), null != stateNode && listeners2.push(
             createDispatchListener(target, stateNode, alternate)
           )));
           target = target.return;
         }
-        0 !== listeners.length && dispatchQueue.push({ event, listeners });
+        0 !== listeners2.length && dispatchQueue.push({ event, listeners: listeners2 });
       }
       var NORMALIZE_NEWLINES_REGEX = /\r\n?/g;
       var NORMALIZE_NULL_AND_REPLACEMENT_REGEX = /\u0000|\uFFFD/g;
@@ -18975,6 +18975,36 @@
   // src/themes/nativeIdentityCss.ts
   var import_postcss_safe_parser = __toESM(require_safe_parse(), 1);
 
+  // src/i18n/index.ts
+  var listeners = /* @__PURE__ */ new Set();
+  function subscribeUiLanguage(listener) {
+    listeners.add(listener);
+    return () => {
+      listeners.delete(listener);
+    };
+  }
+  function localized(create) {
+    const value = create();
+    const snapshot = (object) => object instanceof Map ? new Map(object) : JSON.parse(JSON.stringify(object));
+    let previous = snapshot(value);
+    const update = (target, before, after) => {
+      if (after instanceof Map) {
+        for (const [key, text2] of after) if (text2 !== before.get(key)) target.set(key, text2);
+        return;
+      }
+      for (const [key, next] of Object.entries(after)) {
+        if (typeof next === "string" && next !== before?.[key]) target[key] = next;
+        else if (next && typeof next === "object" && target[key] && before?.[key]) update(target[key], before[key], next);
+      }
+    };
+    subscribeUiLanguage(() => {
+      const next = create();
+      update(value, previous, next);
+      previous = snapshot(next);
+    });
+    return value;
+  }
+
   // src/protocol/eventTypeCodes.ts
   var UNKNOWN_MSG_TYPE_CODE = 27;
   var MsgType = /* @__PURE__ */ ((MsgType2) => {
@@ -19055,6 +19085,18 @@
   // src/eventStyleSettings.ts
   var DEFAULT_EVENT_STYLE_ROLE_PRIORITY = ["viceroy", "admiral", "captain", "anchor", "admin", "normal"];
   var EVENT_STYLE_TYPES = ["danmu", "interact", "gift", "redPocket", "lottery", "superChat", "guardCaptain", "guardAdmiral", "guardViceroy", "system"];
+  var EVENT_STYLE_TYPE_LABELS = localized(() => ({
+    danmu: "\u5F39\u5E55",
+    interact: "\u4E92\u52A8",
+    gift: "\u793C\u7269",
+    redPocket: "\u7EA2\u5305",
+    lottery: "\u5929\u9009",
+    superChat: "\u9192\u76EE\u7559\u8A00",
+    guardCaptain: "\u8230\u957F",
+    guardAdmiral: "\u63D0\u7763",
+    guardViceroy: "\u603B\u7763",
+    system: "\u7CFB\u7EDF"
+  }));
   var DEFAULT_EVENT_FONT_FAMILY = "MiSans";
   var DEFAULT_AVATAR_SIZE = 24;
   var DEFAULT_TEXT_STROKE_WIDTH = 1;
@@ -19088,6 +19130,31 @@
     };
   }
   var DEFAULT_EVENT_STYLE_SETTINGS = createDefaultEventStyleSettings();
+
+  // src/eventDisplaySettings.ts
+  var EVENT_ANIMATION_PRESET_OPTIONS = localized(() => [
+    { value: "none", label: "\u65E0\u52A8\u753B" },
+    { value: "fade", label: "\u6DE1\u5165\u6DE1\u51FA" },
+    { value: "lift", label: "\u8F7B\u5FAE\u4E0A\u79FB" },
+    { value: "scale", label: "\u8F7B\u5FAE\u7F29\u653E" },
+    { value: "slide", label: "\u6A2A\u5411\u8F7B\u6ED1" }
+  ]);
+
+  // src/themes/nativeComponentAppearance.ts
+  var NATIVE_COMPONENT_LABELS = localized(() => ({
+    event: "\u4E8B\u4EF6",
+    identity: "\u8EAB\u4EFD\u4FE1\u606F",
+    avatar: "\u5934\u50CF",
+    avatarFrame: "\u5934\u50CF\u6846",
+    username: "\u7528\u6237\u540D",
+    medal: "\u7C89\u4E1D\u724C",
+    guardBadge: "\u5927\u822A\u6D77\u8EAB\u4EFD",
+    message: "\u6B63\u6587",
+    translation: "\u8BD1\u6587",
+    giftImage: "\u793C\u7269\u56FE\u7247",
+    eventIcon: "\u4E8B\u4EF6\u56FE\u6807",
+    sticky: "\u7F6E\u9876\u680F"
+  }));
 
   // node_modules/postcss/lib/postcss.mjs
   var import_postcss = __toESM(require_postcss(), 1);
@@ -19274,6 +19341,44 @@
   });
 
   // src/themes/nativeThemeCapabilities.ts
+  var NATIVE_EVENT_SCOPES = localized(() => [
+    { id: "all", label: "\u5168\u90E8\u4E8B\u4EF6" },
+    { id: "danmaku", label: "\u5F39\u5E55" },
+    { id: "interaction", label: "\u4E92\u52A8", children: [
+      { id: "enter", label: "\u8FDB\u5165\u76F4\u64AD\u95F4" },
+      { id: "follow", label: "\u5173\u6CE8" },
+      { id: "share", label: "\u5206\u4EAB" },
+      { id: "specialFollow", label: "\u7279\u522B\u5173\u6CE8" },
+      { id: "mutualFollow", label: "\u4E92\u76F8\u5173\u6CE8" },
+      { id: "like", label: "\u70B9\u8D5E" }
+    ] },
+    { id: "gift", label: "\u793C\u7269", children: [
+      { id: "free", label: "\u514D\u8D39\u793C\u7269" },
+      { id: "normal", label: "\u666E\u901A\u793C\u7269" },
+      { id: "blind", label: "\u76F2\u76D2\u793C\u7269" },
+      { id: "redpocket", label: "\u7EA2\u5305", children: [{ id: "redpocketStart", label: "\u7EA2\u5305\u5F00\u59CB" }, { id: "redpocketResult", label: "\u7EA2\u5305\u5F00\u5956" }] },
+      { id: "lottery", label: "\u5929\u9009", children: [{ id: "lotteryStart", label: "\u5929\u9009\u5F00\u59CB" }, { id: "lotteryResult", label: "\u5929\u9009\u5F00\u5956" }] }
+    ] },
+    { id: "superchat", label: "\u9192\u76EE\u7559\u8A00" },
+    { id: "guard", label: "\u5927\u822A\u6D77" },
+    { id: "system", label: "\u7CFB\u7EDF", children: [
+      { id: "liveStatus", label: "\u5F00\u64AD\u4E0E\u4E0B\u64AD" },
+      { id: "userMute", label: "\u7528\u6237\u7981\u8A00" },
+      { id: "roomMute", label: "\u5168\u5458\u7981\u8A00" },
+      { id: "admin", label: "\u623F\u7BA1\u53D8\u66F4" },
+      { id: "roomChange", label: "\u623F\u95F4\u4FE1\u606F\u53D8\u66F4" },
+      { id: "warning", label: "\u76F4\u64AD\u8B66\u544A\u4E0E\u5207\u65AD" }
+    ] }
+  ]);
+  var NATIVE_IDENTITY_SCOPES = localized(() => [
+    { id: "all", label: "\u6240\u6709\u7528\u6237" },
+    { id: "ordinary", label: "\u666E\u901A\u7528\u6237" },
+    { id: "captain", label: "\u8230\u957F" },
+    { id: "admiral", label: "\u63D0\u7763" },
+    { id: "viceroy", label: "\u603B\u7763" },
+    { id: "anchor", label: "\u4E3B\u64AD" },
+    { id: "admin", label: "\u623F\u7BA1" }
+  ]);
   var capability = (shape, ...groups) => ({ shape, groups });
   var text = () => capability("text", "display", "typography", "surface", "spacing", "border");
   var badge = () => capability("text-badge", "display", "typography", "surface", "spacing", "border");
@@ -19409,7 +19514,7 @@
     selector: NATIVE_PART_SELECTORS[id],
     capability: NATIVE_PART_CAPABILITIES[id]
   });
-  var NATIVE_SEMANTIC_PARTS = [
+  var NATIVE_SEMANTIC_PARTS = localized(() => [
     part("quantityPrefix", "\u6570\u91CF\u7B26\u53F7", "common"),
     part("quantityNumber", "\u6570\u91CF\u6570\u503C", "common"),
     part("quantityUnit", "\u6570\u91CF\u5355\u4F4D", "common"),
@@ -19513,7 +19618,7 @@
     part("winnerItems", "\u4E2D\u5956\u5185\u5BB9", "redpocket"),
     part("winnerToggle", "\u540D\u5355\u5C55\u5F00", "redpocket"),
     part("winnerList", "\u4E2D\u5956\u540D\u5355", "redpocket")
-  ];
+  ]);
   var navItem = (id, children, label) => ({
     id,
     part: id,
@@ -19527,7 +19632,7 @@
     ...part2 ? { part: part2 } : {},
     ...event ? { event } : {}
   });
-  var NATIVE_VISUAL_NAVIGATION = [
+  var NATIVE_VISUAL_NAVIGATION = localized(() => [
     { id: "display", label: "\u663E\u793A\u533A\u57DF", defaultExpanded: true, items: [navItem("whole"), navBranch("events", "\u4E8B\u4EF6", [navItem("event", void 0, "\u6240\u6709\u4E8B\u4EF6"), navBranch("row", "\u666E\u901A\u4E8B\u4EF6", [navItem("card"), navItem("header")], "row"), navItem("stickyEvent")]), navItem("list"), navItem("sticky")] },
     { id: "identity", label: "\u7528\u6237\u4FE1\u606F", defaultExpanded: true, items: [navItem("user", void 0, "\u7528\u6237\u4FE1\u606F\u6574\u4F53"), navBranch("avatarWrap", "\u5934\u50CF\u533A\u57DF", [navItem("avatarPlaceholder"), navItem("avatarFrame"), navItem("avatar")], "avatarWrap"), navItem("username"), navBranch("medal", "\u7C89\u4E1D\u724C", [navItem("medalName"), navItem("medalLevel")], "medal"), navBranch("badges", "\u8EAB\u4EFD\u5FBD\u7AE0", [navItem("guardBadge"), navItem("anchorBadge"), navItem("adminBadge")], "badges"), navItem("honor"), navItem("rank")] },
     { id: "content", label: "\u4E8B\u4EF6\u5185\u5BB9", defaultExpanded: true, items: [navItem("content"), navItem("message"), navItem("action"), navItem("timestamp"), navItem("eventIcon"), navItem("activityStatus"), navItem("systemTitle"), navItem("systemDetail"), navBranch("quantity", "\u6570\u91CF", [navItem("quantityPrefix"), navItem("quantityNumber"), navItem("quantityUnit")]), navItem("price", ["price", "priceUnit", "priceValue"], "\u4EF7\u683C")] },
@@ -19541,7 +19646,16 @@
       navBranch("lotteryGroup", "\u5929\u9009", [navItem("lotteryPrize"), navItem("lotteryCount"), navBranch("lotteryCommand", "\u5929\u9009\u53E3\u4EE4", [navItem("lotteryCommandPrefix"), navItem("lotteryCommandText")], "lotteryCommand"), navBranch("lotteryGift", "\u53C2\u4E0E\u793C\u7269", [navItem("lotteryGiftPrefix"), navItem("lotteryGiftName")], "lotteryGift"), navItem("lotteryWait"), { ...navItem("activityStatus"), event: "lotteryStart" }, navBranch("lotteryRequirement", "\u53C2\u4E0E\u6761\u4EF6", [navItem("lotteryRequirementPrefix"), navItem("lotteryRequirementText")], "lotteryRequirement")], "lotteryGroup", "lottery"),
       navBranch("winnerList", "\u4E2D\u5956", [navItem("resultDescription"), navItem("winnerCount"), navItem("winnerListCount"), navBranch("winnerItems", "\u4E2D\u5956\u5185\u5BB9", [navItem("winnerItem"), navItem("winnerAvatar"), navItem("winnerUser")], "winnerItems"), navItem("winnerToggle")], "winnerList", "all")
     ] }
-  ];
+  ]);
+  var PROPERTY_SECTION_LABELS = localized(() => ({
+    display: "\u663E\u793A",
+    typography: "\u6587\u5B57",
+    surface: "\u989C\u8272\u4E0E\u80CC\u666F",
+    spacing: "\u95F4\u8DDD",
+    border: "\u8FB9\u6846",
+    layout: "\u6392\u7248",
+    media: "\u5A92\u4F53"
+  }));
 
   // src/themes/nativePriceGradient.ts
   var OFFICIAL_SC_PALETTE = [

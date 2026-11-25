@@ -1,4 +1,5 @@
-import { uiText } from "../i18n/index.ts";
+import { useUiLanguage } from "../i18n/react.ts";
+import { localized, uiText } from "../i18n/index.ts";
 import { AnchorMenuRow } from "./AnchorMenuRow.tsx";
 import { AnchorRemovalDialog } from "./AnchorRemovalDialog.tsx";
 /**
@@ -17,14 +18,14 @@ import { getAnchorCardView } from "./anchorCard";
 import { RoomRankings } from "./RoomRankings";
 import type { RankUser } from "../protocol/roomInsights";
 
-const STATUS_META: Record<ConnStatus, { label: string; dot: string }> = {
+const STATUS_META: Record<ConnStatus, { label: string; dot: string }> = localized(() => ({
   idle: { label: uiText("connectBar.STATUS_META.idle.label"), dot: "bg-t3" },
   connecting: { label: uiText("connectBar.STATUS_META.connecting.label"), dot: "bg-warning" },
   connected: { label: uiText("connectBar.STATUS_META.connected.label"), dot: "bg-success-indicator" },
   reconnecting: { label: uiText("connectBar.STATUS_META.reconnecting.label"), dot: "bg-warning" },
   closed: { label: uiText("connectBar.STATUS_META.closed.label"), dot: "bg-t3" },
   error: { label: uiText("connectBar.STATUS_META.error.label"), dot: "bg-danger" },
-};
+}));
 
 /** 圆形头像：右下角直播状态点（live 传 undefined 不显示）；加载失败（或无 URL）回退名字首字 */
 function Avatar({
@@ -39,6 +40,7 @@ function Avatar({
   /** true 绿点 / false 灰点 / undefined 无点 */
   live?: boolean;
 }) {
+  useUiLanguage();
   const [failedUrl, setFailedUrl] = useState<string | undefined>();
   return (
     <span className="relative inline-flex shrink-0" style={{ width: size, height: size }}>
@@ -80,6 +82,7 @@ interface Preview {
 }
 
 export function ConnectBar({ onUserFilter }: { onUserFilter?: (user: Pick<RankUser, "uid" | "name">) => void }) {
+  useUiLanguage();
   const [roomInput, setRoomInput] = useState("");
   const [preview, setPreview] = useState<Preview>({ status: "idle" });
   const [menuOpen, setMenuOpen] = useState(false);

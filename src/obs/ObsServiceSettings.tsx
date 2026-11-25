@@ -1,3 +1,4 @@
+import { useUiLanguage } from "../i18n/react.ts";
 import { uiText } from "../i18n/index.ts";
 import { emit, listen } from "@tauri-apps/api/event";
 import { useEffect, useState } from "react";
@@ -15,6 +16,7 @@ export function ObsServiceSettings({
   onNotice?: (message:string)=>void;
   configurations?: import("./nativeObsConfigurations.ts").NativeObsConfiguration[];
 }) {
+  useUiLanguage();
   const showGiftEffect = useGeneralSettings(state => state.showObsGiftEffect);
   const setShowGiftEffect = useGeneralSettings(state => state.setShowObsGiftEffect);
   const showGuardEffect = useGeneralSettings(state => state.showObsGuardEffect);

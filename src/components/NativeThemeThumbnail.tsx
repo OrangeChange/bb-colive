@@ -1,3 +1,4 @@
+import { useUiLanguage } from "../i18n/react.ts";
 import { uiText } from "../i18n/index.ts";
 import { IsolatedPreviewFrame } from "./IsolatedPreviewFrame.tsx";
 import { useMemo, useRef } from "react";
@@ -20,6 +21,7 @@ export function NativeThemeThumbnail({ themeId, revision, displayPreferences, lo
   displayScale?: number;
   context?: StylePreviewContext;
 }) {
+  useUiLanguage();
   const root = useRef<HTMLDivElement>(null);
   const { document, failed } = useThemeThumbnailDocument({ root, themeId, revision, load });
   const previewCss = useMemo(

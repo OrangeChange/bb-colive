@@ -1,3 +1,4 @@
+import { useUiLanguage } from "../i18n/react.ts";
 import { uiText } from "../i18n/index.ts";
 import { useTheme, type Palette } from '../theme';
 import { useEffect,useState,useRef,useLayoutEffect } from 'react';
@@ -11,6 +12,7 @@ import { CoLiveLogo } from '../components/CoLiveLogo';
 import './updates.css';
 interface Status {appearance?:{palette:Palette;scheme:"light"|"dark";customColor:string};phase:string;version:string;completed:number;total:number;error:string|null;releaseUrl:string}
 export function UpdateProgressWindow(){
+  useUiLanguage();
   const content=useRef<HTMLElement>(null);
   const [status,setStatus]=useState<Status>({phase:'waiting',version:'',completed:0,total:0,error:null,releaseUrl:''});
   useEffect(()=>{let disposed=false;let stop:(()=>void)|undefined;

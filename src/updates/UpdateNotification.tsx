@@ -1,9 +1,11 @@
+import { useUiLanguage } from "../i18n/react.ts";
 import { uiText } from "../i18n/index.ts";
 import { useState } from 'react';
 import { X } from 'lucide-react';
 import { CoLiveLogo } from '../components/CoLiveLogo';
 import { useSoftwareUpdate } from './store';
 export function UpdateNotification({onOpen}:{onOpen:()=>void}){
+  useUiLanguage();
   const state=useSoftwareUpdate();const [dismissed,setDismissed]=useState<string[]>([]);
   const version=state.offer?.version??state.manualVersion,ready=state.phase==='ready';
   const key=`${ready?'ready':'available'}:${version}`;

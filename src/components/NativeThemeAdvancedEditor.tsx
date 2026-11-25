@@ -1,3 +1,4 @@
+import { useUiLanguage } from "../i18n/react.ts";
 import { uiText } from "../i18n/index.ts";
 import { Copy, Check, Trash2, ListOrdered, Download, ChevronDown, Plus, Images } from "lucide-react";
 import { ThemeActionMenu } from "./ThemeActionMenu.tsx";
@@ -14,6 +15,7 @@ import { bindUiDismissableLayer } from "./ui/layer";
 import { findThemeAssetUsages, isLocalUserThemeAsset, themeAssetExample, themeAssetFontAlias, themeAssetInsertValue } from "../themes/themeAssetPresentation.ts";
 
 export function NativeThemeAdvancedEditor({ document, visualCss, customCss, cssMessage, cssMessageKind = "error", onCustomCssChange, onVisualCssChange, onSave, onExportCss, onAddAsset, onRemoveAsset, onReplaceAsset, assetPreviewUrls }: { document: ThemeDocument; visualCss: string; customCss: string; cssMessage: string; cssMessageKind?: "error" | "notice"; onCustomCssChange: (css: string) => void; onVisualCssChange: (css: string) => string; onSave: () => void; onExportCss: (scope: NativeThemeCssExportScope) => void; onAddAsset: () => void; onRemoveAsset: (assetId: string) => void; onReplaceAsset?: (assetId: string) => void; assetPreviewUrls?: ReadonlyMap<string, string> }) {
+  const uiLanguage = useUiLanguage();
   const [assetsOpen, setAssetsOpen] = useState(false);
   const [assetMessage, setAssetMessage] = useState("");
   const [fontAliases, setFontAliases] = useState<Record<string, string>>({});
@@ -49,7 +51,7 @@ export function NativeThemeAdvancedEditor({ document, visualCss, customCss, cssM
     if (!text.trim()) return "";
     try { postcss.parse(text); return ""; }
     catch (error) { return error instanceof Error ? error.message : uiText("nativeThemeAdvancedEditor.NativeThemeAdvancedEditor.syntaxError"); }
-  }, [text]);
+  }, [text, uiLanguage]);
   const format = async () => {
     if (formatting) return;
     setFormatting(true);

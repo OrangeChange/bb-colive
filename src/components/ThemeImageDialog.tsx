@@ -1,3 +1,4 @@
+import { useUiLanguage } from "../i18n/react.ts";
 import { uiText } from "../i18n/index.ts";
 import { useContext, useEffect, useRef, type ReactNode } from "react";
 import {
@@ -19,6 +20,7 @@ export function ThemeImageDialog({
   children: ReactNode;
   actions: ReactNode;
 }) {
+  useUiLanguage();
   const surface = useRef<HTMLElement>(null);
   const editing = useContext(ThemeImageEditingContext);
   const close = useRef(onClose);

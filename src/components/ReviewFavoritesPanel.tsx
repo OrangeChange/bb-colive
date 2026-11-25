@@ -1,4 +1,5 @@
-import { uiText } from "../i18n/index.ts";
+import { useUiLanguage } from "../i18n/react.ts";
+import { localized, uiText } from "../i18n/index.ts";
 import { UiSearchInput } from "./ui/SearchInput.tsx";
 import { useCallback, useEffect, useMemo, useState } from "react";
 import { EventRowSlot } from "./EventRowSlot";
@@ -34,19 +35,19 @@ const PAGE_SIZE = 50;
 const inputClass = "h-8 rounded-md border border-line bg-bg px-2.5 ui-type-control text-t1 outline-none focus:border-accent focus:ring-2 focus:ring-accent-ring";
 const buttonClass = actionButtonClass;
 const tagFilterButtonClass = "inline-flex h-7 items-center rounded-md border px-2 ui-type-control transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent-ring";
-const favoriteKeywordFieldOptions = [
+const favoriteKeywordFieldOptions = localized(() => ([
   { value: "all", label: uiText("reviewFavoritesPanel.favoriteKeywordFieldOptions.label") },
   { value: "user", label: uiText("reviewFavoritesPanel.favoriteKeywordFieldOptions.label2") },
   { value: "fanMedal", label: uiText("reviewFavoritesPanel.favoriteKeywordFieldOptions.label3") },
   { value: "gift", label: uiText("reviewFavoritesPanel.favoriteKeywordFieldOptions.label4") },
   { value: "content", label: uiText("reviewFavoritesPanel.favoriteKeywordFieldOptions.label5") },
   { value: "note", label: uiText("reviewFavoritesPanel.favoriteKeywordFieldOptions.label6") },
-] as const;
-const favoriteTimeFieldOptions = [
+] as const));
+const favoriteTimeFieldOptions = localized(() => ([
   { value: "favoritedAt", label: uiText("reviewFavoritesPanel.favoriteTimeFieldOptions.label") },
   { value: "eventTs", label: uiText("reviewFavoritesPanel.favoriteTimeFieldOptions.label2") },
-] as const;
-const favoriteTimePresetOptions = [
+] as const));
+const favoriteTimePresetOptions = localized(() => ([
   { value: "all", label: uiText("reviewFavoritesPanel.favoriteTimePresetOptions.label") },
   { value: "today", label: uiText("reviewFavoritesPanel.favoriteTimePresetOptions.label2") },
   { value: "yesterday", label: uiText("reviewFavoritesPanel.favoriteTimePresetOptions.label3") },
@@ -57,16 +58,16 @@ const favoriteTimePresetOptions = [
   { value: "month", label: uiText("reviewFavoritesPanel.favoriteTimePresetOptions.label8") },
   { value: "lastMonth", label: uiText("reviewFavoritesPanel.favoriteTimePresetOptions.label9") },
   { value: "custom", label: uiText("reviewFavoritesPanel.favoriteTimePresetOptions.label10") },
-] as const;
+] as const));
 const favoriteSortOptions = favoriteTimeFieldOptions;
-const favoriteDirectionOptions = [
+const favoriteDirectionOptions = localized(() => ([
   { value: "desc", label: uiText("reviewFavoritesPanel.favoriteDirectionOptions.label") },
   { value: "asc", label: uiText("reviewFavoritesPanel.favoriteDirectionOptions.label2") },
-] as const;
-const favoriteTagModeOptions = [
+] as const));
+const favoriteTagModeOptions = localized(() => ([
   { value: "any", label: uiText("reviewFavoritesPanel.favoriteTagModeOptions.label") },
   { value: "all", label: uiText("reviewFavoritesPanel.favoriteTagModeOptions.label2") },
-] as const;
+] as const));
 
 function eventFromItem(item: ArchiveFavoriteItem): DanmakuEvent | null {
   if (!item.event) return null;
@@ -101,6 +102,7 @@ export function ReviewFavoritesPanel({
   refreshKey: unknown;
   onOpenFavorite: (item: ArchiveFavoriteItem) => void;
 }) {
+  useUiLanguage();
   const displayPreferences = useGeneralSettings((state) => state.eventDisplayPreferences);
   const [keyword, setKeyword] = useState("");
   const [keywordField, setKeywordField] = useState<"all" | "user" | "fanMedal" | "gift" | "content" | "note">("all");

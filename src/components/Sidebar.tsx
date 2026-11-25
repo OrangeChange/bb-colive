@@ -1,3 +1,4 @@
+import { useUiLanguage } from "../i18n/react.ts";
 import { uiText } from "../i18n/index.ts";
 import { Radio as LucideRadio, History as LucideHistory, Mic as LucideMic, AudioLines as LucideAudioLines, Paintbrush as LucidePaintbrush, Bell as LucideBell, BellOff as LucideBellOff, MessagesSquare as LucideMessagesSquare, Lock as LucideLock, LockOpen as LucideLockOpen, Gift as LucideGift, Wallet as LucideWallet, MessageSquareQuote as LucideMessageSquareQuote, Ship as LucideShip, Palette as LucidePalette, Sun as LucideSun, Moon as LucideMoon, Contrast as LucideContrast } from "lucide-react";
 /**
@@ -102,6 +103,7 @@ function IconSystem() {
 }
 
 function ThemeQuickToggle() {
+  useUiLanguage();
   const palette = useTheme((state) => state.palette);
   const cyclePalette = useTheme((state) => state.cyclePalette);
   const mode = useTheme((state) => state.mode);
@@ -163,6 +165,7 @@ function SidebarQuickToggle({
   onSelectMainView,
   onToggle,
 }: SidebarQuickToggleProps) {
+  useUiLanguage();
   const [revealed, setRevealed] = useState(false);
   const rootRef = useRef<HTMLDivElement>(null);
   const collapseTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
@@ -222,6 +225,7 @@ function SidebarQuickToggle({
 
 /** 已登录用户标识：头像悬停显示登录状态，点击弹出用户菜单（退出需二次点击，防误触） */
 function UserBadge() {
+  useUiLanguage();
   const session = useSession((s) => s.session);
   const logout = useSession((s) => s.logout);
   const [open, setOpen] = useState(false);
@@ -319,6 +323,7 @@ export function Sidebar({
   revenueSelection?: RevenueWindowSelection;
   onToggleRevenueChild?: (kind: RevenueWindowKind) => void;
 }) {
+  useUiLanguage();
   const voiceEnabled = useVoiceSettings((state) => state.enabled);
   const personalBroadcastEnabled = useVoiceSettings((state) => state.personalBroadcast.enabled);
   const personalBroadcast = useVoiceSettings((state) => state.personalBroadcast);

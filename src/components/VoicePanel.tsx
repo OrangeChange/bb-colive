@@ -1,4 +1,5 @@
-import { uiText } from "../i18n/index.ts";
+import { useUiLanguage } from "../i18n/react.ts";
+import { localized, uiText } from "../i18n/index.ts";
 import { ChevronDown as LucideChevronDown, Mic, SlidersHorizontal, RotateCcw } from "lucide-react";
 import { useEffect, useMemo, useRef, useState, useSyncExternalStore, type DragEvent } from "react";
 import { openUrl } from "@tauri-apps/plugin-opener";
@@ -20,7 +21,7 @@ import { UiSelect } from "./ui/Select";
 import { VoiceTestPanel } from "./VoiceTestPanel";
 import { SettingsChoiceControl } from "./SettingsChoiceControl";
 
-const CATEGORY_LABELS: Record<VoiceEventCategory, string> = {
+const CATEGORY_LABELS: Record<VoiceEventCategory, string> = localized(() => ({
   danmu: uiText("voicePanel.CATEGORY_LABELS.danmu"),
   interact: uiText("voicePanel.CATEGORY_LABELS.interact"),
   gift: uiText("voicePanel.CATEGORY_LABELS.gift"),
@@ -30,9 +31,9 @@ const CATEGORY_LABELS: Record<VoiceEventCategory, string> = {
   superChat: uiText("voicePanel.CATEGORY_LABELS.superChat"),
   guard: uiText("voicePanel.CATEGORY_LABELS.guard"),
   system: uiText("voicePanel.CATEGORY_LABELS.system"),
-};
+}));
 
-const FIELD_LABELS: Record<VoiceTemplateField, string> = {
+const FIELD_LABELS: Record<VoiceTemplateField, string> = localized(() => ({
   username: uiText("voicePanel.FIELD_LABELS.username"),
   content: uiText("voicePanel.statusText"),
   giftName: uiText("voicePanel.FIELD_LABELS.giftName"),
@@ -44,42 +45,42 @@ const FIELD_LABELS: Record<VoiceTemplateField, string> = {
   months: uiText("voicePanel.FIELD_LABELS.months"),
   companionDays: uiText("voicePanel.FIELD_LABELS.companionDays"),
   emoteName: uiText("voicePanel.FIELD_LABELS.emoteName"),
-};
+}));
 
-const PRIORITY_OPTIONS: { value: VoicePriority; label: string }[] = [
+const PRIORITY_OPTIONS: { value: VoicePriority; label: string }[] = localized(() => ([
   { value: "high", label: uiText("voicePanel.PRIORITY_OPTIONS.label") },
   { value: "medium", label: uiText("voicePanel.PRIORITY_OPTIONS.label2") },
   { value: "normal", label: uiText("voicePanel.PRIORITY_OPTIONS.label3") },
-];
+]));
 
-const VOICE_ENGINE_OPTIONS = [
+const VOICE_ENGINE_OPTIONS = localized(() => ([
   { value: "edge-online", label: uiText("voicePanel.VOICE_ENGINE_OPTIONS.label") },
   { value: "windows-system", label: uiText("voicePanel.VOICE_ENGINE_OPTIONS.label2") },
   { value: "fish-audio", label: "Fish Audio" },
   { value: "custom-http", label: uiText("voicePanel.VOICE_ENGINE_OPTIONS.label3") },
-] as const;
+] as const));
 const FISH_AUDIO_FORMAT_OPTIONS = [
   { value: "mp3", label: "MP3" },
   { value: "wav", label: "WAV" },
 ] as const;
-const CUSTOM_HTTP_AUTH_OPTIONS = [
+const CUSTOM_HTTP_AUTH_OPTIONS = localized(() => ([
   { value: "none", label: uiText("common.noneOption") },
   { value: "bearer", label: "Bearer" },
   { value: "api-key", label: "API Key Header" },
-] as const;
-const CUSTOM_HTTP_RESPONSE_OPTIONS = [
+] as const));
+const CUSTOM_HTTP_RESPONSE_OPTIONS = localized(() => ([
   { value: "audio", label: uiText("voicePanel.CUSTOM_HTTP_RESPONSE_OPTIONS.label") },
   { value: "json-base64", label: "JSON Base64" },
-] as const;
-const VOICE_QUEUE_MODE_OPTIONS = [
+] as const));
+const VOICE_QUEUE_MODE_OPTIONS = localized(() => ([
   { value: "original", label: uiText("voicePanel.VOICE_QUEUE_MODE_OPTIONS.label") },
   { value: "priority", label: uiText("voicePanel.VOICE_QUEUE_MODE_OPTIONS.label2") },
-] as const;
-const VOICE_OVERFLOW_OPTIONS = [
+] as const));
+const VOICE_OVERFLOW_OPTIONS = localized(() => ([
   { value: "drop-oldest", label: uiText("voicePanel.VOICE_OVERFLOW_OPTIONS.label") },
   { value: "drop-newest", label: uiText("voicePanel.VOICE_OVERFLOW_OPTIONS.label2") },
   { value: "drop-normal-first", label: uiText("voicePanel.VOICE_OVERFLOW_OPTIONS.label3") },
-] as const;
+] as const));
 const CUSTOM_HTTP_PRESET_OPTIONS = [
   { value: "openai-compatible", label: CUSTOM_HTTP_PRESET_LABELS["openai-compatible"] },
   { value: "gpt-sovits", label: CUSTOM_HTTP_PRESET_LABELS["gpt-sovits"] },
@@ -89,7 +90,16 @@ const CUSTOM_HTTP_PRESET_OPTIONS = [
 
 const DEFAULT_EDGE_VOICE = "zh-CN-XiaoxiaoNeural";
 const DEFAULT_WINDOWS_VOICE = "Huihui";
-const EDGE_VOICE_GROUPS = [uiText("voicePanel.EDGE_VOICE_GROUPS"), uiText("voicePanel.EDGE_VOICE_GROUPS2"), uiText("voicePanel.EDGE_VOICE_GROUPS3"), uiText("voicePanel.EDGE_VOICE_GROUPS4"), uiText("voicePanel.EDGE_VOICE_GROUPS5"), uiText("voicePanel.EDGE_VOICE_GROUPS6"), uiText("voicePanel.EDGE_VOICE_GROUPS7"), uiText("voicePanel.EDGE_VOICE_GROUPS8")];
+const EDGE_VOICE_GROUPS = localized(() => ([
+  { value: "zh-CN", label: uiText("voicePanel.EDGE_VOICE_GROUPS") },
+  { value: "zh-HK", label: uiText("voicePanel.EDGE_VOICE_GROUPS2") },
+  { value: "zh-dialect", label: uiText("voicePanel.EDGE_VOICE_GROUPS3") },
+  { value: "zh-TW", label: uiText("voicePanel.EDGE_VOICE_GROUPS4") },
+  { value: "en-US", label: uiText("voicePanel.EDGE_VOICE_GROUPS5") },
+  { value: "en-GB", label: uiText("voicePanel.EDGE_VOICE_GROUPS6") },
+  { value: "ja-JP", label: uiText("voicePanel.EDGE_VOICE_GROUPS7") },
+  { value: "multilingual", label: uiText("voicePanel.EDGE_VOICE_GROUPS8") },
+]));
 const FISH_API_KEY_URL = "https://fish.audio/app/api-keys/";
 const FISH_VOICE_LIBRARY_URL = "https://fish.audio/zh-CN/app/discovery/";
 
@@ -162,6 +172,7 @@ function findPreferredVoice(engine: VoiceEngine, availableVoices: VoiceInfo[]): 
 }
 
 function VoicePronunciationEditor({ rules, onChange }: { rules: VoicePronunciationRule[]; onChange: (rules: VoicePronunciationRule[]) => void }) {
+  useUiLanguage();
   const [draftRules, setDraftRules] = useState<VoicePronunciationRule[]>(() => rules);
 
   useEffect(() => {
@@ -240,6 +251,7 @@ function VoicePronunciationEditor({ rules, onChange }: { rules: VoicePronunciati
 }
 
 function FishReferenceVoiceManager({ fishAudio, updateFishAudio, openFishResource }: { fishAudio: FishAudioSettings; updateFishAudio: (value: Partial<FishAudioSettings>) => void; openFishResource: (url: string) => Promise<void> }) {
+  useUiLanguage();
   const pickerRef = useRef<HTMLDivElement>(null);
   const [isOpen, setIsOpen] = useState(false);
   const [draftId, setDraftId] = useState("");
@@ -372,6 +384,7 @@ function FishReferenceVoiceManager({ fishAudio, updateFishAudio, openFishResourc
 }
 
 function VoiceTemplateComposer({ category, segments, onChange }: { category: VoiceEventCategory; segments: TemplateSegment[]; onChange: (segments: TemplateSegment[]) => void }) {
+  useUiLanguage();
   const [dragIndex, setDragIndex] = useState<number | null>(null);
   const preserveAdjacentText = category === "anchorLottery";
   const normalizeSegments = (next: TemplateSegment[]) => ensureTemplateTextGaps(next, preserveAdjacentText);
@@ -491,6 +504,7 @@ function VoiceTemplateComposer({ category, segments, onChange }: { category: Voi
 }
 
 export function VoicePanel() {
+  const uiLanguage = useUiLanguage();
   const settings = useVoiceSettings();
   const snapshot = useSyncExternalStore(voiceController.subscribe, voiceController.getSnapshot, voiceController.getSnapshot);
   const personalSnapshot = useSyncExternalStore(personalBroadcastController.subscribe, personalBroadcastController.getSnapshot, personalBroadcastController.getSnapshot);
@@ -550,13 +564,13 @@ export function VoicePanel() {
     };
     const available = settings.engine === "edge-online"
       ? EDGE_VOICE_GROUPS.flatMap((group) => voices
-        .filter((voice) => voice.group === group && voice.name !== engineVoiceName)
-        .map((voice) => ({ value: voice.name, label: voice.label, title: voice.label, group })))
+        .filter((voice) => voice.group === group.value && voice.name !== engineVoiceName)
+        .map((voice) => ({ value: voice.name, label: voice.label, title: voice.label, group: group.label })))
       : voices
         .filter((voice) => voice.name !== engineVoiceName)
         .map((voice) => ({ value: voice.name, label: voice.label }));
     return [current, ...available];
-  }, [activeVoice?.label, engineVoiceName, settings.engine, voiceNeedsSelection, voices]);
+  }, [activeVoice?.label, engineVoiceName, settings.engine, voiceNeedsSelection, voices, uiLanguage]);
 
   const toggleEnabled = () => {
     if (settings.enabled) {

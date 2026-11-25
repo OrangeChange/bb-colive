@@ -1,3 +1,4 @@
+import { useUiLanguage } from "../i18n/react.ts";
 import { uiText } from "../i18n/index.ts";
 import { UpdateNotification } from "../updates/UpdateNotification";
 /**
@@ -10,6 +11,7 @@ import { RoomOverviewBar } from "./RoomOverviewBar";
 import { SystemReminderBell } from "./SystemReminderBell";
 
 export function StatusBar({onOpenUpdate}:{onOpenUpdate?:()=>void}) {
+  useUiLanguage();
   const listCount = useConnection((s) => s.listCount);
   const events = useConnection((s) => s.events);
   const [version, setVersion] = useState("0.1.2");

@@ -1,4 +1,5 @@
-import { uiText } from "../i18n/index.ts";
+import { useUiLanguage } from "../i18n/react.ts";
+import { localized, uiText } from "../i18n/index.ts";
 import {
   imageBackgroundCss,
   isImageBackgroundDraft,
@@ -24,7 +25,7 @@ import { NATIVE_PROPERTY_GROUPS } from "../themes/nativeThemeCapabilities.ts";
 
 export const THEME_NUMBER_FIELDS: Partial<
   Record<NativeVisualProperty, readonly [string, number, number, number]>
-> = {
+> = localized(() => ({
   fontWeight: [uiText("themeVisualPropertyField.THEME_NUMBER_FIELDS.fontWeight"), 100, 900, 100],
   fontSize: [uiText("common.fontSize"), 0, 640, 0.5],
   lineHeight: [uiText("themeVisualPropertyField.THEME_NUMBER_FIELDS.lineHeight"), 0, 640, 0.1],
@@ -37,16 +38,16 @@ export const THEME_NUMBER_FIELDS: Partial<
   height: [uiText("themeVisualPropertyField.THEME_NUMBER_FIELDS.height"), 0, 2048, 0.5],
   borderWidth: [uiText("themeVisualPropertyField.THEME_NUMBER_FIELDS.borderWidth"), 0, 80, 0.5],
   borderRadius: [uiText("themeVisualPropertyField.THEME_NUMBER_FIELDS.borderRadius"), 0, 640, 0.5],
-};
-const labels: Partial<Record<NativeVisualProperty, string>> = {
+}));
+const labels: Partial<Record<NativeVisualProperty, string>> = localized(() => ({
   visible: uiText("themeVisualPropertyField.labels.visible"),
   fontFamily: uiText("common.font"),
   color: uiText("common.color"),
   background: uiText("themeVisualPropertyField.labels.background"),
   borderImage: uiText("themeVisualPropertyField.labels.borderImage"),
   borderColor: uiText("themeVisualPropertyField.labels.borderColor"),
-};
-const groupLabels: Record<string, string> = {
+}));
+const groupLabels: Record<string, string> = localized(() => ({
   display: uiText("themeVisualPropertyField.groupLabels.display"),
   typography: uiText("themeVisualPropertyField.groupLabels.typography"),
   surface: uiText("themeVisualPropertyField.groupLabels.surface"),
@@ -54,7 +55,7 @@ const groupLabels: Record<string, string> = {
   border: uiText("themeVisualPropertyField.groupLabels.border"),
   layout: uiText("themeVisualPropertyField.groupLabels.layout"),
   media: uiText("themeVisualPropertyField.groupLabels.media"),
-};
+}));
 export function themeVisualPropertyGroups(
   properties: readonly NativeVisualProperty[],
 ) {
@@ -107,6 +108,7 @@ export function ThemeVisualPropertyField({
   saved?: boolean;
   imageScale?: { variable: string; value: number };
 }) {
+  useUiLanguage();
   const inheritedValue = useRef<{ value: unknown } | null>(null);
   const previewing = useRef(false);
   if (!previewing.current && !onRestore && !mixed && !missing && !controlled) inheritedValue.current = { value };

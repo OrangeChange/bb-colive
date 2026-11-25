@@ -1,4 +1,4 @@
-import { uiText } from "./i18n/index.ts";
+import { localized, uiText } from "./i18n/index.ts";
 import { MsgType, type DanmakuEvent, type EmoticonInfo, type FanMedalInfo } from "./protocol/types.ts";
 
 export const DEFAULT_EVENT_SPACING = 6;
@@ -14,13 +14,13 @@ export type HonorLevelDisplayMode = "icon" | "text";
 export type GuardIdentityDisplayMode = "icon" | "text";
 export type RoleIdentityDisplayMode = "icon" | "text";
 
-export const EVENT_ANIMATION_PRESET_OPTIONS: readonly { value: EventAnimationPreset; label: string }[] = [
+export const EVENT_ANIMATION_PRESET_OPTIONS: readonly { value: EventAnimationPreset; label: string }[] = localized(() => ([
   { value: "none", label: uiText("eventDisplaySettings.EVENT_ANIMATION_PRESET_OPTIONS.label") },
   { value: "fade", label: uiText("eventDisplaySettings.EVENT_ANIMATION_PRESET_OPTIONS.label2") },
   { value: "lift", label: uiText("eventDisplaySettings.EVENT_ANIMATION_PRESET_OPTIONS.label3") },
   { value: "scale", label: uiText("eventDisplaySettings.EVENT_ANIMATION_PRESET_OPTIONS.label4") },
   { value: "slide", label: uiText("eventDisplaySettings.EVENT_ANIMATION_PRESET_OPTIONS.label5") },
-];
+]));
 
 export const DEFAULT_EVENT_ANIMATION_PRESET: EventAnimationPreset = "fade";
 

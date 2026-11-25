@@ -2446,6 +2446,23 @@ fn build_tray_menu(
 }
 
 #[tauri::command]
+fn get_ui_language() -> &'static str { ui_messages::language() }
+
+#[tauri::command]
+fn set_ui_language(app: tauri::AppHandle, state: tauri::State<TrayWindowState>, language: String) -> Result<(), String> {
+    let language = match language.as_str() { "zh-Hant" => "zh-Hant", "en" => "en", "ja" => "ja", _ => "zh-CN" };
+    std::fs::write(data_paths::root()?.join("ui-language.json"), serde_json::to_vec(language).map_err(|error| error.to_string())?)
+        .map_err(|error| error.to_string())?;
+    ui_messages::set_language(language);
+    if let Some(tray) = app.tray_by_id("main-tray") {
+        let display = *state.display_open.lock().map_err(|error| error.to_string())?;
+        let gift = *state.gift_open.lock().map_err(|error| error.to_string())?;
+        tray.set_menu(Some(build_tray_menu(&app, display, gift).map_err(|error| error.to_string())?)).map_err(|error| error.to_string())?;
+    }
+    app.emit("ui-language-changed", language).map_err(|error| error.to_string())
+}
+
+#[tauri::command]
 fn set_tray_window_state(
     app: tauri::AppHandle,
     state: tauri::State<TrayWindowState>,
@@ -2496,6 +2513,7 @@ pub fn run() {
             return;
         }
     };
+    ui_messages::initialize(&_root);
     let mut context = application_context();
     for window in &mut context.config_mut().app.windows {
         window.create = false;
@@ -2631,6 +2649,8 @@ pub fn run() {
             write_archive_transfer,
             write_archive_export_bytes,
             set_tray_window_state,
+            get_ui_language,
+            set_ui_language,
             synthesize_edge_speech,
             synthesize_fish_audio,
             lookup_fish_audio_model,

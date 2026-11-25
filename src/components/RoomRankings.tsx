@@ -1,3 +1,4 @@
+import { useUiLanguage } from "../i18n/react.ts";
 import { uiText } from "../i18n/index.ts";
 import { useEffect, useMemo, useRef, useState } from 'react'
 import { useVirtualizer } from '@tanstack/react-virtual'
@@ -32,6 +33,7 @@ function RankRows({
   showGuardIdentity: boolean
   onUserFilter?: (user: Pick<RankUser, 'uid' | 'name'>) => void
 }) {
+  useUiLanguage();
   const scrollRef = useRef<HTMLDivElement>(null)
   const sentinelRef = useRef<HTMLDivElement>(null)
   const loadMoreRef = useRef(onLoadMore)
@@ -62,6 +64,7 @@ function RankRows({
 }
 
 function Ranking({ kind, onUserFilter }: { kind: 'contribution' | 'guard'; onUserFilter?: (user: Pick<RankUser, 'uid' | 'name'>) => void }) {
+  useUiLanguage();
   const { roomId, enabled, refreshRank, overview, contribution, guardFirst, guardRest, guardUsers, guardSort, setGuardSort, openRank, open, dismiss, hasMoreGuards, loadingMore, loadMoreGuards } = useRoomInsights()
   const guardIdentityDisplayMode = useGeneralSettings(state => state.eventDisplayPreferences.guardIdentityDisplayMode)
   const showGuardIdentity = useGeneralSettings(state => state.eventDisplayPreferences.showGuardIdentity)
@@ -161,6 +164,7 @@ function Ranking({ kind, onUserFilter }: { kind: 'contribution' | 'guard'; onUse
 }
 
 export function RoomRankings({ onUserFilter }: { onUserFilter?: (user: Pick<RankUser, 'uid' | 'name'>) => void }) {
+  useUiLanguage();
   const { roomId } = useRoomInsights()
   return <div className="ml-auto flex shrink-0 items-center gap-1" key={roomId ?? 'none'}>
     <Ranking kind="contribution" onUserFilter={onUserFilter} />

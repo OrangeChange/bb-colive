@@ -1,3 +1,4 @@
+import { useUiLanguage } from "../i18n/react.ts";
 import { uiText } from "../i18n/index.ts";
 import { imageTargetNodes } from "./ThemeImagePreview.tsx";
 import { ThemeImagePicker } from "./ThemeImagePicker.tsx";
@@ -59,6 +60,7 @@ export function ThemeDecorationField({
   onPreviewInherit?: () => void;
   inherited?: boolean;
 }) {
+  useUiLanguage();
   const assets = useThemeImageAssets(),
     [open, setOpen] = useState(false),
     [selected, setSelected] = useState(0),
@@ -510,7 +512,7 @@ export function ThemeDecorationField({
               {clippingLabel && (
                 <details className="theme-image-hint">
                   <summary>{uiText("themeDecorationField.ThemeDecorationField7")}{clippingLabel.split("、")[0]}</summary>
-                  <p>{uiText("themeDecorationField.ThemeDecorationField8")}{clippingLabel.split("、")[0]}{uiText("themeDecorationField.ThemeDecorationField9")}</p>
+                  <p>{uiText("theme.clippingDescription", { area: clippingLabel.split("、")[0] })}</p>
                   {clippingLabel.includes("、") && (
                     <details>
                       <summary>{uiText("themeDecorationField.ThemeDecorationField10")}</summary>

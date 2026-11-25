@@ -1,17 +1,18 @@
-import { uiText } from "../i18n/index.ts";
+import { useUiLanguage } from "../i18n/react.ts";
+import { localized, uiText } from "../i18n/index.ts";
 import { NATIVE_EVENT_SCOPES } from "../themes/nativeThemeCapabilities.ts";
 import { normalizeNativeEventVisibility, type NativeEventVisibility, type NativeThemeDisplaySettings } from "../themes/nativeComponentAppearance.ts";
 import { PanelSwitch } from "./voicePanelPrimitives.tsx";
 import { SettingsChoiceControl } from "./SettingsChoiceControl";
 import { SettingsIcon } from "./SettingsIcon";
 
-const DISPLAY_OPTIONS: readonly [keyof NativeThemeDisplaySettings, string][] = [
+const DISPLAY_OPTIONS: readonly [keyof NativeThemeDisplaySettings, string][] = localized(() => ([
   ["showUsername", uiText("nativeThemeBasicSettings.DISPLAY_OPTIONS")], ["showTimestamp", uiText("nativeThemeBasicSettings.DISPLAY_OPTIONS2")], ["maskUsername", uiText("nativeThemeBasicSettings.DISPLAY_OPTIONS3")],
   ["showAvatar", uiText("nativeThemeBasicSettings.DISPLAY_OPTIONS4")], ["showAvatarFrame", uiText("nativeThemeBasicSettings.DISPLAY_OPTIONS5")], ["showGuardIdentity", uiText("nativeThemeBasicSettings.DISPLAY_OPTIONS6")],
   ["showAdminIdentity", uiText("nativeThemeBasicSettings.DISPLAY_OPTIONS7")], ["showAnchorIdentity", uiText("nativeThemeBasicSettings.DISPLAY_OPTIONS8")], ["showFanMedal", uiText("nativeThemeBasicSettings.DISPLAY_OPTIONS9")],
   ["showHonorLevel", uiText("nativeThemeBasicSettings.DISPLAY_OPTIONS10")], ["showCurrentRank", uiText("nativeThemeBasicSettings.DISPLAY_OPTIONS11")], ["showGiftImage", uiText("nativeThemeBasicSettings.DISPLAY_OPTIONS12")], ["showEventIcon", uiText("nativeThemeBasicSettings.DISPLAY_OPTIONS13")],
   ["onlyAnchorFanMedal", uiText("nativeThemeBasicSettings.DISPLAY_OPTIONS14")], ["hideUnlitFanMedal", uiText("nativeThemeBasicSettings.DISPLAY_OPTIONS15")],
-];
+]));
 
 export function NativeThemeBasicSettings({ display, visibility, onDisplayChange, onVisibilityChange }: {
   display: NativeThemeDisplaySettings;
@@ -19,6 +20,7 @@ export function NativeThemeBasicSettings({ display, visibility, onDisplayChange,
   onDisplayChange: (value: NativeThemeDisplaySettings) => void;
   onVisibilityChange: (value: NativeEventVisibility) => void;
 }) {
+  useUiLanguage();
   const eventVisibility = normalizeNativeEventVisibility(visibility);
   const toggleCategory = (id: string) => { onVisibilityChange({ ...eventVisibility, categories: { ...eventVisibility.categories, [id]: !eventVisibility.categories[id] } }); };
   const toggleChild = (id: string) => { onVisibilityChange({ ...eventVisibility, legacyLiveStatusConflict: id === "liveStatus" ? false : eventVisibility.legacyLiveStatusConflict, children: { ...eventVisibility.children, [id]: !eventVisibility.children[id] } }); };

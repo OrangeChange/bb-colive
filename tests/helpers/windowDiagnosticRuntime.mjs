@@ -26,6 +26,7 @@ export async function windowDiagnosticRuntime(label = 'display', options = {}) {
     },
     async invoke(command, args) {
       calls.push({ command, args });
+      if (command === 'get_ui_language') return 'zh-CN';
       if (command === 'set_window_diagnostic_close_state') closeStates.set(args.state.instanceId, args.state);
       if (command === 'read_window_diagnostic_close_states') return [...closeStates.values()];
     },
@@ -42,7 +43,7 @@ export async function windowDiagnosticRuntime(label = 'display', options = {}) {
       return { get: async (key) => data.get(key), set: async (key, value) => data.set(key, value), save: async () => { port.onSaveStarted?.(file); await port.saveGate; calls.push({ command: 'save', file }); } };
     },
     window: {
-      label, setSize: async value => { size = { width:value.width, height:value.height }; calls.push({command:'setSize',...size}); },
+      label, setTitle: async title => calls.push({ command: 'setTitle', title }), setSize: async value => { size = { width:value.width, height:value.height }; calls.push({command:'setSize',...size}); },
       setPosition: async value => { position = { x:value.x, y:value.y }; calls.push({command:'setPosition',...position}); }, setAlwaysOnTop: async () => {}, setMaximizable: async () => {},
       outerPosition: async () => ({ ...position }), innerSize: async () => ({ ...size }),
       onMoved: async (handler) => { port.moved = handler; return () => { port.moved = undefined; }; },
@@ -58,7 +59,7 @@ export async function windowDiagnosticRuntime(label = 'display', options = {}) {
   const p = `globalThis[${JSON.stringify(key)}]`;
   const modules = {
     '@tauri-apps/api/event': `export const listen = (name, cb) => ${p}.listen(name, cb); export const emitTo = (target, name, payload) => ${p}.emitTo(target, name, payload);`,
-    '@tauri-apps/api/core': `export const invoke = (command, args) => ${p}.invoke(command, args);`,
+    '@tauri-apps/api/core': `export const isTauri = () => true; export const invoke = (command, args) => ${p}.invoke(command, args);`,
     '@tauri-apps/api/window': `export const getAllWindows = () => ${p}.getAllWindows(); export const getCurrentWindow = () => ${p}.window; export const currentMonitor = async () => null;`,
     '@tauri-apps/plugin-store': `export const load = (file) => ${p}.load(file);`,
     react: `export const useEffect = (effect, deps) => ${p}.useEffect(effect, deps); export const useLayoutEffect = (effect, deps) => ${p}.useEffect(effect, deps); export const useRef = (current) => ${p}.useRef(current); export const useState = (initial) => ${p}.useState(initial); export const useCallback = (fn) => fn; export const useMemo = (factory) => factory(); export const useSyncExternalStore = (_subscribe, getSnapshot) => getSnapshot();`,

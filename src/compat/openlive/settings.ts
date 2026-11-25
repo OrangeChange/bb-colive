@@ -1,4 +1,4 @@
-import { uiText } from "../../i18n/index.ts";
+import { localized, uiText } from "../../i18n/index.ts";
 /** 开放版的既有设置默认值，与 BLC 原版独立。 */
 export const DEFAULT_OPENLIVE_SETTINGS = Object.freeze({
   skin: 'none',
@@ -26,7 +26,7 @@ export type OpenLiveSettings = { -readonly [K in keyof typeof DEFAULT_OPENLIVE_S
   typeof DEFAULT_OPENLIVE_SETTINGS[K] extends boolean ? boolean : typeof DEFAULT_OPENLIVE_SETTINGS[K] extends number ? number : string };
 export type OpenLiveSettingKey = keyof OpenLiveSettings;
 export const OPENLIVE_SETTING_KEYS = Object.freeze(Object.keys(DEFAULT_OPENLIVE_SETTINGS) as OpenLiveSettingKey[]);
-export const OPENLIVE_SETTING_LABELS: Record<OpenLiveSettingKey, string> = {
+export const OPENLIVE_SETTING_LABELS: Record<OpenLiveSettingKey, string> = localized(() => ({
   skin: uiText("settings.OPENLIVE_SETTING_LABELS.skin"), minGiftPrice: uiText("settings.OPENLIVE_SETTING_LABELS.minGiftPrice"), minTickerPrice: uiText("settings.OPENLIVE_SETTING_LABELS.minTickerPrice"),
   showDanmaku: uiText("settings.OPENLIVE_SETTING_LABELS.showDanmaku"), showSuperchat: uiText("settings.OPENLIVE_SETTING_LABELS.showSuperchat"), showNewMember: uiText("settings.OPENLIVE_SETTING_LABELS.showNewMember"),
   showGift: uiText("settings.OPENLIVE_SETTING_LABELS.showGift"), showGiftInfo: uiText("settings.OPENLIVE_SETTING_LABELS.showGiftInfo"), mergeSimilarDanmaku: uiText("settings.OPENLIVE_SETTING_LABELS.mergeSimilarDanmaku"),
@@ -35,7 +35,7 @@ export const OPENLIVE_SETTING_LABELS: Record<OpenLiveSettingKey, string> = {
   showLike: uiText("settings.OPENLIVE_SETTING_LABELS.showLike"), blockMedalLevel: uiText("settings.OPENLIVE_SETTING_LABELS.blockMedalLevel"),
   minDanmakuInterval: uiText("settings.OPENLIVE_SETTING_LABELS.minDanmakuInterval"), maxDanmakuInterval: uiText("settings.OPENLIVE_SETTING_LABELS.maxDanmakuInterval"),
   emoticonSize: uiText("settings.OPENLIVE_SETTING_LABELS.emoticonSize"),
-};
+}));
 
 /** The upstream bool parser does not trim strings. */
 export function coerceOpenLiveBoolean(value: unknown): boolean {

@@ -1,4 +1,5 @@
-import { uiText } from "../i18n/index.ts";
+import { useUiLanguage } from "../i18n/react.ts";
+import { localized, uiText } from "../i18n/index.ts";
 import { UiSearchInput } from "./ui/SearchInput.tsx";
 import { ChevronDown as LucideChevronDown } from "lucide-react";
 import { useState, type Dispatch, type FocusEvent, type SetStateAction } from "react";
@@ -31,11 +32,11 @@ interface LiveFilterBarProps {
   onClearQuery: () => void;
 }
 
-const rightOptions: { key: RightFilterKey; label: string }[] = [
+const rightOptions: { key: RightFilterKey; label: string }[] = localized(() => ([
   { key: "gift", label: uiText("liveFilterBar.rightOptions.label") },
   { key: "superChat", label: "SC" },
   { key: "guard", label: uiText("liveFilterBar.rightOptions.label2") },
-];
+]));
 
 const filterButtonBase = "inline-flex h-8 shrink-0 items-center justify-center whitespace-nowrap rounded-md border px-2 ui-type-control transition-colors";
 
@@ -48,6 +49,7 @@ function FilterToggle({
   active: boolean;
   onClick: () => void;
 }) {
+  useUiLanguage();
   return (
     <button
       type="button"
@@ -87,6 +89,7 @@ function FilterSubmenu<K extends string>({
   selected: Record<K, boolean>;
   onToggle: (key: K) => void;
 }) {
+  useUiLanguage();
   const [open, setOpen] = useState(false);
   const closeWhenFocusLeaves = (event: FocusEvent<HTMLDivElement>) => {
     if (!event.currentTarget.contains(event.relatedTarget as Node | null)) setOpen(false);
@@ -155,6 +158,7 @@ export function LiveFilterBar({
   onLayoutChange,
   onClearQuery,
 }: LiveFilterBarProps) {
+  useUiLanguage();
   const toggleLeft = (key: LeftFilterKey) => {
     setFilters((current) => ({
       ...current,

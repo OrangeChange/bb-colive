@@ -61,7 +61,7 @@ test("容量、过期和合并集中在副窗口与 OBS 分组，不进入弹幕
 
 test("公共输出行为的搜索名称与分组同步，金额计算仍属于事件筛选", () => {
   const source = read("src/components/SettingsPanel.tsx");
-  const entriesText = source.match(/const SETTINGS_SEARCH_ENTRIES[^=]*= (\[[\s\S]*?\n\]);/)[1];
+  const entriesText = source.match(/const SETTINGS_SEARCH_ENTRIES[^=]*= localized\(\(\) => \((\[[\s\S]*?\n\])\)\);/)[1];
   const entries = new Function(`return ${entriesText}`)();
   for (const [id, label] of [
     ["event-window-capacity", "输出保留条数"],
@@ -119,7 +119,7 @@ test("信息流行为独立控制内容对齐和最新事件位置", () => {
 
 test("内容对齐和最新事件位置分别可搜索并定位到事件显示", () => {
   const source = read("src/components/SettingsPanel.tsx");
-  const entriesText = source.match(/const SETTINGS_SEARCH_ENTRIES[^=]*= (\[[\s\S]*?\n\]);/)[1];
+  const entriesText = source.match(/const SETTINGS_SEARCH_ENTRIES[^=]*= localized\(\(\) => \((\[[\s\S]*?\n\])\)\);/)[1];
   const entries = new Function(`return ${entriesText}`)();
   for (const [id, label, keywords] of [
     ["content-alignment", "内容对齐", ["顶部", "底部", "对齐"]],

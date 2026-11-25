@@ -5,6 +5,7 @@ import ts from "typescript";
 
 const root = fileURLToPath(new URL("../", import.meta.url));
 const catalog = JSON.parse(fs.readFileSync(path.join(root, "src/i18n/zh-CN.json"), "utf8"));
+const translations = ["zh-Hant", "en", "ja"].map(language => JSON.parse(fs.readFileSync(path.join(root, `src/i18n/${language}.json`), "utf8")));
 const usage = new Map(Object.keys(catalog).map(key => [key, []]));
 
 function files(directory) {
@@ -46,7 +47,7 @@ for (const [key, text] of Object.entries(catalog).sort(([a], [b]) => a.localeCom
   if (/^\s|\s$/.test(text)) notes.push("保留首尾空格。");
   if (/\{|\}|<|>|`/.test(text) && !parameters.length) notes.push("包含代码或格式示例，请保留代码部分。");
   if (/^(元|秒|分钟|天|月|条|级|次)$/.test(text.trim())) notes.push("界面单位，不改变数值或换算规则。");
-  rows.push([key, key.split(".")[0] === "backend" ? key.split(".").slice(0, 2).join(".") : key.split(".")[0], locations.join("\n"), text, "", "", "", parameters.join("、"), notes.join(" ")]);
+  rows.push([key, key.split(".")[0] === "backend" ? key.split(".").slice(0, 2).join(".") : key.split(".")[0], locations.join("\n"), text, ...translations.map(catalog => catalog[key] ?? ""), parameters.join("、"), notes.join(" ")]);
 }
 const destination = path.join(root, "docs/translations/ui-translation-list.csv");
 fs.mkdirSync(path.dirname(destination), { recursive: true });

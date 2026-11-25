@@ -1,4 +1,4 @@
-import { uiText } from "../i18n/index.ts";
+import { localized, uiText } from "../i18n/index.ts";
 import type { NativeThemeDisplaySettings, NativeVisualProperty } from "./nativeComponentAppearance.ts";
 import type { ThemeMode } from "./themeTypes.ts";
 import { NATIVE_PART_SELECTORS, type NativeSemanticPartId } from "./nativeSemanticSelectors.ts";
@@ -6,7 +6,7 @@ import { NATIVE_PART_SELECTORS, type NativeSemanticPartId } from "./nativeSemant
 export interface NativeScopeChoice { id: string; label: string; children?: readonly NativeScopeChoice[] }
 export interface NativeSemanticPart { id: NativeSemanticPartId; label: string; group: "common" | "identity" | "message" | "gift" | "guard" | "lottery" | "redpocket"; selector: string; capability: NativePartCapability }
 
-export const NATIVE_EVENT_SCOPES: readonly NativeScopeChoice[] = [
+export const NATIVE_EVENT_SCOPES: readonly NativeScopeChoice[] = localized(() => ([
   { id: "all", label: uiText("nativeThemeCapabilities.NATIVE_EVENT_SCOPES.label") }, { id: "danmaku", label: uiText("nativeThemeCapabilities.NATIVE_EVENT_SCOPES.label2") },
   { id: "interaction", label: uiText("nativeThemeCapabilities.NATIVE_EVENT_SCOPES.label3"), children: [
     { id: "enter", label: uiText("nativeThemeCapabilities.NATIVE_EVENT_SCOPES.children.label") }, { id: "follow", label: uiText("nativeThemeCapabilities.NATIVE_EVENT_SCOPES.children.label2") }, { id: "share", label: uiText("nativeThemeCapabilities.NATIVE_EVENT_SCOPES.children.label3") },
@@ -22,12 +22,12 @@ export const NATIVE_EVENT_SCOPES: readonly NativeScopeChoice[] = [
     { id: "roomMute", label: uiText("nativeThemeCapabilities.NATIVE_EVENT_SCOPES.children.label18") }, { id: "admin", label: uiText("nativeThemeCapabilities.NATIVE_EVENT_SCOPES.children.label19") }, { id: "roomChange", label: uiText("nativeThemeCapabilities.NATIVE_EVENT_SCOPES.children.label20") },
     { id: "warning", label: uiText("nativeThemeCapabilities.NATIVE_EVENT_SCOPES.children.label21") },
   ] },
-] as const;
+] as const));
 
-export const NATIVE_IDENTITY_SCOPES = [
+export const NATIVE_IDENTITY_SCOPES = localized(() => ([
   { id: "all", label: uiText("nativeThemeCapabilities.NATIVE_IDENTITY_SCOPES.label") }, { id: "ordinary", label: uiText("nativeThemeCapabilities.NATIVE_IDENTITY_SCOPES.label2") }, { id: "captain", label: uiText("nativeThemeCapabilities.NATIVE_IDENTITY_SCOPES.label3") }, { id: "admiral", label: uiText("nativeThemeCapabilities.NATIVE_IDENTITY_SCOPES.label4") },
   { id: "viceroy", label: uiText("nativeThemeCapabilities.NATIVE_IDENTITY_SCOPES.label5") }, { id: "anchor", label: uiText("nativeThemeCapabilities.NATIVE_IDENTITY_SCOPES.label6") }, { id: "admin", label: uiText("nativeThemeCapabilities.NATIVE_IDENTITY_SCOPES.label7") },
-] as const;
+] as const));
 
 export function nativeEventScopePath(id: string, choices: readonly NativeScopeChoice[] = NATIVE_EVENT_SCOPES): NativeScopeChoice[] {
   for (const choice of choices) {
@@ -119,7 +119,7 @@ export const NATIVE_PART_CAPABILITIES: Record<NativeSemanticPartId, NativePartCa
 const part = (id: NativeSemanticPartId, label: string, group: NativeSemanticPart["group"]): NativeSemanticPart => ({
   id, label, group, selector: NATIVE_PART_SELECTORS[id], capability: NATIVE_PART_CAPABILITIES[id],
 });
-export const NATIVE_SEMANTIC_PARTS: readonly NativeSemanticPart[] = [
+export const NATIVE_SEMANTIC_PARTS: readonly NativeSemanticPart[] = localized(() => ([
   part("quantityPrefix",uiText("nativeThemeCapabilities.NATIVE_SEMANTIC_PARTS"),"common"),part("quantityNumber",uiText("nativeThemeCapabilities.NATIVE_SEMANTIC_PARTS2"),"common"),part("quantityUnit",uiText("nativeThemeCapabilities.NATIVE_SEMANTIC_PARTS3"),"common"),part("winnerAvatar",uiText("nativeThemeCapabilities.NATIVE_SEMANTIC_PARTS4"),"redpocket"),part("honorHeading",uiText("nativeThemeCapabilities.NATIVE_SEMANTIC_PARTS5"),"guard"),part("honorSummary",uiText("nativeThemeCapabilities.NATIVE_SEMANTIC_PARTS6"),"guard"),part("honorMilestone",uiText("nativeThemeCapabilities.NATIVE_SEMANTIC_PARTS7"),"guard"),part("systemTitle",uiText("nativeThemeCapabilities.NATIVE_SEMANTIC_PARTS8"),"common"),part("systemDetail",uiText("nativeThemeCapabilities.NATIVE_SEMANTIC_PARTS9"),"common"),
   part("card", uiText("nativeThemeCapabilities.NATIVE_SEMANTIC_PARTS10"), "common"), part("header", uiText("nativeThemeCapabilities.NATIVE_SEMANTIC_PARTS11"), "common"), part("activityStatus", uiText("nativeThemeCapabilities.NATIVE_SEMANTIC_PARTS12"), "message"),
   part("whole", uiText("nativeThemeCapabilities.NATIVE_SEMANTIC_PARTS13"), "common"), part("list", uiText("nativeThemeCapabilities.NATIVE_SEMANTIC_PARTS14"), "common"), part("event", uiText("nativeThemeCapabilities.NATIVE_SEMANTIC_PARTS15"), "common"), part("row", uiText("nativeThemeCapabilities.NATIVE_SEMANTIC_PARTS16"), "common"), part("sticky", uiText("nativeThemeCapabilities.NATIVE_SEMANTIC_PARTS17"), "common"), part("stickyEvent", uiText("nativeThemeCapabilities.NATIVE_SEMANTIC_PARTS18"), "common"),
@@ -129,7 +129,7 @@ export const NATIVE_SEMANTIC_PARTS: readonly NativeSemanticPart[] = [
   part("guardDurationPrefix", uiText("nativeThemeCapabilities.NATIVE_SEMANTIC_PARTS63"), "guard"), part("guardDurationNumber", uiText("nativeThemeCapabilities.NATIVE_SEMANTIC_PARTS64"), "guard"), part("guardDurationUnit", uiText("nativeThemeCapabilities.NATIVE_SEMANTIC_PARTS65"), "guard"), part("guardDaysPrefix", uiText("nativeThemeCapabilities.NATIVE_SEMANTIC_PARTS66"), "guard"), part("guardDaysNumber", uiText("nativeThemeCapabilities.NATIVE_SEMANTIC_PARTS67"), "guard"), part("guardDaysUnit", uiText("nativeThemeCapabilities.NATIVE_SEMANTIC_PARTS68"), "guard"), part("guardDuration", uiText("nativeThemeCapabilities.NATIVE_SEMANTIC_PARTS69"), "guard"), part("guardDays", uiText("nativeThemeCapabilities.NATIVE_SEMANTIC_PARTS70"), "guard"), part("guardName", uiText("nativeThemeCapabilities.NATIVE_SEMANTIC_PARTS71"), "guard"), part("guardContent", uiText("nativeThemeCapabilities.NATIVE_SEMANTIC_PARTS72"), "guard"), part("guardHighlight", uiText("nativeThemeCapabilities.NATIVE_SEMANTIC_PARTS73"), "guard"),
   part("lotteryRequirementPrefix", uiText("nativeThemeCapabilities.NATIVE_SEMANTIC_PARTS74"), "lottery"), part("lotteryRequirementText", uiText("nativeThemeCapabilities.NATIVE_SEMANTIC_PARTS75"), "lottery"), part("redpocketAwardsPrefix", uiText("nativeThemeCapabilities.NATIVE_SEMANTIC_PARTS76"), "redpocket"), part("redpocketCount", uiText("nativeThemeCapabilities.NATIVE_SEMANTIC_PARTS77"), "redpocket"), part("resultDescription", uiText("nativeThemeCapabilities.NATIVE_SEMANTIC_PARTS78"), "redpocket"), part("winnerListCount", uiText("nativeThemeCapabilities.NATIVE_SEMANTIC_PARTS79"), "redpocket"), part("lotteryCommandPrefix", uiText("nativeThemeCapabilities.NATIVE_SEMANTIC_PARTS80"), "lottery"), part("lotteryCommandText", uiText("nativeThemeCapabilities.NATIVE_SEMANTIC_PARTS81"), "lottery"), part("lotteryGiftPrefix", uiText("nativeThemeCapabilities.NATIVE_SEMANTIC_PARTS82"), "lottery"), part("lotteryGiftName", uiText("nativeThemeCapabilities.NATIVE_SEMANTIC_PARTS83"), "lottery"), part("lotteryPrize", uiText("nativeThemeCapabilities.NATIVE_SEMANTIC_PARTS84"), "lottery"), part("lotteryCount", uiText("nativeThemeCapabilities.NATIVE_SEMANTIC_PARTS85"), "lottery"), part("lotteryCommand", uiText("nativeThemeCapabilities.NATIVE_SEMANTIC_PARTS86"), "lottery"), part("lotteryGift", uiText("nativeThemeCapabilities.NATIVE_SEMANTIC_PARTS87"), "lottery"), part("lotteryWait", uiText("nativeThemeCapabilities.NATIVE_SEMANTIC_PARTS88"), "lottery"), part("lotteryRequirement", uiText("nativeThemeCapabilities.NATIVE_SEMANTIC_PARTS89"), "lottery"), part("lotteryGroup", uiText("nativeThemeCapabilities.NATIVE_SEMANTIC_PARTS90"), "lottery"),
   part("redpocketCommandPrefix", uiText("nativeThemeCapabilities.NATIVE_SEMANTIC_PARTS80"), "redpocket"), part("redpocketCommandText", uiText("nativeThemeCapabilities.NATIVE_SEMANTIC_PARTS81"), "redpocket"), part("redpocketAwards", uiText("nativeThemeCapabilities.NATIVE_SEMANTIC_PARTS91"), "redpocket"), part("redpocketCommand", uiText("nativeThemeCapabilities.NATIVE_SEMANTIC_PARTS92"), "redpocket"), part("redpocketWait", uiText("nativeThemeCapabilities.NATIVE_SEMANTIC_PARTS88"), "redpocket"), part("redpocketName", uiText("nativeThemeCapabilities.NATIVE_SEMANTIC_PARTS93"), "redpocket"), part("redpocketGroup", uiText("nativeThemeCapabilities.NATIVE_SEMANTIC_PARTS94"), "redpocket"), part("winnerCount", uiText("nativeThemeCapabilities.NATIVE_SEMANTIC_PARTS95"), "redpocket"), part("winnerUser", uiText("nativeThemeCapabilities.NATIVE_SEMANTIC_PARTS96"), "redpocket"), part("winnerItem", uiText("nativeThemeCapabilities.NATIVE_SEMANTIC_PARTS97"), "redpocket"), part("winnerItems", uiText("nativeThemeCapabilities.NATIVE_SEMANTIC_PARTS98"), "redpocket"), part("winnerToggle", uiText("nativeThemeCapabilities.NATIVE_SEMANTIC_PARTS99"), "redpocket"), part("winnerList", uiText("nativeThemeCapabilities.NATIVE_SEMANTIC_PARTS100"), "redpocket"),
-] as const;
+] as const));
 
 export interface NativeVisualNavigationItem {
   id: string;
@@ -159,7 +159,7 @@ const navBranch = (id: string, label: string, children: readonly NativeVisualNav
 });
 
 /** Navigation order and nesting; labels and capabilities continue to come from NATIVE_SEMANTIC_PARTS. */
-export const NATIVE_VISUAL_NAVIGATION: readonly NativeVisualNavigationGroup[] = [
+export const NATIVE_VISUAL_NAVIGATION: readonly NativeVisualNavigationGroup[] = localized(() => ([
   { id: "display", label: uiText("nativeThemeCapabilities.NATIVE_VISUAL_NAVIGATION.label"), defaultExpanded: true, items: [navItem("whole"), navBranch("events", uiText("nativeThemeCapabilities.NATIVE_VISUAL_NAVIGATION.items"), [navItem("event", undefined, uiText("nativeThemeCapabilities.NATIVE_VISUAL_NAVIGATION.items2")), navBranch("row", uiText("nativeThemeCapabilities.NATIVE_VISUAL_NAVIGATION.items3"), [navItem("card"), navItem("header")], "row"), navItem("stickyEvent")]), navItem("list"), navItem("sticky")] },
   { id: "identity", label: uiText("nativeThemeCapabilities.NATIVE_VISUAL_NAVIGATION.label2"), defaultExpanded: true, items: [navItem("user", undefined, uiText("nativeThemeCapabilities.NATIVE_VISUAL_NAVIGATION.items4")), navBranch("avatarWrap", uiText("nativeThemeCapabilities.NATIVE_VISUAL_NAVIGATION.items5"), [navItem("avatarPlaceholder"), navItem("avatarFrame"), navItem("avatar")], "avatarWrap"), navItem("username"), navBranch("medal", uiText("nativeThemeCapabilities.NATIVE_VISUAL_NAVIGATION.items6"), [navItem("medalName"), navItem("medalLevel")], "medal"), navBranch("badges", uiText("nativeThemeCapabilities.NATIVE_VISUAL_NAVIGATION.items7"), [navItem("guardBadge"), navItem("anchorBadge"), navItem("adminBadge")], "badges"), navItem("honor"), navItem("rank")] },
   { id: "content", label: uiText("nativeThemeCapabilities.NATIVE_VISUAL_NAVIGATION.label3"), defaultExpanded: true, items: [navItem("content"), navItem("message"), navItem("action"), navItem("timestamp"), navItem("eventIcon"), navItem("activityStatus"), navItem("systemTitle"), navItem("systemDetail"), navBranch("quantity",uiText("nativeThemeCapabilities.NATIVE_VISUAL_NAVIGATION.items8"),[navItem("quantityPrefix"),navItem("quantityNumber"),navItem("quantityUnit")]), navItem("price", ["price", "priceUnit", "priceValue"], uiText("nativeThemeCapabilities.NATIVE_VISUAL_NAVIGATION.items9"))] },
@@ -173,7 +173,7 @@ export const NATIVE_VISUAL_NAVIGATION: readonly NativeVisualNavigationGroup[] = 
     navBranch("lotteryGroup", uiText("nativeThemeCapabilities.NATIVE_VISUAL_NAVIGATION.items19"), [navItem("lotteryPrize"), navItem("lotteryCount"), navBranch("lotteryCommand", uiText("nativeThemeCapabilities.NATIVE_VISUAL_NAVIGATION.items20"), [navItem("lotteryCommandPrefix"), navItem("lotteryCommandText")], "lotteryCommand"), navBranch("lotteryGift", uiText("nativeThemeCapabilities.NATIVE_VISUAL_NAVIGATION.items21"), [navItem("lotteryGiftPrefix"), navItem("lotteryGiftName")], "lotteryGift"), navItem("lotteryWait"), { ...navItem("activityStatus"), event: "lotteryStart" }, navBranch("lotteryRequirement", uiText("nativeThemeCapabilities.NATIVE_VISUAL_NAVIGATION.items22"), [navItem("lotteryRequirementPrefix"), navItem("lotteryRequirementText")], "lotteryRequirement")], "lotteryGroup", "lottery"),
     navBranch("winnerList", uiText("nativeThemeCapabilities.NATIVE_VISUAL_NAVIGATION.items23"), [navItem("resultDescription"), navItem("winnerCount"), navItem("winnerListCount"), navBranch("winnerItems", uiText("nativeThemeCapabilities.NATIVE_VISUAL_NAVIGATION.items24"), [navItem("winnerItem"), navItem("winnerAvatar"), navItem("winnerUser")], "winnerItems"), navItem("winnerToggle")], "winnerList", "all"),
   ] },
-] as const;
+] as const));
 
 export function nativeVisualPropertiesForPart(partId: NativeSemanticPartId, shape?: "text" | "image"): readonly NativeVisualProperty[] {
   const metadata = NATIVE_PART_CAPABILITIES[partId];
@@ -187,15 +187,15 @@ export function nativeVisualPropertiesForPart(partId: NativeSemanticPartId, shap
     && !(roleIcon && (["fontFamily", "fontSize", "fontWeight", "lineHeight"] as NativeVisualProperty[]).includes(property)));
 }
 
-const PROPERTY_SECTION_LABELS: Record<NativePropertyGroup, string> = {
-  display: uiText("common.show"),
+const PROPERTY_SECTION_LABELS: Record<NativePropertyGroup, string> = localized(() => ({
+  display: uiText("theme.propertyVisibility"),
   typography: uiText("nativeThemeCapabilities.PROPERTY_SECTION_LABELS.typography"),
   surface: uiText("nativeThemeCapabilities.PROPERTY_SECTION_LABELS.surface"),
   spacing: uiText("nativeThemeCapabilities.PROPERTY_SECTION_LABELS.spacing"),
   border: uiText("nativeThemeCapabilities.PROPERTY_SECTION_LABELS.border"),
   layout: uiText("nativeThemeCapabilities.PROPERTY_SECTION_LABELS.layout"),
   media: uiText("nativeThemeCapabilities.PROPERTY_SECTION_LABELS.media"),
-};
+}));
 
 export function nativeVisualPropertySectionsForPart(partId: NativeSemanticPartId, shape?: "text" | "image"): readonly NativeVisualPropertySection[] {
   const available = new Set(nativeVisualPropertiesForPart(partId, shape));

@@ -1,3 +1,4 @@
+import { useUiLanguage } from "../i18n/react.ts";
 import { uiText } from "../i18n/index.ts";
 import { useEffect, useRef, useState } from "react";
 
@@ -6,6 +7,7 @@ export function notifyWorkspace(message: string) {
 }
 
 export function WorkspaceNotice({ message, onDismiss }: { message: string; onDismiss: () => void }) {
+  useUiLanguage();
   const [paused, setPaused] = useState(false);
   const [exiting, setExiting] = useState(false);
   const remaining = useRef(0);

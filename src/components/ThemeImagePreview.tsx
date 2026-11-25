@@ -1,3 +1,4 @@
+import { useUiLanguage } from "../i18n/react.ts";
 import { uiText } from "../i18n/index.ts";
 import {
   createContext,
@@ -74,6 +75,7 @@ function belongsTo(node: Element, ancestor: Element): boolean {
 }
 
 export function ThemeImagePreview() {
+  useUiLanguage();
   const { root: sourceRoot, selector } = useContext(ThemeImageEditingContext);
   const [source, setSource] = useState(getPreview);
   useEffect(() => {

@@ -1,3 +1,4 @@
+import { setUiLanguage, getUiLanguage, uiText } from "../i18n/index.ts";
 import { resolveOutputScheme } from "./obsConfigurationIdentity.ts";
 import { subscribeLaplaceObsScene, parseLaplaceObsScene } from "./laplaceObsScene.ts";
 import { useEffect, useLayoutEffect, useRef, useState } from "react";
@@ -51,7 +52,12 @@ function BrowserOutput() {
         `${location.protocol === "https:" ? "wss" : "ws"}://${location.host}/ws${location.search}`,
       );
       socket.onmessage = (event) => {
-        const message = JSON.parse(event.data) as ObsMessage;
+        const message = JSON.parse(event.data) as ObsMessage & { uiLanguage?: string; type: string };
+        if (message.uiLanguage) {
+          setUiLanguage(message.uiLanguage);
+          document.documentElement.lang = getUiLanguage();
+          document.title = uiText("obs.pageTitle");
+        }
         if (
           message.type === "state" &&
           gate.accept(message.identity, message.sequence)

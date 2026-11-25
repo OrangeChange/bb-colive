@@ -75,7 +75,7 @@
   margin-inline-start: 0; border: 1px solid var(--border); background: var(--bg); padding: 0; gap: 0;
 }
 .settings-segmented-row.settings-choice-tiles > .settings-control-value > .settings-choice-option {
-  flex: 1 1 0; min-width: 0; height: auto; min-height: 52px; padding: 8px 5px;
+  flex: 1 1 0; min-width: max-content; height: auto; min-height: 52px; padding: 8px 5px;
   border: 0; border-inline-start: 1px solid var(--border); display: inline-flex; align-items: center; justify-content: center; gap: 5px;
 }
 .settings-segmented-row.settings-choice-tiles > .settings-control-value > .settings-choice-option:first-child { border-inline-start: 0; }

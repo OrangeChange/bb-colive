@@ -1,4 +1,5 @@
-import { uiText, UiMessageError } from "../i18n/index.ts";
+import { useUiLanguage } from "../i18n/react.ts";
+import { localized, uiText, UiMessageError } from "../i18n/index.ts";
 import { captureThemeDraft, createThemeDraftStore } from "../themes/themeDraftStore.ts";
 import { ThemeImageAssetsContext } from "./ThemeImageAssets.tsx";
 import { SettingsChoiceControl } from "./SettingsChoiceControl";
@@ -97,7 +98,7 @@ const resolveThemeAssets = async (document: ThemeDocument, changes: Record<strin
   return routeThemeRemoteUrls(resolved, `http://127.0.0.1:${(await obsServiceStatus()).port}`);
 };
 const resolveSavedThemeForObsPreview = async (themeId: string) => resolveThemeAssets(await repository.loadThemeDocument(themeId));
-const THEME_CATEGORIES = [["all", uiText("themeWorkspace.THEME_CATEGORIES")], ["native", uiText("themeWorkspace.THEME_CATEGORIES2")], ["blivechat", uiText("themeWorkspace.THEME_CATEGORIES3")], ["blivechat-open", uiText("themeWorkspace.THEME_CATEGORIES4")], ["laplace", "LAPLACE"]] as const;
+const THEME_CATEGORIES = localized(() => ([["all", uiText("themeWorkspace.THEME_CATEGORIES")], ["native", uiText("themeWorkspace.THEME_CATEGORIES2")], ["blivechat", uiText("themeWorkspace.THEME_CATEGORIES3")], ["blivechat-open", uiText("themeWorkspace.THEME_CATEGORIES4")], ["laplace", "LAPLACE"]] as const));
 type ThemeCategory = typeof THEME_CATEGORIES[number][0];
 type ObsDraft = NativeObsConfiguration;
 type ThemeInfoDraft = { mode: "save" | "rename" | "edit"; name: string; author: string; version: string; target?: ThemeSummary };
@@ -110,6 +111,7 @@ function themeTargetIcon(targetId: string) {
 }
 
 function ThemeModeThumbnail(props: Parameters<typeof NativeThemeThumbnail>[0] & { mode: ThemeDocument["mode"] }) {
+  useUiLanguage();
   if (getThemeModeAdapter(props.mode).thumbnail === "native") {
     const { mode: _mode, ...nativeProps } = props;
     return <NativeThemeThumbnail {...nativeProps} />;
@@ -136,6 +138,7 @@ export function ThemeWorkspace({ active, displayPreferences, applyThemeProjectio
   fontFamilyOptions: string[];
   onOpenFonts: () => void;
 }) {
+  useUiLanguage();
   const [summaries, setSummaries] = useState<ThemeSummary[]>([]);
   // 会话由 sessionHost 持有，界面刷新只更换容器，不复制会话。
   const [{ session }, setSession] = useReducer(
@@ -900,7 +903,7 @@ export function ThemeWorkspace({ active, displayPreferences, applyThemeProjectio
   },[Boolean(themeInfoDraft),savingThemeInfo]);
   useEffect(()=>{
     if(!pendingImport || resourceProgress)return;
-    const panel=document.querySelector<HTMLElement>(uiText("themeWorkspace.ThemeWorkspace.panel"));
+    const panel=document.querySelector<HTMLElement>('.theme-import-confirmation .theme-name-dialog');
     return panel?bindUiDismissableLayer(panel,()=>setPendingImports([]),{modal:true}):undefined;
   },[Boolean(pendingImport),Boolean(resourceProgress)]);
   useEffect(()=>{
@@ -1101,7 +1104,7 @@ export function ThemeWorkspace({ active, displayPreferences, applyThemeProjectio
     {deleteTarget && <ConfirmDialog title={uiText("themeWorkspace.title4", { name: deleteTarget.name })} description={uiText("themeWorkspace.description3")} confirmLabel={uiText("themeWorkspace.confirmLabel2")} confirmTone="danger" onCancel={() => setDeleteTarget(null)} onConfirm={deleteTheme} />}
     {deleteSelectionOpen && <ConfirmDialog title={uiText("themeWorkspace.title5")} description={uiText("themeWorkspace.description4", { length: summaries.filter(item=>selectedThemeIds.has(item.themeId)&&item.origin==="custom").length, value: summaries.filter(item=>selectedThemeIds.has(item.themeId)&&item.origin==="custom").map(item=>item.name).join("、") })} confirmLabel={uiText("themeWorkspace.confirmLabel3")} confirmTone="danger" onCancel={() => setDeleteSelectionOpen(false)} onConfirm={deleteSelected} />}
     {deleteObsOpen && selectedObs && <ConfirmDialog title={uiText("themeWorkspace.title4", { name: selectedObs.name })} description={uiText("themeWorkspace.description5")} confirmLabel={uiText("themeWorkspace.confirmLabel4")} confirmTone="danger" onCancel={() => setDeleteObsOpen(false)} onConfirm={() => deleteObsConfiguration(selectedObs)} />}
-    {pendingImport && <div className="theme-name-overlay" role="dialog" aria-modal="true" aria-label={uiText("themeWorkspace.aria_label23")}><div className="theme-name-dialog"><h3>{uiText("themeWorkspace.ThemeWorkspace88")}</h3>{error && <p role="alert">{error}</p>}<p className="ui-type-control text-t2">{summaries.some(item => item.themeId === pendingImport.document.themeId && item.origin === "builtin") ? uiText("themeWorkspace.ThemeWorkspace89") : summaries.some(item => item.themeId === pendingImport.document.themeId) ? uiText("themeWorkspace.ThemeWorkspace90", { themeId: pendingImport.document.themeId }) : uiText("themeWorkspace.ThemeWorkspace91", { name: pendingImport.document.metadata.name, label: getThemeModeDefinition(pendingImport.document.mode).label })}</p><div><button type="button" onClick={() => { setError(""); setImportResults(current => [...current, uiText("themeWorkspace.onClick2", { name: pendingImport.document.metadata.name })]); setPendingImports(current => current.slice(1)); }}>{uiText("themeWorkspace.ThemeWorkspace92")}</button><button type="button" onClick={() => void installImportedTheme({ ...pendingImport.document, metadata: { ...pendingImport.document.metadata, name: uiText("themeWorkspace.onClick.metadata.name", { name: pendingImport.document.metadata.name }) } }, pendingImport.assets, "copy").then(() => setImportResults(current => [...current, uiText("themeWorkspace.onClick3", { name: pendingImport.document.metadata.name })])).catch(cause => setError(cause instanceof Error ? cause.message : uiText("themeWorkspace.onClick4")))}>{uiText("themeWorkspace.ThemeWorkspace93")}</button><button type="button" className="is-primary" disabled={summaries.some(item => item.themeId === pendingImport.document.themeId && item.origin === "builtin")} onClick={() => void installImportedTheme(pendingImport.document, pendingImport.assets, "update").then(() => setImportResults(current => [...current, `${pendingImport.document.metadata.name}：${summaries.some(item => item.themeId === pendingImport.document.themeId) ? uiText("themeWorkspace.onClick5") : uiText("themeWorkspace.onClick6")}`])).catch(cause => setError(cause instanceof Error ? cause.message : uiText("themeWorkspace.onClick4")))}>{summaries.some(item => item.themeId === pendingImport.document.themeId) ? uiText("themeWorkspace.ThemeWorkspace94") : uiText("themeWorkspace.ThemeWorkspace95")}</button></div></div></div>}
+    {pendingImport && <div className="theme-name-overlay theme-import-confirmation" role="dialog" aria-modal="true" aria-label={uiText("themeWorkspace.aria_label23")}><div className="theme-name-dialog"><h3>{uiText("themeWorkspace.ThemeWorkspace88")}</h3>{error && <p role="alert">{error}</p>}<p className="ui-type-control text-t2">{summaries.some(item => item.themeId === pendingImport.document.themeId && item.origin === "builtin") ? uiText("themeWorkspace.ThemeWorkspace89") : summaries.some(item => item.themeId === pendingImport.document.themeId) ? uiText("themeWorkspace.ThemeWorkspace90", { themeId: pendingImport.document.themeId }) : uiText("themeWorkspace.ThemeWorkspace91", { name: pendingImport.document.metadata.name, label: getThemeModeDefinition(pendingImport.document.mode).label })}</p><div><button type="button" onClick={() => { setError(""); setImportResults(current => [...current, uiText("themeWorkspace.onClick2", { name: pendingImport.document.metadata.name })]); setPendingImports(current => current.slice(1)); }}>{uiText("themeWorkspace.ThemeWorkspace92")}</button><button type="button" onClick={() => void installImportedTheme({ ...pendingImport.document, metadata: { ...pendingImport.document.metadata, name: uiText("themeWorkspace.onClick.metadata.name", { name: pendingImport.document.metadata.name }) } }, pendingImport.assets, "copy").then(() => setImportResults(current => [...current, uiText("themeWorkspace.onClick3", { name: pendingImport.document.metadata.name })])).catch(cause => setError(cause instanceof Error ? cause.message : uiText("themeWorkspace.onClick4")))}>{uiText("themeWorkspace.ThemeWorkspace93")}</button><button type="button" className="is-primary" disabled={summaries.some(item => item.themeId === pendingImport.document.themeId && item.origin === "builtin")} onClick={() => void installImportedTheme(pendingImport.document, pendingImport.assets, "update").then(() => setImportResults(current => [...current, `${pendingImport.document.metadata.name}：${summaries.some(item => item.themeId === pendingImport.document.themeId) ? uiText("themeWorkspace.onClick5") : uiText("themeWorkspace.onClick6")}`])).catch(cause => setError(cause instanceof Error ? cause.message : uiText("themeWorkspace.onClick4")))}>{summaries.some(item => item.themeId === pendingImport.document.themeId) ? uiText("themeWorkspace.ThemeWorkspace94") : uiText("themeWorkspace.ThemeWorkspace95")}</button></div></div></div>}
     {createPanelOpen && <ThemeCreateDialog onClose={() => setCreatePanelOpen(false)} onCreate={createTheme} />}
     {importPanelOpen && <ThemeImportDialog onClose={() => setImportPanelOpen(false)} onTheme={importTheme} onCss={importCss} onUrl={url => { setImportPanelOpen(false); laplaceSourceCoordinatorRef.current?.cancel(); setLaplaceUrlDraft({ url, document: null, loading: false, error: "" }); }} />}
     {laplaceUrlDraft && <div className="theme-name-overlay" role="dialog" aria-modal="true" aria-label={uiText("themeWorkspace.aria_label24")}><div className="theme-name-dialog theme-url-dialog">

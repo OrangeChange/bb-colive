@@ -79,9 +79,9 @@ function mergeVersion(current: LaplaceProductEventSettings, incoming: LaplacePro
   return freeze({ ...current, interactions: incoming.interactions,
     gifts: incoming.version === 2 ? incoming.gifts : current.gifts });
 }
-const FUTURE = uiText("productEventSettings.FUTURE");
-const CORRUPT = uiText("productEventSettings.CORRUPT");
-const MEMORY = uiText("productEventSettings.MEMORY");
+const FUTURE = () => uiText("productEventSettings.FUTURE");
+const CORRUPT = () => uiText("productEventSettings.CORRUPT");
+const MEMORY = () => uiText("productEventSettings.MEMORY");
 /** One authority per realm. Reads/migration/storage notifications never write;
  * only an explicit setter persists, and future schemas lock setters entirely. */
 export function createLaplaceProductEventStore(getStorage: () => StorageAdapter) {
@@ -89,9 +89,9 @@ export function createLaplaceProductEventStore(getStorage: () => StorageAdapter)
   let diagnostic = '';
   function legacy() {
     let storage: StorageAdapter;
-    try { storage = getStorage(); } catch { diagnostic = MEMORY; return migrate(readLaplaceSettings({ getItem: () => null })); }
+    try { storage = getStorage(); } catch { diagnostic = MEMORY(); return migrate(readLaplaceSettings({ getItem: () => null })); }
     return migrate(readLaplaceSettings({ getItem(key) {
-      try { return storage.getItem(key); } catch { diagnostic = MEMORY; return null; }
+      try { return storage.getItem(key); } catch { diagnostic = MEMORY(); return null; }
     } }));
   }
   let initial = legacy(), readOnly = false;
@@ -99,11 +99,11 @@ export function createLaplaceProductEventStore(getStorage: () => StorageAdapter)
     const raw = getStorage().getItem(LAPLACE_PRODUCT_EVENTS_KEY);
     if (raw !== null) {
       const parsed = decode(raw);
-      if (parsed === 'future') { readOnly = true; diagnostic = FUTURE; }
+      if (parsed === 'future') { readOnly = true; diagnostic = FUTURE(); }
       else if (parsed) initial = mergeVersion(initial, parsed);
-      else diagnostic = CORRUPT;
+      else diagnostic = CORRUPT();
     }
-  } catch { diagnostic = MEMORY; }
+  } catch { diagnostic = MEMORY(); }
   let snapshot: LaplaceProductEventSnapshot = Object.freeze({ settings: initial, readOnly, diagnostic });
   function publish(settings: LaplaceProductEventSettings, locked: boolean, message: string) {
     snapshot = Object.freeze({ settings, readOnly: locked, diagnostic: message });
@@ -112,7 +112,7 @@ export function createLaplaceProductEventStore(getStorage: () => StorageAdapter)
   function save(settings: LaplaceProductEventSettings) {
     if (snapshot.readOnly) return;
     let message = '';
-    try { getStorage().setItem(LAPLACE_PRODUCT_EVENTS_KEY, JSON.stringify(settings)); } catch { message = MEMORY; }
+    try { getStorage().setItem(LAPLACE_PRODUCT_EVENTS_KEY, JSON.stringify(settings)); } catch { message = MEMORY(); }
     publish(freeze(settings), false, message);
   }
   return {
@@ -144,16 +144,16 @@ export function createLaplaceProductEventStore(getStorage: () => StorageAdapter)
     handleStorageEvent(event: StorageChange) {
       if (event.key !== null && event.key !== LAPLACE_PRODUCT_EVENTS_KEY) return;
       if (event.storageArea) {
-        try { if (event.storageArea !== getStorage()) return; } catch { publish(snapshot.settings, snapshot.readOnly, MEMORY); return; }
+        try { if (event.storageArea !== getStorage()) return; } catch { publish(snapshot.settings, snapshot.readOnly, MEMORY()); return; }
       }
       if (event.newValue === null || event.key === null) {
         diagnostic = ''; const settings = legacy();
         publish(settings, false, diagnostic || uiText("productEventSettings.createLaplaceProductEventStore.handleStorageEvent")); return;
       }
       const parsed = decode(event.newValue);
-      if (parsed === 'future') publish(snapshot.settings, true, FUTURE);
+      if (parsed === 'future') publish(snapshot.settings, true, FUTURE());
       else if (parsed) publish(mergeVersion(snapshot.settings, parsed), false, '');
-      else publish(snapshot.settings, false, CORRUPT);
+      else publish(snapshot.settings, false, CORRUPT());
     },
   };
 }

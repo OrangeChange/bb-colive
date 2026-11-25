@@ -1,4 +1,5 @@
-import { uiText } from "../i18n/index.ts";
+import { useUiLanguage } from "../i18n/react.ts";
+import { localized, uiText } from "../i18n/index.ts";
 import { useEffect, useMemo, useState } from "react";
 import { Upload, Download, Eye } from "lucide-react";
 import { SettingsIcon } from "./SettingsIcon";
@@ -29,7 +30,7 @@ export interface ReviewArchiveSettingsProps {
 
 type DeleteMode = "all" | "before" | "range" | "retention" | "keep-owner";
 
-const retentionOptions = [
+const retentionOptions = localized(() => ([
   { value: "permanent", label: uiText("reviewArchiveSettings.retentionOptions.label") },
   { value: "7", label: uiText("reviewArchiveSettings.retentionOptions.label2") },
   { value: "30", label: uiText("reviewArchiveSettings.retentionOptions.label3") },
@@ -37,19 +38,19 @@ const retentionOptions = [
   { value: "180", label: uiText("reviewArchiveSettings.retentionOptions.label5") },
   { value: "365", label: uiText("reviewArchiveSettings.retentionOptions.label6") },
   { value: "custom", label: uiText("reviewArchiveSettings.retentionOptions.label7") },
-] as const;
-const archiveCleanupOptions = [
+] as const));
+const archiveCleanupOptions = localized(() => ([
   { value: "all", label: uiText("reviewArchiveSettings.archiveCleanupOptions.label") },
   { value: "retention", label: uiText("reviewArchiveSettings.archiveCleanupOptions.label2") },
   { value: "before", label: uiText("reviewArchiveSettings.archiveCleanupOptions.label3") },
   { value: "range", label: uiText("reviewArchiveSettings.archiveCleanupOptions.label4") },
   { value: "keep-owner", label: uiText("reviewArchiveSettings.archiveCleanupOptions.label5") },
-] as const;
-const ownerRetentionPolicyOptions = [
+] as const));
+const ownerRetentionPolicyOptions = localized(() => ([
   { value: "global", label: uiText("reviewArchiveSettings.ownerRetentionPolicyOptions.label") },
   { value: "permanent", label: uiText("reviewArchiveSettings.ownerRetentionPolicyOptions.label2") },
   { value: "custom", label: uiText("reviewArchiveSettings.ownerRetentionPolicyOptions.label3") },
-] as const;
+] as const));
 
 function formatError(error: unknown): string {
   return error instanceof Error ? error.message : String(error);
@@ -68,6 +69,7 @@ function formatExportDate(): string {
 const DAY_MS = 86_400_000;
 
 function DeletePreview({ preview }: { preview: ArchiveDeletePreview }) {
+  useUiLanguage();
   return <div className="archive-delete-preview mt-3 border-l-2 border-warning pl-3 ui-type-meta text-t2">
     <p>{uiText("reviewArchiveSettings.DeletePreview")}</p>
     <dl className="archive-summary mt-1">
@@ -78,11 +80,12 @@ function DeletePreview({ preview }: { preview: ArchiveDeletePreview }) {
       <div><dt>{uiText("reviewArchiveSettings.DeletePreview9")}</dt><dd>{preview.resourceReferenceCount} {uiText("reviewArchiveSettings.DeletePreview7")}</dd></div>
       <div><dt>{uiText("reviewArchiveSettings.DeletePreview10")}</dt><dd>{formatBytes(preview.bytes)}</dd></div>
     </dl>
-    {preview.blockedSessionCount > 0 && <p className="mt-2 text-warning">{uiText("reviewArchiveSettings.DeletePreview11")}{preview.blockedSessionCount} {uiText("reviewArchiveSettings.DeletePreview12")}</p>}
+    {preview.blockedSessionCount > 0 && <p className="mt-2 text-warning">{uiText("review.deleteBlockedSessions", { count: preview.blockedSessionCount })}</p>}
   </div>;
 }
 
 export function ReviewArchiveSettings({ repository, retentionDays, onRetentionDaysChange, onChanged }: ReviewArchiveSettingsProps) {
+  useUiLanguage();
   const service = useMemo(() => repository ? new ArchiveTransferService({
     repository,
     flushArchiveWriter,

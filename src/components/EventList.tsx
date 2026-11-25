@@ -1,3 +1,4 @@
+import { useUiLanguage } from "../i18n/react.ts";
 import { uiText } from "../i18n/index.ts";
 /**
  * 事件列表：贴底自动跟随（向上滚动即暂停跟随；「回到最新」完整版是 3b）
@@ -121,6 +122,7 @@ export function EventList({
   roomGuardProfile,
   compatibleEventRender: suppliedCompatibleEventRender,
 }: EventListProps) {
+  useUiLanguage();
   const compatibleEventRender = liveLayout ? suppliedCompatibleEventRender : undefined;
   const rowEventMenu = useMemo(() => liveLayout && eventMenuHandlers
     ? { ...eventMenuHandlers, regionKey: feedKey } : undefined, [liveLayout, eventMenuHandlers, feedKey]);

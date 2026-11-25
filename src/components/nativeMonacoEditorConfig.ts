@@ -1,4 +1,4 @@
-import { uiText } from "../i18n/index.ts";
+import { localized, uiText } from "../i18n/index.ts";
 import { NATIVE_EVENT_SCOPES, NATIVE_IDENTITY_SCOPES, NATIVE_SEMANTIC_PARTS } from "../themes/nativeThemeCapabilities.ts";
 
 export const NATIVE_MONACO_OPTIONS = {
@@ -28,13 +28,13 @@ export function createNativeMonacoModelUri(documentKey: string): string {
   return `inmemory://danmu-theme/${encodeURIComponent(documentKey)}.css`;
 }
 
-const labelMap = new Map<string, string>([
+const labelMap = localized(() => (new Map<string, string>([
   ["common", uiText("nativeMonacoEditorConfig.labelMap")], ["light", uiText("nativeMonacoEditorConfig.labelMap2")], ["dark", uiText("nativeMonacoEditorConfig.labelMap3")],
   ["all", uiText("nativeMonacoEditorConfig.labelMap4")],
   ...NATIVE_EVENT_SCOPES.flatMap(item => [[item.id, item.label] as const, ...(item.children ?? []).map(child => [child.id, child.label] as const)]),
   ...NATIVE_IDENTITY_SCOPES.map(item => [item.id, item.label] as const),
   ...NATIVE_SEMANTIC_PARTS.map(item => [item.id, item.label] as const),
-]);
+])));
 
 export function nativeMonacoHoverDescription(line: string): string | undefined {
   const match = line.match(/\/\*\s*visual:([a-z]+)\|([A-Za-z]+)\|([A-Za-z]+)\|([A-Za-z]+)\s*\*\//);

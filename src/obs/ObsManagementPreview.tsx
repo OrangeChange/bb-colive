@@ -1,3 +1,4 @@
+import { useUiLanguage } from "../i18n/react.ts";
 import { uiText } from "../i18n/index.ts";
 import { useEffect, useMemo, useState } from "react";
 import { createPortal } from "react-dom";
@@ -16,6 +17,7 @@ import { OBS_SAMPLE_KINDS } from "./obsSamples.ts";
 import "./obs.css";
 
 function RealtimePreview({state,width,scheme,background}:{state:ObsWireState;width:number;scheme:StylePreviewScheme;background:string}) {
+  useUiLanguage();
  const canvas=usePreviewCanvas(width,scheme);
  const shared=useMemo<StylePreviewDraft>(()=>({kind:'obs',content:state,previewBackground:background,...canvas.geometry,frame:{epoch:0,cursor:state.events.length}}),[state,background,canvas.geometry]);
  useStylePreviewPublisher(shared);
@@ -27,6 +29,7 @@ export function ObsManagementPreview({configuration,saved,displayScale,loadDocum
  geometry?:import('../components/nativePreviewGeometry.ts').NativePreviewGeometry|null;
  previewHeaderTarget?:HTMLElement|null;
 }) {
+  useUiLanguage();
  const [document,setDocument]=useState<ThemeDocument>();
  const [error,setError]=useState('');
  const [eventKinds,setEventKinds]=useState<string[]>([]);

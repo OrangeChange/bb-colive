@@ -1,4 +1,5 @@
-import { uiText } from "../i18n/index.ts";
+import { useUiLanguage } from "../i18n/react.ts";
+import { setUiLanguage, getUiLanguage, uiText } from "../i18n/index.ts";
 import {
   createPreviewResourceReceiver,
   type StylePreviewWireMessage,
@@ -10,6 +11,7 @@ import type { StylePreviewSnapshot } from "./stylePreviewState.ts";
 import { applyPreviewMessage } from "./stylePreviewProtocol.ts";
 import { rebaseThemeResourceOrigin } from "../themes/themeResourceOrigin.ts";
 export function StylePreviewPage() {
+  useUiLanguage();
   const [state, setState] = useState<StylePreviewSnapshot | null>(null),
     [status, setStatus] = useState(uiText("stylePreviewPage.StylePreviewPage.statussetStatus")),
     [disconnected, setDisconnected] = useState(false);
@@ -25,9 +27,14 @@ export function StylePreviewPage() {
       );
       socket.onmessage = (event) => {
         setDisconnected(false);
-        const message = decode(
-          JSON.parse(event.data) as StylePreviewWireMessage,
-        );
+        const payload = JSON.parse(event.data);
+        if (payload.uiLanguage) {
+          setUiLanguage(payload.uiLanguage);
+          document.documentElement.lang = getUiLanguage();
+          document.title = uiText("nativeStylePreviewBridge.openNativeStylePreviewWindow.title");
+        }
+        if (payload.type === "ui-language") return;
+        const message = decode(payload as StylePreviewWireMessage);
         if (!message.type.startsWith("preview:")) return;
         const configured = message.type === "preview:replace" || message.type === "preview:configure"
           ? rebaseThemeResourceOrigin(message, location.origin) : message;

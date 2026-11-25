@@ -1,4 +1,4 @@
-import { uiText } from "../i18n/index.ts";
+import { localized, uiText } from "../i18n/index.ts";
 import type { ArchiveIdentityEvidence, ArchiveTitleSource } from "./archiveTypes.ts";
 import type { ArchiveSessionStateInput } from "./archiveSessionState.ts";
 
@@ -16,7 +16,7 @@ export interface ArchiveRecordNotice {
 /** 平台开播时间按秒提供，允许少量传输和时间精度误差，但不掩盖真实晚连接。 */
 export const ARCHIVE_START_TIME_TOLERANCE_MS = 5_000;
 
-const QUALITY_REASON_LABELS: Record<string, string> = {
+const QUALITY_REASON_LABELS: Record<string, string> = localized(() => ({
   "previous-runtime": uiText("archiveQuality.QUALITY_REASON_LABELS.previousruntime"),
   "connection-error": uiText("archiveQuality.QUALITY_REASON_LABELS.connectionerror"),
   "connection-closed": uiText("archiveQuality.QUALITY_REASON_LABELS.connectionclosed"),
@@ -26,7 +26,7 @@ const QUALITY_REASON_LABELS: Record<string, string> = {
   "live-start-not-captured": uiText("archiveQuality.QUALITY_REASON_LABELS.livestartnotcaptured"),
   "start-time-unknown": uiText("archiveQuality.QUALITY_REASON_LABELS.starttimeunknown"),
   "disconnect-before-end": uiText("archiveQuality.QUALITY_REASON_LABELS.disconnectbeforeend"),
-};
+}));
 
 export function formatArchiveQualityReason(reason: string | null | undefined): string {
   if (!reason) return "";

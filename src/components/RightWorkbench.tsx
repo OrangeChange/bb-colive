@@ -1,3 +1,4 @@
+import { useUiLanguage } from "../i18n/react.ts";
 import { uiText } from "../i18n/index.ts";
 import { PanelRightOpen as LucidePanelRightOpen, PanelRightClose as LucidePanelRightClose } from "lucide-react";
 import { useCallback, useEffect, useRef, useState, type Dispatch, type PointerEvent, type RefObject, type SetStateAction, type KeyboardEvent } from "react";
@@ -111,6 +112,7 @@ export function RightWorkbench({
   onStylePreviewHeaderTarget,
   onStylePreviewGeometry,
 }: RightWorkbenchProps) {
+  useUiLanguage();
   const [appWindow] = useState(() => getCurrentWindow());
   const uiScale = useGeneralSettings(state => state.uiScale);
   const [nativeTransition, setNativeTransition] = useState(false);

@@ -1,4 +1,5 @@
-import { uiText } from "../../i18n/index.ts";
+import { useUiLanguage } from "../../i18n/react.ts";
+import { localized, uiText } from "../../i18n/index.ts";
 import { NATIVE_TEXT_LEGACY_KEYS, useNativeTextSettingsHandoff, useNativeGuardEntrySettingsHandoff } from './useNativeTextSettingsHandoff';
 import { nativeLaplaceTextSourceSettings } from './nativeTextFilters';
 import { livePaidSettings, type PaidDisplayFilter } from '../livePaidSettings';
@@ -20,22 +21,23 @@ import { useLaplaceProductPresentation } from './useLaplaceProductPresentation';
 import './preview.css';
 import { LaplaceLiveHost } from './LaplaceLiveHost';
 
-const INTERACTION_LABELS = { entry: uiText("laplacePreview.INTERACTION_LABELS.entry"), follow: uiText("laplacePreview.INTERACTION_LABELS.follow"), share: uiText("laplacePreview.INTERACTION_LABELS.share"), specialFollow: uiText("laplacePreview.INTERACTION_LABELS.specialFollow"), mutualFollow: uiText("laplacePreview.INTERACTION_LABELS.mutualFollow"), like: uiText("laplacePreview.INTERACTION_LABELS.like") };
-const SYSTEM_LABELS = { live: uiText("laplacePreview.SYSTEM_LABELS.live"), userMute: uiText("laplacePreview.SYSTEM_LABELS.userMute"), roomMute: uiText("laplacePreview.SYSTEM_LABELS.roomMute"), roomChange: uiText("laplacePreview.SYSTEM_LABELS.roomChange"), warning: uiText("laplacePreview.SYSTEM_LABELS.warning") };
+const INTERACTION_LABELS = localized(() => ({ entry: uiText("laplacePreview.INTERACTION_LABELS.entry"), follow: uiText("laplacePreview.INTERACTION_LABELS.follow"), share: uiText("laplacePreview.INTERACTION_LABELS.share"), specialFollow: uiText("laplacePreview.INTERACTION_LABELS.specialFollow"), mutualFollow: uiText("laplacePreview.INTERACTION_LABELS.mutualFollow"), like: uiText("laplacePreview.INTERACTION_LABELS.like") }));
+const SYSTEM_LABELS = localized(() => ({ live: uiText("laplacePreview.SYSTEM_LABELS.live"), userMute: uiText("laplacePreview.SYSTEM_LABELS.userMute"), roomMute: uiText("laplacePreview.SYSTEM_LABELS.roomMute"), roomChange: uiText("laplacePreview.SYSTEM_LABELS.roomChange"), warning: uiText("laplacePreview.SYSTEM_LABELS.warning") }));
 const NO_SIMULATION_RECORDS: readonly LaplaceInputRecord[] = Object.freeze([]);
-const GROUPS: { title: string; keys: LaplaceSettingKey[] }[] = [
+const GROUPS: { title: string; keys: LaplaceSettingKey[] }[] = localized(() => ([
   { title: '消息种类', keys: ['showDanmaku', 'showSuperChat', 'showToast'] },
   { title: uiText("laplacePreview.GROUPS.title"), keys: ['showPhoneNotVerified', 'showAutoDanmaku', 'showEnterEventCurrentGuardOnly', 'showGiftPriceAbove', 'showGiftHighlightAbove'] },
   { title: '身份与内容', keys: ['showUsername', 'showAvatar', 'showAvatarFrame', 'showGuardBadge', 'showMedal', 'showMedalLightenedOnly', 'showWealthMedal', 'showCurrentRank', 'showModBadge', 'showSpoiler'] },
   { title: uiText("laplacePreview.GROUPS.title2"), keys: ['showStickyBar', 'limitEventAmount', 'showGiftStickyAbove', 'limitStickyAmount', 'baseFontSize'] },
-];
-const SIMULATION_TYPES = [
+]));
+const SIMULATION_TYPES = localized(() => ([
   ['message', uiText("laplacePreview.SIMULATION_TYPES")], ['effect-message', uiText("laplacePreview.SIMULATION_TYPES2")], ['superchat', uiText("laplacePreview.SIMULATION_TYPES3")], ['gift', uiText("laplacePreview.SIMULATION_TYPES4")], ['toast', uiText("laplacePreview.SIMULATION_TYPES5")], ['interaction', uiText("laplacePreview.SIMULATION_TYPES6")], ['like-click', uiText("laplacePreview.SIMULATION_TYPES7")], ['system', uiText("laplacePreview.SIMULATION_TYPES8")], ['live-start', uiText("laplacePreview.SIMULATION_TYPES9")], ['live-end', uiText("laplacePreview.SIMULATION_TYPES10")], ['live-warning', uiText("laplacePreview.SIMULATION_TYPES11")], ['live-cutoff', uiText("laplacePreview.SIMULATION_TYPES12")], ['room-name-update', uiText("laplacePreview.SIMULATION_TYPES13")], ['room-mute-on', uiText("laplacePreview.SIMULATION_TYPES14")], ['room-mute-off', uiText("laplacePreview.SIMULATION_TYPES15")], ['red-envelope-start', uiText("laplacePreview.SIMULATION_TYPES16")], ['red-envelope-result', uiText("laplacePreview.SIMULATION_TYPES17")], ['lottery-start', uiText("laplacePreview.SIMULATION_TYPES18")], ['lottery-result', uiText("laplacePreview.SIMULATION_TYPES19")], ['user-block', uiText("laplacePreview.SIMULATION_TYPES20")],
-] as const;
+] as const));
 type PreviewMode = 'static' | 'design' | 'simulation';
-const MODE_OPTIONS = [{ value: 'static', label: uiText("laplacePreview.MODE_OPTIONS.label") }, { value: 'design', label: uiText("laplacePreview.MODE_OPTIONS.label2") }, { value: 'simulation', label: uiText("laplacePreview.MODE_OPTIONS.label3") }];
+const MODE_OPTIONS = localized(() => ([{ value: 'static', label: uiText("laplacePreview.MODE_OPTIONS.label") }, { value: 'design', label: uiText("laplacePreview.MODE_OPTIONS.label2") }, { value: 'simulation', label: uiText("laplacePreview.MODE_OPTIONS.label3") }]));
 
 export default function LaplacePreview({ live = false, nativeTextFilters = false, nativeGuardEntry = false, paidFilter, sessionIdentity = 'laplace-preview' }: { live?: boolean; nativeTextFilters?: boolean; nativeGuardEntry?: boolean; paidFilter?: PaidDisplayFilter; sessionIdentity?: string }) {
+  useUiLanguage();
   const { store: presentationStore, snapshot: presentation } = useLaplaceProductPresentation();
   const { store: productEventStore, snapshot: productEvents } = useLaplaceProductEvents();
   const [settings, setSettings] = useState(() => readLaplaceSettings(localStorage));

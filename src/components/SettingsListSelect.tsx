@@ -1,3 +1,4 @@
+import { useUiLanguage } from "../i18n/react.ts";
 import { uiText } from "../i18n/index.ts";
 import { ChevronDown as LucideChevronDown } from "lucide-react";
 import { useEffect, useId, useLayoutEffect, useRef, useState, type CSSProperties, type KeyboardEvent } from "react";
@@ -30,6 +31,7 @@ export function SettingsListSelect({
   onFocus,
   onOpen,
 }: SettingsListSelectProps) {
+  useUiLanguage();
   const [open, setOpen] = useState(false);
   const selectedOptionIndex = options.findIndex((option) => option.value === value);
   const selectedIndex = Math.max(0, selectedOptionIndex);
@@ -214,6 +216,7 @@ export function SettingsFontFamilySelect({
   onOpen?: () => void;
   emptyLabel?: string;
 }) {
+  useUiLanguage();
   const values = value && !options.includes(value) ? [value,...options] : options;
   const selectOptions: {value:string;label:string;title?:string;disabled?:boolean}[] = values.map((option) => ({ value: option, ...fontFamilyPresentation(option) }));
   if (!value) selectOptions.unshift({value:"",label:emptyLabel,disabled:true});

@@ -1,3 +1,4 @@
+import { useUiLanguage } from "../i18n/react.ts";
 import { uiText } from "../i18n/index.ts";
 import { useEffect, useState, useSyncExternalStore } from 'react';
 import type { ArchiveRepositoryContract } from '../archive/archiveTypes.ts';
@@ -23,6 +24,7 @@ export function CloudRecoverySettings({ repository, onChanged, connectionRequest
   onChanged?: () => void;
   connectionRequested?: boolean;
 }) {
+  useUiLanguage();
   const [binding, setBinding] = useState<CloudRecoveryBindingState>({ status: 'unbound', binding: null });
   const [baseUrl, setBaseUrl] = useState('');
   const [token, setToken] = useState('');

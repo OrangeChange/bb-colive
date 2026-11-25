@@ -1,4 +1,5 @@
-import { uiText } from "../i18n/index.ts";
+import { useUiLanguage } from "../i18n/react.ts";
+import { localized, uiText } from "../i18n/index.ts";
 import { useEffect, useId, useRef, useState } from 'react';
 import { createPortal } from 'react-dom';
 import {
@@ -17,11 +18,11 @@ import { recoveryTimestamp } from '../cloudSync/recoverySessionMetadata.ts';
 import { readRecoverySessionPages } from '../cloudSync/recoverySessionPages.ts';
 import { ArchiveCoverThumbnail } from './ArchiveCoverThumbnail';
 
-const scopeOptions: Array<{ value: CloudRecoveryScope; label: string; description: string }> = [
+const scopeOptions: Array<{ value: CloudRecoveryScope; label: string; description: string }> = localized(() => ([
   { value: 'all', label: uiText("cloudRecoveryDialog.scopeOptions.label"), description: uiText("cloudRecoveryDialog.scopeOptions.description") },
   { value: 'sessions', label: uiText("cloudRecoveryDialog.scopeOptions.label2"), description: uiText("cloudRecoveryDialog.scopeOptions.description2") },
   { value: 'time', label: uiText("cloudRecoveryDialog.scopeOptions.label3"), description: uiText("cloudRecoveryDialog.scopeOptions.description3") },
-];
+]));
 
 const dateLabel = (value?: string | null) => {
   if (!value) return uiText("cloudRecoveryDialog.dateLabel");
@@ -56,6 +57,7 @@ export function CloudRecoveryDialog({
   onOpenSettings: () => void;
   onStart: (selection: CloudRecoverySelection) => Promise<'started' | 'binding-required' | 'busy'>;
 }) {
+  useUiLanguage();
   const [draft, setDraft] = useState<CloudRecoverySelectionDraft>(createCloudRecoverySelectionDraft);
   const [sessions, setSessions] = useState<CloudRecoverySessionItem[]>([]);
   const [nextCursor, setNextCursor] = useState<string | null>(null);

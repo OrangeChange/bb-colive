@@ -40,10 +40,10 @@ test("Edge Provider 的音色列表只暴露可用的短名称", async () => {
     }),
   });
   assert.deepEqual(await provider.listVoices(), [
-    { name: "zh-CN-XiaoxiaoNeural", label: "Xiaoxiao", language: "zh-CN", local: false, group: "中文（普通话）", multilingual: false },
-    { name: "zh-HK-HiuGaaiNeural", label: "HiuGaai", language: "zh-HK", local: false, group: "中文（粤语）", multilingual: false },
-    { name: "en-US-AndrewMultilingualNeural", label: "AndrewMultilingual", language: "en-US", local: false, group: "多语言音色", multilingual: true },
-    { name: "en-GB-RyanNeural", label: "Ryan", language: "en-GB", local: false, group: "English（英国）", multilingual: false },
-    { name: "ja-JP-NanamiNeural", label: "Nanami", language: "ja-JP", local: false, group: "日本語", multilingual: false },
+    { name: "zh-CN-XiaoxiaoNeural", label: "Xiaoxiao", language: "zh-CN", local: false, group: "zh-CN", multilingual: false },
+    { name: "zh-HK-HiuGaaiNeural", label: "HiuGaai", language: "zh-HK", local: false, group: "zh-HK", multilingual: false },
+    { name: "en-US-AndrewMultilingualNeural", label: "AndrewMultilingual", language: "en-US", local: false, group: "multilingual", multilingual: true },
+    { name: "en-GB-RyanNeural", label: "Ryan", language: "en-GB", local: false, group: "en-GB", multilingual: false },
+    { name: "ja-JP-NanamiNeural", label: "Nanami", language: "ja-JP", local: false, group: "ja-JP", multilingual: false },
   ]);
 });

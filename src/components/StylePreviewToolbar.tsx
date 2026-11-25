@@ -1,3 +1,4 @@
+import { useUiLanguage } from "../i18n/react.ts";
 import { uiText } from "../i18n/index.ts";
 import * as Popover from "@radix-ui/react-popover";
 import { Filter, Sun, Moon, Pause, Play, RotateCcw, Check } from "lucide-react";
@@ -31,6 +32,7 @@ export interface StylePreviewToolbarProps {
 }
 
 export function StylePreviewToolbar(props: StylePreviewToolbarProps) {
+  useUiLanguage();
   const supportedMotions = props.supportedMotions ?? [
     "static",
     "design",

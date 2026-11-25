@@ -1,3 +1,4 @@
+import { useUiLanguage } from "../i18n/react.ts";
 import { uiText } from "../i18n/index.ts";
 import { Pin as LucidePin, ChevronRight as LucideChevronRight } from "lucide-react";
 import { useEffect, useRef } from "react";
@@ -46,6 +47,7 @@ function liveStatusLabel(liveStatus: Anchor["liveStatus"]): string {
 }
 
 function OwnerAvatar({ anchor }: { anchor: Anchor }) {
+  useUiLanguage();
   const isLive = anchor.liveStatus === 1;
   return (
     <span className={`review-owner-avatar relative flex size-12 shrink-0 items-center justify-center rounded-full ${isLive ? "review-live-pulse text-accent-text" : ""}`}>
@@ -78,6 +80,7 @@ function OwnerCard({
   onTogglePinned: (roomId: number, pinned: boolean) => void;
   ownersLoading: boolean;
 }) {
+  useUiLanguage();
   const sessionCount = card.owner?.sessionCount ?? 0;
   const isLive = card.anchor.liveStatus === 1;
   return (
@@ -128,6 +131,7 @@ function SessionRow({
   selected: boolean;
   onToggle?: (sessionId: string, selected: boolean) => void;
 }) {
+  useUiLanguage();
   const notices = getArchiveRecordNotices(session);
   const qualityNotice = notices.find((notice) => notice.kind === "quality");
   const noticeLabel = notices.map((notice) => `${notice.label}：${notice.message}`).join(" ");
@@ -197,6 +201,7 @@ export function ReviewOwnerList({
   onExportSelected,
   onClearSelection,
 }: ReviewOwnerListProps) {
+  useUiLanguage();
   const pinnedOwnerRoomIds = useGeneralSettings((state) => state.reviewPinnedOwnerRoomIds);
   const setReviewOwnerPinned = useGeneralSettings((state) => state.setReviewOwnerPinned);
   const togglePinned = (roomId: number, pinned: boolean) => {

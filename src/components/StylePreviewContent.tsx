@@ -1,3 +1,4 @@
+import { useUiLanguage } from "../i18n/react.ts";
 import { uiText } from "../i18n/index.ts";
 import { useStylePreviewPresentation } from "../preview/useStylePreviewPresentation.ts";
 import type { StylePreviewSnapshot } from "../preview/stylePreviewState.ts";
@@ -19,6 +20,7 @@ export function StylePreviewContent({
   transparent?: boolean;
   onPreviewFrame?: (frame: PreviewFrame) => void;
 }) {
+  useUiLanguage();
   const ref = useStylePreviewPresentation(state);
   const scale = state.displayScale && state.displayScale > 0 ? state.displayScale : 1;
   const background =

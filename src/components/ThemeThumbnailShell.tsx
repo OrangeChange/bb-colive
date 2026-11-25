@@ -1,3 +1,4 @@
+import { useUiLanguage } from "../i18n/react.ts";
 import { uiText } from "../i18n/index.ts";
 import { useEffect, useState, type ReactNode, type RefObject } from "react";
 import type { ThemeDocument } from "../themes/themeTypes.ts";
@@ -47,6 +48,7 @@ export function ThemeThumbnailShell({ root, failed, ready, full = false, childre
   full?: boolean;
   children?: ReactNode;
 }) {
+  useUiLanguage();
   const className = "theme-library-thumbnail" + (ready ? " is-rendered" : failed ? " is-error" : " is-loading") + (full ? " is-full" : "");
   if (failed) return <div ref={root} className={className} role="status"><span>{uiText("themeThumbnailShell.ThemeThumbnailShell")}</span></div>;
   if (!ready) return <div ref={root} className={className} aria-label={uiText("themeThumbnailShell.aria_label")}><span /><span /><span /></div>;

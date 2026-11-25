@@ -1,4 +1,5 @@
-import { uiText } from "../i18n/index.ts";
+import { useUiLanguage } from "../i18n/react.ts";
+import { localized, uiText } from "../i18n/index.ts";
 import { CloudDownload as LucideCloudDownload, ChevronDown as LucideChevronDown } from "lucide-react";
 import { useState, useSyncExternalStore } from 'react';
 import type { CloudRecoveryRunProgress } from '../cloudSync/cloudRecoveryRunner.ts';
@@ -6,12 +7,12 @@ import { cloudRecoveryTask } from '../cloudSync/cloudRecoveryRuntime.ts';
 import { recordFeatureDiagnostic } from '../diagnostics/featureDiagnostics.ts';
 import { ConfirmDialog } from './ConfirmDialog.tsx';
 
-const STAGES = [
+const STAGES = localized(() => ([
   { phase: 'preparing', label: uiText("cloudRecoveryProgress.STAGES.label") },
   { phase: 'downloading', label: uiText("cloudRecoveryProgress.STAGES.label2") },
   { phase: 'restoring', label: uiText("cloudRecoveryProgress.STAGES.label3") },
   { phase: 'finalizing', label: uiText("cloudRecoveryProgress.STAGES.label4") },
-] as const;
+] as const));
 
 const percent = (progress: CloudRecoveryRunProgress | null) => progress && progress.total > 0
   ? Math.min(100, Math.round(progress.current / progress.total * 100)) : 0;
@@ -26,6 +27,7 @@ function CloudDownloadIcon() {
 }
 
 export function CloudRecoveryProgress() {
+  useUiLanguage();
   const snapshot = useSyncExternalStore(cloudRecoveryTask.subscribe, cloudRecoveryTask.getSnapshot, cloudRecoveryTask.getSnapshot);
   const [expanded, setExpanded] = useState(false);
   const [confirmCancel, setConfirmCancel] = useState(false);

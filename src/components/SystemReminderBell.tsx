@@ -1,3 +1,4 @@
+import { useUiLanguage } from "../i18n/react.ts";
 import { uiText } from "../i18n/index.ts";
 import { Bell as LucideBell } from "lucide-react";
 import { useEffect, useRef, useState, type ReactNode } from "react";
@@ -13,6 +14,7 @@ function IconBell() {
 }
 
 export function SystemReminderBell({ events, placement = "bottom", children }: { events: DanmakuEvent[]; placement?: "top" | "bottom"; children?: ReactNode }) {
+  useUiLanguage();
   const [open, setOpen] = useState(false);
   const [readCount, setReadCount] = useState(0);
   const rootRef = useRef<HTMLDivElement>(null);

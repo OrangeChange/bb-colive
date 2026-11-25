@@ -1,4 +1,4 @@
-import { uiText } from "../i18n/index.ts";
+import { localized, uiText } from "../i18n/index.ts";
 /**
  * B站 HTTP API 层（移植自 danmu_tool/webview_verify/src/main.js，已通过风控验证）
  *
@@ -51,14 +51,14 @@ export function encWbi(params: Record<string, string>, imgKey: string, subKey: s
 // ============ 通用请求 ============
 
 /** 常见业务错误码 -> 用户可读文案（未命中时回退技术信息） */
-const API_ERROR_TEXT: Record<number, string> = {
+const API_ERROR_TEXT: Record<number, string> = localized(() => ({
   60004: uiText("api.API_ERROR_TEXT.60004"),
   [-352]: uiText("api.API_ERROR_TEXT.352"),
   [-412]: uiText("api.API_ERROR_TEXT.412"),
   [-101]: uiText("api.API_ERROR_TEXT.101"),
   [-400]: uiText("api.API_ERROR_TEXT.400"),
   [-1]: uiText("api.API_ERROR_TEXT.1"),
-}
+}))
 
 const REQUEST_ERROR_DETAIL_LIMIT = 240
 type UnknownRecord = Record<string, unknown>

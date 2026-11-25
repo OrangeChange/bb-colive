@@ -1,3 +1,4 @@
+import { useUiLanguage } from "../i18n/react.ts";
 import { uiText } from "../i18n/index.ts";
 import { previewEditorAccent } from '../../public/previewEditorHit.mjs';
 import { useTheme } from '../theme.ts';
@@ -91,6 +92,7 @@ export function CompatibleThemePreview({ onPreviewReady, onPreviewFailure, trans
   inspectionRevision?: number;
   onEditorInspection?: (inspection: CompatibleEditorInspection) => void;
 }) {
+  useUiLanguage();
   const previewCss = useMemo(() => {
     const base = composeCss ? composeCss(document) : [
       document.styles.baseCss,
@@ -173,6 +175,7 @@ export function CompatibleThemeThumbnail({ mode, themeId, revision, load, onPrev
   revision: number;
   load: (themeId: string) => Promise<ThemeDocument>;
 }) {
+  useUiLanguage();
   const root = useRef<HTMLDivElement>(null);
   const { document, failed } = useThemeThumbnailDocument({ root, themeId, revision, load });
   const surface = getCompatibleThemeEditingSurface(mode);

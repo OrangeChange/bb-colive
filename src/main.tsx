@@ -1,5 +1,6 @@
 import "./brandMigration.ts";
 import React from "react";
+import { initializeUiLanguage } from "./i18n/runtime.ts";
 import { ObsExternalValidation } from "./obs/ObsExternalValidation.tsx";
 import ReactDOM from "react-dom/client";
 import "./App.css";
@@ -23,6 +24,7 @@ if (windowType === "display") document.documentElement.dataset.window = "display
 if (isEventWindowKind(windowType) && windowType !== 'display') document.documentElement.dataset.window = "gift";
 
 async function mount() {
+  await initializeUiLanguage();
   let Component: React.ComponentType;
   if (windowType === "app-update") {
     (await import("./theme.ts")).initTheme();
