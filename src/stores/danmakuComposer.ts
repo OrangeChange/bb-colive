@@ -5,12 +5,13 @@ import type {
 } from "../protocol/danmakuSendingModel.ts";
 export interface ComposerDraft {
   text: string;
+  mode: "text" | "emoticon";
   reply?: { uid: string; name: string };
   emoticon?: LiveEmoticon;
   status?: SendStatus;
   revision: number;
 }
-const empty = (): ComposerDraft => ({ text: "", revision: 0 });
+const empty = (): ComposerDraft => ({ text: "", mode: "text", revision: 0 });
 interface ComposerState {
   context: string;
   open: boolean;
@@ -35,8 +36,8 @@ export const useDanmakuComposer = create<ComposerState>((set, get) => ({
     if (get().context !== key) set({ context: key, open: false });
   },
   show: (reply) => {
-    if (!get().context) return;
-    if (reply) get().edit({ reply, emoticon: undefined });
+    if (reply && !get().context) return;
+    if (reply) get().edit({ reply, mode: "text" });
     set((s) => ({ open: true, focusRevision: s.focusRevision + 1 }));
   },
   close: () => set({ open: false }),
@@ -49,6 +50,7 @@ export const useDanmakuComposer = create<ComposerState>((set, get) => ({
           [s.context]: {
             ...d,
             ...patch,
+            mode: patch.mode ?? (patch.emoticon ? "emoticon" : d.mode),
             revision: d.revision + 1,
             status: undefined,
           },
@@ -79,8 +81,8 @@ export const useDanmakuComposer = create<ComposerState>((set, get) => ({
           [context]: {
             ...current,
             ...(unchanged && status === "sent"
-              ? draft.emoticon
-                ? { emoticon: undefined }
+              ? draft.mode === "emoticon"
+                ? { emoticon: undefined, mode: "text" as const }
                 : { text: "" }
               : {}),
             status: unchanged ? status : current.status,
@@ -90,4 +92,8 @@ export const useDanmakuComposer = create<ComposerState>((set, get) => ({
     });
   },
 }));
-export const EMPTY_COMPOSER_DRAFT: ComposerDraft = { text: "", revision: 0 };
+export const EMPTY_COMPOSER_DRAFT: ComposerDraft = {
+  text: "",
+  mode: "text",
+  revision: 0,
+};

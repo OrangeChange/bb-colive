@@ -1,3 +1,4 @@
+import { DanmakuComposer } from "./components/DanmakuComposer";
 import { useDanmakuComposer } from "./stores/danmakuComposer";
 import { Button } from "./components/shadcn/button";
 import { useUiLanguage } from "./i18n/react.ts";
@@ -178,6 +179,7 @@ function MainArea({
 }) {
   useUiLanguage();
   const events = useConnection((s) => s.events);
+  const loginPhase = useSession(s=>s.phase);
   const status = useConnection((s) => s.state.status);
   const roomId = useConnection((s) => s.state.roomId);
   const roomGuardProfile = useConnection((s) => s.state.roomGuardProfile);
@@ -450,6 +452,7 @@ function MainArea({
   }, [archiveRepository, archiveSessionId, onToggleFavorite]);
   const queryActive = Boolean(query.userId || query.userName || query.text?.trim());
   const eventMenuHandlers = useMemo<Omit<EventMenuHandlers, "regionKey">>(() => ({
+    canReplyUser: (event) => loginPhase === "loggedIn" && status === "connected" && event.roomId === roomId,
     onReplyUser: (event) => {
       const current = useConnection.getState().state;
       if (!event.user?.uid || event.roomId !== current.roomId || current.status !== "connected" || useSession.getState().phase !== "loggedIn") return;
@@ -473,7 +476,7 @@ function MainArea({
     getFavoriteError: (event) => favoriteFailureKey === getEventBookmarkKey(event) ? favoriteFailureMessage : null,
     isMarked: (regionKey, event) => getRegionMark(regionMarks, regionKey) === getEventMarkKey(event),
     onToggleMark,
-  }), [onSpeakEvent, onUserFilter, isUserFiltered, onClearUserFilter, queryActive, onViewContext,
+  }), [roomId, status, loginPhase, onSpeakEvent, onUserFilter, isUserFiltered, onClearUserFilter, queryActive, onViewContext,
     contextTarget, onContextTargetConsumed, onSaveNickname, onDeleteNickname, onOpenUser, favorites,
     archiveSessionId, onToggleFavorite, onEditFavorite, favoriteEditOnAdd, favoriteFailureKey,
     favoriteFailureMessage, regionMarks, onToggleMark]);
@@ -523,7 +526,7 @@ function MainArea({
   };
 
   return (
-    <>
+    <DanmakuComposer fallbackRef={eventAreaRef}>
       <ConnectBar onUserFilter={onRankUserFilter} />
       {!showEmpty && (
         <LiveFilterBar
@@ -768,7 +771,7 @@ function MainArea({
           onCancel={() => setFavoriteEditor(null)}
         />
       )}
-    </>
+    </DanmakuComposer>
   );
 }
 

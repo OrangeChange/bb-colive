@@ -4556,5 +4556,7 @@
   "danmaku.emoticonReply": "這個表情暫不支援回覆使用者。",
   "danmaku.sendNormally": "取消回覆並選擇表情",
   "danmaku.cancel": "取消",
-  "danmaku.empty": "請先輸入彈幕內容。"
+  "danmaku.empty": "請先輸入彈幕內容。",
+  "danmaku.savedEmoticon": "切換到表情草稿",
+  "danmaku.unavailableEmoticon": "這個表情暫不可用，請重新選擇。"
 }

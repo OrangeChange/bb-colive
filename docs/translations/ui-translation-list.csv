@@ -37,25 +37,25 @@
 "api.biliGet.data2","api","src/protocol/api.ts:192","服务响应异常，请稍后重试","服務回應異常，請稍後重試","Unexpected service response. Please try again later.","サーバーから異常な応答がありました。しばらくしてから再試行してください。","","仅软件操作界面；保持占位符名称原样，可按语序移动。"
 "api.getRealRoomId","api","src/protocol/api.ts:257","房间不存在，请检查房间号","直播間不存在，請檢查房間號","Room does not exist. Please check the room ID.","ルームが存在しません。ルームIDを確認してください。","","仅软件操作界面；保持占位符名称原样，可按语序移动。"
 "api.text","api","src/protocol/api.ts:137","网络异常，请检查网络或代理后重试","網路異常，請檢查網路或代理伺服器後重試","Network error. Please check your connection or proxy and try again.","ネットワークエラーです。接続やプロキシを確認して再試行してください。","","仅软件操作界面；保持占位符名称原样，可按语序移动。"
-"app.App","app","src/App.tsx:1391","副窗口设置","副視窗設定","Secondary window settings","サブウィンドウ設定","","仅软件操作界面；保持占位符名称原样，可按语序移动。"
-"app.App.runRevenueWindowOperation.message","app","src/App.tsx:1126","窗口操作未完成，请重试。","視窗操作未完成，請重試。","Window operation failed to complete. Please try again.","ウィンドウ操作が完了しませんでした。再試行してください。","","仅软件操作界面；保持占位符名称原样，可按语序移动。"
-"app.App.stylePreviewTitlesetStylePreviewTitle","app","src/App.tsx:812","样式预览","樣式預覽","Style preview","スタイルプレビュー","","仅软件操作界面；保持占位符名称原样，可按语序移动。"
-"app.App2","app","src/App.tsx:1464","正在恢复登录态…","正在恢復登入狀態…","Restoring login session…","ログイン状態を復元中…","","仅软件操作界面；保持占位符名称原样，可按语序移动。"
-"app.aria_label","app","src/App.tsx:579
-src/App.tsx:681","调整左右区域宽度","調整左右區域寬度","Resize left and right panels","左右の領域幅を調整","","仅软件操作界面；保持占位符名称原样，可按语序移动。"
-"app.aria_label2","app","src/App.tsx:1391","关闭窗口提示","關閉視窗提示","Close window notice","ウィンドウの通知を閉じる","","仅软件操作界面；保持占位符名称原样，可按语序移动。"
-"app.MainArea.favoriteFailureMessagesetFavoriteFailureMessage","app","src/App.tsx:236","收藏同步失败，请重试","收藏同步失敗，請重試","Failed to sync favorite. Please try again.","お気に入りの同期に失敗しました。再試行してください。","","仅软件操作界面；保持占位符名称原样，可按语序移动。"
-"app.MainArea.onEditFavorite","app","src/App.tsx:436","收藏关系尚未写入档案","收藏關聯尚未寫入檔案","Favorite link has not been written to archive yet","お気に入りの関連付けがまだアーカイブに書き込まれていません","","仅软件操作界面；保持占位符名称原样，可按语序移动。"
-"app.MainArea.onToggleFavorite","app","src/App.tsx:388","回看场次暂不可用，请稍后再试","直播紀錄場次暫時無法使用，請稍後再試","History session is temporarily unavailable. Please try again later.","この配信回は現在利用できません。しばらくしてから再試行してください。","","仅软件操作界面；保持占位符名称原样，可按语序移动。"
-"app.MainArea.onToggleFavorite2","app","src/App.tsx:391","档案事件尚未写入，无法同步收藏","檔案事件尚未寫入，無法同步收藏","Archive event has not been written yet; cannot sync favorite","イベントがまだアーカイブに書き込まれていないため、お気に入りを同期できません","","仅软件操作界面；保持占位符名称原样，可按语序移动。"
-"app.MainArea.onToggleFavorite3","app","src/App.tsx:396","已保存，刷新失败","已儲存，重新整理失敗","Saved, but failed to refresh","保存しましたが、更新に失敗しました","","仅软件操作界面；保持占位符名称原样，可按语序移动。"
-"app.MainArea.onToggleFavorite4","app","src/App.tsx:411","收藏同步失败，请重试","收藏同步失敗，請重試","Failed to sync favorite. Please try again.","お気に入りの同期に失敗しました。再試行してください。","","仅软件操作界面；保持占位符名称原样，可按语序移动。"
-"app.onConfirm.message","app","src/App.tsx:1402","窗口操作未完成，请重试。","視窗操作未完成，請重試。","Window operation failed to complete. Please try again.","ウィンドウ操作が完了しませんでした。再試行してください。","","仅软件操作界面；保持占位符名称原样，可按语序移动。"
-"app.title","app","src/App.tsx:655","弹幕与互动","彈幕與互動","Danmaku & interactions","弾幕・インタラクション","","仅软件操作界面；保持占位符名称原样，可按语序移动。"
-"app.title.value","app","src/App.tsx:754","未知用户","未知使用者","Unknown user","不明なユーザー","","仅软件操作界面；保持占位符名称原样，可按语序移动。"
-"app.title2","app","src/App.tsx:714","付费事件","付費事件","Paid events","有料イベント","","仅软件操作界面；保持占位符名称原样，可按语序移动。"
-"app.title3","app","src/App.tsx:754","编辑收藏 · {value}","編輯收藏 · {value}","Edit favorite · {value}","お気に入りを編集 · {value}","value","仅软件操作界面；保持占位符名称原样，可按语序移动。"
-"app.title4","app","src/App.tsx:1394","窗口操作未完成","視窗操作未完成","Window operation incomplete","ウィンドウ操作が完了していません","","仅软件操作界面；保持占位符名称原样，可按语序移动。"
+"app.App","app","src/App.tsx:1394","副窗口设置","副視窗設定","Secondary window settings","サブウィンドウ設定","","仅软件操作界面；保持占位符名称原样，可按语序移动。"
+"app.App.runRevenueWindowOperation.message","app","src/App.tsx:1129","窗口操作未完成，请重试。","視窗操作未完成，請重試。","Window operation failed to complete. Please try again.","ウィンドウ操作が完了しませんでした。再試行してください。","","仅软件操作界面；保持占位符名称原样，可按语序移动。"
+"app.App.stylePreviewTitlesetStylePreviewTitle","app","src/App.tsx:815","样式预览","樣式預覽","Style preview","スタイルプレビュー","","仅软件操作界面；保持占位符名称原样，可按语序移动。"
+"app.App2","app","src/App.tsx:1467","正在恢复登录态…","正在恢復登入狀態…","Restoring login session…","ログイン状態を復元中…","","仅软件操作界面；保持占位符名称原样，可按语序移动。"
+"app.aria_label","app","src/App.tsx:582
+src/App.tsx:684","调整左右区域宽度","調整左右區域寬度","Resize left and right panels","左右の領域幅を調整","","仅软件操作界面；保持占位符名称原样，可按语序移动。"
+"app.aria_label2","app","src/App.tsx:1394","关闭窗口提示","關閉視窗提示","Close window notice","ウィンドウの通知を閉じる","","仅软件操作界面；保持占位符名称原样，可按语序移动。"
+"app.MainArea.favoriteFailureMessagesetFavoriteFailureMessage","app","src/App.tsx:238","收藏同步失败，请重试","收藏同步失敗，請重試","Failed to sync favorite. Please try again.","お気に入りの同期に失敗しました。再試行してください。","","仅软件操作界面；保持占位符名称原样，可按语序移动。"
+"app.MainArea.onEditFavorite","app","src/App.tsx:438","收藏关系尚未写入档案","收藏關聯尚未寫入檔案","Favorite link has not been written to archive yet","お気に入りの関連付けがまだアーカイブに書き込まれていません","","仅软件操作界面；保持占位符名称原样，可按语序移动。"
+"app.MainArea.onToggleFavorite","app","src/App.tsx:390","回看场次暂不可用，请稍后再试","直播紀錄場次暫時無法使用，請稍後再試","History session is temporarily unavailable. Please try again later.","この配信回は現在利用できません。しばらくしてから再試行してください。","","仅软件操作界面；保持占位符名称原样，可按语序移动。"
+"app.MainArea.onToggleFavorite2","app","src/App.tsx:393","档案事件尚未写入，无法同步收藏","檔案事件尚未寫入，無法同步收藏","Archive event has not been written yet; cannot sync favorite","イベントがまだアーカイブに書き込まれていないため、お気に入りを同期できません","","仅软件操作界面；保持占位符名称原样，可按语序移动。"
+"app.MainArea.onToggleFavorite3","app","src/App.tsx:398","已保存，刷新失败","已儲存，重新整理失敗","Saved, but failed to refresh","保存しましたが、更新に失敗しました","","仅软件操作界面；保持占位符名称原样，可按语序移动。"
+"app.MainArea.onToggleFavorite4","app","src/App.tsx:413","收藏同步失败，请重试","收藏同步失敗，請重試","Failed to sync favorite. Please try again.","お気に入りの同期に失敗しました。再試行してください。","","仅软件操作界面；保持占位符名称原样，可按语序移动。"
+"app.onConfirm.message","app","src/App.tsx:1405","窗口操作未完成，请重试。","視窗操作未完成，請重試。","Window operation failed to complete. Please try again.","ウィンドウ操作が完了しませんでした。再試行してください。","","仅软件操作界面；保持占位符名称原样，可按语序移动。"
+"app.title","app","src/App.tsx:658","弹幕与互动","彈幕與互動","Danmaku & interactions","弾幕・インタラクション","","仅软件操作界面；保持占位符名称原样，可按语序移动。"
+"app.title.value","app","src/App.tsx:757","未知用户","未知使用者","Unknown user","不明なユーザー","","仅软件操作界面；保持占位符名称原样，可按语序移动。"
+"app.title2","app","src/App.tsx:717","付费事件","付費事件","Paid events","有料イベント","","仅软件操作界面；保持占位符名称原样，可按语序移动。"
+"app.title3","app","src/App.tsx:757","编辑收藏 · {value}","編輯收藏 · {value}","Edit favorite · {value}","お気に入りを編集 · {value}","value","仅软件操作界面；保持占位符名称原样，可按语序移动。"
+"app.title4","app","src/App.tsx:1397","窗口操作未完成","視窗操作未完成","Window operation incomplete","ウィンドウ操作が完了していません","","仅软件操作界面；保持占位符名称原样，可按语序移动。"
 "appData.createAppWindow","appData","src/appData.ts:19","窗口创建失败，请重试","視窗建立失敗，請重試","Failed to create window. Please try again.","ウィンドウの作成に失敗しました。再試行してください。","","仅软件操作界面；保持占位符名称原样，可按语序移动。"
 "archiveCloudDetails.alt","archiveCloudDetails","src/components/ArchiveCloudDetails.tsx:46","历史封面","歷史封面","Historical cover","過去のカバー画像","","仅软件操作界面；保持占位符名称原样，可按语序移动。"
 "archiveCloudDetails.ArchiveCloudDetails","archiveCloudDetails","src/components/ArchiveCloudDetails.tsx:24","云端场次资料","雲端場次資料","Cloud session info","クラウド配信回情報","","仅软件操作界面；保持占位符名称原样，可按语序移动。"
@@ -728,7 +728,7 @@ src/components/SettingsPanel.tsx:1471","底部","底部","Bottom","下","","仅�
 src/components/ConfirmDialog.tsx:34
 src/components/ConfirmDialog.tsx:106
 src/components/DiagnosticSettings.tsx:67
-src/components/EventContextMenu.tsx:729
+src/components/EventContextMenu.tsx:730
 src/components/FavoriteOrganizationEditor.tsx:113
 src/components/ReviewArchiveManagement.tsx:437
 src/components/ReviewArchiveManagement.tsx:477
@@ -753,10 +753,10 @@ src/components/ThemeImportDialog.tsx:74","选择文件","選擇檔案","Choose f
 src/components/DateTimeField.tsx:245
 src/components/NativeThemeAdvancedEditor.tsx:85
 src/components/NativeThemeBasicSettings.tsx:31","清空","清空","Clear","クリア","","仅软件操作界面；保持占位符名称原样，可按语序移动。"
-"common.close","common","src/App.tsx:1391
+"common.close","common","src/App.tsx:1394
 src/components/AboutDialog.tsx:18
 src/components/CloudRecoveryProgress.tsx:89
-src/components/DanmakuComposer.tsx:22
+src/components/DanmakuComposer.tsx:189
 src/components/FavoriteOrganizationEditor.tsx:92
 src/components/NativePriceGradientControls.tsx:37
 src/components/NativeThemeAdvancedEditor.tsx:92
@@ -830,12 +830,12 @@ src/components/ThemeWorkspace.tsx:1013","浅色","淺色","Light","ライト",""
 src/components/SettingsPanel.tsx:1543
 src/components/ThemeWorkspace.tsx:191
 src/components/ThemeWorkspace.tsx:194
-src/diagnostics/featureCatalog.ts:55
+src/diagnostics/featureCatalog.ts:57
 src/themes/themeReferences.ts:11","现场","現場","Live","ライブ","","仅软件操作界面；保持占位符名称原样，可按语序移动。"
 "common.none","common","src/components/PersonalBroadcastPanel.tsx:73","暂无","暫無","None","なし","","仅软件操作界面；保持占位符名称原样，可按语序移动。"
 "common.noneOption","common","src/components/VoicePanel.tsx:70","无","無","None","なし","","仅软件操作界面；保持占位符名称原样，可按语序移动。"
 "common.personalBroadcast","common","src/components/PersonalBroadcastPanel.tsx:140
-src/diagnostics/featureCatalog.ts:79","个性播报","個人化播報","Custom audio","カスタム音声","","仅软件操作界面；保持占位符名称原样，可按语序移动。"
+src/diagnostics/featureCatalog.ts:81","个性播报","個人化播報","Custom audio","カスタム音声","","仅软件操作界面；保持占位符名称原样，可按语序移动。"
 "common.remove","common","src/compat/laplace/LaplacePreview.tsx:247
 src/components/NativeThemeAdvancedEditor.tsx:90
 src/components/NativeThemeAdvancedEditor.tsx:98","移除","移除","Remove","削除","","仅软件操作界面；保持占位符名称原样，可按语序移动。"
@@ -844,7 +844,7 @@ src/components/PersonalBroadcastPanel.tsx:227
 src/components/ReviewStyleSettings.tsx:143
 src/components/ThemeWorkspace.tsx:948
 src/components/VoicePanel.tsx:876","恢复默认","恢復預設","Restore defaults","デフォルトに戻す","","仅软件操作界面；保持占位符名称原样，可按语序移动。"
-"common.retry","common","src/App.tsx:1396
+"common.retry","common","src/App.tsx:1399
 src/components/AnchorRemovalDialog.tsx:79
 src/components/CloudCollectionSettings.tsx:163
 src/components/CloudRecoveryDialog.tsx:153
@@ -870,7 +870,7 @@ src/windows/windowPositionHint.ts:4","收益窗","收益窗","Revenue window","�
 src/components/settingsNavigation.ts:23
 src/components/SettingsPanel.tsx:1557
 src/components/Sidebar.tsx:499","回看","直播紀錄","History","履歴","","仅软件操作界面；保持占位符名称原样，可按语序移动。"
-"common.save","common","src/components/EventContextMenu.tsx:755
+"common.save","common","src/components/EventContextMenu.tsx:756
 src/components/ReviewSearchControls.tsx:701
 src/components/ReviewSearchControls.tsx:737
 src/components/SettingsPanel.tsx:1763
@@ -891,11 +891,11 @@ src/components/ThemeVisualPropertyField.tsx:271","显示","顯示","Show","表�
 src/components/Sidebar.tsx:531
 src/components/ThemeWorkspace.tsx:932
 src/components/ThemeWorkspace.tsx:935
-src/diagnostics/featureCatalog.ts:95","样式","樣式","Styles","スタイル","","仅软件操作界面；保持占位符名称原样，可按语序移动。"
+src/diagnostics/featureCatalog.ts:97","样式","樣式","Styles","スタイル","","仅软件操作界面；保持占位符名称原样，可按语序移动。"
 "common.top","common","src/components/SettingsPanel.tsx:1441
 src/components/SettingsPanel.tsx:1471","顶部","頂部","Top","上","","仅软件操作界面；保持占位符名称原样，可按语序移动。"
 "common.voice","common","src/components/VoicePanel.tsx:722
-src/diagnostics/featureCatalog.ts:71","语音","語音","Voice","音声","","仅软件操作界面；保持占位符名称原样，可按语序移动。"
+src/diagnostics/featureCatalog.ts:73","语音","語音","Voice","音声","","仅软件操作界面；保持占位符名称原样，可按语序移动。"
 "compatCssReverseSync.reverseSyncCompatibleCss","compatCssReverseSync","src/themes/compatCssReverseSync.ts:72","{prop} 未受可视化编辑管理，已保留","{prop} 未受視覺化編輯管理，已保留","{prop} is not managed by the visual editor and has been preserved","{prop} はビジュアル編集の管理対象外のため保持されました","prop","仅软件操作界面；保持占位符名称原样，可按语序移动。"
 "compatCssReverseSync.reverseSyncCompatibleCss.error","compatCssReverseSync","src/themes/compatCssReverseSync.ts:99","CSS 语法有误","CSS 語法有誤","CSS syntax error","CSS 構文エラーがあります","","仅软件操作界面；保持占位符名称原样，可按语序移动。"
 "compatCssReverseSync.reverseSyncCompatibleCss2","compatCssReverseSync","src/themes/compatCssReverseSync.ts:73","{prop} 存在多个声明，已保留","{prop} 存在多個宣告，已保留","{prop} has multiple declarations and has been preserved","{prop} に複数の宣言があるため保持されました","prop","仅软件操作界面；保持占位符名称原样，可按语序移动。"
@@ -1242,30 +1242,37 @@ src/themes/compatThemeCapabilities.ts:80","点赞","按讚","Like","いいね","
 "customHttpProvider.createCustomHttpProvider.synthesize","customHttpProvider","src/voice/customHttpProvider.ts:33","没有可播报的文字","沒有可播報的文字","No text to read aloud","読み上げるテキストがありません","","仅软件操作界面；保持占位符名称原样，可按语序移动。"
 "customHttpProvider.createCustomHttpProvider.synthesize2","customHttpProvider","src/voice/customHttpProvider.ts:35","请先填写自定义 API 地址","請先填寫自訂 API 位址","Please enter the custom API URL first","先にカスタム API の URL を入力してください","","仅软件操作界面；保持占位符名称原样，可按语序移动。"
 "customHttpProvider.createCustomHttpProvider.synthesize3","customHttpProvider","src/voice/customHttpProvider.ts:75","自定义 API 语音合成失败：{detail}","自訂 API 語音合成失敗：{detail}","Custom API TTS synthesis failed: {detail}","カスタム API 音声合成に失敗しました：{detail}","detail","仅软件操作界面；保持占位符名称原样，可按语序移动。"
-"danmaku.cancel","danmaku","src/components/DanmakuComposer.tsx:28","取消","取消","Cancel","キャンセル","","仅软件操作界面；保持占位符名称原样，可按语序移动。"
-"danmaku.cancelEmoticon","danmaku","src/components/DanmakuComposer.tsx:25","取消表情","取消表情","Remove emoticon","スタンプを解除","","仅软件操作界面；保持占位符名称原样，可按语序移动。"
-"danmaku.cancelReply","danmaku","src/components/DanmakuComposer.tsx:23","取消回复","取消回覆","Cancel reply","返信を解除","","仅软件操作界面；保持占位符名称原样，可按语序移动。"
-"danmaku.content","danmaku","src/components/DanmakuComposer.tsx:24","弹幕内容","彈幕內容","Message","コメント","","仅软件操作界面；保持占位符名称原样，可按语序移动。"
-"danmaku.count","danmaku","src/components/DanmakuComposer.tsx:26","{count} 字","{count} 字","{count} characters","{count} 文字","count","仅软件操作界面；保持占位符名称原样，可按语序移动。"
-"danmaku.emoticonReply","danmaku","src/components/DanmakuComposer.tsx:28","这个表情暂不支持回复用户。","這個表情暫不支援回覆使用者。","This emoticon cannot be used as a reply yet.","このスタンプはユーザーへの返信に対応していません。","","仅软件操作界面；保持占位符名称原样，可按语序移动。"
-"danmaku.emoticons","danmaku","src/components/DanmakuComposer.tsx:26
-src/components/DanmakuEmoticonPicker.tsx:12","表情","表情","Emoticons","スタンプ","","仅软件操作界面；保持占位符名称原样，可按语序移动。"
-"danmaku.empty","danmaku","src/components/DanmakuComposer.tsx:29","请先输入弹幕内容。","請先輸入彈幕內容。","Enter a message first.","コメントを入力してください。","","仅软件操作界面；保持占位符名称原样，可按语序移动。"
-"danmaku.emptyEmoticons","danmaku","src/components/DanmakuEmoticonPicker.tsx:14","这个直播间暂无表情","這個直播間暫無表情","No emoticons in this room","このルームにはスタンプがありません","","仅软件操作界面；保持占位符名称原样，可按语序移动。"
-"danmaku.loadError","danmaku","src/components/DanmakuEmoticonPicker.tsx:14","表情没能加载，请重试。","表情載入失敗，請重試。","Could not load emoticons. Please try again.","スタンプを読み込めませんでした。再試行してください。","","仅软件操作界面；保持占位符名称原样，可按语序移动。"
-"danmaku.loading","danmaku","src/components/DanmakuEmoticonPicker.tsx:14","正在加载表情…","正在載入表情…","Loading emoticons…","スタンプを読み込み中…","","仅软件操作界面；保持占位符名称原样，可按语序移动。"
-"danmaku.login","danmaku","src/components/DanmakuComposer.tsx:19","请重新登录后再发。","請重新登入後再發。","Please sign in again before sending.","再ログインしてから送信してください。","","仅软件操作界面；保持占位符名称原样，可按语序移动。"
-"danmaku.noRoom","danmaku","src/components/DanmakuComposer.tsx:19","请先连接直播间","請先連線直播間","Connect to a live room first","先に配信ルームに接続してください","","仅软件操作界面；保持占位符名称原样，可按语序移动。"
-"danmaku.open","danmaku","src/components/DanmakuComposer.tsx:20
-src/components/DanmakuComposer.tsx:21","发送弹幕","發送彈幕","Send danmaku","コメントを送信","","仅软件操作界面；保持占位符名称原样，可按语序移动。"
-"danmaku.refresh","danmaku","src/components/DanmakuEmoticonPicker.tsx:13","刷新表情","重新整理表情","Refresh emoticons","スタンプを更新","","仅软件操作界面；保持占位符名称原样，可按语序移动。"
-"danmaku.reply","danmaku","src/components/EventContextMenu.tsx:388
-src/components/EventContextMenu.tsx:402
+"danmaku.cancel","danmaku","src/components/DanmakuComposer.tsx:346","取消","取消","Cancel","キャンセル","","仅软件操作界面；保持占位符名称原样，可按语序移动。"
+"danmaku.cancelEmoticon","danmaku","src/components/DanmakuComposer.tsx:226","取消表情","取消表情","Remove emoticon","スタンプを解除","","仅软件操作界面；保持占位符名称原样，可按语序移动。"
+"danmaku.cancelReply","danmaku","src/components/DanmakuComposer.tsx:204","取消回复","取消回覆","Cancel reply","返信を解除","","仅软件操作界面；保持占位符名称原样，可按语序移动。"
+"danmaku.content","danmaku","src/components/DanmakuComposer.tsx:212","弹幕内容","彈幕內容","Message","コメント","","仅软件操作界面；保持占位符名称原样，可按语序移动。"
+"danmaku.count","danmaku","src/components/DanmakuComposer.tsx:290","{count} 字","{count} 字","{count} characters","{count} 文字","count","仅软件操作界面；保持占位符名称原样，可按语序移动。"
+"danmaku.emoticonReply","danmaku","src/components/DanmakuComposer.tsx:326","这个表情暂不支持回复用户。","這個表情暫不支援回覆使用者。","This emoticon cannot be used as a reply yet.","このスタンプはユーザーへの返信に対応していません。","","仅软件操作界面；保持占位符名称原样，可按语序移动。"
+"danmaku.emoticons","danmaku","src/components/DanmakuComposer.tsx:265
+src/components/DanmakuComposer.tsx:266
+src/components/DanmakuEmoticonPicker.tsx:63","表情","表情","Emoticons","スタンプ","","仅软件操作界面；保持占位符名称原样，可按语序移动。"
+"danmaku.empty","danmaku","src/components/DanmakuComposer.tsx:355","请先输入弹幕内容。","請先輸入彈幕內容。","Enter a message first.","コメントを入力してください。","","仅软件操作界面；保持占位符名称原样，可按语序移动。"
+"danmaku.emptyEmoticons","danmaku","src/components/DanmakuEmoticonPicker.tsx:99","这个直播间暂无表情","這個直播間暫無表情","No emoticons in this room","このルームにはスタンプがありません","","仅软件操作界面；保持占位符名称原样，可按语序移动。"
+"danmaku.loadError","danmaku","src/components/DanmakuEmoticonPicker.tsx:96","表情没能加载，请重试。","表情載入失敗，請重試。","Could not load emoticons. Please try again.","スタンプを読み込めませんでした。再試行してください。","","仅软件操作界面；保持占位符名称原样，可按语序移动。"
+"danmaku.loading","danmaku","src/components/DanmakuEmoticonPicker.tsx:93","正在加载表情…","正在載入表情…","Loading emoticons…","スタンプを読み込み中…","","仅软件操作界面；保持占位符名称原样，可按语序移动。"
+"danmaku.login","danmaku","src/components/DanmakuComposer.tsx:143","请重新登录后再发。","請重新登入後再發。","Please sign in again before sending.","再ログインしてから送信してください。","","仅软件操作界面；保持占位符名称原样，可按语序移动。"
+"danmaku.noRoom","danmaku","src/components/DanmakuComposer.tsx:143","请先连接直播间","請先連線直播間","Connect to a live room first","先に配信ルームに接続してください","","仅软件操作界面；保持占位符名称原样，可按语序移动。"
+"danmaku.open","danmaku","src/components/DanmakuComposer.tsx:174
+src/components/DanmakuComposer.tsx:377
+src/components/DanmakuComposer.tsx:378
+src/diagnostics/featureCatalog.ts:53","发送弹幕","發送彈幕","Send danmaku","コメントを送信","","仅软件操作界面；保持占位符名称原样，可按语序移动。"
+"danmaku.refresh","danmaku","src/components/DanmakuEmoticonPicker.tsx:84
+src/components/DanmakuEmoticonPicker.tsx:85","刷新表情","重新整理表情","Refresh emoticons","スタンプを更新","","仅软件操作界面；保持占位符名称原样，可按语序移动。"
+"danmaku.reply","danmaku","src/components/EventContextMenu.tsx:389
+src/components/EventContextMenu.tsx:403
 src/components/SettingsPanel.tsx:280","回复该用户","回覆該使用者","Reply to this user","このユーザーに返信","","仅软件操作界面；保持占位符名称原样，可按语序移动。"
-"danmaku.replyTo","danmaku","src/components/DanmakuComposer.tsx:23","回复 {name}","回覆 {name}","Reply to {name}","{name} に返信","name","仅软件操作界面；保持占位符名称原样，可按语序移动。"
-"danmaku.send","danmaku","src/components/DanmakuComposer.tsx:26","发送","發送","Send","送信","","仅软件操作界面；保持占位符名称原样，可按语序移动。"
-"danmaku.sendNormally","danmaku","src/components/DanmakuComposer.tsx:28","取消回复并选择表情","取消回覆並選擇表情","Cancel reply and select emoticon","返信を解除してスタンプを選択","","仅软件操作界面；保持占位符名称原样，可按语序移动。"
-"danmaku.unavailable","danmaku","src/components/DanmakuEmoticonPicker.tsx:14","暂不可用","暫不可用","Unavailable","現在利用できません","","仅软件操作界面；保持占位符名称原样，可按语序移动。"
+"danmaku.replyTo","danmaku","src/components/DanmakuComposer.tsx:198","回复 {name}","回覆 {name}","Reply to {name}","{name} に返信","name","仅软件操作界面；保持占位符名称原样，可按语序移动。"
+"danmaku.savedEmoticon","danmaku","src/components/DanmakuComposer.tsx:278
+src/components/DanmakuComposer.tsx:279","切换到表情草稿","切換到表情草稿","Switch to saved emoticon","保存したスタンプに切り替え","","仅软件操作界面；保持占位符名称原样，可按语序移动。"
+"danmaku.send","danmaku","src/components/DanmakuComposer.tsx:303","发送","發送","Send","送信","","仅软件操作界面；保持占位符名称原样，可按语序移动。"
+"danmaku.sendNormally","danmaku","src/components/DanmakuComposer.tsx:338","取消回复并选择表情","取消回覆並選擇表情","Cancel reply and select emoticon","返信を解除してスタンプを選択","","仅软件操作界面；保持占位符名称原样，可按语序移动。"
+"danmaku.unavailable","danmaku","src/components/DanmakuEmoticonPicker.tsx:113","暂不可用","暫不可用","Unavailable","現在利用できません","","仅软件操作界面；保持占位符名称原样，可按语序移动。"
+"danmaku.unavailableEmoticon","danmaku","src/components/DanmakuComposer.tsx:353","这个表情暂不可用，请重新选择。","這個表情暫不可用，請重新選擇。","This emoticon is unavailable. Please choose another.","このスタンプは利用できません。別のスタンプを選んでください。","","仅软件操作界面；保持占位符名称原样，可按语序移动。"
 "dateTimeField.hour","dateTimeField","src/components/DateTimeField.tsx:229","小时","小時","Hour","時","","仅软件操作界面；保持占位符名称原样，可按语序移动。"
 "dateTimeField.minute","dateTimeField","src/components/DateTimeField.tsx:235","分钟","分鐘","Minute","分","","仅软件操作界面；保持占位符名称原样，可按语序移动。 界面单位，不改变数值或换算规则。"
 "dateTimeField.openCalendar","dateTimeField","src/components/DateTimeField.tsx:193","{label}：选择日期","{label}：選擇日期","{label}: choose date","{label}：日付を選択","label","仅软件操作界面；保持占位符名称原样，可按语序移动。"
@@ -1335,55 +1342,55 @@ src/components/DiagnosticSettings.tsx:302","请稍后重试","請稍後重試","
 "eventAnnotations.formatEventAge3","eventAnnotations","src/eventAnnotations.ts:167","{elapsedMinutes}分钟前","{elapsedMinutes}分鐘前","{elapsedMinutes}m ago","{elapsedMinutes}分前","elapsedMinutes","仅软件操作界面；保持占位符名称原样，可按语序移动。"
 "eventAnnotations.formatEventAge4","eventAnnotations","src/eventAnnotations.ts:168","{value}小时前","{value}小時前","{value}h ago","{value}時間前","value","仅软件操作界面；保持占位符名称原样，可按语序移动。"
 "eventAnnotations.migrateLegacyFavorites","eventAnnotations","src/eventAnnotations.ts:371","无法确认旧收藏迁移状态","無法確認舊收藏遷移狀態","Unable to verify legacy favorites migration status","旧お気に入りの移行状態を確認できませんでした","","仅软件操作界面；保持占位符名称原样，可按语序移动。"
-"eventContextMenu.actions.label.value","eventContextMenu","src/components/EventContextMenu.tsx:453","取消收藏","取消收藏","Unfavorite","お気に入り解除","","仅软件操作界面；保持占位符名称原样，可按语序移动。"
-"eventContextMenu.actions.label.value2","eventContextMenu","src/components/EventContextMenu.tsx:453","收藏事件","收藏事件","Favorite event","お気に入りに追加","","仅软件操作界面；保持占位符名称原样，可按语序移动。"
-"eventContextMenu.alt","eventContextMenu","src/components/EventContextMenu.tsx:665","{userName}头像","{userName}頭像","{userName} avatar","{userName}のアバター","userName","仅软件操作界面；保持占位符名称原样，可按语序移动。"
-"eventContextMenu.aria_label","eventContextMenu","src/components/EventContextMenu.tsx:542","打开事件菜单","開啟事件選單","Open event menu","イベントメニューを開く","","仅软件操作界面；保持占位符名称原样，可按语序移动。"
-"eventContextMenu.aria_label2","eventContextMenu","src/components/EventContextMenu.tsx:578","事件菜单","事件選單","Event menu","イベントメニュー","","仅软件操作界面；保持占位符名称原样，可按语序移动。"
-"eventContextMenu.aria_label3","eventContextMenu","src/components/EventContextMenu.tsx:600","{userName}头像预览","{userName}頭像預覽","{userName} avatar preview","{userName}のアバタープレビュー","userName","仅软件操作界面；保持占位符名称原样，可按语序移动。"
-"eventContextMenu.aria_label4","eventContextMenu","src/components/EventContextMenu.tsx:678","更改昵称","變更暱稱","Edit nickname","ニックネームを変更","","仅软件操作界面；保持占位符名称原样，可按语序移动。"
-"eventContextMenu.aria_label5","eventContextMenu","src/components/EventContextMenu.tsx:678","添加昵称","新增暱稱","Add nickname","ニックネームを追加","","仅软件操作界面；保持占位符名称原样，可按语序移动。"
-"eventContextMenu.aria_label6","eventContextMenu","src/components/EventContextMenu.tsx:697","关闭昵称编辑","關閉暱稱編輯","Close nickname editor","ニックネーム編集を閉じる","","仅软件操作界面；保持占位符名称原样，可按语序移动。"
-"eventContextMenu.aria_label7","eventContextMenu","src/components/EventContextMenu.tsx:716","输入昵称","輸入暱稱","Enter nickname","ニックネームを入力","","仅软件操作界面；保持占位符名称原样，可按语序移动。"
-"eventContextMenu.closeLabel","eventContextMenu","src/components/EventContextMenu.tsx:667","关闭头像预览","關閉頭像預覽","Close avatar preview","アバタープレビューを閉じる","","仅软件操作界面；保持占位符名称原样，可按语序移动。"
-"eventContextMenu.EventContextMenu","eventContextMenu","src/components/EventContextMenu.tsx:694","更改昵称","變更暱稱","Edit nickname","ニックネームを変更","","仅软件操作界面；保持占位符名称原样，可按语序移动。"
-"eventContextMenu.EventContextMenu.actions.label","eventContextMenu","src/components/EventContextMenu.tsx:404","退出筛选","結束篩選","Clear filter","絞り込みを解除","","仅软件操作界面；保持占位符名称原样，可按语序移动。"
-"eventContextMenu.EventContextMenu.actions.label10","eventContextMenu","src/components/EventContextMenu.tsx:453","取消收藏","取消收藏","Unfavorite","お気に入り解除","","仅软件操作界面；保持占位符名称原样，可按语序移动。"
-"eventContextMenu.EventContextMenu.actions.label11","eventContextMenu","src/components/EventContextMenu.tsx:453","收藏事件","收藏事件","Favorite event","お気に入りに追加","","仅软件操作界面；保持占位符名称原样，可按语序移动。"
-"eventContextMenu.EventContextMenu.actions.label12","eventContextMenu","src/components/EventContextMenu.tsx:464","播放大航海特效","播放大航海特效","Play membership effect","大航海エフェクトを再生","","仅软件操作界面；保持占位符名称原样，可按语序移动。"
-"eventContextMenu.EventContextMenu.actions.label13","eventContextMenu","src/components/EventContextMenu.tsx:464","播放礼物特效","播放禮物特效","Play gift effect","ギフトエフェクトを再生","","仅软件操作界面；保持占位符名称原样，可按语序移动。"
-"eventContextMenu.EventContextMenu.actions.label14","eventContextMenu","src/components/EventContextMenu.tsx:469","取消标记","取消標記","Unmark","マークを解除","","仅软件操作界面；保持占位符名称原样，可按语序移动。"
-"eventContextMenu.EventContextMenu.actions.label15","eventContextMenu","src/components/EventContextMenu.tsx:469","标记事件","標記事件","Mark event","イベントをマーク","","仅软件操作界面；保持占位符名称原样，可按语序移动。"
-"eventContextMenu.EventContextMenu.actions.label2","eventContextMenu","src/components/EventContextMenu.tsx:404","筛选该用户","篩選該使用者","Filter by user","このユーザーで絞り込み","","仅软件操作界面；保持占位符名称原样，可按语序移动。"
-"eventContextMenu.EventContextMenu.actions.label3","eventContextMenu","src/components/EventContextMenu.tsx:415","查看上下文","查看上下文","View context","前後の文脈を見る","","仅软件操作界面；保持占位符名称原样，可按语序移动。"
-"eventContextMenu.EventContextMenu.actions.label4","eventContextMenu","src/components/EventContextMenu.tsx:420","语音播报","語音播報","Read aloud","音声読み上げ","","仅软件操作界面；保持占位符名称原样，可按语序移动。"
-"eventContextMenu.EventContextMenu.actions.label5","eventContextMenu","src/components/EventContextMenu.tsx:425","复制内容","複製內容","Copy content","内容をコピー","","仅软件操作界面；保持占位符名称原样，可按语序移动。"
-"eventContextMenu.EventContextMenu.actions.label6","eventContextMenu","src/components/EventContextMenu.tsx:434","更改昵称","變更暱稱","Edit nickname","ニックネームを変更","","仅软件操作界面；保持占位符名称原样，可按语序移动。"
-"eventContextMenu.EventContextMenu.actions.label7","eventContextMenu","src/components/EventContextMenu.tsx:434","添加昵称","新增暱稱","Add nickname","ニックネームを追加","","仅软件操作界面；保持占位符名称原样，可按语序移动。"
-"eventContextMenu.EventContextMenu.actions.label8","eventContextMenu","src/components/EventContextMenu.tsx:447","打开用户主页","開啟使用者主頁","Open user profile","ユーザーページを開く","","仅软件操作界面；保持占位符名称原样，可按语序移动。"
-"eventContextMenu.EventContextMenu.actions.label9","eventContextMenu","src/components/EventContextMenu.tsx:453","{value}（上次失败）","{value}（上次失敗）","{value} (Last attempt failed)","{value}（前回失敗）","value","仅软件操作界面；保持占位符名称原样，可按语序移动。"
-"eventContextMenu.EventContextMenu.shortcutActionLabel","eventContextMenu","src/components/EventContextMenu.tsx:389","语音播报","語音播報","Read aloud","音声読み上げ","","仅软件操作界面；保持占位符名称原样，可按语序移动。"
-"eventContextMenu.EventContextMenu.shortcutActionLabel2","eventContextMenu","src/components/EventContextMenu.tsx:390","退出筛选","結束篩選","Clear filter","絞り込みを解除","","仅软件操作界面；保持占位符名称原样，可按语序移动。"
-"eventContextMenu.EventContextMenu.shortcutActionLabel3","eventContextMenu","src/components/EventContextMenu.tsx:390","筛选该用户","篩選該使用者","Filter by user","このユーザーで絞り込み","","仅软件操作界面；保持占位符名称原样，可按语序移动。"
-"eventContextMenu.EventContextMenu.shortcutActionLabel4","eventContextMenu","src/components/EventContextMenu.tsx:391","取消收藏","取消收藏","Unfavorite","お気に入り解除","","仅软件操作界面；保持占位符名称原样，可按语序移动。"
-"eventContextMenu.EventContextMenu.shortcutActionLabel5","eventContextMenu","src/components/EventContextMenu.tsx:391","收藏事件","收藏事件","Favorite event","お気に入りに追加","","仅软件操作界面；保持占位符名称原样，可按语序移动。"
-"eventContextMenu.EventContextMenu.shortcutActionLabel6","eventContextMenu","src/components/EventContextMenu.tsx:392","取消标记","取消標記","Unmark","マークを解除","","仅软件操作界面；保持占位符名称原样，可按语序移动。"
-"eventContextMenu.EventContextMenu.shortcutActionLabel7","eventContextMenu","src/components/EventContextMenu.tsx:392","标记事件","標記事件","Mark event","イベントをマーク","","仅软件操作界面；保持占位符名称原样，可按语序移动。"
-"eventContextMenu.EventContextMenu.userName","eventContextMenu","src/components/EventContextMenu.tsx:374","未知用户","未知使用者","Unknown user","不明なユーザー","","仅软件操作界面；保持占位符名称原样，可按语序移动。"
-"eventContextMenu.EventContextMenu2","eventContextMenu","src/components/EventContextMenu.tsx:694","添加昵称","新增暱稱","Add nickname","ニックネームを追加","","仅软件操作界面；保持占位符名称原样，可按语序移动。"
-"eventContextMenu.EventContextMenu3","eventContextMenu","src/components/EventContextMenu.tsx:708","昵称作为通用用户名，影响界面显示和语音播报。","暱稱作為通用使用者名稱，影響介面顯示與語音播報。","Nicknames act as a global display name across the UI and voice readout.","ニックネームは共通ユーザー名として画面表示と音声読み上げに反映されます。","","仅软件操作界面；保持占位符名称原样，可按语序移动。"
-"eventContextMenu.EventContextMenu4","eventContextMenu","src/components/EventContextMenu.tsx:710","昵称","暱稱","Nickname","ニックネーム","","仅软件操作界面；保持占位符名称原样，可按语序移动。"
-"eventContextMenu.EventContextMenu5","eventContextMenu","src/components/EventContextMenu.tsx:741","删除昵称","刪除暱稱","Delete nickname","ニックネームを削除","","仅软件操作界面；保持占位符名称原样，可按语序移动。"
-"eventContextMenu.formatEventTime","eventContextMenu","src/components/EventContextMenu.tsx:155","时间未知","時間未知","Unknown time","時刻不明","","仅软件操作界面；保持占位符名称原样，可按语序移动。"
-"eventContextMenu.label","eventContextMenu","src/components/EventContextMenu.tsx:666","{userName}头像预览","{userName}頭像預覽","{userName} avatar preview","{userName}のアバタープレビュー","userName","仅软件操作界面；保持占位符名称原样，可按语序移动。"
-"eventContextMenu.placeholder","eventContextMenu","src/components/EventContextMenu.tsx:717","输入通用昵称","輸入通用暱稱","Enter global nickname","共通ニックネームを入力","","仅软件操作界面；保持占位符名称原样，可按语序移动。"
-"eventContextMenu.title","eventContextMenu","src/components/EventContextMenu.tsx:502
-src/components/EventContextMenu.tsx:628","点击取消收藏；长按编辑备注和标签","點擊取消收藏；長按編輯備註與標籤","Click to unfavorite; long-press to edit notes and tags","クリックでお気に入り解除、長押しでメモとタグを編集","","仅软件操作界面；保持占位符名称原样，可按语序移动。"
-"eventContextMenu.title2","eventContextMenu","src/components/EventContextMenu.tsx:502
-src/components/EventContextMenu.tsx:628","点击收藏；长按编辑备注和标签","點擊收藏；長按編輯備註與標籤","Click to favorite; long-press to edit notes and tags","クリックでお気に入り登録、長押しでメモとタグを編集","","仅软件操作界面；保持占位符名称原样，可按语序移动。"
-"eventContextMenu.title3","eventContextMenu","src/components/EventContextMenu.tsx:601","查看头像预览","查看頭像預覽","View avatar preview","アバタープレビューを表示","","仅软件操作界面；保持占位符名称原样，可按语序移动。"
-"eventContextMenu.title4","eventContextMenu","src/components/EventContextMenu.tsx:688","拖动移动昵称弹窗","拖曳移動暱稱彈窗","Drag to move nickname popup","ドラッグしてニックネームポップアップを移動","","仅软件操作界面；保持占位符名称原样，可按语序移动。"
-"eventContextMenu.title5","eventContextMenu","src/components/EventContextMenu.tsx:708","昵称作为通用用户名，影响界面显示和语音播报。","暱稱作為通用使用者名稱，影響介面顯示與語音播報。","Nicknames act as a global display name across the UI and voice readout.","ニックネームは共通ユーザー名として画面表示と音声読み上げに反映されます。","","仅软件操作界面；保持占位符名称原样，可按语序移动。"
+"eventContextMenu.actions.label.value","eventContextMenu","src/components/EventContextMenu.tsx:454","取消收藏","取消收藏","Unfavorite","お気に入り解除","","仅软件操作界面；保持占位符名称原样，可按语序移动。"
+"eventContextMenu.actions.label.value2","eventContextMenu","src/components/EventContextMenu.tsx:454","收藏事件","收藏事件","Favorite event","お気に入りに追加","","仅软件操作界面；保持占位符名称原样，可按语序移动。"
+"eventContextMenu.alt","eventContextMenu","src/components/EventContextMenu.tsx:666","{userName}头像","{userName}頭像","{userName} avatar","{userName}のアバター","userName","仅软件操作界面；保持占位符名称原样，可按语序移动。"
+"eventContextMenu.aria_label","eventContextMenu","src/components/EventContextMenu.tsx:543","打开事件菜单","開啟事件選單","Open event menu","イベントメニューを開く","","仅软件操作界面；保持占位符名称原样，可按语序移动。"
+"eventContextMenu.aria_label2","eventContextMenu","src/components/EventContextMenu.tsx:579","事件菜单","事件選單","Event menu","イベントメニュー","","仅软件操作界面；保持占位符名称原样，可按语序移动。"
+"eventContextMenu.aria_label3","eventContextMenu","src/components/EventContextMenu.tsx:601","{userName}头像预览","{userName}頭像預覽","{userName} avatar preview","{userName}のアバタープレビュー","userName","仅软件操作界面；保持占位符名称原样，可按语序移动。"
+"eventContextMenu.aria_label4","eventContextMenu","src/components/EventContextMenu.tsx:679","更改昵称","變更暱稱","Edit nickname","ニックネームを変更","","仅软件操作界面；保持占位符名称原样，可按语序移动。"
+"eventContextMenu.aria_label5","eventContextMenu","src/components/EventContextMenu.tsx:679","添加昵称","新增暱稱","Add nickname","ニックネームを追加","","仅软件操作界面；保持占位符名称原样，可按语序移动。"
+"eventContextMenu.aria_label6","eventContextMenu","src/components/EventContextMenu.tsx:698","关闭昵称编辑","關閉暱稱編輯","Close nickname editor","ニックネーム編集を閉じる","","仅软件操作界面；保持占位符名称原样，可按语序移动。"
+"eventContextMenu.aria_label7","eventContextMenu","src/components/EventContextMenu.tsx:717","输入昵称","輸入暱稱","Enter nickname","ニックネームを入力","","仅软件操作界面；保持占位符名称原样，可按语序移动。"
+"eventContextMenu.closeLabel","eventContextMenu","src/components/EventContextMenu.tsx:668","关闭头像预览","關閉頭像預覽","Close avatar preview","アバタープレビューを閉じる","","仅软件操作界面；保持占位符名称原样，可按语序移动。"
+"eventContextMenu.EventContextMenu","eventContextMenu","src/components/EventContextMenu.tsx:695","更改昵称","變更暱稱","Edit nickname","ニックネームを変更","","仅软件操作界面；保持占位符名称原样，可按语序移动。"
+"eventContextMenu.EventContextMenu.actions.label","eventContextMenu","src/components/EventContextMenu.tsx:405","退出筛选","結束篩選","Clear filter","絞り込みを解除","","仅软件操作界面；保持占位符名称原样，可按语序移动。"
+"eventContextMenu.EventContextMenu.actions.label10","eventContextMenu","src/components/EventContextMenu.tsx:454","取消收藏","取消收藏","Unfavorite","お気に入り解除","","仅软件操作界面；保持占位符名称原样，可按语序移动。"
+"eventContextMenu.EventContextMenu.actions.label11","eventContextMenu","src/components/EventContextMenu.tsx:454","收藏事件","收藏事件","Favorite event","お気に入りに追加","","仅软件操作界面；保持占位符名称原样，可按语序移动。"
+"eventContextMenu.EventContextMenu.actions.label12","eventContextMenu","src/components/EventContextMenu.tsx:465","播放大航海特效","播放大航海特效","Play membership effect","大航海エフェクトを再生","","仅软件操作界面；保持占位符名称原样，可按语序移动。"
+"eventContextMenu.EventContextMenu.actions.label13","eventContextMenu","src/components/EventContextMenu.tsx:465","播放礼物特效","播放禮物特效","Play gift effect","ギフトエフェクトを再生","","仅软件操作界面；保持占位符名称原样，可按语序移动。"
+"eventContextMenu.EventContextMenu.actions.label14","eventContextMenu","src/components/EventContextMenu.tsx:470","取消标记","取消標記","Unmark","マークを解除","","仅软件操作界面；保持占位符名称原样，可按语序移动。"
+"eventContextMenu.EventContextMenu.actions.label15","eventContextMenu","src/components/EventContextMenu.tsx:470","标记事件","標記事件","Mark event","イベントをマーク","","仅软件操作界面；保持占位符名称原样，可按语序移动。"
+"eventContextMenu.EventContextMenu.actions.label2","eventContextMenu","src/components/EventContextMenu.tsx:405","筛选该用户","篩選該使用者","Filter by user","このユーザーで絞り込み","","仅软件操作界面；保持占位符名称原样，可按语序移动。"
+"eventContextMenu.EventContextMenu.actions.label3","eventContextMenu","src/components/EventContextMenu.tsx:416","查看上下文","查看上下文","View context","前後の文脈を見る","","仅软件操作界面；保持占位符名称原样，可按语序移动。"
+"eventContextMenu.EventContextMenu.actions.label4","eventContextMenu","src/components/EventContextMenu.tsx:421","语音播报","語音播報","Read aloud","音声読み上げ","","仅软件操作界面；保持占位符名称原样，可按语序移动。"
+"eventContextMenu.EventContextMenu.actions.label5","eventContextMenu","src/components/EventContextMenu.tsx:426","复制内容","複製內容","Copy content","内容をコピー","","仅软件操作界面；保持占位符名称原样，可按语序移动。"
+"eventContextMenu.EventContextMenu.actions.label6","eventContextMenu","src/components/EventContextMenu.tsx:435","更改昵称","變更暱稱","Edit nickname","ニックネームを変更","","仅软件操作界面；保持占位符名称原样，可按语序移动。"
+"eventContextMenu.EventContextMenu.actions.label7","eventContextMenu","src/components/EventContextMenu.tsx:435","添加昵称","新增暱稱","Add nickname","ニックネームを追加","","仅软件操作界面；保持占位符名称原样，可按语序移动。"
+"eventContextMenu.EventContextMenu.actions.label8","eventContextMenu","src/components/EventContextMenu.tsx:448","打开用户主页","開啟使用者主頁","Open user profile","ユーザーページを開く","","仅软件操作界面；保持占位符名称原样，可按语序移动。"
+"eventContextMenu.EventContextMenu.actions.label9","eventContextMenu","src/components/EventContextMenu.tsx:454","{value}（上次失败）","{value}（上次失敗）","{value} (Last attempt failed)","{value}（前回失敗）","value","仅软件操作界面；保持占位符名称原样，可按语序移动。"
+"eventContextMenu.EventContextMenu.shortcutActionLabel","eventContextMenu","src/components/EventContextMenu.tsx:390","语音播报","語音播報","Read aloud","音声読み上げ","","仅软件操作界面；保持占位符名称原样，可按语序移动。"
+"eventContextMenu.EventContextMenu.shortcutActionLabel2","eventContextMenu","src/components/EventContextMenu.tsx:391","退出筛选","結束篩選","Clear filter","絞り込みを解除","","仅软件操作界面；保持占位符名称原样，可按语序移动。"
+"eventContextMenu.EventContextMenu.shortcutActionLabel3","eventContextMenu","src/components/EventContextMenu.tsx:391","筛选该用户","篩選該使用者","Filter by user","このユーザーで絞り込み","","仅软件操作界面；保持占位符名称原样，可按语序移动。"
+"eventContextMenu.EventContextMenu.shortcutActionLabel4","eventContextMenu","src/components/EventContextMenu.tsx:392","取消收藏","取消收藏","Unfavorite","お気に入り解除","","仅软件操作界面；保持占位符名称原样，可按语序移动。"
+"eventContextMenu.EventContextMenu.shortcutActionLabel5","eventContextMenu","src/components/EventContextMenu.tsx:392","收藏事件","收藏事件","Favorite event","お気に入りに追加","","仅软件操作界面；保持占位符名称原样，可按语序移动。"
+"eventContextMenu.EventContextMenu.shortcutActionLabel6","eventContextMenu","src/components/EventContextMenu.tsx:393","取消标记","取消標記","Unmark","マークを解除","","仅软件操作界面；保持占位符名称原样，可按语序移动。"
+"eventContextMenu.EventContextMenu.shortcutActionLabel7","eventContextMenu","src/components/EventContextMenu.tsx:393","标记事件","標記事件","Mark event","イベントをマーク","","仅软件操作界面；保持占位符名称原样，可按语序移动。"
+"eventContextMenu.EventContextMenu.userName","eventContextMenu","src/components/EventContextMenu.tsx:375","未知用户","未知使用者","Unknown user","不明なユーザー","","仅软件操作界面；保持占位符名称原样，可按语序移动。"
+"eventContextMenu.EventContextMenu2","eventContextMenu","src/components/EventContextMenu.tsx:695","添加昵称","新增暱稱","Add nickname","ニックネームを追加","","仅软件操作界面；保持占位符名称原样，可按语序移动。"
+"eventContextMenu.EventContextMenu3","eventContextMenu","src/components/EventContextMenu.tsx:709","昵称作为通用用户名，影响界面显示和语音播报。","暱稱作為通用使用者名稱，影響介面顯示與語音播報。","Nicknames act as a global display name across the UI and voice readout.","ニックネームは共通ユーザー名として画面表示と音声読み上げに反映されます。","","仅软件操作界面；保持占位符名称原样，可按语序移动。"
+"eventContextMenu.EventContextMenu4","eventContextMenu","src/components/EventContextMenu.tsx:711","昵称","暱稱","Nickname","ニックネーム","","仅软件操作界面；保持占位符名称原样，可按语序移动。"
+"eventContextMenu.EventContextMenu5","eventContextMenu","src/components/EventContextMenu.tsx:742","删除昵称","刪除暱稱","Delete nickname","ニックネームを削除","","仅软件操作界面；保持占位符名称原样，可按语序移动。"
+"eventContextMenu.formatEventTime","eventContextMenu","src/components/EventContextMenu.tsx:156","时间未知","時間未知","Unknown time","時刻不明","","仅软件操作界面；保持占位符名称原样，可按语序移动。"
+"eventContextMenu.label","eventContextMenu","src/components/EventContextMenu.tsx:667","{userName}头像预览","{userName}頭像預覽","{userName} avatar preview","{userName}のアバタープレビュー","userName","仅软件操作界面；保持占位符名称原样，可按语序移动。"
+"eventContextMenu.placeholder","eventContextMenu","src/components/EventContextMenu.tsx:718","输入通用昵称","輸入通用暱稱","Enter global nickname","共通ニックネームを入力","","仅软件操作界面；保持占位符名称原样，可按语序移动。"
+"eventContextMenu.title","eventContextMenu","src/components/EventContextMenu.tsx:503
+src/components/EventContextMenu.tsx:629","点击取消收藏；长按编辑备注和标签","點擊取消收藏；長按編輯備註與標籤","Click to unfavorite; long-press to edit notes and tags","クリックでお気に入り解除、長押しでメモとタグを編集","","仅软件操作界面；保持占位符名称原样，可按语序移动。"
+"eventContextMenu.title2","eventContextMenu","src/components/EventContextMenu.tsx:503
+src/components/EventContextMenu.tsx:629","点击收藏；长按编辑备注和标签","點擊收藏；長按編輯備註與標籤","Click to favorite; long-press to edit notes and tags","クリックでお気に入り登録、長押しでメモとタグを編集","","仅软件操作界面；保持占位符名称原样，可按语序移动。"
+"eventContextMenu.title3","eventContextMenu","src/components/EventContextMenu.tsx:602","查看头像预览","查看頭像預覽","View avatar preview","アバタープレビューを表示","","仅软件操作界面；保持占位符名称原样，可按语序移动。"
+"eventContextMenu.title4","eventContextMenu","src/components/EventContextMenu.tsx:689","拖动移动昵称弹窗","拖曳移動暱稱彈窗","Drag to move nickname popup","ドラッグしてニックネームポップアップを移動","","仅软件操作界面；保持占位符名称原样，可按语序移动。"
+"eventContextMenu.title5","eventContextMenu","src/components/EventContextMenu.tsx:709","昵称作为通用用户名，影响界面显示和语音播报。","暱稱作為通用使用者名稱，影響介面顯示與語音播報。","Nicknames act as a global display name across the UI and voice readout.","ニックネームは共通ユーザー名として画面表示と音声読み上げに反映されます。","","仅软件操作界面；保持占位符名称原样，可按语序移动。"
 "eventDisplaySettings.EVENT_ANIMATION_PRESET_OPTIONS.label","eventDisplaySettings","src/eventDisplaySettings.ts:18","无动画","無動畫","None","なし","","仅软件操作界面；保持占位符名称原样，可按语序移动。"
 "eventDisplaySettings.EVENT_ANIMATION_PRESET_OPTIONS.label2","eventDisplaySettings","src/eventDisplaySettings.ts:19","淡入淡出","淡入淡出","Fade","フェード","","仅软件操作界面；保持占位符名称原样，可按语序移动。"
 "eventDisplaySettings.EVENT_ANIMATION_PRESET_OPTIONS.label3","eventDisplaySettings","src/eventDisplaySettings.ts:20","轻微上移","輕微上移","Slide up","スライドアップ","","仅软件操作界面；保持占位符名称原样，可按语序移动。"
@@ -1437,16 +1444,16 @@ src/components/EventContextMenu.tsx:628","点击收藏；长按编辑备注和�
 "favoriteOrganizationEditor.placeholder2","favoriteOrganizationEditor","src/components/FavoriteOrganizationEditor.tsx:107","新标签","新標籤","New tag","新しいタグ","","仅软件操作界面；保持占位符名称原样，可按语序移动。"
 "favoriteOrganizationEditor.title","favoriteOrganizationEditor","src/components/FavoriteOrganizationEditor.tsx:102","已选，点击取消","已選，點擊取消","Selected; click to deselect","選択済み（クリックで解除）","","仅软件操作界面；保持占位符名称原样，可按语序移动。"
 "favoriteOrganizationEditor.title2","favoriteOrganizationEditor","src/components/FavoriteOrganizationEditor.tsx:102","未选，点击添加","未選，點擊新增","Not selected; click to add","未選択（クリックで追加）","","仅软件操作界面；保持占位符名称原样，可按语序移动。"
-"featureCatalog.FEATURE_DIAGNOSTIC_CATALOG.panel","featureCatalog","src/diagnostics/featureCatalog.ts:52","软件更新","軟體更新","Software updates","アップデート","","仅软件操作界面；保持占位符名称原样，可按语序移动。"
-"featureCatalog.FEATURE_DIAGNOSTIC_CATALOG.panel10","featureCatalog","src/diagnostics/featureCatalog.ts:164","登录","登入","Login","ログイン","","仅软件操作界面；保持占位符名称原样，可按语序移动。"
-"featureCatalog.FEATURE_DIAGNOSTIC_CATALOG.panel2","featureCatalog","src/diagnostics/featureCatalog.ts:63","副窗口","副視窗","Secondary Windows","サブウィンドウ","","仅软件操作界面；保持占位符名称原样，可按语序移动。"
-"featureCatalog.FEATURE_DIAGNOSTIC_CATALOG.panel3","featureCatalog","src/diagnostics/featureCatalog.ts:87","事件交互","事件互動","Event interactions","イベント操作","","仅软件操作界面；保持占位符名称原样，可按语序移动。"
-"featureCatalog.FEATURE_DIAGNOSTIC_CATALOG.panel4","featureCatalog","src/diagnostics/featureCatalog.ts:103","启动行为","啟動行為","Startup behavior","起動時の動作","","仅软件操作界面；保持占位符名称原样，可按语序移动。"
-"featureCatalog.FEATURE_DIAGNOSTIC_CATALOG.panel5","featureCatalog","src/diagnostics/featureCatalog.ts:111","直播间概览","直播間概覽","Room overview","ルーム概要","","仅软件操作界面；保持占位符名称原样，可按语序移动。"
-"featureCatalog.FEATURE_DIAGNOSTIC_CATALOG.panel6","featureCatalog","src/diagnostics/featureCatalog.ts:119","礼物特效","禮物特效","Gift effects","ギフトエフェクト","","仅软件操作界面；保持占位符名称原样，可按语序移动。"
-"featureCatalog.FEATURE_DIAGNOSTIC_CATALOG.panel7","featureCatalog","src/diagnostics/featureCatalog.ts:127","诊断与日志","診斷與日誌","Diagnostics & logs","診断とログ","","仅软件操作界面；保持占位符名称原样，可按语序移动。"
-"featureCatalog.FEATURE_DIAGNOSTIC_CATALOG.panel8","featureCatalog","src/diagnostics/featureCatalog.ts:135","回看档案","直播紀錄檔案","History","履歴","","仅软件操作界面；保持占位符名称原样，可按语序移动。"
-"featureCatalog.FEATURE_DIAGNOSTIC_CATALOG.panel9","featureCatalog","src/diagnostics/featureCatalog.ts:156","云端记录恢复","雲端記錄恢復","Cloud record recovery","クラウド記録の復元","","仅软件操作界面；保持占位符名称原样，可按语序移动。"
+"featureCatalog.FEATURE_DIAGNOSTIC_CATALOG.panel","featureCatalog","src/diagnostics/featureCatalog.ts:54","软件更新","軟體更新","Software updates","アップデート","","仅软件操作界面；保持占位符名称原样，可按语序移动。"
+"featureCatalog.FEATURE_DIAGNOSTIC_CATALOG.panel10","featureCatalog","src/diagnostics/featureCatalog.ts:166","登录","登入","Login","ログイン","","仅软件操作界面；保持占位符名称原样，可按语序移动。"
+"featureCatalog.FEATURE_DIAGNOSTIC_CATALOG.panel2","featureCatalog","src/diagnostics/featureCatalog.ts:65","副窗口","副視窗","Secondary Windows","サブウィンドウ","","仅软件操作界面；保持占位符名称原样，可按语序移动。"
+"featureCatalog.FEATURE_DIAGNOSTIC_CATALOG.panel3","featureCatalog","src/diagnostics/featureCatalog.ts:89","事件交互","事件互動","Event interactions","イベント操作","","仅软件操作界面；保持占位符名称原样，可按语序移动。"
+"featureCatalog.FEATURE_DIAGNOSTIC_CATALOG.panel4","featureCatalog","src/diagnostics/featureCatalog.ts:105","启动行为","啟動行為","Startup behavior","起動時の動作","","仅软件操作界面；保持占位符名称原样，可按语序移动。"
+"featureCatalog.FEATURE_DIAGNOSTIC_CATALOG.panel5","featureCatalog","src/diagnostics/featureCatalog.ts:113","直播间概览","直播間概覽","Room overview","ルーム概要","","仅软件操作界面；保持占位符名称原样，可按语序移动。"
+"featureCatalog.FEATURE_DIAGNOSTIC_CATALOG.panel6","featureCatalog","src/diagnostics/featureCatalog.ts:121","礼物特效","禮物特效","Gift effects","ギフトエフェクト","","仅软件操作界面；保持占位符名称原样，可按语序移动。"
+"featureCatalog.FEATURE_DIAGNOSTIC_CATALOG.panel7","featureCatalog","src/diagnostics/featureCatalog.ts:129","诊断与日志","診斷與日誌","Diagnostics & logs","診断とログ","","仅软件操作界面；保持占位符名称原样，可按语序移动。"
+"featureCatalog.FEATURE_DIAGNOSTIC_CATALOG.panel8","featureCatalog","src/diagnostics/featureCatalog.ts:137","回看档案","直播紀錄檔案","History","履歴","","仅软件操作界面；保持占位符名称原样，可按语序移动。"
+"featureCatalog.FEATURE_DIAGNOSTIC_CATALOG.panel9","featureCatalog","src/diagnostics/featureCatalog.ts:158","云端记录恢复","雲端記錄恢復","Cloud record recovery","クラウド記録の復元","","仅软件操作界面；保持占位符名称原样，可按语序移动。"
 "fishAudioProvider.createFishAudioProvider.synthesize","fishAudioProvider","src/voice/fishAudioProvider.ts:68","没有可播报的文字","沒有可播報的文字","No text to read aloud","読み上げるテキストがありません","","仅软件操作界面；保持占位符名称原样，可按语序移动。"
 "fishAudioProvider.createFishAudioProvider.synthesize2","fishAudioProvider","src/voice/fishAudioProvider.ts:70","请先填写 Fish Audio API Key","請先填寫 Fish Audio API Key","Please enter your Fish Audio API key first","先に Fish Audio API Key を入力してください","","仅软件操作界面；保持占位符名称原样，可按语序移动。"
 "fishAudioProvider.createFishAudioProvider.synthesize3","fishAudioProvider","src/voice/fishAudioProvider.ts:72","请先填写 Fish Audio 地址和模型","請先填寫 Fish Audio 位址與模型","Please enter the Fish Audio URL and model first","先に Fish Audio の URL とモデルを入力してください","","仅软件操作界面；保持占位符名称原样，可按语序移动。"
@@ -4691,7 +4698,7 @@ src/compat/laplace/register.tsx:234","基础设置","基礎設定","Basic settin
 "uiControls.cancelBatchDelete","uiControls","src/components/ReviewPanel.tsx:1958","取消批量删除","取消批次刪除","Cancel batch deletion","一括削除をキャンセル","","仅软件操作界面；保持占位符名称原样，可按语序移动。"
 "uiControls.cancelCleanup","uiControls","src/components/ReviewArchiveSettings.tsx:443","取消清理","取消清理","Cancel cleanup","クリーンアップをキャンセル","","仅软件操作界面；保持占位符名称原样，可按语序移动。"
 "uiControls.cancelDelete","uiControls","src/components/ReviewArchiveManagement.tsx:520","取消删除","取消刪除","Cancel deletion","削除をキャンセル","","仅软件操作界面；保持占位符名称原样，可按语序移动。"
-"uiControls.chatRegion","uiControls","src/App.tsx:561","弹幕与互动分区","彈幕與互動分區","Chat and interactions area","コメント・インタラクションエリア","","仅软件操作界面；保持占位符名称原样，可按语序移动。"
+"uiControls.chatRegion","uiControls","src/App.tsx:564","弹幕与互动分区","彈幕與互動分區","Chat and interactions area","コメント・インタラクションエリア","","仅软件操作界面；保持占位符名称原样，可按语序移动。"
 "uiControls.chatWindow","uiControls","src/windows/DisplayWindow.tsx:353
 src/windows/FloatingEventWindow.tsx:162","实时弹幕和互动","即時彈幕與互動","Live chat and interactions","ライブコメントとインタラクション","","仅软件操作界面；保持占位符名称原样，可按语序移动。"
 "uiControls.classic","uiControls","src/compat/laplace/register.tsx:240","经典控制范围","經典控制範圍","Classic scope","従来の制御範囲","","仅软件操作界面；保持占位符名称原样，可按语序移动。"
@@ -4715,7 +4722,7 @@ src/compat/laplace/register.tsx:242","模式特色","模式特色","Mode feature
 "uiControls.hue","uiControls","src/components/useColorPickerLabels.ts:32","色相","色相","Hue","色相","","仅软件操作界面；保持占位符名称原样，可按语序移动。"
 "uiControls.identityContent","uiControls","src/compat/laplace/LaplacePreview.tsx:35
 src/compat/laplace/LaplacePreview.tsx:264","身份与内容","身分與內容","Identity and content","身分と内容","","仅软件操作界面；保持占位符名称原样，可按语序移动。"
-"uiControls.leftEmpty","uiControls","src/App.tsx:665","左区已被筛选为空","左區篩選後無內容","No matches in the left area","左エリアに一致する項目はありません","","仅软件操作界面；保持占位符名称原样，可按语序移动。"
+"uiControls.leftEmpty","uiControls","src/App.tsx:668","左区已被筛选为空","左區篩選後無內容","No matches in the left area","左エリアに一致する項目はありません","","仅软件操作界面；保持占位符名称原样，可按语序移动。"
 "uiControls.litMedal","uiControls","src/compat/laplace/register.tsx:240","只显示已点亮粉丝牌","只顯示已點亮粉絲牌","Lit fan medals only","点灯中のファンメダルのみ","","仅软件操作界面；保持占位符名称原样，可按语序移动。"
 "uiControls.mask","uiControls","src/compat/blivechat/register.tsx:69
 src/compat/laplace/register.tsx:240","用户名打码","使用者名稱遮蔽","Mask usernames","ユーザー名をマスク","","仅软件操作界面；保持占位符名称原样，可按语序移动。"
@@ -4732,12 +4739,12 @@ src/compat/laplace/register.tsx:240","房管标记","房管標記","Mod badge","
 "uiControls.noAnimation","uiControls","src/components/SettingsFlowPreview.tsx:42","当前为无动画","目前為無動畫","Animation is off","アニメーションなし","","仅软件操作界面；保持占位符名称原样，可按语序移动。"
 "uiControls.outputHelp","uiControls","src/compat/blivechat/register.tsx:69","时间与用户名打码仅用于副窗口和 OBS。","時間與使用者名稱遮蔽僅用於副視窗和 OBS。","Time and name masking apply only to secondary windows and OBS.","時刻とユーザー名のマスクはサブウィンドウとOBSのみに適用されます。","","仅软件操作界面；保持占位符名称原样，可按语序移动。"
 "uiControls.overallScale","uiControls","src/compat/blivechat/register.tsx:65","整体比例","整體比例","Overall scale","全体倍率","","仅软件操作界面；保持占位符名称原样，可按语序移动。"
-"uiControls.paidRegion","uiControls","src/App.tsx:619","礼物、醒目留言与大航海分区","禮物、醒目留言與大航海分區","Gifts, Super Chats and Membership area","ギフト・SC・大航海エリア","","仅软件操作界面；保持占位符名称原样，可按语序移动。"
+"uiControls.paidRegion","uiControls","src/App.tsx:622","礼物、醒目留言与大航海分区","禮物、醒目留言與大航海分區","Gifts, Super Chats and Membership area","ギフト・SC・大航海エリア","","仅软件操作界面；保持占位符名称原样，可按语序移动。"
 "uiControls.paidWindow","uiControls","src/windows/FloatingEventWindow.tsx:185","礼物、醒目留言和大航海","禮物、醒目留言與大航海","Gifts, Super Chats and Membership","ギフト・SC・大航海","","仅软件操作界面；保持占位符名称原样，可按语序移动。"
 "uiControls.playAnimation","uiControls","src/components/SettingsFlowPreview.tsx:43","试播动画","試播動畫","Preview animation","アニメーションを試す","","仅软件操作界面；保持占位符名称原样，可按语序移动。"
 "uiControls.previewOnly","uiControls","src/components/SettingsFlowPreview.tsx:42","仅在示意中播放当前动画","僅在示意中播放目前動畫","Play this animation in the preview only","プレビューでのみ再生します","","仅软件操作界面；保持占位符名称原样，可按语序移动。"
 "uiControls.rank","uiControls","src/compat/laplace/register.tsx:240","当前排行","目前排名","Current rank","現在の順位","","仅软件操作界面；保持占位符名称原样，可按语序移动。"
-"uiControls.rightEmpty","uiControls","src/App.tsx:724","右区已被筛选为空","右區篩選後無內容","No matches in the right area","右エリアに一致する項目はありません","","仅软件操作界面；保持占位符名称原样，可按语序移动。"
+"uiControls.rightEmpty","uiControls","src/App.tsx:727","右区已被筛选为空","右區篩選後無內容","No matches in the right area","右エリアに一致する項目はありません","","仅软件操作界面；保持占位符名称原样，可按语序移动。"
 "uiControls.roomMedal","uiControls","src/compat/laplace/register.tsx:240","仅当前房间粉丝牌","僅目前房間粉絲牌","Current room medals only","現在のルームのメダルのみ","","仅软件操作界面；保持占位符名称原样，可按语序移动。"
 "uiControls.scaleHelp","uiControls","src/compat/blivechat/register.tsx:64","整体比例 调整文字、尺寸与间距；字体比例 调整文字及随字号变化的表情等元素。","整體比例調整文字、尺寸與間距；字體比例調整文字及隨字號變化的表情等元素。","Overall scale adjusts text, sizes and spacing. Font scale adjusts text and font-relative emotes.","全体倍率は文字・サイズ・間隔、文字倍率は文字と文字サイズに連動する絵文字を調整します。","","仅软件操作界面；保持占位符名称原样，可按语序移动。"
 "uiControls.scWindow","uiControls","src/windows/FloatingEventWindow.tsx:237","醒目留言","醒目留言","Super Chat","スーパーチャット","","仅软件操作界面；保持占位符名称原样，可按语序移动。"

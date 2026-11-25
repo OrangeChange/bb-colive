@@ -4556,5 +4556,7 @@
   "danmaku.emoticonReply": "このスタンプはユーザーへの返信に対応していません。",
   "danmaku.sendNormally": "返信を解除してスタンプを選択",
   "danmaku.cancel": "キャンセル",
-  "danmaku.empty": "コメントを入力してください。"
+  "danmaku.empty": "コメントを入力してください。",
+  "danmaku.savedEmoticon": "保存したスタンプに切り替え",
+  "danmaku.unavailableEmoticon": "このスタンプは利用できません。別のスタンプを選んでください。"
 }

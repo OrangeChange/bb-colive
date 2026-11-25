@@ -1,7 +1,15 @@
 import { recordFeatureDiagnostic } from "../diagnostics/featureDiagnostics";
-import { useEffect, useRef, useState, useId } from "react";
+import {
+  useEffect,
+  useRef,
+  useState,
+  useId,
+  useMemo,
+  type ReactNode,
+  type RefObject,
+} from "react";
 import { SquarePen, Smile, X, Send } from "lucide-react";
-import { Popover, PopoverTrigger, PopoverContent } from "./shadcn/popover";
+import { Popover, PopoverAnchor, PopoverContent } from "./shadcn/popover";
 import { Button } from "./shadcn/button";
 import { Textarea } from "./shadcn/textarea";
 import { useSession } from "../stores/session";
@@ -15,7 +23,13 @@ import type { LiveEmoticon } from "../protocol/danmakuSendingModel";
 import { DanmakuEmoticonPicker } from "./DanmakuEmoticonPicker";
 import { uiText } from "../i18n";
 import { useUiLanguage } from "../i18n/react";
-export function DanmakuComposer() {
+export function DanmakuComposer({
+  children,
+  fallbackRef,
+}: {
+  children: ReactNode;
+  fallbackRef?: RefObject<HTMLElement | null>;
+}) {
   useUiLanguage();
   const session = useSession((s) => s.session);
   const phase = useSession((s) => s.phase);
@@ -27,6 +41,29 @@ export function DanmakuComposer() {
   const draft = state.drafts[context] ?? EMPTY_COMPOSER_DRAFT;
   const open = state.open && state.context === context;
   const input = useRef<HTMLTextAreaElement>(null);
+  const requestAbort = useRef<AbortController | null>(null);
+  const anchor = useMemo(
+    () => ({
+      current: {
+        getBoundingClientRect: () =>
+          document
+            .querySelector<HTMLElement>("[data-danmaku-trigger]")
+            ?.getBoundingClientRect() ??
+          fallbackRef?.current?.getBoundingClientRect() ??
+          new DOMRect(16, 72, 0, 0),
+      },
+    }),
+    [fallbackRef],
+  );
+  const activeEmoticon = draft.mode === "emoticon" ? draft.emoticon : undefined;
+  useEffect(() => {
+    return () => {
+      requestAbort.current?.abort();
+    };
+  }, [context, phase, session?.savedAt, status]);
+  useEffect(() => {
+    setPendingEmote(undefined);
+  }, [open, draft.reply?.uid]);
   const id = useId();
   const [emotes, setEmotes] = useState(false);
   const [pendingEmote, setPendingEmote] = useState<LiveEmoticon>();
@@ -45,6 +82,7 @@ export function DanmakuComposer() {
   }, [open, state.focusRevision]);
   const edit = state.edit;
   const choose = (e: LiveEmoticon) => {
+    setPendingEmote(undefined);
     if (!e.available) return;
     if (!e.textual && draft.reply) {
       setPendingEmote(e);
@@ -55,7 +93,7 @@ export function DanmakuComposer() {
       const end = input.current?.selectionEnd ?? start;
       edit({
         text: draft.text.slice(0, start) + e.text + draft.text.slice(end),
-        emoticon: undefined,
+        mode: "text",
       });
       requestAnimationFrame(() => {
         input.current?.focus();
@@ -69,7 +107,7 @@ export function DanmakuComposer() {
   };
   const send = async () => {
     if (!available || !session || !roomId || state.busy) return;
-    if (!draft.emoticon && !draft.text.trim()) {
+    if (!activeEmoticon && !draft.text.trim()) {
       setEmptyError(true);
       input.current?.focus();
       return;
@@ -81,12 +119,15 @@ export function DanmakuComposer() {
       action: "send",
       outcome: "requested",
     });
+    const abort = new AbortController();
+    requestAbort.current = abort;
     await state.submit(async (d) => {
       const result = await sendLiveDanmaku(
-        d.emoticon
+        d.mode === "emoticon" && d.emoticon
           ? { roomId, kind: "emoticon", unique: d.emoticon.unique }
           : { roomId, kind: "text", text: d.text, replyUid: d.reply?.uid },
         session,
+        abort.signal,
       );
       recordFeatureDiagnostic({
         featureId: "danmaku-sending",
@@ -108,23 +149,22 @@ export function DanmakuComposer() {
         else state.close();
       }}
     >
-      <PopoverTrigger asChild>
-        <Button
-          type="button"
-          variant="ghost"
-          size="icon-sm"
-          title={available ? uiText("danmaku.open") : reason}
-          aria-label={uiText("danmaku.open")}
-          disabled={!available}
-        >
-          <SquarePen size={16} />
-        </Button>
-      </PopoverTrigger>
+      {children}
+      <PopoverAnchor virtualRef={anchor} />
       <PopoverContent
         align="start"
         side="bottom"
         collisionPadding={8}
         className="w-[360px] max-w-[calc(100vw-24px)] max-h-[calc(100vh-32px)] overflow-y-auto"
+        onCloseAutoFocus={(event) => {
+          event.preventDefault();
+          const target =
+            document.querySelector<HTMLElement>("[data-danmaku-trigger]") ??
+            fallbackRef?.current?.querySelector<HTMLElement>(
+              ".event-menu-trigger",
+            );
+          target?.focus();
+        }}
         onOpenAutoFocus={(event) => {
           event.preventDefault();
           input.current?.focus();
@@ -171,20 +211,20 @@ export function DanmakuComposer() {
           <label htmlFor={id} className="text-sm text-t2">
             {uiText("danmaku.content")}
           </label>
-          {draft.emoticon ? (
+          {activeEmoticon ? (
             <div className="flex min-h-20 items-center gap-2 rounded border border-line p-2">
               <img
-                src={draft.emoticon.url}
-                alt={draft.emoticon.text}
+                src={activeEmoticon.url}
+                alt={activeEmoticon.text}
                 className="max-h-20 max-w-40 object-contain"
               />
-              <span className="truncate">{draft.emoticon.text}</span>
+              <span className="truncate">{activeEmoticon.text}</span>
               <Button
                 type="button"
                 variant="ghost"
                 size="icon-sm"
                 aria-label={uiText("danmaku.cancelEmoticon")}
-                onClick={() => edit({ emoticon: undefined })}
+                onClick={() => edit({ emoticon: undefined, mode: "text" })}
               >
                 <X size={14} />
               </Button>
@@ -195,7 +235,7 @@ export function DanmakuComposer() {
               id={id}
               name="message"
               value={draft.text}
-              readOnly={state.busy}
+              readOnly={state.busy || !available}
               aria-describedby={`${id}-status`}
               aria-invalid={emptyError || undefined}
               className="max-h-40 resize-y"
@@ -229,12 +269,36 @@ export function DanmakuComposer() {
             >
               <Smile size={16} />
             </Button>
+            {draft.emoticon && !activeEmoticon && (
+              <Button
+                type="button"
+                variant="ghost"
+                size="icon-sm"
+                disabled={state.busy}
+                aria-label={uiText("danmaku.savedEmoticon")}
+                title={uiText("danmaku.savedEmoticon")}
+                onClick={() => choose(draft.emoticon!)}
+              >
+                <img
+                  src={draft.emoticon.url}
+                  alt=""
+                  className="max-h-6 max-w-6 object-contain"
+                />
+              </Button>
+            )}
             <span className="mr-auto text-xs text-t3">
               {uiText("danmaku.count", {
                 count: Array.from(draft.text).length,
               })}
             </span>
-            <Button type="submit" disabled={state.busy || !available}>
+            <Button
+              type="submit"
+              disabled={
+                state.busy ||
+                !available ||
+                (!!activeEmoticon && !activeEmoticon.available)
+              }
+            >
               <Send size={14} />
               {uiText("danmaku.send")}
             </Button>
@@ -245,6 +309,16 @@ export function DanmakuComposer() {
               cookie={session.cookie}
               accountKey={`${session.mid}:${session.savedAt}`}
               onChoose={choose}
+              onPackages={(packages) => {
+                if (!draft.emoticon) return;
+                const updated = packages
+                  .flatMap((p) => p.emoticons)
+                  .find((e) => e.unique === draft.emoticon!.unique);
+                edit({
+                  emoticon: updated ?? { ...draft.emoticon, available: false },
+                  mode: draft.mode,
+                });
+              }}
             />
           )}
           {pendingEmote && (
@@ -275,16 +349,37 @@ export function DanmakuComposer() {
             </div>
           )}
           <p id={`${id}-status`} role="status" className="text-sm text-t2">
-            {emptyError
-              ? uiText("danmaku.empty")
-              : draft.status
-                ? uiText(`danmaku.${draft.status}`)
-                : !available
-                  ? reason
-                  : ""}
+            {activeEmoticon && !activeEmoticon.available
+              ? uiText("danmaku.unavailableEmoticon")
+              : emptyError
+                ? uiText("danmaku.empty")
+                : draft.status
+                  ? uiText(`danmaku.${draft.status}`)
+                  : !available
+                    ? reason
+                    : ""}
           </p>
         </form>
       </PopoverContent>
     </Popover>
+  );
+}
+
+export function DanmakuComposerTrigger() {
+  useUiLanguage();
+  const state = useDanmakuComposer();
+  return (
+    <Button
+      data-danmaku-trigger
+      type="button"
+      variant="ghost"
+      size="icon-sm"
+      title={uiText("danmaku.open")}
+      aria-label={uiText("danmaku.open")}
+      aria-expanded={state.open}
+      onClick={() => (state.open ? state.close() : state.show())}
+    >
+      <SquarePen size={16} />
+    </Button>
   );
 }

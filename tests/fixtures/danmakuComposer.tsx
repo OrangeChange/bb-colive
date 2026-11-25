@@ -1,5 +1,9 @@
+import { useState } from "react";
 import { createRoot } from "react-dom/client";
-import { DanmakuComposer } from "../../src/components/DanmakuComposer";
+import {
+  DanmakuComposer,
+  DanmakuComposerTrigger,
+} from "../../src/components/DanmakuComposer";
 import { EventContextMenu } from "../../src/components/EventContextMenu";
 import { useDanmakuComposer } from "../../src/stores/danmakuComposer";
 import { useConnection } from "../../src/stores/connection";
@@ -34,30 +38,39 @@ const event = {
   user: { uid: "456", uname: "测试观众" },
 };
 function App() {
+  const [hide, setHide] = useState(false);
+  const room = useConnection((s) => s.state.roomId);
+  const status = useConnection((s) => s.state.status);
   return (
-    <main className="m-4 rounded border border-line">
-      <header className="flex h-9 items-center gap-1 px-3">
-        <h2>弹幕与互动</h2>
-        <DanmakuComposer />
-      </header>
-      <div className="event-row-with-menu relative m-4 h-10">
-        <span>观众提问</span>
-        <EventContextMenu
-          event={event}
-          shortcutActions={["reply"]}
-          handlers={{
-            regionKey: "test",
-            onSpeakEvent() {},
-            isFavorite: () => false,
-            onToggleFavorite() {},
-            onReplyUser: (ev) =>
-              useDanmakuComposer
-                .getState()
-                .show({ uid: ev.user!.uid, name: ev.user!.uname }),
-          }}
-        />
-      </div>
-    </main>
+    <DanmakuComposer>
+      <main className="m-4 rounded border border-line">
+        <header className="flex h-9 items-center gap-1 px-3">
+          <h2>弹幕与互动</h2>
+          {!hide && <DanmakuComposerTrigger />}
+        </header>
+        <div className="event-row-with-menu relative m-4 h-10">
+          <span>观众提问</span>
+          <EventContextMenu
+            event={{ ...event, roomId: room ?? 0 }}
+            shortcutActions={["reply"]}
+            handlers={{
+              regionKey: "test",
+              onSpeakEvent() {},
+              isFavorite: () => false,
+              onToggleFavorite() {},
+              canReplyUser: () => status === "connected",
+              onReplyUser: (ev) =>
+                useDanmakuComposer
+                  .getState()
+                  .show({ uid: ev.user!.uid, name: ev.user!.uname }),
+            }}
+          />
+        </div>
+        <button type="button" onClick={() => setHide((v) => !v)}>
+          切换标题入口
+        </button>
+      </main>
+    </DanmakuComposer>
   );
 }
 createRoot(document.getElementById("root")!).render(<App />);

@@ -10,6 +10,9 @@ await page.addInitScript(() => {
   const requests = new Map(),
     read = new Set();
   window.sent = [];
+  window.navCode = 0;
+  window.navDelay = 0;
+  window.emoticonsLocked = false;
   window.sendResult = { code: 0, message: "", msg: "" };
   window.__TAURI_INTERNALS__ = {
     metadata: {
@@ -28,6 +31,8 @@ await page.addInitScript(() => {
       }
       if (cmd === "plugin:http|fetch_send") {
         const q = requests.get(args.rid);
+        if (q.url.includes("/nav") && window.navDelay)
+          await new Promise((r) => setTimeout(r, window.navDelay));
         return {
           rid: args.rid,
           status: 200,
@@ -42,7 +47,7 @@ await page.addInitScript(() => {
         const q = requests.get(args.rid);
         let body = q.url.includes("/nav")
           ? {
-              code: 0,
+              code: window.navCode,
               data: {
                 isLogin: true,
                 mid: 1,
@@ -66,7 +71,7 @@ await page.addInitScript(() => {
                           emoji: "[笑]",
                           emoticon_unique: "emoji_1",
                           url: "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7",
-                          perm: 1,
+                          perm: window.emoticonsLocked ? 0 : 1,
                         },
                       ],
                     },
@@ -79,7 +84,7 @@ await page.addInitScript(() => {
                           emoji: "大笑",
                           emoticon_unique: "official_1",
                           url: "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7",
-                          perm: 1,
+                          perm: window.emoticonsLocked ? 0 : 1,
                         },
                         {
                           emoji: "未解锁",
@@ -174,6 +179,29 @@ try {
     .getByText("这条弹幕没发出去，请修改内容后再试。", { exact: true })
     .waitFor();
   assert.equal(await field.inputValue(), "文字仍保留");
+
+  await page.evaluate(() => {
+    window.sendResult = { code: 0, message: "", msg: "" };
+  });
+  await page.getByRole("button", { name: "表情", exact: true }).click();
+  await page.getByRole("button", { name: "大表情", exact: true }).click();
+  await page.getByRole("button", { name: "大笑", exact: true }).click();
+  await page.evaluate(() => (window.emoticonsLocked = true));
+  const beforeLocked = await page.evaluate(() => window.sent.length);
+  await page.getByRole("button", { name: "发送", exact: true }).click();
+  await page
+    .getByText("这个表情暂不可用，请重新选择。", { exact: true })
+    .waitFor();
+  assert.equal(await page.evaluate(() => window.sent.length), beforeLocked);
+  await page.getByRole("button", { name: "表情", exact: true }).click();
+  await page.getByRole("button", { name: "刷新表情", exact: true }).click();
+  await page.waitForFunction(
+    () => document.querySelector("button[type=submit]")?.disabled === true,
+  );
+  await page.evaluate(() => (window.emoticonsLocked = false));
+  await page.getByRole("button", { name: "刷新表情", exact: true }).click();
+  await page.getByRole("button", { name: "取消表情", exact: true }).click();
+  await page.getByRole("button", { name: "表情", exact: true }).click();
   for (const scale of [1, 1.25, 1.5]) {
     await page.setViewportSize({
       width: Math.round(1000 / scale),
@@ -205,6 +233,78 @@ try {
     await page.getByRole("button", { name: label, exact: true }).waitFor();
     assert.equal(await page.locator("textarea").inputValue(), "文字仍保留");
   }
+
+  await page.evaluate(() => {
+    window.language("zh-CN");
+    window.sendResult = { code: 0, message: "", msg: "" };
+  });
+  await page.keyboard.press("Escape");
+  await page.getByRole("button", { name: "切换标题入口", exact: true }).click();
+  await page.locator(".event-row-with-menu").hover();
+  await page.getByRole("button", { name: "回复该用户", exact: true }).click();
+  await page.getByRole("textbox", { name: "弹幕内容" }).waitFor();
+  await page.evaluate(() =>
+    window.connection.setState({
+      state: { status: "connected", roomId: 999, anchorName: "新房间" },
+    }),
+  );
+  await page.getByRole("dialog").waitFor({ state: "hidden" });
+  await page.locator(".event-row-with-menu").hover();
+  await page.getByRole("button", { name: "回复该用户", exact: true }).click();
+  assert.equal(
+    await page.evaluate(() => window.composer.getState().context),
+    "1:999",
+  );
+  await page.getByRole("textbox", { name: "弹幕内容" }).fill("不能发出的草稿");
+  await page.evaluate(() => (window.navCode = -101));
+  const sendsBefore = await page.evaluate(() => window.sent.length);
+  await page.getByRole("button", { name: "发送", exact: true }).click();
+  await page.getByText("请重新登录后再发。", { exact: true }).waitFor();
+  assert.equal(await page.evaluate(() => window.sent.length), sendsBefore);
+  await page.evaluate(() => {
+    window.navCode = 0;
+    window.navDelay = 300;
+  });
+  await page.getByRole("button", { name: "发送", exact: true }).click();
+  await page.evaluate(() =>
+    window.connection.setState({
+      state: { status: "connected", roomId: 1000, anchorName: "另一房间" },
+    }),
+  );
+  await page.waitForTimeout(600);
+  assert.equal(await page.evaluate(() => window.sent.length), sendsBefore);
+  await page.evaluate(() =>
+    window.connection.setState({ state: { status: "error", roomId: 1000 } }),
+  );
+  await page.locator(".event-row-with-menu").hover();
+  await page.waitForFunction(
+    () =>
+      document.querySelector('button[aria-label="回复该用户"]')?.disabled ===
+      true,
+  );
+
+  await page.evaluate(() => {
+    window.connection.setState({
+      state: { status: "connected", roomId: 1000 },
+    });
+    window.navDelay = 0;
+  });
+  await page.locator(".event-row-with-menu").hover();
+  await page.getByRole("button", { name: "回复该用户", exact: true }).click();
+  await page.getByRole("button", { name: "表情", exact: true }).click();
+  await page.getByRole("button", { name: "大表情", exact: true }).click();
+  await page.getByRole("button", { name: "大笑", exact: true }).click();
+  await page
+    .getByRole("button", { name: "取消回复并选择表情", exact: true })
+    .waitFor();
+  await page.getByRole("button", { name: "文字表情", exact: true }).click();
+  await page.getByRole("button", { name: "[笑]", exact: true }).click();
+  assert.equal(
+    await page
+      .getByRole("button", { name: "取消回复并选择表情", exact: true })
+      .count(),
+    0,
+  );
   assert.deepEqual(errors, []);
   console.log(
     "悬浮发送、菜单回复、IME、真实 multipart 编码、两类表情、权限及失败保留通过",

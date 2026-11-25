@@ -1,4 +1,5 @@
 export type SendStatus =
+  | "unavailableEmoticon"
   | "sent"
   | "sending"
   | "blocked"

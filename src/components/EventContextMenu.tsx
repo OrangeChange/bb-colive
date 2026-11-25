@@ -19,6 +19,7 @@ export type EventMenuHandlers = {
   regionKey: string;
   onSpeakEvent: (event: DanmakuEvent) => void;
   onReplyUser?: (event: DanmakuEvent) => void;
+  canReplyUser?: (event: DanmakuEvent) => boolean;
   onUserFilter?: (user: DanmakuUser) => void;
   isUserFiltered?: (user: DanmakuUser) => boolean;
   onClearUserFilter?: () => void;
@@ -399,7 +400,7 @@ export function EventContextMenu({ event, nickname, eventFontSize, shortcutActio
   );
   const persistentShortcutActions = visibleShortcutActions.filter(shortcutActionPersistent);
   const actions: MenuAction[] = [
-    ...(scope === "live" && handlers.onReplyUser && user?.uid ? [{label:uiText("danmaku.reply"),icon:"reply" as const,onSelect:()=>handlers.onReplyUser?.(event)}] : []),
+    ...(scope === "live" && handlers.onReplyUser && user?.uid ? [{label:uiText("danmaku.reply"),icon:"reply" as const,disabled:handlers.canReplyUser?.(event)===false,onSelect:()=>handlers.onReplyUser?.(event)}] : []),
     {
       label: userFiltered ? uiText("eventContextMenu.EventContextMenu.actions.label") : uiText("eventContextMenu.EventContextMenu.actions.label2"),
       icon: "filter",
@@ -483,7 +484,7 @@ export function EventContextMenu({ event, nickname, eventFontSize, shortcutActio
         {visibleShortcutActions.map((shortcutAction, index) => {
           const active = shortcutActionActive(shortcutAction);
           const persistent = shortcutActionPersistent(shortcutAction);
-          const disabled = shortcutAction === "filter" && (!user || actionDisabled);
+          const disabled = (shortcutAction === "filter" && (!user || actionDisabled)) || (shortcutAction === "reply" && handlers.canReplyUser?.(event) === false);
           const persistentIndex = persistentShortcutActions.indexOf(shortcutAction);
           const shortcutRestOffset = persistent && persistentIndex >= 0
             ? persistentShortcutActions.length - 1 - persistentIndex

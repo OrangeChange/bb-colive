@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import { RefreshCw } from "lucide-react";
 import { Button } from "./shadcn/button";
 import { getRoomEmoticonPackages } from "../protocol/danmakuSending";
@@ -13,12 +13,16 @@ export function DanmakuEmoticonPicker({
   cookie,
   accountKey,
   onChoose,
+  onPackages,
 }: {
   roomId: number;
   cookie: string;
   accountKey: string;
   onChoose: (emoticon: LiveEmoticon) => void;
+  onPackages?: (packages: RoomEmoticonPackage[]) => void;
 }) {
+  const onPackagesRef = useRef(onPackages);
+  onPackagesRef.current = onPackages;
   const key = `${accountKey}:${roomId}`;
   const [packages, setPackages] = useState<RoomEmoticonPackage[]>([]);
   const [loading, setLoading] = useState(true);
@@ -38,6 +42,7 @@ export function DanmakuEmoticonPicker({
         if (abort.signal.aborted) return;
         cache.set(key, value);
         setPackages(value);
+        onPackagesRef.current?.(value);
         setTab(value[0]?.id ?? "");
         setLoading(false);
       })

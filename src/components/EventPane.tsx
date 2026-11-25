@@ -1,4 +1,4 @@
-import { DanmakuComposer } from "./DanmakuComposer";
+import { DanmakuComposerTrigger } from "./DanmakuComposer";
 import { useUiLanguage } from "../i18n/react.ts";
 import { uiText } from "../i18n/index.ts";
 import type { DanmakuEvent, DanmakuUser } from "../protocol/types";
@@ -86,7 +86,7 @@ export function EventPane({
   return (
     <section className={`flex min-w-0 flex-1 flex-col overflow-hidden bg-bg ${className}`} aria-label={title}>
       <header className="flex h-9 shrink-0 items-center justify-between border-b border-line px-3">
-        <div className="flex min-w-0 items-center gap-1"><h2 className="truncate ui-type-section-title font-semibold tracking-wide text-t2">{title}</h2>{canSendDanmaku && <DanmakuComposer />}</div>
+        <div className="flex min-w-0 items-center gap-1"><h2 className="truncate ui-type-section-title font-semibold tracking-wide text-t2">{title}</h2>{canSendDanmaku && <DanmakuComposerTrigger />}</div>
         <span className="flex min-w-0 items-center gap-1.5 ui-type-meta text-t3">
           <span className="shrink-0">{uiText("eventPane.EventPane")}<span className="font-mono tabular-nums">{count}</span></span>
           {summary && (

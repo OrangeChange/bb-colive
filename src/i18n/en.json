@@ -4556,5 +4556,7 @@
   "danmaku.emoticonReply": "This emoticon cannot be used as a reply yet.",
   "danmaku.sendNormally": "Cancel reply and select emoticon",
   "danmaku.cancel": "Cancel",
-  "danmaku.empty": "Enter a message first."
+  "danmaku.empty": "Enter a message first.",
+  "danmaku.savedEmoticon": "Switch to saved emoticon",
+  "danmaku.unavailableEmoticon": "This emoticon is unavailable. Please choose another."
 }
