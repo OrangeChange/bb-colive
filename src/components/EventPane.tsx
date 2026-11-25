@@ -38,6 +38,7 @@ interface EventPaneProps {
   giftEffectEnabled?: boolean;
   guardEffectEnabled?: boolean;
   giftEffectNotices?: readonly GiftEffectNotice[];
+  giftEffectProcessedNotices?: WeakSet<GiftEffectNotice>;
   giftEffectRoomKey?: string | number | null;
   eventMenuHandlers?: Omit<EventMenuHandlers, "regionKey">;
   giftEffectResolver?: (event: DanmakuEvent) => GiftEffectResource | null;
@@ -70,6 +71,7 @@ export function EventPane({
   giftEffectEnabled = false,
   guardEffectEnabled = false,
   giftEffectNotices,
+  giftEffectProcessedNotices,
   giftEffectRoomKey = null,
   eventMenuHandlers,
   giftEffectResolver,
@@ -118,7 +120,7 @@ export function EventPane({
           compatibleEventRender={compatibleEventRender}
         />
         {giftEffectNotices !== undefined && (
-          <GiftEffectOverlay enabled={giftEffectEnabled} guardEnabled={guardEffectEnabled} notices={giftEffectNotices} roomKey={giftEffectRoomKey} />
+          <GiftEffectOverlay enabled={giftEffectEnabled} guardEnabled={guardEffectEnabled} notices={giftEffectNotices} processedNotices={giftEffectProcessedNotices} roomKey={giftEffectRoomKey} />
         )}
       </div>
     </section>

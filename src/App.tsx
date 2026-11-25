@@ -205,6 +205,7 @@ function MainArea({
   const markRegionEvent = useEventAnnotations((state) => state.markRegionEvent);
   const clearRegionMark = useEventAnnotations((state) => state.clearRegionMark);
   const [giftEffectNotices, setGiftEffectNotices] = useState<GiftEffectNotice[]>([]);
+  const giftEffectProcessedNotices = useRef(new WeakSet<GiftEffectNotice>());
   const { filters, giftThreshold, giftThresholdMode, audienceFilters, layoutMode, leftRatio, leftBoundaries, rightBoundaries } = sceneSettings;
   const setFilters: Dispatch<SetStateAction<EventFilterState>> = (value) => {
     setSceneSettings((current) => ({ ...current, filters: resolveState(value, current.filters) }));
@@ -625,6 +626,7 @@ function MainArea({
               giftEffectEnabled={showLiveGiftEffect}
               guardEffectEnabled={showLiveGuardEffect}
               giftEffectNotices={giftEffectNotices}
+              giftEffectProcessedNotices={giftEffectProcessedNotices.current}
               giftEffectRoomKey={roomId}
               giftEffectResolver={resolveGiftEffect}
               onPlayGiftEffect={onPlayGiftEffect}
@@ -727,6 +729,7 @@ function MainArea({
               giftEffectEnabled={showLiveGiftEffect}
               guardEffectEnabled={showLiveGuardEffect}
               giftEffectNotices={giftEffectNotices}
+              giftEffectProcessedNotices={giftEffectProcessedNotices.current}
               giftEffectRoomKey={roomId}
               giftEffectResolver={resolveGiftEffect}
               onPlayGiftEffect={onPlayGiftEffect}

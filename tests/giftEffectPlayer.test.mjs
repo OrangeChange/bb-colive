@@ -112,3 +112,45 @@ test("竖向大航海素材保持官方宽高比",async()=>{
  const runtime=componentRuntime("src/windows/giftEffectPlayer.ts",{"video-animation-player":{default:()=>({once(){},destroy(){}})},"../diagnostics/diagnosticLogger.ts":{getDiagnosticContext:()=>({record(){}})},"../diagnostics/featureDiagnostics.ts":{recordFeatureDiagnostic(){}}});const player=runtime.exports.createGiftEffectPlayer();
  try{player.play({webMp4:"guard.mp4",webMp4Json:"guard.json",username:"昵称"},{style:{setProperty:(name,value)=>ratios.push([name,value])},ownerDocument:{createElement:()=>({remove(){}})},replaceChildren(){}});await new Promise(r=>setTimeout(r,0));assert.deepEqual(ratios,[["--gift-effect-aspect-ratio","0.5625"]])}finally{player.destroy();request.mock.restore();runtime.close()}
 });
+
+test("双区与多区播放器重建不重播旧礼物或大航海，新通知和手动播放仍生效", () => {
+  const processedNotices = new WeakSet();
+  const played = [];
+  const notices = [
+    { event: { id: "gift" }, resource: { webMp4: "gift.mp4" } },
+    { event: { id: "guard", guard: { level: 1 } }, resource: { webMp4: "guard.mp4" } },
+  ];
+  const mount = () => {
+    const listeners = {};
+    const player = { play: resource => played.push(resource.webMp4), destroy() {}, on(name, callback) { listeners[name] = callback; return () => {}; } };
+    const runtime = componentRuntime("src/components/GiftEffectOverlay.tsx", {
+      "../windows/giftEffectPlayer": { createGiftEffectPlayer: () => player },
+      "../windows/giftEffectQueue": { createGiftEffectQueue },
+    });
+    return {
+      render(items) {
+        const tree = runtime.render("GiftEffectOverlay", { enabled: true, guardEnabled: true, roomKey: 1, notices: items, processedNotices });
+        findElement(tree, node => node.props.className === "gift-effect-viewport").props.ref.current = {};
+        runtime.effects();
+      },
+      finish: () => listeners.ended(),
+      close: () => runtime.close(),
+    };
+  };
+  const dual = mount();
+  dual.render(notices); dual.finish(); dual.close();
+  assert.deepEqual(played, ["gift.mp4", "guard.mp4"]);
+  const giftRegion = mount(), guardRegion = mount();
+  giftRegion.render([notices[0]]); guardRegion.render([notices[1]]);
+  assert.deepEqual(played, ["gift.mp4", "guard.mp4"]);
+  const nextGift = { event: { id: "new-gift" }, resource: { webMp4: "new-gift.mp4" } };
+  const nextGuard = { event: { id: "new-guard", guard: { level: 1 } }, resource: { webMp4: "new-guard.mp4" } };
+  giftRegion.render([notices[0], nextGift]); guardRegion.render([notices[1], nextGuard]);
+  giftRegion.close(); guardRegion.close();
+  const restored = mount();
+  restored.render([...notices, nextGift, nextGuard]);
+  assert.deepEqual(played, ["gift.mp4", "guard.mp4", "new-gift.mp4", "new-guard.mp4"]);
+  restored.render([...notices, nextGift, nextGuard, { ...notices[0], manual: true }]);
+  assert.deepEqual(played, ["gift.mp4", "guard.mp4", "new-gift.mp4", "new-guard.mp4", "gift.mp4"]);
+  restored.close();
+});

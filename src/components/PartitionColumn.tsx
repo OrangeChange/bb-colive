@@ -48,6 +48,7 @@ interface PartitionColumnProps {
   giftEffectEnabled?: boolean;
   guardEffectEnabled?: boolean;
   giftEffectNotices?: readonly GiftEffectNotice[];
+  giftEffectProcessedNotices?: WeakSet<GiftEffectNotice>;
   giftEffectRoomKey?: string | number | null;
   eventMenuHandlers?: Omit<EventMenuHandlers, "regionKey">;
   giftEffectResolver?: (event: DanmakuEvent) => GiftEffectResource | null;
@@ -138,6 +139,7 @@ export function PartitionColumn({
   giftEffectEnabled = false,
   guardEffectEnabled = false,
   giftEffectNotices = [],
+  giftEffectProcessedNotices,
   giftEffectRoomKey = null,
   eventMenuHandlers,
   giftEffectResolver,
@@ -189,6 +191,7 @@ export function PartitionColumn({
                 giftEffectEnabled={region === "gift" && giftEffectEnabled}
                 guardEffectEnabled={region === "guard" && guardEffectEnabled}
                 giftEffectNotices={region === "gift" ? giftEffectNotices.filter(notice => !notice.event.guard) : region === "guard" ? giftEffectNotices.filter(notice => !!notice.event.guard) : undefined}
+                giftEffectProcessedNotices={giftEffectProcessedNotices}
                 giftEffectRoomKey={region === "gift" || region === "guard" ? giftEffectRoomKey : null}
                 eventMenuHandlers={eventMenuHandlers}
                 giftEffectResolver={region === "gift" || region === "guard" ? giftEffectResolver : undefined}

@@ -7,6 +7,8 @@ interface GiftEffectOverlayProps {
   enabled: boolean;
   guardEnabled?: boolean;
   notices: readonly GiftEffectNotice[];
+  /** 同一现场的不同布局共用，避免重建播放器后回放旧通知。 */
+  processedNotices?: WeakSet<GiftEffectNotice>;
   /** 直播间切换代号；同房重连不变，换房时取消当前特效。 */
   roomKey: string | number | null;
   /** 外部上下文代际；变化时取消当前和排队特效，但不改变现场默认播放路径。 */
@@ -14,7 +16,7 @@ interface GiftEffectOverlayProps {
 }
 
 /** 事件列表上的礼物特效层：不占布局、不接收鼠标，只负责单个 VAP 队列。 */
-export function GiftEffectOverlay({ enabled, guardEnabled = false, notices, roomKey, resetKey }: GiftEffectOverlayProps) {
+export function GiftEffectOverlay({ enabled, guardEnabled = false, notices, processedNotices, roomKey, resetKey }: GiftEffectOverlayProps) {
   const stageRef = useRef<HTMLDivElement>(null);
   const queueRef = useRef<GiftEffectQueue<GiftEffectNotice> | null>(null);
   const playerRef = useRef<GiftEffectPlayer | null>(null);
@@ -23,7 +25,7 @@ export function GiftEffectOverlay({ enabled, guardEnabled = false, notices, room
   const activeRef = useRef(false);
   const roomKeyRef = useRef(roomKey);
   const resetKeyRef = useRef(resetKey);
-  const processedNoticesRef = useRef(new WeakSet<GiftEffectNotice>());
+  const processedNoticesRef = useRef(processedNotices ?? new WeakSet<GiftEffectNotice>());
 
   const playCurrent = useCallback(() => {
     const current = queueRef.current?.current;
@@ -68,7 +70,7 @@ export function GiftEffectOverlay({ enabled, guardEnabled = false, notices, room
       queueRef.current?.cancelAll();
       playerRef.current?.destroy();
       activeRef.current = false;
-      processedNoticesRef.current = new WeakSet<GiftEffectNotice>();
+      processedNoticesRef.current = processedNotices ?? new WeakSet<GiftEffectNotice>();
       resetKeyRef.current = resetKey;
       roomKeyRef.current = roomKey;
       return;
@@ -78,7 +80,7 @@ export function GiftEffectOverlay({ enabled, guardEnabled = false, notices, room
       processedNoticesRef.current.add(notice);
       if ((((notice.event.guard || notice.event.honor) ? guardEnabled : enabled) || notice.manual) && queueRef.current?.enqueue(notice)) playCurrent();
     });
-  }, [enabled, guardEnabled, notices, playCurrent, resetKey, roomKey]);
+  }, [enabled, guardEnabled, notices, processedNotices, playCurrent, resetKey, roomKey]);
 
   return (
     <div className="gift-effect-overlay pointer-events-none" aria-hidden="true">
