@@ -91,3 +91,9 @@ test('原生输出的系统开关及警告分组同时约束封禁，兼容投�
  assert.equal(projected.event.type,'system');
  assert.match(projected.event.message,/直播间被封禁[\s\S]*2026-11-27/);
 });
+
+test('期限补查返回顺序不改变新旧封禁的优先顺序',()=>{
+ const oldLock={id:'old',roomId:870004,ts:1,msgType:MsgType.RoomLock};
+ const newLock={...oldLock,id:'new',ts:2};
+ assert.equal(reminders.getLatestUrgentSystemEvent([newLock,oldLock]),newLock);
+});

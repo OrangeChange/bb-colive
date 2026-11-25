@@ -87,13 +87,14 @@ export function isUrgentSystemEvent(event: DanmakuEvent): boolean {
 }
 
 export function getLatestUrgentSystemEvent(events: readonly DanmakuEvent[]): DanmakuEvent | null {
-  const latestStart = events.reduce((time, event) => event.msgType === MsgType.LiveStart ? Math.max(time, event.ts) : time, -Infinity);
+  let latestStart = -Infinity;
   let latest: DanmakuEvent | null = null;
-  for (let index = events.length - 1; index >= 0; index -= 1) {
-    const event = events[index];
-    if (event.ts <= latestStart) continue;
-    if (event.msgType === MsgType.RoomLock) return event;
-    if (!latest && isUrgentSystemEvent(event)) latest = event;
+  let locked: DanmakuEvent | null = null;
+  for (const event of events) {
+    if (event.msgType === MsgType.LiveStart) latestStart = Math.max(latestStart, event.ts);
+    if (isUrgentSystemEvent(event) && (!latest || event.ts >= latest.ts)) latest = event;
+    if (event.msgType === MsgType.RoomLock && (!locked || event.ts >= locked.ts)) locked = event;
   }
-  return latest;
+  if (locked && locked.ts > latestStart) return locked;
+  return latest && latest.ts > latestStart ? latest : null;
 }
