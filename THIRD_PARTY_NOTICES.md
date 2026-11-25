@@ -9,6 +9,7 @@
 - [许可目录](licenses/notices.json)：Windows x64 运行依赖、兼容渲染依赖和字体许可。
 - [补充原文](licenses/supplemental/index.json)：依赖发布包未附原文时，记录上游原文及来源地址。
 - [字体授权](licenses/fonts/)：MiSans 协议、仓耳授权声明原件及其阅读图片，以及 LAPLACE 使用的 Barlow Condensed 字体 OFL 原文。
+- [shadcn/ui](src/components/shadcn/LICENSE)：通用界面组件的官方 MIT 许可，来源和项目适配见[组件说明](src/components/shadcn/README.md)。
 - [BLC 原版](vendor/blivechat/LICENSE) 与 [BLC 开放版](vendor/openlive/LICENSE)：兼容渲染使用的上游 MIT 许可。
 - [LAPLACE 依赖许可](vendor/laplace/licenses/)：对应第三方组件的原始声明。
 

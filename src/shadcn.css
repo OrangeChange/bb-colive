@@ -1,0 +1,50 @@
+@import "./App.css";
+@import "tw-animate-css";
+@import "shadcn/tailwind.css";
+
+:root {
+  --radius: 7px;
+  --primary: var(--accent-solid);
+  --primary-foreground: var(--accent-fg);
+  --secondary: var(--accent-subtle);
+  --secondary-foreground: var(--accent-text);
+  --muted: var(--surface-raised);
+  --muted-foreground: var(--text-2);
+  --popover: var(--surface);
+  --popover-foreground: var(--text-1);
+  --input: color-mix(in srgb, var(--text-1) 22%, transparent);
+  --ring: var(--accent);
+  --destructive: var(--status-danger);
+}
+@theme inline {
+  --color-background: var(--bg);
+  --color-foreground: var(--text-1);
+  --color-card: var(--surface);
+  --color-card-foreground: var(--text-1);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-primary-hover: var(--accent-solid-hover);
+  --color-primary-active: var(--accent-solid-active);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent-foreground: var(--accent-fg);
+  --color-destructive: var(--destructive);
+  --color-destructive-foreground: var(--danger-fg);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+  --radius-sm: calc(var(--radius) - 2px);
+  --radius-md: calc(var(--radius) - 1px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 3px);
+}
+@media (prefers-reduced-motion: reduce) {
+  [data-slot] {
+    animation-duration: 0s !important;
+    transition-duration: 0s !important;
+  }
+}

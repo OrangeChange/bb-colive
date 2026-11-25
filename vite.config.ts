@@ -40,6 +40,7 @@ export default defineConfig(async () => ({
     transformIndexHtml: (html) => html.replace("%UI_OBS_TITLE%", uiMessages["obs.pageTitle"]),
   }],
   build: { rollupOptions: { input: { main: "index.html", obs: "obs.html" } } },
+  resolve: { alias: { "@": new URL("./src", import.meta.url).pathname.replace(/^\/(\w:)/, "$1") } },
   cacheDir: `node_modules/.vite-${devPort}`,
   define: {
     __DANMU_BUILD_ID__: JSON.stringify(buildId),
