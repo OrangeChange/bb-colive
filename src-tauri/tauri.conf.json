@@ -47,9 +47,12 @@
       "nsis": {
         "languages": [
           "SimpChinese",
-          "English"
+          "TradChinese",
+          "English",
+          "Japanese"
         ],
-        "installerHooks": "installer-hooks.nsh"
+        "installerHooks": "installer-hooks.nsh",
+        "displayLanguageSelector": true
       }
     }
   }

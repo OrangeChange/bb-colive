@@ -1952,7 +1952,7 @@ export function ReviewPanel({ repository, anchors, active, refreshKey, onOpenClo
           confirmLabel={batchDeleteBusy ? uiText("reviewPanel.confirmLabel") : uiText("reviewPanel.confirmLabel2")}
           confirmTone="danger"
           errorMessage={uiText("reviewPanel.errorMessage")}
-          cancelAriaLabel="取消批量删除"
+          cancelAriaLabel={uiText("uiControls.cancelBatchDelete")}
           onCancel={cancelBatchDelete}
           onConfirm={confirmBatchDelete}
         />

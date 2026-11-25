@@ -1,3 +1,5 @@
+import { uiText } from "../../i18n/index.ts";
+import { useUiLanguage } from "../../i18n/react.ts";
 import { resolveThemeEventVisibility } from "../../themes/themeEventVisibility.ts";
 import { normalizeCompatibleEventVisibility } from "../../themes/compatibleEventVisibility.ts";
 import { createAllNativeEventVisibility } from '../../themes/nativeComponentAppearance.ts';
@@ -53,17 +55,18 @@ export function BlivechatPreview({ previewPolicy, previewFrame,onPreviewFrame,do
 }
 
 function BlivechatBasicControls({ document, onSettingsChange }: { document: ThemeDocument; onSettingsChange(settings: CompatibleVisualSettings): void }) {
+  useUiLanguage();
   const settings = settingsOf(document);
   const update = (next: Partial<BlivechatThemeSettings>) => onSettingsChange({ ...settings, ...next });
   const row = (key: "showGiftName" | "showTimestamp" | "maskUsername" | "showAvatar" | "showUsername" | "showGuardBadge" | "showModBadge", label: string) => <div className="native-theme-setting-row" key={key}><PanelSwitch label={label} checked={Boolean(settings[key])} onChange={() => update({ [key]: !settings[key] })} /><span>{label}</span></div>;
   return <>
-    <section className="native-editor-section"><header><h3>基础设置</h3><p>整体比例 调整文字、尺寸与间距；字体比例 调整文字及随字号变化的表情等元素。</p></header>
-      <div className="native-theme-inline-fields"><label className="native-theme-number-field"><span>整体比例</span><input type="number" min="0.5" max="3" step="0.05" value={settings.globalScale} onChange={event => update({ globalScale: Number(event.target.value) })} /></label>
-      <label className="native-theme-number-field"><span>字体比例</span><input type="number" min="0.5" max="3" step="0.05" value={settings.fontScale} onChange={event => update({ fontScale: Number(event.target.value) })} /></label></div>
+    <section className="native-editor-section"><header><h3>{uiText("uiControls.basic")}</h3><p>{uiText("uiControls.scaleHelp")}</p></header>
+      <div className="native-theme-inline-fields"><label className="native-theme-number-field"><span>{uiText("uiControls.overallScale")}</span><input type="number" min="0.5" max="3" step="0.05" value={settings.globalScale} onChange={event => update({ globalScale: Number(event.target.value) })} /></label>
+      <label className="native-theme-number-field"><span>{uiText("uiControls.fontScale")}</span><input type="number" min="0.5" max="3" step="0.05" value={settings.fontScale} onChange={event => update({ fontScale: Number(event.target.value) })} /></label></div>
     </section>
     <CompatibleThemeEventSettings document={document} onSettingsChange={onSettingsChange} />
-    <section className="native-editor-section"><header><h3>信息元素</h3><p>时间与用户名打码仅用于副窗口和 OBS。</p></header><div className="native-theme-toggle-grid native-theme-element-grid">{row("showAvatar", "头像")}{row("showUsername", "用户名")}{row("showGuardBadge", "大航海标记")}{row("showModBadge", "房管标记")}{row("showTimestamp", "时间")}{row("maskUsername", "用户名打码")}</div></section>
-    <section className="native-editor-section"><header><h3>模式特色</h3><p>仅调整 BLC 原版主消息区的礼物描述。</p></header><div className="native-theme-toggle-grid native-theme-feature-grid">{row("showGiftName", "显示礼物名称与数量")}</div></section>
+    <section className="native-editor-section"><header><h3>{uiText("uiControls.elements")}</h3><p>{uiText("uiControls.outputHelp")}</p></header><div className="native-theme-toggle-grid native-theme-element-grid">{row("showAvatar", uiText("uiControls.avatar"))}{row("showUsername", uiText("uiControls.username"))}{row("showGuardBadge", uiText("uiControls.membershipBadge"))}{row("showModBadge", uiText("uiControls.modBadge"))}{row("showTimestamp", uiText("uiControls.time"))}{row("maskUsername", uiText("uiControls.mask"))}</div></section>
+    <section className="native-editor-section"><header><h3>{uiText("uiControls.features")}</h3><p>{uiText("uiControls.giftHelp")}</p></header><div className="native-theme-toggle-grid native-theme-feature-grid">{row("showGiftName", uiText("uiControls.giftName"))}</div></section>
   </>;
 }
 

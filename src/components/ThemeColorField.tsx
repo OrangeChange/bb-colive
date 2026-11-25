@@ -1,3 +1,4 @@
+import { useColorPickerLabels } from "./useColorPickerLabels.ts";
 import { useUiLanguage } from "../i18n/react.ts";
 import { localized, uiText } from "../i18n/index.ts";
 import { X as LucideX, Check, Pipette, Eraser } from "lucide-react";
@@ -25,6 +26,7 @@ export function ThemeColorField({ value, onChange, onPreviewChange, onPreviewCan
   useUiLanguage();
   const trigger = useRef<HTMLButtonElement>(null);
   const panel = useRef<HTMLDivElement>(null);
+  useColorPickerLabels(panel);
   const presets = useRef<HTMLDivElement>(null);
   const [presetFocus, setPresetFocus] = useState(0);
   const draggingPicker = useRef(false);

@@ -283,7 +283,7 @@ export function ThemeBackgroundField({
         <Popover.Content
           className="theme-background-popover"
           aria-label={uiText("themeBackgroundField.aria_label", { label: label })}
-          side="left"
+          side="bottom"
           align="start"
           sideOffset={8}
           collisionPadding={8}

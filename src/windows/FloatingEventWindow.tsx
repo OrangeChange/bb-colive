@@ -1,3 +1,5 @@
+import { useUiLanguage } from "../i18n/react.ts";
+import { uiText } from "../i18n/index.ts";
 import { resolveWindowSurfaceColor, resolveWindowSurfaceOpacity, resolveWindowScheme } from '../windowAppearance';
 import { applyEventWindowMaterial } from './eventWindowMaterial';
 import { EventWindowPositionHint } from './EventWindowPositionHint';
@@ -157,7 +159,7 @@ const WINDOW_CONFIGS: Record<"display" | "gift", EventWindowConfig> = {
     resetGeometryEvent: DISPLAY_RESET_GEOMETRY_EVENT,
     geometryStoreFile: "display-window.local.json",
     appendEvent: (events, event, preferences) => appendDisplayEvent(events, event, preferences.capacity, preferences),
-    label: "实时弹幕和互动",
+    get label() { return uiText("uiControls.chatWindow"); },
   },
   gift: {
     kind: "gift",
@@ -180,7 +182,7 @@ const WINDOW_CONFIGS: Record<"display" | "gift", EventWindowConfig> = {
     resetGeometryEvent: GIFT_RESET_GEOMETRY_EVENT,
     geometryStoreFile: "gift-window.local.json",
     appendEvent: (events, event, preferences) => appendGiftWindowEvent(events, event, preferences.capacity),
-    label: "礼物、醒目留言和大航海",
+    get label() { return uiText("uiControls.paidWindow"); },
   },
 };
 
@@ -232,10 +234,11 @@ const SPLIT_WINDOW_CONFIGS = Object.fromEntries((['gift-only', 'superchat', 'gua
   ...WINDOW_CONFIGS.gift, ...revenueWindowChannels(kind), kind,
   appendEvent: (events: EventWindowEvent[], event: EventWindowEvent, preferences: EventWindowPreferences) => revenueEventKind(event) === (kind === 'gift-only' ? 'gift' : kind)
     ? appendGiftWindowEvent(events,event,preferences.capacity) : events,
-  label: kind === 'gift-only' ? '礼物、天选和红包' : kind === 'superchat' ? '醒目留言' : '大航海',
+  get label() { return uiText(kind === 'gift-only' ? 'uiControls.giftWindow' : kind === 'superchat' ? 'uiControls.scWindow' : 'uiControls.membershipWindow'); },
 }])) as unknown as Record<Exclude<RevenueWindowLabel,'gift'>, EventWindowConfig>;
 
 export function FloatingEventWindow({ kind }: { kind: EventWindowKind }) {
+  useUiLanguage();
   const config = kind === 'display' || kind === 'gift' ? WINDOW_CONFIGS[kind] : SPLIT_WINDOW_CONFIGS[kind];
   const isRevenue = kind !== 'display';
   const hasGiftEffects = kind === 'gift' || kind === 'gift-only' || kind === 'guard';
@@ -995,7 +998,7 @@ export function FloatingEventWindow({ kind }: { kind: EventWindowKind }) {
   const sourcePlan = planCompatibleListPresentation(compatibleMainRender, orderedVisibleEvents, windowPreferences.stickyEvents.enabled);
   const sourceListSurface = sourcePlan.surface;
   const stickyArea = sourcePlan.renderSoftwareSticky ? <div className={publicWindowAreaClass(kind)} data-style-api="1">
-    <div className="sticky-area" onWheel={scrollSticky} data-event-style-scope={areaStyle.scope} data-position={windowPreferences.stickyEvents.position} aria-label="置顶栏">
+    <div className="sticky-area" onWheel={scrollSticky} data-event-style-scope={areaStyle.scope} data-position={windowPreferences.stickyEvents.position} aria-label={uiText("uiControls.sticky")}>
       <AnimatePresence key={stickyRoomKey}>
         {stickyCards.map(card => <StickyEventCard key={stickyEventKey(card.event)} card={card} now={stickyNow} position={windowPreferences.stickyEvents.position} display={windowPreferences.display} eventStyleSettings={windowPreferences.eventStyleSettings} compatibleEventRender={compatibleStickyRender} />)}
       </AnimatePresence>

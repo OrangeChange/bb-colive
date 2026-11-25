@@ -437,7 +437,7 @@ export function ReviewArchiveSettings({ repository, retentionDays, onRetentionDa
       </section>
       {notice && <div role="status" className="mt-2 ui-type-meta text-success">{notice}</div>}
       {error && <div role="alert" className="mt-2 ui-type-meta text-danger">{error}</div>}
-      {deleteConfirmOpen && deletePreview && <ConfirmDialog title={uiText("reviewArchiveSettings.title6")} description={uiText("reviewArchiveSettings.description", { value: deletePreview.ownerCount ?? 0, sessionCount: deletePreview.sessionCount, eventCount: deletePreview.eventCount, favoriteCount: deletePreview.favoriteCount })} confirmLabel={uiText("reviewArchiveSettings.confirmLabel")} confirmTone="danger" errorMessage={uiText("reviewArchiveSettings.errorMessage")} cancelAriaLabel="取消清理" onCancel={() => { if (!busy) setDeleteConfirmOpen(false); }} onConfirm={confirmDelete} />}
+      {deleteConfirmOpen && deletePreview && <ConfirmDialog title={uiText("reviewArchiveSettings.title6")} description={uiText("reviewArchiveSettings.description", { value: deletePreview.ownerCount ?? 0, sessionCount: deletePreview.sessionCount, eventCount: deletePreview.eventCount, favoriteCount: deletePreview.favoriteCount })} confirmLabel={uiText("reviewArchiveSettings.confirmLabel")} confirmTone="danger" errorMessage={uiText("reviewArchiveSettings.errorMessage")} cancelAriaLabel={uiText("uiControls.cancelCleanup")} onCancel={() => { if (!busy) setDeleteConfirmOpen(false); }} onConfirm={confirmDelete} />}
     </div>
   );
 }

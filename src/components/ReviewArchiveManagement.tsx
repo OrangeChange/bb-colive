@@ -514,7 +514,7 @@ export function ReviewArchiveManagement({
           confirmLabel={uiText("reviewArchiveManagement.confirmLabel")}
           confirmTone="danger"
           errorMessage={uiText("reviewArchiveManagement.errorMessage")}
-          cancelAriaLabel="取消删除"
+          cancelAriaLabel={uiText("uiControls.cancelDelete")}
           onCancel={() => { if (!busy) setDeleteConfirmOpen(false); }}
           onConfirm={confirmDelete}
         />

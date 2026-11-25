@@ -70,3 +70,15 @@ test("短文案保留历史含义并区分总数与未读消息", () => {
     assert.equal(messages.uiText("settings.language"), "言語");
   } finally { messages.setUiLanguage("zh-CN"); }
 });
+
+test("安装器提供四种语言，交互安装保存语言而静默更新保留偏好", () => {
+  const config = JSON.parse(fs.readFileSync("src-tauri/tauri.conf.json", "utf8"));
+  assert.deepEqual(config.bundle.windows.nsis.languages, ["SimpChinese", "TradChinese", "English", "Japanese"]);
+  assert.equal(config.bundle.windows.nsis.displayLanguageSelector, true);
+  const hooks = fs.readFileSync("src-tauri/installer-hooks.nsh", "utf8");
+  assert.match(hooks, /NSIS_HOOK_POSTINSTALL/);
+  assert.match(hooks, /\$UpdateMode <> 1/);
+  assert.match(hooks, /IfNot.*Silent/);
+  for (const language of ["zh-CN", "zh-Hant", "en", "ja"]) assert.ok(hooks.includes(language));
+  assert.ok(hooks.includes("ui-language.json"));
+});

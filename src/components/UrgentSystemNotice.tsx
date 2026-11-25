@@ -1,3 +1,5 @@
+import { useUiLanguage } from "../i18n/react.ts";
+import { uiText } from "../i18n/index.ts";
 import { TriangleAlert as LucideTriangleAlert } from "lucide-react";
 import { MsgType, type DanmakuEvent } from "../protocol/types";
 
@@ -8,6 +10,7 @@ function IconAlert() {
 }
 
 export function UrgentSystemNotice({ event, onDismiss }: { event: DanmakuEvent | null; onDismiss: () => void }) {
+  useUiLanguage();
   if (!event) return null;
   const label = event.msgType === MsgType.CutOff ? "直播切断" : "直播警告";
   return (
@@ -19,7 +22,7 @@ export function UrgentSystemNotice({ event, onDismiss }: { event: DanmakuEvent |
       </div>
       <button
         type="button"
-        aria-label="关闭提醒"
+        aria-label={uiText("uiControls.closeNotice")}
         onClick={onDismiss}
         className="shrink-0 rounded px-1 text-danger/70 hover:bg-danger/10 hover:text-danger focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-danger"
       >

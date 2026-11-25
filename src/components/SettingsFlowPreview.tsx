@@ -1,3 +1,5 @@
+import { useUiLanguage } from "../i18n/react.ts";
+import { uiText } from "../i18n/index.ts";
 import { useEffect, useRef } from "react";
 import { Play } from "lucide-react";
 import { getEventAnimationDuration, type EventAnimationPreset } from "../eventDisplaySettings";
@@ -9,6 +11,7 @@ export function SettingsFlowPreview({ alignment, direction, preset, duration }: 
   preset: EventAnimationPreset;
   duration: number;
 }) {
+  useUiLanguage();
   const newestRef = useRef<HTMLParagraphElement>(null);
   const animationRef = useRef<Animation | null>(null);
   useEffect(() => () => { animationRef.current?.cancel(); }, [alignment, direction, preset, duration]);
@@ -30,19 +33,19 @@ export function SettingsFlowPreview({ alignment, direction, preset, duration }: 
   ];
   if (direction === "bottom") samples.reverse();
 
-  return <section className="settings-flow-preview" aria-label="信息流排列示意">
+  return <section className="settings-flow-preview" aria-label={uiText("uiControls.flowRegion")}>
     <div className="settings-flow-preview-header ui-type-meta text-t3">
-      <span>排列示意</span>
+      <span>{uiText("uiControls.flowPreview")}</span>
       <button type="button" className="settings-inline-button settings-flow-play" onClick={replay}
         disabled={alignment === undefined || getEventAnimationDuration(preset, duration) === 0}
-        title={preset === "none" ? "当前为无动画" : duration === 0 ? "当前动画时长为 0" : "仅在示意中播放当前动画"}>
-        <Play size={14} aria-hidden="true" />试播动画
+        title={preset === "none" ? uiText("uiControls.noAnimation") : duration === 0 ? uiText("uiControls.zeroDuration") : uiText("uiControls.previewOnly")}>
+        <Play size={14} aria-hidden="true" />{uiText("uiControls.playAnimation")}
       </button>
     </div>
-    {alignment === undefined ? <p className="settings-hint">选择内容对齐后显示排列示意。</p> :
+    {alignment === undefined ? <p className="settings-hint">{uiText("uiControls.selectAlignment")}</p> :
       <div className="settings-flow-preview-events" data-alignment={alignment}>
         {samples.map(sample => <p key={sample.name} ref={sample.newest ? newestRef : undefined} className="ui-type-meta text-t2">
-          {sample.newest && <span className="settings-flow-new">新</span>}{sample.name}：{sample.text}
+          {sample.newest && <span className="settings-flow-new">{uiText("uiControls.newMarker")}</span>}{sample.name}：{sample.text}
         </p>)}
       </div>}
   </section>;

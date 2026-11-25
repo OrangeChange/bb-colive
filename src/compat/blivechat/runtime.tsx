@@ -1,3 +1,4 @@
+import { uiText } from "../../i18n/index.ts";
 import { resolveThemeEventVisibility } from "../../themes/themeEventVisibility.ts";
 import { normalizeCompatibleEventVisibility } from "../../themes/compatibleEventVisibility.ts";
 import { projectCallbackNames } from "../../events/displayNameProjection.ts";
@@ -375,7 +376,7 @@ export function resolvePublishedBlivechatRender(current: PublishedBlivechatTarge
         maskUsername: auxiliaryDisplay && settings.maskUsername,
         url: "/blivechat/renderer.html",
         protocol: "bb-blivechat",
-        title: "BLC 原版事件列表",
+        title: uiText("uiControls.sourceEvents"),
         css: [composeBlivechatThemeCss(current.document), createBlivechatAuxiliaryDisplayCss({
           ...settings,
           showTimestamp: auxiliaryDisplay && settings.showTimestamp,

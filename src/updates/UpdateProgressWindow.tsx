@@ -23,7 +23,7 @@ export function UpdateProgressWindow(){
   useLayoutEffect(()=>{
     const element=content.current;if(!element)return;
     let frame=0,lastHeight=0;
-    const resize=()=>{cancelAnimationFrame(frame);frame=requestAnimationFrame(()=>{const height=Math.max(176,Math.ceil(element.getBoundingClientRect().height));if(height!==lastHeight){lastHeight=height;void getCurrentWindow().setSize(new LogicalSize(494,height));}});};
+    const resize=()=>{cancelAnimationFrame(frame);frame=requestAnimationFrame(()=>{const height=Math.max(176,Math.ceil(element.getBoundingClientRect().height));if(height!==lastHeight){lastHeight=height;void getCurrentWindow().setSize(new LogicalSize(Math.max(400, Math.ceil(element.getBoundingClientRect().width)),height));}});};
     const observer=new ResizeObserver(resize);observer.observe(element);resize();
     return()=>{observer.disconnect();cancelAnimationFrame(frame);};
   },[]);

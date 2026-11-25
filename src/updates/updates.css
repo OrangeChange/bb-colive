@@ -7,9 +7,9 @@
 .software-update-brand-identity>span {font-size:13px;line-height:20px;color:var(--text-3)}
 .software-update-brand>svg {color:var(--text-3);flex:none}
 .software-update-options {margin-top:26px;border-top:1px solid var(--border)}
-.software-update-option {display:flex;align-items:center;justify-content:space-between;gap:16px;min-height:58px;border-bottom:1px solid var(--border);color:var(--text-2)}
-.software-update-option>span {white-space:nowrap}
-.software-update-option .settings-choice-control {flex-wrap:nowrap;flex:none}
+.software-update-option {display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:8px 16px;padding:12px 0;min-height:58px;border-bottom:1px solid var(--border);color:var(--text-2)}
+.software-update-option>span {min-width:0;overflow-wrap:break-word}
+.software-update-option .settings-choice-control {flex-wrap:wrap;flex:0 1 auto;max-width:100%;margin-left:auto}
 .software-update-option .settings-choice-option {min-width:0}
 .software-update-body {margin-top:22px}
 .software-update-body h3 {font-size:17px;font-weight:600;line-height:26px;margin:0}

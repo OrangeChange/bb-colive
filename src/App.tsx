@@ -550,7 +550,7 @@ function MainArea({
               projections={projections}
               boundaries={leftBoundaries}
               onBoundaryChange={(index, value) => updateBoundary(setLeftBoundaries, index, value)}
-              sideLabel="弹幕与互动分区"
+              sideLabel={uiText("uiControls.chatRegion")}
               getFeedSession={getFeedSession}
               liveLayout
               eventAreaRef={eventAreaRef}
@@ -608,7 +608,7 @@ function MainArea({
               projections={projections}
               boundaries={rightBoundaries}
               onBoundaryChange={(index, value) => updateBoundary(setRightBoundaries, index, value)}
-              sideLabel="礼物、醒目留言与大航海分区"
+              sideLabel={uiText("uiControls.paidRegion")}
               getFeedSession={getFeedSession}
               liveLayout
               eventAreaRef={eventAreaRef}
@@ -652,7 +652,7 @@ function MainArea({
               queryActive={queryActive}
               feedKey={leftFeed.feedKey}
               feedSession={leftFeed.feedSession}
-              emptyLabel="左区已被筛选为空"
+              emptyLabel={uiText("uiControls.leftEmpty")}
               liveLayout
               eventAreaRef={eventAreaRef}
               onUserFilter={onUserFilter}
@@ -711,7 +711,7 @@ function MainArea({
               queryActive={queryActive}
               feedKey={rightFeed.feedKey}
               feedSession={rightFeed.feedSession}
-              emptyLabel="右区已被筛选为空"
+              emptyLabel={uiText("uiControls.rightEmpty")}
               liveLayout
               eventAreaRef={eventAreaRef}
               onUserFilter={onUserFilter}

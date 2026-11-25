@@ -1,3 +1,5 @@
+import { useUiLanguage } from "../i18n/react.ts";
+import { uiText } from "../i18n/index.ts";
 import { useCallback, useEffect, useRef, useState } from "react";
 import { emitTo, listen } from "@tauri-apps/api/event";
 import { PhysicalPosition, PhysicalSize } from "@tauri-apps/api/dpi";
@@ -93,6 +95,7 @@ async function writeDisplayGeometry(store: Store, geometry: DisplayGeometry | nu
 }
 
 export function DisplayWindow() {
+  useUiLanguage();
   const [events, setEvents] = useState<EventWindowEvent[]>([]);
   const [windowPreferences, setWindowPreferences] = useState<EventWindowPreferences>(DEFAULT_EVENT_WINDOW_PREFERENCES);
   const applyThemeProjection = useCallback((projection: Parameters<typeof applyNativeThemeProjectionToWindowPreferences>[1]) => {
@@ -347,7 +350,7 @@ export function DisplayWindow() {
       ))}
       <div
         role="log"
-        aria-label="实时弹幕和互动"
+        aria-label={uiText("uiControls.chatWindow")}
         aria-live="polite"
         ref={logRef}
         className="display-window-log pointer-events-none min-h-0 flex-1 cursor-default select-none overflow-y-auto overscroll-contain"

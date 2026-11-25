@@ -1,11 +1,14 @@
+import { useColorPickerLabels } from "./useColorPickerLabels.ts";
 import { useUiLanguage } from "../i18n/react.ts";
 import { uiText } from "../i18n/index.ts";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import { HslaColorPicker, RgbaColorPicker } from "react-colorful";
 import { hexToRgba, hslaToRgba, rgbaToHex, rgbaToHsla, type HslaColor, type RgbaColor } from "../eventStyleSettings";
 
 export function ColorSlider({ value, onChange, compact = false }: { value: RgbaColor; onChange: (value: RgbaColor) => void; compact?: boolean }) {
   useUiLanguage();
+  const picker = useRef<HTMLDivElement>(null);
+  useColorPickerLabels(picker);
   const [mode, setMode] = useState<"rgba" | "hsla" | "hex">("hex");
   const [hexDraft, setHexDraft] = useState(() => rgbaToHex(value));
   const hsla = rgbaToHsla(value);
@@ -16,7 +19,7 @@ export function ColorSlider({ value, onChange, compact = false }: { value: RgbaC
       ? [["H", "h", hsla.h, 0, 360], ["S", "s", hsla.s, 0, 100], ["L", "l", hsla.l, 0, 100], ["A", "a", hsla.a, 0, 1]] as const
       : null;
   return <div className={`style-color-editor${compact ? " style-color-editor-compact" : ""}`}>
-    <div className="style-color-picker-surface" aria-label={uiText("colorSlider.aria_label")}>{mode === "hsla" ? <HslaColorPicker color={hsla} onChange={next => onChange(hslaToRgba(next))} /> : <RgbaColorPicker color={value} onChange={onChange} />}</div>
+    <div ref={picker} className="style-color-picker-surface" aria-label={uiText("colorSlider.aria_label")}>{mode === "hsla" ? <HslaColorPicker color={hsla} onChange={next => onChange(hslaToRgba(next))} /> : <RgbaColorPicker color={value} onChange={onChange} />}</div>
     <div className="style-color-precise" aria-label={uiText("colorSlider.aria_label2", { value: mode.toUpperCase() })}>
       <div className="style-color-precise-title ui-type-control text-t2">{uiText("colorSlider.ColorSlider")}{mode.toUpperCase()}</div>
       <div className="style-color-mode-tabs" role="group" aria-label={uiText("colorSlider.aria_label3")}>{(["hex", "rgba", "hsla"] as const).map(option => <button key={option} type="button" aria-pressed={mode === option} onClick={() => setMode(option)} className={mode === option ? "is-active" : ""}>{option.toUpperCase()}</button>)}</div>

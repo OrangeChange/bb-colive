@@ -514,7 +514,7 @@ export function Sidebar({
       <SidebarQuickToggle
         activeMainView={activeMainView}
         mainView="voice"
-        mainTitle="语音（TTS播报）"
+        mainTitle={uiText("uiControls.voiceTip")}
         mainIcon={<IconVoice />}
         enabled={voiceEnabled}
         toggleLabel={voiceEnabled ? uiText("sidebar.toggleLabel") : uiText("sidebar.toggleLabel2")}
@@ -525,7 +525,7 @@ export function Sidebar({
       <SidebarQuickToggle
         activeMainView={activeMainView}
         mainView="personal"
-        mainTitle="个性播报（提示音）"
+        mainTitle={uiText("uiControls.audioTip")}
         mainIcon={<IconAudioWaveform />}
         enabled={personalBroadcastEnabled}
         toggleLabel={personalBroadcastEnabled ? uiText("sidebar.toggleLabel3") : uiText("sidebar.toggleLabel4")}

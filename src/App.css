@@ -2773,7 +2773,8 @@ html[data-window="gift"] body {
 
 .settings-font-size-control {
   display: flex;
-  width: 84px;
+  width: auto;
+  min-width: 84px;
   height: 32px;
   align-items: center;
   gap: 4px;
@@ -2786,8 +2787,8 @@ html[data-window="gift"] body {
 }
 
 .settings-number-row > .settings-font-size-control {
-  flex: 0 0 84px;
-  width: 84px;
+  flex: 0 0 auto;
+  width: auto;
 }
 
 .settings-font-size-control:focus-within {
@@ -2797,6 +2798,7 @@ html[data-window="gift"] body {
 }
 
 .settings-font-size-input {
+  flex: 0 0 52px;
   width: 52px;
   min-width: 0;
   border: 0;
@@ -4073,6 +4075,7 @@ html[data-window="gift"] body {
 
 .gift-threshold-input-control {
   display: flex;
+  flex: 0 0 auto;
   width: 112px;
   height: 32px;
   align-items: center;
@@ -4087,7 +4090,7 @@ html[data-window="gift"] body {
 }
 
 .gift-threshold-input.is-compact .gift-threshold-input-control {
-  width: 88px;
+  width: 112px;
   height: 28px;
 }
 

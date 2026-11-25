@@ -1,3 +1,5 @@
+import { uiText } from "../../i18n/index.ts";
+import { useUiLanguage } from "../../i18n/react.ts";
 import { resolveThemeEventVisibility } from "../../themes/themeEventVisibility.ts";
 import { normalizeCompatibleEventVisibility } from "../../themes/compatibleEventVisibility.ts";
 import { createAllNativeEventVisibility } from '../../themes/nativeComponentAppearance.ts';
@@ -223,20 +225,21 @@ export function LaplacePreview({
     }),createElement(StylePreviewFallbacks,{frameDocument:fallbackDocument,events:selected.events.filter(event=>nativeIds.has(event.id)&&mainIds.has(event.id)),sticky:selected.sticky.filter(card=>nativeIds.has(card.event.id)),policy,mode:'laplace',settings:document.settings,target:previewTarget,now:previewFrame?.now??frameNow}));
 }
 function Basic({ document, onSettingsChange }: { document: ThemeDocument; onSettingsChange(settings: CompatibleVisualSettings): void }) {
+  useUiLanguage();
   const settings = settingsOf(document);
   const update = (next: Partial<LaplaceThemeSettings>) => onSettingsChange({ ...settings, ...next });
   const row = (key: "showSpoiler" | "showAvatar" | "showUsername" | "showMedal" | "showTimestamp" | "maskUsername" | "classicElementScope" | "showAvatarFrame" | "showGuardBadge" | "showMedalLightenedOnly" | "showMedalCurrentRoomOnly" | "showWealthMedal" | "showCurrentRank" | "showModBadge" | "showAnchorBadge", label: string, disabled = false) => <div className="native-theme-setting-row" key={key}><PanelSwitch label={label} checked={Boolean(settings[key])} disabled={disabled} onChange={() => update({ [key]: !settings[key] })} /><span>{label}</span></div>;
   return <>
-    <section className="native-editor-section"><header><h3>基础设置</h3><p>基准字号控制相对尺寸；固定 CSS 值保持不变。</p></header>
-      <label className="native-theme-number-field"><span>基准字号</span><input aria-label="基准字号" type="number" min="12" max="64" step="0.5" value={settings.baseFontSize} onChange={event => update({ baseFontSize: Number(event.target.value) })} /><span>px</span></label>
+    <section className="native-editor-section"><header><h3>{uiText("uiControls.basic")}</h3><p>{uiText("uiControls.baseHelp")}</p></header>
+      <label className="native-theme-number-field"><span>{uiText("uiControls.baseFont")}</span><input aria-label={uiText("uiControls.baseFont")} type="number" min="12" max="64" step="0.5" value={settings.baseFontSize} onChange={event => update({ baseFontSize: Number(event.target.value) })} /><span>px</span></label>
 
     </section>
     <CompatibleThemeEventSettings document={document} onSettingsChange={onSettingsChange} />
-    <section className="native-editor-section"><header><h3>信息元素</h3><p>时间与用户名打码仅用于副窗口和 OBS。经典控制范围仅影响副窗口和 OBS 的头像、用户名开关；开启后按 LAPLACE 原有范围控制。</p></header>
-      <div className="native-theme-toggle-grid native-theme-element-grid">{row("showAvatar", "头像")}{row("showAvatarFrame", "头像框")}{row("showUsername", "用户名")}{row("showGuardBadge", "大航海标记")}{row("showMedal", "粉丝牌")}{row("showMedalLightenedOnly", "只显示已点亮粉丝牌", !settings.showMedal)}{row("showMedalCurrentRoomOnly", "仅当前房间粉丝牌", !settings.showMedal)}{row("showWealthMedal", "荣耀勋章")}{row("showCurrentRank", "当前排行")}{row("showModBadge", "房管标记")}{row("showAnchorBadge", "主播标记")}{row("showTimestamp", "时间")}{row("maskUsername", "用户名打码")}{row("classicElementScope", "经典控制范围")}</div>
+    <section className="native-editor-section"><header><h3>{uiText("uiControls.elements")}</h3><p>{uiText("uiControls.classicHelp")}</p></header>
+      <div className="native-theme-toggle-grid native-theme-element-grid">{row("showAvatar", uiText("uiControls.avatar"))}{row("showAvatarFrame", uiText("uiControls.avatarFrame"))}{row("showUsername", uiText("uiControls.username"))}{row("showGuardBadge", uiText("uiControls.membershipBadge"))}{row("showMedal", uiText("uiControls.medal"))}{row("showMedalLightenedOnly", uiText("uiControls.litMedal"), !settings.showMedal)}{row("showMedalCurrentRoomOnly", uiText("uiControls.roomMedal"), !settings.showMedal)}{row("showWealthMedal", uiText("uiControls.wealth"))}{row("showCurrentRank", uiText("uiControls.rank"))}{row("showModBadge", uiText("uiControls.modBadge"))}{row("showAnchorBadge", uiText("uiControls.anchorBadge"))}{row("showTimestamp", uiText("uiControls.time"))}{row("maskUsername", uiText("uiControls.mask"))}{row("classicElementScope", uiText("uiControls.classic"))}</div>
     </section>
-    <section className="native-editor-section"><header><h3>模式特色</h3></header>
-      <div className="native-theme-feature-grid native-theme-feature-inline">{row("showSpoiler", "解析剧透内容")}<label className="native-theme-number-field" title="高亮金额只影响呈现，不改变事件显示门槛、置顶门槛或收益。"><span>礼物高亮金额</span><input aria-label="礼物高亮金额" type="number" min="0" max="99999999" step="0.01" value={settings.showGiftHighlightAbove} onChange={event => update({ showGiftHighlightAbove: Number(event.target.value) })} /><span>元</span></label></div>
+    <section className="native-editor-section"><header><h3>{uiText("uiControls.features")}</h3></header>
+      <div className="native-theme-feature-grid native-theme-feature-inline">{row("showSpoiler", uiText("uiControls.spoiler"))}<label className="native-theme-number-field" title={uiText("uiControls.highlightHelp")}><span>{uiText("uiControls.highlight")}</span><input aria-label={uiText("uiControls.highlight")} type="number" min="0" max="99999999" step="0.01" value={settings.showGiftHighlightAbove} onChange={event => update({ showGiftHighlightAbove: Number(event.target.value) })} /><span>{uiText("uiControls.currency")}</span></label></div>
     </section>
   </>;
 }
