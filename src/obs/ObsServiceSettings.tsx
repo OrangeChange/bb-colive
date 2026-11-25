@@ -1,3 +1,5 @@
+import { Button } from "../components/shadcn/button";
+import { Input } from "../components/shadcn/input";
 import { useUiLanguage } from "../i18n/react.ts";
 import { uiText } from "../i18n/index.ts";
 import { emit, listen } from "@tauri-apps/api/event";
@@ -69,19 +71,13 @@ export function ObsServiceSettings({
       </span></div>
       {renderFailures.length > 0 && (
         <span role="status" className="theme-obs-unavailable">
-          {renderFailures
-            .map(
-              (failure) =>
-                configurations.find(
-                  (configuration) =>
-                    configuration.id === failure.configurationId,
-                )?.name ?? uiText("obsServiceSettings.ObsServiceSettings5"),
-            )
-            .join("、")}
-          {uiText("obsServiceSettings.ObsServiceSettings6")}</span>
+          {renderFailures.map(failure => {
+            const name = configurations.find(configuration => configuration.id === failure.configurationId)?.name;
+            return <span key={failure.clientId} style={{ display: "block" }}>{name ? uiText("obsServiceSettings.outputFailure", { name, message: failure.message }) : failure.message}</span>;
+          })}</span>
       )}
       <div className="obs-service-port"><label>
-        {uiText("obsServiceSettings.ObsServiceSettings7")}<input
+        {uiText("obsServiceSettings.ObsServiceSettings7")}<Input
           aria-label={uiText("obsServiceSettings.aria_label")}
           type="number"
           min="1"
@@ -91,21 +87,19 @@ export function ObsServiceSettings({
           onChange={(event) => setPort(Number(event.target.value))}
         />
       </label>
-      <button type="button" disabled={loading || !status} onClick={() => setConfirm(true)}>
-        {uiText("obsServiceSettings.ObsServiceSettings8")}</button></div>
+      <Button variant="outline" type="button" disabled={loading || !status} onClick={() => setConfirm(true)}>
+        {uiText("obsServiceSettings.ObsServiceSettings8")}</Button></div>
       <div className="obs-service-effects">
         <span>{uiText("obsServiceSettings.ObsServiceSettings9")}</span>
         <PanelSwitch label={uiText("obsServiceSettings.label")} checked={showGiftEffect} onChange={() => setShowGiftEffect(!showGiftEffect)} />
-        <button type="button" className="obs-effect-reset" aria-label={uiText("obsServiceSettings.aria_label2")} onClick={() => setShowGiftEffect(false)} disabled={!showGiftEffect}>{uiText("common.restoreDefaults")}</button>
       </div>
       <div className="obs-service-effects">
         <span>{uiText("obsServiceSettings.ObsServiceSettings10")}</span>
         <PanelSwitch label={uiText("obsServiceSettings.label2")} checked={showGuardEffect} onChange={() => setShowGuardEffect(!showGuardEffect)} />
-        <button type="button" className="obs-effect-reset" aria-label={uiText("obsServiceSettings.aria_label3")} onClick={() => setShowGuardEffect(false)} disabled={!showGuardEffect}>{uiText("common.restoreDefaults")}</button>
       </div>
-      {!loading && !status && <button type="button" className="settings-action-button" onClick={() => void refresh()}><RefreshCw size={15} aria-hidden="true" />{uiText("obsServiceSettings.ObsServiceSettings11")}</button>}
+      {!loading && !status && <Button variant="outline" type="button" className="settings-action-button" onClick={() => void refresh()}><RefreshCw size={15} aria-hidden="true" />{uiText("obsServiceSettings.ObsServiceSettings11")}</Button>}
       {!loading && status && !status.running && (
-        <button
+        <Button variant="outline"
           type="button"
           onClick={() => {
             void invoke<ObsServiceStatus>("obs_start_service")
@@ -113,7 +107,7 @@ export function ObsServiceSettings({
               .catch((cause) => setError(String(cause)));
           }}
         >
-          <Play size={15} aria-hidden="true" />{uiText("obsServiceSettings.ObsServiceSettings12")}</button>
+          <Play size={15} aria-hidden="true" />{uiText("obsServiceSettings.ObsServiceSettings12")}</Button>
       )}
       {confirm && (
         <ConfirmDialog

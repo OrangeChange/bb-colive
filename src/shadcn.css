@@ -1,0 +1,329 @@
+@import "./App.css";
+@import "tw-animate-css";
+@import "shadcn/tailwind.css";
+
+:root {
+  --radius: 7px;
+  --primary: var(--accent-solid);
+  --primary-foreground: var(--accent-fg);
+  --secondary: var(--accent-subtle);
+  --secondary-foreground: var(--accent-text);
+  --muted: var(--surface-raised);
+  --muted-foreground: var(--text-2);
+  --popover: var(--surface);
+  --popover-foreground: var(--text-1);
+  --input: color-mix(in srgb, var(--text-1) 22%, transparent);
+  --ring: var(--accent);
+  --destructive: var(--status-danger);
+}
+@theme inline {
+  --color-background: var(--bg);
+  --color-foreground: var(--text-1);
+  --color-card: var(--surface);
+  --color-card-foreground: var(--text-1);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-primary-hover: var(--accent-solid-hover);
+  --color-primary-active: var(--accent-solid-active);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent-foreground: var(--accent-fg);
+  --color-destructive: var(--destructive);
+  --color-destructive-foreground: var(--danger-fg);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+  --radius-sm: calc(var(--radius) - 2px);
+  --radius-md: calc(var(--radius) - 1px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 3px);
+}
+@media (prefers-reduced-motion: reduce) {
+  [data-slot] {
+    animation-duration: 0s !important;
+    transition-duration: 0s !important;
+  }
+}
+
+.date-time-field-trigger {
+  width: 240px;
+  max-width: 100%;
+}
+.date-time-field-trigger input[data-slot="input-group-control"] {
+  border: 0;
+  background: transparent;
+  min-width: 0;
+  padding-inline: 8px 0;
+}
+.date-time-field-trigger input::-webkit-calendar-picker-indicator {
+  display: none;
+}
+.date-time-field-trigger [data-slot="input-group-addon"] {
+  padding-inline: 4px;
+}
+.date-time-picker {
+  width: max-content;
+  max-width: calc(100vw - 16px);
+  gap: 0;
+}
+.date-time-picker-body {
+  display: flex;
+  align-items: stretch;
+}
+.date-time-picker-time {
+  display: grid;
+  grid-template-columns: repeat(2, 48px);
+  gap: 4px;
+  padding: 8px;
+  border-inline-start: 1px solid var(--border);
+}
+.date-time-column {
+  min-width: 0;
+}
+.date-time-column-title {
+  height: 30px;
+  display: grid;
+  place-items: center;
+  color: var(--text-3);
+  font-size: 12px;
+}
+.date-time-column-scroll {
+  height: 210px;
+}
+.date-time-column-options {
+  gap: 0;
+  padding-inline: 2px;
+}
+.date-time-column-option[data-slot="radio-group-item"] {
+  height: 30px;
+  min-height: 30px;
+  width: 100%;
+  border: 0;
+  border-radius: 4px;
+  padding: 0;
+  font-weight: 400;
+  font-variant-numeric: tabular-nums;
+}
+.date-time-column-option[data-state="checked"] {
+  background: var(--accent-solid);
+  color: var(--accent-fg);
+  font-weight: 600;
+}
+.date-time-column-option:not([data-state="checked"]):hover {
+  background: var(--surface-raised);
+}
+.date-time-column-option::after {
+  display: none;
+}
+.date-time-field-actions {
+  display: flex;
+  justify-content: space-between;
+  gap: 8px;
+  padding: 6px 8px;
+  border-top: 1px solid var(--border);
+}
+
+.native-property-field.is-fontWeight .native-number-control {
+  width: 96px;
+}
+
+.native-property-field.is-fontFamily > div {
+  max-width: 320px;
+}
+.native-property-field.is-fontFamily [data-slot="select-trigger"] {
+  width: 100%;
+  min-width: 0;
+}
+.native-number-control [data-slot="input"] {
+  width: 104px;
+  max-width: 100%;
+}
+/* Shared segmented appearance for mutually exclusive controls. */
+.ui-segmented[data-slot] {
+  display: inline-flex;
+  align-items: stretch;
+  width: fit-content;
+  min-width: 0;
+  max-width: 100%;
+  gap: 0;
+  padding: 0;
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  background: var(--bg);
+  overflow: hidden;
+}
+.ui-segmented > .ui-segmented-item[data-slot] {
+  flex: 1 0 auto;
+  width: auto;
+  height: auto;
+  min-height: 30px;
+  padding: 3px 10px;
+  border: 0;
+  border-inline-start: 1px solid var(--border);
+  border-radius: 0;
+  box-shadow: none;
+  background: transparent;
+  color: var(--text-2);
+  font: inherit;
+}
+.ui-segmented > .ui-segmented-item:first-child {
+  border-inline-start: 0;
+}
+.ui-segmented
+  > .ui-segmented-item:is(
+    [data-state="checked"],
+    [data-state="on"],
+    [data-state="active"]
+  ) {
+  background: var(--accent-subtle);
+  color: var(--accent-text);
+  font-weight: 600;
+}
+.ui-segmented > .ui-segmented-item:not(:disabled):hover {
+  background: var(--surface-raised);
+}
+.ui-segmented
+  > .ui-segmented-item:is(
+    [data-state="checked"],
+    [data-state="on"],
+    [data-state="active"]
+  ):hover {
+  background: var(--accent-subtle);
+}
+.ui-segmented > .ui-segmented-item:focus-visible {
+  outline: 2px solid var(--accent-text);
+  outline-offset: -2px;
+  z-index: 1;
+}
+.ui-segmented.settings-choice-control {
+  flex-wrap: wrap;
+}
+.ui-segmented.settings-choice-control.settings-control-value {
+  align-self: center;
+}
+.settings-choice-tiles .ui-segmented.settings-choice-control {
+  align-self: stretch;
+}
+
+.ui-combobox-anchor > [data-slot="command-input-wrapper"] {
+  flex: 1;
+  min-width: 0;
+  padding: 0;
+}
+.ui-combobox-anchor [data-slot="input-group"] {
+  border: 0;
+  background: transparent;
+  box-shadow: none;
+}
+[data-slot="progress"][data-state="indeterminate"]
+  [data-slot="progress-indicator"] {
+  width: 35%;
+  flex: none;
+  animation: shadcn-progress-pulse 1.4s ease-in-out infinite alternate;
+}
+@keyframes shadcn-progress-pulse {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(185%);
+  }
+}
+
+.date-time-field-trigger.is-date-only {
+  width: 160px;
+}
+
+.date-time-picker [data-slot="calendar"] .rdp-week {
+  margin-top: 0;
+}
+.date-time-picker [data-slot="calendar"] .rdp-month {
+  gap: 8px;
+}
+
+.about-dialog[data-slot="dialog-content"] {
+  display: block;
+  margin: 0;
+}
+.about-character[data-slot="button"] {
+  height: auto;
+  min-height: 0;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  box-shadow: none;
+}
+.about-character[data-slot="button"]:hover {
+  background: transparent;
+}
+.theme-category-tabs[data-slot="tabs-list"] {
+  height: auto;
+  padding: 0;
+  justify-content: flex-start;
+  border-radius: 0;
+  background: transparent;
+  flex-wrap: wrap;
+  overflow: visible;
+}
+.theme-category-tabs [data-slot="tabs-trigger"] {
+  flex: 0 0 auto;
+  box-shadow: none;
+}
+.theme-category-tabs [data-slot="tabs-trigger"]::after {
+  display: none;
+}
+
+.software-update-brand[data-slot="button"] {
+  height: auto;
+  min-height: 52px;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  box-shadow: none;
+  justify-content: flex-start;
+}
+.software-update-brand[data-slot="button"]:hover {
+  background: var(--surface-raised);
+}
+
+.voice-setting-control > .voice-select-tone {
+  width: min(100%, 320px);
+  max-width: 320px;
+  justify-self: start;
+}
+[data-slot="select-item"] > span:last-child {
+  min-width: 0;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+[data-slot="select-item"] .ui-select-item-label {
+  min-width: 0;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.ui-segmented [role="tab"]::after {
+  display: none;
+}
+.native-visual-body nav button {
+  justify-content: flex-start;
+  text-align: left;
+}
+
+.native-visual-body nav {
+  overflow-x: hidden;
+}
+.native-visual-body nav button {
+  min-width: 0;
+  max-width: 100%;
+  flex-shrink: 1;
+}
+.native-visual-body nav .native-part-summary.is-editable > button {
+  flex: 1 1 auto;
+  width: auto;
+}

@@ -54,14 +54,14 @@ test("子选择器打开时第一次Escape不关闭父层，外部点击也只�
   } finally { globalThis.document = savedDocument; }
 });
 
-test("共享选择器使用 Radix 并保留空值语义", async () => {
+test("共享选择器接入 shadcn 并保留空值语义", async () => {
   const pkg = JSON.parse(await read("package.json"));
   const select = await read("src/components/ui/Select.tsx");
 
-  assert.ok(pkg.dependencies["@radix-ui/react-select"]);
-  assert.match(select, /@radix-ui\/react-select/);
+  assert.ok(pkg.dependencies["radix-ui"]);
+  assert.match(select, /shadcn\/select/);
   assert.match(select, /EMPTY_VALUE/);
-  assert.match(select, /data-size/);
+  assert.match(select, /data-density/);
   assert.match(select, /aria-label/);
   assert.match(select, /open\?: boolean/);
   assert.match(select, /open=\{open\}/);
@@ -70,17 +70,17 @@ test("共享选择器使用 Radix 并保留空值语义", async () => {
 test("共享选择器把选项样式应用到实际可见文字", async () => {
   const select = await read("src/components/ui/Select.tsx");
 
-  assert.match(select, /<SelectPrimitive\.ItemText data-ui-select-item-text="true">\s*<span className="ui-select-item-label" style=\{option\.style\}>\{option\.label\}<\/span>\s*<\/SelectPrimitive\.ItemText>/);
+  assert.match(select, /<SelectItem[^;]+style=\{option\.style\}/);
 });
 
 test("组合输入暴露 listbox 关系并使用项目弹层标记", async () => {
   const combobox = await read("src/components/ui/Combobox.tsx");
 
-  assert.match(combobox, /@radix-ui\/react-popover/);
+  assert.match(combobox, /shadcn\/popover/);
   assert.match(combobox, /role="combobox"/);
-  assert.match(combobox, /aria-activedescendant/);
-  assert.match(combobox, /role="listbox"/);
-  assert.match(combobox, /role="option"/);
+  assert.match(combobox, /<Command\b/);
+  assert.match(combobox, /<CommandList/);
+  assert.match(combobox, /<CommandItem/);
   assert.match(combobox, /data-ui-overlay/);
 });
 
@@ -185,13 +185,10 @@ test("语音设置和字体下拉复用统一选择器契约", async () => {
 
   assert.doesNotMatch(voicePanel, /<select\b/);
   assert.match(voicePanel, /<UiSelect/);
-  assert.match(listSelect, /role="combobox"/);
-  assert.match(listSelect, /role="listbox"/);
-  assert.match(listSelect, /aria-selected/);
-  assert.match(listSelect, /settings-list-select-menu-check/);
+  assert.doesNotMatch(listSelect, /createPortal/);
   assert.match(listSelect, /<UiSelect/);
   assert.doesNotMatch(listSelect, /virtualize|useVirtualizer/);
-  assert.match(sharedSelect, /<SelectPrimitive\.Content/);
+  assert.match(sharedSelect, /<SelectContent/);
   assert.match(settingsPanel, /from "\.\/SettingsListSelect"/);
   assert.doesNotMatch(settingsPanel, /function SettingsListSelect\(/);
 });

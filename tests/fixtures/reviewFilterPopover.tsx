@@ -2,7 +2,7 @@ import { useRef, useState } from "react";
 import { createRoot } from "react-dom/client";
 import { ReviewFilterPopover } from "../../src/components/ReviewFilterPopover";
 import { ReviewFilterSubmenu } from "../../src/components/ReviewSearchControls";
-import "../../src/App.css";
+import "../../src/shadcn.css";
 
 function Fixture() {
   const [open, setOpen] = useState(false);

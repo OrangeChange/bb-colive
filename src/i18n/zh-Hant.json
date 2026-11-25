@@ -4509,5 +4509,12 @@
   "backend.install.verification_missing": "更新包缺少驗證資訊，請重新下載",
   "roomLock.expiryPart": "解禁時間",
   "roomLock.remaining": "剩餘 {duration}",
-  "roomLock.awaitingConfirmation": "已到解禁時間，實際狀態待確認"
+  "roomLock.awaitingConfirmation": "已到解禁時間，實際狀態待確認",
+  "dateTimeField.hour": "小時",
+  "dateTimeField.minute": "分鐘",
+  "dateTimeField.today": "今天",
+  "dateTimeField.openCalendar": "{label}：選擇日期",
+  "commandDialog.title": "命令面板",
+  "commandDialog.description": "搜尋要執行的命令",
+  "obsServiceSettings.outputFailure": "{name}：{message}"
 }

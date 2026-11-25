@@ -856,7 +856,7 @@ export function EventList({
             </div>
           </>
         )}
-        {visibleIndices.length === 0 && <div className={`flex h-full min-h-24 items-center justify-center px-4 ui-type-control text-t3 ${compatibleListSurface ? "absolute inset-0 pointer-events-none" : ""}`}>{emptyLabel}</div>}
+        {visibleIndices.length === 0 && <div className={`ui-empty-state ui-empty-fill ${compatibleListSurface ? "absolute inset-0 pointer-events-none" : ""}`}>{emptyLabel}</div>}
   </>;
 
   return (
@@ -872,7 +872,7 @@ export function EventList({
         style={compatibleSurface?.surfaceStyle}
       >
         {areaStyle.style}
-        <div className={`event-list ${compatibleListSurface ? "h-full" : `feed-virtual-viewport feed-virtual-viewport-${getFeedStackAlignment(scrollDirection, liveLayout ? contentAlignment : undefined)}`}`}>
+        <div data-empty={visibleIndices.length === 0 || undefined} className={`event-list ${compatibleListSurface ? "h-full" : `feed-virtual-viewport feed-virtual-viewport-${getFeedStackAlignment(scrollDirection, liveLayout ? contentAlignment : undefined)}`}`}>
         {eventListContent}
         </div>
         {sourceLocated && locatedMarkKey === sourceLocated.eventId && <div className="pointer-events-none event-row-located-indicator" style={{ position: "fixed", left: sourceLocated.left, top: sourceLocated.top, width: sourceLocated.width, height: sourceLocated.height, zIndex: 15 }} />}

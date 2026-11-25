@@ -5,10 +5,10 @@ import { existsSync } from 'node:fs';
 import { createStylePreviewEvents } from '../src/components/stylePreviewEvents.ts';
 import { getSystemMessage } from '../src/components/systemReminder.ts';
 
-test('静态采用确认的62项并按类别排列，保留身份与价格梯度', () => {
+test('静态采用确认的样例及封禁事件并按类别排列，保留身份与价格梯度', () => {
  const all=createStylePreviewEvents('混合流');
- assert.equal(all.length,62);
- const counts=[['弹幕',17],['互动',7],['礼物',12],['醒目留言',8],['大航海',4],['红包/天选',6],['系统',8]];
+ assert.equal(all.length,63);
+ const counts=[['弹幕',17],['互动',7],['礼物',12],['醒目留言',8],['大航海',4],['红包/天选',6],['系统',9]];
  assert.deepEqual(all.map(e=>e.id),counts.flatMap(([kind,count])=>{const rows=createStylePreviewEvents(kind);assert.equal(rows.length,count,kind);return rows.map(e=>e.id)}));
  assert.deepEqual(all.slice(0,6).map(e=>e.user.uname),['极星萤昼','诸仙immortal','傾--城','奥利奥爱吃马里奥','猫耳小月子','东爱璃Lovely']);
  const whale=all.find(e=>e.user?.uname==='鲸落落raku');assert.equal(whale.text,'送我');assert(!whale.danmuDeleted);assert.equal(whale.user.currentRank,undefined);
@@ -17,7 +17,7 @@ test('静态采用确认的62项并按类别排列，保留身份与价格梯度
  assert.deepEqual(all.filter(e=>e.user?.currentRank).map(e=>[e.user.uname,e.user.currentRank]),[['奥利奥爱吃马里奥',1],['迟年春',2],['礼-雾响碧潮',3]]);
  const ticket=all.find(e=>e.user?.uname==='86永不落幕');assert.equal(ticket.gift.name,'人气票');assert.equal(ticket.gift.count,1);
  const gift=all.find(e=>e.gift?.count===432);assert.equal(gift.gift.totalRmb,43.2);assert.equal(gift.user.uname,'邪恶的马星瞳_official');
- assert.equal(all.filter(e=>isPaidEventVisibleAtThreshold(e,0.1)).length,60);
+ assert.equal(all.filter(e=>isPaidEventVisibleAtThreshold(e,0.1)).length,61);
  assert.equal(all.filter(e=>e.msgType===5).length,1);assert.equal(all.filter(e=>e.msgType===7).length,1);
  assert(all.every(e=>![16,26].includes(e.msgType)));
  all[0].text='修改';assert.equal(createStylePreviewEvents('混合流')[0].text,'无法下播之人');

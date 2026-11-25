@@ -20,7 +20,7 @@ import type { ObsMessage, ObsWireState } from "./obsProtocol.ts";
 import "../compat/blivechat/register.tsx";
 import "../compat/openlive/register.tsx";
 import "../compat/laplace/register.tsx";
-import "../App.css";
+import "../shadcn.css";
 import "../components/themeWorkspace.css";
 import "../components/nativeThemeEditor.css";
 import "./obs.css";
@@ -28,7 +28,6 @@ document.documentElement.dataset.obsBrowser = "true";
 const stopCustomCssBridge = installObsCustomCssBridge(document);
 if (import.meta.hot) import.meta.hot.dispose(stopCustomCssBridge);
 function BrowserOutput() {
-  const [status, setStatus] = useState("");
   const [scene, setScene] = useState<ReturnType<typeof parseLaplaceObsScene>>();
   useEffect(() => subscribeLaplaceObsScene(window, setScene), []);
   const [notices, setNotices] = useState<GiftEffectNotice[]>([]);
@@ -72,7 +71,6 @@ function BrowserOutput() {
               message.giftEffectSequence ?? 0,
             );
           setState({ ...message, snapshot: rebaseThemeResourceOrigin(message.snapshot, location.origin) });
-          setStatus("");
         } else if (
           message.type === "gift-effect" &&
           effectGate.accept(message.session, message.sequence)
@@ -87,10 +85,13 @@ function BrowserOutput() {
           setNotices((previous) => [...previous.slice(-32), notice]);
         } else if (message.type === "status") {
           setState(undefined);
-          setStatus(message.message);
+          setNotices([]);
         }
       };
       socket.onclose = () => {
+        if (disposed) return;
+        setState(undefined);
+        setNotices([]);
         if (!disposed) retry = setTimeout(connect, 1500);
       };
     };
@@ -107,7 +108,6 @@ function BrowserOutput() {
       : state;
   return (
     <div className="obs-output-root">
-      {status && <p role="status" className="ui-type-control text-t2" style={{margin:0,padding:8}}>{status}</p>}
       {displayed && (
         <GiftEffectOverlay
           key={displayed.snapshot.roomId}

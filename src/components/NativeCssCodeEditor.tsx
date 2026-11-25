@@ -1,3 +1,4 @@
+import { Button } from "./shadcn/button";
 import { useUiLanguage } from "../i18n/react.ts";
 import { uiText } from "../i18n/index.ts";
 import { forwardRef, useEffect, useImperativeHandle, useRef, useState } from "react";
@@ -200,6 +201,6 @@ export const NativeCssCodeEditor = forwardRef<NativeCssCodeEditorHandle, { value
   return <div className="native-css-code-shell">
     <div ref={host} className="native-css-code" aria-label={label} />
     {loadState === "loading" && <div className="native-css-code-state" role="status">{uiText("nativeCssCodeEditor.NativeCssCodeEditor9")}</div>}
-    {loadState === "error" && <div className="native-css-code-state is-error" role="alert"><span>{uiText("nativeCssCodeEditor.NativeCssCodeEditor10")}</span><button type="button" onClick={() => setLoadAttempt(current => current + 1)}>{uiText("common.retry")}</button></div>}
+    {loadState === "error" && <div className="native-css-code-state is-error" role="alert"><span>{uiText("nativeCssCodeEditor.NativeCssCodeEditor10")}</span><Button variant="outline" type="button" onClick={() => setLoadAttempt(current => current + 1)}>{uiText("common.retry")}</Button></div>}
   </div>;
 });

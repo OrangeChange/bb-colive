@@ -1,6 +1,6 @@
 import { StrictMode, useEffect, useState } from 'react';
 import { createRoot } from 'react-dom/client';
-import '../../src/App.css';
+import '../../src/shadcn.css';
 import { AboutDialog } from '../../src/components/AboutDialog';
 import { CoLiveLogo } from '../../src/components/CoLiveLogo';
 import { initTheme } from '../../src/theme';

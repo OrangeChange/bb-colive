@@ -1,5 +1,5 @@
-.theme-image-field > button,
-.theme-image-dialog button {
+.theme-image-field > button:not([data-slot]),
+.theme-image-dialog button:not([data-slot]) {
   display: inline-flex;
   align-items: center;
   justify-content: center;

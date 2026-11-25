@@ -3,7 +3,7 @@ import { useState } from "react";
 import { EventRow } from "../../src/components/EventRow";
 import { DEFAULT_EVENT_DISPLAY_PREFERENCES } from "../../src/eventDisplaySettings";
 import { getNativeEventSample, nativeEventSamples } from "./nativeEventSamples";
-import "../../src/App.css";
+import "../../src/shadcn.css";
 import { Task4Fixture } from "./task4EventStyle";
 import { Task1MediaFixture } from './task1EventMedia';
 

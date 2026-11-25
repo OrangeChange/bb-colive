@@ -1,3 +1,4 @@
+import { Button } from "./shadcn/button";
 import { useUiLanguage } from "../i18n/react.ts";
 import { localized, uiText } from "../i18n/index.ts";
 import { CloudDownload as LucideCloudDownload, ChevronDown as LucideChevronDown } from "lucide-react";
@@ -58,7 +59,7 @@ export function CloudRecoveryProgress() {
 
   return <aside className="absolute bottom-12 right-4 z-40 w-[min(312px,calc(100%-2rem))]" aria-label={uiText("cloudRecoveryProgress.aria_label")}>
     <div className="overflow-hidden rounded-lg border border-line bg-surface shadow-xl shadow-black/25">
-      <button type="button" aria-expanded={expanded} onClick={() => setExpanded(value => !value)}
+      <Button variant="outline" type="button" aria-expanded={expanded} onClick={() => setExpanded(value => !value)}
         className="flex min-h-10 w-full cursor-pointer items-center gap-2 px-3 py-2 text-left hover:bg-raised focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-accent-ring">
         <span className={running ? 'text-accent-text' : snapshot.status === 'failed' ? 'text-danger' : 'text-success'}><CloudDownloadIcon /></span>
         <span className="min-w-0 flex-1">
@@ -66,7 +67,7 @@ export function CloudRecoveryProgress() {
           <span className="block ui-type-micro text-t3">{summary}</span>
         </span>
         <LucideChevronDown aria-hidden="true" className={`size-4 shrink-0 text-t3 transition-transform ${expanded ? 'rotate-180' : ''}`} />
-      </button>
+      </Button>
       {running && <div className="h-0.5 bg-line" aria-hidden="true"><div className="h-full origin-left bg-accent transition-transform duration-[180ms] motion-reduce:transition-none" style={{ transform: `scaleX(${(snapshot.progress?.phase === 'preparing' ? 8 : snapshot.progress?.phase === 'finalizing' ? 96 : value) / 100})` }} /></div>}
       {expanded && <div role="status" className="border-t border-line px-3 py-3">
         <ol className="grid grid-cols-4 gap-1" aria-label={uiText("cloudRecoveryProgress.aria_label2")}>
@@ -81,11 +82,11 @@ export function CloudRecoveryProgress() {
         </ol>
         {(snapshot.notice || snapshot.error) && <p className={`mt-3 ui-type-meta ${snapshot.error ? 'text-danger' : 'text-t2'}`}>{snapshot.error ?? snapshot.notice}</p>}
         <div className="mt-3 flex items-center justify-end gap-2">
-          {running && <button type="button" onClick={pause} className="h-8 rounded-md border border-line bg-bg px-3 ui-type-control text-t2 hover:bg-raised focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent-ring">{uiText("cloudRecoveryProgress.CloudRecoveryProgress2")}</button>}
-          {snapshot.status === 'failed' && snapshot.canRestartFully && <button type="button" onClick={restartFully} className="h-8 rounded-md border border-line bg-bg px-3 ui-type-control text-t2 hover:bg-raised focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent-ring">{uiText("cloudRecoveryProgress.CloudRecoveryProgress3")}</button>}
-          {(snapshot.status === 'paused' || snapshot.status === 'failed') && <button type="button" onClick={retry} className="h-8 rounded-md bg-accent-solid px-3 ui-type-control text-accent-fg enabled:hover:bg-accent-solid-hover active:bg-accent-solid-active focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent-ring">{uiText("common.retry")}</button>}
-          {snapshot.status !== 'complete' && <button type="button" onClick={() => setConfirmCancel(true)} className="h-8 rounded-md px-2 ui-type-control text-danger hover:bg-danger/10 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-danger">{uiText("cloudRecoveryProgress.CloudRecoveryProgress4")}</button>}
-          {!running && <button type="button" onClick={() => cloudRecoveryTask.dismiss()} className="h-8 rounded-md px-2 ui-type-control text-t3 hover:bg-raised hover:text-t1 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent-ring">{uiText("common.close")}</button>}
+          {running && <Button variant="outline" type="button" onClick={pause} className="h-8 rounded-md border border-line bg-bg px-3 ui-type-control text-t2 hover:bg-raised focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent-ring">{uiText("cloudRecoveryProgress.CloudRecoveryProgress2")}</Button>}
+          {snapshot.status === 'failed' && snapshot.canRestartFully && <Button variant="outline" type="button" onClick={restartFully} className="h-8 rounded-md border border-line bg-bg px-3 ui-type-control text-t2 hover:bg-raised focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent-ring">{uiText("cloudRecoveryProgress.CloudRecoveryProgress3")}</Button>}
+          {(snapshot.status === 'paused' || snapshot.status === 'failed') && <Button variant="default" type="button" onClick={retry} className="h-8 rounded-md bg-accent-solid px-3 ui-type-control text-accent-fg enabled:hover:bg-accent-solid-hover active:bg-accent-solid-active focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent-ring">{uiText("common.retry")}</Button>}
+          {snapshot.status !== 'complete' && <Button variant="outline" type="button" onClick={() => setConfirmCancel(true)} className="h-8 rounded-md px-2 ui-type-control text-danger hover:bg-danger/10 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-danger">{uiText("cloudRecoveryProgress.CloudRecoveryProgress4")}</Button>}
+          {!running && <Button variant="outline" type="button" onClick={() => cloudRecoveryTask.dismiss()} className="h-8 rounded-md px-2 ui-type-control text-t3 hover:bg-raised hover:text-t1 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent-ring">{uiText("common.close")}</Button>}
         </div>
       </div>}
     </div>

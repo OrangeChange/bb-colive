@@ -40,7 +40,7 @@ test("个性播报面板拥有自己的标题和总开关", () => {
   assert.match(source, /选择文件/);
   assert.match(source, /试听/);
   assert.match(source, /直播间警告/);
-  assert.match(source, /直播间切断/);
+  assert.match(source, /直播切断与封禁/);
 });
 
 test("个性播报面板共用播报状态和队列控制", () => {

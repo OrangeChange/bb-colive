@@ -1,15 +1,13 @@
 import assert from 'node:assert/strict';
 import {createRequire} from 'node:module';
-import {readFile,mkdir,writeFile} from 'node:fs/promises';
-import {build} from 'esbuild';
+import {mkdir,writeFile} from 'node:fs/promises';
 const {chromium}=createRequire(import.meta.url)(process.env.PLAYWRIGHT_MODULE||'playwright');
-const out=process.env.LAYOUT_ACCEPTANCE_DIR||'D:/CodexBuild/native-price-gradient';await mkdir(out,{recursive:true});
-const result=await build({entryPoints:['tests/fixtures/themeColorDrag.tsx'],bundle:true,write:false,format:'iife',jsx:'automatic',loader:{'.css':'empty'},plugins:process.env.COLOR_PICKER_SOURCE?[{name:'picker-source',setup(b){b.onLoad({filter:/[\\/]ThemeColorField\.tsx$/},async args=>({contents:await readFile(process.env.COLOR_PICKER_SOURCE,'utf8'),loader:'tsx',resolveDir:args.path.replace(/[\\/][^\\/]+$/,'')}));}}]:[]});
-const css=(await readFile('src/components/nativeThemeEditor.css','utf8'))+(await readFile('src/App.css','utf8')).replace(/^@import[^;]+;|^@source[^;]+;/gm,'');
+const out=process.env.LAYOUT_ACCEPTANCE_DIR||'.superpowers/shadcn-ui/color-drag';await mkdir(out,{recursive:true});
+const url=(process.env.BB_COLIVE_TEST_BASE_URL||'http://127.0.0.1:1436')+'/tests/fixtures/shadcn/color-drag.html';
 const browser=await chromium.launch({channel:'chrome',headless:true});
 try{
  const page=await browser.newPage({viewport:{width:1000,height:800}});page.on('pageerror',error=>console.log('pageerror',error.message));
- await page.setContent(`<style>${css}</style><div id="root" style="padding:40px"></div>`);await page.addScriptTag({content:result.outputFiles[0].text});
+ await page.goto(url);
  await page.getByRole('button',{name:'拖动测试',exact:true}).click();await page.waitForTimeout(120);const area=page.locator('.theme-color-popover .react-colorful__saturation');const box=await area.boundingBox();
  await page.screenshot({path:out+'/color-before.png'});await page.mouse.move(box.x+box.width*.15,box.y+box.height*.3);await page.mouse.down();let maxError=0;const panels=[];
  for(let i=0;i<45;i++){
@@ -24,7 +22,7 @@ try{
  await writeFile(out+'/color-drag.json',JSON.stringify({maxError,panels,report},null,2));
  assert(maxError<=3,`拖动圆点偏移 ${maxError}px`);assert.equal(new Set(panels.map(p=>p.join(','))).size,1,'拖动时浮层位置固定');assert.equal(report.commits.length,1,'松手只提交一次');
  console.log(JSON.stringify({maxError,stablePopover:true,commits:report.commits.length}));
- await page.goto('about:blank#opaque');await page.setContent(`<style>${css}</style><div id="root" style="padding:40px"></div>`);await page.addScriptTag({content:result.outputFiles[0].text});
+ await page.goto(url+'?opaque=1#opaque');
  await page.getByRole('button',{name:'拖动测试',exact:true}).click();await page.waitForTimeout(120);
  const opaquePanel=page.locator('.theme-color-popover');assert.equal(await opaquePanel.locator('.react-colorful__alpha').count(),0);
  const opaqueBox=await opaquePanel.locator('.react-colorful__saturation').boundingBox();await page.mouse.move(opaqueBox.x+opaqueBox.width*.1,opaqueBox.y+opaqueBox.height*.8);await page.mouse.down();await page.mouse.move(opaqueBox.x+opaqueBox.width*.8,opaqueBox.y+opaqueBox.height*.3);await page.keyboard.press('Escape');await page.mouse.up();await page.waitForTimeout(150);

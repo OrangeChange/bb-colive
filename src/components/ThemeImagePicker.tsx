@@ -1,3 +1,4 @@
+import { Button } from "./shadcn/button";
 import { useUiLanguage } from "../i18n/react.ts";
 import { uiText } from "../i18n/index.ts";
 import { useEffect, useRef, useState } from "react";
@@ -65,7 +66,7 @@ export function ThemeImagePicker({
           })) ?? []),
         ]}
       />
-      <button
+      <Button variant="outline"
         type="button"
         disabled={!assets || Boolean(path && selected?.ready === false)}
         onClick={() => useImage(single && Boolean(onReplace))}
@@ -78,15 +79,15 @@ export function ThemeImagePicker({
               ? uiText("themeImagePicker.ThemeImagePicker2")
               : uiText("themeImagePicker.ThemeImagePicker3")
           : uiText("themeImagePicker.ThemeImagePicker4")}
-      </button>
+      </Button>
       {!single && onReplace && (
-        <button
+        <Button variant="outline"
           type="button"
           disabled={Boolean(path && selected?.ready === false)}
           onClick={() => useImage(true)}
         >
           <ImageUp size={18} />
-          {uiText("themeImagePicker.ThemeImagePicker2")}</button>
+          {uiText("themeImagePicker.ThemeImagePicker2")}</Button>
       )}
     </div>
   );

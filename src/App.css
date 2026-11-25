@@ -60,8 +60,22 @@
 }
 /* 仓耳与墨 W03：登录标题/空态点缀（W02 备选，落地对比后定稿；当前用 W03） */
 @font-face {
+  font-family: "Chuan Qu";
+  src: url("./assets/fonts/ChuanQu-Regular.woff2") format("woff2");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "RocknRoll One";
+  src: url("./assets/fonts/RocknRollOne-Regular.woff2") format("woff2");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
   font-family: "TsangerYuMo";
-  src: url("./assets/fonts/TsangerYuMo-W03.subset.woff2") format("woff2");
+  src: url("./assets/fonts/TsangerYuMo-W03.woff2") format("woff2");
   font-weight: 400;
   font-style: normal;
   font-display: swap;
@@ -2056,7 +2070,7 @@ html[data-window="gift"] body {
 .voice-setting-row {
   display: grid;
   min-width: 0;
-  grid-template-columns: minmax(112px, 120px) minmax(0, 1fr);
+  grid-template-columns: minmax(112px, max-content) minmax(0, 1fr);
   align-items: center;
   gap: 8px;
   padding-block: 6px;
@@ -3678,7 +3692,7 @@ html[data-window="gift"] body {
   min-height: 26px;
   border-radius: 4px;
   color: var(--text-3);
-  font-family: var(--font-data);
+  font-family: var(--font-ui);
   font-size: 12px;
   line-height: 16px;
 }
@@ -3702,7 +3716,7 @@ html[data-window="gift"] body {
   gap: 2px;
   min-width: 0;
   color: var(--text-3);
-  font-family: var(--font-data);
+  font-family: var(--font-ui);
   font-size: 11px;
   line-height: 14px;
 }
@@ -3716,7 +3730,7 @@ html[data-window="gift"] body {
   background: var(--bg);
   padding: 0 4px;
   color: var(--text-1);
-  font-family: var(--font-data);
+  font-family: var(--font-ui);
   font-size: 12px;
   line-height: 16px;
   outline: none;
@@ -3858,7 +3872,7 @@ html[data-window="gift"] body {
   min-height: 28px;
   border-radius: 5px;
   color: var(--text-3);
-  font-family: var(--font-data);
+  font-family: var(--font-ui);
   font-size: 12px;
 }
 
@@ -3879,7 +3893,7 @@ html[data-window="gift"] body {
   min-width: 0;
   gap: 3px;
   color: var(--text-3);
-  font-family: var(--font-data);
+  font-family: var(--font-ui);
   font-size: 11px;
 }
 
@@ -3892,7 +3906,7 @@ html[data-window="gift"] body {
   background: var(--bg);
   padding-inline: 5px;
   color: var(--text-1);
-  font-family: var(--font-data);
+  font-family: var(--font-ui);
   font-size: 12px;
   outline: none;
 }
@@ -3914,7 +3928,7 @@ html[data-window="gift"] body {
   min-width: 0;
   gap: 3px;
   color: var(--text-3);
-  font-family: var(--font-data);
+  font-family: var(--font-ui);
   font-size: 11px;
 }
 
@@ -3927,7 +3941,7 @@ html[data-window="gift"] body {
   background: var(--bg);
   padding-inline: 5px;
   color: var(--text-1);
-  font-family: var(--font-data);
+  font-family: var(--font-ui);
   font-size: 12px;
   outline: none;
 }
@@ -3951,7 +3965,7 @@ html[data-window="gift"] body {
 .style-color-opacity-input span {
   flex: 0 0 auto;
   color: var(--text-3);
-  font-family: var(--font-data);
+  font-family: var(--font-ui);
   font-size: 12px;
 }
 
@@ -4019,7 +4033,7 @@ html[data-window="gift"] body {
   overflow: hidden;
   flex: 1 1 auto;
   color: var(--text-2);
-  font-family: var(--font-data);
+  font-family: var(--font-ui);
   font-size: 12px;
   text-overflow: ellipsis;
   white-space: nowrap;
@@ -4248,7 +4262,7 @@ html[data-window="gift"] body {
 .about-badge-react { --badge-color: #61dafb; }
 .about-badge-tauri { --badge-color: #ffc131; }
 .about-badge-tailwind { --badge-color: #06b6d4; }
-.about-badge-radix { --badge-color: #6f6d78; }
+.about-badge-radix, .about-badge-shadcn { --badge-color: #6f6d78; }
 .about-badge-blivechat { --badge-color: #18b1e5; }
 .about-badge-laplace { --badge-color: #fb7299; }
 .about-badge-bilibili { --badge-color: var(--accent); }
@@ -4275,3 +4289,36 @@ html[data-window="gift"] body {
 .window-material-notice button { color:var(--accent-text); text-decoration:underline; }
 
 :is(.display-window, .gift-window)[data-material="transparent"][data-lock-state="unlocked"] :is(.display-window-resize-handle, .gift-window-resize-handle) { background: rgb(127 127 127 / 1%); }
+
+.ui-empty-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  min-block-size: 128px;
+  inline-size: 100%;
+  padding: 24px 20px;
+  color: var(--text-3);
+  font-size: 14px;
+  line-height: 1.5;
+  text-align: center;
+}
+.ui-empty-state > p { max-inline-size: 48ch; margin: 0; }
+.ui-empty-state > button { margin-block: 0; }
+.ui-empty-fill { flex: 1 0 auto; }
+.event-list[data-empty] { display: flex; flex-direction: column; block-size: 100%; }
+.native-style-preview-loading { min-block-size: 100dvh; }
+.style-preview-page { display: flex; flex-direction: column; inline-size: 100%; block-size: 100dvh; min-block-size: 0; background: transparent; }
+.style-preview-body { flex: 1; min-block-size: 0; }
+.style-preview-connection-status { flex: none; margin: 0; padding: 8px 12px; border-block-end: 1px solid var(--color-line); background: var(--surface); color: var(--text-2); font-size: 14px; line-height: 1.5; text-align: center; }
+
+.review-session-list[data-empty] { display: flex; flex: 1; min-block-size: 128px; }
+
+.voice-setting-label-text,.voice-setting-hint{white-space:normal;overflow:visible;text-overflow:clip;overflow-wrap:break-word}
+.voice-setting-row{grid-template-columns:minmax(0,max-content) minmax(44px,1fr)}
+.voice-setting-label{overflow:visible;max-width:32ch}
+.settings-font-size-control{min-width:0;gap:4px}
+.settings-font-size-input[data-slot="input"]{flex:0 0 48px;width:48px;padding-inline:0 2px;font-size:14px;line-height:20px;box-shadow:none}
+.settings-font-size-unit{font-size:14px;line-height:20px}
+.settings-section-navigator-menu>button{justify-content:flex-start;gap:8px}

@@ -5,7 +5,7 @@
 .anchor-menu-select:hover { background:var(--color-raised); }
 .anchor-menu-name { min-width:0; flex:1; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
 .anchor-menu-room { flex:none; color:var(--color-t3); font-variant-numeric:tabular-nums; transition:opacity 120ms ease; }
-.anchor-menu-remove { position:absolute; inset-block:0; right:4px; display:flex; align-items:center; justify-content:center; width:32px; border:0; border-radius:6px; background:transparent; color:var(--color-t3); visibility:hidden; opacity:0; pointer-events:none; transition:opacity 120ms ease; }
+.anchor-menu-remove { position:absolute; inset-block:0; right:4px; display:flex; align-items:center; justify-content:center; width:32px; border:0; border-radius:6px; background:transparent; color:var(--color-t3); opacity:0; pointer-events:none; transition:opacity 120ms ease; }
 .anchor-menu-remove:hover { color:var(--color-danger); background:var(--color-raised); }
 .anchor-menu-row.is-remove-visible .anchor-menu-room,.anchor-menu-row:has(:focus-visible) .anchor-menu-room { opacity:0; }
 .anchor-menu-row.is-remove-visible .anchor-menu-remove,.anchor-menu-row:has(:focus-visible) .anchor-menu-remove { visibility:visible; opacity:1; pointer-events:auto; }

@@ -2,15 +2,24 @@ import { tmpdir as ssrTemporaryDirectory } from 'node:os';
 import test, { before, after } from 'node:test';
 import assert from 'node:assert/strict';
 import React from 'react';
+import { JSDOM } from '../vendor/blivechat/node_modules/jsdom/lib/api.js';
 import { renderToStaticMarkup } from 'react-dom/server';
-import { createServer } from 'vite';
+import { createServer } from "./helpers/vite.mjs";
 import { fileURLToPath } from 'node:url';
 import { componentRuntime, findElement } from './helpers/componentRuntime.mjs';
 import { createRevenueWindowSelection, changeRevenueWindowSelection } from '../src/windows/giftWindowModel.ts';
 
 let vite, Sidebar, SettingsPanel, createDefaultSceneSettings;
 const savedMatchMedia = globalThis.matchMedia;
+const savedDocument = globalThis.document;
+const savedComputedStyle = globalThis.getComputedStyle;
+const savedDomParser = globalThis.DOMParser, savedSerializer = globalThis.XMLSerializer;
+const dom = new JSDOM("<!doctype html><html></html>");
 before(async () => {
+  globalThis.DOMParser = dom.window.DOMParser;
+  globalThis.XMLSerializer = dom.window.XMLSerializer;
+  globalThis.document = dom.window.document;
+  globalThis.getComputedStyle = dom.window.getComputedStyle.bind(dom.window);
   globalThis.matchMedia = query => ({matches:false,media:query,addEventListener(){},removeEventListener(){}});
   vite = await createServer({configFile:false,esbuild:{jsx:"automatic"},cacheDir:ssrTemporaryDirectory()+"/danmu-ssr-cache/tests-revenueSidebar.test.mjs",optimizeDeps:{noDiscovery:true,include:[]}, root: fileURLToPath(new URL('..', import.meta.url)), server: {watch:null,middlewareMode:true, hmr:false, ws:false}, appType:'custom', logLevel:'silent' });
   ({ Sidebar } = await vite.ssrLoadModule('/src/components/Sidebar.tsx'));
@@ -24,6 +33,11 @@ after(async () => {
     await getConnectionRuntime()?.dispose('shutdown');
   } finally {
     await vite.close();
+    globalThis.DOMParser = savedDomParser;
+    globalThis.XMLSerializer = savedSerializer;
+    globalThis.document = savedDocument;
+    globalThis.getComputedStyle = savedComputedStyle;
+    dom.window.close();
     if (savedMatchMedia === undefined) delete globalThis.matchMedia;
     else globalThis.matchMedia = savedMatchMedia;
   }
@@ -59,8 +73,12 @@ test('真实设置将子窗放进分窗组，总开名称保留，显示方式�
   const group = giftSection.slice(giftSection.indexOf('aria-label="分窗"'));
   assert.ok(group.length > 0, '子开关归属分窗组');
   for (const label of ['礼物窗','醒目留言窗','大航海窗']) assert.match(group,new RegExp(`aria-label="${label}"`));
-  assert.match(giftSection, /role="radiogroup" aria-label=["']显示方式["']/);
-  assert.match(giftSection, /checked="" value="split"[\s\S]*?分窗显示<\/span>/);
+  const fragment = JSDOM.fragment(html);
+  const choice = fragment.querySelector('[role="radiogroup"][aria-label="显示方式"]');
+  assert.ok(choice);
+  const selected = choice.querySelector('[role="radio"][aria-checked="true"]');
+  assert.equal(selected.getAttribute("value"), "split");
+  assert.match(selected.textContent, /分窗/);
 });
 
 test('真实Sidebar总入口使用组合窗口，子窗使用礼盒、气泡金额和标准锚', () => {

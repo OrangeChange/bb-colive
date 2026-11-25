@@ -1,3 +1,6 @@
+import { Popover, PopoverTrigger, PopoverContent } from "./shadcn/popover";
+import { Input } from "./shadcn/input";
+import { Button } from "./shadcn/button";
 import { useUiLanguage } from "../i18n/react.ts";
 import { localized, uiText } from "../i18n/index.ts";
 import { AnchorMenuRow } from "./AnchorMenuRow.tsx";
@@ -144,16 +147,6 @@ export function ConnectBar({ onUserFilter }: { onUserFilter?: (user: Pick<RankUs
     return () => clearTimeout(timer);
   }, [roomInput, session]);
 
-  // 点击菜单外部关闭
-  useEffect(() => {
-    if (!menuOpen) return;
-    const onDown = (e: MouseEvent) => {
-      if (!menuRef.current?.contains(e.target as Node)) setMenuOpen(false);
-    };
-    document.addEventListener("mousedown", onDown);
-    return () => document.removeEventListener("mousedown", onDown);
-  }, [menuOpen]);
-
   // 连接状态变化后回到连接状态提供的主播卡，避免临时选择残留到下一次断开。
   useEffect(() => {
     setSelectedAnchorId(null);
@@ -182,12 +175,9 @@ export function ConnectBar({ onUserFilter }: { onUserFilter?: (user: Pick<RankUs
     <div className="flex min-h-12 shrink-0 flex-wrap items-center gap-x-3 gap-y-1 border-b border-line bg-surface px-4 py-2">
       {card && !showInput ? (
         // 主播卡（连接中=当前连接主播；未连接=回显最后使用的主播；点击弹主播列表）
-        <div ref={menuRef} className="relative">
-          <button
-            onClick={() => {
-              setMenuOpen((v) => !v);
-              refreshAnchors(); // 展开即懒刷新开播状态（store 内 60s 节流）
-            }}
+        <Popover open={menuOpen} onOpenChange={open => {setMenuOpen(open);if(open)refreshAnchors();}}><div ref={menuRef} className="relative">
+          <PopoverTrigger asChild>
+          <Button type="button" variant="outline"
             className={`flex h-8 items-center gap-2 rounded-md border px-2 ui-type-section-title transition-colors ${
               card.live
                 ? "border-accent/40 bg-accent-subtle hover:border-accent/60"
@@ -200,10 +190,8 @@ export function ConnectBar({ onUserFilter }: { onUserFilter?: (user: Pick<RankUs
               {card.uname ?? (card.roomId !== undefined ? uiText("connectBar.ConnectBar", { roomId: card.roomId }) : "…")}
             </span>
             <span className={`text-t3 transition-transform ${menuOpen ? "rotate-180" : ""}`}>▾</span>
-          </button>
-
-          {menuOpen && (
-            <div className="ui-motion-enter absolute left-0 top-10 z-50 w-72 rounded-lg border border-line bg-surface p-1 shadow-xl shadow-black/20">
+          </Button></PopoverTrigger>
+            <PopoverContent align="start" className="w-72 p-1">
               <div className="px-2.5 py-1.5 ui-type-control text-t3">{uiText("connectBar.ConnectBar2")}</div>
               <div className="max-h-[50vh] overflow-y-auto">
                 {anchors.length === 0 && (
@@ -215,7 +203,7 @@ export function ConnectBar({ onUserFilter }: { onUserFilter?: (user: Pick<RankUs
                   onSelect={() => switchAnchor(a)} onRemove={() => {setMenuOpen(false);setRemovingAnchor(a);}} />)}
               </div>
               <div className="mt-1 border-t border-line pt-1">
-                <button
+                <Button type="button" variant="outline"
                   onClick={() => {
                     setMenuOpen(false);
                     setShowInput(true);
@@ -223,15 +211,14 @@ export function ConnectBar({ onUserFilter }: { onUserFilter?: (user: Pick<RankUs
                   className="flex w-full items-center gap-2.5 rounded-md px-2 py-1.5 ui-type-section-title text-t2 hover:bg-raised"
                 >
                   <span className="inline-flex size-[22px] items-center justify-center rounded-full border border-dashed border-t3 text-t3">＋</span>
-                  {uiText("connectBar.ConnectBar4")}</button>
+                  {uiText("connectBar.ConnectBar4")}</Button>
               </div>
-            </div>
-          )}
-        </div>
+            </PopoverContent>
+        </div></Popover>
       ) : (
         <>
           <div className="relative">
-            <input
+            <Input
               value={roomInput}
               onChange={(e) => setRoomInput(e.target.value)}
               onKeyDown={(e) => {
@@ -267,7 +254,7 @@ export function ConnectBar({ onUserFilter }: { onUserFilter?: (user: Pick<RankUs
             )}
           </div>
           {showInput && (
-            <button
+            <Button type="button" variant="outline"
               onClick={() => {
                 setRoomInput("");
                 setPreview({ status: "idle" });
@@ -277,13 +264,13 @@ export function ConnectBar({ onUserFilter }: { onUserFilter?: (user: Pick<RankUs
               title={uiText("connectBar.title6")}
             >
               ✕
-            </button>
+            </Button>
           )}
         </>
       )}
       {card && !showInput ? (
         active ? (
-          <button
+          <Button type="button" variant="default"
             onClick={() => {
               if (hasPendingSwitch && session && selectedAnchor) {
                 connect(selectedAnchor.roomIdInput, session.cookie, session.mid);
@@ -296,10 +283,10 @@ export function ConnectBar({ onUserFilter }: { onUserFilter?: (user: Pick<RankUs
             className="h-8 rounded-md bg-accent-solid px-4 ui-type-section-title font-semibold text-accent-fg transition-colors hover:bg-accent-solid-hover active:bg-accent-solid-active"
           >
             {hasPendingSwitch ? uiText("connectBar.ConnectBar7") : uiText("common.disconnect")}
-          </button>
+          </Button>
         ) : (
           // 未连接：连接当前选中的主播；未选择时连接最后使用的主播
-          <button
+          <Button type="button" variant="default"
             onClick={() => {
               if (session && selectedOrLastAnchor) {
                 connect(selectedOrLastAnchor.roomIdInput, session.cookie, session.mid);
@@ -307,15 +294,15 @@ export function ConnectBar({ onUserFilter }: { onUserFilter?: (user: Pick<RankUs
             }}
             className="h-8 rounded-md bg-accent-solid px-4 ui-type-section-title font-semibold text-accent-fg transition-colors hover:bg-accent-solid-hover active:bg-accent-solid-active"
           >
-            {uiText("common.connect")}</button>
+            {uiText("common.connect")}</Button>
         )
       ) : (
-        <button
+        <Button type="button" variant="default"
           onClick={onConnect}
           disabled={!canConnect}
           className="h-8 rounded-md bg-accent-solid px-4 ui-type-section-title font-semibold text-accent-fg transition-colors enabled:hover:bg-accent-solid-hover enabled:active:bg-accent-solid-active disabled:cursor-not-allowed disabled:opacity-40"
         >
-          {uiText("common.connect")}</button>
+          {uiText("common.connect")}</Button>
       )}
 
       <div className="flex items-center gap-1.5" title={state.message ?? meta.label}>

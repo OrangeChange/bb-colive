@@ -64,8 +64,8 @@ export function StylePreviewArea({ context, mode, events, eventStyleSettings, ar
     data-event-style-scope={area.scope} className={`native-theme-preview preview ${context === "review" ? "" : "theme-surface"} ${resolved.areaClass} style-editor-preview-list native-preview-regions`}>
     {area.style}
     {stickyPosition === "top" && sticky}
-    <div ref={setScrollNode} data-native-list className={`event-list native-preview-message-scroll feed-virtual-viewport feed-virtual-viewport-${getFeedStackAlignment(direction, alignment)}`}>
-      {visible.length === 0 && <p role="status" className="ui-type-control text-t3">{uiText("stylePreviewArea.StylePreviewArea")}</p>}
+    <div ref={setScrollNode} data-empty={visible.length === 0 || undefined} data-native-list className={`event-list native-preview-message-scroll feed-virtual-viewport feed-virtual-viewport-${getFeedStackAlignment(direction, alignment)}`}>
+      {visible.length === 0 && <div role="status" className="ui-empty-state ui-empty-fill native-preview-empty"><p>{uiText("stylePreviewArea.StylePreviewArea")}</p></div>}
       {visible.map((event, index) => <EventRowSlot key={event.reactKey ?? event.id} className="event-row-slot"
         data-event-id={event.reactKey ?? event.id} showEventSpacing={index < visible.length - 1}>
         <EventRow maskUsername={maskUsername} ev={event} activityNow={input.previewMotion === "simulation" ? undefined : previewNow} liveLayout={resolved.layout !== "review"} reviewLayout={resolved.layout === "review"}

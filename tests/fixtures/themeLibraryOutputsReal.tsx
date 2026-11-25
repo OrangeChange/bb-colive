@@ -1,5 +1,5 @@
 import {mockIPC,mockWindows} from '@tauri-apps/api/mocks';
-import React from 'react';import{createRoot}from'react-dom/client';import '../../src/App.css';
+import React from 'react';import{createRoot}from'react-dom/client';import '../../src/shadcn.css';
 const target=new URLSearchParams(location.search).get('target')??'live';mockWindows(target==='windows'?'display':'main');mockIPC((command,args)=>(window as any).__realInvoke(command,args));
 await import('../../src/compat/blivechat/register.tsx');await import('../../src/compat/openlive/register.tsx');await import('../../src/compat/laplace/register.tsx');
 const{createStylePreviewEvents}=await import('../../src/components/stylePreviewEvents.ts');const events=createStylePreviewEvents('混合流').map(e=>({...e,roomId:24125,__roomGeneration:1}));(window as any).__outputEvents=events;

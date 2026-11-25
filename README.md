@@ -122,7 +122,7 @@ OBS 输出由本机程序提供，使用期间需保持 BB CoLive 运行。详�
 
 ## 开发与构建
 
-基于 **Tauri 2 · React 19 · TypeScript · Tailwind CSS · Radix UI**。
+基于 **Tauri 2 · React 19 · TypeScript · Tailwind CSS · shadcn/ui（Radix UI）**。
 
 开发环境：Windows 10 / 11 x64、Node.js 24、Rust MSVC 工具链、Microsoft C++ Build Tools 和 WebView2；确保 `~/.cargo/bin` 已加入 `PATH`。
 

@@ -19,5 +19,5 @@ test('默认配色仍允许可视化和自定义CSS覆盖',()=>{
  const root=postcss.parse(composeNativeThemeCss(theme));const layers=[];root.walkDecls('color',d=>{if(d.value==='rgb(12, 34, 56)'||d.value==='rgb(65, 43, 21)')layers.push([d.value,d.parent.parent.params])});assert.deepEqual(layers,[['rgb(12, 34, 56)','config'],['rgb(65, 43, 21)','custom']]);
 });
 test('其他两个原生主题保留独立基础样式',()=>{
- for(const [id,file]of[['native-card','nativeCardTheme.css'],['native-bubble','nativeBubbleTheme.css']])assert.equal(createBuiltinNativeTheme(id).styles.baseCss,readFileSync('src/themes/'+file,'utf8'));
+ for(const [id,file]of[['native-card','nativeCardTheme.css'],['native-bubble','nativeBubbleTheme.css']])assert.equal(createBuiltinNativeTheme(id).styles.baseCss,readFileSync('src/themes/'+file,'utf8').replaceAll('\r\n', '\n'));
 });

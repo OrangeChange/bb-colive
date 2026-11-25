@@ -1,6 +1,16 @@
-import { useId, type ReactNode } from "react";
+import type { ReactNode } from "react";
+import { RadioGroup, RadioGroupItem } from "./shadcn/radio-group";
 
-export function SettingsChoiceControl<T extends string | number>({ label, value, options, onChange, disabled = false, decoration, iconOnly = false, className = "" }: {
+export function SettingsChoiceControl<T extends string | number>({
+  label,
+  value,
+  options,
+  onChange,
+  disabled = false,
+  decoration,
+  iconOnly = false,
+  className = "",
+}: {
   label: string;
   value: T | undefined;
   options: readonly { value: T; label: string }[];
@@ -10,11 +20,35 @@ export function SettingsChoiceControl<T extends string | number>({ label, value,
   iconOnly?: boolean;
   className?: string;
 }) {
-  const name = useId();
-  return <div className={`settings-choice-control ui-type-control ${className}`} role="radiogroup" aria-label={label} aria-disabled={disabled || undefined}>
-    {options.map(option => <label className="settings-choice-option" key={option.value} title={iconOnly ? option.label : undefined}>
-      <input type="radio" name={name} value={option.value} checked={value === option.value} disabled={disabled} onChange={() => onChange(option.value)} />
-      {decoration && <span className="settings-choice-decoration" aria-hidden="true">{decoration(option.value)}</span>}<span className={iconOnly ? "sr-only" : undefined}>{option.label}</span>
-    </label>)}
-  </div>;
+  return (
+    <RadioGroup
+      className={`ui-segmented settings-choice-control ui-type-control ${className}`}
+      aria-label={label}
+      value={value === undefined ? "" : String(value)}
+      disabled={disabled}
+      onValueChange={(next) => {
+        const option = options.find((option) => String(option.value) === next);
+        if (option) onChange(option.value);
+      }}
+    >
+      {options.map((option) => (
+        <RadioGroupItem
+          className="ui-segmented-item settings-choice-option"
+          value={String(option.value)}
+          key={option.value}
+          title={iconOnly ? option.label : undefined}
+          aria-label={option.label}
+        >
+          {decoration && (
+            <span className="settings-choice-decoration" aria-hidden="true">
+              {decoration(option.value)}
+            </span>
+          )}
+          <span className={iconOnly ? "sr-only" : undefined}>
+            {option.label}
+          </span>
+        </RadioGroupItem>
+      ))}
+    </RadioGroup>
+  );
 }

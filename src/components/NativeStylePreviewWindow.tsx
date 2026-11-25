@@ -40,6 +40,6 @@ export function NativeStylePreviewWindow() {
       <StylePreviewContent state={state} />
     </div>
   ) : (
-    <div role="status">{uiText("nativeStylePreviewWindow.NativeStylePreviewWindow")}</div>
+    <div role="status" className="native-style-preview-loading ui-empty-state">{uiText("nativeStylePreviewWindow.NativeStylePreviewWindow")}</div>
   );
 }

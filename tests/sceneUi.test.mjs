@@ -186,7 +186,7 @@ test("预言玩法心跳丢弃，不进入现场或系统提醒", () => {
 test("主窗口为现场保留独立的右侧工作台空间", () => {
   assert.match(appSource, /RightWorkbench/);
   assert.match(appSource, /workbenchExpanded/);
-  assert.match(appSource, /<StatusBar \/>/);
+  assert.match(appSource, /<StatusBar\b/);
   assert.match(appSource, /<RightWorkbench/);
   assert.match(workbenchSource, /style=\{\{ width:/);
   assert.doesNotMatch(appSource, /position:\s*["']?absolute/);

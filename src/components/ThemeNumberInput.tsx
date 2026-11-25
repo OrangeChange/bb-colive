@@ -1,6 +1,8 @@
+import { Input } from "./shadcn/input";
 import { useRef, useState } from "react";
 
-const numberText = (value: number | undefined) => value === undefined ? "" : String(Number(value.toFixed(2)));
+const numberText = (value: number | undefined) =>
+  value === undefined ? "" : String(Number(value.toFixed(2)));
 
 export function ThemeNumberInput({
   label,
@@ -51,8 +53,11 @@ export function ThemeNumberInput({
     }
   };
   return (
-    <input
-      type="text"
+    <Input
+      type={step === 100 ? "number" : "text"}
+      min={min}
+      max={max}
+      step={step}
       inputMode="decimal"
       role="spinbutton"
       aria-label={label}
@@ -88,7 +93,8 @@ export function ThemeNumberInput({
           event.preventDefault();
           dirty.current = true;
           const next = bounded(
-            (parse(draft) ?? value ?? 0) + (event.key === "ArrowUp" ? step : -step),
+            (parse(draft) ?? value ?? 0) +
+              (event.key === "ArrowUp" ? step : -step),
           );
           setDraft(String(Number(next.toFixed(2))));
           onPreviewChange?.(next);

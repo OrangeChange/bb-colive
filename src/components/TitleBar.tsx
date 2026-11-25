@@ -1,3 +1,4 @@
+import { Button } from "./shadcn/button";
 import { useUiLanguage } from "../i18n/react.ts";
 import { uiText } from "../i18n/index.ts";
 import { Minus as LucideMinus, Square as LucideSquare, Copy as LucideCopy, X as LucideX } from "lucide-react";
@@ -107,10 +108,10 @@ export function TitleBar() {
         <span className="truncate ui-type-control font-medium text-t1">BB CoLive</span>
       </div>
       <div className="flex h-full shrink-0 items-center" aria-label={uiText("titleBar.aria_label")}>
-        <button type="button" className={windowButton} aria-label={uiText("titleBar.aria_label2")} title={uiText("titleBar.title")} onClick={minimize}>
+        <Button variant="ghost" type="button" className={windowButton} aria-label={uiText("titleBar.aria_label2")} title={uiText("titleBar.title")} onClick={minimize}>
           <IconMinimize />
-        </button>
-        <button
+        </Button>
+        <Button variant="ghost"
           type="button"
           className={windowButton}
           aria-label={maximized ? uiText("titleBar.aria_label3") : uiText("titleBar.aria_label4")}
@@ -118,8 +119,8 @@ export function TitleBar() {
           onClick={toggleMaximize}
         >
           {maximized ? <IconRestore /> : <IconMaximize />}
-        </button>
-        <button
+        </Button>
+        <Button variant="ghost"
           type="button"
           className={`${windowButton} hover:bg-danger-solid hover:text-danger-fg focus-visible:ring-danger`}
           aria-label={uiText("common.closeWindow")}
@@ -127,7 +128,7 @@ export function TitleBar() {
           onClick={close}
         >
           <IconClose />
-        </button>
+        </Button>
       </div>
     </header>
   );

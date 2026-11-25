@@ -1,3 +1,4 @@
+import { Button } from "./shadcn/button";
 import { RoomLockExpiry } from './RoomLockExpiry';
 import { useEffect, useState } from 'react';
 import { Ban, LockKeyhole, TriangleAlert } from 'lucide-react';
@@ -35,8 +36,8 @@ export function UrgentSystemNotice({ event, onDismiss }: { event: DanmakuEvent |
           ? uiText('roomLock.remaining', { duration: formatRemainingDuration(endsAt - now) })
           : uiText('roomLock.awaitingConfirmation')}</div>}
       </div>
-      <button type="button" aria-label={uiText('uiControls.closeNotice')} onClick={onDismiss}
-        className="shrink-0 rounded px-1 text-danger/70 hover:bg-danger/10 hover:text-danger focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-danger">×</button>
+      <Button size="icon-sm" variant="ghost" type="button" aria-label={uiText('uiControls.closeNotice')} onClick={onDismiss}
+        className="shrink-0 rounded px-1 text-danger/70 hover:bg-danger/10 hover:text-danger focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-danger">×</Button>
     </div>
   );
 }

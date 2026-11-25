@@ -1,3 +1,4 @@
+import { Button } from "./shadcn/button";
 import { useUiLanguage } from "../i18n/react.ts";
 import { uiText } from "../i18n/index.ts";
 import { imageTargetNodes } from "./ThemeImagePreview.tsx";
@@ -294,7 +295,7 @@ export function ThemeDecorationField({
   };
   return (
     <div className="theme-image-field">
-      <button
+      <Button variant="outline"
         type="button"
         onClick={() => {
           const nodes = targetNodes(root, selector);
@@ -430,16 +431,16 @@ export function ThemeDecorationField({
       >
         <ImagePlus size={18} />
         {avatarFrame ? uiText("themeDecorationField.ThemeDecorationField") : uiText("themeDecorationField.ThemeDecorationField2")}
-      </button>
+      </Button>
       {open && (
         <ThemeImageDialog
           title={avatarFrame ? uiText("themeDecorationField.title") : uiText("themeDecorationField.title2")}
           onClose={() => setOpen(false)}
           actions={
             <>
-              <button type="button" onClick={() => setOpen(false)}>
-                {uiText("common.cancel")}</button>
-              <button
+              <Button variant="outline" type="button" onClick={() => setOpen(false)}>
+                {uiText("common.cancel")}</Button>
+              <Button variant="outline"
                 type="button"
                 disabled={
                   avatarFrame &&
@@ -457,7 +458,7 @@ export function ThemeDecorationField({
                   setOpen(false);
                 }}
               >
-                {uiText("themeDecorationField.actions")}</button>
+                {uiText("themeDecorationField.actions")}</Button>
             </>
           }
         >
@@ -474,7 +475,7 @@ export function ThemeDecorationField({
                   ["hidden", uiText("themeDecorationField.ThemeDecorationField5")],
                 ] as const
               ).map(([mode, label]) => (
-                <button
+                <Button variant="outline"
                   type="button"
                   key={mode}
                   aria-pressed={avatarMode === mode}
@@ -484,21 +485,21 @@ export function ThemeDecorationField({
                   }}
                 >
                   {label}
-                </button>
+                </Button>
               ))}
             </div>
           )}
           {(!avatarFrame || avatarMode === "custom") && (
             <>
               {!avatarFrame && onInherit && (
-                <button
+                <Button variant="outline"
                   type="button"
                   onClick={() => {
                     onInherit();
                     setOpen(false);
                   }}
                 >
-                  {uiText("themeDecorationField.ThemeDecorationField6")}</button>
+                  {uiText("themeDecorationField.ThemeDecorationField6")}</Button>
               )}
               <ThemeImagePicker
                 label={uiText("themeDecorationField.label")}
@@ -519,21 +520,21 @@ export function ThemeDecorationField({
                       {clippingLabel.split("、").slice(1).join("、")}
                     </details>
                   )}
-                  <button
+                  <Button variant="outline"
                     type="button"
                     onMouseEnter={showClipping}
                     onMouseLeave={clearHighlight}
                     onFocus={showClipping}
                     onBlur={clearHighlight}
                   >
-                    {uiText("themeDecorationField.ThemeDecorationField11")}</button>
+                    {uiText("themeDecorationField.ThemeDecorationField11")}</Button>
                 </details>
               )}
               {existing.map((entry) => (
                 <div key={entry.slot} className="theme-image-hint">
                   {uiText("themeDecorationField.ThemeDecorationField12")}{entry.slot === "before" ? uiText("themeDecorationField.ThemeDecorationField13") : uiText("themeDecorationField.ThemeDecorationField14")}：
                   {entry.candidate ? (
-                    <button
+                    <Button variant="outline"
                       type="button"
                       disabled={draft.some(
                         (image) => image.slot === entry.slot,
@@ -543,7 +544,7 @@ export function ThemeDecorationField({
                         setSelected(draft.length);
                       }}
                     >
-                      {uiText("themeDecorationField.ThemeDecorationField15")}</button>
+                      {uiText("themeDecorationField.ThemeDecorationField15")}</Button>
                   ) : (
                     <span>{uiText("themeDecorationField.ThemeDecorationField16")}</span>
                   )}
@@ -596,7 +597,7 @@ export function ThemeDecorationField({
                             backgroundImage: `url(${JSON.stringify(assets?.images.find((asset) => asset.path === entry.source)?.url ?? entry.source)})`,
                           }}
                         />
-                        <button
+                        <Button variant="outline"
                           type="button"
                           className="theme-image-layer-name"
                           onClick={() => setSelected(index)}
@@ -607,8 +608,8 @@ export function ThemeDecorationField({
                               ? uiText("themeDecorationField.ThemeDecorationField18")
                               : entry.source.split("/").pop()?.slice(0, 80) ||
                                 uiText("themeDecorationField.ThemeDecorationField19"))}
-                        </button>
-                        <button
+                        </Button>
+                        <Button variant="outline"
                           type="button"
                           aria-label={uiText("themeDecorationField.aria_label2")}
                           disabled={index === 0}
@@ -623,8 +624,8 @@ export function ThemeDecorationField({
                           }}
                         >
                           <ArrowUp size={18} />
-                        </button>
-                        <button
+                        </Button>
+                        <Button variant="outline"
                           type="button"
                           aria-label={uiText("themeDecorationField.aria_label3")}
                           disabled={index === draft.length - 1}
@@ -639,8 +640,8 @@ export function ThemeDecorationField({
                           }}
                         >
                           <ArrowDown size={18} />
-                        </button>
-                        <button
+                        </Button>
+                        <Button variant="outline"
                           type="button"
                           aria-label={uiText("themeDecorationField.aria_label4")}
                           onClick={() =>
@@ -656,8 +657,8 @@ export function ThemeDecorationField({
                           ) : (
                             <EyeOff size={18} />
                           )}
-                        </button>
-                        <button
+                        </Button>
+                        <Button size="icon-sm" variant="ghost"
                           type="button"
                           aria-label={uiText("themeDecorationField.aria_label5")}
                           onClick={() => {
@@ -668,7 +669,7 @@ export function ThemeDecorationField({
                           }}
                         >
                           <X size={18} />
-                        </button>
+                        </Button>
                       </div>
                     ))}
                   </div>
@@ -784,7 +785,7 @@ export function ThemeDecorationField({
                       {!avatarFrame && !referenceIsCurrent && (
                         <details>
                           <summary>{uiText("themeDecorationField.ThemeDecorationField29")}</summary>
-                          <button
+                          <Button variant="outline"
                             type="button"
                             onClick={() => {
                               update({ localReference: !item.localReference });
@@ -798,22 +799,22 @@ export function ThemeDecorationField({
                             {item.localReference
                               ? uiText("themeDecorationField.ThemeDecorationField30")
                               : uiText("themeDecorationField.ThemeDecorationField31")}
-                          </button>
+                          </Button>
                         </details>
                       )}
-                      <button
+                      <Button variant="outline"
                         type="button"
                         onMouseEnter={showReference}
                         onMouseLeave={clearHighlight}
                         onFocus={showReference}
                         onBlur={clearHighlight}
                       >
-                        {uiText("themeDecorationField.ThemeDecorationField32")}</button>
+                        {uiText("themeDecorationField.ThemeDecorationField32")}</Button>
                       <section>
                         <h4>{uiText("themeDecorationField.ThemeDecorationField33")}</h4>
                         <div className="theme-image-grid">
                           {Array.from({ length: 9 }, (_, i) => (
-                            <button
+                            <Button variant="outline"
                               type="button"
                               key={i}
                               aria-pressed={
@@ -852,14 +853,14 @@ export function ThemeDecorationField({
                                   }}
                                 />
                               </span>
-                            </button>
+                            </Button>
                           ))}
                         </div>
                       </section>
                     </>
                   )}
                   {avatarFrame && (
-                    <button
+                    <Button variant="outline"
                       type="button"
                       onClick={() =>
                         update({
@@ -877,14 +878,14 @@ export function ThemeDecorationField({
                       }
                     >
                       <RotateCcw size={18} />
-                      {uiText("themeDecorationField.ThemeDecorationField34")}</button>
+                      {uiText("themeDecorationField.ThemeDecorationField34")}</Button>
                   )}
                   <section className="theme-image-size">
                     <div className="theme-image-dimensions">
                       {(["width", "height"] as const).map((key, index) => (
                         <Fragment key={key}>
                           {index === 1 && (
-                            <button
+                            <Button variant="outline"
                               type="button"
                               aria-label={locked ? uiText("themeDecorationField.aria_label7") : uiText("themeDecorationField.aria_label8")}
                               title={locked ? uiText("themeDecorationField.title4") : uiText("themeDecorationField.title5")}
@@ -895,7 +896,7 @@ export function ThemeDecorationField({
                               ) : (
                                 <Link2Off size={18} />
                               )}
-                            </button>
+                            </Button>
                           )}
                           <label>
                             {index ? uiText("themeDecorationField.ThemeDecorationField35") : uiText("themeDecorationField.ThemeDecorationField36")}
@@ -947,7 +948,7 @@ export function ThemeDecorationField({
                         </Fragment>
                       ))}
                     </div>
-                    <button
+                    <Button variant="outline"
                       type="button"
                       onClick={() => {
                         const asset = assets?.images.find(
@@ -967,7 +968,7 @@ export function ThemeDecorationField({
                       }}
                     >
                       <RotateCcw size={18} />
-                      {uiText("themeDecorationField.ThemeDecorationField37")}</button>
+                      {uiText("themeDecorationField.ThemeDecorationField37")}</Button>
                   </section>
                   {(["move", "anchor"] as const).map((group) => (
                     <section key={group} className="theme-image-coordinate">

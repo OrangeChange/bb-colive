@@ -8,7 +8,7 @@ import { createCompatibleThemeModeAdapter } from "../../src/themes/themeModeAdap
 import type { ThemeDocument } from "../../src/themes/themeTypes.ts";
 import type { CompatibleVisualSettings } from "../../src/themes/compatThemeSettings.ts";
 import "../../src/compat/laplace/register.tsx";
-import "../../src/App.css";
+import "../../src/shadcn.css";
 
 const documents = new Map<string, ThemeDocument>();
 const port = {

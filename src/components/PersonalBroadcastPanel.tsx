@@ -1,6 +1,7 @@
+import { Input } from "./shadcn/input";
+import { Button } from "./shadcn/button";
 import { useUiLanguage } from "../i18n/react.ts";
 import { localized, uiText } from "../i18n/index.ts";
-import { RotateCcw } from "lucide-react";
 import { useState, useSyncExternalStore } from "react";
 import { ConnectBar } from "./ConnectBar";
 import { useGeneralSettings } from "../generalSettings.ts";
@@ -147,14 +148,14 @@ export function PersonalBroadcastPanel() {
           <div className="voice-panel-scroll min-h-0 flex-1 overflow-y-auto">
             <section className={sectionClass}>
               <SectionToolbar iconName="runtime" title={uiText("personalBroadcastPanel.title")} actionsClassName="voice-runtime-actions" status={<RuntimeQueueStatus text={statusText} state={personalSnapshot.status} />}>
-                <button type="button" aria-label={playbackPaused ? uiText("personalBroadcastPanel.aria_label") : uiText("personalBroadcastPanel.aria_label2")} className={controlClass} onClick={togglePlayback} disabled={!canControlPlayback}>{playbackPaused ? uiText("personalBroadcastPanel.PersonalBroadcastPanel2") : uiText("personalBroadcastPanel.PersonalBroadcastPanel3")}</button>
-                <button type="button" className={controlClass} onClick={() => personalBroadcastController.skip()} disabled={!canControlPlayback}>{uiText("personalBroadcastPanel.PersonalBroadcastPanel4")}</button>
-                <button type="button" className={controlClass} onClick={() => personalBroadcastController.clear()}>{uiText("personalBroadcastPanel.PersonalBroadcastPanel5")}</button>
+                <Button variant="outline" type="button" aria-label={playbackPaused ? uiText("personalBroadcastPanel.aria_label") : uiText("personalBroadcastPanel.aria_label2")} className={controlClass} onClick={togglePlayback} disabled={!canControlPlayback}>{playbackPaused ? uiText("personalBroadcastPanel.PersonalBroadcastPanel2") : uiText("personalBroadcastPanel.PersonalBroadcastPanel3")}</Button>
+                <Button variant="outline" type="button" className={controlClass} onClick={() => personalBroadcastController.skip()} disabled={!canControlPlayback}>{uiText("personalBroadcastPanel.PersonalBroadcastPanel4")}</Button>
+                <Button variant="outline" type="button" className={controlClass} onClick={() => personalBroadcastController.clear()}>{uiText("personalBroadcastPanel.PersonalBroadcastPanel5")}</Button>
               </SectionToolbar>
               {personalSnapshot.error && (
                 <div className="mt-3 rounded-md border border-danger/40 bg-danger/10 px-3 py-2 ui-type-meta text-danger">
                   <div>{personalSnapshot.error}</div>
-                  <button type="button" className="mt-1 rounded border border-danger/40 px-2 py-0.5 text-danger hover:bg-danger/10" onClick={() => personalBroadcastController.clearError()}>{uiText("personalBroadcastPanel.PersonalBroadcastPanel6")}</button>
+                  <Button variant="outline" type="button" className="mt-1 rounded border border-danger/40 px-2 py-0.5 text-danger hover:bg-danger/10" onClick={() => personalBroadcastController.clearError()}>{uiText("personalBroadcastPanel.PersonalBroadcastPanel6")}</Button>
                 </div>
               )}
               <RuntimeQueueSummary
@@ -176,14 +177,14 @@ export function PersonalBroadcastPanel() {
                 </SettingRow>
                 <SettingRow label={uiText("personalBroadcastPanel.label4")}>
                   <div className="flex items-center gap-2">
-                    <input aria-label={uiText("personalBroadcastPanel.aria_label3")} className={`${controlClass} w-24 font-mono`} type="number" min={0} max={30} step={0.5} value={settings.personalBroadcast.promptIntervalSeconds} onChange={(event) => updatePersonalBroadcast({ promptIntervalSeconds: Number(event.target.value) })} />
+                    <Input aria-label={uiText("personalBroadcastPanel.aria_label3")} className={`${controlClass} w-24 font-mono`} type="number" min={0} max={30} step={0.5} value={settings.personalBroadcast.promptIntervalSeconds} onChange={(event) => updatePersonalBroadcast({ promptIntervalSeconds: Number(event.target.value) })} />
                     <span className="ui-type-meta text-t3">{uiText("personalBroadcastPanel.PersonalBroadcastPanel8")}</span>
                   </div>
                 </SettingRow>
                 {settings.personalBroadcast.mode === "before-tts" && (
                   <SettingRow label={uiText("personalBroadcastPanel.label5")}>
                     <div className="flex items-center gap-2">
-                      <input aria-label={uiText("personalBroadcastPanel.aria_label4")} className={`${controlClass} w-24 font-mono`} type="number" min={0} max={30} step={0.5} value={settings.personalBroadcast.promptToTtsIntervalSeconds} onChange={(event) => updatePersonalBroadcast({ promptToTtsIntervalSeconds: Number(event.target.value) })} />
+                      <Input aria-label={uiText("personalBroadcastPanel.aria_label4")} className={`${controlClass} w-24 font-mono`} type="number" min={0} max={30} step={0.5} value={settings.personalBroadcast.promptToTtsIntervalSeconds} onChange={(event) => updatePersonalBroadcast({ promptToTtsIntervalSeconds: Number(event.target.value) })} />
                       <span className="ui-type-meta text-t3">{uiText("personalBroadcastPanel.PersonalBroadcastPanel8")}</span>
                     </div>
                   </SettingRow>
@@ -208,9 +209,9 @@ export function PersonalBroadcastPanel() {
                             <span className="voice-personal-rule-label ui-type-control font-medium text-t1">{label}</span>
                             <span className="voice-personal-rule-file ui-type-control text-t2" title={rule.audioPath || undefined}>{fileName}</span>
                             <div className="voice-personal-rule-actions">
-                              <button type="button" aria-label={uiText("personalBroadcastPanel.aria_label5", { label: label })} className={controlClass} onClick={() => void choosePersonalBroadcastFile(key, label)}>{uiText("common.chooseFile")}</button>
-                              <button type="button" aria-label={uiText("personalBroadcastPanel.aria_label6", { label: label })} className={`${controlClass} border-accent/50 text-accent-text`} onClick={() => testPersonalBroadcastRule(key, label)}>{uiText("personalBroadcastPanel.PersonalBroadcastPanel10")}</button>
-                              <button type="button" aria-label={uiText("personalBroadcastPanel.aria_label7", { label: label })} className={`${controlClass} text-t3`} onClick={() => clearPersonalBroadcastRule(key)}>{uiText("personalBroadcastPanel.PersonalBroadcastPanel11")}</button>
+                              <Button variant="outline" type="button" aria-label={uiText("personalBroadcastPanel.aria_label5", { label: label })} className={controlClass} onClick={() => void choosePersonalBroadcastFile(key, label)}>{uiText("common.chooseFile")}</Button>
+                              <Button variant="outline" type="button" aria-label={uiText("personalBroadcastPanel.aria_label6", { label: label })} className={`${controlClass} border-accent/50 text-accent-text`} onClick={() => testPersonalBroadcastRule(key, label)}>{uiText("personalBroadcastPanel.PersonalBroadcastPanel10")}</Button>
+                              <Button variant="outline" type="button" aria-label={uiText("personalBroadcastPanel.aria_label7", { label: label })} className={`${controlClass} text-t3`} onClick={() => clearPersonalBroadcastRule(key)}>{uiText("personalBroadcastPanel.PersonalBroadcastPanel11")}</Button>
                             </div>
                             {ruleError && <span role="status" aria-live="polite" className="voice-personal-rule-error ui-type-meta text-danger">{ruleError}</span>}
                           </div>
@@ -223,7 +224,7 @@ export function PersonalBroadcastPanel() {
             </section>
 
             <section className={`${sectionClass} flex justify-end`}>
-              <button type="button" className={`${controlClass} border-danger/40 text-danger`} title={uiText("common.restoreDefaults")} aria-label={uiText("common.restoreDefaults")} onClick={reset}><RotateCcw size={16} aria-hidden="true" /></button>
+              <Button variant="outline" type="button" className={`${controlClass} border-danger/40 text-danger`} title={uiText("common.restoreDefaults")} aria-label={uiText("common.restoreDefaults")} onClick={reset}>{uiText("common.restoreDefaults")}</Button>
             </section>
           </div>
         </section>

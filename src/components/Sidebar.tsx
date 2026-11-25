@@ -1,3 +1,5 @@
+import { Popover, PopoverTrigger, PopoverContent } from "./shadcn/popover";
+import { Button } from "./shadcn/button";
 import { useUiLanguage } from "../i18n/react.ts";
 import { uiText } from "../i18n/index.ts";
 import { Radio as LucideRadio, History as LucideHistory, Mic as LucideMic, AudioLines as LucideAudioLines, Paintbrush as LucidePaintbrush, Bell as LucideBell, BellOff as LucideBellOff, MessagesSquare as LucideMessagesSquare, Lock as LucideLock, LockOpen as LucideLockOpen, Gift as LucideGift, Wallet as LucideWallet, MessageSquareQuote as LucideMessageSquareQuote, Ship as LucideShip, Palette as LucidePalette, Sun as LucideSun, Moon as LucideMoon, Contrast as LucideContrast } from "lucide-react";
@@ -114,7 +116,7 @@ function ThemeQuickToggle() {
 
   return (
     <div className="flex flex-col items-center gap-1" aria-label={uiText("sidebar.aria_label")}>
-      <button
+      <Button variant="ghost"
         type="button"
         className={btnIdle}
         aria-label={uiText("sidebar.aria_label2", { paletteLabel: paletteLabel })}
@@ -122,8 +124,8 @@ function ThemeQuickToggle() {
         onClick={cyclePalette}
       >
         <IconPalette />
-      </button>
-      <button
+      </Button>
+      <Button variant="ghost"
         type="button"
         className={btnIdle}
         aria-label={uiText("sidebar.aria_label3", { modeLabel: modeLabel })}
@@ -131,7 +133,7 @@ function ThemeQuickToggle() {
         onClick={() => setMode(nextMode)}
       >
         {mode === "system" ? <IconSystem /> : mode === "light" ? <IconSun /> : <IconMoon />}
-      </button>
+      </Button>
     </div>
   );
 }
@@ -206,10 +208,10 @@ function SidebarQuickToggle({
       onFocusCapture={reveal}
       onBlurCapture={handleBlur}
     >
-      <button type="button" aria-current={activeMainView === mainView ? "page" : undefined} className={activeMainView === mainView ? btnOn : btnIdle} title={mainTitle} onClick={() => onSelectMainView?.(mainView)}>
+      <Button variant="ghost" type="button" aria-current={activeMainView === mainView ? "page" : undefined} className={activeMainView === mainView ? btnOn : btnIdle} title={mainTitle} onClick={() => onSelectMainView?.(mainView)}>
         {mainIcon}
-      </button>
-      <button
+      </Button>
+      <Button variant="ghost"
         type="button"
         className={`${btnIdle} sidebar-feature-toggle ${enabled ? "bg-accent-subtle text-accent-text" : ""}`}
         title={toggleLabel}
@@ -218,7 +220,7 @@ function SidebarQuickToggle({
         onClick={onToggle}
       >
         {toggleIcon}
-      </button>
+      </Button>
     </div>
   );
 }
@@ -230,17 +232,7 @@ function UserBadge() {
   const logout = useSession((s) => s.logout);
   const [open, setOpen] = useState(false);
   const [failedFaceUrl, setFailedFaceUrl] = useState<string | undefined>();
-  const rootRef = useRef<HTMLDivElement>(null);
 
-  useEffect(() => {
-    if (!open) return;
-    // 点击菜单外部关闭（与主播卡菜单一致的交互）
-    const onDown = (e: MouseEvent) => {
-      if (rootRef.current && !rootRef.current.contains(e.target as Node)) setOpen(false);
-    };
-    window.addEventListener("mousedown", onDown);
-    return () => window.removeEventListener("mousedown", onDown);
-  }, [open]);
 
   if (!session) return null;
   const face =
@@ -260,17 +252,16 @@ function UserBadge() {
     );
 
   return (
-    <div ref={rootRef} className="relative">
-      <button
+    <Popover open={open} onOpenChange={setOpen}><div className="relative">
+      <PopoverTrigger asChild>
+      <Button type="button" variant="ghost"
         className={`${btnIdle} flex-col gap-0.5 ${open ? "bg-raised text-t1" : ""}`}
         aria-label={uiText("sidebar.aria_label4", { uname: session.uname })}
         title={uiText("sidebar.title3", { uname: session.uname })}
-        onClick={() => setOpen((v) => !v)}
       >
         <span className="size-6">{face}</span>
-      </button>
-      {open && (
-        <div className="ui-motion-enter absolute bottom-0 left-12 z-50 w-52 rounded-lg border border-line bg-surface p-2 shadow-xl shadow-black/20">
+      </Button></PopoverTrigger>
+        <PopoverContent side="right" align="end" className="w-52 p-2">
           <div className="flex items-center gap-2.5 px-1 pb-2">
             <span className="size-8 shrink-0">{face}</span>
             <div className="min-w-0">
@@ -278,17 +269,16 @@ function UserBadge() {
           <div className="ui-type-meta text-t3">UID {session.mid}</div>
             </div>
           </div>
-          <button
+          <Button type="button" variant="ghost"
             className="mt-1 flex w-full items-center gap-2 rounded-md border-t border-line px-1 pt-2 ui-type-section-title text-t3 transition-colors hover:bg-raised hover:text-danger"
             onClick={() => {
               setOpen(false);
               void logout();
             }}
           >
-            {uiText("sidebar.UserBadge")}</button>
-        </div>
-      )}
-    </div>
+            {uiText("sidebar.UserBadge")}</Button>
+        </PopoverContent>
+    </div></Popover>
   );
 }
 
@@ -499,10 +489,10 @@ export function Sidebar({
 
   return (
     <aside className="flex w-16 shrink-0 flex-col items-center gap-1 border-r border-line bg-surface py-3">
-      <button type="button" aria-current={activeMainView === "scene" ? "page" : undefined} className={activeMainView === "scene" ? btnOn : btnIdle} title={uiText("sidebar.title4")} onClick={() => onSelectMainView?.("scene")}>
+      <Button variant="ghost" type="button" aria-current={activeMainView === "scene" ? "page" : undefined} className={activeMainView === "scene" ? btnOn : btnIdle} title={uiText("sidebar.title4")} onClick={() => onSelectMainView?.("scene")}>
         <IconBroadcast />
-      </button>
-      <button
+      </Button>
+      <Button variant="ghost"
         type="button"
         aria-current={activeMainView === "review" ? "page" : undefined}
         className={activeMainView === "review" ? btnOn : btnIdle}
@@ -510,7 +500,7 @@ export function Sidebar({
         onClick={() => onSelectMainView?.("review")}
       >
         <IconHistory />
-      </button>
+      </Button>
       <SidebarQuickToggle
         activeMainView={activeMainView}
         mainView="voice"
@@ -533,7 +523,7 @@ export function Sidebar({
         onSelectMainView={onSelectMainView}
         onToggle={togglePersonalBroadcast}
       />
-      <button
+      <Button variant="ghost"
         type="button"
         aria-current={activeMainView === "style" ? "page" : undefined}
         className={activeMainView === "style" ? btnOn : btnIdle}
@@ -542,7 +532,7 @@ export function Sidebar({
         onClick={() => onSelectMainView?.("style")}
       >
         <IconStyle />
-      </button>
+      </Button>
 
       <div className="mt-auto flex flex-col items-center gap-1">
         <UserBadge />
@@ -554,7 +544,7 @@ export function Sidebar({
           onFocusCapture={revealDisplayControls}
           onBlurCapture={handleDisplayControlsBlur}
         >
-          <button
+          <Button variant="ghost"
             type="button"
             className={onToggleDisplay ? (displayOpen ? btnOn : btnIdle) : btnOff}
             title={uiText("sidebar.title5", { value: displayOpen ? uiText("sidebar.title.value") : uiText("sidebar.title.value2") })}
@@ -565,9 +555,9 @@ export function Sidebar({
             disabled={!onToggleDisplay}
           >
             <IconChatWindow />
-          </button>
+          </Button>
           {displayOpen && onToggleDisplayLock && (
-            <button
+            <Button variant="ghost"
               type="button"
               className={`${btnIdle} sidebar-display-lock ${displayLocked ? "bg-accent-subtle text-accent-text" : ""}`}
               title={displayLocked ? uiText("sidebar.title6") : uiText("sidebar.title7")}
@@ -576,7 +566,7 @@ export function Sidebar({
               onClick={onToggleDisplayLock}
             >
               <IconLock locked={displayLocked} />
-            </button>
+            </Button>
           )}
         </div>
         <div
@@ -587,7 +577,7 @@ export function Sidebar({
           onFocusCapture={revealGiftControls}
           onBlurCapture={handleGiftControlsBlur}
         >
-          <button
+          <Button variant="ghost"
             type="button"
             className={onToggleGift ? (giftOpen ? btnOn : btnIdle) : btnOff}
             title={uiText("sidebar.title5", { value: giftOpen ? uiText("sidebar.title.value3") : uiText("sidebar.title.value4") })}
@@ -598,19 +588,19 @@ export function Sidebar({
             disabled={!onToggleGift}
           >
           <IconRevenue />
-          </button>
+          </Button>
           {hasGiftControls && <div className="sidebar-gift-actions" role="group" aria-label={revenueSplit ? uiText("sidebar.aria_label11") : uiText("sidebar.aria_label12")}>
           {revenueSplit && (['gift', 'superchat', 'guard'] as const).map((kind, index) => {
             const open = revenueSelection.selected.includes(kind);
             const name = [uiText("sidebar.Sidebar.name"), uiText("sidebar.Sidebar.name2"), uiText("sidebar.Sidebar.name3")][index];
-            return <button key={kind} type="button" className={open ? btnOn : btnIdle}
+            return <Button variant="ghost" key={kind} type="button" className={open ? btnOn : btnIdle}
               aria-label={uiText("sidebar.aria_label13", { name: name, value: open ? uiText("sidebar.aria_label.value") : uiText("sidebar.aria_label.value2") })} title={uiText("sidebar.title8", { name: name, value: open ? uiText("sidebar.title.value5") : uiText("sidebar.title.value6") })}
               aria-pressed={open} onClick={() => onToggleRevenueChild?.(kind)} disabled={!onToggleRevenueChild}>
               {kind === 'gift' ? <IconGiftBox /> : kind === 'superchat' ? <IconSuperChat /> : <IconGuard />}
-            </button>;
+            </Button>;
           })}
           {onToggleGiftLock && (
-            <button
+            <Button variant="ghost"
               type="button"
               className={giftOpen ? `${btnIdle} sidebar-gift-lock ${giftLocked ? "bg-accent-subtle text-accent-text" : ""}` : btnOff}
               title={giftLocked ? uiText("sidebar.title9") : uiText("sidebar.title10")}
@@ -620,7 +610,7 @@ export function Sidebar({
               disabled={!giftOpen}
             >
               <IconLock locked={giftLocked} />
-            </button>
+            </Button>
           )}
           </div>}
         </div>

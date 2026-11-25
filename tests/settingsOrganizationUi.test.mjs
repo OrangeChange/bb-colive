@@ -74,7 +74,7 @@ test("公共输出行为的搜索名称与分组同步，金额计算仍属于�
     assert.ok(entry, `${id} 可搜索`);
     assert.equal(entry.label, label);
     assert.equal(entry.sectionId, "display");
-    assert.ok(entry.keywords.includes("副窗口") && entry.keywords.includes("OBS"));
+    assert.ok(entry.keywords.includes("副窗口") && entry.keywords.includes("obs"));
   }
   assert.ok(entries.find((item) => item.id === "event-window-capacity").keywords.includes("容量"));
   assert.ok(entries.find((item) => item.id === "event-expiry").keywords.includes("过期"));

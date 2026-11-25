@@ -1,3 +1,6 @@
+import { DateTimeField, localDateTimeValue } from "./DateTimeField";
+import { Input } from "./shadcn/input";
+import { Button } from "./shadcn/button";
 import { useUiLanguage } from "../i18n/react.ts";
 import { localized, uiText } from "../i18n/index.ts";
 import { useEffect, useMemo, useState } from "react";
@@ -334,8 +337,8 @@ export function ReviewArchiveSettings({ repository, retentionDays, onRetentionDa
           <div className="settings-control-label ui-type-control text-t2" title={uiText("reviewArchiveSettings.title")}>{uiText("reviewArchiveSettings.ReviewArchiveSettings2")}</div>
         </div>
         <div className="settings-review-setting-actions settings-review-actions flex gap-1.5">
-          <button type="button" disabled={!repository || busy} className="settings-action-button settings-inline-button ui-type-control" onClick={importAll}><Upload size={15} aria-hidden="true" />{uiText("reviewArchiveSettings.ReviewArchiveSettings3")}</button>
-          <button type="button" disabled={!repository || busy} className="settings-action-button settings-inline-button ui-type-control" onClick={exportAll}><Download size={15} aria-hidden="true" />{uiText("reviewArchiveSettings.ReviewArchiveSettings4")}</button>
+          <Button variant="outline" type="button" disabled={!repository || busy} className="settings-action-button settings-inline-button ui-type-control" onClick={importAll}><Upload size={15} aria-hidden="true" />{uiText("reviewArchiveSettings.ReviewArchiveSettings3")}</Button>
+          <Button variant="outline" type="button" disabled={!repository || busy} className="settings-action-button settings-inline-button ui-type-control" onClick={exportAll}><Download size={15} aria-hidden="true" />{uiText("reviewArchiveSettings.ReviewArchiveSettings4")}</Button>
         </div>
       </div>
       <div className="settings-review-setting settings-control-row settings-input-row">
@@ -343,9 +346,9 @@ export function ReviewArchiveSettings({ repository, retentionDays, onRetentionDa
           <div className="settings-control-label ui-type-control text-t2" title={uiText("reviewArchiveSettings.title2")}>{uiText("reviewArchiveSettings.ReviewArchiveSettings5")}</div>
         </div>
         <div className="settings-review-setting-actions settings-review-actions flex flex-wrap items-center gap-1.5">
-          <label className="settings-date-pair"><span className="ui-type-meta text-t2">{uiText("reviewArchiveSettings.ReviewArchiveSettings6")}</span><input type="date" value={exportFromDate} aria-label={uiText("reviewArchiveSettings.aria_label2")} onChange={(event) => setExportFromDate(event.target.value)} className="settings-date-input ui-type-control" /></label>
-          <label className="settings-date-pair"><span className="ui-type-meta text-t2">{uiText("reviewArchiveSettings.ReviewArchiveSettings7")}</span><input type="date" value={exportToDate} aria-label={uiText("reviewArchiveSettings.aria_label3")} onChange={(event) => setExportToDate(event.target.value)} className="settings-date-input ui-type-control" /></label>
-          <button type="button" disabled={!repository || busy || !exportFromDate || !exportToDate} className="settings-action-button settings-inline-button ui-type-control" onClick={exportDateRange}><Download size={15} aria-hidden="true" />{uiText("common.export")}</button>
+          <label className="settings-date-pair"><span className="ui-type-meta text-t2">{uiText("reviewArchiveSettings.ReviewArchiveSettings6")}</span><DateTimeField showTime={false} label={uiText("reviewArchiveSettings.aria_label2")} value={exportFromDate ? new Date(exportFromDate+"T00:00") : undefined} onChange={date=>setExportFromDate(localDateTimeValue(date).slice(0,10))} /></label>
+          <label className="settings-date-pair"><span className="ui-type-meta text-t2">{uiText("reviewArchiveSettings.ReviewArchiveSettings7")}</span><DateTimeField showTime={false} label={uiText("reviewArchiveSettings.aria_label3")} value={exportToDate ? new Date(exportToDate+"T00:00") : undefined} onChange={date=>setExportToDate(localDateTimeValue(date).slice(0,10))} /></label>
+          <Button variant="outline" type="button" disabled={!repository || busy || !exportFromDate || !exportToDate} className="settings-action-button settings-inline-button ui-type-control" onClick={exportDateRange}><Download size={15} aria-hidden="true" />{uiText("common.export")}</Button>
         </div>
       </div>
       {importPreview && (
@@ -360,8 +363,8 @@ export function ReviewArchiveSettings({ repository, retentionDays, onRetentionDa
             <div><dt>{uiText("reviewArchiveSettings.ReviewArchiveSettings17")}</dt><dd>{importPreview.completedFields} {uiText("reviewArchiveSettings.ReviewArchiveSettings14")}</dd></div>
           </dl>
           <div className="mt-2 flex gap-2">
-            <button type="button" disabled={busy} className="settings-inline-button ui-type-control" onClick={confirmImport}>{uiText("reviewArchiveSettings.ReviewArchiveSettings18")}</button>
-            <button type="button" disabled={busy} className="settings-inline-button ui-type-control" onClick={cancelImport}>{uiText("common.cancel")}</button>
+            <Button variant="outline" type="button" disabled={busy} className="settings-inline-button ui-type-control" onClick={confirmImport}>{uiText("reviewArchiveSettings.ReviewArchiveSettings18")}</Button>
+            <Button variant="outline" type="button" disabled={busy} className="settings-inline-button ui-type-control" onClick={cancelImport}>{uiText("common.cancel")}</Button>
           </div>
         </div>
       )}
@@ -378,7 +381,7 @@ export function ReviewArchiveSettings({ repository, retentionDays, onRetentionDa
             else if (value === "custom") onRetentionDaysChange(retentionDays ?? 30);
             else onRetentionDaysChange(Number(value));
           }} />
-          {retentionPreset === "custom" && <><input type="number" min="1" value={retentionDays ?? ""} placeholder={uiText("reviewArchiveSettings.placeholder")} onChange={(event) => {
+          {retentionPreset === "custom" && <><Input type="number" min="1" value={retentionDays ?? ""} placeholder={uiText("reviewArchiveSettings.placeholder")} onChange={(event) => {
             const value = event.target.value;
             const days = value === "" ? null : Number(value);
             setRetentionDraft(value || "30");
@@ -397,7 +400,7 @@ export function ReviewArchiveSettings({ repository, retentionDays, onRetentionDa
               setOwnerRetentionDays(selectedOwnerId, value === "global" ? undefined : value === "permanent" ? null : Number(ownerRetentionDraft));
               recordArchiveDiagnostic("setting-change", "review-owner-retention", "changed", { data: { ownerId: selectedOwnerId, policy: value, source: "settings" } });
             }} />
-            {selectedOwnerPolicyMode === "custom" && <><input type="number" min="1" value={selectedOwnerPolicy ?? ownerRetentionDraft} aria-label={uiText("reviewArchiveSettings.aria_label6")} className="settings-number-input ui-type-control" onChange={(event) => { setOwnerRetentionDraft(event.target.value); const days = Number(event.target.value); if (Number.isFinite(days) && days > 0) setOwnerRetentionDays(selectedOwnerId, days); }} /><span className="ui-type-meta text-t3">{uiText("reviewArchiveSettings.ReviewArchiveSettings25")}</span></>}
+            {selectedOwnerPolicyMode === "custom" && <><Input type="number" min="1" value={selectedOwnerPolicy ?? ownerRetentionDraft} aria-label={uiText("reviewArchiveSettings.aria_label6")} className="settings-number-input ui-type-control" onChange={(event) => { setOwnerRetentionDraft(event.target.value); const days = Number(event.target.value); if (Number.isFinite(days) && days > 0) setOwnerRetentionDays(selectedOwnerId, days); }} /><span className="ui-type-meta text-t3">{uiText("reviewArchiveSettings.ReviewArchiveSettings25")}</span></>}
           </> : <span className="ui-type-meta text-t3">{uiText("reviewArchiveSettings.ReviewArchiveSettings27")}</span>}
         </span>
       </div>
@@ -425,15 +428,15 @@ export function ReviewArchiveSettings({ repository, retentionDays, onRetentionDa
           {deleteMode === "all" ? (
             <span className="ui-type-meta text-warning">{uiText("reviewArchiveSettings.ReviewArchiveSettings35")}</span>
           ) : deleteMode === "retention" ? (
-            <span className="flex items-center gap-1"><input type="number" min="1" value={retentionDraft} onChange={(event) => setRetentionDraft(event.target.value)} className="settings-number-input ui-type-control" aria-label={uiText("reviewArchiveSettings.aria_label8")} /><span className="ui-type-meta text-t3">{uiText("reviewArchiveSettings.ReviewArchiveSettings25")}</span></span>
-          ) : deleteMode === "before" ? <input type="date" value={deleteDate} onChange={(event) => setDeleteDate(event.target.value)} className="settings-inline-select ui-type-control" aria-label={uiText("reviewArchiveSettings.aria_label9")} />
-            : deleteMode === "range" ? <><label className="settings-date-pair"><span className="ui-type-meta text-t2">{uiText("reviewArchiveSettings.ReviewArchiveSettings6")}</span><input type="date" value={deleteFromDate} onChange={(event) => setDeleteFromDate(event.target.value)} className="settings-inline-select ui-type-control" aria-label={uiText("reviewArchiveSettings.aria_label10")} /></label><label className="settings-date-pair"><span className="ui-type-meta text-t2">{uiText("reviewArchiveSettings.ReviewArchiveSettings7")}</span><input type="date" value={deleteToDate} onChange={(event) => setDeleteToDate(event.target.value)} className="settings-inline-select ui-type-control" aria-label={uiText("reviewArchiveSettings.aria_label11")} /></label></>
+            <span className="flex items-center gap-1"><Input type="number" min="1" value={retentionDraft} onChange={(event) => setRetentionDraft(event.target.value)} className="settings-number-input ui-type-control" aria-label={uiText("reviewArchiveSettings.aria_label8")} /><span className="ui-type-meta text-t3">{uiText("reviewArchiveSettings.ReviewArchiveSettings25")}</span></span>
+          ) : deleteMode === "before" ? <DateTimeField showTime={false} label={uiText("reviewArchiveSettings.aria_label9")} value={deleteDate ? new Date(deleteDate+"T00:00") : undefined} onChange={date=>setDeleteDate(localDateTimeValue(date).slice(0,10))} />
+            : deleteMode === "range" ? <><label className="settings-date-pair"><span className="ui-type-meta text-t2">{uiText("reviewArchiveSettings.ReviewArchiveSettings6")}</span><DateTimeField showTime={false} label={uiText("reviewArchiveSettings.aria_label10")} value={deleteFromDate ? new Date(deleteFromDate+"T00:00") : undefined} onChange={date=>setDeleteFromDate(localDateTimeValue(date).slice(0,10))} /></label><label className="settings-date-pair"><span className="ui-type-meta text-t2">{uiText("reviewArchiveSettings.ReviewArchiveSettings7")}</span><DateTimeField showTime={false} label={uiText("reviewArchiveSettings.aria_label11")} value={deleteToDate ? new Date(deleteToDate+"T00:00") : undefined} onChange={date=>setDeleteToDate(localDateTimeValue(date).slice(0,10))} /></label></>
               : <UiSelect ariaLabel={uiText("reviewArchiveSettings.ariaLabel5")} size="standard" className="settings-inline-select ui-type-control" options={[{ value: "", label: uiText("reviewArchiveSettings.options.label") }, ...owners.map((owner) => ({ value: owner.ownerId, label: getArchiveOwnerLabel(owner, anchors) }))]} value={keepOwnerId} onValueChange={setKeepOwnerId} />}
-          <button type="button" disabled={!repository || busy || (deleteMode === "keep-owner" && !keepOwnerId)} className="settings-action-button settings-inline-button ui-type-control" onClick={previewDelete}><Eye size={15} aria-hidden="true" />{uiText("reviewArchiveSettings.ReviewArchiveSettings36")}</button>
+          <Button variant="outline" type="button" disabled={!repository || busy || (deleteMode === "keep-owner" && !keepOwnerId)} className="settings-action-button settings-inline-button ui-type-control" onClick={previewDelete}><Eye size={15} aria-hidden="true" />{uiText("reviewArchiveSettings.ReviewArchiveSettings36")}</Button>
         </span>
       </div>
       {deletePreview && <DeletePreview preview={deletePreview} />}
-      {deletePreview && <div className="mt-2 flex justify-end gap-2"><button type="button" disabled={busy} className="settings-inline-button settings-inline-button-danger ui-type-control" onClick={() => setDeleteConfirmOpen(true)}>{uiText("reviewArchiveSettings.ReviewArchiveSettings37")}</button><button type="button" disabled={busy} className="settings-inline-button ui-type-control" onClick={cancelDelete}>{uiText("common.cancel")}</button></div>}
+      {deletePreview && <div className="mt-2 flex justify-end gap-2"><Button variant="outline" type="button" disabled={busy} className="settings-inline-button settings-inline-button-danger ui-type-control" onClick={() => setDeleteConfirmOpen(true)}>{uiText("reviewArchiveSettings.ReviewArchiveSettings37")}</Button><Button variant="outline" type="button" disabled={busy} className="settings-inline-button ui-type-control" onClick={cancelDelete}>{uiText("common.cancel")}</Button></div>}
       </section>
       {notice && <div role="status" className="mt-2 ui-type-meta text-success">{notice}</div>}
       {error && <div role="alert" className="mt-2 ui-type-meta text-danger">{error}</div>}

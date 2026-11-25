@@ -60,6 +60,8 @@ for (const name of ['renderer.js.LEGAL.txt', 'ATTRIBUTION.txt']) {
 }
 for (const [name, file, license, url] of [
   ['MiSans', 'licenses/fonts/MiSans.txt', 'MiSans 字体知识产权许可协议', 'https://hyperos.mi.com/font/download'],
+  ['传趣体', 'licenses/fonts/ChuanQu-OFL.txt', 'OFL-1.1', 'https://github.com/Steve-Yuu/Chuanqu'],
+  ['RocknRoll One', 'licenses/fonts/RocknRollOne-OFL.txt', 'OFL-1.1', 'https://github.com/fontworks-fonts/RocknRoll'],
   ['Barlow Condensed', 'licenses/fonts/Barlow-OFL.txt', 'OFL-1.1', 'https://github.com/jpt/barlow'],
   ['仓耳与墨', null, '仓耳字库免费开源字体授权声明', 'https://www.tsanger.cn/'],
 ]) add({ id: `font/${name}`, name, version: '', category: '字体', license, url, text: file ? read(file) : '北京仓耳文字技术有限公司\n仓耳字库免费开源字体授权声明\n2020年11月11日\n\n授权原件见下方两页。', ...(file ? {} : { images: ['Tsanger-1.png', 'Tsanger-2.png'] }) });

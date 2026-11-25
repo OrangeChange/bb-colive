@@ -1,6 +1,6 @@
 import { useUiLanguage } from "../i18n/react.ts";
 import { uiText } from "../i18n/index.ts";
-import * as PopoverPrimitive from "@radix-ui/react-popover";
+import { PopoverContent, PopoverAnchor, Popover } from "./shadcn/popover";
 import { createContext, useLayoutEffect, useMemo, useRef, useState, type ReactNode, type RefObject } from "react";
 import { positionReviewFilterPopover, type ReviewFilterPopoverPosition } from "../archive/reviewFilterPopover.ts";
 
@@ -73,10 +73,10 @@ export function ReviewFilterPopover({ open, onOpenChange, anchorRef, triggerRef,
 
   return (
     <ReviewFilterSubmenuLayerContext.Provider value={submenuLayer}>
-    <PopoverPrimitive.Root open={open} onOpenChange={onOpenChange}>
-      <PopoverPrimitive.Anchor virtualRef={virtualRef} />
-      <PopoverPrimitive.Portal>
-        <PopoverPrimitive.Content
+    <Popover open={open} onOpenChange={onOpenChange}>
+      <PopoverAnchor virtualRef={virtualRef} />
+
+        <PopoverContent
           id={triggerRef.current?.getAttribute("aria-controls") ?? undefined}
           aria-label={uiText("reviewFilterPopover.aria_label")}
           align="start"
@@ -96,9 +96,9 @@ export function ReviewFilterPopover({ open, onOpenChange, anchorRef, triggerRef,
             event.preventDefault();
             triggerRef.current?.focus({ preventScroll: true });
           }}
-        >{children}</PopoverPrimitive.Content>
-      </PopoverPrimitive.Portal>
-    </PopoverPrimitive.Root>
+        >{children}</PopoverContent>
+
+    </Popover>
     </ReviewFilterSubmenuLayerContext.Provider>
   );
 }

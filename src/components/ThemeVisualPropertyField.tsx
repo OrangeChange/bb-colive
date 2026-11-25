@@ -10,13 +10,22 @@ import {
 import { ThemeImageBorderField } from "./ThemeImageBorderField.tsx";
 import { ThemeNumberInput } from "./ThemeNumberInput.tsx";
 import { RotateCcw } from "lucide-react";
-import { useRef } from "react";
+import { useRef, useState } from "react";
 import { parseThemeColor } from "./themeColorValue.ts";
-import { SettingsChoiceControl } from "./SettingsChoiceControl";
+import { ToggleGroup, ToggleGroupItem } from "./shadcn/toggle-group";
+import {
+  Select,
+  SelectTrigger,
+  SelectContent,
+  SelectItem,
+  SelectValue,
+} from "./shadcn/select";
+import { fontFamilyPresentation } from "./fontFamilyPresentation";
+import { Button } from "./shadcn/button";
 import { ThemeColorField } from "./ThemeColorField.tsx";
 import { ThemeBackgroundField } from "./ThemeBackgroundField.tsx";
 import { ThemeImageField } from "./ThemeImageField.tsx";
-import { SettingsFontFamilySelect } from "./SettingsListSelect.tsx";
+
 import type {
   NativeVisualProperty,
   NativeVisualValue,
@@ -26,18 +35,73 @@ import { NATIVE_PROPERTY_GROUPS } from "../themes/nativeThemeCapabilities.ts";
 export const THEME_NUMBER_FIELDS: Partial<
   Record<NativeVisualProperty, readonly [string, number, number, number]>
 > = localized(() => ({
-  fontWeight: [uiText("themeVisualPropertyField.THEME_NUMBER_FIELDS.fontWeight"), 100, 900, 100],
+  fontWeight: [
+    uiText("themeVisualPropertyField.THEME_NUMBER_FIELDS.fontWeight"),
+    100,
+    900,
+    100,
+  ],
   fontSize: [uiText("common.fontSize"), 0, 640, 0.5],
-  lineHeight: [uiText("themeVisualPropertyField.THEME_NUMBER_FIELDS.lineHeight"), 0, 640, 0.1],
-  paddingX: [uiText("themeVisualPropertyField.THEME_NUMBER_FIELDS.paddingX"), 0, 640, 0.5],
-  paddingY: [uiText("themeVisualPropertyField.THEME_NUMBER_FIELDS.paddingY"), 0, 640, 0.5],
-  marginX: [uiText("themeVisualPropertyField.THEME_NUMBER_FIELDS.marginX"), -640, 640, 0.5],
-  marginY: [uiText("themeVisualPropertyField.THEME_NUMBER_FIELDS.marginY"), -640, 640, 0.5],
-  gap: [uiText("themeVisualPropertyField.THEME_NUMBER_FIELDS.gap"), 0, 640, 0.5],
-  width: [uiText("themeVisualPropertyField.THEME_NUMBER_FIELDS.width"), 0, 2048, 0.5],
-  height: [uiText("themeVisualPropertyField.THEME_NUMBER_FIELDS.height"), 0, 2048, 0.5],
-  borderWidth: [uiText("themeVisualPropertyField.THEME_NUMBER_FIELDS.borderWidth"), 0, 80, 0.5],
-  borderRadius: [uiText("themeVisualPropertyField.THEME_NUMBER_FIELDS.borderRadius"), 0, 640, 0.5],
+  lineHeight: [
+    uiText("themeVisualPropertyField.THEME_NUMBER_FIELDS.lineHeight"),
+    0,
+    640,
+    0.1,
+  ],
+  paddingX: [
+    uiText("themeVisualPropertyField.THEME_NUMBER_FIELDS.paddingX"),
+    0,
+    640,
+    0.5,
+  ],
+  paddingY: [
+    uiText("themeVisualPropertyField.THEME_NUMBER_FIELDS.paddingY"),
+    0,
+    640,
+    0.5,
+  ],
+  marginX: [
+    uiText("themeVisualPropertyField.THEME_NUMBER_FIELDS.marginX"),
+    -640,
+    640,
+    0.5,
+  ],
+  marginY: [
+    uiText("themeVisualPropertyField.THEME_NUMBER_FIELDS.marginY"),
+    -640,
+    640,
+    0.5,
+  ],
+  gap: [
+    uiText("themeVisualPropertyField.THEME_NUMBER_FIELDS.gap"),
+    0,
+    640,
+    0.5,
+  ],
+  width: [
+    uiText("themeVisualPropertyField.THEME_NUMBER_FIELDS.width"),
+    0,
+    2048,
+    0.5,
+  ],
+  height: [
+    uiText("themeVisualPropertyField.THEME_NUMBER_FIELDS.height"),
+    0,
+    2048,
+    0.5,
+  ],
+  borderWidth: [
+    uiText("themeVisualPropertyField.THEME_NUMBER_FIELDS.borderWidth"),
+    0,
+    80,
+    0.5,
+  ],
+  borderRadius: [
+    uiText("themeVisualPropertyField.THEME_NUMBER_FIELDS.borderRadius"),
+    0,
+    640,
+    0.5,
+  ],
 }));
 const labels: Partial<Record<NativeVisualProperty, string>> = localized(() => ({
   visible: uiText("themeVisualPropertyField.labels.visible"),
@@ -109,22 +173,34 @@ export function ThemeVisualPropertyField({
   imageScale?: { variable: string; value: number };
 }) {
   useUiLanguage();
+  const [weightDraft, setWeightDraft] = useState<number | undefined>();
   const inheritedValue = useRef<{ value: unknown } | null>(null);
   const previewing = useRef(false);
-  if (!previewing.current && !onRestore && !mixed && !missing && !controlled) inheritedValue.current = { value };
+  if (!previewing.current && !onRestore && !mixed && !missing && !controlled)
+    inheritedValue.current = { value };
   if (saved && onRestore) inheritedValue.current = null;
   const sameValue = (left: unknown, right: unknown) => {
     if (Object.is(left, right)) return true;
-    if (["color", "borderColor", "background"].includes(property) && typeof left === "string" && typeof right === "string") {
-      const a = parseThemeColor(left), b = parseThemeColor(right);
-      return Boolean(a && b && a.r === b.r && a.g === b.g && a.b === b.b && a.a === b.a);
+    if (
+      ["color", "borderColor", "background"].includes(property) &&
+      typeof left === "string" &&
+      typeof right === "string"
+    ) {
+      const a = parseThemeColor(left),
+        b = parseThemeColor(right);
+      return Boolean(
+        a && b && a.r === b.r && a.g === b.g && a.b === b.b && a.a === b.a,
+      );
     }
     return false;
   };
   const onChange = (next: NativeVisualValue) => {
     const hadPreview = previewing.current;
     try {
-      if (inheritedValue.current && sameValue(next, inheritedValue.current.value)) {
+      if (
+        inheritedValue.current &&
+        sameValue(next, inheritedValue.current.value)
+      ) {
         onRestore?.();
         return;
       }
@@ -173,21 +249,66 @@ export function ThemeVisualPropertyField({
         onPreviewCancel={onPreviewCancel}
       />
     ) : controlled ? (
-      <strong>{uiText("themeVisualPropertyField.ThemeVisualPropertyField.input")}</strong>
+      <strong>
+        {uiText("themeVisualPropertyField.ThemeVisualPropertyField.input")}
+      </strong>
     ) : missing ? (
-      <span>{uiText("themeVisualPropertyField.ThemeVisualPropertyField.input2")}</span>
+      <span>
+        {uiText("themeVisualPropertyField.ThemeVisualPropertyField.input2")}
+      </span>
     ) : property === "visible" ? (
-      <SettingsChoiceControl label={label} value={blank ? undefined : value === false ? "hidden" : "visible"}
-        options={[{ value: "visible", label: uiText("common.show") }, { value: "hidden", label: uiText("common.hide") }]}
-        onChange={next => onChange(next === "visible")} />
+      <ToggleGroup
+        type="single"
+        variant="outline"
+        spacing={0}
+        aria-label={label}
+        value={blank ? "" : value === false ? "hidden" : "visible"}
+        onValueChange={(next) => {
+          if (next) onChange(next === "visible");
+        }}
+      >
+        <ToggleGroupItem value="visible">
+          {uiText("common.show")}
+        </ToggleGroupItem>
+        <ToggleGroupItem value="hidden">
+          {uiText("common.hide")}
+        </ToggleGroupItem>
+      </ToggleGroup>
     ) : property === "fontFamily" ? (
-      <SettingsFontFamilySelect
-        emptyLabel={mixed ? uiText("themeVisualPropertyField.emptyLabel") : uiText("themeVisualPropertyField.emptyLabel2")}
-        options={fontFamilyOptions}
-        value={blank ? "" : String(value ?? "")}
-        onChange={onChange}
-        onOpen={onOpenFonts}
-      />
+      <Select
+        value={blank || !value ? "__inherit__" : String(value)}
+        onValueChange={(next) => onChange(next === "__inherit__" ? "" : next)}
+        onOpenChange={(open) => {
+          if (open) onOpenFonts();
+        }}
+      >
+        <SelectTrigger aria-label={label} className="w-full">
+          <SelectValue />
+        </SelectTrigger>
+        <SelectContent position="popper" collisionPadding={8}>
+          <SelectItem value="__inherit__">
+            {mixed
+              ? uiText("themeVisualPropertyField.emptyLabel")
+              : uiText("themeVisualPropertyField.emptyLabel2")}
+          </SelectItem>
+          {[
+            ...new Set([
+              ...fontFamilyOptions,
+              ...(typeof value === "string" && value ? [value] : []),
+            ]),
+          ]
+            .filter(Boolean)
+            .map((font) => (
+              <SelectItem
+                key={font}
+                value={font}
+                title={fontFamilyPresentation(font).title}
+              >
+                {fontFamilyPresentation(font).label}
+              </SelectItem>
+            ))}
+        </SelectContent>
+      </Select>
     ) : property === "background" && allowGradient ? (
       <ThemeBackgroundField
         label={label}
@@ -207,22 +328,64 @@ export function ThemeVisualPropertyField({
         onPreviewCancel={onPreviewCancel}
       />
     ) : (
-      <><div className="native-number-control">
-        <ThemeNumberInput
-          label={uiText("themeVisualPropertyField.label", { label: label })}
-          min={min}
-          max={max}
-          step={step}
-          value={blank || typeof value !== "number" ? undefined : value}
-          placeholder={mixed ? uiText("themeVisualPropertyField.placeholder") : undefined}
-          onChange={onChange}
-          onPreviewChange={onPreviewChange}
-          onPreviewCancel={onPreviewCancel}
-        />
-        {unit && <span>{unit}</span>}
-      </div>
-      {property === "fontWeight" && <SettingsChoiceControl label={uiText("themeVisualPropertyField.label2")} value={blank || typeof value !== "number" ? undefined : value}
-        options={[{ value: 400, label: uiText("themeVisualPropertyField.options.label") }, { value: 500, label: uiText("themeVisualPropertyField.options.label2") }, { value: 700, label: uiText("themeVisualPropertyField.options.label3") }]} onChange={onChange} />}</>
+      <>
+        <div className="native-number-control">
+          <ThemeNumberInput
+            label={uiText("themeVisualPropertyField.label", { label: label })}
+            min={min}
+            max={max}
+            step={step}
+            value={blank || typeof value !== "number" ? undefined : value}
+            placeholder={
+              mixed ? uiText("themeVisualPropertyField.placeholder") : undefined
+            }
+            onChange={(next) => {
+              setWeightDraft(undefined);
+              onChange(next);
+            }}
+            onPreviewChange={(next) => {
+              if (property === "fontWeight") setWeightDraft(next);
+              onPreviewChange?.(next);
+            }}
+            onPreviewCancel={() => {
+              setWeightDraft(undefined);
+              onPreviewCancel?.();
+            }}
+          />
+          {unit && <span>{unit}</span>}
+        </div>
+        {property === "fontWeight" && (
+          <ToggleGroup
+            type="single"
+            variant="outline"
+            spacing={0}
+            aria-label={uiText("themeVisualPropertyField.label2")}
+            value={
+              weightDraft !== undefined
+                ? String(weightDraft)
+                : blank || typeof value !== "number"
+                  ? ""
+                  : String(value)
+            }
+            onValueChange={(next) => {
+              if (next) {
+                setWeightDraft(undefined);
+                onChange(Number(next));
+              }
+            }}
+          >
+            {[
+              [400, uiText("themeVisualPropertyField.options.label")],
+              [500, uiText("themeVisualPropertyField.options.label2")],
+              [700, uiText("themeVisualPropertyField.options.label3")],
+            ].map(([weight, title]) => (
+              <ToggleGroupItem key={weight} value={String(weight)}>
+                {title}
+              </ToggleGroupItem>
+            ))}
+          </ToggleGroup>
+        )}
+      </>
     );
   return (
     <div className={`native-property-group is-${property}`}>
@@ -234,15 +397,17 @@ export function ThemeVisualPropertyField({
         <div>
           {input}
           {onRestore && (
-            <button
+            <Button
               type="button"
+              variant="ghost"
+              size="icon-sm"
               className="native-property-restore"
               title={uiText("themeVisualPropertyField.title")}
               aria-label={uiText("themeVisualPropertyField.aria_label")}
               onClick={onRestore}
             >
               <RotateCcw size={16} aria-hidden="true" />
-            </button>
+            </Button>
           )}
         </div>
       </div>
@@ -264,8 +429,12 @@ export function ThemeVisualPropertyField({
       )}
       {mixed && (property === "background" || property === "borderImage") && (
         <small>
-          {uiText("themeVisualPropertyField.ThemeVisualPropertyField")}{property === "background" ? uiText("themeVisualPropertyField.ThemeVisualPropertyField2") : uiText("themeVisualPropertyField.ThemeVisualPropertyField3")}
-          {uiText("themeVisualPropertyField.ThemeVisualPropertyField4")}</small>
+          {uiText("themeVisualPropertyField.ThemeVisualPropertyField")}
+          {property === "background"
+            ? uiText("themeVisualPropertyField.ThemeVisualPropertyField2")
+            : uiText("themeVisualPropertyField.ThemeVisualPropertyField3")}
+          {uiText("themeVisualPropertyField.ThemeVisualPropertyField4")}
+        </small>
       )}
     </div>
   );

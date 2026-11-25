@@ -1,7 +1,11 @@
+import { Checkbox } from "./shadcn/checkbox";
+import { Input } from "./shadcn/input";
+import { Button } from "./shadcn/button";
+import { Switch } from "./shadcn/switch";
 import { useUiLanguage } from "../i18n/react.ts";
 import { uiText } from "../i18n/index.ts";
 import { useEffect, useRef, useState } from "react";
-import { createPortal } from "react-dom";
+import { Dialog, DialogContent, DialogTitle } from "./shadcn/dialog";
 import { Settings2, X, RotateCcw } from "lucide-react";
 import { SettingsChoiceControl } from "./SettingsChoiceControl";
 import { SettingsIcon } from "./SettingsIcon";
@@ -21,11 +25,7 @@ export function ReviewStyleSettings() {
   useEffect(() => setFontInput(String(settings.fontSize)), [settings.fontSize]);
   const update = useGeneralSettings((s) => s.setReviewStyleSettings);
   const reset = useGeneralSettings((s) => s.resetReviewStyle);
-  const dialog = useRef<HTMLDialogElement>(null);
   const trigger = useRef<HTMLButtonElement>(null);
-  useEffect(() => {
-    if (open) dialog.current?.showModal();
-  }, [open]);
   const close = () => {
     setOpen(false);
     trigger.current?.focus();
@@ -39,60 +39,38 @@ export function ReviewStyleSettings() {
       className={`review-style-toggle ${disabled ? "review-style-toggle-disabled" : ""}`}
     >
       <span>{label}</span>
-      <input
-        className="review-style-switch"
-        type="checkbox"
-        role="switch"
+      <Switch
+
+
+
         checked={settings[key]}
         disabled={disabled}
-        onChange={(event) => update({ [key]: event.target.checked })}
+        onCheckedChange={(event) => update({ [key]: (event === true) })}
       />
     </label>
   );
   return (
     <>
-      <button
+      <Button variant="outline"
         ref={trigger}
         type="button"
         className="inline-flex h-7 items-center gap-1.5 rounded-md border border-line bg-bg px-2.5 ui-type-control text-t2 hover:bg-raised hover:text-accent-text"
         onClick={() => setOpen(true)}
       >
         <Settings2 size={16} strokeWidth={2} />
-        {uiText("reviewStyleSettings.ReviewStyleSettings")}</button>
-      {open &&
-        createPortal(
-          <dialog
-            ref={dialog}
-            className="review-style-dialog"
-            aria-labelledby="review-style-title"
-            onCancel={(event) => {
-              event.preventDefault();
-              close();
-            }}
-            onClick={(event) => {
-              if (event.target === event.currentTarget) {
-                const r = event.currentTarget.getBoundingClientRect();
-                if (
-                  event.clientX < r.left ||
-                  event.clientX > r.right ||
-                  event.clientY < r.top ||
-                  event.clientY > r.bottom
-                )
-                  close();
-              }
-            }}
-          >
+        {uiText("reviewStyleSettings.ReviewStyleSettings")}</Button>
+      <Dialog open={open} onOpenChange={setOpen}><DialogContent asChild showCloseButton={false} aria-describedby={undefined} className="max-w-none gap-0 p-0"><section className="review-style-dialog">
             <header>
-              <h2 id="review-style-title">{uiText("reviewStyleSettings.ReviewStyleSettings")}</h2>
-              <button type="button" aria-label={uiText("reviewStyleSettings.aria_label")} onClick={close}>
+              <DialogTitle asChild><h2 id="review-style-title">{uiText("reviewStyleSettings.ReviewStyleSettings")}</h2></DialogTitle>
+              <Button size="icon-sm" variant="ghost" type="button" aria-label={uiText("reviewStyleSettings.aria_label")} onClick={close}>
                 <X size={20} />
-              </button>
+              </Button>
             </header>
             <div className="review-style-options">
               <label className="review-style-toggle">
                 <span>{uiText("reviewStyleSettings.ReviewStyleSettings2")}</span>
                 <span>
-                  <input
+                  <Input
                     className="review-style-font"
                     aria-label={uiText("reviewStyleSettings.aria_label2")}
                     type="number"
@@ -139,11 +117,11 @@ export function ReviewStyleSettings() {
                     ] as const
                   ).map((key, index) => (
                     <label key={key}>
-                      <input
-                        type="checkbox"
+                      <Checkbox
+
                         checked={settings[key]}
-                        onChange={(event) =>
-                          update({ [key]: event.target.checked })
+                        onCheckedChange={(event) =>
+                          update({ [key]: (event === true) })
                         }
                       />
                       {[uiText("reviewStyleSettings.ReviewStyleSettings6"), uiText("reviewStyleSettings.ReviewStyleSettings7"), uiText("reviewStyleSettings.ReviewStyleSettings8")][index]}
@@ -162,15 +140,13 @@ export function ReviewStyleSettings() {
               {toggle("uniformTextColor", uiText("reviewStyleSettings.ReviewStyleSettings14"))}
             </div>
             <footer>
-              <button type="button" className="settings-icon-action" title={uiText("common.restoreDefaults")} aria-label={uiText("common.restoreDefaults")} onClick={reset}>
+              <Button variant="ghost" type="button" className="settings-icon-action" title={uiText("common.restoreDefaults")} aria-label={uiText("common.restoreDefaults")} onClick={reset}>
                 <RotateCcw size={16} aria-hidden="true" />
-              </button>
-              <button type="button" onClick={close}>
-                {uiText("reviewStyleSettings.ReviewStyleSettings15")}</button>
+              </Button>
+              <Button variant="outline" type="button" onClick={close}>
+                {uiText("reviewStyleSettings.ReviewStyleSettings15")}</Button>
             </footer>
-          </dialog>,
-          document.body,
-        )}
+          </section></DialogContent></Dialog>
     </>
   );
 }

@@ -6,7 +6,7 @@ import { existsSync, readFileSync } from "node:fs";
 import { fileURLToPath } from "node:url";
 import React from "react";
 import { renderToStaticMarkup } from "react-dom/server";
-import { createServer } from "vite";
+import { createServer } from "./helpers/vite.mjs";
 
 test("主播事件检索主区与单场主区使用同一收藏和更多筛选行", async () => {
   const root = fileURLToPath(new URL("..", import.meta.url));

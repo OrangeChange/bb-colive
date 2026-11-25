@@ -1,3 +1,4 @@
+import { Button } from "./shadcn/button";
 import { useUiLanguage } from "../i18n/react.ts";
 import { uiText } from "../i18n/index.ts";
 import { PanelRightOpen as LucidePanelRightOpen, PanelRightClose as LucidePanelRightClose } from "lucide-react";
@@ -542,16 +543,16 @@ export function RightWorkbench({
       </div>
       <div className="pointer-events-none absolute bottom-0 right-0 top-0 flex w-16 flex-col items-center py-3">
         <div aria-hidden="true" className={`right-workbench-rail absolute inset-0 bg-surface ${!expanded || closing ? "is-solid" : ""}`} />
-        <button type="button" className={`${railButtonIdle} relative pointer-events-auto bg-accent-subtle cursor-pointer`} aria-label={label} title={label}
+        <Button variant="outline" type="button" className={`${railButtonIdle} relative pointer-events-auto bg-accent-subtle cursor-pointer`} aria-label={label} title={label}
           aria-expanded={expanded} aria-controls="right-workbench-content" disabled={busy} onClick={() => void handleWorkbenchToggle()}>
           {expanded ? <LucidePanelRightOpen className="size-5" aria-hidden="true" /> : <LucidePanelRightClose className="size-5" aria-hidden="true" />}
-        </button>
+        </Button>
         <div className="right-workbench-settings relative mt-auto">
-          <button type="button" aria-label={settingsButtonLabel} title={settingsButtonLabel} aria-pressed={expanded && view === "settings"}
+          <Button variant="outline" type="button" aria-label={settingsButtonLabel} title={settingsButtonLabel} aria-pressed={expanded && view === "settings"}
             onClick={() => void handleSettingsClick()}
             className={`${railButtonIdle} pointer-events-auto ${view === "settings" ? "bg-accent-subtle text-accent-text" : "bg-accent-subtle"}`}>
             <IconSettings /><span className="sr-only">{uiText("common.settings")}</span>
-          </button>
+          </Button>
         </div>
       </div>
     </aside>

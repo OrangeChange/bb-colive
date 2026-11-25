@@ -1,3 +1,4 @@
+import { Button } from "./shadcn/button";
 import { useEffect, useLayoutEffect, useRef, useState, type RefObject } from "react";
 import { createPortal } from "react-dom";
 
@@ -123,7 +124,7 @@ export function ImagePreviewOverlay({
     >
       <div className={`ui-modal-surface ${surfaceClass}`}>
         <img src={src} alt={alt} className={imageClass} onError={() => onCloseRef.current()} />
-        <button
+        <Button size="icon-sm" variant="ghost"
           ref={closeButtonRef}
           type="button"
           aria-label={closeLabel}
@@ -131,7 +132,7 @@ export function ImagePreviewOverlay({
           onClick={() => onCloseRef.current()}
         >
           ×
-        </button>
+        </Button>
       </div>
     </div>,
     document.body,

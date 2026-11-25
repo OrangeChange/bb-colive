@@ -2,7 +2,7 @@ import React,{useState} from 'react';
 import {createRoot} from 'react-dom/client';
 import {mockIPC} from '@tauri-apps/api/mocks';
 import {emit} from '@tauri-apps/api/event';
-import '../../src/App.css';
+import '../../src/shadcn.css';
 import {SoftwareUpdateSettings} from '../../src/updates/SoftwareUpdateSettings';
 import {useSoftwareUpdate,useUpdatePreferences} from '../../src/updates/store';
 import {initTheme,useTheme} from '../../src/theme';

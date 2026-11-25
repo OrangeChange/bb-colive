@@ -9,7 +9,7 @@ import { createDefaultReviewOwnerState } from "../../src/archive/archiveState";
 import { isArchiveSessionRecording } from "../../src/archive/archiveSessionState";
 import type { ArchiveSessionSummary, ArchiveRepositoryContract, ArchiveEventRecord } from "../../src/archive/archiveTypes";
 import { actionButtonClass } from "../../src/components/actionButtonStyles";
-import "../../src/App.css";
+import "../../src/shadcn.css";
 
 const base: ArchiveSessionSummary = {
   sessionId: "fixture-current", ownerId: "room:101", roomId: 101, title: "周末直播", titleSource: "bilibili",

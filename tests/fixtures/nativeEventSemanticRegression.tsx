@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { createRoot } from "react-dom/client";
-import "../../src/App.css";
+import "../../src/shadcn.css";
 import { EventRow } from "../../src/components/EventRow";
 import { useEventAreaStyle } from "../../src/components/EventAreaStyle";
 import { createDefaultEventStyleSettings } from "../../src/eventStyleSettings";

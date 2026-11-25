@@ -604,6 +604,9 @@
   color: var(--review-body);
 }
 .review-style-dialog {
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
   margin: auto;
   width: min(440px, calc(100vw - 32px));
   max-height: calc(100vh - 48px);
@@ -613,13 +616,6 @@
   background: var(--surface);
   color: var(--text-1);
   box-shadow: 0 12px 40px #0003;
-}
-.review-style-dialog[open] {
-  display: flex;
-  flex-direction: column;
-}
-.review-style-dialog::backdrop {
-  background: #0005;
 }
 .review-style-dialog header,
 .review-style-dialog footer {
@@ -642,6 +638,7 @@
   border-radius: 4px;
 }
 .review-style-options {
+  flex: 1 1 auto;
   min-height: 0;
   padding: 8px 20px;
   overflow-y: auto;

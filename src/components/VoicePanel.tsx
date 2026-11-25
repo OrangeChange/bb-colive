@@ -1,6 +1,9 @@
+import { Textarea } from "./shadcn/textarea";
+import { Button } from "./shadcn/button";
+import { Input } from "./shadcn/input";
 import { useUiLanguage } from "../i18n/react.ts";
 import { localized, uiText } from "../i18n/index.ts";
-import { ChevronDown as LucideChevronDown, Mic, SlidersHorizontal, RotateCcw } from "lucide-react";
+import { ChevronDown as LucideChevronDown, Mic, SlidersHorizontal } from "lucide-react";
 import { useEffect, useMemo, useRef, useState, useSyncExternalStore, type DragEvent } from "react";
 import { openUrl } from "@tauri-apps/plugin-opener";
 import { ConnectBar } from "./ConnectBar";
@@ -218,7 +221,7 @@ function VoicePronunciationEditor({ rules, onChange }: { rules: VoicePronunciati
       <div className="voice-pronunciation-list space-y-2">
         {draftRules.map((rule) => (
           <div key={rule.id} className="voice-pronunciation-row">
-            <input
+            <Input
               aria-label={uiText("voicePanel.aria_label", { id: rule.id })}
               className={`${controlClass} min-w-0 w-full`}
               value={rule.source}
@@ -227,7 +230,7 @@ function VoicePronunciationEditor({ rules, onChange }: { rules: VoicePronunciati
               onBlur={() => commitRule(draftRules.find((candidate) => candidate.id === rule.id) ?? rule)}
             />
             <span className="voice-pronunciation-arrow ui-type-meta text-t3" aria-hidden="true">{uiText("voicePanel.VoicePronunciationEditor")}</span>
-            <input
+            <Input
               aria-label={uiText("voicePanel.aria_label2", { id: rule.id })}
               className={`${controlClass} min-w-0 w-full`}
               value={rule.replacement}
@@ -237,13 +240,13 @@ function VoicePronunciationEditor({ rules, onChange }: { rules: VoicePronunciati
             />
             <div className="voice-pronunciation-actions flex shrink-0 items-center gap-2">
               <PanelSwitch label={uiText("voicePanel.label", { value: rule.source || uiText("voicePanel.label.value") })} checked={rule.enabled} onChange={() => toggleRule(rule)} />
-              <button type="button" aria-label={uiText("voicePanel.aria_label3", { value: rule.source || uiText("voicePanel.aria_label.value") })} className="voice-pronunciation-delete rounded px-1.5 ui-type-control text-t3 transition-colors hover:bg-danger/10 hover:text-danger focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-danger" onClick={() => removeRule(rule.id)}>×</button>
+              <Button size="icon-sm" variant="ghost" type="button" aria-label={uiText("voicePanel.aria_label3", { value: rule.source || uiText("voicePanel.aria_label.value") })} className="voice-pronunciation-delete rounded px-1.5 ui-type-control text-t3 transition-colors hover:bg-danger/10 hover:text-danger focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-danger" onClick={() => removeRule(rule.id)}>×</Button>
             </div>
           </div>
         ))}
       </div>
       <div className="flex flex-wrap items-center gap-2">
-        <button type="button" className={`${controlClass} border-accent/50 text-accent-text`} onClick={addRule}>{uiText("voicePanel.VoicePronunciationEditor2")}</button>
+        <Button variant="outline" type="button" className={`${controlClass} border-accent/50 text-accent-text`} onClick={addRule}>{uiText("voicePanel.VoicePronunciationEditor2")}</Button>
         <span className="ui-type-meta text-t3">{uiText("voicePanel.VoicePronunciationEditor3")}</span>
       </div>
     </div>
@@ -347,30 +350,30 @@ function FishReferenceVoiceManager({ fishAudio, updateFishAudio, openFishResourc
   };
 
   return (
-    <div ref={pickerRef} className="fish-reference-picker relative flex min-w-0 w-full items-center gap-2">
+    <div ref={pickerRef} className="fish-reference-picker voice-select-tone relative flex min-w-0 w-full items-center gap-2">
       <div className="relative min-w-0 flex-1">
-        <button type="button" aria-label={uiText("voicePanel.aria_label4")} aria-haspopup="listbox" aria-expanded={isOpen} className={`${controlClass} ${selectClass} fish-reference-picker-trigger flex items-center justify-between gap-2 text-left`} onClick={() => setIsOpen((open) => !open)}>
+        <Button variant="outline" type="button" aria-label={uiText("voicePanel.aria_label4")} aria-haspopup="listbox" aria-expanded={isOpen} className={`${controlClass} ${selectClass} fish-reference-picker-trigger flex items-center justify-between gap-2 text-left`} onClick={() => setIsOpen((open) => !open)}>
           <span className="min-w-0 overflow-hidden text-ellipsis whitespace-nowrap">{currentPreset ? optionLabel(currentPreset) : currentId ? uiText("voicePanel.FishReferenceVoiceManager", { value: currentId.slice(0, 8) }) : uiText("voicePanel.FishReferenceVoiceManager2")}</span>
           <LucideChevronDown className={`size-4 shrink-0 transition-transform ${isOpen ? "rotate-180" : ""}`} aria-hidden="true" />
-        </button>
+        </Button>
         {isOpen && (
           <div data-ui-overlay="true" onPointerDown={(event) => event.stopPropagation()} className="ui-overlay-surface fish-reference-picker-popover absolute left-0 right-0 top-full z-30 mt-1 p-2">
             <div className="flex min-w-0 items-center gap-2">
-              <input aria-label={uiText("voicePanel.aria_label5")} className={`${controlClass} min-w-0 flex-1`} value={draftId} onChange={(event) => setDraftId(event.target.value)} onKeyDown={handleInputKeyDown} placeholder={uiText("voicePanel.placeholder3")} autoFocus />
-              <button type="button" className={`${controlClass} shrink-0 border-accent/50 text-accent-text`} disabled={busy} aria-busy={busy} onClick={submitInput}>{uiText("voicePanel.FishReferenceVoiceManager3")}</button>
+              <Input aria-label={uiText("voicePanel.aria_label5")} className={`${controlClass} min-w-0 flex-1`} value={draftId} onChange={(event) => setDraftId(event.target.value)} onKeyDown={handleInputKeyDown} placeholder={uiText("voicePanel.placeholder3")} autoFocus />
+              <Button variant="outline" type="button" className={`${controlClass} shrink-0 border-accent/50 text-accent-text`} disabled={busy} aria-busy={busy} onClick={submitInput}>{uiText("voicePanel.FishReferenceVoiceManager3")}</Button>
               {busy && <span className="shrink-0 ui-type-meta text-accent-text" aria-live="polite">{uiText("voicePanel.FishReferenceVoiceManager4")}</span>}
             </div>
             {feedback && <div role="status" aria-live="polite" className={`mt-2 ui-type-meta ${feedbackKind === "success" ? "text-accent-text" : "text-danger"}`}>{feedback}</div>}
             <div role="listbox" aria-label={uiText("voicePanel.aria_label6")} className="mt-2 max-h-48 overflow-y-auto">
               {currentId && !currentPreset && (
                 <div role="option" aria-selected="true" className="ui-select-item flex items-center gap-1">
-                  <button type="button" className="ui-select-item-text min-w-0 flex-1 text-left" onClick={() => selectVoice(currentId)}>{uiText("voicePanel.FishReferenceVoiceManager5")}{currentId.slice(0, 8)}{uiText("voicePanel.FishReferenceVoiceManager6")}</button>
+                  <Button variant="outline" type="button" className="ui-select-item-text min-w-0 flex-1 text-left" onClick={() => selectVoice(currentId)}>{uiText("voicePanel.FishReferenceVoiceManager5")}{currentId.slice(0, 8)}{uiText("voicePanel.FishReferenceVoiceManager6")}</Button>
                 </div>
               )}
               {fishAudio.referenceVoices.map((voice) => (
                 <div key={voice.id} role="option" aria-selected={voice.id === currentId} className={`ui-select-item flex items-center gap-1 ${voice.id === currentId ? "bg-bg text-accent-text" : "text-t2"}`}>
-                  <button type="button" className="ui-select-item-text min-w-0 flex-1 px-1 text-left" onClick={() => selectVoice(voice.id)}>{optionLabel(voice)}</button>
-                  <button type="button" aria-label={uiText("voicePanel.aria_label7", { name: voice.name })} className="size-6 shrink-0 rounded text-t3 transition-colors hover:bg-danger/10 hover:text-danger focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-danger" onClick={() => deleteVoice(voice)}><span aria-hidden="true">×</span></button>
+                  <Button variant="outline" type="button" className="ui-select-item-text min-w-0 flex-1 px-1 text-left" onClick={() => selectVoice(voice.id)}>{optionLabel(voice)}</Button>
+                  <Button variant="outline" type="button" aria-label={uiText("voicePanel.aria_label7", { name: voice.name })} className="size-6 shrink-0 rounded text-t3 transition-colors hover:bg-danger/10 hover:text-danger focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-danger" onClick={() => deleteVoice(voice)}><span aria-hidden="true">×</span></Button>
                 </div>
               ))}
               {fishAudio.referenceVoices.length === 0 && !currentId && <div className="px-2 py-1 ui-type-meta text-t3">{uiText("voicePanel.FishReferenceVoiceManager7")}</div>}
@@ -378,7 +381,7 @@ function FishReferenceVoiceManager({ fishAudio, updateFishAudio, openFishResourc
           </div>
         )}
       </div>
-      <button type="button" className={`${controlClass} shrink-0 border-accent/50 text-accent-text`} onClick={() => void openFishResource(FISH_VOICE_LIBRARY_URL)}>{uiText("voicePanel.FishReferenceVoiceManager8")}</button>
+      <Button variant="outline" type="button" className={`${controlClass} shrink-0 border-accent/50 text-accent-text`} onClick={() => void openFishResource(FISH_VOICE_LIBRARY_URL)}>{uiText("voicePanel.FishReferenceVoiceManager8")}</Button>
     </div>
   );
 }
@@ -435,7 +438,7 @@ function VoiceTemplateComposer({ category, segments, onChange }: { category: Voi
           segment.kind === "field" ? (
             <span
               key={`${segment.kind}-${segment.field}-${index}`}
-              className={`voice-template-module inline-flex min-w-0 shrink-0 items-stretch whitespace-nowrap overflow-hidden rounded-md border border-accent/35 bg-accent-subtle ${dragIndex === index ? "opacity-60" : ""}`}
+              className={`voice-template-module inline-flex min-w-0 shrink-0 items-center whitespace-nowrap overflow-hidden rounded-md border border-accent/35 bg-accent-subtle ${dragIndex === index ? "opacity-60" : ""}`}
               onDragOver={(event) => {
                 event.preventDefault();
                 event.dataTransfer.dropEffect = "move";
@@ -448,7 +451,7 @@ function VoiceTemplateComposer({ category, segments, onChange }: { category: Voi
               }}
             >
               <span
-                className="voice-template-drag-handle inline-flex min-w-0 cursor-grab items-center gap-1 px-2 py-1 ui-type-meta text-accent-text outline-none active:cursor-grabbing focus-visible:ring-2 focus-visible:ring-accent-ring"
+                className="voice-template-drag-handle inline-flex min-w-0 cursor-grab items-center gap-1 pl-2 pr-0 py-1 ui-type-meta text-accent-text outline-none active:cursor-grabbing focus-visible:ring-2 focus-visible:ring-accent-ring"
                 role="button"
                 tabIndex={0}
                 draggable={true}
@@ -463,19 +466,19 @@ function VoiceTemplateComposer({ category, segments, onChange }: { category: Voi
                 <span aria-hidden="true" className="select-none text-t3 opacity-70">⠿</span>
                 <span className="truncate">{FIELD_LABELS[segment.field]}</span>
               </span>
-              <button
+              <Button variant="ghost" size="icon-xs"
                 type="button"
                 aria-label={uiText("voicePanel.aria_label9", { value: FIELD_LABELS[segment.field] })}
                 title={uiText("voicePanel.title2")}
                 onClick={() => onChange(normalizeSegments(editableSegments.filter((_, itemIndex) => itemIndex !== index)))}
-                className="voice-template-delete shrink-0 px-1.5 ui-type-meta text-t3 text-accent-text/75 transition-colors hover:bg-accent/15 hover:text-accent-text focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent-ring"
+                className="voice-template-delete size-5 shrink-0 ui-type-meta text-t3 text-accent-text/75 transition-colors hover:bg-accent/15 hover:text-accent-text focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent-ring"
               >
                 ×
-              </button>
+              </Button>
             </span>
           ) : (
             <span key={`${segment.kind}-${index}`} className="voice-template-text-slot inline-flex shrink-0 items-center">
-              <input
+              <Input
                 aria-label={uiText("voicePanel.aria_label10", { value: index + 1 })}
                 title={uiText("voicePanel.title3")}
                 value={segment.value}
@@ -489,14 +492,14 @@ function VoiceTemplateComposer({ category, segments, onChange }: { category: Voi
       </div>
       <div className="flex flex-wrap gap-1.5">
         {availableFields.map((field) => (
-          <button
+          <Button variant="outline"
             type="button"
             key={field}
             onClick={() => onChange(normalizeSegments([...editableSegments, { kind: "field", field }]))}
             className="rounded-md border border-line bg-surface px-2 py-1 ui-type-meta text-t3 transition-colors hover:border-accent/60 hover:text-accent-text"
           >
             +{FIELD_LABELS[field]}
-          </button>
+          </Button>
         ))}
       </div>
     </div>
@@ -727,14 +730,14 @@ export function VoicePanel() {
           <div className="voice-panel-scroll min-h-0 flex-1 overflow-y-auto">
             <section className={sectionClass}>
               <SectionToolbar iconName="runtime" title={uiText("voicePanel.title4")} actionsClassName="voice-runtime-actions" status={<RuntimeQueueStatus text={statusText} state={snapshot.status} />}>
-                <button type="button" aria-label={playbackPaused ? uiText("voicePanel.aria_label11") : uiText("voicePanel.aria_label12")} className={controlClass} onClick={togglePlayback} disabled={!canControlPlayback}>{playbackPaused ? uiText("voicePanel.VoicePanel2") : uiText("voicePanel.VoicePanel3")}</button>
-                <button type="button" className={controlClass} onClick={() => voiceController.skip()} disabled={!canControlPlayback}>{uiText("voicePanel.VoicePanel4")}</button>
-                <button type="button" className={controlClass} onClick={() => voiceController.clear()}>{uiText("voicePanel.VoicePanel5")}</button>
+                <Button variant="outline" type="button" aria-label={playbackPaused ? uiText("voicePanel.aria_label11") : uiText("voicePanel.aria_label12")} className={controlClass} onClick={togglePlayback} disabled={!canControlPlayback}>{playbackPaused ? uiText("voicePanel.VoicePanel2") : uiText("voicePanel.VoicePanel3")}</Button>
+                <Button variant="outline" type="button" className={controlClass} onClick={() => voiceController.skip()} disabled={!canControlPlayback}>{uiText("voicePanel.VoicePanel4")}</Button>
+                <Button variant="outline" type="button" className={controlClass} onClick={() => voiceController.clear()}>{uiText("voicePanel.VoicePanel5")}</Button>
               </SectionToolbar>
               {(snapshot.error || voiceError || testError || voiceNeedsSelection) && (
                 <div className="mt-3 rounded-md border border-danger/40 bg-danger/10 px-3 py-2 ui-type-meta text-danger">
                   <div>{snapshot.error || voiceError || testError || uiText("voicePanel.VoicePanel6")}</div>
-                  {snapshot.status === "error" && <button type="button" className="mt-1 rounded border border-danger/40 px-2 py-0.5 text-danger hover:bg-danger/10" onClick={() => voiceController.start()}>{uiText("common.retry")}</button>}
+                  {snapshot.status === "error" && <Button variant="outline" type="button" className="mt-1 rounded border border-danger/40 px-2 py-0.5 text-danger hover:bg-danger/10" onClick={() => voiceController.start()}>{uiText("common.retry")}</Button>}
                 </div>
               )}
               <RuntimeQueueSummary
@@ -753,23 +756,23 @@ export function VoicePanel() {
                 </SettingRow>
                 {settings.engine === "custom-http" || settings.engine === "fish-audio" ? null : (
                   <SettingRow label={uiText("voicePanel.label4")} hint={activeVoice?.local ? uiText("voicePanel.hint") : undefined}>
-                    <UiSelect ariaLabel={uiText("voicePanel.ariaLabel2")} size="standard" className={selectClass} options={engineVoiceOptions} value={engineVoiceName} onValueChange={changeVoice} />
+                    <UiSelect ariaLabel={uiText("voicePanel.ariaLabel2")} size="standard" className={`${selectClass} voice-select-tone`} options={engineVoiceOptions} value={engineVoiceName} onValueChange={changeVoice} />
                   </SettingRow>
                 )}
               </div>
               {settings.engine === "fish-audio" && (
                 <div className="voice-setting-grid mt-3 grid min-w-0 gap-x-6 gap-y-1">
-                  <SettingRow label={uiText("voicePanel.label5")}><input aria-label={uiText("voicePanel.aria_label13")} className={controlClass} value={settings.fishAudio.baseUrl} onChange={(event) => updateFishAudio({ baseUrl: event.target.value })} /></SettingRow>
+                  <SettingRow label={uiText("voicePanel.label5")}><Input aria-label={uiText("voicePanel.aria_label13")} className={controlClass} value={settings.fishAudio.baseUrl} onChange={(event) => updateFishAudio({ baseUrl: event.target.value })} /></SettingRow>
                   <SettingRow label="API Key">
                     <div className="flex min-w-0 items-center gap-2">
-                      <input aria-label="Fish Audio API Key" type="password" autoComplete="off" className={`${controlClass} min-w-0 flex-1`} value={settings.fishAudio.apiKey} onChange={(event) => updateFishAudio({ apiKey: event.target.value })} />
-                      <button type="button" className={`${controlClass} shrink-0 border-accent/50 text-accent-text`} onClick={() => void openFishResource(FISH_API_KEY_URL)}>{uiText("voicePanel.VoicePanel8")}</button>
+                      <Input aria-label="Fish Audio API Key" type="password" autoComplete="off" className={`${controlClass} min-w-0 flex-1`} value={settings.fishAudio.apiKey} onChange={(event) => updateFishAudio({ apiKey: event.target.value })} />
+                      <Button variant="outline" type="button" className={`${controlClass} shrink-0 border-accent/50 text-accent-text`} onClick={() => void openFishResource(FISH_API_KEY_URL)}>{uiText("voicePanel.VoicePanel8")}</Button>
                     </div>
                   </SettingRow>
                   <SettingRow label={uiText("voicePanel.label6")}>
                     <FishReferenceVoiceManager fishAudio={settings.fishAudio} updateFishAudio={updateFishAudio} openFishResource={openFishResource} />
                   </SettingRow>
-                  <SettingRow label={uiText("voicePanel.label7")}><input aria-label={uiText("voicePanel.aria_label14")} className={controlClass} value={settings.fishAudio.model} onChange={(event) => updateFishAudio({ model: event.target.value })} /></SettingRow>
+                  <SettingRow label={uiText("voicePanel.label7")}><Input aria-label={uiText("voicePanel.aria_label14")} className={controlClass} value={settings.fishAudio.model} onChange={(event) => updateFishAudio({ model: event.target.value })} /></SettingRow>
                   <SettingRow label={uiText("voicePanel.label8")}><SettingsChoiceControl label={uiText("voicePanel.label9")} options={FISH_AUDIO_FORMAT_OPTIONS} value={settings.fishAudio.format} onChange={(value) => updateFishAudio({ format: value as FishAudioSettings["format"] })} /></SettingRow>
                   {fishLinkError && <div role="status" aria-live="polite" className="col-span-full ui-type-meta text-danger">{fishLinkError}</div>}
                 </div>
@@ -778,26 +781,26 @@ export function VoicePanel() {
                 <div className="mt-3 space-y-3">
                   <div className="voice-setting-grid grid min-w-0 gap-x-6 gap-y-1">
                     <SettingRow label={uiText("voicePanel.label10")} hint={uiText("voicePanel.hint2")}><SettingsChoiceControl label={uiText("voicePanel.label11")} options={CUSTOM_HTTP_PRESET_OPTIONS} value={settings.customHttp.preset} onChange={(value) => applyCustomHttpPreset(value as CustomHttpPreset)} /></SettingRow>
-                    <SettingRow label={uiText("voicePanel.label5")}><input aria-label={uiText("voicePanel.aria_label15")} className={controlClass} value={settings.customHttp.endpoint} onChange={(event) => updateCustomHttp({ endpoint: event.target.value })} /></SettingRow>
+                    <SettingRow label={uiText("voicePanel.label5")}><Input aria-label={uiText("voicePanel.aria_label15")} className={controlClass} value={settings.customHttp.endpoint} onChange={(event) => updateCustomHttp({ endpoint: event.target.value })} /></SettingRow>
                     <SettingRow label={uiText("voicePanel.label12")}><SettingsChoiceControl label={uiText("voicePanel.label13")} options={CUSTOM_HTTP_AUTH_OPTIONS} value={settings.customHttp.authType} onChange={(value) => updateCustomHttp({ authType: value as CustomHttpVoiceSettings["authType"] })} /></SettingRow>
-                    {settings.customHttp.authType !== "none" && <SettingRow label="API Key"><input aria-label={uiText("voicePanel.aria_label16")} type="password" autoComplete="off" className={controlClass} value={settings.customHttp.apiKey} onChange={(event) => updateCustomHttp({ apiKey: event.target.value })} /></SettingRow>}
-                    <SettingRow label={uiText("voicePanel.label7")}><input aria-label={uiText("voicePanel.aria_label17")} className={controlClass} value={settings.customHttp.model} onChange={(event) => updateCustomHttp({ model: event.target.value })} /></SettingRow>
-                    <SettingRow label={uiText("voicePanel.label14")}><input aria-label={uiText("voicePanel.aria_label18")} className={controlClass} value={customVoiceName} onChange={(event) => changeCustomVoice(event.target.value)} /></SettingRow>
-                    <SettingRow label={uiText("voicePanel.label15")} hint={uiText("voicePanel.hint3")}><input aria-label={uiText("voicePanel.aria_label19")} className={controlClass} value={settings.customHttp.textField} onChange={(event) => updateCustomHttp({ textField: event.target.value })} /></SettingRow>
-                    <SettingRow label={uiText("voicePanel.label16")} hint={uiText("voicePanel.hint4")}><input aria-label={uiText("voicePanel.aria_label20")} className={controlClass} value={settings.customHttp.voiceField} onChange={(event) => updateCustomHttp({ voiceField: event.target.value })} /></SettingRow>
-                    <SettingRow label={uiText("voicePanel.label17")} hint={uiText("voicePanel.hint4")}><input aria-label={uiText("voicePanel.aria_label21")} className={controlClass} value={settings.customHttp.modelField} onChange={(event) => updateCustomHttp({ modelField: event.target.value })} /></SettingRow>
+                    {settings.customHttp.authType !== "none" && <SettingRow label="API Key"><Input aria-label={uiText("voicePanel.aria_label16")} type="password" autoComplete="off" className={controlClass} value={settings.customHttp.apiKey} onChange={(event) => updateCustomHttp({ apiKey: event.target.value })} /></SettingRow>}
+                    <SettingRow label={uiText("voicePanel.label7")}><Input aria-label={uiText("voicePanel.aria_label17")} className={controlClass} value={settings.customHttp.model} onChange={(event) => updateCustomHttp({ model: event.target.value })} /></SettingRow>
+                    <SettingRow label={uiText("voicePanel.label14")}><Input aria-label={uiText("voicePanel.aria_label18")} className={`${controlClass} voice-select-tone`} value={customVoiceName} onChange={(event) => changeCustomVoice(event.target.value)} /></SettingRow>
+                    <SettingRow label={uiText("voicePanel.label15")} hint={uiText("voicePanel.hint3")}><Input aria-label={uiText("voicePanel.aria_label19")} className={controlClass} value={settings.customHttp.textField} onChange={(event) => updateCustomHttp({ textField: event.target.value })} /></SettingRow>
+                    <SettingRow label={uiText("voicePanel.label16")} hint={uiText("voicePanel.hint4")}><Input aria-label={uiText("voicePanel.aria_label20")} className={controlClass} value={settings.customHttp.voiceField} onChange={(event) => updateCustomHttp({ voiceField: event.target.value })} /></SettingRow>
+                    <SettingRow label={uiText("voicePanel.label17")} hint={uiText("voicePanel.hint4")}><Input aria-label={uiText("voicePanel.aria_label21")} className={controlClass} value={settings.customHttp.modelField} onChange={(event) => updateCustomHttp({ modelField: event.target.value })} /></SettingRow>
                     <SettingRow label={uiText("voicePanel.label18")}><SettingsChoiceControl label={uiText("voicePanel.label19")} options={CUSTOM_HTTP_RESPONSE_OPTIONS} value={settings.customHttp.responseFormat} onChange={(value) => updateCustomHttp({ responseFormat: value as CustomHttpVoiceSettings["responseFormat"] })} /></SettingRow>
-                    {settings.customHttp.responseFormat === "json-base64" && <SettingRow label={uiText("voicePanel.label20")} hint={uiText("voicePanel.hint5")}><input aria-label={uiText("voicePanel.aria_label22")} className={controlClass} value={settings.customHttp.audioField} onChange={(event) => updateCustomHttp({ audioField: event.target.value })} /></SettingRow>}
+                    {settings.customHttp.responseFormat === "json-base64" && <SettingRow label={uiText("voicePanel.label20")} hint={uiText("voicePanel.hint5")}><Input aria-label={uiText("voicePanel.aria_label22")} className={controlClass} value={settings.customHttp.audioField} onChange={(event) => updateCustomHttp({ audioField: event.target.value })} /></SettingRow>}
                   </div>
                   <details className="voice-advanced-settings">
                     <summary className="voice-advanced-summary"><span>{uiText("voicePanel.VoicePanel9")}</span><span className="voice-advanced-hint">{uiText("voicePanel.VoicePanel10")}</span><span aria-hidden="true" className="voice-advanced-chevron" /></summary>
                     <div className="voice-setting-grid mt-2 grid min-w-0 gap-x-6 gap-y-1">
-                      {settings.customHttp.authType === "api-key" && <SettingRow label="Key Header"><input aria-label={uiText("voicePanel.aria_label23")} className={controlClass} value={settings.customHttp.apiKeyHeader} onChange={(event) => updateCustomHttp({ apiKeyHeader: event.target.value })} /></SettingRow>}
-                      <SettingRow label={uiText("voicePanel.label21")} hint={uiText("voicePanel.hint4")}><input aria-label={uiText("voicePanel.aria_label24")} className={controlClass} value={settings.customHttp.rateField} onChange={(event) => updateCustomHttp({ rateField: event.target.value })} /></SettingRow>
-                      <SettingRow label={uiText("voicePanel.label22")} hint={uiText("voicePanel.hint4")}><input aria-label={uiText("voicePanel.aria_label25")} className={controlClass} value={settings.customHttp.pitchField} onChange={(event) => updateCustomHttp({ pitchField: event.target.value })} /></SettingRow>
-                      <SettingRow label={uiText("voicePanel.label23")} hint={uiText("voicePanel.hint4")}><input aria-label={uiText("voicePanel.aria_label26")} className={controlClass} value={settings.customHttp.volumeField} onChange={(event) => updateCustomHttp({ volumeField: event.target.value })} /></SettingRow>
-                      <SettingRow label={uiText("voicePanel.label24")} hint={uiText("voicePanel.hint6")}><textarea aria-label={uiText("voicePanel.aria_label27")} className={`${controlClass} min-h-20 resize-none whitespace-pre-wrap`} value={customFixedBodyText} onChange={(event) => setCustomFixedBodyText(event.target.value)} onBlur={(event) => applyCustomJson(event.target.value, "fixedBody")} /></SettingRow>
-                      <SettingRow label={uiText("voicePanel.label25")} hint={uiText("voicePanel.hint7")}><textarea aria-label={uiText("voicePanel.aria_label28")} className={`${controlClass} min-h-20 resize-none whitespace-pre-wrap`} value={customHeadersText} onChange={(event) => setCustomHeadersText(event.target.value)} onBlur={(event) => applyCustomJson(event.target.value, "extraHeaders")} /></SettingRow>
+                      {settings.customHttp.authType === "api-key" && <SettingRow label="Key Header"><Input aria-label={uiText("voicePanel.aria_label23")} className={controlClass} value={settings.customHttp.apiKeyHeader} onChange={(event) => updateCustomHttp({ apiKeyHeader: event.target.value })} /></SettingRow>}
+                      <SettingRow label={uiText("voicePanel.label21")} hint={uiText("voicePanel.hint4")}><Input aria-label={uiText("voicePanel.aria_label24")} className={controlClass} value={settings.customHttp.rateField} onChange={(event) => updateCustomHttp({ rateField: event.target.value })} /></SettingRow>
+                      <SettingRow label={uiText("voicePanel.label22")} hint={uiText("voicePanel.hint4")}><Input aria-label={uiText("voicePanel.aria_label25")} className={controlClass} value={settings.customHttp.pitchField} onChange={(event) => updateCustomHttp({ pitchField: event.target.value })} /></SettingRow>
+                      <SettingRow label={uiText("voicePanel.label23")} hint={uiText("voicePanel.hint4")}><Input aria-label={uiText("voicePanel.aria_label26")} className={controlClass} value={settings.customHttp.volumeField} onChange={(event) => updateCustomHttp({ volumeField: event.target.value })} /></SettingRow>
+                      <SettingRow label={uiText("voicePanel.label24")} hint={uiText("voicePanel.hint6")}><Textarea aria-label={uiText("voicePanel.aria_label27")} className={`${controlClass} min-h-20 resize-none whitespace-pre-wrap`} value={customFixedBodyText} onChange={(event) => setCustomFixedBodyText(event.target.value)} onBlur={(event) => applyCustomJson(event.target.value, "fixedBody")} /></SettingRow>
+                      <SettingRow label={uiText("voicePanel.label25")} hint={uiText("voicePanel.hint7")}><Textarea aria-label={uiText("voicePanel.aria_label28")} className={`${controlClass} min-h-20 resize-none whitespace-pre-wrap`} value={customHeadersText} onChange={(event) => setCustomHeadersText(event.target.value)} onBlur={(event) => applyCustomJson(event.target.value, "extraHeaders")} /></SettingRow>
                     </div>
                   </details>
                 </div>
@@ -819,11 +822,11 @@ export function VoicePanel() {
               <SectionHeading iconName="queue">{uiText("voicePanel.VoicePanel12")}</SectionHeading>
               <div className="voice-setting-grid grid min-w-0 gap-x-6 gap-y-2">
                 <SettingRow label={uiText("voicePanel.label30")}><SettingsChoiceControl label={uiText("voicePanel.label31")} options={VOICE_QUEUE_MODE_OPTIONS} value={settings.queueMode} onChange={queueMode => settings.setVoiceSettings({ queueMode })} /></SettingRow>
-                <SettingRow label={uiText("voicePanel.label32")}><div className="flex items-center gap-2"><input className={`${controlClass} w-24 font-mono`} type="number" min={0} max={30} step={0.5} value={settings.eventIntervalSeconds} onChange={(event) => settings.setVoiceSettings({ eventIntervalSeconds: Number(event.target.value) })} /><span className="ui-type-meta text-t3">{uiText("voicePanel.VoicePanel13")}</span></div></SettingRow>
-                <SettingRow label={uiText("voicePanel.label33")}><input className={`${controlClass} w-24 font-mono`} type="number" min={10} max={500} value={settings.queueLimit} onChange={(event) => settings.setVoiceSettings({ queueLimit: Number(event.target.value) })} /></SettingRow>
+                <SettingRow label={uiText("voicePanel.label32")}><div className="flex items-center gap-2"><Input className={`${controlClass} w-24 font-mono`} type="number" min={0} max={30} step={0.5} value={settings.eventIntervalSeconds} onChange={(event) => settings.setVoiceSettings({ eventIntervalSeconds: Number(event.target.value) })} /><span className="ui-type-meta text-t3">{uiText("voicePanel.VoicePanel13")}</span></div></SettingRow>
+                <SettingRow label={uiText("voicePanel.label33")}><Input className={`${controlClass} w-24 font-mono`} type="number" min={10} max={500} value={settings.queueLimit} onChange={(event) => settings.setVoiceSettings({ queueLimit: Number(event.target.value) })} /></SettingRow>
                 <SettingRow label={uiText("voicePanel.label34")}><UiSelect ariaLabel={uiText("voicePanel.ariaLabel3")} size="standard" className="voice-select-control voice-select-compact" options={VOICE_OVERFLOW_OPTIONS} value={settings.overflowPolicy} onValueChange={(value) => settings.setVoiceSettings({ overflowPolicy: value as "drop-oldest" | "drop-newest" | "drop-normal-first" })} /></SettingRow>
                 <SettingRow label={uiText("voicePanel.label35")}><PanelSwitch label={uiText("voicePanel.label35")} checked={settings.expiryEnabled} onChange={() => settings.setVoiceSettings({ expiryEnabled: !settings.expiryEnabled })} /></SettingRow>
-                {settings.expiryEnabled && <SettingRow label={uiText("voicePanel.label36")}><input className={`${controlClass} w-24 font-mono`} type="number" min={5} max={600} value={settings.expirySeconds} onChange={(event) => settings.setVoiceSettings({ expirySeconds: Number(event.target.value) })} /></SettingRow>}
+                {settings.expiryEnabled && <SettingRow label={uiText("voicePanel.label36")}><Input className={`${controlClass} w-24 font-mono`} type="number" min={5} max={600} value={settings.expirySeconds} onChange={(event) => settings.setVoiceSettings({ expirySeconds: Number(event.target.value) })} /></SettingRow>}
               </div>
               <div className="voice-setting-grid mt-3 grid min-w-0 gap-x-6 gap-y-1">
                 {VOICE_EVENT_CATEGORIES.map((category) => <SettingRow key={category} label={uiText("voicePanel.label37", { value: CATEGORY_LABELS[category] })}><SettingsChoiceControl label={uiText("voicePanel.label37", { value: CATEGORY_LABELS[category] })} options={PRIORITY_OPTIONS} value={settings.priorities[category]} onChange={value => settings.setVoiceSettings({ priorities: { ...settings.priorities, [category]: value } })} /></SettingRow>)}
@@ -849,28 +852,28 @@ export function VoicePanel() {
             <section className={sectionClass}>
               <SectionHeading iconName="templates">{uiText("voicePanel.VoicePanel17")}</SectionHeading>
               <div className="mb-3 flex flex-wrap gap-1.5">
-                {VOICE_EVENT_CATEGORIES.map((category) => <button type="button" key={category} className={`whitespace-nowrap rounded-md border px-2.5 py-1 ui-type-control ${currentTemplateCategory === category ? "border-accent bg-accent-subtle text-accent-text" : "border-line text-t3 hover:text-t1"}`} onClick={() => setTemplateSelection(category === "interact" ? { kind: "interact", interactKind: "entry" } : { kind: "category", category })}>{CATEGORY_LABELS[category]}</button>)}
+                {VOICE_EVENT_CATEGORIES.map((category) => <Button variant="outline" type="button" key={category} className={`whitespace-nowrap rounded-md border px-2.5 py-1 ui-type-control ${currentTemplateCategory === category ? "border-accent bg-accent-subtle text-accent-text" : "border-line text-t3 hover:text-t1"}`} onClick={() => setTemplateSelection(category === "interact" ? { kind: "interact", interactKind: "entry" } : { kind: "category", category })}>{CATEGORY_LABELS[category]}</Button>)}
               </div>
               {currentTemplateCategory === "interact" && (
                 <div className="mb-3 flex flex-wrap gap-1.5">
-                  {INTERACT_KIND_OPTIONS.map((option) => <button type="button" key={option.key} className={`whitespace-nowrap rounded-md border px-2.5 py-1 ui-type-control ${templateSelection.kind === "interact" && templateSelection.interactKind === option.key ? "border-accent bg-accent-subtle text-accent-text" : "border-line text-t3 hover:text-t1"}`} onClick={() => setTemplateSelection({ kind: "interact", interactKind: option.key })}>{option.label}</button>)}
+                  {INTERACT_KIND_OPTIONS.map((option) => <Button variant="outline" type="button" key={option.key} className={`whitespace-nowrap rounded-md border px-2.5 py-1 ui-type-control ${templateSelection.kind === "interact" && templateSelection.interactKind === option.key ? "border-accent bg-accent-subtle text-accent-text" : "border-line text-t3 hover:text-t1"}`} onClick={() => setTemplateSelection({ kind: "interact", interactKind: option.key })}>{option.label}</Button>)}
                 </div>
               )}
               {(currentTemplateCategory === "redPocket" || currentTemplateCategory === "anchorLottery") && (
                 <div className="mb-3 flex flex-wrap gap-1.5">
-                  <button type="button" className={`whitespace-nowrap rounded-md border px-2.5 py-1 ui-type-control ${templateSelection.kind === "category" ? "border-accent bg-accent-subtle text-accent-text" : "border-line text-t3 hover:text-t1"}`} onClick={() => setTemplateSelection({ kind: "category", category: currentTemplateCategory })}>{CATEGORY_LABELS[currentTemplateCategory]}{uiText("voicePanel.VoicePanel18")}</button>
-                  <button type="button" className={`whitespace-nowrap rounded-md border px-2.5 py-1 ui-type-control ${templateSelection.kind === "result" ? "border-accent bg-accent-subtle text-accent-text" : "border-line text-t3 hover:text-t1"}`} onClick={() => setTemplateSelection({ kind: "result", category: currentTemplateCategory as "redPocket" | "anchorLottery" })}>{CATEGORY_LABELS[currentTemplateCategory]}{uiText("voicePanel.VoicePanel19")}</button>
+                  <Button variant="outline" type="button" className={`whitespace-nowrap rounded-md border px-2.5 py-1 ui-type-control ${templateSelection.kind === "category" ? "border-accent bg-accent-subtle text-accent-text" : "border-line text-t3 hover:text-t1"}`} onClick={() => setTemplateSelection({ kind: "category", category: currentTemplateCategory })}>{CATEGORY_LABELS[currentTemplateCategory]}{uiText("voicePanel.VoicePanel18")}</Button>
+                  <Button variant="outline" type="button" className={`whitespace-nowrap rounded-md border px-2.5 py-1 ui-type-control ${templateSelection.kind === "result" ? "border-accent bg-accent-subtle text-accent-text" : "border-line text-t3 hover:text-t1"}`} onClick={() => setTemplateSelection({ kind: "result", category: currentTemplateCategory as "redPocket" | "anchorLottery" })}>{CATEGORY_LABELS[currentTemplateCategory]}{uiText("voicePanel.VoicePanel19")}</Button>
                 </div>
               )}
               <VoiceTemplateComposer category={currentTemplateCategory} segments={currentTemplate} onChange={updateTemplate} />
               <div className="mt-3 flex flex-wrap justify-end gap-2">
-                <button type="button" aria-label={uiText("voicePanel.aria_label29")} className={`voice-template-audition ${controlClass} border-accent/50 text-accent-text`} onClick={runTemplateTest}>{uiText("voicePanel.VoicePanel20")}</button>
-                <button type="button" className={`${controlClass} text-t3`} onClick={resetTemplate}>{uiText("voicePanel.VoicePanel21")}</button>
+                <Button variant="outline" type="button" aria-label={uiText("voicePanel.aria_label29")} className={`voice-template-audition ${controlClass} border-accent/50 text-accent-text`} onClick={runTemplateTest}>{uiText("voicePanel.VoicePanel20")}</Button>
+                <Button variant="outline" type="button" className={`${controlClass} text-t3`} onClick={resetTemplate}>{uiText("voicePanel.VoicePanel21")}</Button>
               </div>
             </section>
 
             <section className={`${sectionClass} flex justify-end`}>
-              <button type="button" className={`${controlClass} border-danger/40 text-danger`} disabled={testBusy} title={uiText("common.restoreDefaults")} aria-label={uiText("common.restoreDefaults")} onClick={reset}><RotateCcw size={16} aria-hidden="true" /></button>
+              <Button variant="outline" type="button" className={`${controlClass} border-danger/40 text-danger`} disabled={testBusy} title={uiText("common.restoreDefaults")} aria-label={uiText("common.restoreDefaults")} onClick={reset}>{uiText("common.restoreDefaults")}</Button>
             </section>
           </div>
         </section>

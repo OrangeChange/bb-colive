@@ -1,3 +1,4 @@
+import { Button } from "./shadcn/button";
 import { useUiLanguage } from "../i18n/react.ts";
 import { uiText } from "../i18n/index.ts";
 import { useCallback, useEffect, useState } from "react";
@@ -23,6 +24,6 @@ export function CompatibleFrameStatus({ ready, error, onRetry }: { ready: boolea
   if (ready && !error) return null;
   return <div className="compatible-frame-status" role={error ? "alert" : "status"}>
     <span>{error || uiText("compatibleFrameStatus.CompatibleFrameStatus")}</span>
-    {error && <button type="button" className="native-preview-open-button" onClick={onRetry}>{uiText("common.retry")}</button>}
+    {error && <Button variant="outline" type="button" className="native-preview-open-button" onClick={onRetry}>{uiText("common.retry")}</Button>}
   </div>;
 }

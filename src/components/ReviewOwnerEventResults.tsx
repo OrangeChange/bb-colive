@@ -1,3 +1,4 @@
+import { Button } from "./shadcn/button";
 import { useUiLanguage } from "../i18n/react.ts";
 import { localized, uiText } from "../i18n/index.ts";
 import { useState } from "react";
@@ -45,13 +46,13 @@ export function ReviewOwnerEventResultsToolbar({
         <UiSelect ariaLabel={uiText("reviewOwnerEventResults.ariaLabel")} options={eventSortOptions} value={sort} onValueChange={(value) => onChangeSort(value as ReviewOwnerEventQuery["sort"])} />
       </div>
       <UiSelect ariaLabel={uiText("reviewOwnerEventResults.ariaLabel2")} options={(["desc", "asc"] as const).map(value => ({ value, label: formatArchiveSortDirection(value, sort) }))} value={direction} onValueChange={(value) => onChangeDirection(value as ArchiveSortDirection)} />
-      <button
+      <Button variant="outline"
         type="button"
         aria-label={uiText("reviewOwnerEventResults.aria_label2")}
         aria-pressed={showBigEmote}
         className={`${toolbarButtonClass} ${showBigEmote ? "border-accent bg-accent-subtle text-accent-text" : "border-line bg-bg text-t2 hover:border-accent/50 hover:text-t1"}`}
         onClick={() => onChangeShowBigEmote(!showBigEmote)}
-      >{uiText("reviewOwnerEventResults.ReviewOwnerEventResultsToolbar3")}</button>
+      >{uiText("reviewOwnerEventResults.ReviewOwnerEventResultsToolbar3")}</Button>
     </div>
   );
 }
@@ -153,8 +154,8 @@ export function ReviewOwnerEventResults({
     return (
       <div role="alert" className="review-owner-event-results rounded-md border border-danger/40 bg-danger/10 px-3 py-3 ui-type-control text-danger">
         <p>{uiText("reviewOwnerEventResults.ReviewOwnerEventResults")}{error}</p>
-        <button type="button" className={`${compactFilterActionButtonClass} mt-2 mr-2`} onClick={onRetry}>{uiText("common.retry")}</button>
-        <button type="button" className={`${compactFilterActionButtonClass} mt-2`} onClick={onClear}>{uiText("reviewOwnerEventResults.ReviewOwnerEventResults2")}</button>
+        <Button variant="outline" type="button" className={`${compactFilterActionButtonClass} mt-2 mr-2`} onClick={onRetry}>{uiText("common.retry")}</Button>
+        <Button variant="outline" type="button" className={`${compactFilterActionButtonClass} mt-2`} onClick={onClear}>{uiText("reviewOwnerEventResults.ReviewOwnerEventResults2")}</Button>
       </div>
     );
   }
@@ -164,14 +165,14 @@ export function ReviewOwnerEventResults({
   }
 
   if (!hasConditions && groups.length === 0) {
-    return <div className="rounded-md border border-dashed border-line px-3 py-8 text-center ui-type-control text-t3">{uiText("reviewOwnerEventResults.ReviewOwnerEventResults4")}</div>;
+    return <div className="ui-empty-state ui-empty-fill rounded-md border border-dashed border-line">{uiText("reviewOwnerEventResults.ReviewOwnerEventResults4")}</div>;
   }
 
   if (!loading && groups.length === 0) {
     return (
-      <div className="review-owner-event-results rounded-md border border-dashed border-line px-3 py-8 text-center ui-type-control text-t3">
+      <div className="review-owner-event-results ui-empty-state ui-empty-fill rounded-md border border-dashed border-line">
         <p>{uiText("reviewOwnerEventResults.ReviewOwnerEventResults5")}</p>
-        <button type="button" className={`${compactFilterActionButtonClass} mt-2`} onClick={onClear}>{uiText("reviewOwnerEventResults.ReviewOwnerEventResults2")}</button>
+        <Button variant="outline" type="button" className={`${compactFilterActionButtonClass} mt-2`} onClick={onClear}>{uiText("reviewOwnerEventResults.ReviewOwnerEventResults2")}</Button>
       </div>
     );
   }
@@ -183,7 +184,7 @@ export function ReviewOwnerEventResults({
       {error && page && (
         <div role="alert" className="flex flex-wrap items-center justify-between gap-2 rounded-md border border-danger/40 bg-danger/10 px-3 py-2 ui-type-meta text-danger">
           <span>{uiText("reviewOwnerEventResults.ReviewOwnerEventResults6")}{error}</span>
-          <button type="button" className="rounded border border-danger/40 px-2 py-1 ui-type-meta hover:bg-danger/10 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent-ring" onClick={onLoadMore}>{uiText("common.retry")}</button>
+          <Button variant="outline" type="button" className="rounded border border-danger/40 px-2 py-1 ui-type-meta hover:bg-danger/10 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent-ring" onClick={onLoadMore}>{uiText("common.retry")}</Button>
         </div>
       )}
       {groups.map((group) => {
@@ -198,24 +199,24 @@ export function ReviewOwnerEventResults({
         return (
           <article key={session.sessionId} className="min-w-0 border-b border-line pb-2 last:border-b-0">
             <header className="flex min-w-0 flex-wrap items-center gap-x-2 gap-y-1 py-1">
-              <button
+              <Button variant="outline"
                 type="button"
                 aria-expanded={!collapsed}
                 aria-controls={`review-owner-event-matches-${session.sessionId}`}
                 className="min-w-0 flex-1 truncate text-left ui-type-control text-t1 hover:text-accent-text focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent-ring"
                 onClick={() => setCollapsedGroups((current) => ({ ...current, [session.sessionId]: !collapsed }))}
-              >{collapsed ? "▸" : "▾"} {session.title?.trim() || fallbackTitle(session.startedAt)}</button>
+              >{collapsed ? "▸" : "▾"} {session.title?.trim() || fallbackTitle(session.startedAt)}</Button>
               <time className="shrink-0 ui-type-meta text-t3">{formatArchiveDateTime(session.startedAt)}</time>
               <span className="shrink-0 rounded-full bg-raised px-1.5 py-0.5 ui-type-meta text-t2">{formatArchiveSessionStatus(session.status)}</span>
               <span className="ui-type-meta text-t3">{formatArchiveRecordingStatus(session.recordingStatus)}</span>
               <span title={getArchiveRecordNotices(session).map(notice => `${notice.label}：${notice.message}`).join(" ") || undefined} className="ui-type-meta text-t3">{formatArchiveQuality(session.quality)}</span>
               <span className="shrink-0 ui-type-meta text-t2">{uiText("reviewOwnerEventResults.ReviewOwnerEventResults7")}{matchCount} {uiText("reviewOwnerEventResults.ReviewOwnerEventResults8")}</span>
-              <button
+              <Button variant="outline"
                 type="button"
                 disabled={!firstMatch}
                 className="shrink-0 rounded-md border border-line px-2 py-1 ui-type-meta text-t2 enabled:hover:border-accent/50 enabled:hover:text-accent-text disabled:opacity-40 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent-ring"
                 onClick={() => firstMatch && onOpenMatch(session.roomId, session.sessionId, firstMatch.eventKey)}
-              >{uiText("reviewOwnerEventResults.ReviewOwnerEventResults9")}</button>
+              >{uiText("reviewOwnerEventResults.ReviewOwnerEventResults9")}</Button>
             </header>
             {!collapsed && (
               <div id={`review-owner-event-matches-${session.sessionId}`} className="event-list min-w-0">
@@ -233,9 +234,9 @@ export function ReviewOwnerEventResults({
         );
       })}
       {page?.hasMore && (
-        <button type="button" disabled={loading} className="mx-auto rounded-md border border-line px-3 py-1.5 ui-type-control text-t2 enabled:hover:border-accent/50 enabled:hover:text-accent-text disabled:cursor-wait disabled:opacity-50 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent-ring" onClick={onLoadMore}>
+        <Button variant="outline" type="button" disabled={loading} className="mx-auto rounded-md border border-line px-3 py-1.5 ui-type-control text-t2 enabled:hover:border-accent/50 enabled:hover:text-accent-text disabled:cursor-wait disabled:opacity-50 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent-ring" onClick={onLoadMore}>
           {loading ? uiText("reviewOwnerEventResults.ReviewOwnerEventResults10") : uiText("reviewOwnerEventResults.ReviewOwnerEventResults11")}
-        </button>
+        </Button>
       )}
     </section>
   );

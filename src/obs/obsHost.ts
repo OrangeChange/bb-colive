@@ -1,4 +1,4 @@
-import { getUiLanguage, subscribeUiLanguage, uiText } from "../i18n/index.ts";
+import { getUiLanguage, subscribeUiLanguage, uiText, UiMessageError } from "../i18n/index.ts";
 import { resolveOutputScheme } from "./obsConfigurationIdentity.ts";
 import { getEventEffect } from "../protocol/giftEffects.ts";
 import { createNativeEventVisibilityPredicate } from '../events/outputEventPolicy.ts';
@@ -66,10 +66,12 @@ type Output = {
 const outputs = new Map<string, Output>();
 const renderFailures = new Map<
   string,
-  { clientId: string; configurationId?: string; message: string }
+  { clientId: string; configurationId?: string; message: string; localizedError?: UiMessageError }
 >();
 const publishRenderFailures = () =>
-  emit("obs:render-failures", [...renderFailures.values()]);
+  emit("obs:render-failures", [...renderFailures.values()].map(({ localizedError, ...failure }) => ({
+    ...failure, message: localizedError ? uiText(localizedError.messageKey, localizedError.parameters) : failure.message,
+  })));
 const previewClients = new Map<string,{last:StylePreviewSnapshot|null;tail:Promise<void>;encode:ReturnType<typeof createPreviewResourceSender>}>();
 function sendCurrentPreview(id:string,initial=false){const client=previewClients.get(id);if(!client)return;const state=getPreview(),message=previewMessage(initial?null:client.last,state);client.tail=client.tail.then(()=>send(id,client.encode(message,initial))).catch(()=>{});client.last=state;}
 const clients = new Map<string, { query: ObsQuery; output?: Output }>();
@@ -203,17 +205,17 @@ async function attach(clientId: string, query: ObsQuery) {
       (c) => c.id === query.config,
     );
     if (!configuration)
-      throw new Error(uiText("obsHost.attach"));
-    if (query.mode && query.mode !== "light" && query.mode !== "dark") throw new Error(uiText("obsHost.attach2"));
+      throw new UiMessageError("obsHost.attach");
+    if (query.mode && query.mode !== "light" && query.mode !== "dark") throw new UiMessageError("obsHost.attach2");
     const room = query.room || configuration.roomId;
     if (!room || !/^\d+$/.test(room) || Number(room) <= 0)
-      throw new Error(uiText("obsHost.attach3"));
+      throw new UiMessageError("obsHost.attach3");
     let snapshot = await loadObsThemeSnapshot(configuration.id);
-    if (!snapshot) throw new Error(uiText("obsHost.attach4"));
+    if (!snapshot) throw new UiMessageError("obsHost.attach4");
     const sample = query.preview === "sample";
     const session = useSession.getState();
     if (!sample && (!session.session || session.phase !== "loggedIn"))
-      throw new Error(uiText("obsHost.attach5"));
+      throw new UiMessageError("obsHost.attach5");
     let pendingEvents: Parameters<
       ReturnType<typeof createObsOutputState>["accept"]
     >[0][] = [];
@@ -329,11 +331,12 @@ async function attach(clientId: string, query: ObsQuery) {
     publish(output, true);
   } catch (error) {
     if (clients.get(clientId) === current) {
-      if (renderFailures.delete(clientId)) void publishRenderFailures();
-      await send(clientId, {
-        type: "status",
-        message: error instanceof Error ? error.message : uiText("obsHost.attach.message"),
+      const message = error instanceof Error ? error.message : uiText("obsHost.attach.message");
+      renderFailures.set(clientId, { clientId, configurationId: query.config, message,
+        localizedError: error instanceof UiMessageError ? error : error instanceof Error ? undefined : new UiMessageError("obsHost.attach.message"),
       });
+      void publishRenderFailures();
+      await send(clientId, { type: "status", message });
     }
   }
 }
@@ -356,6 +359,7 @@ export async function startObsHost() {
             message:
               message.message ||
               uiText("obsHost.startObsHost.stops.message"),
+            localizedError: message.message ? undefined : new UiMessageError("obsHost.startObsHost.stops.message"),
           });
           void publishRenderFailures();
         } else if (message.type === "ready" && renderFailures.delete(clientId))
@@ -400,6 +404,7 @@ export async function startObsHost() {
   const stopGeneral = useGeneralSettings.subscribe(refreshSettings);
   const stopTheme = useTheme.subscribe(refreshSettings);
   const stopLanguage = subscribeUiLanguage(() => {
+    void publishRenderFailures();
     for (const id of [...clients.keys(), ...previewClients.keys()]) void send(id, { type: "ui-language" });
   });
   const stopVoice = useVoiceSettings.subscribe((state, previous) => {

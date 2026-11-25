@@ -1,3 +1,6 @@
+import { DateTimeField } from "./DateTimeField";
+import { Input } from "./shadcn/input";
+import { Button } from "./shadcn/button";
 import { useUiLanguage } from "../i18n/react.ts";
 import { localized, uiText } from "../i18n/index.ts";
 import { ChevronDown as LucideChevronDown, X as LucideX } from "lucide-react";
@@ -20,7 +23,7 @@ import type { ReviewDatePreset, ReviewQueryState } from "../archive/archiveState
 import { recordArchiveDiagnostic } from "../archive/archiveDiagnostics.ts";
 import { ReviewFilterShell } from "./ReviewFilterShell";
 import { ReviewFilterPopover, ReviewFilterSubmenuLayerContext } from "./ReviewFilterPopover";
-import * as PopoverPrimitive from "@radix-ui/react-popover";
+import { PopoverContent, PopoverAnchor, Popover } from "./shadcn/popover";
 import { compactFilterActionButtonClass } from "./actionButtonStyles";
 import { UiCombobox } from "./ui/Combobox";
 import { UiSelect } from "./ui/Select";
@@ -131,7 +134,6 @@ const REVIEW_DATE_OPTIONS: readonly { value: DatePreset; label: string }[] = loc
   { value: "custom", label: uiText("reviewSearchControls.REVIEW_DATE_OPTIONS.label17") },
 ]));
 
-const selectClass = "h-8 rounded-md border border-line bg-bg px-2 ui-type-control text-t1 outline-none focus:border-accent focus:ring-2 focus:ring-accent-ring";
 const inputClass = "h-8 min-w-0 rounded-md border border-line bg-bg px-2 ui-type-control text-t1 outline-none placeholder:text-t3 focus:border-accent focus:ring-2 focus:ring-accent-ring";
 const toggleClass = "inline-flex min-h-8 items-center rounded-md border px-2 py-1 ui-type-control transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent-ring";
 
@@ -312,7 +314,7 @@ export function ReviewFilterSubmenu({
   };
 
   return (
-    <PopoverPrimitive.Root open={open} onOpenChange={setOpen}>
+    <Popover open={open} onOpenChange={setOpen}>
     <div
       className="relative flex h-8 items-center"
       onPointerEnter={() => setOpen(true)}
@@ -320,8 +322,8 @@ export function ReviewFilterSubmenu({
       onFocus={() => { if (suppressFocusOpenRef.current) suppressFocusOpenRef.current = false; else setOpen(true); }}
       onBlur={closeWhenFocusLeaves}
     >
-      <PopoverPrimitive.Anchor asChild>
-      <button
+      <PopoverAnchor asChild>
+      <Button variant="outline"
         ref={triggerRef}
         type="button"
         aria-pressed={active}
@@ -340,10 +342,10 @@ export function ReviewFilterSubmenu({
       >
         {label}
         <IconChevronDown open={open} />
-      </button>
-      </PopoverPrimitive.Anchor>
-      <PopoverPrimitive.Portal>
-        <PopoverPrimitive.Content
+      </Button>
+      </PopoverAnchor>
+
+        <PopoverContent
           ref={setSubmenuRef}
           data-ui-overlay="true"
           align="start"
@@ -375,7 +377,7 @@ export function ReviewFilterSubmenu({
             {options.map((option) => {
               const checked = isSelected(option.value);
               return (
-                <button
+                <Button variant="outline"
                   key={option.value}
                   type="button"
                   role="menuitemcheckbox"
@@ -385,14 +387,14 @@ export function ReviewFilterSubmenu({
                 >
                   <span className={checked ? filterMode === "include" ? "size-1.5 rounded-full bg-accent" : "size-1.5 rounded-full bg-danger" : "size-1.5 rounded-full border border-line"} aria-hidden="true" />
                   {option.label}
-                </button>
+                </Button>
               );
             })}
           </div>
-        </PopoverPrimitive.Content>
-      </PopoverPrimitive.Portal>
+        </PopoverContent>
+
     </div>
-    </PopoverPrimitive.Root>
+    </Popover>
   );
 }
 
@@ -460,17 +462,17 @@ export function ReviewAdvancedFilters({
     <>
       <div className="review-filter-advanced-section review-filter-category-section" aria-label={uiText("reviewSearchControls.aria_label2")}>
         <span className="ui-type-meta text-t3">{uiText("reviewSearchControls.ReviewAdvancedFilters")}</span>
-        <button
+        <Button variant="outline"
           type="button"
           aria-label={areAllReviewCategoriesEnabled(filters) ? uiText("reviewSearchControls.aria_label3") : uiText("reviewSearchControls.aria_label4")}
           className={`${toggleClass} ${areAllReviewCategoriesEnabled(filters) ? "border-accent bg-accent-subtle text-accent-text" : "border-line bg-bg text-t2 hover:border-accent/50 hover:bg-raised hover:text-t1"}`}
           onClick={() => onChangeFilters(setAllReviewCategories(filters, !areAllReviewCategoriesEnabled(filters)))}
-        >{areAllReviewCategoriesEnabled(filters) ? uiText("reviewSearchControls.ReviewAdvancedFilters2") : uiText("common.selectAll")}</button>
+        >{areAllReviewCategoriesEnabled(filters) ? uiText("reviewSearchControls.ReviewAdvancedFilters2") : uiText("common.selectAll")}</Button>
         <div className="inline-flex rounded-md border border-line bg-bg p-0.5" aria-label={uiText("reviewSearchControls.aria_label5")}>
           {(["include", "exclude"] as const).map((mode) => (
-            <button key={mode} type="button" aria-pressed={filterMode === mode} className={`rounded px-2 py-0.5 ui-type-meta transition-colors ${filterMode === mode ? mode === "include" ? "bg-accent-subtle text-accent-text" : "bg-danger/10 text-danger" : "text-t3 hover:text-t1"}`} onClick={() => changeFilterMode(mode)}>
+            <Button variant="outline" key={mode} type="button" aria-pressed={filterMode === mode} className={`rounded px-2 py-0.5 ui-type-meta transition-colors ${filterMode === mode ? mode === "include" ? "bg-accent-subtle text-accent-text" : "bg-danger/10 text-danger" : "text-t3 hover:text-t1"}`} onClick={() => changeFilterMode(mode)}>
               {mode === "include" ? uiText("reviewSearchControls.ReviewAdvancedFilters3") : uiText("reviewSearchControls.ReviewAdvancedFilters4")}
-            </button>
+            </Button>
           ))}
         </div>
         <span aria-hidden="true" className="mx-1 h-4 w-px bg-line" />
@@ -491,7 +493,7 @@ export function ReviewAdvancedFilters({
               />
             );
           }
-          return <button key={option.value} type="button" aria-pressed={active} className={`${toggleClass} ${active ? filterMode === "include" ? "border-accent bg-accent-subtle text-accent-text" : "border-danger/60 bg-danger/10 text-danger" : "border-line bg-bg text-t2 hover:border-accent/50 hover:bg-raised hover:text-t1"}`} onClick={() => toggleFilterOption("primaryCategories", option.value, CATEGORY_OPTIONS)}>{active ? (filterMode === "include" ? "✓ " : "− ") : ""}{option.label}</button>;
+          return <Button variant="outline" key={option.value} type="button" aria-pressed={active} className={`${toggleClass} ${active ? filterMode === "include" ? "border-accent bg-accent-subtle text-accent-text" : "border-danger/60 bg-danger/10 text-danger" : "border-line bg-bg text-t2 hover:border-accent/50 hover:bg-raised hover:text-t1"}`} onClick={() => toggleFilterOption("primaryCategories", option.value, CATEGORY_OPTIONS)}>{active ? (filterMode === "include" ? "✓ " : "− ") : ""}{option.label}</Button>;
         })}
       </div>
 
@@ -530,9 +532,9 @@ export function ReviewAdvancedFilters({
               onValueChange={(value) => updateFilters({ giftPriceMode: value as ArchiveGiftPriceMode })}
             />
             <div className="review-filter-price-range">
-              <input type="number" min="0" step="0.01" aria-label={uiText("reviewSearchControls.aria_label8")} placeholder={uiText("reviewSearchControls.placeholder")} className={`${inputClass} w-20`} value={filters.giftPriceMinRmb ?? ""} onChange={(event) => setGiftPrice("giftPriceMinRmb", event.target.value)} />
+              <Input type="number" min="0" step="0.01" aria-label={uiText("reviewSearchControls.aria_label8")} placeholder={uiText("reviewSearchControls.placeholder")} className={`${inputClass} w-20`} value={filters.giftPriceMinRmb ?? ""} onChange={(event) => setGiftPrice("giftPriceMinRmb", event.target.value)} />
               <span className="ui-type-meta text-t3">{uiText("reviewSearchControls.ReviewAdvancedFilters9")}</span>
-              <input type="number" min="0" step="0.01" aria-label={uiText("reviewSearchControls.aria_label9")} placeholder={uiText("reviewSearchControls.placeholder2")} className={`${inputClass} w-20`} value={filters.giftPriceMaxRmb ?? ""} onChange={(event) => setGiftPrice("giftPriceMaxRmb", event.target.value)} />
+              <Input type="number" min="0" step="0.01" aria-label={uiText("reviewSearchControls.aria_label9")} placeholder={uiText("reviewSearchControls.placeholder2")} className={`${inputClass} w-20`} value={filters.giftPriceMaxRmb ?? ""} onChange={(event) => setGiftPrice("giftPriceMaxRmb", event.target.value)} />
               <span className="ui-type-meta text-t3">{uiText("reviewSearchControls.ReviewAdvancedFilters10")}</span>
             </div>
             {(filters.giftPriceMinRmb !== undefined || filters.giftPriceMaxRmb !== undefined) && <span className="ui-type-meta text-t3">{uiText("reviewSearchControls.ReviewAdvancedFilters11")}</span>}
@@ -555,11 +557,11 @@ export function ReviewAdvancedFilters({
             <>
               <label className="flex items-center gap-1 ui-type-meta text-t2">
                 <span>{uiText("reviewSearchControls.ReviewAdvancedFilters13")}</span>
-                <input type="datetime-local" step="60" aria-label={uiText("reviewSearchControls.aria_label11")} className={selectClass} value={dateInputValue(filters.fromTs)} onChange={(event) => updateFilters({ fromTs: dateInputTimestamp(event.target.value) })} />
+                <DateTimeField label={uiText("reviewSearchControls.aria_label11")} value={filters.fromTs === undefined ? undefined : new Date(filters.fromTs)} onChange={date => updateFilters({ fromTs: date?.getTime() })} />
               </label>
               <label className="flex items-center gap-1 ui-type-meta text-t2">
                 <span>{uiText("reviewSearchControls.ReviewAdvancedFilters14")}</span>
-                <input type="datetime-local" step="60" aria-label={uiText("reviewSearchControls.aria_label12")} className={selectClass} value={dateInputValue(filters.toTs)} onChange={(event) => updateFilters({ toTs: dateInputTimestamp(event.target.value) })} />
+                <DateTimeField label={uiText("reviewSearchControls.aria_label12")} value={filters.toTs === undefined ? undefined : new Date(filters.toTs)} onChange={date => updateFilters({ toTs: date?.getTime() })} />
               </label>
             </>
           )}
@@ -694,17 +696,17 @@ export function ReviewFilterPresetMenu({
           {editingId === preset.id ? (
             <>
               <label className="sr-only" htmlFor={`review-filter-preset-edit-${preset.id}`}>{uiText("reviewSearchControls.ReviewFilterPresetMenu")}</label>
-              <input id={`review-filter-preset-edit-${preset.id}`} value={editingName} maxLength={40} className={`${inputClass} min-w-0 w-28 border-0 bg-transparent`} onChange={(event) => setEditingName(event.target.value)} onKeyDown={(event) => { if (event.nativeEvent.isComposing || event.nativeEvent.keyCode === 229) return; if (event.key === "Enter") { event.preventDefault(); commitRename(preset.id); } if (event.key === "Escape") { setEditingId(null); setEditingName(""); } }} autoFocus />
-              <button type="button" className="shrink-0 rounded px-1.5 py-1 ui-type-meta text-accent-text hover:bg-accent-subtle" onClick={() => commitRename(preset.id)}>{uiText("common.save")}</button>
+              <Input id={`review-filter-preset-edit-${preset.id}`} value={editingName} maxLength={40} className={`${inputClass} min-w-0 w-28 border-0 bg-transparent`} onChange={(event) => setEditingName(event.target.value)} onKeyDown={(event) => { if (event.nativeEvent.isComposing || event.nativeEvent.keyCode === 229) return; if (event.key === "Enter") { event.preventDefault(); commitRename(preset.id); } if (event.key === "Escape") { setEditingId(null); setEditingName(""); } }} autoFocus />
+              <Button variant="outline" type="button" className="shrink-0 rounded px-1.5 py-1 ui-type-meta text-accent-text hover:bg-accent-subtle" onClick={() => commitRename(preset.id)}>{uiText("common.save")}</Button>
             </>
           ) : (
             <>
-              <button type="button" aria-pressed={active} className={`min-w-0 max-w-32 truncate rounded px-2 py-1 text-left ui-type-control ${active ? "text-accent-text" : "text-t2 hover:text-accent-text"}`} title={uiText("reviewSearchControls.title", { name: preset.name })} onClick={() => { onApply(preset); setManageOpen(false); }}>{preset.name}</button>
+              <Button variant="outline" type="button" aria-pressed={active} className={`min-w-0 max-w-32 truncate rounded px-2 py-1 text-left ui-type-control ${active ? "text-accent-text" : "text-t2 hover:text-accent-text"}`} title={uiText("reviewSearchControls.title", { name: preset.name })} onClick={() => { onApply(preset); setManageOpen(false); }}>{preset.name}</Button>
               {manageOpen && <>
-                <button type="button" className="shrink-0 rounded px-1 py-1 ui-type-meta text-t3 hover:bg-raised hover:text-t1" aria-label={uiText("reviewSearchControls.aria_label14", { name: preset.name })} onClick={() => { setEditingId(preset.id); setEditingName(preset.name); }}>{uiText("reviewSearchControls.ReviewFilterPresetMenu2")}</button>
-                <button type="button" className="shrink-0 rounded px-1.5 py-1 text-t2 hover:bg-danger/10 hover:text-danger" aria-label={uiText("reviewSearchControls.aria_label15", { name: preset.name })} onClick={() => deleteCurrent(preset.id)}>
+                <Button variant="outline" type="button" className="shrink-0 rounded px-1 py-1 ui-type-meta text-t3 hover:bg-raised hover:text-t1" aria-label={uiText("reviewSearchControls.aria_label14", { name: preset.name })} onClick={() => { setEditingId(preset.id); setEditingName(preset.name); }}>{uiText("reviewSearchControls.ReviewFilterPresetMenu2")}</Button>
+                <Button size="icon-sm" variant="ghost" type="button" className="shrink-0 rounded px-1.5 py-1 text-t2 hover:bg-danger/10 hover:text-danger" aria-label={uiText("reviewSearchControls.aria_label15", { name: preset.name })} onClick={() => deleteCurrent(preset.id)}>
                   <LucideX className="size-3" aria-hidden="true" />
-                </button>
+                </Button>
               </>}
             </>
           )}
@@ -712,26 +714,26 @@ export function ReviewFilterPresetMenu({
         );
       })}
       <span className="review-filter-preset-divider" aria-hidden="true" />
-      <button
+      <Button variant="outline"
         ref={addTriggerRef}
         type="button"
         aria-expanded={addOpen}
         aria-controls="review-filter-add-menu"
         className={`${toggleClass} border-line bg-bg text-t2 hover:border-accent/50 hover:bg-raised hover:text-t1`}
         onClick={() => setAddOpen((value) => !value)}
-      >{uiText("reviewSearchControls.ReviewFilterPresetMenu3")}</button>
-      <button
+      >{uiText("reviewSearchControls.ReviewFilterPresetMenu3")}</Button>
+      <Button variant="outline"
         type="button"
         aria-pressed={manageOpen}
         disabled={presets.length === 0}
         className={`${toggleClass} ${manageOpen ? "border-accent bg-accent-subtle text-accent-text enabled:hover:border-accent enabled:hover:bg-accent/15" : "border-line bg-bg text-t2 enabled:hover:border-accent/50 enabled:hover:bg-raised enabled:hover:text-t1"} disabled:cursor-not-allowed disabled:opacity-40`}
         onClick={() => { setManageOpen((value) => !value); setAddOpen(false); }}
-      >{manageOpen ? uiText("reviewSearchControls.ReviewFilterPresetMenu4") : uiText("reviewSearchControls.ReviewFilterPresetMenu5")}</button>
+      >{manageOpen ? uiText("reviewSearchControls.ReviewFilterPresetMenu4") : uiText("reviewSearchControls.ReviewFilterPresetMenu5")}</Button>
       {addOpen && addMenuPosition && createPortal(
         <div ref={addMenuRef} id="review-filter-add-menu" className="ui-motion-enter review-filter-presets-menu z-50 flex items-center gap-1.5 rounded-lg border border-line bg-surface p-2 shadow-lg shadow-black/25" role="group" aria-label={uiText("reviewSearchControls.aria_label16")} style={{ position: "fixed", top: addMenuPosition.top, left: addMenuPosition.left, width: addMenuPosition.width }}>
           <label className="sr-only" htmlFor="review-filter-preset-name">{uiText("reviewSearchControls.ReviewFilterPresetMenu6")}</label>
-          <input id="review-filter-preset-name" value={nameDraft} maxLength={40} placeholder={uiText("reviewSearchControls.placeholder3")} className={`${inputClass} min-w-0 flex-1`} onChange={(event) => setNameDraft(event.target.value)} onKeyDown={(event) => { if (event.nativeEvent.isComposing || event.nativeEvent.keyCode === 229) return; if (event.key === "Enter") { event.preventDefault(); saveCurrent(); } }} autoFocus />
-          <button type="button" disabled={!nameDraft.trim()} className={`${toggleClass} shrink-0 border-accent/60 bg-accent-subtle text-accent-text disabled:opacity-50`} onClick={saveCurrent}>{uiText("common.save")}</button>
+          <Input id="review-filter-preset-name" value={nameDraft} maxLength={40} placeholder={uiText("reviewSearchControls.placeholder3")} className={`${inputClass} min-w-0 flex-1`} onChange={(event) => setNameDraft(event.target.value)} onKeyDown={(event) => { if (event.nativeEvent.isComposing || event.nativeEvent.keyCode === 229) return; if (event.key === "Enter") { event.preventDefault(); saveCurrent(); } }} autoFocus />
+          <Button variant="outline" type="button" disabled={!nameDraft.trim()} className={`${toggleClass} shrink-0 border-accent/60 bg-accent-subtle text-accent-text disabled:opacity-50`} onClick={saveCurrent}>{uiText("common.save")}</Button>
         </div>,
         document.body,
       )}
@@ -861,7 +863,7 @@ export function ReviewSearchControls({ level, query, onChange, onClearSearch, on
       headerActions={activeUserFilter && onClearUserFilter ? (
         <div className="flex min-w-0 items-center gap-1.5" data-review-user-filter>
           <span className="max-w-48 truncate ui-type-meta text-t2" title={activeUserFilter.name}>{uiText("reviewSearchControls.headerActions")}{activeUserFilter.name}</span>
-          <button type="button" aria-label={uiText("reviewSearchControls.aria_label17")} className={compactFilterActionButtonClass} onClick={onClearUserFilter}>{uiText("reviewSearchControls.headerActions2")}</button>
+          <Button variant="outline" type="button" aria-label={uiText("reviewSearchControls.aria_label17")} className={compactFilterActionButtonClass} onClick={onClearUserFilter}>{uiText("reviewSearchControls.headerActions2")}</Button>
         </div>
       ) : undefined}
     >
@@ -883,9 +885,9 @@ export function ReviewSearchControls({ level, query, onChange, onClearSearch, on
           onKeyDown={onKeywordKeyDown}
           className="w-44 flex-1"
         />
-        <button type="button" className={`${toggleClass} border-line bg-bg text-t2 hover:border-accent/50 hover:bg-raised hover:text-t1`} onClick={addKeyword}>{uiText("common.add")}</button>
+        <Button variant="outline" type="button" className={`${toggleClass} border-line bg-bg text-t2 hover:border-accent/50 hover:bg-raised hover:text-t1`} onClick={addKeyword}>{uiText("common.add")}</Button>
         {searchActive && (
-          <button type="button" aria-label={uiText("reviewSearchControls.aria_label18")} className={compactFilterActionButtonClass} onClick={() => onClearSearch?.()}>{uiText("reviewSearchControls.ReviewSearchControls")}</button>
+          <Button variant="outline" type="button" aria-label={uiText("reviewSearchControls.aria_label18")} className={compactFilterActionButtonClass} onClick={() => onClearSearch?.()}>{uiText("reviewSearchControls.ReviewSearchControls")}</Button>
         )}
       </div>
 
@@ -908,7 +910,7 @@ export function ReviewSearchControls({ level, query, onChange, onClearSearch, on
               )}
               <span role="listitem" className="inline-flex items-center gap-1 rounded-full bg-accent-subtle px-2 py-0.5 ui-type-meta text-accent-text">
                 {keywordFieldLabel(condition.field)}：{condition.value}
-                <button type="button" aria-label={uiText("reviewSearchControls.aria_label20", { value: condition.value })} className="rounded-full px-1 text-accent-text hover:bg-accent/15 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent-ring" onClick={() => removeKeyword(index)}>×</button>
+                <Button size="icon-sm" variant="ghost" type="button" aria-label={uiText("reviewSearchControls.aria_label20", { value: condition.value })} className="rounded-full px-1 text-accent-text hover:bg-accent/15 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent-ring" onClick={() => removeKeyword(index)}>×</Button>
               </span>
             </span>
           ))}
@@ -919,21 +921,21 @@ export function ReviewSearchControls({ level, query, onChange, onClearSearch, on
         <span className="ui-type-meta text-t3">{uiText("reviewSearchControls.ReviewSearchControls3")}</span>
         {REVIEW_QUICK_CONDITIONS.map((condition) => {
           const active = isReviewQuickConditionActive(filters, condition.value);
-          return <button key={condition.value} type="button" aria-pressed={active} className={`${toggleClass} ${active ? "border-accent bg-accent-subtle text-accent-text" : "border-line bg-bg text-t2 hover:border-accent/50 hover:bg-raised hover:text-t1"}`} onClick={() => applyQuickCondition(condition.value)}>{condition.label}</button>;
+          return <Button variant="outline" key={condition.value} type="button" aria-pressed={active} className={`${toggleClass} ${active ? "border-accent bg-accent-subtle text-accent-text" : "border-line bg-bg text-t2 hover:border-accent/50 hover:bg-raised hover:text-t1"}`} onClick={() => applyQuickCondition(condition.value)}>{condition.label}</Button>;
         })}
         <ReviewFilterPresetMenu activePresetId={activePresetId} presets={filterPresets} onApply={applyPreset} onSave={savePreset} onRename={renamePreset} onDelete={deletePreset} />
         <span aria-hidden="true" className="review-filter-inline-divider mx-1 h-4 w-px bg-line" />
         <div aria-label={uiText("reviewSearchControls.aria_label22")} className="inline-flex">
-          <button type="button" aria-label={uiText("reviewSearchControls.aria_label23")} aria-pressed={filters.favoriteOnly === true} className={`${toggleClass} ${filters.favoriteOnly ? "border-accent bg-accent-subtle text-accent-text" : "border-line bg-bg text-t2 hover:border-accent/50 hover:bg-raised hover:text-t1"}`} onClick={() => updateFilters({ favoriteOnly: filters.favoriteOnly ? undefined : true })}>{uiText("reviewSearchControls.ReviewSearchControls4")}</button>
+          <Button variant="outline" type="button" aria-label={uiText("reviewSearchControls.aria_label23")} aria-pressed={filters.favoriteOnly === true} className={`${toggleClass} ${filters.favoriteOnly ? "border-accent bg-accent-subtle text-accent-text" : "border-line bg-bg text-t2 hover:border-accent/50 hover:bg-raised hover:text-t1"}`} onClick={() => updateFilters({ favoriteOnly: filters.favoriteOnly ? undefined : true })}>{uiText("reviewSearchControls.ReviewSearchControls4")}</Button>
         </div>
-        <button
+        <Button variant="outline"
           ref={advancedTriggerRef}
           type="button"
           aria-expanded={advancedOpen}
           aria-controls={`review-filter-advanced-${level}`}
           className={`${toggleClass} ml-auto ${advancedOpen ? "border-accent bg-accent-subtle text-accent-text" : "border-line bg-bg text-t2 hover:border-accent/50 hover:bg-raised hover:text-t1"}`}
           onClick={() => setAdvancedOpen((value) => !value)}
-        >{uiText("reviewSearchControls.ReviewSearchControls5")}{advancedFilterConditionCount(filters) > 0 ? ` · ${advancedFilterConditionCount(filters)}` : ""}</button>
+        >{uiText("reviewSearchControls.ReviewSearchControls5")}{advancedFilterConditionCount(filters) > 0 ? ` · ${advancedFilterConditionCount(filters)}` : ""}</Button>
       </div>
 
     </ReviewFilterShell>

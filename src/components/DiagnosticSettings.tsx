@@ -1,3 +1,7 @@
+import { Progress } from "./shadcn/progress";
+import { Dialog, DialogContent, DialogTitle, DialogDescription } from "./shadcn/dialog";
+import { Textarea } from "./shadcn/textarea";
+import { Button } from "./shadcn/button";
 import { useUiLanguage } from "../i18n/react.ts";
 import { uiText } from "../i18n/index.ts";
 import { useEffect, useRef, useState, type CSSProperties, type ReactNode } from "react";
@@ -54,62 +58,17 @@ function DiagnosticDialog({
   busy?: boolean;
 }) {
   useUiLanguage();
-  const dialogRef = useRef<HTMLDivElement>(null);
-  const onCancelRef = useRef(onCancel);
-  const busyRef = useRef(busy);
-  onCancelRef.current = onCancel;
-  busyRef.current = busy;
-  useEffect(() => {
-    const previous = document.activeElement instanceof HTMLElement ? document.activeElement : null;
-    dialogRef.current?.focus();
-    const onKeyDown = (event: KeyboardEvent) => {
-      if (event.key === "Escape" && !busyRef.current) {
-        event.preventDefault();
-        onCancelRef.current();
-        return;
-      }
-      if (event.key !== "Tab" || !dialogRef.current) return;
-      const focusable = Array.from(dialogRef.current.querySelectorAll<HTMLElement>(
-        'button:not([disabled]), textarea:not([disabled]), input:not([disabled]), select:not([disabled]), [tabindex]:not([tabindex="-1"])',
-      ));
-      if (focusable.length === 0) {
-        event.preventDefault();
-        dialogRef.current.focus();
-        return;
-      }
-      const first = focusable[0];
-      const last = focusable[focusable.length - 1];
-      if (event.shiftKey && document.activeElement === first) {
-        event.preventDefault();
-        last.focus();
-      } else if (!event.shiftKey && document.activeElement === last) {
-        event.preventDefault();
-        first.focus();
-      }
-    };
-    document.addEventListener("keydown", onKeyDown);
-    return () => {
-      document.removeEventListener("keydown", onKeyDown);
-      previous?.focus();
-    };
-  }, []);
-
-  return (
-    <div className="diagnostic-dialog-overlay absolute inset-0 z-[80]" role="presentation">
-      <button type="button" className="diagnostic-dialog-backdrop absolute inset-0 h-full w-full border-0" aria-label={uiText("diagnosticSettings.aria_label")} onClick={() => { if (!busy) onCancel(); }} />
-      <div ref={dialogRef} role="dialog" aria-modal="true" aria-labelledby="diagnostic-dialog-title" aria-describedby="diagnostic-dialog-description" tabIndex={-1} className="diagnostic-dialog absolute left-1/2 top-1/2 w-[min(460px,calc(100%-24px))] -translate-x-1/2 -translate-y-1/2 rounded-lg border border-line bg-surface p-4 shadow-2xl shadow-black/30">
-        <h3 id="diagnostic-dialog-title" className="ui-type-section-title font-medium text-t1">{title}</h3>
-        <p id="diagnostic-dialog-description" className="mt-2 ui-type-control leading-5 text-t2">{description}</p>
+  return <Dialog open onOpenChange={open=>{if(!open&&!busy)onCancel();}}><DialogContent showCloseButton={false} onEscapeKeyDown={event=>{if(busy)event.preventDefault();}} onInteractOutside={event=>{if(busy)event.preventDefault();}} className="diagnostic-dialog max-w-[min(460px,calc(100vw-24px))]">
+        <DialogTitle asChild><h3 id="diagnostic-dialog-title" className="ui-type-section-title font-medium text-t1">{title}</h3></DialogTitle>
+        <DialogDescription asChild><p id="diagnostic-dialog-description" className="mt-2 ui-type-control leading-5 text-t2">{description}</p></DialogDescription>
         {children}
         {onConfirm && (
           <div className="mt-4 flex justify-end gap-2">
-            <button type="button" disabled={busy} onClick={onCancel} className="h-8 rounded-md border border-line bg-bg px-3 ui-type-control text-t2 transition-colors enabled:hover:bg-raised enabled:hover:text-t1 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent-ring disabled:cursor-not-allowed disabled:opacity-50">{uiText("common.cancel")}</button>
-            <button type="button" disabled={busy} onClick={onConfirm} className="h-8 rounded-md bg-accent-solid px-3 ui-type-control text-accent-fg transition-colors enabled:hover:bg-accent-solid-hover enabled:active:bg-accent-solid-active focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent-ring disabled:cursor-not-allowed disabled:opacity-50">{busy ? uiText("diagnosticSettings.DiagnosticDialog") : confirmLabel}</button>
+            <Button variant="outline" type="button" disabled={busy} onClick={onCancel} className="h-8 rounded-md border border-line bg-bg px-3 ui-type-control text-t2 transition-colors enabled:hover:bg-raised enabled:hover:text-t1 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent-ring disabled:cursor-not-allowed disabled:opacity-50">{uiText("common.cancel")}</Button>
+            <Button variant="default" type="button" disabled={busy} onClick={onConfirm} className="h-8 rounded-md bg-accent-solid px-3 ui-type-control text-accent-fg transition-colors enabled:hover:bg-accent-solid-hover enabled:active:bg-accent-solid-active focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent-ring disabled:cursor-not-allowed disabled:opacity-50">{busy ? uiText("diagnosticSettings.DiagnosticDialog") : confirmLabel}</Button>
           </div>
         )}
-      </div>
-    </div>
-  );
+      </DialogContent></Dialog>;
 }
 
 export function DiagnosticSettings({ status, markers, openMarkRequest, onMarkIssue, onExport, onExportStateChange, onOpenDirectory }: DiagnosticSettingsProps) {
@@ -371,12 +330,12 @@ export function DiagnosticSettings({ status, markers, openMarkRequest, onMarkIss
         <span className="ui-type-control text-t2">{markers.length} {uiText("diagnosticSettings.DiagnosticSettings12")}{collectingCount > 0 ? uiText("diagnosticSettings.DiagnosticSettings13", { collectingCount: collectingCount, remainingText: remainingText }) : markers.length > 0 ? uiText("diagnosticSettings.DiagnosticSettings14") : ""}</span>
       </div>
       <div className="diagnostic-export-actions mt-3 flex min-w-0 flex-wrap gap-2" title={uiText("diagnosticSettings.title3")}>
-        <button type="button" disabled={busy !== null} onClick={() => { setNotice(null); markOpenedAtRef.current = Date.now(); setMarkOpen(true); }} className="min-h-8 min-w-0 flex-1 rounded-md border border-line bg-bg px-2.5 ui-type-control text-t2 transition-colors enabled:hover:border-accent/50 enabled:hover:bg-raised enabled:hover:text-t1 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent-ring disabled:cursor-not-allowed disabled:opacity-50">{uiText("diagnosticSettings.DiagnosticSettings15")}</button>
-        <button type="button" disabled={busy !== null} onClick={() => void runExport("24h")} className="min-h-8 min-w-0 flex-1 rounded-md border border-line bg-bg px-2.5 ui-type-control text-t2 transition-colors enabled:hover:border-accent/50 enabled:hover:bg-raised enabled:hover:text-t1 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent-ring disabled:cursor-not-allowed disabled:opacity-50">{busy === "24h" ? uiText("diagnosticSettings.DiagnosticSettings16") : uiText("diagnosticSettings.DiagnosticSettings17")}</button>
+        <Button variant="outline" type="button" disabled={busy !== null} onClick={() => { setNotice(null); markOpenedAtRef.current = Date.now(); setMarkOpen(true); }} className="min-h-8 min-w-0 flex-1 rounded-md border border-line bg-bg px-2.5 ui-type-control text-t2 transition-colors enabled:hover:border-accent/50 enabled:hover:bg-raised enabled:hover:text-t1 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent-ring disabled:cursor-not-allowed disabled:opacity-50">{uiText("diagnosticSettings.DiagnosticSettings15")}</Button>
+        <Button variant="outline" type="button" disabled={busy !== null} onClick={() => void runExport("24h")} className="min-h-8 min-w-0 flex-1 rounded-md border border-line bg-bg px-2.5 ui-type-control text-t2 transition-colors enabled:hover:border-accent/50 enabled:hover:bg-raised enabled:hover:text-t1 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent-ring disabled:cursor-not-allowed disabled:opacity-50">{busy === "24h" ? uiText("diagnosticSettings.DiagnosticSettings16") : uiText("diagnosticSettings.DiagnosticSettings17")}</Button>
       </div>
       <div className="mt-2 flex min-w-0 flex-wrap gap-2">
-        <button type="button" disabled={busy !== null} onClick={() => { setNotice(null); setFullConfirmOpen(true); }} className="min-h-8 min-w-0 flex-1 rounded-md border border-line bg-bg px-2.5 ui-type-control text-t2 transition-colors enabled:hover:border-accent/50 enabled:hover:bg-raised enabled:hover:text-t1 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent-ring disabled:cursor-not-allowed disabled:opacity-50">{uiText("diagnosticSettings.DiagnosticSettings18")}</button>
-        <button type="button" disabled={busy !== null} onClick={() => void openDirectory()} className="min-h-8 min-w-0 flex-1 rounded-md border border-line bg-bg px-2.5 ui-type-control text-t2 transition-colors enabled:hover:border-accent/50 enabled:hover:bg-raised enabled:hover:text-t1 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent-ring disabled:cursor-not-allowed disabled:opacity-50">{busy === "directory" ? uiText("diagnosticSettings.DiagnosticSettings19") : uiText("diagnosticSettings.DiagnosticSettings20")}</button>
+        <Button variant="outline" type="button" disabled={busy !== null} onClick={() => { setNotice(null); setFullConfirmOpen(true); }} className="min-h-8 min-w-0 flex-1 rounded-md border border-line bg-bg px-2.5 ui-type-control text-t2 transition-colors enabled:hover:border-accent/50 enabled:hover:bg-raised enabled:hover:text-t1 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent-ring disabled:cursor-not-allowed disabled:opacity-50">{uiText("diagnosticSettings.DiagnosticSettings18")}</Button>
+        <Button variant="outline" type="button" disabled={busy !== null} onClick={() => void openDirectory()} className="min-h-8 min-w-0 flex-1 rounded-md border border-line bg-bg px-2.5 ui-type-control text-t2 transition-colors enabled:hover:border-accent/50 enabled:hover:bg-raised enabled:hover:text-t1 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent-ring disabled:cursor-not-allowed disabled:opacity-50">{busy === "directory" ? uiText("diagnosticSettings.DiagnosticSettings19") : uiText("diagnosticSettings.DiagnosticSettings20")}</Button>
       </div>
       {exportProgress && (
         <div className="mt-3" aria-live="polite">
@@ -384,9 +343,7 @@ export function DiagnosticSettings({ status, markers, openMarkRequest, onMarkIss
             <span>{exportPercent}%</span>
             <span>{exportProgress.complete ? uiText("diagnosticSettings.DiagnosticSettings21") : formatExportRemaining(exportRemainingSeconds)}</span>
           </div>
-          <div className="mt-2 h-1.5 overflow-hidden rounded-full bg-raised" role="progressbar" aria-valuemin={0} aria-valuemax={100} aria-valuenow={exportPercent} aria-label={uiText("diagnosticSettings.aria_label2")}>
-            <div className="h-full origin-left rounded-full bg-accent motion-reduce:transition-none" style={{ transform: `scaleX(${exportPercent / 100})` }} />
-          </div>
+          <Progress className="mt-2 h-1.5" value={exportPercent} aria-label={uiText("diagnosticSettings.aria_label2")} />
         </div>
       )}
       {notice && <p role={notice.tone === "error" ? "alert" : "status"} className={`mt-3 rounded-md border px-2.5 py-2 ui-type-meta leading-4 ${notice.tone === "error" ? "border-danger/40 bg-danger/10 text-danger" : notice.tone === "warning" ? "border-warning/40 bg-warning/10 text-t2" : "border-success/40 bg-success/10 text-t2"}`}>{notice.text}</p>}
@@ -395,7 +352,7 @@ export function DiagnosticSettings({ status, markers, openMarkRequest, onMarkIss
           {markOpen && (
               <DiagnosticDialog title={uiText("diagnosticSettings.title4")} description={uiText("diagnosticSettings.description")} onCancel={() => { if (!busy) { markOpenedAtRef.current = null; setMarkOpen(false); setNote(""); } }} onConfirm={() => void mark()} confirmLabel={uiText("diagnosticSettings.confirmLabel")} busy={busy === "mark"}>
               <label htmlFor="diagnostic-marker-note" className="mt-3 block ui-type-control text-t2">{uiText("diagnosticSettings.DiagnosticSettings22")}</label>
-              <textarea id="diagnostic-marker-note" value={note} onChange={(event) => setNote(event.target.value)} rows={3} className="mt-1.5 w-full resize-none rounded-md border border-line bg-bg px-2.5 py-2 ui-type-control text-t1 outline-none transition-colors focus:border-accent focus:ring-2 focus:ring-accent-ring" placeholder={uiText("diagnosticSettings.placeholder")} />
+              <Textarea id="diagnostic-marker-note" value={note} onChange={(event) => setNote(event.target.value)} rows={3} className="mt-1.5 w-full resize-none rounded-md border border-line bg-bg px-2.5 py-2 ui-type-control text-t1 outline-none transition-colors focus:border-accent focus:ring-2 focus:ring-accent-ring" placeholder={uiText("diagnosticSettings.placeholder")} />
             </DiagnosticDialog>
           )}
           {fullConfirmOpen && (

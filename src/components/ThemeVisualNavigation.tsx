@@ -1,3 +1,4 @@
+import { Button } from "./shadcn/button";
 import { useUiLanguage } from "../i18n/react.ts";
 import { uiText } from "../i18n/index.ts";
 import {
@@ -83,7 +84,7 @@ export function ThemeVisualNavigation({
   ): ReactNode => {
     const key = [...path, item.id].join("/");
     const button = (
-      <button
+      <Button variant="outline"
         type="button"
         data-native-part-id={item.part}
         data-navigation-id={item.id}
@@ -96,7 +97,7 @@ export function ThemeVisualNavigation({
         }}
       >
         {item.label}
-      </button>
+      </Button>
     );
     if (item.children?.length)
       return (

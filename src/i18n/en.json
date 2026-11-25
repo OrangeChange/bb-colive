@@ -4509,5 +4509,12 @@
   "backend.install.verification_missing": "Update package verification information is missing. Please download again.",
   "roomLock.expiryPart": "Ban expiry",
   "roomLock.remaining": "Remaining: {duration}",
-  "roomLock.awaitingConfirmation": "The stated expiry has passed. Status not yet confirmed."
+  "roomLock.awaitingConfirmation": "The stated expiry has passed. Status not yet confirmed.",
+  "dateTimeField.hour": "Hour",
+  "dateTimeField.minute": "Minute",
+  "dateTimeField.today": "Today",
+  "dateTimeField.openCalendar": "{label}: choose date",
+  "commandDialog.title": "Command palette",
+  "commandDialog.description": "Search for a command to run",
+  "obsServiceSettings.outputFailure": "{name}: {message}"
 }

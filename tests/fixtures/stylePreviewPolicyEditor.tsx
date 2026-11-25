@@ -17,7 +17,7 @@ import { saveSceneSettings, loadSceneSettings } from "../../src/components/scene
 import "../../src/compat/blivechat/register.tsx";
 import "../../src/compat/openlive/register.tsx";
 import "../../src/compat/laplace/register.tsx";
-import "../../src/App.css";
+import "../../src/shadcn.css";
 import "../../src/components/nativeThemeEditor.css";
 const q=new URLSearchParams(location.search);
 mockWindows('main');mockIPC(command=>command==='plugin:event|listen'?1:null);

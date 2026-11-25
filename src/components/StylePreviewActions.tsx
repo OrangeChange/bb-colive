@@ -1,3 +1,4 @@
+import { Button } from "./shadcn/button";
 import { useUiLanguage } from "../i18n/react.ts";
 import { uiText } from "../i18n/index.ts";
 import { ExternalLink, Link, Radio, Check } from "lucide-react";
@@ -41,7 +42,7 @@ export function StylePreviewActions({
   };
   return (
     <div className="native-preview-header-actions shared-preview-actions">
-      <button
+      <Button variant="outline"
         type="button"
         className="native-preview-open-button ui-type-control"
         title={uiText("stylePreviewActions.title")}
@@ -49,8 +50,8 @@ export function StylePreviewActions({
         onClick={() => void openNativeStylePreviewWindow()}
       >
         <ExternalLink size={16} aria-hidden="true" />
-      </button>
-      <button
+      </Button>
+      <Button variant="outline"
         type="button"
         className="native-preview-open-button ui-type-control"
         title={copied ? uiText("stylePreviewActions.title2") : uiText("stylePreviewActions.title3")}
@@ -59,10 +60,10 @@ export function StylePreviewActions({
         onClick={() => void copy()}
       >
         {copied ? <Check size={16} aria-hidden="true" /> : <Link size={16} aria-hidden="true" />}
-      </button>
+      </Button>
       <span role="status" className="sr-only">{copied ? uiText("stylePreviewActions.StylePreviewActions") : ""}</span>
       {onRealtimeChange && (
-        <button
+        <Button variant="outline"
           type="button"
           className={`native-preview-open-button ui-type-control preview-live-toggle${realtime ? " is-active" : ""}`}
           title={
@@ -78,7 +79,7 @@ export function StylePreviewActions({
           onClick={onRealtimeChange}
         >
           <Radio size={16} aria-hidden="true" />
-        </button>
+        </Button>
       )}
     </div>
   );

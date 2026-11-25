@@ -3,7 +3,7 @@ import assert from "node:assert/strict";
 import test, { after, before } from "node:test";
 import React from "react";
 import { renderToStaticMarkup } from "react-dom/server";
-import { createServer } from "vite";
+import { createServer } from "./helpers/vite.mjs";
 import { fileURLToPath } from "node:url";
 import { existsSync, readFileSync } from "node:fs";
 import { resolve as resolvePath } from "node:path";

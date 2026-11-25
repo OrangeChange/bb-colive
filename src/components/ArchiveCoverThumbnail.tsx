@@ -1,3 +1,4 @@
+import { Button } from "./shadcn/button";
 import { useUiLanguage } from "../i18n/react.ts";
 import { uiText } from "../i18n/index.ts";
 import { useEffect, useRef, useState } from "react";
@@ -77,7 +78,7 @@ export function ArchiveCoverThumbnail({ url, alt, size, cloudSessionId, previewE
       {showImage && !previewEnabled ? (
         <span className={thumbnailClass}><img src={imageUrl!} alt={alt} className="size-full object-cover" onError={() => setFailedUrl(imageUrl)} /></span>
       ) : showImage ? (
-        <button
+        <Button variant="outline"
           ref={triggerRef}
           type="button"
           className={`${thumbnailClass} cursor-zoom-in p-0 text-left transition-[border-color,box-shadow] hover:border-accent/70 hover:shadow-lg hover:shadow-black/20 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent-ring`}
@@ -93,10 +94,10 @@ export function ArchiveCoverThumbnail({ url, alt, size, cloudSessionId, previewE
             className="size-full object-cover"
             onError={() => setFailedUrl(imageUrl)}
           />
-        </button>
+        </Button>
       ) : failed ? (
-        <button type="button" className={`${thumbnailClass} ui-type-micro text-t3 hover:text-t1 focus-visible:ring-2 focus-visible:ring-accent-ring`}
-          title={uiText("archiveCoverThumbnail.title2")} onClick={() => setRetry(value => value + 1)}>{uiText("archiveCoverThumbnail.ArchiveCoverThumbnail")}</button>
+        <Button variant="outline" type="button" className={`${thumbnailClass} ui-type-micro text-t3 hover:text-t1 focus-visible:ring-2 focus-visible:ring-accent-ring`}
+          title={uiText("archiveCoverThumbnail.title2")} onClick={() => setRetry(value => value + 1)}>{uiText("archiveCoverThumbnail.ArchiveCoverThumbnail")}</Button>
       ) : (
         <span
           className={thumbnailClass}

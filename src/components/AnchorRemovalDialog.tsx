@@ -1,6 +1,8 @@
+import { RadioGroup, RadioGroupItem } from "./shadcn/radio-group";
+import { Button } from "./shadcn/button";
 import { useUiLanguage } from "../i18n/react.ts";
 import { uiText } from "../i18n/index.ts";
-import { useEffect, useId, useState } from "react";
+import { useEffect, useState } from "react";
 import type { Anchor } from "../protocol/anchors.ts";
 import type { ArchiveDeletePreview } from "../archive/archiveTypes.ts";
 import { getArchiveRepository, flushArchiveWriter, runArchiveTransfer, notifyArchiveRevision } from "../archive/archiveRuntime.ts";
@@ -20,7 +22,6 @@ export function AnchorRemovalDialog({ anchor, onRemove, onClose }: {
   const [includeArchive, setIncludeArchive] = useState(false);
   const [archive, setArchive] = useState<ArchiveState>({ status: "loading" });
   const [attempt, setAttempt] = useState(0);
-  const group = useId();
   useEffect(() => {
     let disposed = false, prepared: Prepared | undefined;
     setArchive({ status: "loading" });
@@ -70,12 +71,12 @@ export function AnchorRemovalDialog({ anchor, onRemove, onClose }: {
         throw error;
       }
     }}>
-    <div className="anchor-removal-options">
-      <label><input type="radio" name={group} aria-label={uiText("anchorRemovalDialog.aria_label")} checked={!includeArchive} onChange={() => setIncludeArchive(false)} />
+    <RadioGroup className="anchor-removal-options" value={String(includeArchive)} onValueChange={value=>setIncludeArchive(value === "true")}>
+      <label><RadioGroupItem value="false" aria-label={uiText("anchorRemovalDialog.aria_label")} />
         <span>{uiText("anchorRemovalDialog.AnchorRemovalDialog")}<small>{uiText("anchorRemovalDialog.AnchorRemovalDialog2")}</small></span></label>
-      <label><input type="radio" name={group} aria-label={uiText("anchorRemovalDialog.aria_label2")} checked={includeArchive} disabled={!canDeleteArchive} onChange={() => setIncludeArchive(true)} />
+      <label><RadioGroupItem value="true" disabled={!canDeleteArchive} aria-label={uiText("anchorRemovalDialog.aria_label2")} />
         <span>{uiText("anchorRemovalDialog.AnchorRemovalDialog3")}<small>{archive.status === "loading" ? uiText("anchorRemovalDialog.AnchorRemovalDialog4") : archive.status === "error" ? uiText("anchorRemovalDialog.AnchorRemovalDialog5") : preview?.blockedSessionCount ? uiText("anchorRemovalDialog.AnchorRemovalDialog6", { blockedSessionCount: preview.blockedSessionCount }) : preview?.sessionCount ? uiText("anchorRemovalDialog.AnchorRemovalDialog7", { sessionCount: preview.sessionCount, eventCount: preview.eventCount, favoriteCount: preview.favoriteCount }) : uiText("anchorRemovalDialog.AnchorRemovalDialog8")}</small></span></label>
-      {archive.status === "error" && <div><p role="alert" className="ui-type-control text-danger">{archive.message}</p><button type="button" className="settings-inline-button" onClick={() => setAttempt(value => value + 1)}>{uiText("common.retry")}</button></div>}
-    </div>
+      {archive.status === "error" && <div><p role="alert" className="ui-type-control text-danger">{archive.message}</p><Button variant="outline" type="button" className="settings-inline-button" onClick={() => setAttempt(value => value + 1)}>{uiText("common.retry")}</Button></div>}
+    </RadioGroup>
   </ConfirmDialog>;
 }

@@ -113,7 +113,7 @@ test("回看大表情按独立行高缩放，官方横幅保持独立限制", ()
   const big = archiveCss.match(/\.event\.event-surface-archive \.big-emote \{([^}]+)\}/)?.[1];
   const banner = archiveCss.match(/\.event\.event-surface-archive \.banner-emote \{([^}]+)\}/)?.[1];
   assert.match(big, /max-height: calc\(var\(--review-line\) \* 2\)/);
-  assert.match(banner, /max-width: calc\(var\(--review-line\) \* 9\)/);
+  assert.match(banner, /max-width: min\(100%, calc\(var\(--review-main\) \* 15\)\)/);
   assert.match(banner, /max-height: var\(--review-line\)/);
 });
 

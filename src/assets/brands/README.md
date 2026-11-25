@@ -1,7 +1,8 @@
 # 品牌图标
 
-React、Tauri、Tailwind CSS、Radix UI、哔哩哔哩、爱发电图标来自 Simple Icons，使用 CC0-1.0 许可。
+React、Tauri、Tailwind CSS、shadcn/ui、Radix UI、哔哩哔哩、爱发电图标来自 Simple Icons，使用 CC0-1.0 许可。
 
+- https://github.com/simple-icons/simple-icons/blob/develop/icons/shadcnui.svg
 - https://github.com/simple-icons/simple-icons/blob/develop/icons/tauri.svg
 - https://github.com/simple-icons/simple-icons/blob/develop/icons/radixui.svg
 - https://github.com/simple-icons/simple-icons/blob/develop/icons/afdian.svg

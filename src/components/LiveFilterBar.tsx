@@ -1,3 +1,4 @@
+import { Button } from "./shadcn/button";
 import { useUiLanguage } from "../i18n/react.ts";
 import { localized, uiText } from "../i18n/index.ts";
 import { UiSearchInput } from "./ui/SearchInput.tsx";
@@ -51,7 +52,7 @@ function FilterToggle({
 }) {
   useUiLanguage();
   return (
-    <button
+    <Button variant="outline"
       type="button"
       aria-pressed={active}
       onClick={onClick}
@@ -64,7 +65,7 @@ function FilterToggle({
       ].join(" ")}
     >
       {label}
-    </button>
+    </Button>
   );
 }
 
@@ -103,7 +104,7 @@ function FilterSubmenu<K extends string>({
       onFocus={() => setOpen(true)}
       onBlur={closeWhenFocusLeaves}
     >
-      <button
+      <Button variant="outline"
         type="button"
         aria-pressed={active}
         aria-haspopup="menu"
@@ -119,14 +120,14 @@ function FilterSubmenu<K extends string>({
       >
         {label}
         <IconChevronDown open={open} />
-      </button>
+      </Button>
       {open && (
         <div className="ui-motion-enter absolute left-0 top-full z-50 pt-1">
           <div role="menu" aria-label={uiText("liveFilterBar.aria_label", { label: label })} className="min-w-32 overflow-hidden rounded-md border border-line bg-surface p-1 shadow-lg shadow-black/20">
             {options.map((option) => {
               const checked = selected[option.key] !== false;
               return (
-                <button
+                <Button variant="outline"
                   key={option.key}
                   type="button"
                   role="menuitemcheckbox"
@@ -136,7 +137,7 @@ function FilterSubmenu<K extends string>({
                 >
                   <span className={checked ? "size-1.5 rounded-full bg-accent" : "size-1.5 rounded-full border border-line"} aria-hidden="true" />
                   {option.label}
-                </button>
+                </Button>
               );
             })}
           </div>
@@ -250,13 +251,13 @@ export function LiveFilterBar({
               {uiText("liveFilterBar.LiveFilterBar")}{query.userName}
             </span>
           ) : null}
-          <button
+          <Button variant="outline"
             type="button"
             aria-label={uiText("liveFilterBar.aria_label4")}
             onClick={onClearQuery}
             className={`${compactFilterActionButtonClass} shrink-0`}
           >
-            {uiText("liveFilterBar.LiveFilterBar2")}</button>
+            {uiText("liveFilterBar.LiveFilterBar2")}</Button>
         </div>
       ) : null}
     </div>

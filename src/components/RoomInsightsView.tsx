@@ -1,3 +1,4 @@
+import { Button } from "./shadcn/button";
 import { formatUiNumber } from "../i18n/format.ts";
 import { useUiLanguage } from "../i18n/react.ts";
 import { uiText } from "../i18n/index.ts";
@@ -31,14 +32,14 @@ export function RankUserRow({ user, kind, guardIdentityDisplayMode = 'icon', sho
   const ranked = user.rank > 0 && !(kind === 'contribution' && user.score === 0)
   const identity = guard === 1 ? uiText("roomInsightsView.RankUserRow.identity") : guard === 2 ? '提督' : guard === 3 ? '舰长' : ''
   const tone = guard === 1 ? 'text-ev-guard3' : guard === 2 ? 'text-ev-guard2' : guard === 3 ? 'text-ev-guard1' : 'text-t1'
-  const userName = onUserFilter ? <button
+  const userName = onUserFilter ? <Button variant="outline"
     type="button"
     onPointerDown={(event) => event.stopPropagation()}
     onClick={() => onUserFilter(user)}
     aria-label={uiText("roomInsightsView.aria_label", { name: user.name })}
     title={uiText("roomInsightsView.title", { name: user.name })}
     className="block w-full cursor-pointer truncate text-left ui-type-event font-medium hover:underline focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-accent-ring"
-  >{user.name}</button> : <div className="truncate ui-type-event font-medium" title={user.name}>{user.name}</div>
+  >{user.name}</Button> : <div className="truncate ui-type-event font-medium" title={user.name}>{user.name}</div>
   return <div className="flex h-14 min-w-0 items-center gap-2.5 border-b border-line/50 px-3">
     <span className="w-6 shrink-0 text-center font-mono ui-type-meta text-t2" aria-label={ranked ? uiText("roomInsightsView.aria_label2", { rank: user.rank }) : uiText("roomInsightsView.aria_label3")}>{ranked ? user.rank : '—'}</span>
     <RankAvatar user={user} size={30} />

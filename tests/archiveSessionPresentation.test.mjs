@@ -83,7 +83,7 @@ test('真实列表选择保护记录与重连，停止未知可以选中', () =>
   const runtime = componentRuntime('src/components/ReviewOwnerList.tsx', { '../archive/archiveQuality.ts': quality, '../archive/archiveDisplay.ts': display, '../archive/archiveSessionState.ts': state, '../generalSettings.ts': { useGeneralSettings: fn => fn({ reviewPinnedOwnerRoomIds: [], setReviewOwnerPinned() {} }) } }, ['SessionRow']);
   for (const [recordingStatus, disabled] of [['recording', true], ['reconnecting', true], ['stopped', false]]) {
     const tree = runtime.render('SessionRow', { session: session({ status: 'unclean', recordingStatus }), onOpen() {}, selected: false, onToggle() {} });
-    assert.equal(findElement(tree, n => n.type === 'input').props.disabled, disabled);
+    assert.equal(findElement(tree, n => n.type === 'checkbox').props.disabled, disabled);
     assert.equal(findElement(tree, n => n.props?.['data-review-session-quality']).props.children, '待确认');
     assert.equal(findElement(tree, n => n.props?.['data-review-session-status']).props.children, '状态未知');
   }

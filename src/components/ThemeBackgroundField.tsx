@@ -1,6 +1,7 @@
+import { Button } from "./shadcn/button";
 import { useUiLanguage } from "../i18n/react.ts";
 import { uiText } from "../i18n/index.ts";
-import * as Popover from "@radix-ui/react-popover";
+import { Popover, PopoverTrigger, PopoverClose, PopoverContent } from "./shadcn/popover";
 import { Plus, Trash2, X } from "lucide-react";
 import { useEffect, useMemo, useRef, useState } from "react";
 import { ThemeColorField } from "./ThemeColorField.tsx";
@@ -245,7 +246,7 @@ export function ThemeBackgroundField({
     );
   };
   return (
-    <Popover.Root
+    <Popover
       open={open}
       onOpenChange={(next) => {
         if (next) {
@@ -261,8 +262,8 @@ export function ThemeBackgroundField({
         setOpen(next);
       }}
     >
-      <Popover.Trigger asChild>
-        <button
+      <PopoverTrigger asChild>
+        <Button variant="outline"
           type="button"
           className="theme-color-trigger"
           aria-label={label}
@@ -277,10 +278,10 @@ export function ThemeBackgroundField({
                   ? uiText("themeBackgroundField.ThemeBackgroundField3")
                   : value}
           </span>
-        </button>
-      </Popover.Trigger>
-      <Popover.Portal>
-        <Popover.Content
+        </Button>
+      </PopoverTrigger>
+
+        <PopoverContent
           className="theme-background-popover"
           aria-label={uiText("themeBackgroundField.aria_label", { label: label })}
           side="bottom"
@@ -291,9 +292,9 @@ export function ThemeBackgroundField({
         >
           <div className="theme-color-popover-header">
             <strong>{label}</strong>
-            <Popover.Close aria-label={uiText("themeBackgroundField.aria_label2")} title={uiText("common.close")}>
+            <PopoverClose aria-label={uiText("themeBackgroundField.aria_label2")} title={uiText("common.close")}>
               <X size={16} />
-            </Popover.Close>
+            </PopoverClose>
           </div>
           <div
             className="theme-background-preview theme-fill-checker"
@@ -327,7 +328,7 @@ export function ThemeBackgroundField({
                   label: `${i === 0 ? uiText("themeBackgroundField.options.label") : i === background.layers.length - 1 ? uiText("themeBackgroundField.options.label2") : uiText("themeBackgroundField.options.label3", { value: i + 1 })} · ${parseGradient(item) ? uiText("themeBackgroundField.options.label4") : hasBackgroundImage(item) ? uiText("themeBackgroundField.options.label5") : uiText("themeBackgroundField.options.label6")}`,
                 }))}
               />
-              <button
+              <Button variant="ghost"
                 type="button"
                 className="theme-fill-icon"
                 aria-label={uiText("themeBackgroundField.aria_label4")}
@@ -336,7 +337,7 @@ export function ThemeBackgroundField({
                 onClick={removeLayer}
               >
                 <Trash2 size={16} />
-              </button>
+              </Button>
             </div>
           )}
           <div
@@ -351,7 +352,7 @@ export function ThemeBackgroundField({
                 { value: "radial", label: uiText("themeBackgroundField.ThemeBackgroundField.label3") },
               ] as const
             ).map((mode) => (
-              <button
+              <Button variant="outline"
                 key={mode.value}
                 type="button"
                 aria-pressed={
@@ -373,7 +374,7 @@ export function ThemeBackgroundField({
                 onClick={() => switchKind(mode.value)}
               >
                 {mode.label}
-              </button>
+              </Button>
             ))}
           </div>
           {gradient && (
@@ -398,14 +399,14 @@ export function ThemeBackgroundField({
                         aria-label={uiText("themeBackgroundField.aria_label6")}
                       >
                         {(["circle", "ellipse"] as const).map((shape) => (
-                          <button
+                          <Button variant="outline"
                             key={shape}
                             type="button"
                             aria-pressed={gradient.shape === shape}
                             onClick={() => update({ ...gradient, shape })}
                           >
                             {shape === "circle" ? uiText("themeBackgroundField.ThemeBackgroundField6") : uiText("themeBackgroundField.ThemeBackgroundField7")}
-                          </button>
+                          </Button>
                         ))}
                       </div>
                     </div>
@@ -466,7 +467,7 @@ export function ThemeBackgroundField({
                   }}
                 />
                 {gradient.stops.map((item, i) => (
-                  <button
+                  <Button variant="outline"
                     key={i}
                     type="button"
                     role="slider"
@@ -546,7 +547,7 @@ export function ThemeBackgroundField({
                     <span className="theme-fill-checker">
                       <span style={{ background: item.color }} />
                     </span>
-                  </button>
+                  </Button>
                 ))}
               </div>
               <div className="theme-gradient-stop-actions">
@@ -567,7 +568,7 @@ export function ThemeBackgroundField({
                   aria-label={uiText("themeBackgroundField.aria_label9")}
                 >
                   {(["%", "px"] as const).map((unit) => (
-                    <button
+                    <Button variant="outline"
                       key={unit}
                       type="button"
                       aria-pressed={gradient.stops[stopIndex].unit === unit}
@@ -584,10 +585,10 @@ export function ThemeBackgroundField({
                       }
                     >
                       {unit}
-                    </button>
+                    </Button>
                   ))}
                 </div>
-                <button
+                <Button variant="ghost"
                   type="button"
                   className="theme-fill-icon"
                   aria-label={uiText("themeBackgroundField.aria_label10")}
@@ -595,8 +596,8 @@ export function ThemeBackgroundField({
                   onClick={() => addStop()}
                 >
                   <Plus size={16} />
-                </button>
-                <button
+                </Button>
+                <Button variant="ghost"
                   type="button"
                   className="theme-fill-icon"
                   aria-label={uiText("themeBackgroundField.aria_label11")}
@@ -605,7 +606,7 @@ export function ThemeBackgroundField({
                   onClick={() => removeStop()}
                 >
                   <Trash2 size={16} />
-                </button>
+                </Button>
               </div>
             </>
           )}
@@ -639,8 +640,8 @@ export function ThemeBackgroundField({
             <p className="theme-background-note">
               {uiText("themeBackgroundField.ThemeBackgroundField10")}</p>
           )}
-        </Popover.Content>
-      </Popover.Portal>
-    </Popover.Root>
+        </PopoverContent>
+
+    </Popover>
   );
 }

@@ -1,3 +1,5 @@
+import { Tabs, TabsList, TabsTrigger } from "./shadcn/tabs";
+import { Button } from "./shadcn/button";
 import { formatUiNumber, formatUiCurrency } from "../i18n/format.ts";
 import { useUiLanguage } from "../i18n/react.ts";
 import { uiText } from "../i18n/index.ts";
@@ -1698,15 +1700,15 @@ export function ReviewPanel({ repository, anchors, active, refreshKey, onOpenClo
       <div aria-label={uiText("reviewPanel.aria_label2")} className="flex min-h-10 shrink-0 flex-wrap items-center gap-2 border-b border-line bg-surface px-5 py-1.5">
         <span className="mr-auto ui-type-meta text-t3">{uiText("reviewPanel.ReviewPanel3")}</span>
         <ReviewStyleSettings />
-        <button
+        <Button variant="outline"
           type="button"
           className="h-7 rounded-md border border-line bg-bg px-2.5 ui-type-control text-t2 transition-colors enabled:hover:border-accent/50 enabled:hover:bg-raised enabled:hover:text-t1 disabled:cursor-not-allowed disabled:opacity-40"
           disabled={currentRoomId == null}
           title={currentRoomId == null ? uiText("reviewPanel.title") : uiText("reviewPanel.title2")}
           onClick={() => { if (currentRoomId != null) openRoute({ level: "owner", roomId: currentRoomId }); }}
         >
-          {uiText("reviewPanel.ReviewPanel4")}</button>
-        <button
+          {uiText("reviewPanel.ReviewPanel4")}</Button>
+        <Button variant="outline"
           type="button"
           className="h-7 rounded-md border border-line bg-bg px-2.5 ui-type-control text-t2 transition-colors enabled:hover:border-accent/50 enabled:hover:bg-raised enabled:hover:text-t1 disabled:cursor-not-allowed disabled:opacity-40"
           disabled={currentRoomId == null || currentArchiveSessionId == null}
@@ -1717,7 +1719,7 @@ export function ReviewPanel({ repository, anchors, active, refreshKey, onOpenClo
             }
           }}
         >
-          {uiText("reviewPanel.ReviewPanel5")}</button>
+          {uiText("reviewPanel.ReviewPanel5")}</Button>
       </div>
       <section
         className="flex min-h-0 flex-1 flex-col bg-bg"
@@ -1729,35 +1731,35 @@ export function ReviewPanel({ repository, anchors, active, refreshKey, onOpenClo
       {route.level === "owner" ? (
         <header className="flex min-h-12 shrink-0 flex-wrap items-center gap-3 border-b border-line px-5 py-2">
           <nav aria-label={uiText("reviewPanel.aria_label3")} className="flex min-w-0 flex-1 basis-80 items-center gap-2">
-            <button type="button" aria-label={uiText("reviewPanel.aria_label4")} className="inline-flex h-8 shrink-0 items-center gap-1.5 whitespace-nowrap rounded-md border border-line bg-surface px-2.5 ui-type-control text-t2 transition-colors hover:border-accent/50 hover:bg-raised hover:text-accent-text focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent-ring" onClick={goHome}>
+            <Button variant="outline" type="button" aria-label={uiText("reviewPanel.aria_label4")} className="inline-flex h-8 shrink-0 items-center gap-1.5 whitespace-nowrap rounded-md border border-line bg-surface px-2.5 ui-type-control text-t2 transition-colors hover:border-accent/50 hover:bg-raised hover:text-accent-text focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent-ring" onClick={goHome}>
               <ChevronLeftIcon />
               <span>{uiText("reviewPanel.ReviewPanel6")}</span>
-            </button>
+            </Button>
             <span className="text-t3" aria-hidden="true">/</span>
             <h1 className="min-w-0 truncate ui-type-page-title text-t1" title={ownerName}>{ownerName}</h1>
             <span className="shrink-0 ui-type-meta text-t3">{owner?.sessionCount ?? sessions.length} {uiText("reviewPanel.ReviewPanel7")}</span>
           </nav>
           <div className="flex max-w-full flex-wrap items-center gap-2">
-          <button type="button" disabled={!repository} className="inline-flex h-8 shrink-0 items-center gap-1.5 whitespace-nowrap rounded-md border border-line bg-surface px-2.5 ui-type-control text-t2 transition-colors enabled:hover:border-accent/50 enabled:hover:bg-raised enabled:hover:text-accent-text disabled:cursor-not-allowed disabled:opacity-50 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent-ring" onClick={() => setCloudRecoveryOpen(true)}>
+          <Button variant="outline" type="button" disabled={!repository} className="inline-flex h-8 shrink-0 items-center gap-1.5 whitespace-nowrap rounded-md border border-line bg-surface px-2.5 ui-type-control text-t2 transition-colors enabled:hover:border-accent/50 enabled:hover:bg-raised enabled:hover:text-accent-text disabled:cursor-not-allowed disabled:opacity-50 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent-ring" onClick={() => setCloudRecoveryOpen(true)}>
             <CloudRecoveryIcon />
             <span>{uiText("reviewPanel.ReviewPanel8")}</span>
-          </button>
-          <button type="button" aria-pressed={showManagement} className={`inline-flex h-8 shrink-0 items-center gap-1.5 whitespace-nowrap rounded-md border px-2.5 ui-type-control transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent-ring ${showManagement ? "border-accent bg-accent-subtle text-accent-text" : "border-line bg-surface text-t2 hover:border-accent/50 hover:bg-raised hover:text-accent-text"}`} onClick={() => setShowManagement((current) => !current)}>
+          </Button>
+          <Button variant="outline" type="button" aria-pressed={showManagement} className={`inline-flex h-8 shrink-0 items-center gap-1.5 whitespace-nowrap rounded-md border px-2.5 ui-type-control transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent-ring ${showManagement ? "border-accent bg-accent-subtle text-accent-text" : "border-line bg-surface text-t2 hover:border-accent/50 hover:bg-raised hover:text-accent-text"}`} onClick={() => setShowManagement((current) => !current)}>
             <ArchiveManageIcon />
             <span>{showManagement ? uiText("reviewPanel.ReviewPanel9") : uiText("reviewPanel.ReviewPanel10")}</span>
-          </button>
-          {repository && <button type="button" className="inline-flex h-8 shrink-0 items-center rounded-md border border-line bg-surface px-2.5 ui-type-control text-t2 transition-colors hover:border-accent/50 hover:bg-raised hover:text-accent-text" onClick={() => openDataExport()}>{uiText("reviewPanel.ReviewPanel11")}</button>}
+          </Button>
+          {repository && <Button variant="outline" type="button" className="inline-flex h-8 shrink-0 items-center rounded-md border border-line bg-surface px-2.5 ui-type-control text-t2 transition-colors hover:border-accent/50 hover:bg-raised hover:text-accent-text" onClick={() => openDataExport()}>{uiText("reviewPanel.ReviewPanel11")}</Button>}
           </div>
         </header>
       ) : route.level === "session" ? (
         <header className="review-session-header flex min-h-14 shrink-0 items-center border-b border-line py-3">
           <nav aria-label={uiText("reviewPanel.aria_label3")} className="flex min-w-0 flex-1 items-center">
-            <button type="button" aria-label={uiText("reviewPanel.aria_label4")} className="inline-flex h-8 shrink-0 items-center gap-1.5 whitespace-nowrap rounded-md border border-line bg-surface px-2.5 ui-type-control text-t2 transition-colors hover:border-accent/50 hover:bg-raised hover:text-accent-text focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent-ring" onClick={goHome}>
+            <Button variant="outline" type="button" aria-label={uiText("reviewPanel.aria_label4")} className="inline-flex h-8 shrink-0 items-center gap-1.5 whitespace-nowrap rounded-md border border-line bg-surface px-2.5 ui-type-control text-t2 transition-colors hover:border-accent/50 hover:bg-raised hover:text-accent-text focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent-ring" onClick={goHome}>
               <ChevronLeftIcon />
               <span>{uiText("reviewPanel.ReviewPanel6")}</span>
-            </button>
+            </Button>
             <span className="text-t3" aria-hidden="true">/</span>
-            <button type="button" aria-label={uiText("reviewPanel.aria_label5")} title={ownerName} className="min-w-0 max-w-40 truncate ui-type-control text-t2 hover:text-accent-text" onClick={() => openRoute({ level: "owner", roomId: route.roomId })}>{ownerName}</button>
+            <Button variant="outline" type="button" aria-label={uiText("reviewPanel.aria_label5")} title={ownerName} className="min-w-0 max-w-40 truncate ui-type-control text-t2 hover:text-accent-text" onClick={() => openRoute({ level: "owner", roomId: route.roomId })}>{ownerName}</Button>
             <span className="text-t3" aria-hidden="true">/</span>
             <span className="min-w-0 flex-1 truncate ui-type-page-title text-t1" title={selectedSession?.title ?? route.sessionId}>{selectedSession?.title ?? route.sessionId}</span>
           </nav>
@@ -1769,11 +1771,11 @@ export function ReviewPanel({ repository, anchors, active, refreshKey, onOpenClo
               size="session-header"
             />
           )}
-          <button type="button" aria-pressed={showManagement} className={`inline-flex h-8 shrink-0 items-center gap-1.5 rounded-md border px-2.5 ui-type-control transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent-ring ${showManagement ? "border-accent bg-accent-subtle text-accent-text" : "border-line bg-surface text-t2 hover:border-accent/50 hover:bg-raised hover:text-accent-text"}`} onClick={() => setShowManagement((current) => !current)}>
+          <Button variant="outline" type="button" aria-pressed={showManagement} className={`inline-flex h-8 shrink-0 items-center gap-1.5 rounded-md border px-2.5 ui-type-control transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent-ring ${showManagement ? "border-accent bg-accent-subtle text-accent-text" : "border-line bg-surface text-t2 hover:border-accent/50 hover:bg-raised hover:text-accent-text"}`} onClick={() => setShowManagement((current) => !current)}>
             <ArchiveManageIcon />
             <span>{showManagement ? uiText("reviewPanel.ReviewPanel9") : uiText("reviewPanel.ReviewPanel10")}</span>
-          </button>
-          {repository && <button type="button" className="inline-flex h-8 shrink-0 items-center rounded-md border border-line bg-surface px-2.5 ui-type-control text-t2 transition-colors hover:border-accent/50 hover:bg-raised hover:text-accent-text" onClick={() => openDataExport()}>{uiText("reviewPanel.ReviewPanel11")}</button>}
+          </Button>
+          {repository && <Button variant="outline" type="button" className="inline-flex h-8 shrink-0 items-center rounded-md border border-line bg-surface px-2.5 ui-type-control text-t2 transition-colors hover:border-accent/50 hover:bg-raised hover:text-accent-text" onClick={() => openDataExport()}>{uiText("reviewPanel.ReviewPanel11")}</Button>}
           </div>
         </header>
       ) : null}
@@ -1785,11 +1787,11 @@ export function ReviewPanel({ repository, anchors, active, refreshKey, onOpenClo
         onWheel={route.level === "session" ? handleReviewSessionWheel : route.level === "owner" && !showManagement ? handleReviewOwnerWheel : undefined}
       >
         {route.level === "home" ? (
-          <div className="mx-auto flex max-w-5xl flex-col gap-4">
-            <div className="flex items-center gap-1 rounded-xl border border-line bg-surface p-1" role="tablist" aria-label={uiText("reviewPanel.aria_label6")}>
-              <button type="button" role="tab" aria-selected={homeMode === "owners"} className={`h-8 rounded-lg px-3 ui-type-control transition-colors ${homeMode === "owners" ? "bg-accent-subtle text-accent-text" : "text-t2 hover:bg-raised hover:text-t1"}`} onClick={() => setHomeMode("owners")}>{uiText("reviewPanel.ReviewPanel12")}</button>
-              <button type="button" role="tab" aria-selected={homeMode === "favorites"} className={`h-8 rounded-lg px-3 ui-type-control transition-colors ${homeMode === "favorites" ? "bg-accent-subtle text-accent-text" : "text-t2 hover:bg-raised hover:text-t1"}`} onClick={() => setHomeMode("favorites")}>{uiText("reviewPanel.ReviewPanel13")}</button>
-            </div>
+          <div className="review-home-content mx-auto flex min-h-full max-w-5xl flex-col gap-4">
+            <Tabs className="contents" value={homeMode} onValueChange={value=>setHomeMode(value as typeof homeMode)}><TabsList variant="line" asChild><div className="ui-segmented" aria-label={uiText("reviewPanel.aria_label6")}>
+              <TabsTrigger value="owners" asChild><Button variant="outline" type="button" className={`ui-segmented-item ui-type-control ${homeMode === "owners" ? "bg-accent-subtle text-accent-text" : "text-t2 hover:bg-raised hover:text-t1"}`}>{uiText("reviewPanel.ReviewPanel12")}</Button></TabsTrigger>
+              <TabsTrigger value="favorites" asChild><Button variant="outline" type="button" className={`ui-segmented-item ui-type-control ${homeMode === "favorites" ? "bg-accent-subtle text-accent-text" : "text-t2 hover:bg-raised hover:text-t1"}`}>{uiText("reviewPanel.ReviewPanel13")}</Button></TabsTrigger>
+            </div></TabsList></Tabs>
             {homeMode === "owners" ? <>
               <UiSearchInput aria-label={uiText("reviewPanel.aria_label7")} placeholder={uiText("reviewPanel.placeholder")} value={ownerSearchText} onValueChange={setOwnerSearchText} />
               {ownersError && <div role="alert" className="rounded-lg border border-danger/40 bg-danger/10 px-3 py-2 ui-type-control text-danger">{uiText("reviewPanel.ReviewPanel14")}{ownersError}</div>}
@@ -1808,7 +1810,7 @@ export function ReviewPanel({ repository, anchors, active, refreshKey, onOpenClo
             </> : repository ? <ReviewFavoritesPanel repository={repository} owners={owners} active={active} refreshKey={refreshKey} onOpenFavorite={openFavorite} /> : <div role="alert" className="rounded-xl border border-dashed border-line px-4 py-12 text-center ui-type-control text-t3">{uiText("reviewPanel.ReviewPanel15")}</div>}
           </div>
         ) : route.level === "owner" ? (
-          <div className="mx-auto flex max-w-5xl flex-col gap-4">
+          <div className="review-home-content mx-auto flex min-h-full max-w-5xl flex-col gap-4">
             {showManagement && repository ? (
               <ReviewArchiveManagement
                 repository={repository}

@@ -1,3 +1,5 @@
+import { Input } from "./shadcn/input";
+import { Button } from "./shadcn/button";
 import { useUiLanguage } from "../i18n/react.ts";
 import { localized, uiText } from "../i18n/index.ts";
 import { NATIVE_EVENT_SCOPES } from "../themes/nativeThemeCapabilities.ts";
@@ -26,7 +28,7 @@ export function NativeThemeBasicSettings({ display, visibility, onDisplayChange,
   const toggleChild = (id: string) => { onVisibilityChange({ ...eventVisibility, legacyLiveStatusConflict: id === "liveStatus" ? false : eventVisibility.legacyLiveStatusConflict, children: { ...eventVisibility.children, [id]: !eventVisibility.children[id] } }); };
   const row = (label: string, checked: boolean, onChange: () => void, disabled = false) => <div className="native-theme-setting-row" role="group" aria-label={label} key={label}><PanelSwitch label={label} checked={checked} disabled={disabled} onChange={onChange} /><span>{label}</span></div>;
   const eventScopes = NATIVE_EVENT_SCOPES.filter(scope => scope.id !== "all");
-  const groupActions = (allSelected: boolean, noneSelected: boolean, onSet: (checked: boolean) => void) => <div className="native-theme-subgroup-actions"><button type="button" disabled={allSelected} onClick={() => onSet(true)}>{uiText("common.selectAll")}</button><button type="button" disabled={noneSelected} onClick={() => onSet(false)}>{uiText("common.clear")}</button></div>;
+  const groupActions = (allSelected: boolean, noneSelected: boolean, onSet: (checked: boolean) => void) => <div className="native-theme-subgroup-actions"><Button variant="outline" type="button" disabled={allSelected} onClick={() => onSet(true)}>{uiText("common.selectAll")}</Button><Button variant="outline" type="button" disabled={noneSelected} onClick={() => onSet(false)}>{uiText("common.clear")}</Button></div>;
   const setAllCategories = (checked: boolean) => { onVisibilityChange({ ...eventVisibility, categories: { ...eventVisibility.categories, ...Object.fromEntries(eventScopes.map(scope => [scope.id, checked])) } }); };
   const detailGroup = (scopeId: "interaction" | "gift" | "system", title: string) => {
     const scope = eventScopes.find(item => item.id === scopeId)!;
@@ -38,7 +40,7 @@ export function NativeThemeBasicSettings({ display, visibility, onDisplayChange,
   const selectedCategories = eventScopes.filter(scope => eventVisibility.categories[scope.id] !== false).length;
   return <div className="native-theme-basic">
     <section className="native-editor-section"><header><h3><SettingsIcon name="basic" />{uiText("nativeThemeBasicSettings.NativeThemeBasicSettings")}</h3><p>{uiText("nativeThemeBasicSettings.NativeThemeBasicSettings2")}</p></header>
-      <div className="native-theme-inline-fields native-theme-baseline-fields"><label className="native-theme-number-field"><span>{uiText("nativeThemeBasicSettings.NativeThemeBasicSettings3")}</span><input type="number" min="8" max="72" step="0.5" value={display.baseFontSize} onChange={event => onDisplayChange({ ...display, baseFontSize: Number(event.target.value) })} /><span>px</span></label>
+      <div className="native-theme-inline-fields native-theme-baseline-fields"><label className="native-theme-number-field"><span>{uiText("nativeThemeBasicSettings.NativeThemeBasicSettings3")}</span><Input type="number" min="8" max="72" step="0.5" value={display.baseFontSize} onChange={event => onDisplayChange({ ...display, baseFontSize: Number(event.target.value) })} /><span>px</span></label>
       {row(uiText("nativeThemeBasicSettings.NativeThemeBasicSettings4"), display.usePriceGradient, () => onDisplayChange({ ...display, usePriceGradient: !display.usePriceGradient }))}</div>
     </section>
     <section className="native-editor-section"><header><h3><SettingsIcon name="display" />{uiText("nativeThemeBasicSettings.NativeThemeBasicSettings5")}</h3><p>{uiText("nativeThemeBasicSettings.NativeThemeBasicSettings6")}</p></header>

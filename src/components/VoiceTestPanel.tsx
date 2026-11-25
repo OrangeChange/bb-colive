@@ -1,3 +1,5 @@
+import { Button } from "./shadcn/button";
+import { Input } from "./shadcn/input";
 import { useUiLanguage } from "../i18n/react.ts";
 import { uiText } from "../i18n/index.ts";
 import { useId, useState } from "react";
@@ -32,12 +34,12 @@ export function VoiceTestPanel({ onTest, onBusyChange }: { onTest: (text: string
   };
 
   return <section className="voice-test-panel" aria-label={uiText("voiceTestPanel.aria_label")}>
-    <input id={id} aria-label={uiText("voiceTestPanel.aria_label2")} className={`${controlClass} voice-test-input`} value={text} disabled={status === "busy"}
+    <Input id={id} aria-label={uiText("voiceTestPanel.aria_label2")} className={`${controlClass} voice-test-input`} value={text} disabled={status === "busy"}
       aria-invalid={status === "error" && !text.trim() || undefined} aria-describedby={`${id}-status`}
       onChange={event => { setText(event.target.value); setStatus("idle"); setError(""); }} />
-      <button type="button" className={`${controlClass} voice-test-button`} aria-label={uiText("voiceTestPanel.aria_label")} disabled={status === "busy"} onClick={() => void runTest()}>
+      <Button variant="outline" type="button" className={`${controlClass} voice-test-button`} aria-label={uiText("voiceTestPanel.aria_label")} disabled={status === "busy"} onClick={() => void runTest()}>
         <Play size={15} aria-hidden="true" />{status === "busy" ? uiText("voiceTestPanel.VoiceTestPanel") : uiText("voiceTestPanel.VoiceTestPanel2")}
-      </button>
+      </Button>
     <p id={`${id}-status`} role="status" className={`voice-test-status ui-type-meta ${status === "error" ? "text-danger" : "text-t3"}`}>{status === "ended" ? uiText("voiceTestPanel.VoiceTestPanel3") : status === "error" ? error : ""}</p>
   </section>;
 }

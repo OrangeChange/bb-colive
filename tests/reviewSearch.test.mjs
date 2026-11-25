@@ -386,7 +386,7 @@ test("回看搜索控件提供字段、逻辑、范围和可移除条件，不�
   assert.match(controls, /aria-label=["']只看收藏["']/);
   assert.doesNotMatch(controls, /<input type="checkbox"[^>]*favoriteOnly/);
   assert.match(controls, /review-filter-preset-divider/);
-  assert.ok(controls.indexOf("presets.map") < controls.indexOf(">添加预设</button>"));
+  assert.ok(controls.indexOf("presets.map") < controls.indexOf(">添加预设</Button>"));
   const quickConditionsStart = controls.indexOf("REVIEW_QUICK_CONDITIONS.map");
   const presetMenuStart = controls.indexOf("<ReviewFilterPresetMenu");
   const favoriteStart = controls.indexOf('aria-label="快捷收藏条件"');
@@ -400,7 +400,7 @@ test("回看搜索控件提供字段、逻辑、范围和可移除条件，不�
   assert.match(controls, /关键词连接/);
   assert.match(controls, /setKeywordJoin/);
   assert.doesNotMatch(controls, /关键词组合方式/);
-  assert.match(controls, /type="datetime-local"/);
+  assert.match(controls, /<DateTimeField/);
   assert.match(timeline, /searchScope/);
   assert.match(timeline, /eventKey/);
   assert.doesNotMatch(timeline, /onToggleMark/);
@@ -495,8 +495,8 @@ test("回看筛选的添加按钮和高级面板保持在可点击层，时间�
   assert.match(controls, /createPortal/);
   assert.match(presetMenu, /createPortal/);
   assert.match(controls, /onClick=\{addKeyword\}/);
-  assert.match(controls, /type="datetime-local"/);
-  assert.match(controls, /step="60"/);
+  assert.match(controls, /<DateTimeField/);
+  assert.match(controls, /<DateTimeField label=["']回看开始时间["']/);
   assert.match(css, /\.review-filter-advanced-panel[\s\S]*position:\s*fixed/);
   assert.doesNotMatch(presets, /recent7d|近7天/);
   assert.match(controls, /过去 2 分钟/);

@@ -1,4 +1,4 @@
-import '../../src/App.css';
+import '../../src/shadcn.css';
 import {createRoot} from 'react-dom/client';
 import {Fragment,useState} from 'react';
 import {MsgType} from '../../src/protocol/eventTypeCodes';

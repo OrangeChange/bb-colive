@@ -4509,5 +4509,12 @@
   "backend.install.verification_missing": "更新パッケージの検証情報がありません。再ダウンロードしてください。",
   "roomLock.expiryPart": "解除予定日時",
   "roomLock.remaining": "残り {duration}",
-  "roomLock.awaitingConfirmation": "解除予定日時を過ぎました。実際の状態は未確認です。"
+  "roomLock.awaitingConfirmation": "解除予定日時を過ぎました。実際の状態は未確認です。",
+  "dateTimeField.hour": "時",
+  "dateTimeField.minute": "分",
+  "dateTimeField.today": "今日",
+  "dateTimeField.openCalendar": "{label}：日付を選択",
+  "commandDialog.title": "コマンドパレット",
+  "commandDialog.description": "実行するコマンドを検索",
+  "obsServiceSettings.outputFailure": "{name}：{message}"
 }

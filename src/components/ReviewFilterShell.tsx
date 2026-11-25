@@ -1,3 +1,4 @@
+import { Button } from "./shadcn/button";
 import { useUiLanguage } from "../i18n/react.ts";
 import { uiText } from "../i18n/index.ts";
 import { useEffect, useRef, type ReactNode, type Ref } from "react";
@@ -58,15 +59,15 @@ export function ReviewFilterShell({
         </div>
         {headerActions}
         {conditionCount > 0 && onClear && (
-          <button type="button" className={compactFilterActionButtonClass} onClick={onClear}>{uiText("reviewFilterShell.ReviewFilterShell4")}</button>
+          <Button variant="outline" type="button" className={compactFilterActionButtonClass} onClick={onClear}>{uiText("reviewFilterShell.ReviewFilterShell4")}</Button>
         )}
-        <button
+        <Button variant="outline"
           type="button"
           aria-expanded={!collapsed}
           aria-controls={contentId}
           className={`rounded-md border px-2.5 py-1 ui-type-control transition-colors hover:border-accent/50 hover:bg-raised hover:text-t1 ${collapsed ? "border-accent/50 bg-accent-subtle text-accent-text" : "border-line bg-bg text-t2"}`}
           onClick={() => onCollapsedChange(!collapsed)}
-        >{collapsed ? uiText("reviewFilterShell.ReviewFilterShell5") : uiText("reviewFilterShell.ReviewFilterShell6")}</button>
+        >{collapsed ? uiText("reviewFilterShell.ReviewFilterShell5") : uiText("reviewFilterShell.ReviewFilterShell6")}</Button>
       </header>
 
       <div id={contentId} ref={contentRef} aria-hidden={collapsed} className={`review-filter-content ${collapsed ? "is-collapsed" : ""}`}>

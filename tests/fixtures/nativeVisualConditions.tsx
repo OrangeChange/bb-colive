@@ -8,7 +8,7 @@ import {tryComposeNativePreviewCss} from '../../src/themes/nativeThemeCascade.ts
 import {DEFAULT_EVENT_DISPLAY_PREFERENCES} from '../../src/eventDisplaySettings.ts';
 import {DEFAULT_STYLE_PREVIEW_POLICY} from '../../src/preview/stylePreviewPolicy.ts';
 import type {NativeVisualSelection} from '../../src/components/NativeThemeVisualEditor.tsx';
-import '../../src/App.css';
+import '../../src/shadcn.css';
 import '../../src/components/nativeThemeEditor.css';
 const query=new URLSearchParams(location.search);
 const theme=createBuiltinNativeTheme(query.get('theme')||'native-default');

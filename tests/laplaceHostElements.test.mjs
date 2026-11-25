@@ -91,7 +91,10 @@ test('基础页可切换仅当前房间，粉丝牌关闭时保留从属选择',
   const nodes = element => !element || typeof element !== 'object' ? [] : [element, ...[element.props?.children].flat(Infinity).flatMap(nodes)];
   const toggle = label => {
     const basic = getCompatibleThemeEditingSurface('laplace').renderBasicControls({ document: { settings }, onSettingsChange: next => { settings = next; } });
-    return nodes(basic.type(basic.props)).find(node => node.props?.label === label);
+    let tree;
+    function Probe() { tree = basic.type(basic.props); return tree; }
+    renderToStaticMarkup(createElement(Probe));
+    return nodes(tree).find(node => node.props?.label === label);
   };
   toggle('仅当前房间粉丝牌').props.onChange();
   assert.equal(settings.showMedalCurrentRoomOnly, true);

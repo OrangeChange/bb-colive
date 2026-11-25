@@ -1,7 +1,7 @@
 import { mockIPC, mockWindows } from '@tauri-apps/api/mocks';
 import React, {useState} from 'react';
 import {createRoot} from 'react-dom/client';
-import '../../src/App.css';
+import '../../src/shadcn.css';
 mockWindows('main');
 mockIPC((command,args)=>(window as any).__realInvoke(command,args));
 await import('../../src/compat/blivechat/register.tsx');

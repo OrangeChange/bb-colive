@@ -39,7 +39,7 @@ test("诊断导出界面订阅进度事件并显示进度条与剩余时长", ()
   assert.match(rust, /processedBytes/);
   assert.match(rust, /totalBytes/);
   assert.match(component, /diagnostic:export-progress/);
-  assert.match(component, /progressbar/);
+  assert.match(component, /<Progress[^>]*value=/);
   assert.match(component, /formatExportRemaining/);
 });
 

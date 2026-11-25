@@ -9,7 +9,7 @@ import { createBuiltinNativeTheme } from "../../src/themes/nativeBuiltinThemes.t
 import { createCompatibleThemeModeAdapter } from "../../src/themes/themeModeAdapters.ts";
 import { DEFAULT_EVENT_DISPLAY_PREFERENCES } from "../../src/eventDisplaySettings.ts";
 import type { ThemeDocument, ThemeMode } from "../../src/themes/themeTypes.ts";
-import "../../src/App.css";
+import "../../src/shadcn.css";
 import "../../src/compat/blivechat/register.tsx";
 import "../../src/compat/openlive/register.tsx";
 import "../../src/compat/laplace/register.tsx";

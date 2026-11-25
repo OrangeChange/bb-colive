@@ -1,3 +1,4 @@
+import { Button } from "./shadcn/button";
 import { useUiLanguage } from "../i18n/react.ts";
 import { uiText } from "../i18n/index.ts";
 import { useEffect, useMemo, useRef, useState, type KeyboardEvent } from "react";
@@ -195,7 +196,7 @@ export function ReviewOwnerEventFilters({
             className="w-full"
           />
         </div>
-        <button type="button" disabled={!keywordDraft.trim()} className={`${toggleClass} border-line bg-bg text-t2 enabled:hover:border-accent/50 enabled:hover:text-t1 disabled:opacity-40`} onClick={addKeyword}>{uiText("common.add")}</button>
+        <Button variant="outline" type="button" disabled={!keywordDraft.trim()} className={`${toggleClass} border-line bg-bg text-t2 enabled:hover:border-accent/50 enabled:hover:text-t1 disabled:opacity-40`} onClick={addKeyword}>{uiText("common.add")}</Button>
       </div>
 
       {keywordConditions.length > 0 && (
@@ -217,7 +218,7 @@ export function ReviewOwnerEventFilters({
               )}
               <span role="listitem" className="inline-flex items-center gap-1 rounded-full bg-accent-subtle px-2 py-0.5 ui-type-meta text-accent-text">
                 {keywordFieldLabel(condition.field)}：{condition.value}
-                <button type="button" aria-label={uiText("reviewOwnerEventFilters.aria_label2", { value: condition.value })} className="rounded-full px-1 text-accent-text hover:bg-accent/15 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent-ring" onClick={() => removeKeyword(index)}>×</button>
+                <Button size="icon-sm" variant="ghost" type="button" aria-label={uiText("reviewOwnerEventFilters.aria_label2", { value: condition.value })} className="rounded-full px-1 text-accent-text hover:bg-accent/15 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent-ring" onClick={() => removeKeyword(index)}>×</Button>
               </span>
             </span>
           ))}
@@ -228,15 +229,15 @@ export function ReviewOwnerEventFilters({
         <span className="ui-type-meta text-t3">{uiText("reviewOwnerEventFilters.ReviewOwnerEventFilters2")}</span>
         {REVIEW_QUICK_CONDITIONS.map((condition) => {
           const active = isReviewQuickConditionActive(filters, condition.value);
-          return <button key={condition.value} type="button" aria-pressed={active} className={`${toggleClass} ${active ? "border-accent bg-accent-subtle text-accent-text" : "border-line bg-bg text-t2 hover:border-accent/50 hover:text-t1"}`} onClick={() => applyQuickCondition(condition.value)}>{condition.label}</button>;
+          return <Button variant="outline" key={condition.value} type="button" aria-pressed={active} className={`${toggleClass} ${active ? "border-accent bg-accent-subtle text-accent-text" : "border-line bg-bg text-t2 hover:border-accent/50 hover:text-t1"}`} onClick={() => applyQuickCondition(condition.value)}>{condition.label}</Button>;
         })}
         <ReviewFilterPresetMenu activePresetId={activePresetId} presets={filterPresets} onApply={applyPreset} onSave={savePreset} onRename={renamePreset} onDelete={deletePreset} />
         <span aria-hidden="true" className="review-filter-inline-divider mx-1 h-4 w-px bg-line" />
-        <button type="button" aria-label={uiText("reviewOwnerEventFilters.aria_label4")} aria-pressed={filters.favoriteOnly === true} className={`${toggleClass} ${filters.favoriteOnly ? "border-accent bg-accent-subtle text-accent-text" : "border-line bg-bg text-t2 hover:border-accent/50 hover:text-t1"}`} onClick={() => updateFilters({ favoriteOnly: filters.favoriteOnly ? undefined : true })}>{uiText("reviewOwnerEventFilters.ReviewOwnerEventFilters3")}</button>
-        <button ref={moreConditionsTriggerRef} type="button" aria-expanded={moreConditionsOpen} aria-controls="review-owner-event-advanced" aria-label={uiText("reviewOwnerEventFilters.aria_label5")} className={`ml-auto ${toggleClass} ${moreConditionsOpen ? "border-accent bg-accent-subtle text-accent-text" : "border-line bg-bg text-t2 hover:border-accent/50 hover:text-t1"}`} onClick={() => setMoreConditionsOpen((current) => !current)}>
+        <Button variant="outline" type="button" aria-label={uiText("reviewOwnerEventFilters.aria_label4")} aria-pressed={filters.favoriteOnly === true} className={`${toggleClass} ${filters.favoriteOnly ? "border-accent bg-accent-subtle text-accent-text" : "border-line bg-bg text-t2 hover:border-accent/50 hover:text-t1"}`} onClick={() => updateFilters({ favoriteOnly: filters.favoriteOnly ? undefined : true })}>{uiText("reviewOwnerEventFilters.ReviewOwnerEventFilters3")}</Button>
+        <Button variant="outline" ref={moreConditionsTriggerRef} type="button" aria-expanded={moreConditionsOpen} aria-controls="review-owner-event-advanced" aria-label={uiText("reviewOwnerEventFilters.aria_label5")} className={`ml-auto ${toggleClass} ${moreConditionsOpen ? "border-accent bg-accent-subtle text-accent-text" : "border-line bg-bg text-t2 hover:border-accent/50 hover:text-t1"}`} onClick={() => setMoreConditionsOpen((current) => !current)}>
           {moreConditionsOpen ? uiText("reviewOwnerEventFilters.ReviewOwnerEventFilters4") : uiText("reviewOwnerEventFilters.ReviewOwnerEventFilters5")}
           {advancedFilterConditionCount(filters) > 0 ? ` · ${advancedFilterConditionCount(filters)}` : ""}
-        </button>
+        </Button>
       </div>
 
     </ReviewFilterShell>

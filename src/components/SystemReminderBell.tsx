@@ -1,3 +1,4 @@
+import { Button } from "./shadcn/button";
 import { useUiLanguage } from "../i18n/react.ts";
 import { uiText } from "../i18n/index.ts";
 import { Bell as LucideBell } from "lucide-react";
@@ -50,7 +51,7 @@ export function SystemReminderBell({ events, placement = "bottom", children }: {
 
   return (
     <div ref={rootRef} className="relative">
-      <button
+      <Button variant="outline"
         type="button"
         aria-label={uiText("systemReminderBell.aria_label")}
         aria-expanded={open}
@@ -64,7 +65,7 @@ export function SystemReminderBell({ events, placement = "bottom", children }: {
             {unreadCount > 99 ? "99+" : unreadCount}
           </span>
         )}
-      </button>
+      </Button>
       {children && <div hidden={open}>{children}</div>}
       {open && (
         <div

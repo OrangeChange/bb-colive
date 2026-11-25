@@ -1,3 +1,5 @@
+import { Input } from "./shadcn/input";
+import { Button } from "./shadcn/button";
 import { useUiLanguage } from "../i18n/react.ts";
 import { uiText } from "../i18n/index.ts";
 import { useEffect, useState } from 'react';
@@ -158,7 +160,7 @@ export function CloudCollectionSettings({ serviceVersion, serverId }: { serviceV
 
   const sectionClass = 'rounded-lg border border-line bg-bg px-3 py-3';
   const retryButton = (key: string, retry: () => void) => errors[key]
-    ? <div className="mt-2 flex items-center justify-between gap-2"><span role="alert" className="ui-type-meta text-danger">{errors[key]}</span><button type="button" className="h-7 rounded-md border border-line px-2 ui-type-meta text-t2 hover:bg-raised" onClick={retry}>{uiText("common.retry")}</button></div>
+    ? <div className="mt-2 flex items-center justify-between gap-2"><span role="alert" className="ui-type-meta text-danger">{errors[key]}</span><Button variant="outline" type="button" className="h-7 rounded-md border border-line px-2 ui-type-meta text-t2 hover:bg-raised" onClick={retry}>{uiText("common.retry")}</Button></div>
     : null;
 
   return <div className="mt-3 grid gap-3" data-settings-search="cloud-collection">
@@ -178,12 +180,12 @@ export function CloudCollectionSettings({ serviceVersion, serverId }: { serviceV
           {auth?.account && <p className="mt-1 ui-type-micro text-t3">{auth.refreshCapable ? uiText("cloudCollectionSettings.CloudCollectionSettings7") : uiText("cloudCollectionSettings.CloudCollectionSettings8")}</p>}
         </div>
         <div className="flex flex-wrap gap-2">
-          <button type="button" disabled={Boolean(busy) || !localSession} onClick={() => void syncLocal()}
-            className="h-8 rounded-md border border-line bg-surface px-3 ui-type-control text-t1 enabled:hover:border-accent/50 enabled:hover:bg-raised disabled:cursor-not-allowed disabled:opacity-50">{uiText("cloudCollectionSettings.CloudCollectionSettings9")}</button>
-          <button type="button" disabled={Boolean(busy)} onClick={() => void openServerQr()}
-            className="h-8 rounded-md border border-line bg-surface px-3 ui-type-control text-t2 enabled:hover:bg-raised disabled:cursor-not-allowed disabled:opacity-50">{uiText("cloudCollectionSettings.CloudCollectionSettings10")}</button>
-          <button type="button" disabled={Boolean(busy)} aria-label={uiText("cloudCollectionSettings.aria_label")} title={uiText("cloudCollectionSettings.title")} onClick={() => void refreshAuth()}
-            className="settings-icon-action h-8 rounded-md border border-line bg-surface px-2 ui-type-control text-t2 enabled:hover:bg-raised disabled:cursor-not-allowed disabled:opacity-50"><RefreshCw size={16} aria-hidden="true" /></button>
+          <Button variant="outline" type="button" disabled={Boolean(busy) || !localSession} onClick={() => void syncLocal()}
+            className="h-8 rounded-md border border-line bg-surface px-3 ui-type-control text-t1 enabled:hover:border-accent/50 enabled:hover:bg-raised disabled:cursor-not-allowed disabled:opacity-50">{uiText("cloudCollectionSettings.CloudCollectionSettings9")}</Button>
+          <Button variant="outline" type="button" disabled={Boolean(busy)} onClick={() => void openServerQr()}
+            className="h-8 rounded-md border border-line bg-surface px-3 ui-type-control text-t2 enabled:hover:bg-raised disabled:cursor-not-allowed disabled:opacity-50">{uiText("cloudCollectionSettings.CloudCollectionSettings10")}</Button>
+          <Button variant="ghost" type="button" disabled={Boolean(busy)} aria-label={uiText("cloudCollectionSettings.aria_label")} title={uiText("cloudCollectionSettings.title")} onClick={() => void refreshAuth()}
+            className="settings-icon-action h-8 rounded-md border border-line bg-surface px-2 ui-type-control text-t2 enabled:hover:bg-raised disabled:cursor-not-allowed disabled:opacity-50"><RefreshCw size={16} aria-hidden="true" /></Button>
         </div>
       </div>
       {localSession && <p className="mt-2 ui-type-meta text-t3">{uiText("cloudCollectionSettings.CloudCollectionSettings11")}{localSession.name}（{localSession.uid}）{localSession.refreshCapable ? '' : uiText("cloudCollectionSettings.CloudCollectionSettings12")}</p>}
@@ -197,18 +199,18 @@ export function CloudCollectionSettings({ serviceVersion, serverId }: { serviceV
         <span className="ui-type-meta text-t3">{rooms ? uiText("cloudCollectionSettings.CloudCollectionSettings15", { length: rooms.items.filter(room => room.enabled).length, supportedEnabledRooms: rooms.supportedEnabledRooms }) : ''}</span>
       </div>
       <div className="mt-2 flex gap-2">
-        <input inputMode="numeric" value={roomId} disabled={Boolean(busy)} onChange={event => setRoomId(event.target.value.replace(/\D/g, ''))}
+        <Input inputMode="numeric" value={roomId} disabled={Boolean(busy)} onChange={event => setRoomId(event.target.value.replace(/\D/g, ''))}
           placeholder={uiText("cloudCollectionSettings.placeholder")} className="h-8 min-w-0 flex-1 rounded-md border border-line bg-surface px-2 ui-type-control text-t1 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent-ring" />
-        <button type="button" disabled={Boolean(busy) || !roomId} onClick={() => void enableRoom()}
-          className="h-8 shrink-0 rounded-md bg-accent-solid px-3 ui-type-control text-accent-fg enabled:hover:bg-accent-solid-hover enabled:active:bg-accent-solid-active disabled:cursor-not-allowed disabled:opacity-50">{uiText("cloudCollectionSettings.CloudCollectionSettings16")}</button>
+        <Button variant="default" type="button" disabled={Boolean(busy) || !roomId} onClick={() => void enableRoom()}
+          className="h-8 shrink-0 rounded-md bg-accent-solid px-3 ui-type-control text-accent-fg enabled:hover:bg-accent-solid-hover enabled:active:bg-accent-solid-active disabled:cursor-not-allowed disabled:opacity-50">{uiText("cloudCollectionSettings.CloudCollectionSettings16")}</Button>
       </div>
       {rooms && <div className="mt-2 divide-y divide-line rounded-md border border-line bg-surface">
-        {rooms.items.length === 0 && <div className="px-3 py-4 text-center ui-type-meta text-t3">{uiText("cloudCollectionSettings.CloudCollectionSettings17")}</div>}
+        {rooms.items.length === 0 && <div className="ui-empty-state">{uiText("cloudCollectionSettings.CloudCollectionSettings17")}</div>}
         {rooms.items.map(room => <div key={room.roomId} className="flex items-center gap-3 px-3 py-2">
           <div className="min-w-0 flex-1"><div className="truncate ui-type-control text-t1">{room.currentSession?.title || uiText("cloudCollectionSettings.CloudCollectionSettings18", { roomId: room.roomId })}</div><div className="ui-type-micro text-t3">{room.roomId} · {room.enabled ? roomState(room.state) : uiText("cloudCollectionSettings.CloudCollectionSettings19")}</div></div>
           {room.enabled
-            ? <button type="button" disabled={Boolean(busy)} onClick={() => setStopRoomId(room.roomId)} className="h-7 rounded-md px-2 ui-type-meta text-danger enabled:hover:bg-danger/10 disabled:opacity-50">{uiText("cloudCollectionSettings.CloudCollectionSettings20")}</button>
-            : <button type="button" disabled={Boolean(busy)} onClick={() => { setRoomId(room.roomId); void run('rooms', async () => { await cloudServerApi.enableRoom(room.roomId); setNotice(uiText("cloudCollectionSettings.onClick")); await refreshRooms(); }); }} className="h-7 rounded-md px-2 ui-type-meta text-accent-text enabled:hover:bg-accent-subtle disabled:opacity-50">{uiText("cloudCollectionSettings.CloudCollectionSettings21")}</button>}
+            ? <Button variant="outline" type="button" disabled={Boolean(busy)} onClick={() => setStopRoomId(room.roomId)} className="h-7 rounded-md px-2 ui-type-meta text-danger enabled:hover:bg-danger/10 disabled:opacity-50">{uiText("cloudCollectionSettings.CloudCollectionSettings20")}</Button>
+            : <Button variant="outline" type="button" disabled={Boolean(busy)} onClick={() => { setRoomId(room.roomId); void run('rooms', async () => { await cloudServerApi.enableRoom(room.roomId); setNotice(uiText("cloudCollectionSettings.onClick")); await refreshRooms(); }); }} className="h-7 rounded-md px-2 ui-type-meta text-accent-text enabled:hover:bg-accent-subtle disabled:opacity-50">{uiText("cloudCollectionSettings.CloudCollectionSettings21")}</Button>}
         </div>)}
       </div>}
       {retryButton('rooms', () => void refreshRooms())}
@@ -218,10 +220,10 @@ export function CloudCollectionSettings({ serviceVersion, serverId }: { serviceV
       <h3 className="settings-experience-heading ui-type-control font-medium text-t1"><SettingsIcon name="dataRetention" />{uiText("cloudCollectionSettings.CloudCollectionSettings22")}</h3>
       <p className="mt-1 ui-type-meta text-t3">{uiText("cloudCollectionSettings.CloudCollectionSettings23")}</p>
       <div className="mt-2 flex items-center gap-2">
-        <input inputMode="numeric" value={retentionInput} disabled={Boolean(busy)} onChange={event => setRetentionInput(event.target.value.replace(/\D/g, ''))}
+        <Input inputMode="numeric" value={retentionInput} disabled={Boolean(busy)} onChange={event => setRetentionInput(event.target.value.replace(/\D/g, ''))}
           placeholder={uiText("cloudCollectionSettings.placeholder2")} aria-label={uiText("cloudCollectionSettings.aria_label2")} className="h-8 w-32 rounded-md border border-line bg-surface px-2 ui-type-control text-t1 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent-ring" />
         <span className="ui-type-control text-t3">{uiText("cloudCollectionSettings.CloudCollectionSettings24")}</span>
-        <button type="button" disabled={Boolean(busy) || !retention} onClick={() => void previewRetention()} className="h-8 rounded-md border border-line bg-surface px-3 ui-type-control text-t1 enabled:hover:bg-raised disabled:opacity-50">{uiText("cloudCollectionSettings.CloudCollectionSettings25")}</button>
+        <Button variant="outline" type="button" disabled={Boolean(busy) || !retention} onClick={() => void previewRetention()} className="h-8 rounded-md border border-line bg-surface px-3 ui-type-control text-t1 enabled:hover:bg-raised disabled:opacity-50">{uiText("cloudCollectionSettings.CloudCollectionSettings25")}</Button>
       </div>
       {retryButton('retention', () => void refreshRetention())}
     </section>

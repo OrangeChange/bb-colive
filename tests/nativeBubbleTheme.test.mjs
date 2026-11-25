@@ -13,7 +13,7 @@ test('轻量气泡作为独立原生主题提供可编辑的基础样式', () =>
   assert.match(theme.styles.baseCss, /\.event\.type-superchat/);
   assert.match(theme.styles.baseCss, /@container/);
   assert.equal(theme.styles.customCss, '');
-  assert.equal(theme.styles.baseCss, readFileSync('src/themes/nativeBubbleTheme.css', 'utf8'));
+  assert.equal(theme.styles.baseCss, readFileSync('src/themes/nativeBubbleTheme.css', 'utf8').replaceAll('\r\n', '\n'));
   assert.ok(createBuiltinNativeThemes().some(item => item.themeId === theme.themeId));
 });
 

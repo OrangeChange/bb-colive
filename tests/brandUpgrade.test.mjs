@@ -7,7 +7,7 @@ test('BB CoLive 发行身份与作者一致', () => {
   const config = JSON.parse(read('src-tauri/tauri.conf.json'));
   assert.equal(config.identifier, 'orange.bbcolive');
   assert.equal(config.productName, 'BB CoLive');
-  assert.equal(config.version, '1.0.0');
+  assert.equal(config.version, JSON.parse(read('package.json')).version);
   assert.match(read('src/components/AboutDialog.tsx'), /橙橙子君 Orange/);
   assert.equal(config.bundle.publisher, '橙橙子君（Orange）');
   assert.doesNotMatch(read('src/components/AboutDialog.tsx'), /setLicenses|license-search/);

@@ -1,8 +1,9 @@
+import { Checkbox } from "./shadcn/checkbox";
+import { Button } from "./shadcn/button";
 import { formatUiCurrency } from "../i18n/format.ts";
 import { useUiLanguage } from "../i18n/react.ts";
 import { uiText } from "../i18n/index.ts";
 import { Pin as LucidePin, ChevronRight as LucideChevronRight } from "lucide-react";
-import { useEffect, useRef } from "react";
 import type { Anchor } from "../protocol/anchors.ts";
 import type {
   ArchiveOwnerSummary,
@@ -86,7 +87,7 @@ function OwnerCard({
   const isLive = card.anchor.liveStatus === 1;
   return (
     <article className="group relative flex w-full items-center gap-2 rounded-xl border border-line bg-surface px-3 py-2.5 transition-colors hover:border-accent/60 hover:bg-raised">
-      <button
+      <Button variant="outline"
         type="button"
         className="flex min-w-0 flex-1 items-center gap-3 rounded-lg px-1 py-0.5 text-left after:absolute after:inset-0 after:rounded-xl focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent-ring"
         aria-label={uiText("reviewOwnerList.aria_label", { uname: card.anchor.uname })}
@@ -105,8 +106,8 @@ function OwnerCard({
             </span>
           </span>
         </span>
-      </button>
-      <button
+      </Button>
+      <Button variant="outline"
         type="button"
         aria-label={pinned ? uiText("reviewOwnerList.aria_label2", { uname: card.anchor.uname }) : uiText("reviewOwnerList.aria_label3", { uname: card.anchor.uname })}
         aria-pressed={pinned}
@@ -115,7 +116,7 @@ function OwnerCard({
         onClick={() => onTogglePinned(card.roomId, !pinned)}
       >
         <LucidePin aria-hidden="true" className="size-4" fill={pinned ? "currentColor" : "none"} />
-      </button>
+      </Button>
       <LucideChevronRight aria-hidden="true" className="pointer-events-none size-4 shrink-0 text-t3 transition-transform group-hover:translate-x-0.5 group-hover:text-accent-text" />
     </article>
   );
@@ -141,13 +142,13 @@ function SessionRow({
     <div className="review-session-row flex w-full items-stretch gap-2 border-b border-line px-3 py-2.5 transition-colors last:border-b-0 hover:bg-raised">
       {onToggle && (
         <label className="flex shrink-0 items-start pt-1.5" title={protectedSession ? uiText("reviewOwnerList.title4") : undefined}>
-          <input
-            type="checkbox"
+          <Checkbox
+
             checked={selected}
             disabled={protectedSession}
             aria-label={protectedSession ? uiText("reviewOwnerList.aria_label4", { value: session.title ?? uiText("reviewOwnerList.aria_label.value") }) : uiText("reviewOwnerList.aria_label5", { value: session.title ?? uiText("reviewOwnerList.aria_label.value") })}
             className="size-4 accent-accent focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent-ring"
-            onChange={(event) => onToggle(session.sessionId, event.currentTarget.checked)}
+            onCheckedChange={(event) => onToggle(session.sessionId, (event === true))}
           />
         </label>
       )}
@@ -156,7 +157,7 @@ function SessionRow({
         alt={(session.title ?? uiText("reviewOwnerList.alt")) + uiText("reviewOwnerList.alt2")}
         size="session-list"
       />
-      <button
+      <Button variant="outline"
         type="button"
         className="flex min-w-0 flex-1 flex-col gap-1 rounded-md text-left focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent-ring"
         aria-label={uiText("reviewOwnerList.aria_label6", { value: session.title ?? uiText("reviewOwnerList.aria_label.value") })}
@@ -175,7 +176,7 @@ function SessionRow({
           <span>{formatUiCurrency(session.paidTotal ?? 0)} {uiText("reviewOwnerList.SessionRow3")}</span>
           <span>{session.favoriteCount ?? 0} {uiText("reviewOwnerList.SessionRow4")}</span>
         </span>
-      </button>
+      </Button>
     </div>
   );
 }
@@ -212,15 +213,12 @@ export function ReviewOwnerList({
       data: { roomId, pinned },
     });
   };
-  const selectAllRef = useRef<HTMLInputElement>(null);
   const selectableSessions = sessions.filter((session) => !isArchiveSessionRecording(session));
   const selectedSessionIdSet = new Set(selectedSessionIds);
   const allSelectableSelected = selectableSessions.length > 0 && selectableSessions.every((session) => selectedSessionIdSet.has(session.sessionId));
   const someSelectableSelected = selectableSessions.some((session) => selectedSessionIdSet.has(session.sessionId));
 
-  useEffect(() => {
-    if (selectAllRef.current) selectAllRef.current.indeterminate = someSelectableSelected && !allSelectableSelected;
-  }, [allSelectableSelected, someSelectableSelected]);
+
 
   if (level === "home") {
     const pinned = new Set(pinnedOwnerRoomIds);
@@ -232,17 +230,17 @@ export function ReviewOwnerList({
         .some((value) => String(value).toLocaleLowerCase().includes(normalizedSearch)))
       : cards;
     return (
-      <section aria-label={uiText("reviewOwnerList.aria_label7")} className="flex min-h-0 flex-col gap-3">
+      <section aria-label={uiText("reviewOwnerList.aria_label7")} className="flex min-h-0 flex-1 flex-col gap-3">
         <div className="flex items-baseline justify-between">
           <h2 className="ui-type-section-title text-t1">{uiText("reviewOwnerList.ReviewOwnerList")}</h2>
           <span className="ui-type-meta text-t3">{visibleCards.length} {uiText("reviewOwnerList.ReviewOwnerList2")}</span>
         </div>
         {visibleCards.length === 0 ? (
-          <div className="px-4 py-8 text-center ui-type-control text-t3">
+          <div className="ui-empty-state ui-empty-fill">
             <p>{ownersLoading ? uiText("reviewOwnerList.ReviewOwnerList3") : normalizedSearch ? uiText("reviewOwnerList.ReviewOwnerList4") : uiText("reviewOwnerList.ReviewOwnerList5")}</p>
             {!ownersLoading && (normalizedSearch && onClearSearch
-              ? <button type="button" className={`${compactFilterActionButtonClass} mt-3`} onClick={onClearSearch}>{uiText("reviewOwnerList.ReviewOwnerList6")}</button>
-              : !normalizedSearch && <p className="mt-2">{uiText("reviewOwnerList.ReviewOwnerList7")}</p>)}
+              ? <Button variant="outline" type="button" className={compactFilterActionButtonClass} onClick={onClearSearch}>{uiText("reviewOwnerList.ReviewOwnerList6")}</Button>
+              : !normalizedSearch && <p>{uiText("reviewOwnerList.ReviewOwnerList7")}</p>)}
           </div>
         ) : (
           <div className="grid min-w-0 gap-2.5">
@@ -263,7 +261,7 @@ export function ReviewOwnerList({
   }
 
   return (
-    <section aria-label={uiText("reviewOwnerList.aria_label8")} className="flex min-h-0 flex-col gap-2">
+    <section aria-label={uiText("reviewOwnerList.aria_label8")} className="flex min-h-0 flex-1 flex-col gap-2">
       <div className="flex items-baseline justify-between">
         <h2 className="ui-type-section-title text-t1">{uiText("reviewOwnerList.ReviewOwnerList8")}</h2>
         <span className="ui-type-meta text-t3">{owner?.sessionCount ?? sessions.length} {uiText("reviewOwnerList.ReviewOwnerList9")}</span>
@@ -271,30 +269,30 @@ export function ReviewOwnerList({
       {onToggleSession && sessions.length > 0 && (
         <div className="flex flex-wrap items-center gap-2 rounded-lg border border-line bg-surface px-3 py-2" aria-label={uiText("reviewOwnerList.aria_label9")}>
           <label className="inline-flex items-center gap-2 ui-type-control text-t2">
-            <input
-              ref={selectAllRef}
-              type="checkbox"
-              checked={allSelectableSelected}
+            <Checkbox
+
+
+              checked={someSelectableSelected && !allSelectableSelected ? "indeterminate" : allSelectableSelected}
               disabled={selectableSessions.length === 0}
               aria-label={uiText("reviewOwnerList.aria_label10")}
               className="size-4 accent-accent focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent-ring"
-              onChange={(event) => onToggleAllSessions?.(event.currentTarget.checked)}
+              onCheckedChange={(event) => onToggleAllSessions?.((event === true))}
             />
             <span>{uiText("reviewOwnerList.ReviewOwnerList10")}</span>
           </label>
           <span className="ui-type-meta text-t3">{uiText("reviewOwnerList.ReviewOwnerList11")}{selectedSessionIds.length} {uiText("reviewOwnerList.ReviewOwnerList9")}</span>
           {owner && owner.sessionCount > sessions.length && <span className="ui-type-meta text-warning">{uiText("reviewOwnerList.ReviewOwnerList12")}{sessions.length} / {owner.sessionCount} {uiText("reviewOwnerList.ReviewOwnerList13")}</span>}
           <span className="mr-auto ui-type-meta text-t3">{uiText("reviewOwnerList.ReviewOwnerList14")}</span>
-          <button type="button" disabled={selectedSessionIds.length === 0} className={compactFilterActionButtonClass} onClick={onExportSelected}>{uiText("reviewOwnerList.ReviewOwnerList15")}</button>
-          <button type="button" disabled={selectedSessionIds.length === 0} className={compactDangerActionButtonClass} onClick={onDeleteSelected}>{uiText("reviewOwnerList.ReviewOwnerList16")}</button>
-          <button type="button" disabled={selectedSessionIds.length === 0} className={compactFilterActionButtonClass} onClick={onClearSelection}>{uiText("reviewOwnerList.ReviewOwnerList17")}</button>
+          <Button variant="outline" type="button" disabled={selectedSessionIds.length === 0} className={compactFilterActionButtonClass} onClick={onExportSelected}>{uiText("reviewOwnerList.ReviewOwnerList15")}</Button>
+          <Button variant="outline" type="button" disabled={selectedSessionIds.length === 0} className={compactDangerActionButtonClass} onClick={onDeleteSelected}>{uiText("reviewOwnerList.ReviewOwnerList16")}</Button>
+          <Button variant="outline" type="button" disabled={selectedSessionIds.length === 0} className={compactFilterActionButtonClass} onClick={onClearSelection}>{uiText("reviewOwnerList.ReviewOwnerList17")}</Button>
         </div>
       )}
-      <div className="overflow-hidden rounded-xl border border-line bg-surface">
+      <div data-empty={sessions.length === 0 || undefined} className="review-session-list overflow-hidden rounded-xl border border-line bg-surface">
         {sessionsLoading ? (
-          <div className="px-3 py-8 text-center ui-type-control text-t3">{uiText("reviewOwnerList.ReviewOwnerList18")}</div>
+          <div className="ui-empty-state ui-empty-fill">{uiText("reviewOwnerList.ReviewOwnerList18")}</div>
         ) : sessions.length === 0 ? (
-          <div className="px-3 py-8 text-center ui-type-control text-t3">{uiText("reviewOwnerList.ReviewOwnerList19")}</div>
+          <div className="ui-empty-state ui-empty-fill">{uiText("reviewOwnerList.ReviewOwnerList19")}</div>
         ) : (
           sessions.map((session) => (
             <SessionRow
@@ -308,12 +306,12 @@ export function ReviewOwnerList({
         )}
       </div>
       {hasMoreSessions && (
-        <button
+        <Button variant="outline"
           type="button"
           disabled={sessionsLoadingMore}
           className="self-center rounded-lg border border-line bg-surface px-3 py-1.5 ui-type-control text-t2 transition-colors enabled:hover:border-accent enabled:hover:text-accent-text disabled:cursor-wait disabled:opacity-60"
           onClick={onLoadMoreSessions}
-        >{sessionsLoadingMore ? uiText("reviewOwnerList.ReviewOwnerList20") : uiText("reviewOwnerList.ReviewOwnerList21", { length: sessions.length, value: owner?.sessionCount ?? uiText("reviewOwnerList.ReviewOwnerList.value") })}</button>
+        >{sessionsLoadingMore ? uiText("reviewOwnerList.ReviewOwnerList20") : uiText("reviewOwnerList.ReviewOwnerList21", { length: sessions.length, value: owner?.sessionCount ?? uiText("reviewOwnerList.ReviewOwnerList.value") })}</Button>
       )}
     </section>
   );

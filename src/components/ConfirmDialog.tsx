@@ -1,9 +1,15 @@
 import { useUiLanguage } from "../i18n/react.ts";
 import { uiText } from "../i18n/index.ts";
-import { useEffect, useId, useRef, useState, type ReactNode } from "react";
-import { createPortal } from "react-dom";
-import { accentSolidButtonClass, dangerSolidButtonClass } from "./actionButtonStyles";
-
+import { useRef, useState, type ReactNode } from "react";
+import {
+  AlertDialog,
+  AlertDialogContent,
+  AlertDialogHeader,
+  AlertDialogTitle,
+  AlertDialogDescription,
+  AlertDialogFooter,
+} from "./shadcn/alert-dialog";
+import { Button } from "./shadcn/button";
 export type ConfirmDialogProps = {
   title: string;
   description: string;
@@ -17,109 +23,96 @@ export type ConfirmDialogProps = {
   onConfirm: () => void | Promise<void>;
 };
 
-/** 应用内的确认对话框：不调用浏览器原生 confirm，并保留焦点与 Escape 语义。 */
-export function ConfirmDialog({ title, description, confirmLabel, confirmTone = "accent", errorMessage = uiText("confirmDialog.ConfirmDialog"), children, confirmDisabled = false, cancelAriaLabel = uiText("common.cancel"), onCancel, onConfirm }: ConfirmDialogProps) {
+export function ConfirmDialog({
+  title,
+  description,
+  confirmLabel,
+  confirmTone = "accent",
+  errorMessage = uiText("confirmDialog.ConfirmDialog"),
+  children,
+  confirmDisabled = false,
+  cancelAriaLabel = uiText("common.cancel"),
+  onCancel,
+  onConfirm,
+}: ConfirmDialogProps) {
   useUiLanguage();
-  const dialogRef = useRef<HTMLDivElement>(null);
-  const cancelRef = useRef<HTMLButtonElement>(null);
-  const onCancelRef = useRef(onCancel);
-  const onConfirmRef = useRef(onConfirm);
-  const [busy, setBusy] = useState(false);
-  const [error, setError] = useState("");
-  const titleId = useId();
-  const descriptionId = useId();
-
-  onCancelRef.current = onCancel;
-  onConfirmRef.current = onConfirm;
-
-  useEffect(() => {
-    const previous = document.activeElement instanceof HTMLElement ? document.activeElement : null;
-    cancelRef.current?.focus();
-    const handleKeyDown = (event: KeyboardEvent) => {
-      if (event.key === "Escape" && !busy) {
-        event.preventDefault();
-        onCancelRef.current();
-        return;
-      }
-      if (event.key !== "Tab" || !dialogRef.current) return;
-      const focusable = Array.from(dialogRef.current.querySelectorAll<HTMLElement>(
-        'button:not([disabled]), input:not([disabled]), [tabindex]:not([tabindex="-1"])',
-      ));
-      if (focusable.length === 0) {
-        event.preventDefault();
-        dialogRef.current.focus();
-        return;
-      }
-      const first = focusable[0];
-      const last = focusable[focusable.length - 1];
-      if (event.shiftKey && document.activeElement === first) {
-        event.preventDefault();
-        last.focus();
-      } else if (!event.shiftKey && document.activeElement === last) {
-        event.preventDefault();
-        first.focus();
-      }
-    };
-    document.addEventListener("keydown", handleKeyDown);
-    return () => {
-      document.removeEventListener("keydown", handleKeyDown);
-      previous?.focus();
-    };
-  }, [busy]);
-
+  const cancel = useRef<HTMLButtonElement>(null);
+  const previous = useRef(
+    document.activeElement instanceof HTMLElement
+      ? document.activeElement
+      : null,
+  );
+  const [busy, setBusy] = useState(false),
+    [error, setError] = useState("");
   const confirm = async () => {
     if (busy || confirmDisabled) return;
     setBusy(true);
     setError("");
     try {
-      await onConfirmRef.current();
-      onCancelRef.current();
-    } catch (error) {
-      setError(typeof errorMessage === "function" ? errorMessage(error) : errorMessage);
+      await onConfirm();
+      onCancel();
+    } catch (cause) {
+      setError(
+        typeof errorMessage === "function" ? errorMessage(cause) : errorMessage,
+      );
     } finally {
       setBusy(false);
     }
   };
-
-  return createPortal(
-    <div className="ui-modal-overlay settings-confirm-overlay fixed inset-0 z-[100] flex items-center justify-center p-3" role="presentation">
-      <button
-        type="button"
-        className="settings-confirm-backdrop absolute inset-0 h-full w-full border-0 bg-black/35"
-        aria-label={cancelAriaLabel}
-        disabled={busy}
-        onClick={onCancel}
-      />
-      <div
-        ref={dialogRef}
-        role="alertdialog"
-        aria-modal="true"
-        aria-labelledby={titleId}
-        aria-describedby={descriptionId}
-        tabIndex={-1}
-        className="ui-modal-surface settings-confirm-dialog relative z-10 w-[min(440px,calc(100vw-24px))] rounded-lg border border-line bg-surface p-4 shadow-2xl shadow-black/30"
+  return (
+    <AlertDialog
+      open
+      onOpenChange={(open) => {
+        if (!open && !busy) onCancel();
+      }}
+    >
+      <AlertDialogContent
+        className="settings-confirm-dialog"
+        onOpenAutoFocus={(event) => {
+          event.preventDefault();
+          cancel.current?.focus();
+        }}
+        onCloseAutoFocus={(event) => {
+          event.preventDefault();
+          previous.current?.focus();
+        }}
+        onEscapeKeyDown={(event) => {
+          if (busy) event.preventDefault();
+        }}
       >
-        <h3 id={titleId} className="ui-type-section-title font-medium text-t1">{title}</h3>
-        <p id={descriptionId} className="mt-2 ui-type-control leading-5 text-t2">{description}</p>
-        {children && <fieldset disabled={busy} className="mt-3 min-w-0 border-0 p-0">{children}</fieldset>}
-        {error && <p role="alert" className="mt-2 ui-type-control text-danger">{error}</p>}
-        <div className="mt-4 flex justify-end gap-2">
-          <button
-            ref={cancelRef}
-            type="button"
+        <AlertDialogHeader>
+          <AlertDialogTitle>{title}</AlertDialogTitle>
+          <AlertDialogDescription>{description}</AlertDialogDescription>
+        </AlertDialogHeader>
+        {children && (
+          <div className="min-w-0" inert={busy || undefined}>
+            {children}
+          </div>
+        )}
+        {error && (
+          <p role="alert" className="text-danger">
+            {error}
+          </p>
+        )}
+        <AlertDialogFooter>
+          <Button
+            ref={cancel}
+            variant="outline"
+            aria-label={cancelAriaLabel}
             disabled={busy}
             onClick={onCancel}
-            className="h-8 rounded-md border border-line bg-bg px-3 ui-type-control text-t2 transition-colors enabled:hover:bg-raised enabled:hover:text-t1 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent-ring disabled:cursor-not-allowed disabled:opacity-50"
-          >{uiText("common.cancel")}</button>
-          <button
-            type="button"
+          >
+            {uiText("common.cancel")}
+          </Button>
+          <Button
+            variant={confirmTone === "danger" ? "destructive" : "default"}
             disabled={busy || confirmDisabled}
             onClick={() => void confirm()}
-            className={confirmTone === "danger" ? dangerSolidButtonClass : accentSolidButtonClass}
-          >{busy ? uiText("confirmDialog.ConfirmDialog2") : confirmLabel}</button>
-        </div>
-      </div>
-    </div>,
-    document.body,
+          >
+            {busy ? uiText("confirmDialog.ConfirmDialog2") : confirmLabel}
+          </Button>
+        </AlertDialogFooter>
+      </AlertDialogContent>
+    </AlertDialog>
   );
 }

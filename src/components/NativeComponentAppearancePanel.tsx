@@ -1,3 +1,6 @@
+import { Dialog, DialogContent, DialogTitle, DialogDescription } from "./shadcn/dialog";
+import { Button } from "./shadcn/button";
+import { Input } from "./shadcn/input";
 import { useUiLanguage } from "../i18n/react.ts";
 import { uiText } from "../i18n/index.ts";
 import { useState } from "react";
@@ -11,12 +14,12 @@ import {
 
 function NumberField({ label, value, onChange, step = 1 }: { label: string; value?: number; onChange: (value?: number) => void; step?: number }) {
   useUiLanguage();
-  return <label><span>{label}</span><input type="number" min="0" step={step} value={value ?? ""} placeholder={uiText("nativeComponentAppearancePanel.placeholder")} onChange={event => onChange(event.target.value === "" ? undefined : Number(event.target.value))} /></label>;
+  return <label><span>{label}</span><Input type="number" min="0" step={step} value={value ?? ""} placeholder={uiText("nativeComponentAppearancePanel.placeholder")} onChange={event => onChange(event.target.value === "" ? undefined : Number(event.target.value))} /></label>;
 }
 
 function TextField({ label, value, onChange }: { label: string; value?: string; onChange: (value?: string) => void }) {
   useUiLanguage();
-  return <label><span>{label}</span><input value={value ?? ""} placeholder={uiText("nativeComponentAppearancePanel.placeholder")} onChange={event => onChange(event.target.value.trim() || undefined)} /></label>;
+  return <label><span>{label}</span><Input value={value ?? ""} placeholder={uiText("nativeComponentAppearancePanel.placeholder")} onChange={event => onChange(event.target.value.trim() || undefined)} /></label>;
 }
 
 export function NativeComponentAppearancePanel({ value, onChange, onClose }: {
@@ -28,18 +31,18 @@ export function NativeComponentAppearancePanel({ value, onChange, onClose }: {
   const [part, setPart] = useState<NativeComponentPart>("event");
   const current = value[part];
   const update = (patch: Partial<NativeComponentStyle>) => onChange({ ...value, [part]: { ...current, ...patch } });
-  return <div className="theme-name-overlay" role="dialog" aria-modal="true" aria-label={uiText("nativeComponentAppearancePanel.aria_label")}>
+  return <Dialog open onOpenChange={open=>{if(!open)onClose();}}><DialogContent asChild showCloseButton={false} className="max-w-none gap-0 p-0">
     <section className="theme-component-dialog">
-      <header><div><h3>{uiText("nativeComponentAppearancePanel.NativeComponentAppearancePanel")}</h3><p>{uiText("nativeComponentAppearancePanel.NativeComponentAppearancePanel2")}</p></div><button type="button" onClick={onClose} aria-label={uiText("nativeComponentAppearancePanel.aria_label2")}>×</button></header>
+      <header><div><DialogTitle asChild><h3>{uiText("nativeComponentAppearancePanel.NativeComponentAppearancePanel")}</h3></DialogTitle><DialogDescription asChild><p>{uiText("nativeComponentAppearancePanel.NativeComponentAppearancePanel2")}</p></DialogDescription></div><Button size="icon-sm" variant="ghost" type="button" onClick={onClose} aria-label={uiText("nativeComponentAppearancePanel.aria_label2")}>×</Button></header>
       <div className="theme-component-body">
-        <nav aria-label={uiText("nativeComponentAppearancePanel.aria_label3")}>{NATIVE_COMPONENT_PARTS.map(item => <button type="button" key={item} className={part === item ? "is-active" : ""} onClick={() => setPart(item)}>{NATIVE_COMPONENT_LABELS[item]}</button>)}</nav>
+        <nav aria-label={uiText("nativeComponentAppearancePanel.aria_label3")}>{NATIVE_COMPONENT_PARTS.map(item => <Button variant="outline" type="button" key={item} className={part === item ? "is-active" : ""} onClick={() => setPart(item)}>{NATIVE_COMPONENT_LABELS[item]}</Button>)}</nav>
         <div className="theme-component-fields">
           <TextField label={uiText("nativeComponentAppearancePanel.label")} value={current.color} onChange={color => update({ color })} />
           <TextField label={uiText("nativeComponentAppearancePanel.label2")} value={current.background} onChange={background => update({ background })} />
           <NumberField label={uiText("nativeComponentAppearancePanel.label3")} value={current.borderWidth} onChange={borderWidth => update({ borderWidth })} />
           <TextField label={uiText("nativeComponentAppearancePanel.label4")} value={current.borderColor} onChange={borderColor => update({ borderColor })} />
           <NumberField label={uiText("nativeComponentAppearancePanel.label5")} value={current.borderRadius} onChange={borderRadius => update({ borderRadius })} />
-          <button type="button" className="theme-component-reset" onClick={() => onChange({ ...value, [part]: { visible: true } })}>{uiText("common.restoreDefaults")}</button>
+          <Button variant="ghost" type="button" className="theme-component-reset" onClick={() => onChange({ ...value, [part]: { visible: true } })}>{uiText("common.restoreDefaults")}</Button>
           <details className="theme-component-details"><summary>{uiText("nativeComponentAppearancePanel.NativeComponentAppearancePanel3")}</summary><div>
             <TextField label={uiText("common.font")} value={current.fontFamily} onChange={fontFamily => update({ fontFamily })} />
             <NumberField label={uiText("common.fontSize")} value={current.fontSize} onChange={fontSize => update({ fontSize })} />
@@ -54,7 +57,6 @@ export function NativeComponentAppearancePanel({ value, onChange, onClose }: {
           </div></details>
         </div>
       </div>
-      <footer><button type="button" className="is-primary" onClick={onClose}>{uiText("nativeComponentAppearancePanel.NativeComponentAppearancePanel4")}</button></footer>
-    </section>
-  </div>;
+      <footer><Button variant="default" type="button" className="is-primary" onClick={onClose}>{uiText("nativeComponentAppearancePanel.NativeComponentAppearancePanel4")}</Button></footer>
+    </section></DialogContent></Dialog>;
 }

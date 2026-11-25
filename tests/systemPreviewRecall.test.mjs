@@ -1,6 +1,6 @@
 import test from 'node:test';import assert from 'node:assert/strict';import {createStylePreviewEvents,createStylePreviewDesignEvents} from '../src/components/stylePreviewEvents.ts';
 for(const factory of [createStylePreviewEvents,createStylePreviewDesignEvents]) test(factory.name+'系统覆盖并排除撤回控制',()=>{
- const s=factory('系统');assert.deepEqual([...new Set(s.map(e=>e.msgType))].sort((a,b)=>a-b),[18,19,20,21,22,23,24,25]);
+ const s=factory('系统');assert.deepEqual([...new Set(s.map(e=>e.msgType))].sort((a,b)=>a-b),[18,19,20,21,22,23,24,25,28]);
  assert(!factory('混合流').some(e=>e.msgType===16||e.msgType===26));
  if(factory===createStylePreviewEvents){const e=factory('弹幕').find(e=>e.danmuDeleted&&e.user?.uname==='稳健的G');assert.equal(e.text,'一生有爱何惧风飞沙');}
  else {const e=factory('弹幕').find(e=>e.id==='native-design:body-recalled');assert(e.danmuDeleted);assert.match(e.text,/已撤回.*检查/);}

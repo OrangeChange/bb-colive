@@ -55,7 +55,7 @@ test("标签管理区域明确说明删除标签不会删除收藏内容", () =>
 
 test("收藏编辑备注框不会拖拽改变弹窗布局", () => {
   const source = read("src/components/FavoriteOrganizationEditor.tsx");
-  assert.match(source, /<textarea[\s\S]*resize-none/);
+  assert.match(source, /<Textarea[\s\S]*resize-none/);
 });
 
 test("收藏筛选提供收藏时间/事件时间切换和跨天快捷范围", () => {
@@ -69,7 +69,7 @@ test("收藏筛选提供收藏时间/事件时间切换和跨天快捷范围", (
   assert.match(source, /本月/);
   assert.match(source, /上月/);
   assert.match(source, /自定义/);
-  assert.match(source, /datetime-local/);
+  assert.match(source, /<DateTimeField/);
 });
 
 test("收藏筛选把标签放在更多筛选之外，并将管理标签放到列表工具栏", () => {
@@ -80,7 +80,7 @@ test("收藏筛选把标签放在更多筛选之外，并将管理标签放到�
   const manageIndex = source.indexOf("管理标签");
   assert.ok(tagIndex >= 0 && tagIndex < advancedIndex, "标签筛选应位于更多筛选面板之外");
   assert.match(source, /tagFilter\.names\.length > 1/);
-  assert.match(source, /hasActiveFilters && <button/);
+  assert.match(source, /hasActiveFilters && <Button/);
   assert.ok(manageIndex > toolbarIndex, "管理标签应位于列表工具栏，而不是更多筛选面板内");
 });
 
@@ -94,9 +94,9 @@ test("收藏自定义时间按内容布局，并把开始结束输入放到下�
   const source = read("src/components/ReviewFavoritesPanel.tsx");
   assert.doesNotMatch(source, /md:grid-cols-2/);
   assert.match(source, /className="mt-2 flex flex-wrap items-center gap-2/);
-  assert.match(source, /type="datetime-local" step="60"/);
-  assert.match(source, /aria-label=["']时间范围开始["']/);
-  assert.match(source, /aria-label=["']时间范围结束["']/);
+  assert.match(source, /<DateTimeField/);
+  assert.match(source, /label=["']时间范围开始["']/);
+  assert.match(source, /label=["']时间范围结束["']/);
 });
 
 test("档案刷新时不应清空收藏页的多选状态", () => {

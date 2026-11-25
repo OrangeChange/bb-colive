@@ -6,7 +6,7 @@ import react from '../assets/brands/react.svg?raw';
 import tailwind from '../assets/brands/tailwindcss.svg?raw';
 import bilibili from '../assets/brands/bilibili.svg?raw';
 import tauri from '../assets/brands/tauri.svg?raw';
-import radix from '../assets/brands/radixui.svg?raw';
+import shadcn from '../assets/brands/shadcnui.svg?raw';
 import afdian from '../assets/brands/afdian.svg?raw';
 import blivechat from '../assets/brands/blivechat.ico';
 import laplace from '../assets/brands/laplace-chat.svg';
@@ -34,7 +34,7 @@ export function AboutLinks() {
       {link('React', 'https://react.dev/', <BrandIcon source={react} />, 'react')}
       {link('Tauri', 'https://tauri.app/', <BrandIcon source={tauri} />, 'tauri')}
       {link('Tailwind CSS', 'https://tailwindcss.com/', <BrandIcon source={tailwind} />, 'tailwind')}
-      {link('Radix UI', 'https://www.radix-ui.com/', <BrandIcon source={radix} />, 'radix')}
+      {link('shadcn/ui', 'https://ui.shadcn.com/', <BrandIcon source={shadcn} />, 'shadcn')}
     </nav>
     <nav className="about-link-row about-profiles" aria-label={uiText("thirdPartyNotices.aria_label2")}>
       {link(uiText("thirdPartyNotices.AboutLinks2"), 'https://space.bilibili.com/4261481', <BrandIcon source={bilibili} />, 'bilibili')}

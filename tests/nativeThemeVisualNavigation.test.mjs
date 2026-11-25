@@ -6,7 +6,7 @@ import * as capabilities from "../src/themes/nativeThemeCapabilities.ts";
 import { normalizeNativeNavigationSelection } from "../src/themes/nativeVisualNavigation.ts";
 import React from "react";
 import { renderToStaticMarkup } from "react-dom/server";
-import { createServer } from "vite";
+import { createServer } from "./helpers/vite.mjs";
 import { fileURLToPath } from "node:url";
 import fs from "node:fs";
 
@@ -28,7 +28,7 @@ test("可视化导航按确认顺序组织默认展开分类与价格子项", ()
   );
   const content = navigation.find((group) => group.id === "content");
   assert.deepEqual(content.items.map((item) => item.id), [
-    "content", "message", "action", "timestamp", "eventIcon", "activityStatus", "systemTitle", "systemDetail", "quantity", "price",
+    "content", "message", "action", "timestamp", "eventIcon", "activityStatus", "systemTitle", "systemDetail", "systemExpiry", "quantity", "price",
   ]);
   assert.deepEqual(content.items.find((item) => item.id === "price").children.map((item) => item.id), [
     "price", "priceUnit", "priceValue",
@@ -52,7 +52,7 @@ test("左侧导航严格保留确认的完整父子层级", () => {
   assert.deepEqual(shape(identity.items), [
     ["用户信息整体", null], ["头像区域", [["头像占位", null], ["头像框", null], ["头像", null]]], ["用户名", null], ["粉丝牌", [["粉丝牌名称", null], ["粉丝牌等级", null]]], ["身份徽章", [["大航海身份", null], ["主播身份", null], ["房管身份", null]]], ["荣耀勋章", null], ["当前排行", null],
   ]);
-  assert.deepEqual(shape(content.items), [["内容区域", null], ["正文", null], ["动作文字", null], ["时间", null], ["事件图标", null], ["活动状态", null], ["系统标题", null], ["系统详情", null], ["数量", [["数量符号", null], ["数量数值", null], ["数量单位", null]]], ["价格", [["价格整体", null], ["货币符号", null], ["金额数值", null]]]]);
+  assert.deepEqual(shape(content.items), [["内容区域", null], ["正文", null], ["动作文字", null], ["时间", null], ["事件图标", null], ["活动状态", null], ["系统标题", null], ["系统详情", null], ["解禁时间", null], ["数量", [["数量符号", null], ["数量数值", null], ["数量单位", null]]], ["价格", [["价格整体", null], ["货币符号", null], ["金额数值", null]]]]);
   assert.deepEqual(shape(gift.items), [["礼物图片", null], ["礼物信息", [["礼物名称", null], ["礼物数量", null]]], ["礼物金额", null], ["盲盒图片", null], ["盲盒信息", [ ["盲盒名称", null], ["盲盒数量", null], ["盲盒盈亏", [["盲盒盈利", null], ["盲盒亏损", null]]], ["盲盒原价", null]]]]);
   assert.deepEqual(shape(superchat.items), [["正文", null], ["价格", [["价格整体", null], ["货币符号", null], ["金额数值", null]]], ["平台译文", null], ["删除状态", null]]);
   assert.deepEqual(shape(guard.items), [["大航海内容", [["大航海名称", null], ["大航海时长", [["时长前缀", null], ["时长数值", null], ["时长单位", null]]]]], ["陪伴天数", [["陪伴前缀", null], ["陪伴数值", null], ["陪伴单位", null]]], ["大航海高亮", null], ["成就标题", null], ["成就说明", null], ["成就里程碑", null], ["成就水印", null], ["价格整体", null]]);
@@ -216,7 +216,7 @@ test("画布工具栏左侧显示背景并在右侧显示内嵌单位的宽度",
   await vite.ssrLoadModule("/src/components/StylePreviewToolbar.tsx");
   const html = readUiSource("src/components/StylePreviewToolbar.tsx", "utf8");
   assert.match(html, /native-preview-canvas-color[\s\S]*native-preview-width/);
-  assert.match(html, /ThemeColorField\s+label=["']画布背景["']/);
+  assert.match(html, /ThemeColorField[^>]*label=["']画布背景["']/);
   assert.match(html, /aria-label=["']窗口宽度["']/);
   assert.match(html, /title=["']窗口宽度["']/);
   assert.match(html, /<span className="native-preview-width-unit">px<\/span>/);

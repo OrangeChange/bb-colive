@@ -410,7 +410,7 @@ test("主播档案卡支持键盘可达的置顶切换，且不与进入档案�
   assert.match(ownerListSource, /aria-pressed/);
   assert.match(ownerListSource, /setReviewOwnerPinned/);
   assert.match(ownerListSource, /focus-within/);
-  assert.match(ownerListSource, /<article[\s\S]*<button[\s\S]*打开\$\{card\.anchor\.uname\}[\s\S]*<\/button>[\s\S]*<button/);
+  assert.match(ownerListSource, /<article[\s\S]*<Button[\s\S]*打开\$\{card\.anchor\.uname\}[\s\S]*<\/Button>[\s\S]*<Button/);
 });
 
 test("置顶按钮位于进入档案箭头左侧，并使用向上顶的图标", () => {
@@ -447,7 +447,7 @@ test("主播档案置顶按钮独立切换状态，不触发进入档案", () =>
 });
 
 test("主播档案场次列表支持当前列表多选和批量删除入口", () => {
-  assert.match(ownerListSource, /type="checkbox"/);
+  assert.match(ownerListSource, /<Checkbox/);
   assert.match(ownerListSource, /全选当前列表/);
   assert.match(ownerListSource, /已选/);
   assert.match(ownerListSource, /删除所选/);
@@ -747,6 +747,7 @@ test("主播事件更多条件以固定浮层打开，不占用结果时间线�
   const source = read("src/components/ReviewOwnerEventFilters.tsx");
   const popover = read("src/components/ReviewFilterPopover.tsx");
   assert.match(source, /<ReviewFilterPopover open=\{!collapsed && moreConditionsOpen\}/);
-  assert.match(popover, /PopoverPrimitive\.Portal/);
+  assert.match(popover, /<PopoverContent/);
+  assert.match(read("src/components/shadcn/popover.tsx"), /PopoverPrimitive\.Portal/);
   assert.match(popover, /review-filter-advanced-panel/);
 });
