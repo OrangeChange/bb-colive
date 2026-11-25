@@ -7,6 +7,7 @@ export type UiSelectOption = {
   title?: string;
   style?: CSSProperties;
   group?: string;
+  separatorBefore?: boolean;
 };
 
 export type UiSelectOptionGroup = {

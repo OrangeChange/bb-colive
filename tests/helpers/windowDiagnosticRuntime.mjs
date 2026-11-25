@@ -62,6 +62,7 @@ export async function windowDiagnosticRuntime(label = 'display', options = {}) {
     '@tauri-apps/api/core': `export const isTauri = () => true; export const invoke = (command, args) => ${p}.invoke(command, args);`,
     '@tauri-apps/api/window': `export const getAllWindows = () => ${p}.getAllWindows(); export const getCurrentWindow = () => ${p}.window; export const currentMonitor = async () => null;`,
     '@tauri-apps/plugin-store': `export const load = (file) => ${p}.load(file);`,
+    '../i18n/react.ts': `export const useUiLanguage = () => 'zh-CN';`,
     react: `export const useEffect = (effect, deps) => ${p}.useEffect(effect, deps); export const useLayoutEffect = (effect, deps) => ${p}.useEffect(effect, deps); export const useRef = (current) => ${p}.useRef(current); export const useState = (initial) => ${p}.useState(initial); export const useCallback = (fn) => fn; export const useMemo = (factory) => factory(); export const useSyncExternalStore = (_subscribe, getSnapshot) => getSnapshot();`,
     '../components/EventRow': 'export const EventRow = () => null;',
     '../components/EventRowSlot': 'export const EventRowSlot = () => null;',
@@ -69,7 +70,7 @@ export async function windowDiagnosticRuntime(label = 'display', options = {}) {
     '../components/GiftEffectOverlay': 'export const GiftEffectOverlay = () => null;',
   };
   if (options.entry) {
-    modules['./App.css'] = 'export default {};';
+    modules['./shadcn.css'] = 'export default {};';
     port.moduleLoads = [];
     port.rendered = new Promise((resolve) => { port.render = resolve; });
     modules['react-dom/client'] = `export default { createRoot: () => ({ render: () => ${p}.render() }) };`;
@@ -84,13 +85,13 @@ export async function windowDiagnosticRuntime(label = 'display', options = {}) {
       name: 'window-diagnostic-native-ports',
       resolveId: (id) => id.startsWith('\0window-port:') ? id : undefined,
       load: (id) => {
-        if (id === '\0window-port:./App.css') port.stylesLoaded = true;
+        if (id === '\0window-port:./shadcn.css') port.stylesLoaded = true;
         return modules[id.slice('\0window-port:'.length)];
       },
       transform(code, id) {
-        if (id.replaceAll('\\', '/').endsWith('/src/App.css')) port.stylesLoaded = true;
+        if (id.replaceAll('\\', '/').endsWith('/src/shadcn.css')) port.stylesLoaded = true;
         if (!id.replaceAll('\\', '/').includes('/src/')) return;
-        if (options.entry) code = code.replaceAll('import "./App.css";', 'import "\0window-port:./App.css";');
+        if (options.entry) code = code.replaceAll('import "./shadcn.css";', 'import "\0window-port:./shadcn.css";');
         for (const name of Object.keys(modules)) {
           if (name === 'react' && !['/FloatingEventWindow.tsx', '/useLocalFeedReading.ts', '/windowThemeSettings.ts'].some(path => id.replaceAll('\\', '/').endsWith(path))) continue;
           code = code.replaceAll(`from "${name}"`, `from "\0window-port:${name}"`);

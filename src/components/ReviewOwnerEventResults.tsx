@@ -165,12 +165,12 @@ export function ReviewOwnerEventResults({
   }
 
   if (!hasConditions && groups.length === 0) {
-    return <div className="rounded-md border border-dashed border-line px-3 py-8 text-center ui-type-control text-t3">{uiText("reviewOwnerEventResults.ReviewOwnerEventResults4")}</div>;
+    return <div className="ui-empty-state ui-empty-fill rounded-md border border-dashed border-line">{uiText("reviewOwnerEventResults.ReviewOwnerEventResults4")}</div>;
   }
 
   if (!loading && groups.length === 0) {
     return (
-      <div className="review-owner-event-results rounded-md border border-dashed border-line px-3 py-8 text-center ui-type-control text-t3">
+      <div className="review-owner-event-results ui-empty-state ui-empty-fill rounded-md border border-dashed border-line">
         <p>{uiText("reviewOwnerEventResults.ReviewOwnerEventResults5")}</p>
         <Button variant="outline" type="button" className={`${compactFilterActionButtonClass} mt-2`} onClick={onClear}>{uiText("reviewOwnerEventResults.ReviewOwnerEventResults2")}</Button>
       </div>

@@ -22,7 +22,7 @@ export function SettingsChoiceControl<T extends string | number>({
 }) {
   return (
     <RadioGroup
-      className={`settings-choice-control ui-type-control ${className}`}
+      className={`ui-segmented settings-choice-control ui-type-control ${className}`}
       aria-label={label}
       value={value === undefined ? "" : String(value)}
       disabled={disabled}
@@ -33,7 +33,7 @@ export function SettingsChoiceControl<T extends string | number>({
     >
       {options.map((option) => (
         <RadioGroupItem
-          className="settings-choice-option"
+          className="ui-segmented-item settings-choice-option"
           value={String(option.value)}
           key={option.value}
           title={iconOnly ? option.label : undefined}

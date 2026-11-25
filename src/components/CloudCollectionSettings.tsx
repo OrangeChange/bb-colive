@@ -205,7 +205,7 @@ export function CloudCollectionSettings({ serviceVersion, serverId }: { serviceV
           className="h-8 shrink-0 rounded-md bg-accent-solid px-3 ui-type-control text-accent-fg enabled:hover:bg-accent-solid-hover enabled:active:bg-accent-solid-active disabled:cursor-not-allowed disabled:opacity-50">{uiText("cloudCollectionSettings.CloudCollectionSettings16")}</Button>
       </div>
       {rooms && <div className="mt-2 divide-y divide-line rounded-md border border-line bg-surface">
-        {rooms.items.length === 0 && <div className="px-3 py-4 text-center ui-type-meta text-t3">{uiText("cloudCollectionSettings.CloudCollectionSettings17")}</div>}
+        {rooms.items.length === 0 && <div className="ui-empty-state">{uiText("cloudCollectionSettings.CloudCollectionSettings17")}</div>}
         {rooms.items.map(room => <div key={room.roomId} className="flex items-center gap-3 px-3 py-2">
           <div className="min-w-0 flex-1"><div className="truncate ui-type-control text-t1">{room.currentSession?.title || uiText("cloudCollectionSettings.CloudCollectionSettings18", { roomId: room.roomId })}</div><div className="ui-type-micro text-t3">{room.roomId} · {room.enabled ? roomState(room.state) : uiText("cloudCollectionSettings.CloudCollectionSettings19")}</div></div>
           {room.enabled

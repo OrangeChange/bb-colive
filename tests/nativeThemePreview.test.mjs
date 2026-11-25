@@ -128,10 +128,10 @@ test("预览 iframe 与事件区域不附加旧版背景和顶部间距", () => 
 test("预览工具栏常显高频控制并提供多类筛选", () => {
   const toolbar = readUiSource("src/components/StylePreviewToolbar.tsx", "utf8");
   assert.match(toolbar, /aria-label=["']事件筛选["']/);
-  assert.match(toolbar, /type="checkbox"/);
+  assert.match(toolbar, /<Checkbox/);
   assert.match(toolbar, /onEventsChange/);
   assert.match(toolbar, /aria-label=\{props.scheme === "dark" \? ["']切换为浅色["'] : ["']切换为深色["']\}/);
-  assert.match(toolbar, /ThemeColorField\s+label=["']画布背景["']/);
+  assert.match(toolbar, /ThemeColorField[^>]*label=["']画布背景["']/);
   assert.match(toolbar, /aria-label=["']窗口宽度["']/);
   assert.doesNotMatch(toolbar, /预览目标|显示全部部件|跟随软件|<details/);
 });

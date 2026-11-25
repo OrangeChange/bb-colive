@@ -29,6 +29,6 @@ export function WorkspaceNotice({ message, onDismiss }: { message: string; onDis
   }, [exiting]);
   if (!message) return null;
   return <div className={`theme-workspace-notice${failed ? " is-error" : ""}${exiting ? " is-exiting" : ""}`} role="status" onMouseEnter={() => setPaused(true)} onMouseLeave={() => setPaused(false)} onFocus={() => setPaused(true)} onBlur={event => { if (!event.currentTarget.contains(event.relatedTarget)) setPaused(false); }}>
-    <span>{message}</span><Button variant="outline" type="button" aria-label={uiText("workspaceNotice.aria_label")} onClick={onDismiss}>×</Button>
+    <span>{message}</span><Button size="icon-sm" variant="ghost" type="button" aria-label={uiText("workspaceNotice.aria_label")} onClick={onDismiss}>×</Button>
   </div>;
 }

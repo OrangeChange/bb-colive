@@ -168,6 +168,8 @@ export function StylePreviewToolbar(props: StylePreviewToolbarProps) {
       <div className="native-preview-toolbar-row is-canvas">
         <div className="native-preview-canvas-color" title={uiText("stylePreviewToolbar.title6")}>
           <ThemeColorField
+            opaque
+            allowTransparent
             label={uiText("stylePreviewToolbar.label")}
             value={props.background}
             onChange={props.onBackgroundChange}

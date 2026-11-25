@@ -23,8 +23,8 @@ test("诊断设置说明两种导出边界并包含原文资料提示", () => {
   assert.match(source, /24h/);
   assert.match(source, /full/);
   assert.match(source, /前2分钟.*后3分钟/);
-  assert.match(source, /role="dialog"/);
-  assert.match(source, /aria-modal="true"/);
+  assert.match(source, /<DialogContent/);
+  assert.match(source, /<DialogTitle/);
   assert.match(source, /resize-none|resize:\s*none/);
 });
 
@@ -101,7 +101,7 @@ test("诊断导出状态会传递到应用关闭流程", () => {
 
 
 test("日志容量、队列积压和实际丢失使用不同提示与颜色", async () => {
-  const {createServer}=await import("vite");
+  const {createServer}=await import("./helpers/vite.mjs");
   const {createElement}=await import("react");
   const {renderToStaticMarkup}=await import("react-dom/server");
   const server=await createServer({configFile:false,esbuild:{jsx:"automatic"},optimizeDeps:{include:[],noDiscovery:true},server:{middlewareMode:true,watch:null},appType:"custom"});

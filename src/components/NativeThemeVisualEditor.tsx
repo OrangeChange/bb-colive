@@ -31,13 +31,6 @@ export interface NativeVisualSelection { event: string; identity: string; part: 
 const GUARD_FIRST_PRIORITY: EventStyleRole[] = ["viceroy", "admiral", "captain", "anchor", "admin", "normal"];
 const STAFF_FIRST_PRIORITY: EventStyleRole[] = ["anchor", "admin", "viceroy", "admiral", "captain", "normal"];
 
-function scopeOptions(choices: typeof NATIVE_EVENT_SCOPES, parents: string[] = []): {value:string;label:string}[] {
-  return choices.flatMap(item => {
-    const path = [...parents, item.label];
-    return [{value:item.id,label:path.join(" / ")}, ...scopeOptions(item.children ?? [], path)];
-  });
-}
-const COMPACT_EVENT_OPTIONS = scopeOptions(NATIVE_EVENT_SCOPES);
 
 export function updateNativeNavigationGroup<T>(current: ReadonlySet<T>, id: T, open: boolean): Set<T> {
   const next = new Set(current);
@@ -69,7 +62,7 @@ export function NativeThemeVisualEditor({ dirty, settings, baseCss = "", selecti
   onDecorationsChange?: (value:ThemeImageDecorations)=>void;
   onDecorationsPreviewChange?: (value:ThemeImageDecorations)=>void;
 }) {
-  useUiLanguage();
+  const uiLanguage = useUiLanguage();
   const [editScheme, setEditScheme] = useState<NativeVisualScheme>("common");
   const [priceBand,setPriceBand]=useState('');
   const gradient=themePriceGradient(settings.priceGradient,baseCss);
@@ -77,6 +70,37 @@ export function NativeThemeVisualEditor({ dirty, settings, baseCss = "", selecti
   const gradientScope:PriceGradientScope = ['normal','blind','superchat'].includes(selection.event) ? selection.event as PriceGradientScope : 'common';
   const activeBand=kinds.some(k=>gradient.types[k]) ? gradient.bands.find(b=>b.id===priceBand) : undefined;
   useEffect(()=>{onPricePreview?.(activeBand?.min);return()=>onPricePreview?.(undefined);},[activeBand?.min,selection.event]);
+  const globalScope = nativeVisualPartUsesGlobalScope(selection.part);
+  const scopeRef = useRef<HTMLDivElement>(null);
+  useEffect(() => {
+    const rows = [...scopeRef.current?.querySelectorAll<HTMLElement>('.native-scope-scroll-row') ?? []];
+    const stops = rows.map(row => {
+      const wheel = (event: WheelEvent) => {
+        if (event.ctrlKey || Math.abs(event.deltaX) >= Math.abs(event.deltaY)) return;
+        const next = Math.max(0, Math.min(row.scrollWidth - row.clientWidth, row.scrollLeft + event.deltaY));
+        if (next === row.scrollLeft) return;
+        event.preventDefault();
+        row.scrollLeft = next;
+      };
+      const updateEdges = () => {
+        row.dataset.hiddenStart = String(row.scrollLeft > 1);
+        row.dataset.hiddenEnd = String(row.scrollLeft + row.clientWidth < row.scrollWidth - 1);
+      };
+      const resize = new ResizeObserver(updateEdges);
+      resize.observe(row);
+      row.addEventListener('scroll', updateEdges, { passive: true });
+      row.addEventListener('wheel', wheel, { passive: false });
+      const active = row.querySelector<HTMLElement>('.is-active');
+      if (active) {
+        const bounds = row.getBoundingClientRect(), selected = active.getBoundingClientRect();
+        if (selected.left < bounds.left) row.scrollLeft += selected.left - bounds.left;
+        else if (selected.right > bounds.right) row.scrollLeft += selected.right - bounds.right;
+      }
+      updateEdges();
+      return () => { resize.disconnect(); row.removeEventListener('scroll', updateEdges); row.removeEventListener('wheel', wheel); };
+    });
+    return () => stops.forEach(stop => stop());
+  }, [selection.event, selection.identity, globalScope, activeBand?.id, uiLanguage]);
   const navigationRef = useRef<HTMLElement>(null);
   const [inspection, setInspection] = useState<Partial<Record<NativeVisualProperty, NativeInspectedValue>>>({});
   useEffect(() => {
@@ -119,7 +143,6 @@ export function NativeThemeVisualEditor({ dirty, settings, baseCss = "", selecti
   const activeShape = resolveNativePartShape(selection.part, { event: selection.event, display: settings.display });
   const propertySections = nativeVisualPropertySectionsForPart(selection.part, activeShape);
   const controlledProperties = new Set(cssControlled.filter(field => field.scheme === editScheme && field.targetKey === nativeVisualTargetKey(selection)).map(field => field.property));
-  const globalScope = nativeVisualPartUsesGlobalScope(selection.part);
   const hasLocalOverrides = Object.keys(model[editScheme][nativeVisualTargetKey(selection)] ?? {}).length > 0 || Object.prototype.hasOwnProperty.call(settings.imageDecorations ?? {},`${editScheme}|${nativeVisualTargetKey(selection)}`);
   const scopePath = nativeEventScopePath(selection.event);
   const eventScope = scopePath[0] ?? NATIVE_EVENT_SCOPES[0];
@@ -185,17 +208,22 @@ export function NativeThemeVisualEditor({ dirty, settings, baseCss = "", selecti
   const identityPriorityControl = <div className="native-scope-setting native-identity-priority"><span className="native-identity-priority-label">{uiText("nativeThemeVisualEditor.NativeThemeVisualEditor.identityPriorityControl")}</span><UiSelect className="native-identity-priority-select" ariaLabel={uiText("nativeThemeVisualEditor.ariaLabel2")} value={priorityMode} onValueChange={value => onDisplayChange({ ...settings.display, identityPriority: value === "staff-first" ? STAFF_FIRST_PRIORITY : GUARD_FIRST_PRIORITY })} options={[{ value: "guard-first", label: uiText("nativeThemeVisualEditor.options.label2") }, { value: "staff-first", label: uiText("nativeThemeVisualEditor.options.label3") }]} /></div>;
 
   return <div className="native-visual-editor">
-    <ThemeVisualScope summary={`${eventScope.label} · ${identityLabel} · ${schemeLabel}${activeBand ? uiText("nativeThemeVisualEditor.summary", { min: activeBand.min }) : ""}`}><div className="native-scope-strip">{globalScope
-      ? <div className="native-global-scope"><span>{uiText("nativeThemeVisualEditor.NativeThemeVisualEditor")}</span><strong>{uiText("nativeThemeVisualEditor.NativeThemeVisualEditor2")}</strong>{editSchemeControl}{identityPriorityControl}</div>
-      : <><div className="native-scope-compact">
-        <div className="native-scope-setting"><span>{uiText("nativeThemeVisualEditor.NativeThemeVisualEditor3")}</span><UiSelect ariaLabel={uiText("nativeThemeVisualEditor.ariaLabel3")} value={selection.event} options={COMPACT_EVENT_OPTIONS} onValueChange={event => changeSelection({...selection,event})} /></div>
-        {editSchemeControl}
-        {!activeBand && <><div className="native-scope-setting"><span>{uiText("nativeThemeVisualEditor.NativeThemeVisualEditor4")}</span><UiSelect ariaLabel={uiText("nativeThemeVisualEditor.ariaLabel4")} value={selection.identity} options={NATIVE_IDENTITY_SCOPES.map(item=>({value:item.id,label:item.label}))} onValueChange={identity=>changeSelection({...selection,identity})} /></div>{identityPriorityControl}</>}
-      </div><div className="native-event-scope-primary"><span>{uiText("nativeThemeVisualEditor.NativeThemeVisualEditor3")}</span>{NATIVE_EVENT_SCOPES.map(item => <Button variant="outline" type="button" className={scopePath.some(scope => scope.id === item.id) ? "is-active" : ""} onClick={() => changeSelection({ ...selection, event: item.id })} key={item.id}>{item.label}</Button>)}{editSchemeControl}</div>
-        {eventChildren.length > 0 && <div className="native-event-scope-children"><span>{uiText("nativeThemeVisualEditor.NativeThemeVisualEditor5")}</span>{eventChildren.map(item => <Button variant="outline" type="button" className={scopePath.some(scope => scope.id === item.id) ? "is-active" : ""} onClick={() => changeSelection({ ...selection, event: item.id })} key={item.id}>{item.label}</Button>)}</div>}
-        {activityChildren.length > 0 && <div className="native-event-scope-children"><span>{uiText("nativeThemeVisualEditor.NativeThemeVisualEditor6")}</span>{activityChildren.map(item => <Button variant="outline" type="button" className={selection.event === item.id ? "is-active" : ""} onClick={() => changeSelection({...selection,event:item.id})} key={item.id}>{item.label}</Button>)}</div>}
-        {!activeBand&&<div className="native-identity-scope"><span>{uiText("nativeThemeVisualEditor.NativeThemeVisualEditor4")}</span>{NATIVE_IDENTITY_SCOPES.map(item => <Button variant="outline" type="button" className={selection.identity === item.id ? "is-active" : ""} onClick={() => changeSelection({ ...selection, identity: item.id })} key={item.id}>{item.label}</Button>)}{identityPriorityControl}</div>}</>}
-      {!globalScope&&onGradientChange&&<NativePriceGradientControls event={selection.event} model={gradient} selected={activeBand?.id??''} onSelect={id=>{onPreviewCancel?.();setPriceBand(id);}} onChange={onGradientChange} applied={settings.display.usePriceGradient}/>}
+    <ThemeVisualScope summary={`${eventScope.label} · ${identityLabel} · ${schemeLabel}${activeBand ? uiText("nativeThemeVisualEditor.summary", { min: activeBand.min }) : ""}`}><div ref={scopeRef} data-native-scope className="native-scope-strip">
+      {globalScope ? <div className="native-global-scope"><span>{uiText("nativeThemeVisualEditor.NativeThemeVisualEditor")}</span><strong>{uiText("nativeThemeVisualEditor.NativeThemeVisualEditor2")}</strong></div> : <>
+        <div className="native-event-scope-primary"><span>{uiText("nativeThemeVisualEditor.NativeThemeVisualEditor3")}</span><div className="native-scope-options native-scope-scroll-row" role="group" aria-label={uiText("nativeThemeVisualEditor.NativeThemeVisualEditor3")}>
+          {NATIVE_EVENT_SCOPES.map(item => <Button variant="outline" type="button" aria-pressed={scopePath.some(scope => scope.id === item.id)} className={scopePath.some(scope => scope.id === item.id) ? "is-active" : ""} onClick={() => changeSelection({ ...selection, event: item.id })} key={item.id}>{item.label}</Button>)}
+        </div></div>
+        {eventChildren.length > 0 && <div className="native-event-scope-children"><span>{uiText("nativeThemeVisualEditor.NativeThemeVisualEditor5")}</span><div className="native-scope-options native-scope-scroll-row">{eventChildren.map(item => <Button variant="outline" type="button" className={scopePath.some(scope => scope.id === item.id) ? "is-active" : ""} onClick={() => changeSelection({ ...selection, event: item.id })} key={item.id}>{item.label}</Button>)}</div></div>}
+        {activityChildren.length > 0 && <div className="native-event-scope-children"><span>{uiText("nativeThemeVisualEditor.NativeThemeVisualEditor6")}</span><div className="native-scope-options native-scope-scroll-row">{activityChildren.map(item => <Button variant="outline" type="button" className={selection.event === item.id ? "is-active" : ""} onClick={() => changeSelection({...selection,event:item.id})} key={item.id}>{item.label}</Button>)}</div></div>}
+        {!activeBand && <div className="native-identity-scope"><span>{uiText("nativeThemeVisualEditor.NativeThemeVisualEditor4")}</span><div className="native-scope-options native-scope-scroll-row" role="group" aria-label={uiText("nativeThemeVisualEditor.NativeThemeVisualEditor4")}>
+          {NATIVE_IDENTITY_SCOPES.map(item => <Button variant="outline" type="button" aria-pressed={selection.identity === item.id} className={selection.identity === item.id ? "is-active" : ""} onClick={() => changeSelection({ ...selection, identity: item.id })} key={item.id}>{item.label}</Button>)}
+        </div></div>}
+      </>}
+      <div className="native-scope-parameters native-scope-scroll-row">
+        {editSchemeControl}{!activeBand && identityPriorityControl}
+        {!globalScope && onGradientChange && <NativePriceGradientControls event={selection.event} model={gradient} selected={activeBand?.id??''} onSelect={id=>{onPreviewCancel?.();setPriceBand(id);}} onChange={onGradientChange}/>}
+      </div>
+      {!globalScope && activeBand && !settings.display.usePriceGradient && <p className="native-scope-notice">{uiText("nativePriceGradientControls.NativePriceGradientControls5")}</p>}
     </div></ThemeVisualScope>
     <div className="native-visual-body"><ThemeVisualNavigation navigationRef={navigationRef} groups={NATIVE_VISUAL_NAVIGATION.map(group=>({...group,items:navigationNodes(group.items,group.event)}))} />
       <ThemeVisualPropertyPanel imageTarget={{root:previewRoot,selector:nativeImageTargetSelector(settings,nativeVisualTargetKey({...selection,part:selection.part==='avatarFrame'?'avatarWrap':selection.part}),editScheme)}} title={partLabel} context={globalScope

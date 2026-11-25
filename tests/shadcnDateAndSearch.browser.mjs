@@ -6,16 +6,20 @@ try {
   p.setDefaultTimeout(7000);
   await p.goto("http://127.0.0.1:1436/tests/fixtures/shadcn/migration.html");
   await p.getByRole("switch", { name: "显示头像" }).waitFor();
-  for (const [lang, label, next, clear] of [
-    ["zh-CN", "时间", "前往下个月", "清空"],
-    ["zh-Hant", "時間", "前往下個月", "清空"],
-    ["en", "Time", "Go to the Next Month", "Clear"],
-    ["ja", "時刻", "次の月へ", "クリア"],
+  const languageModule = await p.evaluate(async () =>
+    (await (await fetch("/src/i18n/react.ts")).text())
+      .match(/from "([^"]*i18n\/index.ts[^"]*)"/)[1],
+  );
+  for (const [lang, hour, minute, next, clear] of [
+    ["zh-CN", "小时", "分钟", "前往下个月", "清空"],
+    ["zh-Hant", "小時", "分鐘", "前往下個月", "清空"],
+    ["en", "Hour", "Minute", "Go to the Next Month", "Clear"],
+    ["ja", "時", "分", "次の月へ", "クリア"],
   ]) {
-    await p.evaluate(async (lang) => {
-      (await import("/src/i18n/index.ts")).setUiLanguage(lang);
-    }, lang);
-    await p.locator(".date-time-field-trigger").click();
+    await p.evaluate(async ({ lang, languageModule }) => {
+      (await import(languageModule)).setUiLanguage(lang);
+    }, { lang, languageModule });
+    await p.locator(".date-time-field-open").click();
     console.log(
       lang,
       await p
@@ -27,18 +31,40 @@ try {
             .map((n) => n.getAttribute("aria-label")),
         ),
     );
-    const panel = p.locator('[data-slot="popover-content"]');
+    const panel = p.locator(
+      '.date-time-picker[data-state="open"][lang="' + lang + '"]',
+    );
+    await panel.waitFor();
     assert.equal(await panel.getAttribute("lang"), lang);
-    assert.equal(await panel.getByRole("button", { name: next, exact: true }).count(), 1);
-    assert.equal(await panel.getByRole("button", { name: clear, exact: true }).count(), 1);
-    const time = p.locator('[data-slot="popover-content"] input[type="time"]');
-    assert.equal(await time.inputValue(), "19:30");
-    await time.fill("21:45");
+    assert.equal(
+      await panel.getByRole("button", { name: next, exact: true }).count(),
+      1,
+    );
+    assert.equal(
+      await panel.getByRole("button", { name: clear, exact: true }).count(),
+      1,
+    );
+    const hours = panel.getByRole("radiogroup", { name: hour, exact: true });
+    const minutes = panel.getByRole("radiogroup", {
+      name: minute,
+      exact: true,
+    });
+    assert.equal(
+      await hours
+        .getByRole("radio", { name: "19", exact: true })
+        .getAttribute("aria-checked"),
+      "true",
+    );
+    await hours.getByRole("radio", { name: "21", exact: true }).click();
+    await minutes.getByRole("radio", { name: "45", exact: true }).click();
     const stamp = Number(await p.locator("[data-date]").innerText());
     assert.equal(new Date(stamp).getHours(), 21);
-    await time.fill("19:30");
+    assert.equal(new Date(stamp).getMinutes(), 45);
+    await hours.getByRole("radio", { name: "19", exact: true }).click();
+    await minutes.getByRole("radio", { name: "30", exact: true }).click();
     await p.keyboard.press("Escape");
   }
+  await p.locator(".date-time-picker").waitFor({ state: "detached" });
   const search = p.getByRole("combobox", { name: "搜索建议" });
   await search.fill("礼物");
   await p.getByRole("option", { name: /礼物名称/ }).waitFor();

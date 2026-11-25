@@ -32,7 +32,7 @@ test('安装版与便携版保留离线许可，关于展示选定项目与个�
   }
   assert.ok(fs.readFileSync('licenses/distribution/Tsanger.pdf').equals(fs.readFileSync('licenses/fonts/Tsanger.pdf')));
   const links = readUiSource('src/components/ThirdPartyNotices.tsx', 'utf8');
-  for (const name of ['Blivechat', 'LAPLACE Chat', 'React', 'Tauri', 'Tailwind CSS', 'Radix UI', 'https://space.bilibili.com/4261481', 'https://afdian.com/a/orangeee']) assert.ok(links.includes(name), name);
+  for (const name of ['Blivechat', 'LAPLACE Chat', 'React', 'Tauri', 'Tailwind CSS', 'shadcn/ui', 'https://space.bilibili.com/4261481', 'https://afdian.com/a/orangeee']) assert.ok(links.includes(name), name);
   assert.doesNotMatch(links, /本软件使用 MiSans 字体|完整许可声明|<h3>致谢/);
   assert.doesNotMatch(links, /lucide-react|@tabler\/icons-react/);
   const about = readUiSource('src/components/AboutDialog.tsx', 'utf8');

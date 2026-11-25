@@ -658,7 +658,7 @@ export function ThemeDecorationField({
                             <EyeOff size={18} />
                           )}
                         </Button>
-                        <Button variant="outline"
+                        <Button size="icon-sm" variant="ghost"
                           type="button"
                           aria-label={uiText("themeDecorationField.aria_label5")}
                           onClick={() => {

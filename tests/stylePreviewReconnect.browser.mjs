@@ -27,7 +27,7 @@ try {
     const { DEFAULT_STICKY_EVENT_SETTINGS } = await import('/src/windows/stickyEventModel.ts');
     const sample = createStylePreviewPartEvents('弹幕')[0];
     return { kind: 'native', ownerId: 'test', revision: 1, width: 520, height: 400, palette: 'pine', scheme: 'light', frame: { epoch: 0, restart: 0 }, content: {
-      previewCss: '', context: 'live', mode: 'all', events: Array.from({ length: 80 }, (_, i) => ({ ...sample, id: `test-${i}`, reactKey: `test-${i}`, text: `测试 ${i}` })),
+      previewCss: '', previewMotion: 'static', context: 'live', mode: 'all', events: Array.from({ length: 80 }, (_, i) => ({ ...sample, id: `test-${i}`, reactKey: `test-${i}`, text: `测试 ${i}` })),
       eventStyleSettings: DEFAULT_EVENT_STYLE_SETTINGS, displayPreferences: DEFAULT_EVENT_DISPLAY_PREFERENCES, eventFontSize: 16, windowEventFontSize: 16, stickySettings: DEFAULT_STICKY_EVENT_SETTINGS, previewScheme: 'light',
     } };
   });
@@ -38,13 +38,14 @@ try {
   await list.waitFor();
   await page.waitForTimeout(500);
   await list.hover();
-  await page.mouse.wheel(0, -500);
+  await page.mouse.wheel(0, 500);
   await page.waitForTimeout(300);
   const read = () => list.evaluate(node => {
     const row = [...node.querySelectorAll('[data-event-id]')].find(item => item.getBoundingClientRect().bottom > node.getBoundingClientRect().top);
     return { id: row?.getAttribute('data-event-id'), offset: row?.getBoundingClientRect().top - node.getBoundingClientRect().top, top: node.scrollTop };
   });
   const before = await read();
+  assert.ok(before.top > 0, '已滚动到其他样例');
   await page.evaluate(() => window.__previewSockets.at(-1).onclose());
   assert.equal(await page.locator('.shared-style-preview-content').count(), 1);
   await page.waitForFunction(() => window.__previewSockets.length === 2);
@@ -53,6 +54,6 @@ try {
   assert.deepEqual(await read(), before, '重连后保留本页锚点');
   await send({ ...state, revision: 2, frame: { ...state.frame, restart: 1 } });
   await page.waitForTimeout(300);
-  assert.ok(await list.evaluate(node => node.scrollHeight - node.clientHeight - node.scrollTop <= 4), '明确重播恢复跟随');
-  console.log(JSON.stringify({ page: '/preview', transport: '模拟 WebSocket', reconnect: before, restart: 'follow' }));
+  assert.ok(await list.evaluate(node => node.scrollTop <= 4), '明确重播恢复静态样例起始位置');
+  console.log(JSON.stringify({ page: '/preview', transport: '模拟 WebSocket', reconnect: before, restart: 'static-start' }));
 } finally { await browser.close(); }

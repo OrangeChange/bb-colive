@@ -4505,5 +4505,12 @@
   "uiControls.alpha": "Opacity",
   "uiControls.colorValue": "Saturation {saturation}%, Brightness {brightness}%",
   "nativePriceGradientControls.fixedColor": "Fixed color",
-  "nativePriceGradientControls.baseTierHint": "Base tier (below next tier; no upper limit if there is no next tier)"
+  "nativePriceGradientControls.baseTierHint": "Base tier (below next tier; no upper limit if there is no next tier)",
+  "dateTimeField.hour": "Hour",
+  "dateTimeField.minute": "Minute",
+  "dateTimeField.today": "Today",
+  "dateTimeField.openCalendar": "{label}: choose date",
+  "commandDialog.title": "Command palette",
+  "commandDialog.description": "Search for a command to run",
+  "obsServiceSettings.outputFailure": "{name}: {message}"
 }

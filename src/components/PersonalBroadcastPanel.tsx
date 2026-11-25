@@ -2,7 +2,6 @@ import { Input } from "./shadcn/input";
 import { Button } from "./shadcn/button";
 import { useUiLanguage } from "../i18n/react.ts";
 import { localized, uiText } from "../i18n/index.ts";
-import { RotateCcw } from "lucide-react";
 import { useState, useSyncExternalStore } from "react";
 import { ConnectBar } from "./ConnectBar";
 import { useGeneralSettings } from "../generalSettings.ts";
@@ -225,7 +224,7 @@ export function PersonalBroadcastPanel() {
             </section>
 
             <section className={`${sectionClass} flex justify-end`}>
-              <Button variant="outline" type="button" className={`${controlClass} border-danger/40 text-danger`} title={uiText("common.restoreDefaults")} aria-label={uiText("common.restoreDefaults")} onClick={reset}><RotateCcw size={16} aria-hidden="true" /></Button>
+              <Button variant="outline" type="button" className={`${controlClass} border-danger/40 text-danger`} title={uiText("common.restoreDefaults")} aria-label={uiText("common.restoreDefaults")} onClick={reset}>{uiText("common.restoreDefaults")}</Button>
             </section>
           </div>
         </section>

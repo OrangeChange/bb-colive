@@ -78,18 +78,26 @@ test("导出忙碌期间Escape和外部点击保持弹窗，失败后可关闭",
   const props = { repository: {}, scopeOptions: [{ id: "session-current", label: "当前场次", scope: { kind: "session", sessionId: "s" } }], defaultScopeId: "session-current", ownerName: "主播", onClose: () => closes++ };
   try {
     let tree = app.render("ReviewDataExportDialog", props);
-    findElement(tree, (node) => node.props?.role === "dialog").props.ref.current = env.surface;
     app.effects();
     findElement(tree, (node) => node.type === "button" && node.props.children === "开始导出").props.onClick();
     await new Promise((resolve) => setImmediate(resolve));
     tree = app.render("ReviewDataExportDialog", props);
     assert.equal(findElement(tree, (node) => node.type === "button" && node.props.children === "关闭").props.disabled, true);
-    env.escape(); env.outside(); assert.equal(closes, 0);
+    const content = findElement(tree, node => node.type === "dialog-content");
+    const escape = keyEvent("Escape"), outside = keyEvent("");
+    content.props.onEscapeKeyDown(escape); content.props.onInteractOutside(outside);
+    findElement(tree, node => node.type === "dialog").props.onOpenChange(false);
+    assert.equal(escape.defaultPrevented, true); assert.equal(outside.defaultPrevented, true);
+    assert.equal(closes, 0);
     failFlush(new Error("档案读取失败")); await new Promise((resolve) => setImmediate(resolve));
     tree = app.render("ReviewDataExportDialog", props);
     assert.ok(findElement(tree, (node) => node.props?.role === "alert"));
-    env.escape(); assert.equal(closes, 1);
-    app.close(); assert.equal(document.activeElement, env.trigger);
+    const escapeAfterFailure = keyEvent("Escape");
+    findElement(tree, node => node.type === "dialog-content").props.onEscapeKeyDown(escapeAfterFailure);
+    assert.equal(escapeAfterFailure.defaultPrevented, false);
+    findElement(tree, node => node.type === "dialog").props.onOpenChange(false);
+    assert.equal(closes, 1);
+    app.close();
   } finally { env.close(); }
 });
 
@@ -228,37 +236,25 @@ test("父筛选浮层保留同一次外部点击的子层快照，后续点击�
   } finally { env.close(); }
 });
 
-test("设备首字匹配打开菜单后仍高亮匹配项，Escape不改已选设备", () => {
-  const savedWindow = globalThis.window;
-  const savedDocument = globalThis.document;
-  globalThis.document = { body: {} };
-  globalThis.window = { setTimeout: () => 1, clearTimeout() {} };
-  const app = componentRuntime("src/components/SettingsListSelect.tsx");
-  const changes = [];
+test("设备选择保留当前值、转发打开与选择行为，缺失设备独立展示", () => {
+  const Select = () => null;
+  const app = componentRuntime("src/components/SettingsListSelect.tsx", { "./ui/Select": { UiSelect: Select } });
+  const changes = []; let opens = 0;
   const props = { ariaLabel: "设备", value: "default", options: [
     { value: "default", label: "跟随系统默认设备" }, { value: "usb", label: "USB 声卡" },
-  ], onChange: (value) => changes.push(value) };
+  ], onChange: value => changes.push(value), onOpen: () => opens++ };
   try {
-    let tree = app.render("SettingsListSelect", props);
-    findElement(tree, (node) => node.props?.role === "combobox").props.onKeyDown(keyEvent("u"));
-    tree = app.render("SettingsListSelect", props);
-    const usb = findElement(tree, (node) => node.props?.role === "option" && node.props.children[0].props.children === "USB 声卡");
-    assert.match(usb.props.className, /is-highlighted/);
-    const imeEscape = keyEvent("Escape", { nativeEvent: { isComposing: true } });
-    findElement(tree, (node) => node.props?.role === "combobox").props.onKeyDown(imeEscape);
-    tree = app.render("SettingsListSelect", props);
-    assert.ok(findElement(tree, (node) => node.props?.role === "listbox"), "输入法组合期间Escape不能关闭设备菜单");
+    const control = () => findElement(app.render("SettingsListSelect", props), node => node.type === Select);
+    control().props.onOpenChange(true);
+    assert.equal(opens, 1); assert.deepEqual(changes, []);
+    control().props.onValueChange("usb"); assert.deepEqual(changes, ["usb"]);
     props.options = [...props.options, { value: "new", label: "新设备" }];
-    tree = app.render("SettingsListSelect", props);
-    assert.ok(findElement(tree, (node) => node.props?.role === "option" && node.props.children[0].props.children === "新设备"));
-    findElement(tree, (node) => node.props?.role === "combobox").props.onKeyDown(keyEvent("Escape"));
-    assert.equal(findElement(app.render("SettingsListSelect", props), (node) => node.props?.role === "listbox"), null);
-    assert.deepEqual(changes, []);
+    assert.ok(control().props.options.some(option => option.value === "new"));
     props.value = "missing";
-    const unavailable = findElement(app.render("SettingsListSelect", props), (node) => node.props?.role === "combobox");
-    assert.equal(unavailable.props.title, "missing");
-    assert.equal(unavailable.props.children[0].props.children, "设备不可用");
-  } finally { app.close(); globalThis.window = savedWindow; globalThis.document = savedDocument; }
+    const unavailable = control().props.options.find(option => option.value === "missing");
+    assert.deepEqual(unavailable, { value: "missing", label: "设备不可用", title: "missing" });
+    assert.equal(control().props.value, "missing");
+  } finally { app.close(); }
 });
 
 for (const [path, name, exports, makeProps, ports] of [

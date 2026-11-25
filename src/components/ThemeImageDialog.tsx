@@ -45,8 +45,8 @@ export function ThemeImageDialog({
                 <p className="theme-image-scope">{editing.scope}</p>
               )}
             </div>
-            <Button
-              variant="outline"
+            <Button size="icon-sm"
+              variant="ghost"
               type="button"
               aria-label={uiText("themeImageDialog.aria_label", {
                 title: title,

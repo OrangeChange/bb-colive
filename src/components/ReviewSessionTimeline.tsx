@@ -77,7 +77,7 @@ function ArchiveNotice({ notice, onDismiss }: {
   return (
     <div className={`flex shrink-0 items-start gap-2 border-b px-3 py-1.5 ui-type-meta ${warning ? "border-warning/30 bg-warning/5 text-warning" : "border-line bg-raised text-t2"}`}>
       <span className="min-w-0 flex-1">{notice.label}：{notice.message}</span>
-      <Button variant="outline"
+      <Button size="icon-sm" variant="ghost"
         type="button"
         className="-my-0.5 shrink-0 rounded px-1 text-lg leading-5 opacity-70 transition-opacity hover:opacity-100 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent-ring"
         aria-label={uiText("reviewSessionTimeline.aria_label", { label: notice.label })}
@@ -994,7 +994,7 @@ export function ReviewSessionTimeline({
         onWheel={handleTimelineWheel}
       >
 
-        <div className="event-list timeline" style={{ height: timelineEntries.length ? `${virtualizer.getTotalSize()}px` : undefined, width: "100%", position: "relative" }}>
+        <div data-empty={timelineEntries.length === 0 || undefined} className="event-list timeline" style={{ height: timelineEntries.length ? `${virtualizer.getTotalSize()}px` : undefined, width: "100%", position: "relative" }}>
         {timelineEntries.length > 0 ? (
           <>
             {virtualItems.map((virtualRow) => {
@@ -1069,7 +1069,7 @@ export function ReviewSessionTimeline({
             })}
           </>
         ) : loaded && !loading ? (
-          <div className="flex min-h-28 items-center justify-center px-4 ui-type-control text-t3">{uiText("reviewSessionTimeline.ReviewSessionTimeline18")}</div>
+          <div className="ui-empty-state ui-empty-fill">{uiText("reviewSessionTimeline.ReviewSessionTimeline18")}</div>
         ) : null}
         </div>
       </div>

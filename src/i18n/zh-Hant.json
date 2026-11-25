@@ -4505,5 +4505,12 @@
   "uiControls.alpha": "不透明度",
   "uiControls.colorValue": "飽和度 {saturation}%，亮度 {brightness}%",
   "nativePriceGradientControls.fixedColor": "固定配色",
-  "nativePriceGradientControls.baseTierHint": "基礎檔（不足下一檔；沒有下一檔時無上限）"
+  "nativePriceGradientControls.baseTierHint": "基礎檔（不足下一檔；沒有下一檔時無上限）",
+  "dateTimeField.hour": "小時",
+  "dateTimeField.minute": "分鐘",
+  "dateTimeField.today": "今天",
+  "dateTimeField.openCalendar": "{label}：選擇日期",
+  "commandDialog.title": "命令面板",
+  "commandDialog.description": "搜尋要執行的命令",
+  "obsServiceSettings.outputFailure": "{name}：{message}"
 }

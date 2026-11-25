@@ -448,7 +448,7 @@ function ShortcutMenuPicker({ value, onChange }: { value: readonly VoiceShortcut
               <LucideGripVertical className="size-4 shrink-0 text-t3" aria-hidden="true" /><MenuActionIcon name={option.icon} active />
               <span className="truncate">{option.label}</span>
             </div>
-            <Button variant="outline"
+            <Button size="icon-sm" variant="ghost"
               type="button"
               data-shortcut-delete
               aria-label={uiText("settingsPanel.aria_label3", { label: option.label })}
@@ -937,6 +937,11 @@ export function SettingsPanel({
     return () => document.removeEventListener("mousedown", close);
   }, []);
 
+  useEffect(() => {
+    if (!directoryOpen) return;
+    directoryRef.current?.querySelector<HTMLElement>('[role="option"][aria-selected="true"]')?.focus();
+  }, [directoryOpen]);
+
   useEffect(() => () => {
     if (wheelResetTimerRef.current) clearTimeout(wheelResetTimerRef.current);
   }, []);
@@ -1339,7 +1344,7 @@ export function SettingsPanel({
                   className="min-w-0 flex-1 bg-transparent py-1.5 ui-type-control text-t1 outline-none placeholder:text-t3"
                 />
                 {settingsSearchQuery && (
-                  <Button variant="outline" type="button" aria-label={uiText("settingsPanel.aria_label15")} className="rounded p-0.5 ui-type-control text-t3 hover:bg-raised hover:text-t1" onClick={() => { setSettingsSearchQuery(""); settingsSearchInputRef.current?.focus(); }}><X size={14} aria-hidden="true" /></Button>
+                  <Button size="icon-sm" variant="ghost" type="button" aria-label={uiText("settingsPanel.aria_label15")} className="rounded p-0.5 ui-type-control text-t3 hover:bg-raised hover:text-t1" onClick={() => { setSettingsSearchQuery(""); settingsSearchInputRef.current?.focus(); }}><X size={14} aria-hidden="true" /></Button>
                 )}
               </div>
               <div className="settings-search-results mt-2" aria-live="polite">
@@ -1381,15 +1386,21 @@ export function SettingsPanel({
             <LucideChevronDown className={`size-4 shrink-0 transition-transform ${directoryOpen ? "rotate-180" : ""}`} aria-hidden="true" />
           </Button>
           {directoryOpen && (
-            <div role="listbox" aria-label={uiText("settingsPanel.aria_label17")} className="settings-control-menu settings-section-navigator-menu absolute">
+            <div role="listbox" aria-label={uiText("settingsPanel.aria_label17")} className="settings-control-menu settings-section-navigator-menu absolute" onKeyDown={event => {
+              const items = [...event.currentTarget.querySelectorAll<HTMLButtonElement>('[role="option"]')];
+              const index = items.indexOf(document.activeElement as HTMLButtonElement);
+              const next = event.key === "Home" ? 0 : event.key === "End" ? items.length - 1 : event.key === "ArrowDown" ? (index + 1) % items.length : event.key === "ArrowUp" ? (index + items.length - 1) % items.length : -1;
+              if (next >= 0) { event.preventDefault(); items[next]?.focus(); }
+              if (event.key === "Escape" || event.key === "Tab") { event.stopPropagation(); setDirectoryOpen(false); directoryRef.current?.querySelector<HTMLButtonElement>(".settings-section-navigator")?.focus(); }
+            }}>
             {SETTINGS_SECTIONS.map((section) => (
               <Button variant="outline"
                 key={section.id}
                 type="button"
                 role="option"
                 aria-selected={section.id === currentSection}
-                onClick={() => { jumpTo(section.id); setDirectoryOpen(false); }}
-                className={`flex h-8 w-full items-center rounded-md px-2 text-left ui-type-control transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent-ring ${section.id === currentSection ? "bg-accent-subtle font-medium text-accent-text" : "text-t2 hover:bg-raised hover:text-t1"}`}
+                onClick={() => { jumpTo(section.id); setDirectoryOpen(false); directoryRef.current?.querySelector<HTMLButtonElement>(".settings-section-navigator")?.focus(); }}
+                className={`flex h-8 w-full items-center justify-start gap-2 rounded-md px-2 text-left ui-type-control transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent-ring ${section.id === currentSection ? "bg-accent-subtle font-medium text-accent-text" : "text-t2 hover:bg-raised hover:text-t1"}`}
               >
                 <SettingsIcon name={section.id} />{section.label}
               </Button>
@@ -1768,7 +1779,7 @@ export function SettingsPanel({
             >
               <div className="flex items-center justify-between gap-3">
                 <div className="ui-type-control font-medium text-t1" title={uiText("settingsPanel.title30")}>{uiText("settingsPanel.SettingsPanel14")}</div>
-                <Button variant="outline"
+                <Button size="icon-sm" variant="ghost"
                   type="button"
                   aria-label={uiText("settingsPanel.aria_label25")}
                   className="rounded px-1.5 py-0.5 ui-type-control text-t3 transition-colors hover:bg-raised hover:text-t1 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent-ring"

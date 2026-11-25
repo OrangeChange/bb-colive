@@ -1,3 +1,4 @@
+import { Tabs, TabsList, TabsTrigger } from "./shadcn/tabs";
 import { Button } from "./shadcn/button";
 import { formatUiNumber, formatUiCurrency } from "../i18n/format.ts";
 import { useUiLanguage } from "../i18n/react.ts";
@@ -1786,11 +1787,11 @@ export function ReviewPanel({ repository, anchors, active, refreshKey, onOpenClo
         onWheel={route.level === "session" ? handleReviewSessionWheel : route.level === "owner" && !showManagement ? handleReviewOwnerWheel : undefined}
       >
         {route.level === "home" ? (
-          <div className="mx-auto flex max-w-5xl flex-col gap-4">
-            <div className="flex items-center gap-1 rounded-xl border border-line bg-surface p-1" role="tablist" aria-label={uiText("reviewPanel.aria_label6")}>
-              <Button variant="outline" type="button" role="tab" aria-selected={homeMode === "owners"} className={`h-8 rounded-lg px-3 ui-type-control transition-colors ${homeMode === "owners" ? "bg-accent-subtle text-accent-text" : "text-t2 hover:bg-raised hover:text-t1"}`} onClick={() => setHomeMode("owners")}>{uiText("reviewPanel.ReviewPanel12")}</Button>
-              <Button variant="outline" type="button" role="tab" aria-selected={homeMode === "favorites"} className={`h-8 rounded-lg px-3 ui-type-control transition-colors ${homeMode === "favorites" ? "bg-accent-subtle text-accent-text" : "text-t2 hover:bg-raised hover:text-t1"}`} onClick={() => setHomeMode("favorites")}>{uiText("reviewPanel.ReviewPanel13")}</Button>
-            </div>
+          <div className="review-home-content mx-auto flex min-h-full max-w-5xl flex-col gap-4">
+            <Tabs className="contents" value={homeMode} onValueChange={value=>setHomeMode(value as typeof homeMode)}><TabsList variant="line" asChild><div className="ui-segmented" aria-label={uiText("reviewPanel.aria_label6")}>
+              <TabsTrigger value="owners" asChild><Button variant="outline" type="button" className={`ui-segmented-item ui-type-control ${homeMode === "owners" ? "bg-accent-subtle text-accent-text" : "text-t2 hover:bg-raised hover:text-t1"}`}>{uiText("reviewPanel.ReviewPanel12")}</Button></TabsTrigger>
+              <TabsTrigger value="favorites" asChild><Button variant="outline" type="button" className={`ui-segmented-item ui-type-control ${homeMode === "favorites" ? "bg-accent-subtle text-accent-text" : "text-t2 hover:bg-raised hover:text-t1"}`}>{uiText("reviewPanel.ReviewPanel13")}</Button></TabsTrigger>
+            </div></TabsList></Tabs>
             {homeMode === "owners" ? <>
               <UiSearchInput aria-label={uiText("reviewPanel.aria_label7")} placeholder={uiText("reviewPanel.placeholder")} value={ownerSearchText} onValueChange={setOwnerSearchText} />
               {ownersError && <div role="alert" className="rounded-lg border border-danger/40 bg-danger/10 px-3 py-2 ui-type-control text-danger">{uiText("reviewPanel.ReviewPanel14")}{ownersError}</div>}
@@ -1809,7 +1810,7 @@ export function ReviewPanel({ repository, anchors, active, refreshKey, onOpenClo
             </> : repository ? <ReviewFavoritesPanel repository={repository} owners={owners} active={active} refreshKey={refreshKey} onOpenFavorite={openFavorite} /> : <div role="alert" className="rounded-xl border border-dashed border-line px-4 py-12 text-center ui-type-control text-t3">{uiText("reviewPanel.ReviewPanel15")}</div>}
           </div>
         ) : route.level === "owner" ? (
-          <div className="mx-auto flex max-w-5xl flex-col gap-4">
+          <div className="review-home-content mx-auto flex min-h-full max-w-5xl flex-col gap-4">
             {showManagement && repository ? (
               <ReviewArchiveManagement
                 repository={repository}

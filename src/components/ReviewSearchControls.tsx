@@ -704,7 +704,7 @@ export function ReviewFilterPresetMenu({
               <Button variant="outline" type="button" aria-pressed={active} className={`min-w-0 max-w-32 truncate rounded px-2 py-1 text-left ui-type-control ${active ? "text-accent-text" : "text-t2 hover:text-accent-text"}`} title={uiText("reviewSearchControls.title", { name: preset.name })} onClick={() => { onApply(preset); setManageOpen(false); }}>{preset.name}</Button>
               {manageOpen && <>
                 <Button variant="outline" type="button" className="shrink-0 rounded px-1 py-1 ui-type-meta text-t3 hover:bg-raised hover:text-t1" aria-label={uiText("reviewSearchControls.aria_label14", { name: preset.name })} onClick={() => { setEditingId(preset.id); setEditingName(preset.name); }}>{uiText("reviewSearchControls.ReviewFilterPresetMenu2")}</Button>
-                <Button variant="outline" type="button" className="shrink-0 rounded px-1.5 py-1 text-t2 hover:bg-danger/10 hover:text-danger" aria-label={uiText("reviewSearchControls.aria_label15", { name: preset.name })} onClick={() => deleteCurrent(preset.id)}>
+                <Button size="icon-sm" variant="ghost" type="button" className="shrink-0 rounded px-1.5 py-1 text-t2 hover:bg-danger/10 hover:text-danger" aria-label={uiText("reviewSearchControls.aria_label15", { name: preset.name })} onClick={() => deleteCurrent(preset.id)}>
                   <LucideX className="size-3" aria-hidden="true" />
                 </Button>
               </>}
@@ -910,7 +910,7 @@ export function ReviewSearchControls({ level, query, onChange, onClearSearch, on
               )}
               <span role="listitem" className="inline-flex items-center gap-1 rounded-full bg-accent-subtle px-2 py-0.5 ui-type-meta text-accent-text">
                 {keywordFieldLabel(condition.field)}：{condition.value}
-                <Button variant="outline" type="button" aria-label={uiText("reviewSearchControls.aria_label20", { value: condition.value })} className="rounded-full px-1 text-accent-text hover:bg-accent/15 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent-ring" onClick={() => removeKeyword(index)}>×</Button>
+                <Button size="icon-sm" variant="ghost" type="button" aria-label={uiText("reviewSearchControls.aria_label20", { value: condition.value })} className="rounded-full px-1 text-accent-text hover:bg-accent/15 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent-ring" onClick={() => removeKeyword(index)}>×</Button>
               </span>
             </span>
           ))}

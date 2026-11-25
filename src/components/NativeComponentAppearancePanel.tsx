@@ -33,7 +33,7 @@ export function NativeComponentAppearancePanel({ value, onChange, onClose }: {
   const update = (patch: Partial<NativeComponentStyle>) => onChange({ ...value, [part]: { ...current, ...patch } });
   return <Dialog open onOpenChange={open=>{if(!open)onClose();}}><DialogContent asChild showCloseButton={false} className="max-w-none gap-0 p-0">
     <section className="theme-component-dialog">
-      <header><div><DialogTitle asChild><h3>{uiText("nativeComponentAppearancePanel.NativeComponentAppearancePanel")}</h3></DialogTitle><DialogDescription asChild><p>{uiText("nativeComponentAppearancePanel.NativeComponentAppearancePanel2")}</p></DialogDescription></div><Button variant="outline" type="button" onClick={onClose} aria-label={uiText("nativeComponentAppearancePanel.aria_label2")}>×</Button></header>
+      <header><div><DialogTitle asChild><h3>{uiText("nativeComponentAppearancePanel.NativeComponentAppearancePanel")}</h3></DialogTitle><DialogDescription asChild><p>{uiText("nativeComponentAppearancePanel.NativeComponentAppearancePanel2")}</p></DialogDescription></div><Button size="icon-sm" variant="ghost" type="button" onClick={onClose} aria-label={uiText("nativeComponentAppearancePanel.aria_label2")}>×</Button></header>
       <div className="theme-component-body">
         <nav aria-label={uiText("nativeComponentAppearancePanel.aria_label3")}>{NATIVE_COMPONENT_PARTS.map(item => <Button variant="outline" type="button" key={item} className={part === item ? "is-active" : ""} onClick={() => setPart(item)}>{NATIVE_COMPONENT_LABELS[item]}</Button>)}</nav>
         <div className="theme-component-fields">

@@ -53,7 +53,7 @@ test("礼物阈值数字输入明确使用数字字体", () => {
   assert.match(styles, /\.gift-threshold-input-field\s*\{[\s\S]*?font-family:\s*var\(--font-mono\)/);
 });
 
-test("紧凑礼物阈值输入框能容纳两位数两位小数", () => {
+test("礼物阈值输入框按数字字符宽度容纳金额", () => {
   const styles = read("src/App.css");
-  assert.match(styles, /\.gift-threshold-input\.is-compact \.gift-threshold-input-control\s*\{[\s\S]*?width:\s*88px/);
+  assert.match(styles, /\.gift-threshold-input-field\s*\{[^}]*width:\s*8ch/);
 });

@@ -24,27 +24,27 @@ test("声音输出只在设置的语音分类中呈现", () => {
   assert.doesNotMatch(voiceSource, /<SectionHeading>声音输出<\/SectionHeading>/);
 });
 
-test("声音输出下拉继续复用设置页的自绘触发器和滚动列表", () => {
+test("声音输出下拉复用统一选择控件与滚动列表", () => {
   const source = read("src/components/SettingsPanel.tsx");
   const listSelectSource = read("src/components/SettingsListSelect.tsx");
-  const css = read("src/App.css");
   assert.match(source, /SharedSettingsListSelect[\s\S]*?ariaLabel=["']主播输出设备["']/);
   assert.match(source, /SharedSettingsListSelect[\s\S]*?ariaLabel=["']观众输出设备["']/);
-  assert.match(listSelectSource, /role="combobox"/);
-  assert.match(listSelectSource, /role="listbox"/);
+  assert.match(listSelectSource, /<UiSelect/);
+  assert.match(read("src/components/ui/Select.tsx"), /<SelectContent/);
   assert.match(listSelectSource, /onFocus\?: \(\) => void/);
   assert.match(listSelectSource, /onFocus=\{onFocus\}/);
   assert.doesNotMatch(source, /<select[\s\S]*?主播输出设备/);
-  assert.match(css, /\.settings-list-select-menu-item[\s\S]*?font-size:\s*14px[\s\S]*?line-height:\s*20px/);
-  assert.match(css, /\.settings-list-select-menu[\s\S]*?overflow-y:\s*auto/);
+  const select = read("src/components/shadcn/select.tsx");
+  assert.match(select, /data-slot="select-item"[\s\S]*text-sm/);
+  assert.match(select, /overflow-y-auto/);
 });
 
 test("保存的设备暂时不可用时不会伪装成跟随系统默认设备", () => {
   const source = read("src/components/SettingsPanel.tsx");
   const listSelectSource = read("src/components/SettingsListSelect.tsx");
-  assert.match(listSelectSource, /selectedOptionIndex/);
+  assert.match(listSelectSource, /!options.some\(\(option\) => option.value === value\)/);
   assert.match(listSelectSource, /设备不可用/);
-  assert.match(listSelectSource, /selectedOption\?\.label \?\? ["']设备不可用["']/);
+  assert.match(listSelectSource, /label: ["']设备不可用["'][\s\S]*title: value/);
 });
 
 test("输出设备不被初始化逻辑写死，播放时保留跟随系统默认设备的语义", () => {

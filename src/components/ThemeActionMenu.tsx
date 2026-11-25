@@ -1,3 +1,5 @@
+import { useRef, useState } from "react";
+import { popupAlignment } from "./ui/popupAlignment";
 import type { ReactNode } from "react";
 import { Check } from "lucide-react";
 import { Button } from "./shadcn/button";
@@ -29,10 +31,17 @@ export function ThemeActionMenu({
     title?: string;
   }[];
 }) {
+  const trigger = useRef<HTMLButtonElement>(null);
+  const [align, setAlign] = useState<"start" | "end">("start");
   return (
-    <DropdownMenu>
+    <DropdownMenu
+      onOpenChange={(open) => {
+        if (open) setAlign(popupAlignment(trigger.current));
+      }}
+    >
       <DropdownMenuTrigger asChild>
         <Button
+          ref={trigger}
           variant="outline"
           disabled={disabled}
           className={className}
@@ -43,7 +52,8 @@ export function ThemeActionMenu({
         </Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent
-        align="end"
+        align={align}
+        className="w-max max-w-[calc(100vw-16px)]"
         collisionPadding={8}
         data-ui-overlay="true"
         aria-label={label}
@@ -59,7 +69,7 @@ export function ThemeActionMenu({
               aria-current={item.current ? "true" : undefined}
             >
               {item.icon}
-              <span className="flex-1">{item.label}</span>
+              <span className="flex-1 whitespace-nowrap">{item.label}</span>
               {item.current && <Check size={14} aria-hidden />}
             </DropdownMenuItem>
           </div>

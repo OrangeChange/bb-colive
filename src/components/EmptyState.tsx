@@ -6,11 +6,11 @@ import { uiText } from "../i18n/index.ts";
 import { DriftBackground } from "./DriftBackground";
 
 export function EmptyState() {
-  useUiLanguage();
+  const language = useUiLanguage();
   return (
     <div className="absolute inset-0 flex items-center justify-center bg-bg">
       <DriftBackground />
-      <p className="relative ui-type-display font-display text-t2">{uiText("emptyState.EmptyState")}</p>
+      <p style={language === "ja" ? { fontFamily: '"RocknRoll One", var(--font-ui)' } : language === "zh-Hant" ? { fontFamily: '"Chuan Qu", var(--font-ui)' } : undefined} className={`relative ui-type-display text-t2${language === "zh-CN" || language === "en" ? " font-display" : ""}`}>{uiText("emptyState.EmptyState")}</p>
     </div>
   );
 }

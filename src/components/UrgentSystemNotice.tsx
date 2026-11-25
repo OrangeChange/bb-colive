@@ -21,7 +21,7 @@ export function UrgentSystemNotice({ event, onDismiss }: { event: DanmakuEvent |
         <div className="font-semibold">{label}</div>
         <div className="break-words text-danger/90">{event.text || label}</div>
       </div>
-      <Button variant="outline"
+      <Button size="icon-sm" variant="ghost"
         type="button"
         aria-label={uiText("uiControls.closeNotice")}
         onClick={onDismiss}

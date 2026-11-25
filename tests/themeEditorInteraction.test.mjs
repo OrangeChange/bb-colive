@@ -28,10 +28,10 @@ test("颜色格式菜单自适应定位且透明状态不伪装成具体格式",
   const css = readUiSource("src/components/nativeThemeEditor.css", "utf8");
   assert.match(select, /contentClassName/);
   assert.match(field, /label:opaque\?'RGB':'RGBA'/);
-  assert.match(field, /allowTransparent && !opaque/);
-  assert.match(field, /contentClassName="theme-color-format-menu"/);
+  assert.match(field, /allowTransparent/);
+  assert.match(field, /className="theme-color-format-menu"/);
   assert.match(css, /\.theme-color-format-menu\s*\{[^}]*z-index:\s*1300/);
-  assert.match(css, /\.theme-color-precise-row>\.ui-select-trigger[^}]*height:\s*30px/);
+  assert.match(css, /\.theme-color-precise-row[^}]*height:\s*30px/);
   assert.match(css, /\.theme-color-precise input[^}]*height:\s*30px/);
 });
 

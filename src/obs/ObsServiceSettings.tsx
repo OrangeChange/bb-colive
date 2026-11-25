@@ -71,16 +71,10 @@ export function ObsServiceSettings({
       </span></div>
       {renderFailures.length > 0 && (
         <span role="status" className="theme-obs-unavailable">
-          {renderFailures
-            .map(
-              (failure) =>
-                configurations.find(
-                  (configuration) =>
-                    configuration.id === failure.configurationId,
-                )?.name ?? uiText("obsServiceSettings.ObsServiceSettings5"),
-            )
-            .join("、")}
-          {uiText("obsServiceSettings.ObsServiceSettings6")}</span>
+          {renderFailures.map(failure => {
+            const name = configurations.find(configuration => configuration.id === failure.configurationId)?.name;
+            return <span key={failure.clientId} style={{ display: "block" }}>{name ? uiText("obsServiceSettings.outputFailure", { name, message: failure.message }) : failure.message}</span>;
+          })}</span>
       )}
       <div className="obs-service-port"><label>
         {uiText("obsServiceSettings.ObsServiceSettings7")}<Input
@@ -98,12 +92,10 @@ export function ObsServiceSettings({
       <div className="obs-service-effects">
         <span>{uiText("obsServiceSettings.ObsServiceSettings9")}</span>
         <PanelSwitch label={uiText("obsServiceSettings.label")} checked={showGiftEffect} onChange={() => setShowGiftEffect(!showGiftEffect)} />
-        <Button variant="ghost" type="button" className="obs-effect-reset" aria-label={uiText("obsServiceSettings.aria_label2")} onClick={() => setShowGiftEffect(false)} disabled={!showGiftEffect}>{uiText("common.restoreDefaults")}</Button>
       </div>
       <div className="obs-service-effects">
         <span>{uiText("obsServiceSettings.ObsServiceSettings10")}</span>
         <PanelSwitch label={uiText("obsServiceSettings.label2")} checked={showGuardEffect} onChange={() => setShowGuardEffect(!showGuardEffect)} />
-        <Button variant="ghost" type="button" className="obs-effect-reset" aria-label={uiText("obsServiceSettings.aria_label3")} onClick={() => setShowGuardEffect(false)} disabled={!showGuardEffect}>{uiText("common.restoreDefaults")}</Button>
       </div>
       {!loading && !status && <Button variant="outline" type="button" className="settings-action-button" onClick={() => void refresh()}><RefreshCw size={15} aria-hidden="true" />{uiText("obsServiceSettings.ObsServiceSettings11")}</Button>}
       {!loading && status && !status.running && (

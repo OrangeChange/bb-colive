@@ -1,3 +1,4 @@
+import { Popover, PopoverTrigger, PopoverContent } from "./shadcn/popover";
 import { Button } from "./shadcn/button";
 import { useUiLanguage } from "../i18n/react.ts";
 import { uiText } from "../i18n/index.ts";
@@ -231,17 +232,7 @@ function UserBadge() {
   const logout = useSession((s) => s.logout);
   const [open, setOpen] = useState(false);
   const [failedFaceUrl, setFailedFaceUrl] = useState<string | undefined>();
-  const rootRef = useRef<HTMLDivElement>(null);
 
-  useEffect(() => {
-    if (!open) return;
-    // 点击菜单外部关闭（与主播卡菜单一致的交互）
-    const onDown = (e: MouseEvent) => {
-      if (rootRef.current && !rootRef.current.contains(e.target as Node)) setOpen(false);
-    };
-    window.addEventListener("mousedown", onDown);
-    return () => window.removeEventListener("mousedown", onDown);
-  }, [open]);
 
   if (!session) return null;
   const face =
@@ -261,17 +252,16 @@ function UserBadge() {
     );
 
   return (
-    <div ref={rootRef} className="relative">
+    <Popover open={open} onOpenChange={setOpen}><div className="relative">
+      <PopoverTrigger asChild>
       <Button type="button" variant="ghost"
         className={`${btnIdle} flex-col gap-0.5 ${open ? "bg-raised text-t1" : ""}`}
         aria-label={uiText("sidebar.aria_label4", { uname: session.uname })}
         title={uiText("sidebar.title3", { uname: session.uname })}
-        onClick={() => setOpen((v) => !v)}
       >
         <span className="size-6">{face}</span>
-      </Button>
-      {open && (
-        <div className="ui-motion-enter absolute bottom-0 left-12 z-50 w-52 rounded-lg border border-line bg-surface p-2 shadow-xl shadow-black/20">
+      </Button></PopoverTrigger>
+        <PopoverContent side="right" align="end" className="w-52 p-2">
           <div className="flex items-center gap-2.5 px-1 pb-2">
             <span className="size-8 shrink-0">{face}</span>
             <div className="min-w-0">
@@ -287,9 +277,8 @@ function UserBadge() {
             }}
           >
             {uiText("sidebar.UserBadge")}</Button>
-        </div>
-      )}
-    </div>
+        </PopoverContent>
+    </div></Popover>
   );
 }
 

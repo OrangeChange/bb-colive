@@ -91,7 +91,7 @@ export function NativeThemeAdvancedEditor({ document, visualCss, customCss, cssM
     <Dialog open={assetsOpen} onOpenChange={setAssetsOpen}><DialogContent asChild showCloseButton={false} aria-describedby={undefined} className="max-w-none p-0 gap-0"><section className="theme-transfer-panel native-asset-panel">
       <header><DialogTitle asChild><h3>{uiText("nativeThemeAdvancedEditor.NativeThemeAdvancedEditor")}</h3></DialogTitle><Button variant="outline" type="button" className="native-theme-asset-action" onClick={() => setAssetsOpen(false)}>{uiText("common.close")}</Button></header>
       <div className="theme-transfer-body native-asset-body">
-        {!userAssets.length && <p>{uiText("nativeThemeAdvancedEditor.NativeThemeAdvancedEditor2")}</p>}
+        {!userAssets.length && <div className="ui-empty-state">{uiText("nativeThemeAdvancedEditor.NativeThemeAdvancedEditor2")}</div>}
         {userAssets.map(asset => <article className="native-asset-card" key={asset.id}>
           <div className="native-asset-heading">{asset.mediaType.startsWith("image/") && (assetPreviewUrls?.get(asset.path) ? <img className="native-asset-thumbnail" src={assetPreviewUrls.get(asset.path)} alt={asset.name} /> : <span className="native-asset-thumbnail">{uiText("nativeThemeAdvancedEditor.NativeThemeAdvancedEditor3")}</span>)}<div><strong>{asset.name}</strong><code>{asset.path}</code></div></div>
           {!asset.mediaType.startsWith("image/") && <label className="native-asset-alias">{uiText("nativeThemeAdvancedEditor.NativeThemeAdvancedEditor4")}<Input value={fontAliases[asset.id] ?? themeAssetFontAlias(asset)} onChange={event => setFontAliases(current => ({ ...current, [asset.id]: event.target.value }))} /></label>}

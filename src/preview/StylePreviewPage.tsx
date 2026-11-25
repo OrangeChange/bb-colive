@@ -13,7 +13,6 @@ import { rebaseThemeResourceOrigin } from "../themes/themeResourceOrigin.ts";
 export function StylePreviewPage() {
   useUiLanguage();
   const [state, setState] = useState<StylePreviewSnapshot | null>(null),
-    [status, setStatus] = useState(uiText("stylePreviewPage.StylePreviewPage.statussetStatus")),
     [disconnected, setDisconnected] = useState(false);
   useEffect(() => {
     if (location.search) history.replaceState(null, "", location.pathname);
@@ -39,11 +38,9 @@ export function StylePreviewPage() {
         const configured = message.type === "preview:replace" || message.type === "preview:configure"
           ? rebaseThemeResourceOrigin(message, location.origin) : message;
         setState((previous) => applyPreviewMessage(previous, configured));
-        setStatus(uiText("stylePreviewPage.StylePreviewPage.connect"));
       };
       socket.onclose = () => {
         setDisconnected(true);
-        setStatus(uiText("stylePreviewPage.StylePreviewPage.connect2"));
         if (!closed) retry = setTimeout(connect, 1500);
       };
     };
@@ -57,14 +54,13 @@ export function StylePreviewPage() {
   useEffect(() => {
     if (state) applyThemeToDocument(state.palette, state.scheme, state.customColor);
   }, [state?.palette, state?.scheme, state?.customColor]);
-  return state ? (
-    <div style={{ width: "100vw", height: "100vh", overflow: "hidden", background: "transparent" }}>
-      <StylePreviewContent state={state} transparent />
-      {disconnected && <p role="status" className="ui-type-control text-t3" style={{ position: "absolute", top: 0, margin: 0 }}>{status}</p>}
+  const status = uiText(disconnected ? "stylePreviewPage.StylePreviewPage.connect2" : "stylePreviewPage.StylePreviewPage.connect");
+  return (
+    <div className="style-preview-page">
+      {state && disconnected && <p role="status" className="style-preview-connection-status">{status}</p>}
+      {state ? <div className="style-preview-body">
+        <StylePreviewContent state={state} transparent />
+      </div> : <div role="status" className="ui-empty-state ui-empty-fill"><p>{status}</p></div>}
     </div>
-  ) : (
-    <p role="status" className="ui-type-control text-t3" style={{ margin: 0 }}>
-      {status}
-    </p>
   );
 }

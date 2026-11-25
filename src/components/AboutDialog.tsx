@@ -15,7 +15,7 @@ export function AboutDialog({ version, onClose }: { version: string; onClose: ()
   const [replay, setReplay] = useState(0);
   const reducedMotion = useReducedMotion();
   return <Dialog open onOpenChange={open=>{if(!open)onClose();}}><DialogContent asChild showCloseButton={false} className="max-w-none"><section className="about-dialog ui-modal-surface">
-    <div className="about-close"><Button variant="outline" autoFocus type="button" onClick={onClose} aria-label={uiText("aboutDialog.aria_label")} title={uiText("common.close")}><X size={18} /></Button></div>
+    <div className="about-close"><Button size="icon-sm" variant="ghost" autoFocus type="button" onClick={onClose} aria-label={uiText("aboutDialog.aria_label")} title={uiText("common.close")}><X size={18} /></Button></div>
     {reducedMotion ? <div className="about-character"><CoLiveLogo /></div> : <Button variant="ghost" type="button" className="about-character" aria-label={uiText("aboutDialog.aria_label2")} title={uiText("aboutDialog.title")} onClick={() => setReplay(value => value + 1)}>
       <CoLiveLogo key={replay} animated />
     </Button>}

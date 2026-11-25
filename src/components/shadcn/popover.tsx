@@ -18,11 +18,19 @@ function PopoverContent({
   className,
   align = "center",
   sideOffset = 4,
+  onEscapeKeyDown,
   ...props
 }: React.ComponentProps<typeof PopoverPrimitive.Content>) {
   return (
     <PopoverPrimitive.Portal>
       <PopoverPrimitive.Content
+        onEscapeKeyDown={(event) => {
+          if (event.isComposing) {
+            event.preventDefault();
+            return;
+          }
+          onEscapeKeyDown?.(event);
+        }}
         data-slot="popover-content"
         align={align}
         sideOffset={sideOffset}

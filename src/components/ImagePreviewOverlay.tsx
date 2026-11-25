@@ -124,7 +124,7 @@ export function ImagePreviewOverlay({
     >
       <div className={`ui-modal-surface ${surfaceClass}`}>
         <img src={src} alt={alt} className={imageClass} onError={() => onCloseRef.current()} />
-        <Button variant="outline"
+        <Button size="icon-sm" variant="ghost"
           ref={closeButtonRef}
           type="button"
           aria-label={closeLabel}

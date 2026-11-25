@@ -1,3 +1,5 @@
+import { uiText } from "../../i18n/index.ts"
+import { useUiLanguage } from "../../i18n/react.ts"
 import * as React from "react"
 import { Command as CommandPrimitive } from "cmdk"
 import { cn } from "cn"
@@ -32,8 +34,8 @@ function Command({
 }
 
 function CommandDialog({
-  title = "Command Palette",
-  description = "Search for a command to run...",
+  title,
+  description,
   children,
   className,
   showCloseButton = false,
@@ -44,12 +46,9 @@ function CommandDialog({
   className?: string
   showCloseButton?: boolean
 }) {
+  useUiLanguage()
   return (
     <Dialog {...props}>
-      <DialogHeader className="sr-only">
-        <DialogTitle>{title}</DialogTitle>
-        <DialogDescription>{description}</DialogDescription>
-      </DialogHeader>
       <DialogContent
         className={cn(
           "top-1/3 translate-y-0 overflow-hidden rounded-xl! p-0",
@@ -57,6 +56,10 @@ function CommandDialog({
         )}
         showCloseButton={showCloseButton}
       >
+        <DialogHeader className="sr-only">
+          <DialogTitle>{title ?? uiText("commandDialog.title")}</DialogTitle>
+          <DialogDescription>{description ?? uiText("commandDialog.description")}</DialogDescription>
+        </DialogHeader>
         {children}
       </DialogContent>
     </Dialog>

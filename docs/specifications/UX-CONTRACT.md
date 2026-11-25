@@ -4,7 +4,7 @@
 
 - Audience: 在 Windows 桌面环境中持续观察直播现场的操作者
 - Primary jobs: 连接直播间、读取事件流、筛选事件并调整多个展示窗口
-- Active locales: zh-CN
+- Active locales: zh-CN（默认）、zh-Hant、en、ja
 - Accessibility target: WCAG 2.2 AA
 
 ## Visual contract
@@ -20,7 +20,9 @@
 
 ### 用户可见语言
 
-- 软件操作界面文案集中维护于 `src/i18n/zh-CN.json`，当前只显示简体中文；修改界面文案同步更新语言资源与翻译清单。状态、图标和错误处理使用固定标识，不依赖中文标签。
+多语言适配属于界面改动的完成条件；设计、开发、验收、提交和发布要求，以及用语确认边界，统一按[开发流程与用语确认](../development/interface-localization.md#开发流程与用语确认)执行。
+
+- 软件操作界面文案集中维护于 `src/i18n/zh-CN.json`，支持简体中文、繁体中文、英文和日文；修改界面文案同步更新四份语言资源与翻译清单。状态、图标和错误处理使用固定标识，不依赖中文标签。
 - 所有事件内部、播报模板与试听内容、用户数据、主题名称及导出数据格式不参与界面翻译；具体边界见[界面文案](../development/interface-localization.md)。
 
 - 统一使用“现场、回看、主播档案、单场、事件检索、右侧工作台、弹幕窗、收益窗、设置、样式、系统提醒”等名称。
@@ -36,7 +38,7 @@
 - 右侧工作台是主窗口的扩展区域；设置不能迁移到左侧导航。弹幕窗和收益窗是主窗口控制的只读外置展示渠道，不能因为主窗口内容更详细而取消。
 - 现场、回看、语音、个性播报和样式保持同级主工作台；不把不同任务强行合并成一条总事件流。
 - 浮层点击外部或 Escape 收回；点击选择器触发器的第二次操作只收起该选择器，不误关父级筛选。浮层必须处理视口边缘、长中文选项和独立滚动。
-- 鼠标、键盘和中文输入法路径必须得到同等结果。焦点始终可见，方向键/Home/End/Enter/Escape 的语义由控件类型统一定义。
+- 鼠标、键盘和中文／日文输入法路径必须得到同等结果。焦点始终可见，方向键/Home/End/Enter/Escape 的语义由控件类型统一定义。
 - 布局根据容器实际可用宽度决定并排或换行；不要用屏幕截图宽度写死断点。分段控件按最长选项保留宽度，放不下时整组换行并占满可用宽度。
 - 动效服务于状态和层级，不阻塞操作；遵循项目统一时长和 `prefers-reduced-motion`，用户事件行进入/退出动效只由事件显示设置控制。
 
@@ -44,8 +46,8 @@
 
 1. 少量互斥选项使用 `src/components/SettingsChoiceControl.tsx` 的连体分段选择；保留原生单选语义和键盘行为，圆点视觉隐藏。长列表和字体选项使用 `src/components/ui/Select.tsx` 的 `UiSelect`。
 2. 需要输入、过滤、最近搜索或关键词建议使用 `src/components/ui/Combobox.tsx` 的 `UiCombobox`。
-3. 语音输出设备使用 `src/components/SettingsListSelect.tsx` 的自绘列表，因为它需要动态刷新和不可用设备提示。
-4. 日期时间字段保留平台原生输入，这是明确的日期选择器边界。
+3. 语音输出设备使用 `src/components/SettingsListSelect.tsx`，通过共享 `UiSelect` 保留动态刷新和不可用设备提示。
+4. 日期时间使用共享 `DateTimeField`，组合键盘输入与同组日历、时分选择；格式和辅助标签遵循界面文案与视觉规范。
 5. 新控件必须复用项目语义令牌、焦点样式、portal 浮层、选中标记、外部关闭和减少动效规则；不能直接套用 HeroUI、Mantine 或浏览器原生弹层的默认皮肤。
 
 ### 新增功能的最小契约
@@ -55,7 +57,7 @@
 - 唯一归属的页面和分类；
 - 默认值、恢复默认边界和持久化范围；
 - 与连接、事件、筛选、阅读位置的关系；
-- 窄工作台、长中文、禁用态、空态、错误态和异步等待态；
+- 窄工作台、四语言完整文案、长标签、禁用态、空态、错误态和异步等待态；
 - 鼠标、键盘、输入法、点击外部和 Escape 的行为；
 - 需要的动效、减少动效表现和验证用例。
 
@@ -95,7 +97,7 @@
 
 | Capability | Canonical owner | Source of truth | Allowed variants | Verification |
 |---|---|---|---|---|
-| Select/Listbox | 固定选项和字体使用 `src/components/ui/Select.tsx` 的 `UiSelect`，关键词建议使用 `src/components/ui/Combobox.tsx` 的 `UiCombobox`，语音设备使用 `src/components/SettingsListSelect.tsx` 的自绘列表；三者共用触发器尺寸、焦点、选中态、浮层层级与减少动效契约 | `DESIGN.md`、`src/components/ui/Select.tsx`、`src/components/ui/Combobox.tsx`、`src/components/SettingsListSelect.tsx`、`src/App.css` | authored | 组件契约测试 + 键盘操作 + 长选项/边缘定位/窄面板检查 |
+| Select/Listbox | 固定选项和字体使用 `src/components/ui/Select.tsx` 的 `UiSelect`，关键词建议使用 `src/components/ui/Combobox.tsx` 的 `UiCombobox`，语音设备使用 `src/components/SettingsListSelect.tsx` ，设备列表复用 `UiSelect`；三者共用触发器尺寸、焦点、选中态、浮层层级与减少动效契约 | `DESIGN.md`、`src/components/ui/Select.tsx`、`src/components/ui/Combobox.tsx`、`src/components/SettingsListSelect.tsx`、`src/App.css` | authored | 组件契约测试 + 键盘操作 + 长选项/边缘定位/窄面板检查 |
 | Scrollbar | `src/App.css` 的全局滚动条规则与设置面板独立滚动轨道 | `DESIGN.md`、`src/App.css`、`src/components/WorkbenchSurface.tsx` | geometry exceptions | 设置面板测试 + 窄/宽面板检查 |
 | Voice and personal broadcast panels | `VoicePanel` 与 `PersonalBroadcastPanel` 作为主区域同级面板，由 App 持久挂载 | `src/App.tsx`、`src/components/VoicePanel.tsx`、`src/components/PersonalBroadcastPanel.tsx` | hidden view switching | 侧栏切换 + 正式队列保持运行检查 |
 | Main workspace status bar | 登录后的主工作区共享壳层在所有主页面切换之外固定挂载一份底栏；新增主面板也放在同一切换容器内，自动共用此底栏 | `src/App.tsx`、`src/components/StatusBar.tsx`、`DESIGN.md` | all authenticated main views | 现场／语音／个性播报／回看切换后底栏始终存在且不重复；登录与恢复页面不显示 |
@@ -129,7 +131,7 @@
 - 列表、详情、历史边界、筛选和导出共用直播状态（进行中／已结束／状态未知）、记录状态（记录中／重连中／已停止）及记录质量（待确认／完整／不完整）。已结束不包含未知；质量选择器使用“记录质量”。黄色只合并明确缺口，灰色说明停止与场次信息；恢复撤去停止条并保留缺口。关闭按场次和原因集合记忆到本次窗口会话，顺序变化不重显，新原因可重显，独立提示互不影响。尚未加载场次不生成身份缺失提示，保存中和失败提示保持独立。
 - 主播档案页以“场次/事件检索”分段切换两种互斥的查询任务：场次模式筛标题、开播时间、生命周期、质量和收藏；事件模式按事件时间、分类、关键词、身份、粉丝牌、礼物价格和收藏筛候选事件。两套筛选分别按主播记忆，排序按各自模式跨主播记忆。切换模式不清空另一侧条件或已加载结果；事件结果按场次分组并通过“加载更多场次”追加，点击摘要使用稳定 eventKey 定位，且不覆盖该场原阅读锚点。
 - 在记录房间 A 时检索主播 B，A 的录档不触发 B 重新查询，也不打断 B 的“加载更多场次”。收藏提交继续跨入口更新检索结果和计数；收藏、整理或档案管理变更重新载入首屏并重置分页位置，已不命中的分组移除。刷新替代分页后，当前查询完成或失败均结束加载；旧请求不会覆盖结果或清除后续查询的加载状态。
-- 固定选项不使用浏览器原生 `select` 或 `datalist`：少量互斥选项使用 `SettingsChoiceControl`，其余现场和设置表单、字体选择使用 `UiSelect`，关键词建议使用 `UiCombobox`；语音设备使用项目内 `SettingsListSelect`，保留动态设备与不可用设备提示。控件统一负责尺寸、选项对比度、选中标记和键盘焦点；浮层选择器另外负责列表宽度、位置和外部点击收起。字体选项统一使用菜单字体，不在下拉选项中逐项实时预览。日期时间字段仍使用平台原生日期输入。
+- 固定选项不使用浏览器原生 `select` 或 `datalist`：少量互斥选项使用 `SettingsChoiceControl`，其余现场和设置表单、字体选择使用 `UiSelect`，关键词建议使用 `UiCombobox`；语音设备使用项目内 `SettingsListSelect`，保留动态设备与不可用设备提示。控件统一负责尺寸、选项对比度、选中标记和键盘焦点；浮层选择器另外负责列表宽度、位置和外部点击收起。字体选项统一使用菜单字体，不在下拉选项中逐项实时预览。日期时间字段使用共享 `DateTimeField`，支持键盘输入和同组日历、时分选择。
 - 高级筛选共用 `ReviewFilterPopover`，不共享条件或阅读状态。分类按钮 ArrowDown/Home 进入首项、ArrowUp/End 进入末项；Escape 关闭子层并回焦，外部点击逐层关闭。普通弹窗循环 Tab 并在关闭时返回触发焦点；导出忙碌时禁止外部、Escape 和关闭按钮关闭。中文输入法组合期间不处理菜单快捷键。设备首字匹配不改变选择；图片失败关联当前 URL，新 URL 重新加载。
 - 标题栏退出和托盘退出均等待在途导出、档案刷盘、副窗关闭准备、诊断接收及最终刷盘；两次窗口等待各最多 3 秒，未完成不标 clean。隐藏到托盘保留连接和副窗。诊断历史累计写入异常与当前 failed/pending/dropped 分开显示，导出提示使用实际路径与最终缺失项。
 - 设置分类和副窗口筛选控件保留可见焦点、主题色 hover/active 状态；窄面板中的双列筛选自动堆叠。

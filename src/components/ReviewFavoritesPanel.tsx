@@ -541,7 +541,7 @@ export function ReviewFavoritesPanel({
   };
 
   return (
-    <div className="flex min-w-0 flex-col gap-3">
+    <div className="review-favorites-panel flex min-w-0 flex-1 flex-col gap-3">
       <section className="rounded-xl border border-line bg-surface p-3" aria-label={uiText("reviewFavoritesPanel.aria_label")}>
         <div className="flex flex-wrap items-center gap-2">
           <strong className="ui-type-section-title text-t1">{uiText("reviewFavoritesPanel.ReviewFavoritesPanel")}</strong>
@@ -603,7 +603,7 @@ export function ReviewFavoritesPanel({
       {error && <div role="alert" className="rounded-lg border border-danger/40 bg-danger/10 px-3 py-2 ui-type-control text-danger">{uiText("reviewFavoritesPanel.ReviewFavoritesPanel26")}{error}<Button variant="outline" type="button" className="ml-2 underline" onClick={() => void load()}>{uiText("common.retry")}</Button></div>}
       {actionError && <div role="alert" className="rounded-lg border border-danger/40 bg-danger/10 px-3 py-2 ui-type-control text-danger">{uiText("reviewFavoritesPanel.ReviewFavoritesPanel27")}{actionError}<Button variant="outline" type="button" className="ml-2 underline" onClick={() => setActionError(null)}>{uiText("common.close")}</Button></div>}
       {!error && loading && page.items.length === 0 && <div role="status" className="rounded-xl border border-line px-4 py-10 text-center ui-type-control text-t3">{uiText("reviewFavoritesPanel.ReviewFavoritesPanel28")}</div>}
-      {!error && !loading && visibleItems.length === 0 && <div className="px-4 py-10 text-center ui-type-control text-t3"><p>{hasActiveFilters ? uiText("reviewFavoritesPanel.ReviewFavoritesPanel29") : page.items.length ? uiText("reviewFavoritesPanel.ReviewFavoritesPanel30") : uiText("reviewFavoritesPanel.ReviewFavoritesPanel31")}</p>{hasActiveFilters ? <Button variant="outline" type="button" className={`${filterActionButtonClass} mt-3`} onClick={clearFilters}>{uiText("reviewFavoritesPanel.ReviewFavoritesPanel32")}</Button> : <p className="mt-2">{page.items.length ? uiText("reviewFavoritesPanel.ReviewFavoritesPanel33") : uiText("reviewFavoritesPanel.ReviewFavoritesPanel34")}</p>}</div>}
+      {!error && !loading && visibleItems.length === 0 && <div role="status" className="ui-empty-state ui-empty-fill"><p>{hasActiveFilters ? uiText("reviewFavoritesPanel.ReviewFavoritesPanel29") : page.items.length ? uiText("reviewFavoritesPanel.ReviewFavoritesPanel30") : uiText("reviewFavoritesPanel.ReviewFavoritesPanel31")}</p>{hasActiveFilters ? <Button variant="outline" type="button" className={filterActionButtonClass} onClick={clearFilters}>{uiText("reviewFavoritesPanel.ReviewFavoritesPanel32")}</Button> : <p>{page.items.length ? uiText("reviewFavoritesPanel.ReviewFavoritesPanel33") : uiText("reviewFavoritesPanel.ReviewFavoritesPanel34")}</p>}</div>}
       <section aria-label={uiText("reviewFavoritesPanel.aria_label6")} data-style-api="1"  className="event-area review flex min-w-0 flex-col gap-2">
 
         <div className="event-list flex min-w-0 flex-col gap-2">

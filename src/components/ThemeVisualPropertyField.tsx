@@ -285,7 +285,7 @@ export function ThemeVisualPropertyField({
         <SelectTrigger aria-label={label} className="w-full">
           <SelectValue />
         </SelectTrigger>
-        <SelectContent position="popper" align="start" collisionPadding={8}>
+        <SelectContent position="popper" collisionPadding={8}>
           <SelectItem value="__inherit__">
             {mixed
               ? uiText("themeVisualPropertyField.emptyLabel")

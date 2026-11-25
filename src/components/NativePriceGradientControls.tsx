@@ -2,7 +2,6 @@ import { Input } from "./shadcn/input";
 import { Button } from "./shadcn/button";
 import { useUiLanguage } from "../i18n/react.ts";
 import { uiText } from "../i18n/index.ts";
-import { SettingsChoiceControl } from "./SettingsChoiceControl";
 import { useState } from 'react';
 import { Dialog, DialogContent, DialogTitle, DialogDescription } from "./shadcn/dialog";
 import { UiSelect } from './ui/Select.tsx';
@@ -12,9 +11,9 @@ export function priceKindsForScope(event: string): PriceGradientKind[] {
   return event==='all' ? ['normal','blind','superchat'] : ['normal','blind','superchat'].includes(event) ? [event as PriceGradientKind] : [];
 }
 
-export function NativePriceGradientControls({ event, model, selected, onSelect, onChange, applied }: {
+export function NativePriceGradientControls({ event, model, selected, onSelect, onChange }: {
   event: string; model: NativePriceGradient; selected: string; onSelect: (id:string)=>void;
-  onChange: (model:NativePriceGradient)=>void; applied: boolean;
+  onChange: (model:NativePriceGradient)=>void;
 }) {
   useUiLanguage();
   const [manage,setManage]=useState(false),[error,setError]=useState('');
@@ -28,14 +27,12 @@ export function NativePriceGradientControls({ event, model, selected, onSelect, 
   };
   return <div className="native-price-gradient-controls">
     <div className="native-price-gradient-scope">
-      <div className="native-price-mode"><span>{uiText("nativePriceGradientControls.NativePriceGradientControls")}</span><SettingsChoiceControl label={uiText("nativePriceGradientControls.label")} value={mode==='mixed'?undefined:mode} options={[{value:'fixed',label:uiText("nativePriceGradientControls.options.label")},{value:'gradient',label:uiText("nativePriceGradientControls.options.label2")}]} onChange={value=>{
+      <div className="native-price-mode"><span>{uiText("nativePriceGradientControls.NativePriceGradientControls")}</span><UiSelect ariaLabel={uiText("nativePriceGradientControls.label")} placeholder={uiText("nativePriceGradientControls.NativePriceGradientControls2")} value={mode==='mixed'?undefined:mode} options={[{value:'fixed',label:uiText("nativePriceGradientControls.options.label")},{value:'gradient',label:uiText("nativePriceGradientControls.options.label2")}]} onValueChange={value=>{
         onChange({...model,types:{...model.types,...Object.fromEntries(kinds.map(k=>[k,value==='gradient']))}});
         onSelect(value==='gradient'?model.bands[0].id:'');
-      }}/>{mode==='mixed'&&<small>{uiText("nativePriceGradientControls.NativePriceGradientControls2")}</small>}</div>
-      {mode!=='fixed'&&<><label><span>{uiText("nativePriceGradientControls.NativePriceGradientControls3")}</span><UiSelect ariaLabel={uiText("nativePriceGradientControls.ariaLabel")} value={selected} options={[{value:'',label:uiText("nativePriceGradientControls.fixedColor") },...model.bands.map(b=>({value:b.id,title:b.min===0?uiText("nativePriceGradientControls.baseTierHint"):undefined,label:b.min===0?uiText("nativePriceGradientControls.options.label3"):uiText("nativePriceGradientControls.options.label4", { value: priceBandLabel(b), min: b.min })}))]} onValueChange={onSelect}/></label>
-        <Button variant="outline" type="button" className="ui-btn" aria-expanded={manage} onClick={()=>setManage(!manage)}>{uiText("nativePriceGradientControls.NativePriceGradientControls4")}</Button></>}
+      }}/></div>
+      {mode!=='fixed'&&<><label><span>{uiText("nativePriceGradientControls.NativePriceGradientControls3")}</span><UiSelect ariaLabel={uiText("nativePriceGradientControls.ariaLabel")} value={selected} options={[{value:'',label:uiText("nativePriceGradientControls.fixedColor") },...model.bands.map(b=>({value:b.id,title:b.min===0?uiText("nativePriceGradientControls.baseTierHint"):undefined,label:b.min===0?uiText("nativePriceGradientControls.options.label3"):uiText("nativePriceGradientControls.options.label4", { value: priceBandLabel(b), min: b.min })})),{value:'__manage_price_bands',label:uiText("nativePriceGradientControls.NativePriceGradientControls4"),separatorBefore:true}]} onValueChange={value=>{if(value==='__manage_price_bands')requestAnimationFrame(()=>setManage(true));else onSelect(value);}}/></label></>}
     </div>
-    {selected&&!applied&&<p className="ui-type-control text-t3">{uiText("nativePriceGradientControls.NativePriceGradientControls5")}</p>}
     <Dialog open={manage} onOpenChange={setManage}><DialogContent asChild showCloseButton={false} className="max-w-none gap-0 p-0"><section className="theme-transfer-panel native-price-band-dialog">
       <header><div><DialogTitle asChild><h3>{uiText("nativePriceGradientControls.NativePriceGradientControls6")}</h3></DialogTitle><DialogDescription asChild><p>{uiText("nativePriceGradientControls.NativePriceGradientControls7")}</p></DialogDescription></div><Button variant="outline" type="button" onClick={()=>setManage(false)}>{uiText("common.close")}</Button></header>
       <div className="theme-transfer-body native-price-band-manager">

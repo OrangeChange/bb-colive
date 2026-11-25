@@ -524,7 +524,7 @@ export function ThemeImageField({
                 >
                   <ArrowDown size={18} />
                 </Button>
-                <Button variant="outline"
+                <Button size="icon-sm" variant="ghost"
                   type="button"
                   title={uiText("themeImageField.title5")}
                   aria-label={uiText("themeImageField.aria_label4", { value: index + 1 })}

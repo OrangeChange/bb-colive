@@ -213,7 +213,7 @@ export function EventContextMenu({ event, nickname, eventFontSize, shortcutActio
       setNicknameDialogOpen(false);
     };
     const closeOnEscape = (keyboardEvent: KeyboardEvent) => {
-      if (keyboardEvent.key !== "Escape") return;
+      if (keyboardEvent.key !== "Escape" || keyboardEvent.defaultPrevented) return;
       keyboardEvent.preventDefault();
       setOpen(false);
       setNicknameDialogOpen(false);
@@ -281,6 +281,11 @@ export function EventContextMenu({ event, nickname, eventFontSize, shortcutActio
       window.removeEventListener("scroll", updatePosition, true);
     };
   }, [open, remoteOpenRequest?.revision, eventAreaRef]);
+
+  useLayoutEffect(() => {
+    if (open && position.ready && document.activeElement === triggerRef.current)
+      menuRef.current?.querySelector<HTMLButtonElement>('[role="menuitem"]:not(:disabled)')?.focus();
+  }, [open, position.ready]);
 
   useLayoutEffect(() => {
     if (!nicknameDialogOpen) return;
@@ -555,6 +560,15 @@ export function EventContextMenu({ event, nickname, eventFontSize, shortcutActio
         <div
           ref={menuRef}
           role="menu"
+          onKeyDown={event => {
+            const items = [...event.currentTarget.querySelectorAll<HTMLButtonElement>('button:not(:disabled)')];
+            const index = items.indexOf(document.activeElement as HTMLButtonElement);
+            const next = event.key === "Home" ? 0 : event.key === "End" ? items.length - 1
+              : event.key === "ArrowDown" ? (index + 1) % items.length
+              : event.key === "ArrowUp" ? (index + items.length - 1) % items.length : -1;
+            if (next >= 0) { event.preventDefault(); items[next]?.focus(); }
+            if (event.key === "Tab") { setOpen(false); triggerRef.current?.focus(); }
+          }}
           aria-label={uiText("eventContextMenu.aria_label2")}
           className="ui-motion-enter event-context-menu fixed z-[70] w-[238px] max-h-[min(440px,calc(100vh-16px))] overflow-y-auto rounded-lg border border-line bg-surface p-1.5 shadow-2xl shadow-black/30"
           style={{
@@ -672,7 +686,7 @@ export function EventContextMenu({ event, nickname, eventFontSize, shortcutActio
             onPointerCancel={handleNicknameDragEnd}
           >
             <div className="ui-type-control font-medium text-t1">{userNickname ? uiText("eventContextMenu.EventContextMenu") : uiText("eventContextMenu.EventContextMenu2")}</div>
-            <Button variant="outline"
+            <Button size="icon-sm" variant="ghost"
               type="button"
               aria-label={uiText("eventContextMenu.aria_label6")}
               className="rounded px-1.5 py-0.5 ui-type-control text-t3 transition-colors hover:bg-raised hover:text-t1 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent-ring"

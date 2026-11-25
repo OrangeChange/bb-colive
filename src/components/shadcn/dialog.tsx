@@ -53,6 +53,7 @@ function DialogContent({
   showCloseButton = true,
   onOpenAutoFocus,
   onCloseAutoFocus,
+  onEscapeKeyDown,
   ...props
 }: React.ComponentProps<typeof DialogPrimitive.Content> & {
   showCloseButton?: boolean;
@@ -63,6 +64,13 @@ function DialogContent({
     <DialogPortal>
       <DialogOverlay />
       <DialogPrimitive.Content
+        onEscapeKeyDown={(event) => {
+          if (event.isComposing) {
+            event.preventDefault();
+            return;
+          }
+          onEscapeKeyDown?.(event);
+        }}
         data-slot="dialog-content"
         onOpenAutoFocus={(event) => {
           returnFocus.current =
@@ -147,7 +155,7 @@ function DialogTitle({
   return (
     <DialogPrimitive.Title
       data-slot="dialog-title"
-      className={cn("text-base leading-none font-medium", className)}
+      className={cn("text-base leading-none font-semibold", className)}
       {...props}
     />
   );

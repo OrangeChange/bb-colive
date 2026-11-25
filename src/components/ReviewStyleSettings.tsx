@@ -62,7 +62,7 @@ export function ReviewStyleSettings() {
       <Dialog open={open} onOpenChange={setOpen}><DialogContent asChild showCloseButton={false} aria-describedby={undefined} className="max-w-none gap-0 p-0"><section className="review-style-dialog">
             <header>
               <DialogTitle asChild><h2 id="review-style-title">{uiText("reviewStyleSettings.ReviewStyleSettings")}</h2></DialogTitle>
-              <Button variant="outline" type="button" aria-label={uiText("reviewStyleSettings.aria_label")} onClick={close}>
+              <Button size="icon-sm" variant="ghost" type="button" aria-label={uiText("reviewStyleSettings.aria_label")} onClick={close}>
                 <X size={20} />
               </Button>
             </header>

@@ -2,6 +2,7 @@ import { readFileSync } from "node:fs";
 import { createRequire } from "node:module";
 import ts from "typescript";
 import * as uiMessages from "../../src/i18n/index.ts";
+import * as format from "../../src/i18n/format.ts";
 
 const require = createRequire(import.meta.url);
 
@@ -55,12 +56,21 @@ export function componentRuntime(path, ports = {}, extraExports = []) {
   }] } }).outputText;
   const module = { exports: {} };
   new Function("require", "module", "exports", "testImportMeta", code)((id) => {
-    if (id.endsWith("i18n/index.ts")) return uiMessages;
-    if (id.endsWith("i18n/react.ts")) return { useUiLanguage: () => uiMessages.getUiLanguage() };
+    if (/i18n(?:\/index)?(?:\.ts)?$/.test(id)) return uiMessages;
+    if (/i18n\/react(?:\.ts)?$/.test(id)) return { useUiLanguage: () => uiMessages.getUiLanguage() };
     if (id === "react") return hooks;
     if (id === "react/jsx-runtime") return require(id);
     if (id === "react-dom") return { createPortal: (children) => children };
-    return ports[id] ?? {};
+    if (/format(?:\.ts)?$/.test(id)) return { ...format, ...ports[id] };
+    const primitiveId = id.replace(/^.*\/shadcn\//, "./shadcn/");
+    return ports[id] ?? ({
+      "./shadcn/button": { Button: "button" },
+      "./shadcn/input": { Input: "input" },
+      "./shadcn/checkbox": { Checkbox: "checkbox" },
+      "./shadcn/textarea": { Textarea: "textarea" },
+      "./shadcn/popover": { Popover: "root", PopoverAnchor: "anchor", PopoverTrigger: "trigger", PopoverContent: "content" },
+      "./shadcn/dialog": { Dialog: "dialog", DialogContent: "dialog-content", DialogTitle: "dialog-title", DialogDescription: "dialog-description" },
+    })[primitiveId] ?? {};
   }, module, module.exports, ports["import.meta"] ?? {});
   return {
     exports: module.exports,

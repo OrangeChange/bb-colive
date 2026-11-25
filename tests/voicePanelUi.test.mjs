@@ -184,15 +184,15 @@ test("Windows 系统语音优先从本机枚举结果中选择 Huihui", () => {
   assert.match(source, /toLowerCase\(\)\.includes\(DEFAULT_WINDOWS_VOICE\.toLowerCase\(\)\)/);
 });
 
-test("语音引擎控件使用统一的标签列、可伸缩控制区和整宽音色下拉", () => {
+test("语音引擎控件使用统一标签列，音色下拉限制宽度", () => {
   const source = read("src/components/VoicePanel.tsx");
   const primitives = read("src/components/voicePanelPrimitives.tsx");
   assert.match(primitives, /voice-setting-row/);
   assert.match(primitives, /voice-setting-control/);
   assert.match(source, /<UiSelect ariaLabel=["']语音引擎["']/);
   assert.doesNotMatch(source, /voice-engine-segmented/);
-  assert.match(source, /className=\{selectClass\}/);
-  assert.match(source, /min-w-0 flex-1/);
+  assert.match(source, /voice-select-tone/);
+  assert.match(source, /min-w-0/);
 });
 
 test("语音面板按引擎和自定义 API 预设读取隔离的音色值", () => {

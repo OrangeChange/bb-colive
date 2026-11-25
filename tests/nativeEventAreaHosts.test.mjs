@@ -4,7 +4,7 @@ import assert from "node:assert/strict";
 import { fileURLToPath } from "node:url";
 import React from "react";
 import { renderToStaticMarkup } from "react-dom/server";
-import { createServer } from "vite";
+import { createServer } from "./helpers/vite.mjs";
 import { getNativeEventSample } from "./fixtures/nativeEventSamples.ts";
 function renderFloatingMarkup(component, props) {
   const previousComputedStyle = globalThis.getComputedStyle;

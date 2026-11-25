@@ -6,7 +6,7 @@ import * as capabilities from "../src/themes/nativeThemeCapabilities.ts";
 import { normalizeNativeNavigationSelection } from "../src/themes/nativeVisualNavigation.ts";
 import React from "react";
 import { renderToStaticMarkup } from "react-dom/server";
-import { createServer } from "vite";
+import { createServer } from "./helpers/vite.mjs";
 import { fileURLToPath } from "node:url";
 import fs from "node:fs";
 
@@ -216,7 +216,7 @@ test("画布工具栏左侧显示背景并在右侧显示内嵌单位的宽度",
   await vite.ssrLoadModule("/src/components/StylePreviewToolbar.tsx");
   const html = readUiSource("src/components/StylePreviewToolbar.tsx", "utf8");
   assert.match(html, /native-preview-canvas-color[\s\S]*native-preview-width/);
-  assert.match(html, /ThemeColorField\s+label=["']画布背景["']/);
+  assert.match(html, /ThemeColorField[^>]*label=["']画布背景["']/);
   assert.match(html, /aria-label=["']窗口宽度["']/);
   assert.match(html, /title=["']窗口宽度["']/);
   assert.match(html, /<span className="native-preview-width-unit">px<\/span>/);

@@ -4505,5 +4505,12 @@
   "uiControls.alpha": "不透明度",
   "uiControls.colorValue": "彩度 {saturation}%、明度 {brightness}%",
   "nativePriceGradientControls.fixedColor": "固定配色",
-  "nativePriceGradientControls.baseTierHint": "基本帯（次の帯未満。次の帯がない場合は上限なし）"
+  "nativePriceGradientControls.baseTierHint": "基本帯（次の帯未満。次の帯がない場合は上限なし）",
+  "dateTimeField.hour": "時",
+  "dateTimeField.minute": "分",
+  "dateTimeField.today": "今日",
+  "dateTimeField.openCalendar": "{label}：日付を選択",
+  "commandDialog.title": "コマンドパレット",
+  "commandDialog.description": "実行するコマンドを検索",
+  "obsServiceSettings.outputFailure": "{name}：{message}"
 }

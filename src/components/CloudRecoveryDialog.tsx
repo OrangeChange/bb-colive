@@ -140,7 +140,7 @@ export function CloudRecoveryDialog({
               <DialogTitle asChild><h2 id={titleId} className="ui-type-page-title truncate text-t1">{uiText("cloudRecoveryDialog.CloudRecoveryDialog")}{ownerName}</h2></DialogTitle>
               <DialogDescription asChild><p id={descriptionId} className="mt-1 ui-type-control text-t3">{uiText("cloudRecoveryDialog.CloudRecoveryDialog2")}</p></DialogDescription>
             </div>
-            <Button variant="outline" ref={closeRef} type="button" disabled={submitting} onClick={onClose}
+            <Button size="icon-sm" variant="ghost" ref={closeRef} type="button" disabled={submitting} onClick={onClose}
               className="grid h-8 w-8 shrink-0 place-items-center rounded-md border border-line text-t2 transition-colors enabled:hover:bg-raised enabled:hover:text-t1 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent-ring disabled:cursor-not-allowed disabled:opacity-50"
               aria-label={uiText("cloudRecoveryDialog.aria_label")}>×</Button>
           </div>
@@ -172,7 +172,7 @@ export function CloudRecoveryDialog({
               <span className="ui-type-meta text-t3">{uiText("cloudRecoveryDialog.CloudRecoveryDialog6")}{draft.sessionIds.length} {uiText("cloudRecoveryDialog.CloudRecoveryDialog7")}</span>
             </div>
             <div className="mt-2 max-h-64 overflow-y-auto rounded-md border border-line bg-bg">
-              {!loading && !loadError && sessions.length === 0 && <div className="grid min-h-24 place-items-center ui-type-control text-t3">{uiText("cloudRecoveryDialog.CloudRecoveryDialog8")}</div>}
+              {!loading && !loadError && sessions.length === 0 && <div className="ui-empty-state">{uiText("cloudRecoveryDialog.CloudRecoveryDialog8")}</div>}
               {sessions.map(session => <div key={session.session_id}
                 className="flex items-start gap-3 border-b border-line px-3 py-2 last:border-b-0 hover:bg-raised">
                 <ArchiveCoverThumbnail cloudSessionId={session.session_id} alt={uiText("cloudRecoveryDialog.alt", { value: session.title || uiText("cloudRecoveryDialog.alt.value") })} size="session-list" previewEnabled={false} />

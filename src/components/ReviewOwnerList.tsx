@@ -230,17 +230,17 @@ export function ReviewOwnerList({
         .some((value) => String(value).toLocaleLowerCase().includes(normalizedSearch)))
       : cards;
     return (
-      <section aria-label={uiText("reviewOwnerList.aria_label7")} className="flex min-h-0 flex-col gap-3">
+      <section aria-label={uiText("reviewOwnerList.aria_label7")} className="flex min-h-0 flex-1 flex-col gap-3">
         <div className="flex items-baseline justify-between">
           <h2 className="ui-type-section-title text-t1">{uiText("reviewOwnerList.ReviewOwnerList")}</h2>
           <span className="ui-type-meta text-t3">{visibleCards.length} {uiText("reviewOwnerList.ReviewOwnerList2")}</span>
         </div>
         {visibleCards.length === 0 ? (
-          <div className="px-4 py-8 text-center ui-type-control text-t3">
+          <div className="ui-empty-state ui-empty-fill">
             <p>{ownersLoading ? uiText("reviewOwnerList.ReviewOwnerList3") : normalizedSearch ? uiText("reviewOwnerList.ReviewOwnerList4") : uiText("reviewOwnerList.ReviewOwnerList5")}</p>
             {!ownersLoading && (normalizedSearch && onClearSearch
-              ? <Button variant="outline" type="button" className={`${compactFilterActionButtonClass} mt-3`} onClick={onClearSearch}>{uiText("reviewOwnerList.ReviewOwnerList6")}</Button>
-              : !normalizedSearch && <p className="mt-2">{uiText("reviewOwnerList.ReviewOwnerList7")}</p>)}
+              ? <Button variant="outline" type="button" className={compactFilterActionButtonClass} onClick={onClearSearch}>{uiText("reviewOwnerList.ReviewOwnerList6")}</Button>
+              : !normalizedSearch && <p>{uiText("reviewOwnerList.ReviewOwnerList7")}</p>)}
           </div>
         ) : (
           <div className="grid min-w-0 gap-2.5">
@@ -261,7 +261,7 @@ export function ReviewOwnerList({
   }
 
   return (
-    <section aria-label={uiText("reviewOwnerList.aria_label8")} className="flex min-h-0 flex-col gap-2">
+    <section aria-label={uiText("reviewOwnerList.aria_label8")} className="flex min-h-0 flex-1 flex-col gap-2">
       <div className="flex items-baseline justify-between">
         <h2 className="ui-type-section-title text-t1">{uiText("reviewOwnerList.ReviewOwnerList8")}</h2>
         <span className="ui-type-meta text-t3">{owner?.sessionCount ?? sessions.length} {uiText("reviewOwnerList.ReviewOwnerList9")}</span>
@@ -288,11 +288,11 @@ export function ReviewOwnerList({
           <Button variant="outline" type="button" disabled={selectedSessionIds.length === 0} className={compactFilterActionButtonClass} onClick={onClearSelection}>{uiText("reviewOwnerList.ReviewOwnerList17")}</Button>
         </div>
       )}
-      <div className="overflow-hidden rounded-xl border border-line bg-surface">
+      <div data-empty={sessions.length === 0 || undefined} className="review-session-list overflow-hidden rounded-xl border border-line bg-surface">
         {sessionsLoading ? (
-          <div className="px-3 py-8 text-center ui-type-control text-t3">{uiText("reviewOwnerList.ReviewOwnerList18")}</div>
+          <div className="ui-empty-state ui-empty-fill">{uiText("reviewOwnerList.ReviewOwnerList18")}</div>
         ) : sessions.length === 0 ? (
-          <div className="px-3 py-8 text-center ui-type-control text-t3">{uiText("reviewOwnerList.ReviewOwnerList19")}</div>
+          <div className="ui-empty-state ui-empty-fill">{uiText("reviewOwnerList.ReviewOwnerList19")}</div>
         ) : (
           sessions.map((session) => (
             <SessionRow

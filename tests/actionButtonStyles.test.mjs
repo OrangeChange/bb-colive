@@ -13,8 +13,8 @@ test("筛选清除入口复用高辨识度的强调色按钮样式", async () =>
   const search = await read("src/components/ReviewSearchControls.tsx");
 
   assert.match(styles, /export const filterActionButtonClass/);
-  assert.match(styles, /border-accent\/60/);
-  assert.match(styles, /bg-accent-subtle/);
+  assert.match(styles, /filterActionButtonClass = buttonVariants\(\{variant:"secondary"\}\)/);
+  assert.match(await read("src/components/shadcn/button.tsx"), /secondary:[\s\S]*bg-secondary text-secondary-foreground/);
   assert.match(liveFilter, /compactFilterActionButtonClass/);
   assert.match(shell, /compactFilterActionButtonClass/);
   assert.match(favorites, /filterActionButtonClass/);
@@ -29,7 +29,8 @@ test("数据删除入口统一使用危险色样式，管理退出使用激活�
   const search = await read("src/components/ReviewSearchControls.tsx");
 
   assert.match(styles, /export const dangerActionButtonClass/);
-  assert.match(styles, /border-danger\/50/);
+  assert.match(styles, /dangerActionButtonClass = buttonVariants\(\{variant:"destructive-outline"\}\)/);
+  assert.match(await read("src/components/shadcn/button.tsx"), /"destructive-outline": "border-destructive\/50 text-destructive/);
   assert.match(ownerList, /compactDangerActionButtonClass/);
   assert.match(favorites, /dangerActionButtonClass/);
   assert.match(search, /manageOpen \?[\s\S]*border-accent bg-accent-subtle text-accent/);

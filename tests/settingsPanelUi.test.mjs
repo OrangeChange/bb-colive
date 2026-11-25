@@ -40,7 +40,8 @@ test("设置开关不应被普通输入控件的宽度规则拉伸", () => {
   assert.match(source, /settings-control-field/);
   assert.match(css, /\.settings-control-row\s*>\s*\.settings-control-field/);
   assert.doesNotMatch(css, /\.settings-control-row\s*>\s*\.relative\s*,/);
-  assert.match(read("src/components/SettingsSwitch.tsx"), /className=\{`relative h-5 w-9/);
+  assert.match(read("src/components/SettingsSwitch.tsx"), /<Switch/);
+  assert.match(read("src/components/shadcn/switch.tsx"), /shrink-0[\s\S]*data-\[size=default\]:w-9/);
 });
 
 test("顶部设置分类下拉的箭头、提示和定位不应干扰菜单", () => {
@@ -95,7 +96,7 @@ test("设置面板提供主题、事件显示和副窗口真实控件", () => {
   assert.match(source, /双区/);
   assert.match(source, /多区/);
   assert.match(source, /GiftThresholdInput/);
-  assert.match(read("src/components/SettingsSwitch.tsx"), /role="switch"/);
+  assert.match(read("src/components/SettingsSwitch.tsx"), /<Switch/);
   assert.match(source, /弹幕窗/);
   assert.match(source, /礼物窗/);
   assert.match(source, /恢复本分类默认/);
@@ -163,7 +164,7 @@ test("样式工作区提供字体选择和文字描边开关", () => {
   assert.match(editor, /fontFamily/);
   assert.match(stylePanelSource, /list_installed_fonts/);
   assert.match(editor, /ThemeVisualPropertyField/);
-  assert.match(read("src/components/ThemeVisualPropertyField.tsx"), /SettingsFontFamilySelect/);
+  assert.match(read("src/components/ThemeVisualPropertyField.tsx"), /property === "fontFamily"[\s\S]*<SelectTrigger[\s\S]*fontFamilyOptions/);
   assert.match(stylePanelSource, /installedFontFamilies/);
 });
 
@@ -238,7 +239,7 @@ test("一级标题与二级标题拉开层级，顶部分类导航和三类下�
   assert.match(source, /settings-section-navigator settings-control-surface/);
   assert.match(source, /settings-control-menu/);
   assert.match(source, /settings-filter-row settings-control-surface/);
-  assert.match(listSelectSource, /settings-list-select-trigger settings-control-surface/);
+  assert.match(listSelectSource, /<UiSelect/);
   assert.match(css, /\.settings-control-surface\s*\{/);
   assert.match(css, /\.settings-filter-row\.is-active\s*\{/);
 });
@@ -259,20 +260,17 @@ test("设置面板恢复原有字号层级，字体下拉选项保持可读", ()
   assert.doesNotMatch(css, /\.settings-filter-row-toggle\s*\{[\s\S]*?font-size:\s*16px/);
   assert.match(css, /\.settings-filter-row-state\s*\{[\s\S]*?font-size:\s*12px[\s\S]*?line-height:\s*16px/);
   assert.match(read("src/components/SettingsListSelect.tsx"), /export function SettingsFontFamilySelect/);
-  assert.match(listSelectSource, /role="combobox"/);
-  assert.match(listSelectSource, /role="listbox"/);
-  assert.match(css, /\.settings-list-select-menu\s*\{[\s\S]*?max-height:/);
-  assert.match(css, /\.settings-list-select-menu-item\s*\{[\s\S]*?font-size:\s*14px[\s\S]*?line-height:\s*20px/);
+  assert.match(listSelectSource, /<UiSelect/);
+  assert.match(read("src/components/ui/Select.tsx"), /<SelectContent/);
+  assert.match(read("src/components/shadcn/select.tsx"), /max-h-\(--radix-select-content-available-height\)/);
+  assert.match(read("src/components/shadcn/select.tsx"), /data-slot="select-item"[\s\S]*text-sm/);
 });
 
 test("字体下拉菜单可滚动，当前字体与其他设置控件统一字号", () => {
-  const css = read("src/App.css");
-  const commonMenuIndex = css.indexOf(".settings-control-menu");
-  const fontMenuIndex = css.indexOf(".settings-list-select-menu {");
-  assert.ok(commonMenuIndex >= 0 && fontMenuIndex > commonMenuIndex);
-  const fontMenu = css.slice(fontMenuIndex, css.indexOf(".settings-list-select-menu-item", fontMenuIndex));
-  assert.match(fontMenu, /overflow-y:\s*auto/);
-  assert.match(listSelectSource, /settings-list-select-trigger settings-control-surface ui-type-control/);
+  const select = read("src/components/shadcn/select.tsx");
+  assert.match(select, /max-h-\(--radix-select-content-available-height\)/);
+  assert.match(select, /overflow-y-auto/);
+  assert.match(select, /data-slot="select-trigger"[\s\S]*text-sm/);
 });
 
 test("顶部设置分类下拉菜单保留完整列表并显示独立滚动条", () => {
@@ -494,8 +492,8 @@ test("设置页移除普通解释性备注且不承载样式入口", () => {
 });
 
 test("设置开关滑块以轨道左边缘为定位基准", () => {
-  assert.match(read("src/components/SettingsSwitch.tsx"), /absolute left-0\.5 top-0\.5/);
-  assert.match(read("src/components/SettingsSwitch.tsx"), /translate-x-\[17px\]/);
+  assert.match(read("src/components/shadcn/switch.tsx"), /SwitchPrimitive\.Thumb/);
+  assert.match(read("src/components/shadcn/switch.tsx"), /data-checked:translate-x-4[\s\S]*data-unchecked:translate-x-0/);
 });
 
 test("设置内框沿用主区域底色并给正文保留十六像素横向留白", () => {
@@ -588,9 +586,9 @@ test("字体列表在样式工作区按需加载并缓存", () => {
 });
 
 test("设置下拉会在打开时根据菜单实际高度重新定位", () => {
-  assert.match(listSelectSource, /menuRef\.current\?\.getBoundingClientRect\(\)\.height/);
-  assert.match(listSelectSource, /resolveSettingsMenuPosition/);
-  assert.match(listSelectSource, /ResizeObserver/);
+  assert.match(read("src/components/ui/Select.tsx"), /position="popper"/);
+  assert.match(read("src/components/shadcn/select.tsx"), /popupAlignment\(trigger\)/);
+  assert.match(read("src/components/shadcn/select.tsx"), /collisionPadding = 8/);
 });
 
 test("自适应设置行使用完整 data 属性名写入布局状态", () => {

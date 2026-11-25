@@ -122,25 +122,30 @@ test("主窗口动效使用统一时序并覆盖主要浮层和状态反馈", as
 
   assert.match(liveFilter, /ui-motion-filter-context/);
   assert.match(liveFilter, /ui-motion-enter/);
-  assert.match(connectBar, /ui-motion-enter/);
+  assert.match(connectBar, /ui-motion-enter|<PopoverContent|<DropdownMenuContent/);
   assert.match(reminder, /ui-motion-enter/);
-  assert.match(urgent, /ui-motion-enter/);
+  assert.match(urgent, /ui-motion-enter|<PopoverContent|<DropdownMenuContent/);
   assert.match(rankings, /ui-motion-enter/);
-  assert.match(contextMenu, /ui-motion-enter/);
+  assert.match(contextMenu, /ui-motion-enter|<PopoverContent|<DropdownMenuContent/);
   assert.match(reviewSearch, /ui-motion-enter/);
-  assert.match(sidebar, /ui-motion-enter/);
-  assert.match(reviewTimeline, /ui-motion-enter/);
+  assert.match(sidebar, /ui-motion-enter|<PopoverContent|<DropdownMenuContent/);
+  assert.match(reviewTimeline, /ui-motion-enter|<PopoverContent|<DropdownMenuContent/);
   assert.match(reviewOwnerFilters, /<ReviewFilterPopover/);
   assert.match(reviewSearch, /<ReviewFilterPopover/);
   assert.match(reviewFilterPopover, /className="ui-motion-enter review-filter-advanced-panel"/);
-  assert.match(confirmDialog, /ui-modal-overlay/);
-  assert.match(confirmDialog, /ui-modal-surface/);
-  assert.match(favoriteEditor, /ui-modal-overlay/);
-  assert.match(favoriteEditor, /ui-modal-surface/);
+  assert.match(confirmDialog, /<AlertDialogContent|<DialogContent/);
+  assert.match(confirmDialog, /ui-modal-surface|<AlertDialogContent|<DialogContent/);
+  assert.match(favoriteEditor, /<AlertDialogContent|<DialogContent/);
+  assert.match(favoriteEditor, /ui-modal-surface|<AlertDialogContent|<DialogContent/);
   assert.match(imagePreview, /ui-modal-overlay/);
-  assert.match(imagePreview, /ui-modal-surface/);
-  assert.match(dataExportDialog, /ui-modal-overlay/);
-  assert.match(dataExportDialog, /ui-modal-surface/);
+  assert.match(imagePreview, /ui-modal-surface|<AlertDialogContent|<DialogContent/);
+  assert.match(dataExportDialog, /<AlertDialogContent|<DialogContent/);
+  assert.match(dataExportDialog, /ui-modal-surface|<AlertDialogContent|<DialogContent/);
+  for (const path of ["dialog", "alert-dialog"]) {
+    const primitive = await read(`src/components/shadcn/${path}.tsx`);
+    assert.match(primitive, /data-open:animate-in/);
+    assert.match(primitive, /data-closed:animate-out/);
+  }
 });
 
 test("共享 Portal 内容由对应浮层管理外部交互，筛选子层保持 Radix 层级", async () => {
@@ -151,8 +156,9 @@ test("共享 Portal 内容由对应浮层管理外部交互，筛选子层保持
 
   assert.match(select, /onPointerDown=\{\(event\) => event\.stopPropagation\(\)\}/);
   assert.match(combobox, /onPointerDown=\{\(event\) => event\.stopPropagation\(\)\}/);
-  assert.match(searchControls, /<PopoverPrimitive\.Root[\s\S]*<PopoverPrimitive\.Portal>[\s\S]*<PopoverPrimitive\.Content/);
-  assert.match(popover, /<PopoverPrimitive\.Root[\s\S]*<PopoverPrimitive\.Portal>[\s\S]*<PopoverPrimitive\.Content/);
+  assert.match(searchControls, /<Popover[\s\S]*<PopoverContent/);
+  assert.match(popover, /<Popover[\s\S]*<PopoverContent/);
+  assert.match(await read("src/components/shadcn/popover.tsx"), /<PopoverPrimitive\.Portal>[\s\S]*<PopoverPrimitive\.Content/);
   assert.match(popover, /data-ui-overlay="true"/);
   assert.match(popover, /onInteractOutside=/);
 });

@@ -19,6 +19,12 @@ export function readUiSource(file, encoding = "utf8") {
   const tree = ts.createSourceFile(name, source, ts.ScriptTarget.Latest, true, name.endsWith("tsx") ? ts.ScriptKind.TSX : ts.ScriptKind.TS);
   const edits = [];
   function visit(node) {
+    if (ts.isCallExpression(node) && node.expression.getText(tree) === "uiSearchText" && node.arguments.every(ts.isStringLiteral)) {
+      const catalogs = ["zh-CN", "zh-Hant", "en", "ja"].map(language => JSON.parse(fs.readFileSync(new URL(`../../src/i18n/${language}.json`, import.meta.url), "utf8")));
+      const text = [...new Set(node.arguments.flatMap(argument => catalogs.map(catalog => catalog[argument.text] ?? messages[argument.text])))].join(" ").toLowerCase();
+      edits.push({ start: node.getStart(tree), end: node.end, text: JSON.stringify(text) });
+      return;
+    }
     if (ts.isCallExpression(node) && node.expression.getText(tree) === "uiText" && ts.isStringLiteral(node.arguments[0])) {
       const key = node.arguments[0].text;
       if (!(key in messages)) throw new Error(`未找到文案：${key}`);

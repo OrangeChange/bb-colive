@@ -24,7 +24,7 @@ const COLOR_PRESETS = localized(() => ([
   { label: uiText("themeColorField.COLOR_PRESETS.label11"), value: "#ef4444" }, { label: uiText("themeColorField.COLOR_PRESETS.label12"), value: "#64748b" },
 ] as const));
 
-export function ThemeColorField({ value, onChange, onPreviewChange, onPreviewCancel, label, allowTransparent = true, opaque = false, mixed = false, inline = false }: { opaque?: boolean; inline?: boolean; value: string; onChange: (value: string) => void; onPreviewChange?: (value: string) => void; onPreviewCancel?: () => void; label: string; allowTransparent?: boolean; mixed?: boolean }) {
+export function ThemeColorField({ value, onChange, onPreviewChange, onPreviewCancel, label, opaque = false, allowTransparent = !opaque, mixed = false, inline = false }: { opaque?: boolean; inline?: boolean; value: string; onChange: (value: string) => void; onPreviewChange?: (value: string) => void; onPreviewCancel?: () => void; label: string; allowTransparent?: boolean; mixed?: boolean }) {
   useUiLanguage();
   const trigger = useRef<HTMLButtonElement>(null);
   const panel = useRef<HTMLDivElement>(null);
@@ -140,7 +140,7 @@ export function ThemeColorField({ value, onChange, onPreviewChange, onPreviewCan
 
   const editor = <div ref={panel} className={`theme-color-popover${inline ? " is-inline" : ""}`} role={inline ? "group" : "dialog"} aria-modal={inline ? undefined : true} aria-label={uiText("themeColorField.aria_label", { label: label })} style={inline ? undefined : position ?? undefined}>
 
-      {!inline && <div className="theme-color-popover-header"><strong>{label}</strong><Button variant="outline" type="button" aria-label={uiText("themeColorField.aria_label2")} onClick={() => { cancelDrag(); setOpen(false); setPosition(null); trigger.current?.focus(); }}><LucideX aria-hidden="true" width="16" height="16" /></Button></div>}
+      {!inline && <div className="theme-color-popover-header"><strong>{label}</strong><Button size="icon-sm" variant="ghost" type="button" aria-label={uiText("themeColorField.aria_label2")} onClick={() => { cancelDrag(); setOpen(false); setPosition(null); trigger.current?.focus(); }}><LucideX aria-hidden="true" width="16" height="16" /></Button></div>}
       <div ref={presets} className="theme-color-presets" role="group" aria-label={uiText("themeColorField.aria_label3")} onKeyDown={event => {
         const buttons = [...event.currentTarget.querySelectorAll<HTMLButtonElement>("button")];
         const index = buttons.indexOf(event.target as HTMLButtonElement);
@@ -188,7 +188,7 @@ export function ThemeColorField({ value, onChange, onPreviewChange, onPreviewCan
       <div className="theme-color-precise-row">
         <Select value={format} onValueChange={next=>{const selected=next as ThemeColorFormat;setFormat(selected);if(opaque)setDraft(serializeThemeColor(savedColor.current,selected,true));else onChange(serializeThemeColor(color,selected));}}>
           <SelectTrigger aria-label={uiText("themeColorField.ariaLabel")} className="theme-color-format"><SelectValue/></SelectTrigger>
-          <SelectContent position="popper" align="start" className="theme-color-format-menu" data-ui-overlay="true" onPointerDown={event=>event.stopPropagation()}>{[{value:'hex',label:'HEX'},{value:'rgba',label:opaque?'RGB':'RGBA'},{value:'hsla',label:opaque?'HSL':'HSLA'}].map(option=><SelectItem key={option.value} value={option.value}>{option.label}</SelectItem>)}</SelectContent>
+          <SelectContent position="popper" className="theme-color-format-menu" data-ui-overlay="true" onPointerDown={event=>event.stopPropagation()}>{[{value:'hex',label:'HEX'},{value:'rgba',label:opaque?'RGB':'RGBA'},{value:'hsla',label:opaque?'HSL':'HSLA'}].map(option=><SelectItem key={option.value} value={option.value}>{option.label}</SelectItem>)}</SelectContent>
         </Select>
         {inline && !opaque && <label className="theme-color-opacity"><span>{uiText("themeColorField.ThemeColorField.editor")}</span><ThemeNumberInput label={uiText("themeColorField.label")} value={Number((color.a*100).toFixed(2))} min={0} max={100}
           onChange={opacity=>onChange(serializeThemeColor({...color,a:opacity/100},format))}
@@ -196,7 +196,7 @@ export function ThemeColorField({ value, onChange, onPreviewChange, onPreviewCan
         <label className="theme-color-precise"><span>{uiText("themeColorField.ThemeColorField.editor2")}</span><Input value={draft} onChange={event=>{const next=event.target.value;setDraft(next);if(parseThemeColor(next))onChange(next);}} onBlur={()=>setDraft(opaque?serializeThemeColor(savedColor.current,formatRef.current,true):value)}/></label>
       </div>
       <div className="theme-color-actions">
-        {allowTransparent && !opaque && <Button variant="ghost" type="button" className="settings-icon-action" aria-label={uiText("themeColorField.aria_label4")} title={uiText("themeColorField.title")} onClick={() => onChange("transparent")}><Eraser size={16} aria-hidden="true" /></Button>}
+        {allowTransparent && <Button variant="ghost" type="button" className="settings-icon-action" aria-label={uiText("themeColorField.aria_label4")} title={uiText("themeColorField.title")} onClick={() => onChange("transparent")}><Eraser size={16} aria-hidden="true" /></Button>}
         <Button variant="ghost" type="button" className="settings-icon-action" aria-label={uiText("themeColorField.aria_label5")} disabled={!eyeDropper} title={eyeDropper ? uiText("themeColorField.title2") : uiText("themeColorField.title3")} onClick={() => { if (!eyeDropper) return; setEyeDropperError(""); void new eyeDropper().open().then((result) => { const next = parseThemeColor(result.sRGBHex); if (next) onChange(serializeThemeColor(next, format, opaque)); }).catch((error: unknown) => { if (!(error instanceof DOMException && error.name === "AbortError")) setEyeDropperError(uiText("themeColorField.onClick")); }); }}><Pipette size={16} aria-hidden="true" /></Button>
       </div>
       {eyeDropperError && <p className="theme-color-error" role="status">{eyeDropperError}</p>}
@@ -206,7 +206,7 @@ export function ThemeColorField({ value, onChange, onPreviewChange, onPreviewCan
   return <div className="theme-color-field">
     <Button variant="outline" ref={trigger} type="button" className={`theme-color-trigger${transparent || mixed ? " is-transparent" : ""}`} aria-label={label} aria-expanded={open} onClick={() => setOpen((current) => { if (current) setPosition(null); return !current; })}>
       <span className="theme-color-swatch" style={transparent || mixed ? undefined : { background: value }} aria-hidden="true" />
-      <span>{mixed ? uiText("themeColorField.ThemeColorField3") : transparent ? uiText("themeColorField.ThemeColorField4") : value}</span>
+      <span>{mixed ? uiText("themeColorField.ThemeColorField3") : transparent ? uiText("themeColorField.ThemeColorField4") : opaque && parsed ? serializeThemeColor(parsed, format, true) : value}</span>
     </Button>
     {open && position && createPortal(editor, document.body)}
   </div>;

@@ -7,6 +7,7 @@ import {
   SelectItem,
   SelectGroup,
   SelectLabel,
+  SelectSeparator,
 } from "../shadcn/select";
 import { groupUiSelectOptions, type UiSelectOption } from "./selectOptions";
 export type { UiSelectOption } from "./selectOptions";
@@ -69,8 +70,9 @@ export function UiSelect({
 }: UiSelectProps) {
   const selected = options.find((option) => option.value === value);
   const renderOption = (option: UiSelectOption) => (
+    <Fragment key={option.value || EMPTY_VALUE}>
+    {option.separatorBefore && <SelectSeparator />}
     <SelectItem
-      key={option.value || EMPTY_VALUE}
       value={toInternalValue(option.value)}
       disabled={option.disabled}
       title={option.title ?? option.label}
@@ -79,6 +81,7 @@ export function UiSelect({
         {option.label}
       </span>
     </SelectItem>
+    </Fragment>
   );
   return (
     <Select
@@ -109,7 +112,6 @@ export function UiSelect({
       </SelectTrigger>
       <SelectContent
         position="popper"
-        align="start"
         collisionPadding={8}
         data-ui-overlay="true"
         onPointerDown={(event) => event.stopPropagation()}

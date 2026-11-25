@@ -3,7 +3,7 @@ import { Button } from "./shadcn/button";
 import { Input } from "./shadcn/input";
 import { useUiLanguage } from "../i18n/react.ts";
 import { localized, uiText } from "../i18n/index.ts";
-import { ChevronDown as LucideChevronDown, Mic, SlidersHorizontal, RotateCcw } from "lucide-react";
+import { ChevronDown as LucideChevronDown, Mic, SlidersHorizontal } from "lucide-react";
 import { useEffect, useMemo, useRef, useState, useSyncExternalStore, type DragEvent } from "react";
 import { openUrl } from "@tauri-apps/plugin-opener";
 import { ConnectBar } from "./ConnectBar";
@@ -240,7 +240,7 @@ function VoicePronunciationEditor({ rules, onChange }: { rules: VoicePronunciati
             />
             <div className="voice-pronunciation-actions flex shrink-0 items-center gap-2">
               <PanelSwitch label={uiText("voicePanel.label", { value: rule.source || uiText("voicePanel.label.value") })} checked={rule.enabled} onChange={() => toggleRule(rule)} />
-              <Button variant="outline" type="button" aria-label={uiText("voicePanel.aria_label3", { value: rule.source || uiText("voicePanel.aria_label.value") })} className="voice-pronunciation-delete rounded px-1.5 ui-type-control text-t3 transition-colors hover:bg-danger/10 hover:text-danger focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-danger" onClick={() => removeRule(rule.id)}>×</Button>
+              <Button size="icon-sm" variant="ghost" type="button" aria-label={uiText("voicePanel.aria_label3", { value: rule.source || uiText("voicePanel.aria_label.value") })} className="voice-pronunciation-delete rounded px-1.5 ui-type-control text-t3 transition-colors hover:bg-danger/10 hover:text-danger focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-danger" onClick={() => removeRule(rule.id)}>×</Button>
             </div>
           </div>
         ))}
@@ -350,7 +350,7 @@ function FishReferenceVoiceManager({ fishAudio, updateFishAudio, openFishResourc
   };
 
   return (
-    <div ref={pickerRef} className="fish-reference-picker relative flex min-w-0 w-full items-center gap-2">
+    <div ref={pickerRef} className="fish-reference-picker voice-select-tone relative flex min-w-0 w-full items-center gap-2">
       <div className="relative min-w-0 flex-1">
         <Button variant="outline" type="button" aria-label={uiText("voicePanel.aria_label4")} aria-haspopup="listbox" aria-expanded={isOpen} className={`${controlClass} ${selectClass} fish-reference-picker-trigger flex items-center justify-between gap-2 text-left`} onClick={() => setIsOpen((open) => !open)}>
           <span className="min-w-0 overflow-hidden text-ellipsis whitespace-nowrap">{currentPreset ? optionLabel(currentPreset) : currentId ? uiText("voicePanel.FishReferenceVoiceManager", { value: currentId.slice(0, 8) }) : uiText("voicePanel.FishReferenceVoiceManager2")}</span>
@@ -438,7 +438,7 @@ function VoiceTemplateComposer({ category, segments, onChange }: { category: Voi
           segment.kind === "field" ? (
             <span
               key={`${segment.kind}-${segment.field}-${index}`}
-              className={`voice-template-module inline-flex min-w-0 shrink-0 items-stretch whitespace-nowrap overflow-hidden rounded-md border border-accent/35 bg-accent-subtle ${dragIndex === index ? "opacity-60" : ""}`}
+              className={`voice-template-module inline-flex min-w-0 shrink-0 items-center whitespace-nowrap overflow-hidden rounded-md border border-accent/35 bg-accent-subtle ${dragIndex === index ? "opacity-60" : ""}`}
               onDragOver={(event) => {
                 event.preventDefault();
                 event.dataTransfer.dropEffect = "move";
@@ -451,7 +451,7 @@ function VoiceTemplateComposer({ category, segments, onChange }: { category: Voi
               }}
             >
               <span
-                className="voice-template-drag-handle inline-flex min-w-0 cursor-grab items-center gap-1 px-2 py-1 ui-type-meta text-accent-text outline-none active:cursor-grabbing focus-visible:ring-2 focus-visible:ring-accent-ring"
+                className="voice-template-drag-handle inline-flex min-w-0 cursor-grab items-center gap-1 pl-2 pr-0 py-1 ui-type-meta text-accent-text outline-none active:cursor-grabbing focus-visible:ring-2 focus-visible:ring-accent-ring"
                 role="button"
                 tabIndex={0}
                 draggable={true}
@@ -466,12 +466,12 @@ function VoiceTemplateComposer({ category, segments, onChange }: { category: Voi
                 <span aria-hidden="true" className="select-none text-t3 opacity-70">⠿</span>
                 <span className="truncate">{FIELD_LABELS[segment.field]}</span>
               </span>
-              <Button variant="outline"
+              <Button variant="ghost" size="icon-xs"
                 type="button"
                 aria-label={uiText("voicePanel.aria_label9", { value: FIELD_LABELS[segment.field] })}
                 title={uiText("voicePanel.title2")}
                 onClick={() => onChange(normalizeSegments(editableSegments.filter((_, itemIndex) => itemIndex !== index)))}
-                className="voice-template-delete shrink-0 px-1.5 ui-type-meta text-t3 text-accent-text/75 transition-colors hover:bg-accent/15 hover:text-accent-text focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent-ring"
+                className="voice-template-delete size-5 shrink-0 ui-type-meta text-t3 text-accent-text/75 transition-colors hover:bg-accent/15 hover:text-accent-text focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent-ring"
               >
                 ×
               </Button>
@@ -756,7 +756,7 @@ export function VoicePanel() {
                 </SettingRow>
                 {settings.engine === "custom-http" || settings.engine === "fish-audio" ? null : (
                   <SettingRow label={uiText("voicePanel.label4")} hint={activeVoice?.local ? uiText("voicePanel.hint") : undefined}>
-                    <UiSelect ariaLabel={uiText("voicePanel.ariaLabel2")} size="standard" className={selectClass} options={engineVoiceOptions} value={engineVoiceName} onValueChange={changeVoice} />
+                    <UiSelect ariaLabel={uiText("voicePanel.ariaLabel2")} size="standard" className={`${selectClass} voice-select-tone`} options={engineVoiceOptions} value={engineVoiceName} onValueChange={changeVoice} />
                   </SettingRow>
                 )}
               </div>
@@ -785,7 +785,7 @@ export function VoicePanel() {
                     <SettingRow label={uiText("voicePanel.label12")}><SettingsChoiceControl label={uiText("voicePanel.label13")} options={CUSTOM_HTTP_AUTH_OPTIONS} value={settings.customHttp.authType} onChange={(value) => updateCustomHttp({ authType: value as CustomHttpVoiceSettings["authType"] })} /></SettingRow>
                     {settings.customHttp.authType !== "none" && <SettingRow label="API Key"><Input aria-label={uiText("voicePanel.aria_label16")} type="password" autoComplete="off" className={controlClass} value={settings.customHttp.apiKey} onChange={(event) => updateCustomHttp({ apiKey: event.target.value })} /></SettingRow>}
                     <SettingRow label={uiText("voicePanel.label7")}><Input aria-label={uiText("voicePanel.aria_label17")} className={controlClass} value={settings.customHttp.model} onChange={(event) => updateCustomHttp({ model: event.target.value })} /></SettingRow>
-                    <SettingRow label={uiText("voicePanel.label14")}><Input aria-label={uiText("voicePanel.aria_label18")} className={controlClass} value={customVoiceName} onChange={(event) => changeCustomVoice(event.target.value)} /></SettingRow>
+                    <SettingRow label={uiText("voicePanel.label14")}><Input aria-label={uiText("voicePanel.aria_label18")} className={`${controlClass} voice-select-tone`} value={customVoiceName} onChange={(event) => changeCustomVoice(event.target.value)} /></SettingRow>
                     <SettingRow label={uiText("voicePanel.label15")} hint={uiText("voicePanel.hint3")}><Input aria-label={uiText("voicePanel.aria_label19")} className={controlClass} value={settings.customHttp.textField} onChange={(event) => updateCustomHttp({ textField: event.target.value })} /></SettingRow>
                     <SettingRow label={uiText("voicePanel.label16")} hint={uiText("voicePanel.hint4")}><Input aria-label={uiText("voicePanel.aria_label20")} className={controlClass} value={settings.customHttp.voiceField} onChange={(event) => updateCustomHttp({ voiceField: event.target.value })} /></SettingRow>
                     <SettingRow label={uiText("voicePanel.label17")} hint={uiText("voicePanel.hint4")}><Input aria-label={uiText("voicePanel.aria_label21")} className={controlClass} value={settings.customHttp.modelField} onChange={(event) => updateCustomHttp({ modelField: event.target.value })} /></SettingRow>
@@ -873,7 +873,7 @@ export function VoicePanel() {
             </section>
 
             <section className={`${sectionClass} flex justify-end`}>
-              <Button variant="outline" type="button" className={`${controlClass} border-danger/40 text-danger`} disabled={testBusy} title={uiText("common.restoreDefaults")} aria-label={uiText("common.restoreDefaults")} onClick={reset}><RotateCcw size={16} aria-hidden="true" /></Button>
+              <Button variant="outline" type="button" className={`${controlClass} border-danger/40 text-danger`} disabled={testBusy} title={uiText("common.restoreDefaults")} aria-label={uiText("common.restoreDefaults")} onClick={reset}>{uiText("common.restoreDefaults")}</Button>
             </section>
           </div>
         </section>
