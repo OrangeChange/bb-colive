@@ -4413,7 +4413,6 @@
   "backend.theme_store.prepare_theme_root2": "无法访问主题目录状态",
   "backend.theme_store.colliding_short_ids_use_different_theme_directories": "同名主题",
   "backend.theme_store.punctuation_only_id_difference_still_uses_a_distinct_directory": "同名主题",
-  "backend.theme_store.summary_omits_theme_content": "一",
   "backend.theme_store.save_as_copies_declared_assets_into_an_independent_theme_directory": "副本",
   "backend.theme_store.migration_does_not_collide_with_dotted_theme_names": "native/主题.migrating",
   "backend.window_snap.install2": "窗口吸附状态不可用",

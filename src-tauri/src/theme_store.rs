@@ -1094,7 +1094,7 @@ mod tests {
     fn summary_omits_theme_content() {
         let result = summary(&json!({
             "themeId":"one", "mode":"native", "origin":"custom", "revision":1,
-            "metadata":{"name":ui_text!("backend.theme_store.summary_omits_theme_content"),"author":"","version":"1.0.0","updatedAt":"now"},
+            "metadata":{"name":"一","author":"","version":"1.0.0","updatedAt":"now"},
             "settings":{"large":"content"}, "assets":[{"path":"large.png"}]
         }))
         .unwrap();

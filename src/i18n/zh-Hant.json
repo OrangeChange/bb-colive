@@ -463,7 +463,6 @@
   "backend.theme_store.program_style_write_error": "無法寫入程式目錄中的 style 資料夾：{error}。請調整資料夾權限或將程式安裝至可寫入位置後重試",
   "backend.theme_store.punctuation_only_id_difference_still_uses_a_distinct_directory": "同名主題",
   "backend.theme_store.save_as_copies_declared_assets_into_an_independent_theme_directory": "複本",
-  "backend.theme_store.summary_omits_theme_content": "一",
   "backend.theme_store.theme_directory_name": "主題識別碼無效",
   "backend.theme_store.theme_root": "無法確定程式目錄：{error}",
   "backend.theme_store.theme_root2": "無法確定程式目錄",

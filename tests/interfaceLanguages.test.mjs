@@ -26,7 +26,7 @@ test("固定选项的已有引用随语言切换更新", async () => {
   try {
     assert.equal(SETTINGS_SECTIONS.find(x => x.id === "review").label, "回看");
     messages.setUiLanguage("en");
-    assert.equal(SETTINGS_SECTIONS.find(x => x.id === "review").label, "Stream history");
+    assert.equal(SETTINGS_SECTIONS.find(x => x.id === "review").label, "History");
     assert.ok(Object.keys(SETTINGS_SECTIONS).length > 0);
   } finally { messages.setUiLanguage("zh-CN"); }
 });
@@ -53,4 +53,20 @@ test("独立更新窗口可读取界面语言，安装计划传递所选语言",
   assert.match(helper, /generate_handler!\[[\s\S]*crate::get_ui_language/);
   assert.match(helper, /set_language\(plan\.ui_language/);
   assert.match(commands, /plan\.ui_language = Some\(crate::ui_messages::language\(\)/);
+});
+
+test("短文案保留历史含义并区分总数与未读消息", () => {
+  try {
+    messages.setUiLanguage("en");
+    assert.equal(messages.uiText("common.review"), "History");
+    assert.equal(messages.uiText("settings.language"), "Language");
+    assert.equal(messages.uiText("reviewOwnerList.ReviewOwnerList"), "Streamer history");
+    assert.equal(messages.uiText("reviewFavoritesPanel.ReviewFavoritesPanel3"), "");
+    assert.equal(messages.uiText("eventList.EventList4"), " new");
+    assert.equal(messages.uiText("partitionColumn.REGION_LABEL.superChat.emptyLabel"), "No Super Chats");
+    messages.setUiLanguage("ja");
+    assert.equal(messages.uiText("common.review"), "履歴");
+    assert.equal(messages.uiText("reviewOwnerList.ReviewOwnerList"), "配信者の履歴");
+    assert.equal(messages.uiText("settings.language"), "言語");
+  } finally { messages.setUiLanguage("zh-CN"); }
 });

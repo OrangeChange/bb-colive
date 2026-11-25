@@ -29,6 +29,8 @@
 | 个性播报 | Custom audio | 個人化播報 | カスタム音声 |
 | 粉丝牌 | Fan medal | 粉絲牌 | ファンメダル |
 | 盈利／亏损 | Gain / Loss | 獲利／虧損 | 利益／損失 |
-| 回看 | Stream history | 直播紀錄 | 配信履歴 |
+| 回看 | History | 直播紀錄 | 履歴 |
 
 英文按句意区分Membership与Member，例如Member count和Member entry。日文说明可将大航海解释为有料メンバーシップ，将红包注为紅包（ホンバオ）；紧凑标签保留专有名称。公开DOM类、配置标识和已有数据字段不随界面译名改动。
+
+英文和日文的历史界面使用History／履歴，主播档案使用Streamer history／配信者の履歴。范围、最低等级、删除与覆盖后果保留完整含义；计数量词按上下文省略，未读数量的new继续保留。
