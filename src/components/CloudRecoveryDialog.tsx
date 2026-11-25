@@ -1,3 +1,4 @@
+import { formatUiDateTime } from "../i18n/format.ts";
 import { useUiLanguage } from "../i18n/react.ts";
 import { localized, uiText } from "../i18n/index.ts";
 import { useEffect, useId, useRef, useState } from 'react';
@@ -28,7 +29,7 @@ const dateLabel = (value?: string | null) => {
   if (!value) return uiText("cloudRecoveryDialog.dateLabel");
   const time = new Date(recoveryTimestamp(value) ?? NaN);
   return Number.isFinite(time.getTime())
-    ? time.toLocaleString('zh-CN', { hour12: false, year: 'numeric', month: '2-digit', day: '2-digit', hour: '2-digit', minute: '2-digit' })
+    ? formatUiDateTime(time)
     : uiText("cloudRecoveryDialog.dateLabel");
 };
 

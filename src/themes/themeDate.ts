@@ -1,3 +1,4 @@
+import { formatUiDateTime } from "../i18n/format.ts";
 import { uiText } from "../i18n/index.ts";
 const pad = (value: number) => String(value).padStart(2, '0');
 const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
@@ -10,8 +11,7 @@ function dateParts(date: Date, timeZone?: string): Record<string, string> {
 }
 
 function localDateTime(date: Date, timeZone?: string): string {
-  const parts = dateParts(date, timeZone);
-  return `${parts.year}-${parts.month}-${parts.day} ${parts.hour}:${parts.minute}`;
+  return formatUiDateTime(date, { timeZone });
 }
 
 export function formatThemeTimestamp(date = new Date(), timeZone?: string): string {

@@ -23,6 +23,11 @@ export function normalizeUiLanguage(value: unknown): UiLanguage {
 
 export function getUiLanguage(): UiLanguage { return language; }
 
+/** 搜索收录所有界面语言，不改变当前显示语言。 */
+export function uiSearchText(...keys: UiMessageKey[]): string {
+  return [...new Set(keys.flatMap(key => UI_LANGUAGE_OPTIONS.map(option => catalogs[option.value][key] ?? zhCN[key])))].join(" ").toLowerCase();
+}
+
 export function subscribeUiLanguage(listener: () => void): () => void {
   listeners.add(listener);
   return () => { listeners.delete(listener); };

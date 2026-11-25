@@ -1,3 +1,4 @@
+import { formatUiNumber } from "../i18n/format.ts";
 import { useUiLanguage } from "../i18n/react.ts";
 import { uiText } from "../i18n/index.ts";
 import { useGeneralSettings } from '../generalSettings'
@@ -56,7 +57,7 @@ export function RankUserRow({ user, kind, guardIdentityDisplayMode = 'icon', sho
       </div>
     </div>
     <span className="shrink-0 font-mono ui-type-section-title tabular-nums text-t1">
-      {kind === 'guard' ? <>{user.accompany?.toLocaleString('zh-CN') ?? '—'}<span className="ml-0.5 font-ui ui-type-meta text-t2">{uiText("roomInsightsView.RankUserRow")}</span></> : user.score?.toLocaleString('zh-CN') ?? '—'}
+      {kind === 'guard' ? <>{formatUiNumber(user.accompany)}<span className="ml-0.5 font-ui ui-type-meta text-t2">{uiText("roomInsightsView.RankUserRow")}</span></> : formatUiNumber(user.score)}
     </span>
   </div>
 }
@@ -80,7 +81,7 @@ export interface OverviewMetricsProps {
 }
 export function OverviewMetrics({ viewers, watched, likes, fansClub, guards, medalName, duration }: OverviewMetricsProps) {
   useUiLanguage();
-  const number = (value?: number) => value?.toLocaleString('zh-CN') ?? '—'
+  const number = (value?: number) => formatUiNumber(value)
   const metrics = [
     [uiText("roomInsightsView.OverviewMetrics.metrics"), viewers ?? '—', uiText("roomInsightsView.OverviewMetrics.metrics2")],
     [uiText("roomInsightsView.OverviewMetrics.metrics3"), number(watched), uiText("roomInsightsView.OverviewMetrics.metrics4")],

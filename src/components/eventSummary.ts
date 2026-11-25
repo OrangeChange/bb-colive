@@ -1,3 +1,4 @@
+import { formatUiCurrency, formatUiNumber } from "../i18n/format.ts";
 import { uiText } from "../i18n/index.ts";
 import { MsgType, type DanmakuEvent, type GiftInfo } from "../protocol/types.ts";
 
@@ -40,12 +41,12 @@ export function summarizeGiftEvents(events: DanmakuEvent[], visibleIndices: numb
 }
 
 function money(value: number): string {
-  return `¥${value.toLocaleString("zh-CN", { minimumFractionDigits: value % 1 ? 2 : 0, maximumFractionDigits: 2 })}`;
+  return formatUiCurrency(value);
 }
 
 export function formatGiftSummary(summary: GiftSummary): string {
   const blind = summary.blindCount > 0
-    ? uiText("liveSummary.blindProfit", { sign: summary.blindProfitRmb > 0 ? "▲+" : summary.blindProfitRmb < 0 ? "▼-" : "", amount: money(Math.abs(summary.blindProfitRmb)).slice(1) })
+    ? uiText("liveSummary.blindProfit", { sign: summary.blindProfitRmb > 0 ? "▲+" : summary.blindProfitRmb < 0 ? "▼-" : "", amount: formatUiNumber(Math.abs(summary.blindProfitRmb), { minimumFractionDigits: summary.blindProfitRmb % 1 ? 2 : 0, maximumFractionDigits: 2 }) })
     : "";
   return uiText("liveSummary.total", { amount: money(summary.totalRmb), blind });
 }

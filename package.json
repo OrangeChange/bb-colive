@@ -6,7 +6,7 @@
   "scripts": {
     "dev": "vite",
     "dev:detached": "wscript.exe //B //NoLogo scripts/start-dev-detached.vbs",
-    "build": "npm run themes:prepare && node scripts/build-laplace-product.mjs && node scripts/package-license-notices.mjs && tsc && vite build",
+    "build": "npm run translations:check && npm run themes:prepare && node scripts/build-laplace-product.mjs && node scripts/package-license-notices.mjs && tsc && vite build",
     "test": "node --experimental-transform-types --test tests/*.test.mjs",
     "preview": "vite preview",
     "tauri": "tauri",
@@ -14,7 +14,8 @@
     "predev": "npm run themes:prepare && node scripts/build-laplace-product.mjs",
     "translations:export": "node scripts/export-ui-translations.mjs",
     "licenses:collect": "node scripts/collect-third-party-notices.mjs",
-    "pretest": "npm run themes:prepare"
+    "pretest": "npm run themes:prepare",
+    "translations:check": "node scripts/check-ui-translations.mjs"
   },
   "dependencies": {
     "@laplace.live/ws": "^8.0.4",

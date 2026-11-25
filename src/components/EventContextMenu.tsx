@@ -1,3 +1,4 @@
+import { formatUiDateTime } from "../i18n/format.ts";
 import { useUiLanguage } from "../i18n/react.ts";
 import { uiText } from "../i18n/index.ts";
 import { Funnel as LucideFunnel, LocateFixed as LucideLocateFixed, Volume2 as LucideVolume2, Tag as LucideTag, UserRound as LucideUserRound, Star as LucideStar, Bookmark as LucideBookmark, Copy as LucideCopy, Sparkles as LucideSparkles, Ellipsis as LucideEllipsis } from "lucide-react";
@@ -147,15 +148,7 @@ export function resolveVisibleShortcutActions(
 
 function formatEventTime(ts: number): string {
   if (!Number.isFinite(ts) || ts <= 0) return uiText("eventContextMenu.formatEventTime");
-  return new Date(ts).toLocaleString("zh-CN", {
-    year: "numeric",
-    month: "2-digit",
-    day: "2-digit",
-    hour: "2-digit",
-    minute: "2-digit",
-    second: "2-digit",
-    hour12: false,
-  });
+  return formatUiDateTime(ts, { second: "2-digit" });
 }
 
 export function EventContextMenu({ event, nickname, eventFontSize, shortcutActions, eventAreaRef, scope = "live", handlers, remoteOpenRequest, onInteractionChange, dismissRevision }: EventContextMenuProps) {

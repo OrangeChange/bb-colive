@@ -1,3 +1,4 @@
+import { formatUiCurrency } from "../i18n/format.ts";
 import { useUiLanguage } from "../i18n/react.ts";
 import { uiText } from "../i18n/index.ts";
 import { Pin as LucidePin, ChevronRight as LucideChevronRight } from "lucide-react";
@@ -171,7 +172,7 @@ function SessionRow({
           <span data-review-session-quality={session.quality} title={noticeLabel || undefined} aria-label={qualityNotice ? `${formatArchiveQuality(session.quality)}：${qualityNotice.message}` : formatArchiveQuality(session.quality)} className={qualityNotice ? "text-warning" : "text-t3"}>{formatArchiveQuality(session.quality)}</span>
           <span>{formatArchiveSessionDuration(session.durationMs, session.status)}</span>
           <span>{session.eventCount ?? 0} {uiText("reviewOwnerList.SessionRow2")}</span>
-          <span>{session.paidTotal ?? 0} {uiText("reviewOwnerList.SessionRow3")}</span>
+          <span>{formatUiCurrency(session.paidTotal ?? 0)} {uiText("reviewOwnerList.SessionRow3")}</span>
           <span>{session.favoriteCount ?? 0} {uiText("reviewOwnerList.SessionRow4")}</span>
         </span>
       </button>

@@ -1,3 +1,4 @@
+import { formatUiNumber } from "../i18n/format.ts";
 import { useUiLanguage } from "../i18n/react.ts";
 import { uiText } from "../i18n/index.ts";
 import { useRoomInsights } from '../hooks/useRoomInsights'
@@ -14,7 +15,7 @@ export function RoomOverviewBar() {
   const fansClub = resolveMetric(base?.fansClub, overview.dataUpdatedAt, stats.fansClub, stats.fansClubUpdatedAt)
   const guards = resolveMetric(base?.guards, overview.dataUpdatedAt, guardFirst.data?.total, guardFirst.dataUpdatedAt)
   const duration = insightsDuration(timing.startedAt, timing.endedAt, observedAt)
-  const number = (value?: number) => value?.toLocaleString('zh-CN') ?? '—'
+  const number = (value?: number) => formatUiNumber(value)
   const summary = [uiText("roomOverviewBar.RoomOverviewBar.summary", { value: viewers.text ?? '—' }), uiText("roomOverviewBar.RoomOverviewBar.summary2", { value: number(watched) }), uiText("roomOverviewBar.RoomOverviewBar.summary3", { value: number(likes) }), `${base?.medalName || uiText("roomOverviewBar.RoomOverviewBar.summary4")} ${number(fansClub)}`, uiText("roomOverviewBar.RoomOverviewBar.summary5", { value: number(guards) }), uiText("roomOverviewBar.RoomOverviewBar.summary6", { duration: duration })].join(' · ')
   return <div className="flex w-max min-w-full flex-nowrap items-center gap-x-2" aria-label={uiText("roomOverviewBar.aria_label")} title={[title, area, summary].filter(Boolean).join('\n')}>
     <OverviewMetrics

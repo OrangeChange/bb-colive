@@ -6,6 +6,7 @@ import { useUiLanguage } from "../../src/i18n/react.ts";
 import { applyThemeToDocument } from "../../src/theme.ts";
 import "../../src/App.css";
 import "../../src/components/nativeThemeEditor.css";
+import "../../src/components/themeWorkspace.css";
 mockWindows("main");
 mockIPC(
   async (c) =>
@@ -37,6 +38,12 @@ const { NativePriceGradientControls } =
   await import("../../src/components/NativePriceGradientControls.tsx");
 const { normalizePriceGradient } =
   await import("../../src/themes/nativePriceGradient.ts");
+const { ThemeMetadataDetails } =
+  await import("../../src/components/ThemeMetadataDetails.tsx");
+const { OverviewMetrics } =
+  await import("../../src/components/RoomInsightsView.tsx");
+const { createBuiltinNativeTheme } =
+  await import("../../src/themes/nativeBuiltinThemes.ts");
 const params = new URLSearchParams(location.search);
 function Audit() {
   useUiLanguage();
@@ -48,6 +55,27 @@ function Audit() {
     normalizePriceGradient(undefined),
   );
   const [tier, setTier] = useState(gradient.bands[0].id);
+  if (params.get("mode") === "formats") {
+    const document = createBuiltinNativeTheme("native-default");
+    document.metadata.updatedAt = "2026-09-25 21:05:42 +08:00";
+    return (
+      <div style={{ padding: 12 }}>
+        <OverviewMetrics
+          watched={1234567}
+          likes={987654}
+          guards={1000}
+          duration="01:23:45"
+        />
+        <ThemeMetadataDetails document={document} load={async () => document} />
+        <GiftThresholdInput
+          value={1234.5}
+          compact
+          mode="unit"
+          onChange={() => {}}
+        />
+      </div>
+    );
+  }
   if (params.get("mode") === "tiers")
     return (
       <NativePriceGradientControls

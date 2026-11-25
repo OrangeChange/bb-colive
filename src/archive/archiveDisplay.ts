@@ -1,3 +1,4 @@
+import { formatUiDateTime } from "../i18n/format.ts";
 import { uiText } from "../i18n/index.ts";
 import type { ArchiveQuality, ArchiveRecordingStatus, ArchiveSessionStatus, ArchiveSessionSort, ArchiveSortDirection, ReviewOwnerEventQuery } from "./archiveTypes.ts";
 
@@ -18,16 +19,12 @@ export function formatArchiveQuality(quality: ArchiveQuality | null | undefined)
   return quality === "complete" ? uiText("archiveDisplay.formatArchiveQuality") : quality === "incomplete" ? uiText("archiveDisplay.formatArchiveQuality2") : uiText("archiveDisplay.formatArchiveQuality3");
 }
 
-function pad(value: number): string {
-  return String(value).padStart(2, "0");
-}
-
 /** 回看界面统一使用本地时间，并明确显示到分钟。 */
 export function formatArchiveDateTime(timestamp: number | null | undefined): string {
   if (!Number.isFinite(timestamp)) return uiText("archiveDisplay.formatArchiveDateTime");
   const date = new Date(timestamp as number);
   if (!Number.isFinite(date.getTime())) return uiText("archiveDisplay.formatArchiveDateTime");
-  return `${date.getFullYear()}-${pad(date.getMonth() + 1)}-${pad(date.getDate())} ${pad(date.getHours())}:${pad(date.getMinutes())}`;
+  return formatUiDateTime(date);
 }
 
 /** 没有结束时间不等于进行中；只有 active 才能显示进行中。 */

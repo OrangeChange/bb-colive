@@ -4076,7 +4076,7 @@ html[data-window="gift"] body {
 .gift-threshold-input-control {
   display: flex;
   flex: 0 0 auto;
-  width: 112px;
+  min-width: 112px;
   height: 32px;
   align-items: center;
   gap: 4px;
@@ -4090,7 +4090,6 @@ html[data-window="gift"] body {
 }
 
 .gift-threshold-input.is-compact .gift-threshold-input-control {
-  width: 112px;
   height: 28px;
 }
 
@@ -4101,7 +4100,8 @@ html[data-window="gift"] body {
 }
 
 .gift-threshold-input-field {
-  width: 100%;
+  width: 8ch;
+  flex: 1 0 8ch;
   min-width: 0;
   border: 0;
   outline: none;

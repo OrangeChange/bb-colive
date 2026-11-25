@@ -1,3 +1,4 @@
+import { formatUiNumber, formatUiCurrency } from "../i18n/format.ts";
 import { useUiLanguage } from "../i18n/react.ts";
 import { uiText } from "../i18n/index.ts";
 import { UiSearchInput } from "./ui/SearchInput.tsx";
@@ -204,7 +205,7 @@ function ownerIdForRoom(roomId: number): string {
 }
 
 function formatAmount(amount: number): string {
-  return new Intl.NumberFormat("zh-CN", { maximumFractionDigits: 3 }).format(amount);
+  return formatUiNumber(amount, { maximumFractionDigits: 3 });
 }
 
 function ChevronLeftIcon() {
@@ -242,7 +243,7 @@ function OwnerSummary({
     <section aria-label={uiText("reviewPanel.aria_label")} className="grid grid-cols-2 gap-2 sm:grid-cols-3 xl:grid-cols-6">
       <div className="rounded-lg border border-line bg-surface px-3 py-2">
         <div className="ui-type-meta text-t3">{uiText("reviewPanel.OwnerSummary")}</div>
-        <div className="mt-1 ui-type-section-title text-t1">{sessionCount}</div>
+        <div className="mt-1 ui-type-section-title text-t1">{formatUiNumber(sessionCount)}</div>
       </div>
       <div className="rounded-lg border border-line bg-surface px-3 py-2">
         <div className="ui-type-meta text-t3">{uiText("reviewPanel.OwnerSummary2")}</div>
@@ -254,7 +255,7 @@ function OwnerSummary({
       </div>
       <div className="rounded-lg border border-line bg-surface px-3 py-2">
         <div className="ui-type-meta text-t3">{uiText("reviewPanel.OwnerSummary4")}</div>
-        <div className="mt-1 ui-type-section-title text-t1">{formatAmount(paidTotal)}</div>
+        <div className="mt-1 ui-type-section-title text-t1">{formatUiCurrency(paidTotal, { maximumFractionDigits: 3 })}</div>
       </div>
       <div className="rounded-lg border border-line bg-surface px-3 py-2">
         <div className="ui-type-meta text-t3">{uiText("reviewPanel.OwnerSummary5")}</div>
@@ -262,7 +263,7 @@ function OwnerSummary({
       </div>
       <div className="rounded-lg border border-line bg-surface px-3 py-2">
         <div className="ui-type-meta text-t3">{uiText("reviewPanel.OwnerSummary6")}</div>
-        <div className="mt-1 ui-type-section-title text-t1">{incompleteCount}</div>
+        <div className="mt-1 ui-type-section-title text-t1">{formatUiNumber(incompleteCount)}</div>
       </div>
     </section>
   );

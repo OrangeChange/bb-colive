@@ -1,3 +1,4 @@
+import { formatUiNumber } from "../i18n/format.ts";
 import { useUiLanguage } from "../i18n/react.ts";
 import { uiText } from "../i18n/index.ts";
 import { UpdateNotification } from "../updates/UpdateNotification";
@@ -27,7 +28,7 @@ export function StatusBar({onOpenUpdate}:{onOpenUpdate?:()=>void}) {
       </div>
       <div className="status-bar-actions ml-auto flex shrink-0 items-center gap-x-3 whitespace-nowrap">
         <span className="status-bar-event-count" title={uiText("statusBar.title")}>
-          {uiText("statusBar.StatusBar")}<span className="font-mono">{listCount.toLocaleString('zh-CN')}</span>
+          {uiText("statusBar.StatusBar")}<span className="font-mono">{formatUiNumber(listCount)}</span>
         </span>
         <span className="status-bar-version shrink-0 whitespace-nowrap font-mono">v{version}</span>
         <SystemReminderBell events={events} placement="top">{onOpenUpdate&&<UpdateNotification onOpen={onOpenUpdate}/>}</SystemReminderBell>

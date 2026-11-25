@@ -1,4 +1,5 @@
 import { useUiLanguage } from "../i18n/react.ts";
+import { uiCurrencyUnit } from "../i18n/format.ts";
 import { uiText } from "../i18n/index.ts";
 import { ChevronUp as LucideChevronUp, ChevronDown as LucideChevronDown } from "lucide-react";
 import { GIFT_THRESHOLD_INPUT_STEP, normalizeGiftThreshold, stepGiftThreshold, type GiftThresholdMode } from "../giftThreshold";
@@ -28,7 +29,7 @@ export function GiftThresholdInput({
     <label className={`gift-threshold-input ${compact ? "is-compact" : ""}`} data-settings-search={searchId}>
       <span className="gift-threshold-input-label">{label}</span>
       <span className="gift-threshold-input-control">
-        <span aria-hidden="true">¥</span>
+        <span aria-hidden="true">{uiCurrencyUnit()}</span>
         <input
           aria-label={inputLabel}
           type="number"
