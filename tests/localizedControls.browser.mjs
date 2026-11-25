@@ -71,7 +71,35 @@ try {
     Number(await panel.locator(".theme-color-opacity input").inputValue()),
     opacity,
   );
-  console.log("多语言数值框、颜色编辑、切换与边界通过");
+  await page.goto(
+    `${process.env.UI_TEST_URL || "http://127.0.0.1:1435"}/tests/fixtures/localizedControls.html?mode=tiers&lang=en`,
+  );
+  const tiers = page.getByRole("combobox", {
+    name: "Price tiers",
+    exact: true,
+  });
+  await tiers.waitFor();
+  assert.equal(await tiers.innerText(), "Base tier");
+  assert.match(await tiers.getAttribute("title"), /below next tier/);
+  await tiers.click();
+  await page.getByRole("option", { name: "Fixed color", exact: true }).click();
+  assert.equal(await tiers.innerText(), "Fixed color");
+  assert.equal(
+    await page
+      .getByRole("radio", { name: "Gradient", exact: true })
+      .isChecked(),
+    true,
+  );
+  await page.evaluate(() => window.auditLanguage("ja"));
+  const japaneseTiers = page.getByRole("combobox", {
+    name: "金額帯",
+    exact: true,
+  });
+  assert.equal(await japaneseTiers.innerText(), "固定配色");
+  await japaneseTiers.click();
+  await page.getByRole("option", { name: "基本帯", exact: true }).click();
+  assert.match(await japaneseTiers.getAttribute("title"), /次の帯未満/);
+  console.log("多语言控件、编辑值与金额档位短标签通过");
 } finally {
   await browser.close();
 }

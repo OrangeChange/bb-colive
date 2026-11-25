@@ -4503,5 +4503,7 @@
   "uiControls.color": "颜色",
   "uiControls.hue": "色相",
   "uiControls.alpha": "不透明度",
-  "uiControls.colorValue": "饱和度 {saturation}%，亮度 {brightness}%"
+  "uiControls.colorValue": "饱和度 {saturation}%，亮度 {brightness}%",
+  "nativePriceGradientControls.fixedColor": "固定配色",
+  "nativePriceGradientControls.baseTierHint": "基础档（不足下一档；没有下一档时无上限）"
 }

@@ -82,3 +82,21 @@ test("安装器提供四种语言，交互安装保存语言而静默更新保�
   for (const language of ["zh-CN", "zh-Hant", "en", "ja"]) assert.ok(hooks.includes(language));
   assert.ok(hooks.includes("ui-language.json"));
 });
+
+test("上下文短选项区分固定配色与档位，并保留基础档边界说明", () => {
+  try {
+    messages.setUiLanguage("en");
+    assert.equal(messages.uiText("settingsPanel.options.label9"), "Unit price");
+    assert.equal(messages.uiText("nativePriceGradientControls.options.label"), "Fixed");
+    assert.equal(messages.uiText("nativePriceGradientControls.fixedColor"), "Fixed color");
+    assert.equal(messages.uiText("nativePriceGradientControls.options.label3"), "Base tier");
+    assert.match(messages.uiText("nativePriceGradientControls.baseTierHint"), /below next tier/);
+    messages.setUiLanguage("ja");
+    assert.equal(messages.uiText("reviewSearchControls.options.label2"), "イベント合計");
+    assert.equal(messages.uiText("nativePriceGradientControls.options.label"), "固定");
+    assert.equal(messages.uiText("nativePriceGradientControls.fixedColor"), "固定配色");
+    assert.match(messages.uiText("nativePriceGradientControls.baseTierHint"), /次の帯未満/);
+    messages.setUiLanguage("zh-CN");
+    assert.equal(messages.uiText("settingsPanel.options.label9"), "按单件价格");
+  } finally { messages.setUiLanguage("zh-CN"); }
+});

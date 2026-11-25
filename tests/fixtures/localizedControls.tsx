@@ -33,6 +33,10 @@ const { createDefaultSceneSettings } =
   await import("../../src/components/sceneSettings.ts");
 const { RoomInsightsProvider } =
   await import("../../src/hooks/useRoomInsights.tsx");
+const { NativePriceGradientControls } =
+  await import("../../src/components/NativePriceGradientControls.tsx");
+const { normalizePriceGradient } =
+  await import("../../src/themes/nativePriceGradient.ts");
 const params = new URLSearchParams(location.search);
 function Audit() {
   useUiLanguage();
@@ -40,6 +44,21 @@ function Audit() {
   const [color, setColor] = useState(
     "linear-gradient(180deg, #fb7299 0%, transparent 100%)",
   );
+  const [gradient, setGradient] = useState(() =>
+    normalizePriceGradient(undefined),
+  );
+  const [tier, setTier] = useState(gradient.bands[0].id);
+  if (params.get("mode") === "tiers")
+    return (
+      <NativePriceGradientControls
+        event="normal"
+        model={gradient}
+        selected={tier}
+        onSelect={setTier}
+        onChange={setGradient}
+        applied
+      />
+    );
   return params.get("mode") === "settings" ? (
     <SettingsPanel
       sceneSettings={s}
