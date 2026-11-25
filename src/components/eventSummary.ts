@@ -16,13 +16,21 @@ function roundMoney(value: number): number {
   return Math.round(value * 100) / 100;
 }
 
-/** 汇总当前礼物投影中的礼物；红包、天选等其他收益区事件不计入。 */
+/** 汇总当前可见的礼物、SC 和大航海；红包、天选不计入。 */
 export function summarizeGiftEvents(events: DanmakuEvent[], visibleIndices: number[]): GiftSummary {
   let totalRmb = 0;
   let blindProfitRmb = 0;
   let blindCount = 0;
   for (const index of visibleIndices) {
     const event = events[index];
+    if (event?.msgType === MsgType.SuperChat) {
+      if (finite(event.sc?.price)) totalRmb += event.sc.price;
+      continue;
+    }
+    if (event?.msgType === MsgType.GuardBuy) {
+      if (finite(event.guard?.priceRmb)) totalRmb += event.guard.priceRmb;
+      continue;
+    }
     if (event?.msgType !== MsgType.Gift || !event.gift) continue;
     const gift: GiftInfo = event.gift;
     const count = gift.count || 1;

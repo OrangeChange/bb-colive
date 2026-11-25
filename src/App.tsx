@@ -703,7 +703,7 @@ function MainArea({
               key={rightFeed.feedKey}
               title={uiText("app.title2")}
               count={rightProjection.indices.length}
-              summary={formatGiftSummary(summarizeGiftEvents(events, giftProjection.indices))}
+              summary={formatGiftSummary(summarizeGiftEvents(events, rightProjection.indices))}
               roomGuardProfile={roomGuardProfile}
               events={events}
               visibleIndices={rightProjection.indices}

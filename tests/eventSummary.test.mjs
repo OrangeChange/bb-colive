@@ -27,3 +27,14 @@ test("盲盒总收益使用爆出批量价值，并额外计算爆出价值减�
   assert.equal(formatGiftSummary({ totalRmb: 12.5, blindProfitRmb: 0, blindCount: 0 }), "总收益 ¥12.50");
   assert.equal(formatGiftSummary({ totalRmb: 0, blindProfitRmb: 0, blindCount: 1 }), "总收益 ¥0 · 盲盒盈亏 0");
 });
+test("收益汇总包含当前可见的 SC 和大航海，开通金额不重复乘月数", () => {
+  const events = [
+    { msgType: MsgType.Gift, gift: { count: 1, totalRmb: 2 } },
+    { msgType: MsgType.SuperChat, sc: { price: 30 } },
+    { msgType: MsgType.GuardBuy, guard: { count: 3, priceRmb: 414 } },
+    { msgType: MsgType.GuardBuy, guard: {} },
+  ];
+  assert.equal(summarizeGiftEvents(events, [0, 1, 2, 3]).totalRmb, 446);
+  assert.equal(summarizeGiftEvents(events, [1]).totalRmb, 30);
+  assert.equal(summarizeGiftEvents(events, [2]).totalRmb, 414);
+});

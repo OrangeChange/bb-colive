@@ -159,7 +159,7 @@ export function PartitionColumn({
       {regions.map((region, index) => {
         const label = REGION_LABEL[region];
         const projection = projections[region];
-        const summary = region === "gift" && projection ? formatGiftSummary(summarizeGiftEvents(events, projection.indices)) : undefined;
+        const summary = ["gift", "superChat", "guard"].includes(region) && projection ? formatGiftSummary(summarizeGiftEvents(events, projection.indices)) : undefined;
         const feed = projection ? getFeedSession(`partition|${region}`, projection.indices.length) : null;
         return (
           <Fragment key={region}>

@@ -963,13 +963,14 @@ html[data-window="gift"] body {
 }
 .theme-surface.live .event-row-slot-content:has(> .event-row-with-menu) {
   isolation: isolate;
+  border-radius: var(--event-row-radius, calc(var(--event-font-size, calc(var(--review-main, 14px) * 16 / 14)) * 8 / 16));
 }
 .theme-surface.live .event-row-slot-content:has(> .event-row-with-menu)::before {
   content: "";
   position: absolute;
   inset: 0 0 var(--event-menu-bottom);
   z-index: -1;
-  border-radius: var(--event-row-radius, calc(var(--event-font-size, calc(var(--review-main, 14px) * 16 / 14)) * 8 / 16));
+  border-radius: inherit;
   background: var(--surface-raised);
   background: color-mix(in srgb, var(--surface-raised) 86%, var(--accent) 14%);
   opacity: 0;
