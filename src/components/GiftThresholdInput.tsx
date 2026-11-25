@@ -46,7 +46,7 @@ export function GiftThresholdInput({
           className="gift-threshold-input-field"
         />
         <span className="gift-threshold-input-steppers" data-step={GIFT_THRESHOLD_INPUT_STEP}>
-          <Button variant="outline"
+          <Button variant="ghost" size={null}
             type="button"
             aria-label={uiText("giftThresholdInput.aria_label", { inputLabel: inputLabel })}
             title={uiText("giftThresholdInput.title", { inputLabel: inputLabel })}
@@ -56,7 +56,7 @@ export function GiftThresholdInput({
           >
             <LucideChevronUp aria-hidden="true" />
           </Button>
-          <Button variant="outline"
+          <Button variant="ghost" size={null}
             type="button"
             aria-label={uiText("giftThresholdInput.aria_label2", { inputLabel: inputLabel })}
             title={uiText("giftThresholdInput.title2", { inputLabel: inputLabel })}

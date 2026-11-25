@@ -127,13 +127,13 @@ function FilterSubmenu<K extends string>({
             {options.map((option) => {
               const checked = selected[option.key] !== false;
               return (
-                <Button variant="outline"
+                <Button variant="ghost" size={null}
                   key={option.key}
                   type="button"
                   role="menuitemcheckbox"
                   aria-checked={checked}
                   onClick={() => onToggle(option.key)}
-                  className="flex w-full items-center gap-2 rounded px-2 py-1 text-left ui-type-control text-t2 transition-colors hover:bg-raised hover:text-t1 focus-visible:bg-raised focus-visible:outline-none"
+                  className="flex h-auto w-full items-center justify-start gap-2 rounded border-0 px-2 py-1 text-left ui-type-control text-t2 transition-colors hover:bg-raised hover:text-t1 focus-visible:bg-raised focus-visible:outline-none"
                 >
                   <span className={checked ? "size-1.5 rounded-full bg-accent" : "size-1.5 rounded-full border border-line"} aria-hidden="true" />
                   {option.label}

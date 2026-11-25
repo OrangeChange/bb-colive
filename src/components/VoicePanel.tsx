@@ -367,13 +367,13 @@ function FishReferenceVoiceManager({ fishAudio, updateFishAudio, openFishResourc
             <div role="listbox" aria-label={uiText("voicePanel.aria_label6")} className="mt-2 max-h-48 overflow-y-auto">
               {currentId && !currentPreset && (
                 <div role="option" aria-selected="true" className="ui-select-item flex items-center gap-1">
-                  <Button variant="outline" type="button" className="ui-select-item-text min-w-0 flex-1 text-left" onClick={() => selectVoice(currentId)}>{uiText("voicePanel.FishReferenceVoiceManager5")}{currentId.slice(0, 8)}{uiText("voicePanel.FishReferenceVoiceManager6")}</Button>
+                  <Button variant="ghost" size={null} type="button" className="ui-select-item-text h-auto justify-start border-0 bg-transparent min-w-0 flex-1 text-left" onClick={() => selectVoice(currentId)}>{uiText("voicePanel.FishReferenceVoiceManager5")}{currentId.slice(0, 8)}{uiText("voicePanel.FishReferenceVoiceManager6")}</Button>
                 </div>
               )}
               {fishAudio.referenceVoices.map((voice) => (
                 <div key={voice.id} role="option" aria-selected={voice.id === currentId} className={`ui-select-item flex items-center gap-1 ${voice.id === currentId ? "bg-bg text-accent-text" : "text-t2"}`}>
-                  <Button variant="outline" type="button" className="ui-select-item-text min-w-0 flex-1 px-1 text-left" onClick={() => selectVoice(voice.id)}>{optionLabel(voice)}</Button>
-                  <Button variant="outline" type="button" aria-label={uiText("voicePanel.aria_label7", { name: voice.name })} className="size-6 shrink-0 rounded text-t3 transition-colors hover:bg-danger/10 hover:text-danger focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-danger" onClick={() => deleteVoice(voice)}><span aria-hidden="true">×</span></Button>
+                  <Button variant="ghost" size={null} type="button" className="ui-select-item-text h-auto justify-start border-0 bg-transparent min-w-0 flex-1 px-1 text-left" onClick={() => selectVoice(voice.id)}>{optionLabel(voice)}</Button>
+                  <Button variant="ghost" size={null} type="button" aria-label={uiText("voicePanel.aria_label7", { name: voice.name })} className="size-6 shrink-0 rounded text-t3 transition-colors hover:bg-danger/10 hover:text-danger focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-danger" onClick={() => deleteVoice(voice)}><span aria-hidden="true">×</span></Button>
                 </div>
               ))}
               {fishAudio.referenceVoices.length === 0 && !currentId && <div className="px-2 py-1 ui-type-meta text-t3">{uiText("voicePanel.FishReferenceVoiceManager7")}</div>}

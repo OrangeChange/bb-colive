@@ -100,3 +100,6 @@
 .voice-test-status:empty { display: none; }
 .voice-test-button { display: inline-flex; align-items: center; justify-content: center; gap: 5px; min-width: 80px; margin-inline-start: auto; color: var(--accent-fg); background: var(--accent-solid); border-color: var(--accent-solid); }
 .voice-test-button:disabled { opacity: .6; cursor: wait; }
+
+.settings-surface-color-field > .theme-color-field { flex: 1; min-width: 0; }
+.settings-surface-color-field .theme-color-trigger { width: 100%; justify-content: flex-start; text-align: left; }

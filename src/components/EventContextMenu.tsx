@@ -485,7 +485,7 @@ export function EventContextMenu({ event, nickname, eventFontSize, shortcutActio
             : 0;
           const shortcutHoverOffset = visibleShortcutActions.length - 1 - index;
           return (
-            <Button variant="outline"
+            <Button variant="ghost"
               key={shortcutAction}
               type="button"
               className={`event-quick-action inline-flex items-center justify-center rounded-md border border-transparent bg-transparent text-t2 shadow-none transition-[opacity,transform,color,border-color,background-color] enabled:hover:border-accent/60 enabled:hover:bg-raised enabled:hover:text-accent-text focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent-ring disabled:cursor-not-allowed disabled:opacity-45 ${persistent ? "event-quick-action-persistent" : ""} ${actionToneClass(QUICK_ACTION_ICON[shortcutAction], active)}`}
@@ -529,7 +529,7 @@ export function EventContextMenu({ event, nickname, eventFontSize, shortcutActio
           );
         })}
         </div>
-        <Button variant="outline"
+        <Button variant="ghost"
           ref={triggerRef}
           type="button"
           className="event-menu-trigger inline-flex items-center justify-center rounded-md border border-transparent bg-transparent text-t2 shadow-none transition-[opacity,transform,color,border-color,background-color] hover:border-accent/60 hover:bg-raised hover:text-accent-text focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent-ring"
@@ -588,9 +588,9 @@ export function EventContextMenu({ event, nickname, eventFontSize, shortcutActio
               </div>
               <div className="event-context-menu-meta flex w-full shrink-0 items-center justify-start gap-2">
                 {user?.avatar && (
-                  <Button variant="outline"
+                  <Button variant="ghost" size={null}
                     type="button"
-                    className="shrink-0 rounded-full focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent-ring"
+                    className="size-6 shrink-0 rounded-full border-0 bg-transparent p-0 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent-ring"
                     aria-label={uiText("eventContextMenu.aria_label3", { userName: userName })}
                     title={uiText("eventContextMenu.title3")}
                     onClick={() => {
@@ -712,7 +712,7 @@ export function EventContextMenu({ event, nickname, eventFontSize, shortcutActio
             />
           </label>
           <div className="mt-3 flex items-center justify-end gap-1.5">
-            <Button variant="outline"
+            <Button variant="ghost"
               type="button"
               className="rounded-md px-2 py-1.5 ui-type-control text-t3 transition-colors hover:bg-raised hover:text-t1 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent-ring"
               onClick={() => {
@@ -722,7 +722,7 @@ export function EventContextMenu({ event, nickname, eventFontSize, shortcutActio
             >
               {uiText("common.cancel")}</Button>
             {userNickname && handlers.onDeleteNickname && (
-              <Button variant="outline"
+              <Button variant="ghost"
                 type="button"
                 className="rounded-md px-2 py-1.5 ui-type-control text-danger transition-colors hover:bg-danger/10 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent-ring"
                 onClick={() => {

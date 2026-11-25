@@ -68,6 +68,7 @@ export function ConfirmDialog({
     >
       <AlertDialogContent
         className="settings-confirm-dialog"
+        onBackdropClick={() => { if (!busy) onCancel(); }}
         onOpenAutoFocus={(event) => {
           event.preventDefault();
           cancel.current?.focus();
@@ -85,12 +86,12 @@ export function ConfirmDialog({
           <AlertDialogDescription>{description}</AlertDialogDescription>
         </AlertDialogHeader>
         {children && (
-          <div className="min-w-0" inert={busy || undefined}>
+          <div className="mt-3 min-w-0" inert={busy || undefined}>
             {children}
           </div>
         )}
         {error && (
-          <p role="alert" className="text-danger">
+          <p role="alert" className="mt-2 ui-type-control text-danger">
             {error}
           </p>
         )}

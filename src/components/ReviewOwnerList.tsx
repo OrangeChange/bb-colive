@@ -87,9 +87,9 @@ function OwnerCard({
   const isLive = card.anchor.liveStatus === 1;
   return (
     <article className="group relative flex w-full items-center gap-2 rounded-xl border border-line bg-surface px-3 py-2.5 transition-colors hover:border-accent/60 hover:bg-raised">
-      <Button variant="outline"
+      <Button variant="ghost" size={null}
         type="button"
-        className="flex min-w-0 flex-1 items-center gap-3 rounded-lg px-1 py-0.5 text-left after:absolute after:inset-0 after:rounded-xl focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent-ring"
+        className="flex h-auto min-w-0 flex-1 justify-start border-0 bg-transparent hover:bg-transparent items-center gap-3 rounded-lg px-1 py-0.5 text-left after:absolute after:inset-0 after:rounded-xl focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent-ring"
         aria-label={uiText("reviewOwnerList.aria_label", { uname: card.anchor.uname })}
         onClick={() => onOpen(card.roomId)}
       >
@@ -107,7 +107,7 @@ function OwnerCard({
           </span>
         </span>
       </Button>
-      <Button variant="outline"
+      <Button variant="ghost" size="icon"
         type="button"
         aria-label={pinned ? uiText("reviewOwnerList.aria_label2", { uname: card.anchor.uname }) : uiText("reviewOwnerList.aria_label3", { uname: card.anchor.uname })}
         aria-pressed={pinned}
@@ -157,9 +157,9 @@ function SessionRow({
         alt={(session.title ?? uiText("reviewOwnerList.alt")) + uiText("reviewOwnerList.alt2")}
         size="session-list"
       />
-      <Button variant="outline"
+      <Button variant="ghost" size={null}
         type="button"
-        className="flex min-w-0 flex-1 flex-col gap-1 rounded-md text-left focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent-ring"
+        className="flex h-auto min-w-0 flex-1 flex-col items-stretch justify-start gap-1 whitespace-normal border-0 bg-transparent p-0 hover:bg-transparent rounded-md text-left focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent-ring"
         aria-label={uiText("reviewOwnerList.aria_label6", { value: session.title ?? uiText("reviewOwnerList.aria_label.value") })}
         onClick={() => onOpen(session.roomId, session.sessionId)}
       >

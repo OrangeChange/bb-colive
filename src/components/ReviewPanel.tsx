@@ -1759,7 +1759,7 @@ export function ReviewPanel({ repository, anchors, active, refreshKey, onOpenClo
               <span>{uiText("reviewPanel.ReviewPanel6")}</span>
             </Button>
             <span className="text-t3" aria-hidden="true">/</span>
-            <Button variant="outline" type="button" aria-label={uiText("reviewPanel.aria_label5")} title={ownerName} className="min-w-0 max-w-40 truncate ui-type-control text-t2 hover:text-accent-text" onClick={() => openRoute({ level: "owner", roomId: route.roomId })}>{ownerName}</Button>
+            <Button variant="ghost" size={null} type="button" aria-label={uiText("reviewPanel.aria_label5")} title={ownerName} className="h-auto min-w-0 max-w-40 justify-start truncate border-0 bg-transparent p-0 ui-type-control text-t2 hover:bg-transparent hover:text-accent-text" onClick={() => openRoute({ level: "owner", roomId: route.roomId })}>{ownerName}</Button>
             <span className="text-t3" aria-hidden="true">/</span>
             <span className="min-w-0 flex-1 truncate ui-type-page-title text-t1" title={selectedSession?.title ?? route.sessionId}>{selectedSession?.title ?? route.sessionId}</span>
           </nav>

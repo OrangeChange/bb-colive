@@ -199,11 +199,11 @@ export function ReviewOwnerEventResults({
         return (
           <article key={session.sessionId} className="min-w-0 border-b border-line pb-2 last:border-b-0">
             <header className="flex min-w-0 flex-wrap items-center gap-x-2 gap-y-1 py-1">
-              <Button variant="outline"
+              <Button variant="ghost" size={null}
                 type="button"
                 aria-expanded={!collapsed}
                 aria-controls={`review-owner-event-matches-${session.sessionId}`}
-                className="min-w-0 flex-1 truncate text-left ui-type-control text-t1 hover:text-accent-text focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent-ring"
+                className="h-auto min-w-0 flex-1 justify-start truncate border-0 bg-transparent p-0 text-left hover:bg-transparent ui-type-control text-t1 hover:text-accent-text focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent-ring"
                 onClick={() => setCollapsedGroups((current) => ({ ...current, [session.sessionId]: !collapsed }))}
               >{collapsed ? "▸" : "▾"} {session.title?.trim() || fallbackTitle(session.startedAt)}</Button>
               <time className="shrink-0 ui-type-meta text-t3">{formatArchiveDateTime(session.startedAt)}</time>

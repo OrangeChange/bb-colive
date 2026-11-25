@@ -12,7 +12,7 @@
   --muted-foreground: var(--text-2);
   --popover: var(--surface);
   --popover-foreground: var(--text-1);
-  --input: color-mix(in srgb, var(--text-1) 22%, transparent);
+  --input: var(--border);
   --ring: var(--accent);
   --destructive: var(--status-danger);
 }
@@ -193,6 +193,10 @@
     [data-state="active"]
   ):hover {
   background: var(--accent-subtle);
+}
+.review-filter-mode[data-slot] > [data-filter-mode="exclude"][data-state="on"] {
+  background: color-mix(in srgb, var(--status-danger) 10%, transparent);
+  color: var(--status-danger);
 }
 .ui-segmented > .ui-segmented-item:focus-visible {
   outline: 2px solid var(--accent-text);

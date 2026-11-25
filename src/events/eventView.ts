@@ -1,3 +1,4 @@
+import { localized, uiText } from "../i18n/index.ts";
 import { MsgType, MsgTypeName, type DanmakuEvent, type GiftKind, type InteractKind } from "../protocol/types.ts";
 import { isPaidEventVisibleAtThreshold, type GiftThresholdMode } from "../giftThreshold.ts";
 import { buildEventContentText } from "./eventContentText.ts";
@@ -53,22 +54,22 @@ const GIFT_TYPES = new Set<MsgType>([
   MsgType.RedPocketWinner,
 ]);
 
-export const INTERACT_KIND_OPTIONS: readonly { key: InteractKind; label: string }[] = [
-  { key: "entry", label: "进房" },
-  { key: "follow", label: "关注" },
-  { key: "share", label: "分享" },
-  { key: "specialFollow", label: "特别关注" },
-  { key: "mutualFollow", label: "互相关注" },
-  { key: "like", label: "点赞" },
-];
+export const INTERACT_KIND_OPTIONS: readonly { key: InteractKind; label: string }[] = localized(() => ([
+  { key: "entry", label: uiText("eventView.interactKinds.entry") },
+  { key: "follow", label: uiText("eventView.interactKinds.follow") },
+  { key: "share", label: uiText("eventView.interactKinds.share") },
+  { key: "specialFollow", label: uiText("eventView.interactKinds.specialFollow") },
+  { key: "mutualFollow", label: uiText("eventView.interactKinds.mutualFollow") },
+  { key: "like", label: uiText("eventView.interactKinds.like") },
+]));
 
-export const GIFT_KIND_OPTIONS: readonly { key: GiftKind; label: string }[] = [
-  { key: "free", label: "免费礼物" },
-  { key: "normal", label: "普通礼物" },
-  { key: "blind", label: "盲盒礼物" },
-  { key: "redPocket", label: "红包" },
-  { key: "anchorLot", label: "天选" },
-];
+export const GIFT_KIND_OPTIONS: readonly { key: GiftKind; label: string }[] = localized(() => ([
+  { key: "free", label: uiText("eventView.giftKinds.free") },
+  { key: "normal", label: uiText("eventView.giftKinds.normal") },
+  { key: "blind", label: uiText("eventView.giftKinds.blind") },
+  { key: "redPocket", label: uiText("eventView.giftKinds.redPocket") },
+  { key: "anchorLot", label: uiText("eventView.giftKinds.anchorLot") },
+]));
 
 /** PK 作为备选功能暂不进入现场事件流。 */
 const PK_HIDDEN = /^(PK_|UNIVERSAL_EVENT_GIFT)/;

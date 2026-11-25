@@ -10,8 +10,8 @@
 
 面向 B站直播的彈幕展示、語音播報、樣式自訂與記錄回看工具。
 
-<a href="https://github.com/OrangeChange/bb-colive/releases/tag/v1.1.0"><picture><source media="(prefers-color-scheme: dark)" srcset="docs/images/badges/github-version-dark.svg" /><img src="docs/images/badges/github-version-light.svg" alt="GitHub 版本 1.1.0" width="132" height="24" /></picture></a>
-<a href="https://gitee.com/orange-chan/bb-colive/releases/tag/v1.1.0"><picture><source media="(prefers-color-scheme: dark)" srcset="docs/images/badges/gitee-version-dark.svg" /><img src="docs/images/badges/gitee-version-light.svg" alt="Gitee 版本 1.1.0" width="126" height="24" /></picture></a>
+<a href="https://github.com/OrangeChange/bb-colive/releases/tag/v1.2.0"><picture><source media="(prefers-color-scheme: dark)" srcset="docs/images/badges/github-version-dark.svg" /><img src="docs/images/badges/github-version-light.svg" alt="GitHub 版本 1.2.0" width="132" height="24" /></picture></a>
+<a href="https://gitee.com/orange-chan/bb-colive/releases/tag/v1.2.0"><picture><source media="(prefers-color-scheme: dark)" srcset="docs/images/badges/gitee-version-dark.svg" /><img src="docs/images/badges/gitee-version-light.svg" alt="Gitee 版本 1.2.0" width="126" height="24" /></picture></a>
 <picture><source media="(prefers-color-scheme: dark)" srcset="docs/images/badges/windows-dark.svg" /><img src="docs/images/badges/windows-light.svg" alt="Windows 10 / 11 x64" width="193" height="24" /></picture>
 <a href="LICENSE"><picture><source media="(prefers-color-scheme: dark)" srcset="docs/images/badges/license-dark.svg" /><img src="docs/images/badges/license-light.svg" alt="原始碼可用授權" width="130" height="24" /></picture></a>
 
@@ -19,7 +19,7 @@
 
 </div>
 
-> 下載徽章指向已發佈的 1.1.0 版本。本文說明目前主分支；尚未隨安裝檔發佈的更新請見[專案狀態](docs/project-status.md)。
+> 下載徽章指向已發佈的 1.2.0 版本。本文說明目前主分支；尚未隨安裝檔發佈的更新請見[專案狀態](docs/project-status.md)。
 
 ## 功能特色
 

@@ -116,5 +116,5 @@ export function FavoriteOrganizationEditor({
     </div>
   );
 
-  return <Dialog open onOpenChange={open=>{if(!open&&!busy)onCancel();}}><DialogContent asChild aria-label={title} aria-describedby={undefined} showCloseButton={false} className="max-w-none p-0 gap-0" onEscapeKeyDown={event=>{if(busy)event.preventDefault();}} onInteractOutside={event=>{if(busy)event.preventDefault();}}>{content}</DialogContent></Dialog>;
+  return <Dialog open onOpenChange={open=>{if(!open&&!busy)onCancel();}}><DialogContent asChild aria-label={title} aria-describedby={undefined} showCloseButton={false} className="max-h-[calc(100%-2rem)] max-w-[min(520px,calc(100%-2rem))] overflow-y-auto gap-0" onEscapeKeyDown={event=>{if(busy)event.preventDefault();}} onInteractOutside={event=>{if(busy)event.preventDefault();}}>{content}</DialogContent></Dialog>;
 }

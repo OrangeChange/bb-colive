@@ -59,7 +59,7 @@ function RankRows({
       </li>)}
     </ol>}
     {(hasMore || loadingMore || loadMoreError) && <div ref={sentinelRef} role={loadMoreError ? 'alert' : 'status'} className="flex min-h-8 items-center justify-center border-t border-line/50 px-3 py-2 ui-type-meta text-t3">
-      {loadingMore ? uiText("roomRankings.RankRows") : loadMoreError ? <Button variant="outline" type="button" onClick={() => loadMoreRef.current?.()} className={`cursor-pointer rounded px-2 py-1 ui-type-control text-accent-text hover:bg-accent-subtle ${focusClass}`}>{uiText("common.retry")}</Button> : uiText("roomRankings.RankRows2")}
+      {loadingMore ? uiText("roomRankings.RankRows") : loadMoreError ? <Button variant="ghost" size={null} type="button" onClick={() => loadMoreRef.current?.()} className={`cursor-pointer rounded px-2 py-1 ui-type-control text-accent-text hover:bg-accent-subtle ${focusClass}`}>{uiText("common.retry")}</Button> : uiText("roomRankings.RankRows2")}
     </div>}
   </div>
 }
@@ -114,7 +114,7 @@ function Ranking({ kind, onUserFilter }: { kind: 'contribution' | 'guard'; onUse
     onMouseLeave={() => {
       if (!pinned && !root.current?.contains(document.activeElement)) closeTimer.current = setTimeout(() => dismiss(kind), 180)
     }}>
-    <Button variant="outline" ref={trigger} type="button" aria-label={uiText("roomRankings.aria_label4", { label: label })} aria-expanded={expanded} aria-haspopup="dialog" aria-controls={`room-rank-${kind}`}
+    <Button variant="ghost" ref={trigger} type="button" aria-label={uiText("roomRankings.aria_label4", { label: label })} aria-expanded={expanded} aria-haspopup="dialog" aria-controls={`room-rank-${kind}`}
       disabled={!roomId}
       onClick={() => { cancelClose(); setPinned(true); open(kind) }}
       onKeyDown={event => { if (event.key === 'ArrowDown') { event.preventDefault(); setPinned(true); open(kind) } }}
@@ -132,10 +132,10 @@ function Ranking({ kind, onUserFilter }: { kind: 'contribution' | 'guard'; onUse
             <span className="ui-type-meta tabular-nums text-t3">{uiText("roomRankings.Ranking")}{users.length}{guard && guardFirst.data?.total !== undefined ? ` / ${guardFirst.data.total}` : ''} {uiText("roomRankings.Ranking2")}</span>
             </div>
           </div>
-              <Button variant="outline" type="button" onClick={refresh} disabled={!enabled || query.isFetching || overview.isFetching} className={`cursor-pointer rounded px-2 py-1 ui-type-control text-t2 enabled:hover:bg-raised disabled:cursor-wait disabled:opacity-50 ${focusClass}`}>{uiText("roomRankings.Ranking3")}</Button>
+              <Button variant="ghost" size={null} type="button" onClick={refresh} disabled={!enabled || query.isFetching || overview.isFetching} className={`cursor-pointer rounded px-2 py-1 ui-type-control text-t2 enabled:hover:bg-raised disabled:cursor-wait disabled:opacity-50 ${focusClass}`}>{uiText("roomRankings.Ranking3")}</Button>
         </header>
         {guard ? <div role="group" aria-label={uiText("roomRankings.aria_label5")} className="flex shrink-0 gap-1 border-b border-line px-3 py-2">
-          {(['intimacy', 'accompany'] as const).map(sort => <Button variant="outline" key={sort} type="button" aria-pressed={guardSort === sort}
+          {(['intimacy', 'accompany'] as const).map(sort => <Button variant="ghost" size={null} key={sort} type="button" aria-pressed={guardSort === sort}
             onPointerDown={event => { event.stopPropagation(); cancelClose(); setPinned(true) }}
             onClick={() => { cancelClose(); setPinned(true); setGuardSort(sort) }} className={`cursor-pointer rounded px-2.5 py-1 ui-type-control ${focusClass} ${guardSort === sort ? 'bg-accent-subtle text-accent-text' : 'text-t2 hover:bg-raised'}`}>
             {sort === 'intimacy' ? uiText("roomRankings.Ranking4") : uiText("roomRankings.Ranking5")}
@@ -143,7 +143,7 @@ function Ranking({ kind, onUserFilter }: { kind: 'contribution' | 'guard'; onUse
         </div> : <p className="shrink-0 border-b border-line px-3 py-2 ui-type-meta text-t3">{uiText("roomRankings.Ranking6")}</p>}
         {error && <div role="status" className="flex shrink-0 items-center justify-between gap-2 border-b border-line px-3 py-2 ui-type-control text-warning">
           <span>{users.length ? uiText("roomRankings.Ranking7") : uiText("roomRankings.Ranking8")}</span>
-          <Button variant="outline" type="button" onClick={refresh} disabled={!enabled || query.isFetching || overview.isFetching} className={`cursor-pointer rounded px-2 py-1 enabled:hover:bg-raised ${focusClass}`}>{uiText("common.retry")}</Button>
+          <Button variant="ghost" size={null} type="button" onClick={refresh} disabled={!enabled || query.isFetching || overview.isFetching} className={`cursor-pointer rounded px-2 py-1 enabled:hover:bg-raised ${focusClass}`}>{uiText("common.retry")}</Button>
         </div>}
         {users.length ? <RankRows
           key={guard ? guardSort : kind}

@@ -288,7 +288,7 @@ export function ReviewDataExportDialog({ repository, scopeOptions, defaultScopeI
   };
 
   return (
-    <Dialog open onOpenChange={open=>{if(!open&&!busy)onClose();}}><DialogContent asChild showCloseButton={false} onEscapeKeyDown={event=>{if(busy)event.preventDefault();}} onInteractOutside={event=>{if(busy)event.preventDefault();}} className="max-w-none gap-0 p-0"><section className="ui-modal-surface flex max-h-[min(720px,calc(100vh-40px))] w-[min(672px,calc(100vw-32px))] flex-col overflow-hidden rounded-xl border border-line bg-surface">
+    <Dialog open onOpenChange={open=>{if(!open&&!busy)onClose();}}><DialogContent asChild showCloseButton={false} onEscapeKeyDown={event=>{if(busy)event.preventDefault();}} onInteractOutside={event=>{if(busy)event.preventDefault();}} className="flex max-w-[min(672px,calc(100%-2rem))] gap-0 p-0"><section className="ui-modal-surface flex max-h-[min(720px,calc(100vh-40px))] w-[min(672px,calc(100vw-32px))] flex-col overflow-hidden rounded-xl border border-line bg-surface">
         <header className="flex shrink-0 items-center justify-between border-b border-line px-5 py-4">
           <div>
             <DialogTitle asChild><h2 id="review-data-export-title" className="ui-type-section-title text-t1">{uiText("reviewDataExportDialog.ReviewDataExportDialog")}</h2></DialogTitle>

@@ -133,7 +133,7 @@ export function CloudRecoveryDialog({
     }
   };
 
-  return <Dialog open onOpenChange={open=>{if(!open&&!submitting)onClose();}}><DialogContent asChild showCloseButton={false} onEscapeKeyDown={event=>{if(submitting)event.preventDefault();}} onInteractOutside={event=>{if(submitting)event.preventDefault();}} className="max-w-none gap-0 p-0"><section className="ui-modal-surface flex max-h-[min(760px,calc(100vh-24px))] w-[min(680px,calc(100vw-24px))] flex-col overflow-hidden rounded-lg border border-line bg-surface">
+  return <Dialog open onOpenChange={open=>{if(!open&&!submitting)onClose();}}><DialogContent asChild showCloseButton={false} onEscapeKeyDown={event=>{if(submitting)event.preventDefault();}} onInteractOutside={event=>{if(submitting)event.preventDefault();}} className="flex max-w-[min(680px,calc(100%-1.5rem))] gap-0 p-0"><section className="ui-modal-surface flex max-h-[min(760px,calc(100vh-24px))] w-[min(680px,calc(100vw-24px))] flex-col overflow-hidden rounded-lg border border-line bg-surface">
         <header className="shrink-0 border-b border-line px-4 py-3">
           <div className="flex items-start justify-between gap-4">
             <div className="min-w-0">

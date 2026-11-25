@@ -4516,5 +4516,16 @@
   "dateTimeField.openCalendar": "{label}：日付を選択",
   "commandDialog.title": "コマンドパレット",
   "commandDialog.description": "実行するコマンドを検索",
-  "obsServiceSettings.outputFailure": "{name}：{message}"
+  "obsServiceSettings.outputFailure": "{name}：{message}",
+  "eventView.interactKinds.entry": "入室",
+  "eventView.interactKinds.follow": "フォロー",
+  "eventView.interactKinds.share": "シェア",
+  "eventView.interactKinds.specialFollow": "特別フォロー",
+  "eventView.interactKinds.mutualFollow": "相互フォロー",
+  "eventView.interactKinds.like": "いいね",
+  "eventView.giftKinds.free": "無料ギフト",
+  "eventView.giftKinds.normal": "通常ギフト",
+  "eventView.giftKinds.blind": "ブラインドボックスギフト",
+  "eventView.giftKinds.redPocket": "紅包",
+  "eventView.giftKinds.anchorLot": "抽選"
 }

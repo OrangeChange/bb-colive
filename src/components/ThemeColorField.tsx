@@ -24,7 +24,7 @@ const COLOR_PRESETS = localized(() => ([
   { label: uiText("themeColorField.COLOR_PRESETS.label11"), value: "#ef4444" }, { label: uiText("themeColorField.COLOR_PRESETS.label12"), value: "#64748b" },
 ] as const));
 
-export function ThemeColorField({ value, onChange, onPreviewChange, onPreviewCancel, label, opaque = false, allowTransparent = !opaque, mixed = false, inline = false }: { opaque?: boolean; inline?: boolean; value: string; onChange: (value: string) => void; onPreviewChange?: (value: string) => void; onPreviewCancel?: () => void; label: string; allowTransparent?: boolean; mixed?: boolean }) {
+export function ThemeColorField({ value, onChange, onPreviewChange, onPreviewCancel, label, opaque = false, allowTransparent = !opaque, mixed = false, inline = false, valueLabel }: { valueLabel?: string; opaque?: boolean; inline?: boolean; value: string; onChange: (value: string) => void; onPreviewChange?: (value: string) => void; onPreviewCancel?: () => void; label: string; allowTransparent?: boolean; mixed?: boolean }) {
   useUiLanguage();
   const trigger = useRef<HTMLButtonElement>(null);
   const panel = useRef<HTMLDivElement>(null);
@@ -206,7 +206,7 @@ export function ThemeColorField({ value, onChange, onPreviewChange, onPreviewCan
   return <div className="theme-color-field">
     <Button variant="outline" ref={trigger} type="button" className={`theme-color-trigger${transparent || mixed ? " is-transparent" : ""}`} aria-label={label} aria-expanded={open} onClick={() => setOpen((current) => { if (current) setPosition(null); return !current; })}>
       <span className="theme-color-swatch" style={transparent || mixed ? undefined : { background: value }} aria-hidden="true" />
-      <span>{mixed ? uiText("themeColorField.ThemeColorField3") : transparent ? uiText("themeColorField.ThemeColorField4") : opaque && parsed ? serializeThemeColor(parsed, format, true) : value}</span>
+      <span>{valueLabel ?? (mixed ? uiText("themeColorField.ThemeColorField3") : transparent ? uiText("themeColorField.ThemeColorField4") : opaque && parsed ? serializeThemeColor(parsed, format, true) : value)}</span>
     </Button>
     {open && position && createPortal(editor, document.body)}
   </div>;

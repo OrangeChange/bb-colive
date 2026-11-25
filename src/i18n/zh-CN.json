@@ -4516,5 +4516,16 @@
   "dateTimeField.openCalendar": "{label}：选择日期",
   "commandDialog.title": "命令面板",
   "commandDialog.description": "搜索要执行的命令",
-  "obsServiceSettings.outputFailure": "{name}：{message}"
+  "obsServiceSettings.outputFailure": "{name}：{message}",
+  "eventView.interactKinds.entry": "进房",
+  "eventView.interactKinds.follow": "关注",
+  "eventView.interactKinds.share": "分享",
+  "eventView.interactKinds.specialFollow": "特别关注",
+  "eventView.interactKinds.mutualFollow": "互相关注",
+  "eventView.interactKinds.like": "点赞",
+  "eventView.giftKinds.free": "免费礼物",
+  "eventView.giftKinds.normal": "普通礼物",
+  "eventView.giftKinds.blind": "盲盒礼物",
+  "eventView.giftKinds.redPocket": "红包",
+  "eventView.giftKinds.anchorLot": "天选"
 }

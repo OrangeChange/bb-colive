@@ -4516,5 +4516,16 @@
   "dateTimeField.openCalendar": "{label}: choose date",
   "commandDialog.title": "Command palette",
   "commandDialog.description": "Search for a command to run",
-  "obsServiceSettings.outputFailure": "{name}: {message}"
+  "obsServiceSettings.outputFailure": "{name}: {message}",
+  "eventView.interactKinds.entry": "Room entry",
+  "eventView.interactKinds.follow": "Follow",
+  "eventView.interactKinds.share": "Share",
+  "eventView.interactKinds.specialFollow": "Special follow",
+  "eventView.interactKinds.mutualFollow": "Mutual follow",
+  "eventView.interactKinds.like": "Like",
+  "eventView.giftKinds.free": "Free gifts",
+  "eventView.giftKinds.normal": "Regular gifts",
+  "eventView.giftKinds.blind": "Blind box gifts",
+  "eventView.giftKinds.redPocket": "Redpocket",
+  "eventView.giftKinds.anchorLot": "Lottery"
 }

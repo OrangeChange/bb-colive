@@ -1,4 +1,6 @@
 import React, { useState } from "react";
+import { LiveFilterBar } from "../../src/components/LiveFilterBar.tsx";
+import { DEFAULT_EVENT_FILTERS } from "../../src/events/eventView.ts";
 import { createRoot } from "react-dom/client";
 import { mockIPC, mockWindows } from "@tauri-apps/api/mocks";
 import { setUiLanguage, uiText } from "../../src/i18n/index.ts";
@@ -55,6 +57,12 @@ function Audit() {
     normalizePriceGradient(undefined),
   );
   const [tier, setTier] = useState(gradient.bands[0].id);
+  if (params.get("mode") === "live-filters") return (
+    <LiveFilterBar filters={DEFAULT_EVENT_FILTERS} setFilters={() => {}}
+      giftThreshold={0} giftThresholdMode="unit" setGiftThreshold={() => {}}
+      query={{}} onSearchTextChange={() => {}} layoutMode="dual"
+      onLayoutChange={() => {}} onClearQuery={() => {}} />
+  );
   if (params.get("mode") === "formats") {
     const document = createBuiltinNativeTheme("native-default");
     document.metadata.updatedAt = "2026-09-25 21:05:42 +08:00";

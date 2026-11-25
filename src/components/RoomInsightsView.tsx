@@ -32,13 +32,13 @@ export function RankUserRow({ user, kind, guardIdentityDisplayMode = 'icon', sho
   const ranked = user.rank > 0 && !(kind === 'contribution' && user.score === 0)
   const identity = guard === 1 ? uiText("roomInsightsView.RankUserRow.identity") : guard === 2 ? '提督' : guard === 3 ? '舰长' : ''
   const tone = guard === 1 ? 'text-ev-guard3' : guard === 2 ? 'text-ev-guard2' : guard === 3 ? 'text-ev-guard1' : 'text-t1'
-  const userName = onUserFilter ? <Button variant="outline"
+  const userName = onUserFilter ? <Button variant="ghost" size={null}
     type="button"
     onPointerDown={(event) => event.stopPropagation()}
     onClick={() => onUserFilter(user)}
     aria-label={uiText("roomInsightsView.aria_label", { name: user.name })}
     title={uiText("roomInsightsView.title", { name: user.name })}
-    className="block w-full cursor-pointer truncate text-left ui-type-event font-medium hover:underline focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-accent-ring"
+    className="block h-auto w-full cursor-pointer truncate rounded-none border-0 bg-transparent p-0 text-left ui-type-event font-medium hover:underline focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-accent-ring"
   >{user.name}</Button> : <div className="truncate ui-type-event font-medium" title={user.name}>{user.name}</div>
   return <div className="flex h-14 min-w-0 items-center gap-2.5 border-b border-line/50 px-3">
     <span className="w-6 shrink-0 text-center font-mono ui-type-meta text-t2" aria-label={ranked ? uiText("roomInsightsView.aria_label2", { rank: user.rank }) : uiText("roomInsightsView.aria_label3")}>{ranked ? user.rank : '—'}</span>

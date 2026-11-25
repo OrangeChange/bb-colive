@@ -119,12 +119,12 @@ test("主播页提供场次和事件检索两个独立模式", () => {
   assert.ok(paths.every(existsSync), "主播双模式组件尚未创建");
   const [toolbar, sessions, events] = paths.map((path) => readUiSource(path, "utf8"));
 
-  assert.match(toolbar, />场次</);
-  assert.match(toolbar, />事件检索</);
-  assert.match(toolbar, /aria-pressed=/);
-  assert.match(toolbar, /focus-visible:ring-2/);
-  assert.match(toolbar, /flex-wrap/);
-  assert.match(toolbar, /border-accent bg-accent-subtle/);
+  assert.match(toolbar, />\s*场次\s*</);
+  assert.match(toolbar, />\s*事件检索\s*</);
+  assert.match(toolbar, /<ToggleGroup\s+type="single"\s+spacing=\{0\}/);
+  assert.match(toolbar, /value=\{mode\}/);
+  assert.match(toolbar, /onModeChange\(value\)/);
+  assert.match(toolbar, /ui-segmented-item/);
   assert.match(sessions, /搜索直播标题/);
   assert.match(sessions, /开播时间/);
   assert.match(sessions, /只看有收藏的场次/);

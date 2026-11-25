@@ -10,8 +10,8 @@
 
 Bilibili ライブ向けの弾幕表示・音声読み上げ・スタイルカスタマイズ・配信履歴管理ツール。
 
-<a href="https://github.com/OrangeChange/bb-colive/releases/tag/v1.1.0"><picture><source media="(prefers-color-scheme: dark)" srcset="docs/images/badges/github-version-dark.svg" /><img src="docs/images/badges/github-version-light.svg" alt="GitHub リリース 1.1.0" width="132" height="24" /></picture></a>
-<a href="https://gitee.com/orange-chan/bb-colive/releases/tag/v1.1.0"><picture><source media="(prefers-color-scheme: dark)" srcset="docs/images/badges/gitee-version-dark.svg" /><img src="docs/images/badges/gitee-version-light.svg" alt="Gitee リリース 1.1.0" width="126" height="24" /></picture></a>
+<a href="https://github.com/OrangeChange/bb-colive/releases/tag/v1.2.0"><picture><source media="(prefers-color-scheme: dark)" srcset="docs/images/badges/github-version-dark.svg" /><img src="docs/images/badges/github-version-light.svg" alt="GitHub リリース 1.2.0" width="132" height="24" /></picture></a>
+<a href="https://gitee.com/orange-chan/bb-colive/releases/tag/v1.2.0"><picture><source media="(prefers-color-scheme: dark)" srcset="docs/images/badges/gitee-version-dark.svg" /><img src="docs/images/badges/gitee-version-light.svg" alt="Gitee リリース 1.2.0" width="126" height="24" /></picture></a>
 <picture><source media="(prefers-color-scheme: dark)" srcset="docs/images/badges/windows-dark.svg" /><img src="docs/images/badges/windows-light.svg" alt="Windows 10 / 11 x64" width="193" height="24" /></picture>
 <a href="LICENSE"><picture><source media="(prefers-color-scheme: dark)" srcset="docs/images/badges/license-dark.svg" /><img src="docs/images/badges/license-light.svg" alt="ソースアベイラブルライセンス" width="130" height="24" /></picture></a>
 
@@ -19,7 +19,7 @@ Bilibili ライブ向けの弾幕表示・音声読み上げ・スタイルカ�
 
 </div>
 
-> ダウンロードバッジはリリース済みの v1.1.0 を指しています。本ページは現在の `main` ブランチに基づく説明です。インストーラー未収録の更新については[プロジェクト状況](docs/project-status.md)をご覧ください。
+> ダウンロードバッジはリリース済みの v1.2.0 を指しています。本ページは現在の `main` ブランチに基づく説明です。インストーラー未収録の更新については[プロジェクト状況](docs/project-status.md)をご覧ください。
 
 ## 主な機能
 

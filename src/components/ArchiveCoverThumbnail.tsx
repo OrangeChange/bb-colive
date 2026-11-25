@@ -65,6 +65,7 @@ export function ArchiveCoverThumbnail({ url, alt, size, cloudSessionId, previewE
     "archive-cover-thumbnail",
     sizeClass[size],
     "aspect-[16/9]",
+    "h-auto",
     "shrink-0",
     "overflow-hidden",
     "rounded-md",
@@ -78,7 +79,7 @@ export function ArchiveCoverThumbnail({ url, alt, size, cloudSessionId, previewE
       {showImage && !previewEnabled ? (
         <span className={thumbnailClass}><img src={imageUrl!} alt={alt} className="size-full object-cover" onError={() => setFailedUrl(imageUrl)} /></span>
       ) : showImage ? (
-        <Button variant="outline"
+        <Button variant="ghost" size={null}
           ref={triggerRef}
           type="button"
           className={`${thumbnailClass} cursor-zoom-in p-0 text-left transition-[border-color,box-shadow] hover:border-accent/70 hover:shadow-lg hover:shadow-black/20 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent-ring`}
@@ -96,7 +97,7 @@ export function ArchiveCoverThumbnail({ url, alt, size, cloudSessionId, previewE
           />
         </Button>
       ) : failed ? (
-        <Button variant="outline" type="button" className={`${thumbnailClass} ui-type-micro text-t3 hover:text-t1 focus-visible:ring-2 focus-visible:ring-accent-ring`}
+        <Button variant="ghost" size={null} type="button" className={`${thumbnailClass} ui-type-micro text-t3 hover:text-t1 focus-visible:ring-2 focus-visible:ring-accent-ring`}
           title={uiText("archiveCoverThumbnail.title2")} onClick={() => setRetry(value => value + 1)}>{uiText("archiveCoverThumbnail.ArchiveCoverThumbnail")}</Button>
       ) : (
         <span

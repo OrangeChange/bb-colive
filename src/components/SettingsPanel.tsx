@@ -38,7 +38,6 @@ import {
   type MinimizeBehavior,
 } from "../generalSettings";
 import {
-  rgbaToHex,
   rgbaToCss,
   type RgbaColor,
 } from "../eventStyleSettings";
@@ -60,14 +59,13 @@ import {
   MAX_SAME_DANMU_WINDOW_SECONDS,
   MIN_SAME_DANMU_WINDOW_SECONDS,
 } from "../windows/danmuMerge";
-import { getColorPopoverPlacement } from "./colorPopoverPlacement";
 import { bindUiDismissableLayer } from "./ui/layer";
 import { GiftThresholdInput } from "./GiftThresholdInput";
 import { SettingsFlowPreview } from './SettingsFlowPreview';
 import { SettingsChoiceControl } from './SettingsChoiceControl';
 import { SettingsIcon } from './SettingsIcon';
 import { SceneLayoutIcon } from './SceneLayoutIcon';
-import { ColorSlider } from "./ColorSlider";
+import { parseThemeColor } from "./themeColorValue.ts";
 import { INTERACT_KIND_OPTIONS, type DisplayEventFilters } from "../eventFilterSettings";
 import {
   SETTINGS_SECTIONS,
@@ -552,78 +550,17 @@ function PixelInput({
 
 function SurfaceColorInput({ value, onChange, searchId, automatic = false, onReset }: { value: RgbaColor; onChange: (value: RgbaColor) => void; searchId?: string; automatic?: boolean; onReset?: () => void }) {
   useUiLanguage();
-  const [open, setOpen] = useState(false);
-  const [placement, setPlacement] = useState<"above" | "below">("below");
-  const [position, setPosition] = useState({ left: 8, top: 8, ready: false });
-  const triggerRef = useRef<HTMLButtonElement>(null);
-  const popoverRef = useRef<HTMLDivElement>(null);
-
-  useEffect(() => {
-    if (!open || !popoverRef.current) return;
-    return bindUiDismissableLayer(popoverRef.current, () => setOpen(false), { trigger: triggerRef.current });
-  }, [open]);
-
-  useLayoutEffect(() => {
-    if (!open) return;
-    const updatePosition = () => {
-      const trigger = triggerRef.current;
-      const popover = popoverRef.current;
-      if (!trigger || !popover) return;
-      const rect = trigger.getBoundingClientRect();
-      const popoverHeight = popover.getBoundingClientRect().height;
-      const nextPlacement = getColorPopoverPlacement(rect, window.innerHeight, popoverHeight);
-      const width = 260;
-      const maxLeft = Math.max(8, window.innerWidth - width - 8);
-      const left = Math.max(8, Math.min(maxLeft, rect.right - width));
-      const top = nextPlacement === "above"
-        ? rect.top - popoverHeight - 8
-        : rect.bottom + 8;
-      const maxTop = Math.max(8, window.innerHeight - popoverHeight - 8);
-      setPlacement(nextPlacement);
-      setPosition({ left, top: Math.min(maxTop, Math.max(8, top)), ready: true });
-    };
-    updatePosition();
-    window.addEventListener("resize", updatePosition);
-    window.addEventListener("scroll", updatePosition, true);
-    return () => {
-      window.removeEventListener("resize", updatePosition);
-      window.removeEventListener("scroll", updatePosition, true);
-    };
-  }, [open]);
-
   return (
     <div className="settings-control-row settings-number-row" data-settings-search={searchId}>
       <span className="settings-control-label ui-type-control text-t2">{uiText("settingsPanel.SurfaceColorInput")}</span>
-      <div className="settings-control-field relative flex min-w-0 flex-1 items-center gap-2">
-        <Button variant="outline"
-          type="button"
-          ref={triggerRef}
-          aria-expanded={open}
-          aria-label={uiText("settingsPanel.aria_label6")}
-          onClick={() => {
-            setPosition((current) => ({ ...current, ready: false }));
-            setOpen((current) => !current);
-          }}
-          className="settings-surface-color-trigger settings-control-surface flex h-8 flex-1 min-w-0 items-center gap-2 px-2 ui-type-control text-t1"
-        >
-          <span className="size-4 shrink-0 rounded border border-line" style={{ backgroundColor: rgbaToCss(value) }} aria-hidden="true" />
-          <span className="truncate font-mono text-t2">{automatic ? uiText("settingsPanel.SurfaceColorInput2") : `${rgbaToHex(value)} · ${Math.round(value.a * 100)}%`}</span>
-        </Button>
-        {onReset && <Button variant="outline" type="button" className="settings-surface-auto" disabled={automatic} onClick={onReset} title={uiText("settingsPanel.title5")} aria-label={uiText("settingsPanel.aria_label7")}><RotateCcw size={14} /></Button>}
-        {open && createPortal(
-          <div
-            ref={popoverRef}
-            data-ui-overlay="true"
-            role="dialog"
-            aria-label={uiText("settingsPanel.aria_label6")}
-            data-placement={placement}
-            className="settings-surface-color-popover fixed z-50 w-[260px] rounded-lg border border-line bg-surface p-2 shadow-xl shadow-black/20"
-            style={{ left: position.left, top: position.top, visibility: position.ready ? "visible" : "hidden" }}
-          >
-            <ColorSlider compact value={value} onChange={onChange} />
-          </div>,
-          document.body,
-        )}
+      <div className="settings-control-field settings-surface-color-field flex min-w-0 flex-1 items-center gap-2">
+        <ThemeColorField
+          label={uiText("settingsPanel.aria_label6")}
+          value={rgbaToCss(value)}
+          valueLabel={automatic ? uiText("settingsPanel.SurfaceColorInput2") : undefined}
+          onChange={next => { const color = parseThemeColor(next); if (color) onChange(color); }}
+        />
+        {onReset && <Button variant="ghost" size={null} type="button" className="settings-surface-auto" disabled={automatic} onClick={onReset} title={uiText("settingsPanel.title5")} aria-label={uiText("settingsPanel.aria_label7")}><RotateCcw size={14} /></Button>}
       </div>
     </div>
   );
@@ -672,7 +609,7 @@ function SectionTitle({ title, onReset, iconName }: { title: string; iconName?: 
   return (
     <header className="settings-section-title" data-settings-level="1">
       <h3 className="settings-experience-heading ui-type-section-title font-medium text-t1"><SettingsIcon name={iconName ?? ""} />{title}</h3>
-      {onReset && <Button variant="ghost" type="button" className={`${resetButtonClass} settings-reset-button settings-icon-action`} title={uiText("settingsPanel.title6")} aria-label={uiText("settingsPanel.aria_label9")} onClick={onReset}><RotateCcw size={16} aria-hidden="true" /></Button>}
+      {onReset && <Button variant="ghost" size={null} type="button" className={`${resetButtonClass} settings-reset-button settings-icon-action`} title={uiText("settingsPanel.title6")} aria-label={uiText("settingsPanel.aria_label9")} onClick={onReset}><RotateCcw size={16} aria-hidden="true" /></Button>}
     </header>
   );
 }
@@ -718,20 +655,20 @@ function SettingsFilterRow({
   return (
     <div ref={surface} className="settings-filter-submenu" onKeyDown={event=>{const items=[...event.currentTarget.querySelectorAll<HTMLButtonElement>('[role="menuitemcheckbox"]')];const index=items.indexOf(document.activeElement as HTMLButtonElement);const next=event.key==="Home"?0:event.key==="End"?items.length-1:event.key==="ArrowDown"?(index+1)%items.length:event.key==="ArrowUp"?(index+items.length-1)%items.length:-1;if(next>=0){event.preventDefault();items[next]?.focus();}}}>
       <div className={`settings-filter-row settings-control-surface ${active ? "is-active" : ""}`}>
-        <Button variant="outline"
+        <Button variant="ghost" size={null}
           type="button"
           aria-pressed={active}
           aria-label={`${label}${active ? uiText("settingsPanel.aria_label10") : uiText("settingsPanel.aria_label11")}`}
-          className={`settings-filter-row-toggle ui-type-control ${active ? "is-active" : ""}`}
+          className={`settings-filter-row-toggle h-full border-0 bg-transparent ui-type-control ${active ? "is-active" : ""}`}
           onClick={onPrimaryToggle}
         >
           <span className="settings-filter-row-label">{label}</span>
           <span className="settings-filter-row-state">{active ? uiText("common.show") : uiText("common.hide")}</span>
         </Button>
         {hasSubmenu && (
-          <Button variant="outline"
+          <Button variant="ghost" size={null}
             type="button"
-            className="settings-filter-row-disclosure"
+            className="settings-filter-row-disclosure h-full border-0 bg-transparent"
             aria-label={uiText("settingsPanel.aria_label12", { label: label })}
             aria-expanded={open}
             onClick={() => setOpen((current) => !current)}
@@ -745,13 +682,13 @@ function SettingsFilterRow({
           {INTERACT_KIND_OPTIONS.map((option) => {
             const checked = selected[option.key] !== false;
             return (
-              <Button variant="outline"
+              <Button variant="ghost" size={null}
                 key={option.key}
                 type="button"
                 role="menuitemcheckbox"
                 aria-checked={checked}
                 onClick={() => onToggle(option.key)}
-                className="settings-filter-menu-item ui-type-control text-t2"
+                className="settings-filter-menu-item h-auto justify-start border-0 bg-transparent ui-type-control text-t2"
               >
                 <span className={checked ? "size-1.5 rounded-full bg-accent" : "size-1.5 rounded-full border border-line"} aria-hidden="true" />
                 {option.label}
@@ -1341,7 +1278,7 @@ export function SettingsPanel({
                   onKeyDown={handleSettingsSearchKeyDown}
                   placeholder={uiText("settingsPanel.placeholder")}
                   aria-label={uiText("settingsPanel.aria_label14")}
-                  className="min-w-0 flex-1 bg-transparent py-1.5 ui-type-control text-t1 outline-none placeholder:text-t3"
+                  className="h-full min-w-0 flex-1 rounded-none border-0 bg-transparent p-0 shadow-none focus-visible:ring-0 ui-type-control text-t1 placeholder:text-t3"
                 />
                 {settingsSearchQuery && (
                   <Button size="icon-sm" variant="ghost" type="button" aria-label={uiText("settingsPanel.aria_label15")} className="rounded p-0.5 ui-type-control text-t3 hover:bg-raised hover:text-t1" onClick={() => { setSettingsSearchQuery(""); settingsSearchInputRef.current?.focus(); }}><X size={14} aria-hidden="true" /></Button>
@@ -1354,10 +1291,10 @@ export function SettingsPanel({
                   <div className="px-2 py-2 ui-type-meta text-t3">{uiText("settingsPanel.SettingsPanel2")}</div>
                 ) : (
                   settingsSearchResults.map((entry) => (
-                    <Button variant="outline"
+                    <Button variant="ghost" size={null}
                       key={entry.id}
                       type="button"
-                      className="settings-search-result flex w-full items-center justify-between gap-3 rounded-md px-2 py-1.5 text-left transition-colors hover:bg-raised focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent-ring"
+                      className="settings-search-result flex h-auto w-full border-0 items-center justify-between gap-3 rounded-md px-2 py-1.5 text-left transition-colors hover:bg-raised focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent-ring"
                       onClick={() => jumpToSearchResult(entry)}
                     >
                       <span className="min-w-0 truncate ui-type-control text-t1">{entry.label}</span>
@@ -1394,13 +1331,13 @@ export function SettingsPanel({
               if (event.key === "Escape" || event.key === "Tab") { event.stopPropagation(); setDirectoryOpen(false); directoryRef.current?.querySelector<HTMLButtonElement>(".settings-section-navigator")?.focus(); }
             }}>
             {SETTINGS_SECTIONS.map((section) => (
-              <Button variant="outline"
+              <Button variant="ghost"
                 key={section.id}
                 type="button"
                 role="option"
                 aria-selected={section.id === currentSection}
                 onClick={() => { jumpTo(section.id); setDirectoryOpen(false); directoryRef.current?.querySelector<HTMLButtonElement>(".settings-section-navigator")?.focus(); }}
-                className={`flex h-8 w-full items-center justify-start gap-2 rounded-md px-2 text-left ui-type-control transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent-ring ${section.id === currentSection ? "bg-accent-subtle font-medium text-accent-text" : "text-t2 hover:bg-raised hover:text-t1"}`}
+                className={`flex h-8 w-full items-center justify-start gap-2 rounded-md border-0 px-2 text-left ui-type-control transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent-ring ${section.id === currentSection ? "bg-accent-subtle font-medium text-accent-text" : "text-t2 hover:bg-raised hover:text-t1"}`}
               >
                 <SettingsIcon name={section.id} />{section.label}
               </Button>
@@ -1811,7 +1748,7 @@ export function SettingsPanel({
                             aria-label={uiText("settingsPanel.aria_label27", { uid: uid })}
                           />
                           <div className="mt-1.5 flex justify-end gap-1.5">
-                            <Button variant="outline"
+                            <Button variant="ghost" size={null}
                               type="button"
                               className="rounded px-1.5 py-1 ui-type-micro text-t3 transition-colors hover:bg-raised hover:text-t1 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent-ring"
                               onClick={() => { setEditingNicknameUid(null); setEditingNicknameValue(""); setNicknameNotice(""); }}
@@ -1831,13 +1768,13 @@ export function SettingsPanel({
                             <span className="font-medium text-t1">{nickname}</span>
                             <span className="ml-2 font-mono ui-type-micro text-t3">{uid}</span>
                           </span>
-                          <Button variant="outline"
+                          <Button variant="ghost" size={null}
                             type="button"
                             className="shrink-0 rounded px-1.5 py-1 ui-type-micro text-t3 transition-colors hover:bg-raised hover:text-t1 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent-ring"
                             onClick={() => { setEditingNicknameUid(uid); setEditingNicknameValue(nickname); setNicknameNotice(""); }}
                           >
                             {uiText("common.edit")}</Button>
-                          <Button variant="outline"
+                          <Button variant="ghost" size={null}
                             type="button"
                             aria-label={uiText("settingsPanel.aria_label28", { nickname: nickname })}
                             className="shrink-0 rounded px-1.5 py-1 ui-type-micro text-t3 transition-colors hover:bg-danger/10 hover:text-danger focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent-ring"

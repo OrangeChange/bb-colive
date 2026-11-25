@@ -78,7 +78,7 @@ export function UiCombobox({
     <Popover open={open && matches.length > 0} onOpenChange={setOpen}>
       <PopoverAnchor asChild>
         <div ref={anchor} className={`ui-combobox-anchor ${className}`}>
-          <Search size={15} className="shrink-0 text-t3" aria-hidden />
+          <span className="ui-combobox-icon"><Search size={15} aria-hidden /></span>
           <Input
             id={id}
             role="combobox"
@@ -90,7 +90,7 @@ export function UiCombobox({
             placeholder={placeholder}
             disabled={disabled}
             value={value}
-            className="ui-combobox-input h-full border-0 bg-transparent p-0 shadow-none focus-visible:ring-0"
+            className="ui-combobox-input"
             onFocus={() => setOpen(matches.length > 0)}
             onChange={(event) => {
               onValueChange(event.target.value);
@@ -138,6 +138,7 @@ export function UiCombobox({
             <Button
               variant="ghost"
               size="icon-xs"
+              className="ui-combobox-clear"
               disabled={disabled}
               aria-label={uiText("combobox.aria_label", { ariaLabel })}
               title={uiText("combobox.title")}
