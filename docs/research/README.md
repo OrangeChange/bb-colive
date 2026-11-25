@@ -4,6 +4,7 @@
 
 | 主题 | 资料 |
 | --- | --- |
+| 开发参考 | [重要参考项目与源码入口](reference-projects.md) |
 | 命令代际 | [V1／V2／V3 调查](protocol-versions.md) |
 | 金额 | [礼物金额字段](gift-price-fields-analysis.md) |
 | 特效 | [特效礼物事件](effect-gift-events-analysis.md) |

@@ -169,6 +169,7 @@ export function PartitionColumn({
               <EventPane
                 key={feed?.feedKey}
                 title={label.title}
+                canSendDanmaku={liveLayout && region === "danmu"}
                 count={projection.indices.length}
                 summary={summary}
                 events={events}

@@ -31,6 +31,7 @@ const NO_SETTING_FEATURE_STAGES = ["open", "request", "success", "failure", "can
 
 /** 生产代码已声明、需要诊断覆盖的功能 ID；新增功能需同步加入此 registry 和 catalog。 */
 export const PRODUCTION_FEATURE_IDS = [
+  "danmaku-sending",
   "scene",
   "floating-windows",
   "voice",
@@ -49,6 +50,7 @@ export const PRODUCTION_FEATURE_IDS = [
 
 /** 新功能或新面板必须先在这里登记自己的诊断覆盖契约。 */
 export const FEATURE_DIAGNOSTIC_CATALOG: FeatureDiagnosticContract[] = localized(() => ([
+  {id:"danmaku-sending",panel:uiText("danmaku.open"),streams:["app"],stages:NO_SETTING_FEATURE_STAGES,snapshotSchema:{version:1,keys:["environment.live"]},failureHooks:COMMON_FAILURE_HOOKS},
   { id: "software-updates", panel: uiText("featureCatalog.FEATURE_DIAGNOSTIC_CATALOG.panel"), streams: ["app"], stages: FULL_FEATURE_STAGES, snapshotSchema: { version: 1, keys: ["environment.appVersion"] }, failureHooks: COMMON_FAILURE_HOOKS },
   {
     id: "scene",

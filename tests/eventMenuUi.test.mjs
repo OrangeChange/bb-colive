@@ -27,11 +27,11 @@ function cssDeclaration(selector, property) {
   return value;
 }
 
-test("现场事件菜单按约定顺序提供六个动作，并保留键盘入口", () => {
+test("现场事件菜单提供回复及原有动作，并保留键盘入口", () => {
   const menuStart = source.indexOf("const actions");
   assert.ok(menuStart >= 0);
-  const menu = source.slice(menuStart, menuStart + 7000);
-  const labels = ["筛选该用户", "语音播报", "添加昵称", "打开用户主页", "收藏事件", "标记事件"];
+  const menu = source.slice(menuStart);
+  const labels = ["回复该用户", "筛选该用户", "语音播报", "添加昵称", "打开用户主页", "收藏事件", "标记事件"];
   let previous = -1;
   for (const label of labels) {
     const index = menu.indexOf(label);

@@ -1,3 +1,4 @@
+import { useDanmakuComposer } from "./stores/danmakuComposer";
 import { Button } from "./components/shadcn/button";
 import { useUiLanguage } from "./i18n/react.ts";
 import { uiText } from "./i18n/index.ts";
@@ -449,6 +450,11 @@ function MainArea({
   }, [archiveRepository, archiveSessionId, onToggleFavorite]);
   const queryActive = Boolean(query.userId || query.userName || query.text?.trim());
   const eventMenuHandlers = useMemo<Omit<EventMenuHandlers, "regionKey">>(() => ({
+    onReplyUser: (event) => {
+      const current = useConnection.getState().state;
+      if (!event.user?.uid || event.roomId !== current.roomId || current.status !== "connected" || useSession.getState().phase !== "loggedIn") return;
+      useDanmakuComposer.getState().show({ uid: String(event.user.uid), name: event.user.uname });
+    },
     onSpeakEvent,
     onUserFilter,
     isUserFiltered,
@@ -647,6 +653,7 @@ function MainArea({
             <EventPane
               key={leftFeed.feedKey}
               title={uiText("app.title")}
+              canSendDanmaku
               count={leftProjection.indices.length}
               roomGuardProfile={roomGuardProfile}
               events={events}

@@ -277,6 +277,7 @@ function SettingSwitch({ label, checked, onChange, searchId, disabled = false, h
 }
 
 const VOICE_SHORTCUT_ACTION_OPTIONS: readonly { value: VoiceShortcutAction; label: string; icon: MenuIconName }[] = localized(() => ([
+  { value: "reply", label: uiText("danmaku.reply"), icon: "reply" },
   { value: "speak", label: uiText("settingsPanel.VOICE_SHORTCUT_ACTION_OPTIONS.label"), icon: "voice" },
   { value: "filter", label: uiText("settingsPanel.VOICE_SHORTCUT_ACTION_OPTIONS.label2"), icon: "filter" },
   { value: "favorite", label: uiText("settingsPanel.VOICE_SHORTCUT_ACTION_OPTIONS.label3"), icon: "favorite" },

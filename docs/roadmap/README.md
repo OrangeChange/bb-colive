@@ -4,6 +4,7 @@
 
 | 文档 | 当前归属 |
 | --- | --- |
+| [弹幕发送、回复与表情](danmaku-sending.md) | 待确认方案；以 PiliPlus 为主要参考，主窗口现场悬浮输入、菜单回复与表情发送 |
 | [平台与更新](platform-and-updates.md) | 1.1.0 已接入 Windows 安装／便携更新和双源分发；其他桌面平台仍为后续规划 |
 | [BB EventFetcher](event-fetcher-design.md) | 早期设计快照；当前客户端已对接恢复契约 0.3，服务端源码基线 0.7.15，现行说明见云端记录恢复 |
 | [云端历史恢复](cloud-history-recovery.md) | 早期恢复方案；旧恢复契约和输入流程已由现行功能替代 |

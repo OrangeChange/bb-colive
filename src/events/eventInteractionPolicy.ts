@@ -1,4 +1,4 @@
-export const EVENT_SHORTCUT_ACTIONS = ["speak", "filter", "favorite", "mark"] as const;
+export const EVENT_SHORTCUT_ACTIONS = ["speak", "filter", "favorite", "mark", "reply"] as const;
 export const MAX_EVENT_SHORTCUT_ACTIONS = 3;
 export type EventShortcutAction = (typeof EVENT_SHORTCUT_ACTIONS)[number];
 export const DEFAULT_EVENT_SHORTCUT_ACTIONS: EventShortcutAction[] = ["speak", "favorite", "mark"];

@@ -3,7 +3,7 @@ import { Button } from "./shadcn/button";
 import { formatUiDateTime } from "../i18n/format.ts";
 import { useUiLanguage } from "../i18n/react.ts";
 import { uiText } from "../i18n/index.ts";
-import { Funnel as LucideFunnel, LocateFixed as LucideLocateFixed, Volume2 as LucideVolume2, Tag as LucideTag, UserRound as LucideUserRound, Star as LucideStar, Bookmark as LucideBookmark, Copy as LucideCopy, Sparkles as LucideSparkles, Ellipsis as LucideEllipsis } from "lucide-react";
+import { Funnel as LucideFunnel, LocateFixed as LucideLocateFixed, Volume2 as LucideVolume2, Tag as LucideTag, UserRound as LucideUserRound, Star as LucideStar, Bookmark as LucideBookmark, Copy as LucideCopy, Sparkles as LucideSparkles, Reply as LucideReply, Ellipsis as LucideEllipsis } from "lucide-react";
 import { useEffect, useLayoutEffect, useRef, useState, type PointerEvent as ReactPointerEvent, type RefObject } from "react";
 import type { CSSProperties } from "react";
 import { createPortal } from "react-dom";
@@ -18,6 +18,7 @@ import { buildEventContentText } from "../events/eventContentText.ts";
 export type EventMenuHandlers = {
   regionKey: string;
   onSpeakEvent: (event: DanmakuEvent) => void;
+  onReplyUser?: (event: DanmakuEvent) => void;
   onUserFilter?: (user: DanmakuUser) => void;
   isUserFiltered?: (user: DanmakuUser) => boolean;
   onClearUserFilter?: () => void;
@@ -73,7 +74,7 @@ export function runEventFavoriteAction(event: DanmakuEvent, handlers: EventMenuH
   void Promise.resolve().then(() => handlers.onToggleFavorite(event)).catch(() => {});
 }
 
-export type MenuIconName = "filter" | "context" | "voice" | "nickname" | "profile" | "favorite" | "mark" | "copy" | "effect";
+export type MenuIconName = "filter" | "context" | "voice" | "nickname" | "profile" | "favorite" | "mark" | "copy" | "effect" | "reply";
 
 type MenuAction = {
   label: string;
@@ -95,6 +96,7 @@ function actionToneClass(icon: MenuIconName, active = false): string {
 
 export function MenuActionIcon({ name, active = false }: { name: MenuIconName; active?: boolean }) {
   switch (name) {
+    case "reply": return <LucideReply className="event-context-menu-action-icon" aria-hidden="true" />;
     case "filter":
       return (
         <LucideFunnel className="event-context-menu-action-icon" aria-hidden="true" fill={active ? "currentColor" : "none"} />
@@ -135,6 +137,7 @@ const QUICK_ACTION_ICON: Record<VoiceShortcutAction, MenuIconName> = {
   filter: "filter",
   favorite: "favorite",
   mark: "mark",
+  reply: "reply",
 };
 
 export function resolveVisibleShortcutActions(
@@ -380,8 +383,9 @@ export function EventContextMenu({ event, nickname, eventFontSize, shortcutActio
     runEventFavoriteAction(event, handlers);
   };
   const visibleShortcutActions = resolveVisibleShortcutActions(shortcutActions, favorited, marked)
-    .filter((action) => scope === "review" ? action !== "mark" : true);
+    .filter((action) => (scope !== "review" || action !== "mark") && (action !== "reply" || (scope === "live" && !!handlers.onReplyUser && !!user?.uid)));
   const shortcutActionLabel = (action: VoiceShortcutAction): string => {
+    if (action === "reply") return uiText("danmaku.reply");
     if (action === "speak") return uiText("eventContextMenu.EventContextMenu.shortcutActionLabel");
     if (action === "filter") return userFiltered ? uiText("eventContextMenu.EventContextMenu.shortcutActionLabel2") : uiText("eventContextMenu.EventContextMenu.shortcutActionLabel3");
     if (action === "favorite") return favorited ? uiText("eventContextMenu.EventContextMenu.shortcutActionLabel4") : uiText("eventContextMenu.EventContextMenu.shortcutActionLabel5");
@@ -395,6 +399,7 @@ export function EventContextMenu({ event, nickname, eventFontSize, shortcutActio
   );
   const persistentShortcutActions = visibleShortcutActions.filter(shortcutActionPersistent);
   const actions: MenuAction[] = [
+    ...(scope === "live" && handlers.onReplyUser && user?.uid ? [{label:uiText("danmaku.reply"),icon:"reply" as const,onSelect:()=>handlers.onReplyUser?.(event)}] : []),
     {
       label: userFiltered ? uiText("eventContextMenu.EventContextMenu.actions.label") : uiText("eventContextMenu.EventContextMenu.actions.label2"),
       icon: "filter",
@@ -513,7 +518,8 @@ export function EventContextMenu({ event, nickname, eventFontSize, shortcutActio
                   eventId: event.reactKey ?? event.id,
                   data: { active },
                 });
-                if (shortcutAction === "speak") handlers.onSpeakEvent(event);
+                if (shortcutAction === "reply") handlers.onReplyUser?.(event);
+                else if (shortcutAction === "speak") handlers.onSpeakEvent(event);
                 else if (shortcutAction === "filter") {
                   if (!user) return;
                   userFiltered ? handlers.onClearUserFilter?.() : handlers.onUserFilter?.(user);
