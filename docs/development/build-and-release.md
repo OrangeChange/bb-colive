@@ -23,7 +23,7 @@
 
 ## 兼容渲染构建
 
-修改BLC原版或开放版源码后，分别运行 `node scripts/build-blivechat.cjs`、`node scripts/build-openlive.cjs`，提交对应public生成物及许可声明。`npm run build`会准备主题、构建LAPLACE并整理分发许可，然后执行TypeScript和Vite构建；它不会自动重建两版BLC。正式资源和测试数据的归属见[目录职责](repository-structure.md)。
+修改BLC原版或开放版源码后，分别运行 `node scripts/build-blivechat.cjs`、`node scripts/build-openlive.cjs`，提交对应public生成物及许可声明。`npm run build`会先检查四种界面语言的标识与参数，再准备主题、构建LAPLACE并整理分发许可，然后执行TypeScript和Vite构建；它不会自动重建两版BLC。正式资源和测试数据的归属见[目录职责](repository-structure.md)。
 
 ## 操作
 
