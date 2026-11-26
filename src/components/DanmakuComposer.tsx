@@ -112,6 +112,7 @@ export function DanmakuComposer({
     };
   }, [available, session?.mid, session?.savedAt, session?.cookie, open]);
   useEffect(() => {
+    if (session && roomId) invalidateLiveEmoticons(session.cookie, roomId);
     state.setContext(context);
     setEmotes(false);
     setEmptyError(false);

@@ -89,6 +89,8 @@ await page.addInitScript(() => {
       }
       if (cmd === "plugin:http|fetch_send") {
         const q = requests.get(args.rid);
+        if (q.url.includes("GetEmoticons") && Number(new URL(q.url).searchParams.get("room_id")) === window.slowEmoteRoom)
+          await new Promise(resolve => { window.releaseLateEmotes = resolve; });
         if (q.url.includes("/nav") && window.navDelay)
           await new Promise((r) => setTimeout(r, window.navDelay));
         return {
@@ -207,6 +209,11 @@ await page.addInitScript(() => {
                     }
                   : window.sendResult;
         if (q.url.includes("GetEmoticons")) {
+          if (window.roomSpecificEmoticons) {
+            const room = new URL(q.url).searchParams.get("room_id");
+            body.data.data[1].pkg_name = `房间${room}专属`;
+            body.data.data[1].emoticons[0].emoji = `房间${room}第${window.roomEmoticonVersion ?? 1}版`;
+          }
           if (window.emoticonError) body.code = -500;
           body.data.data[1].pkg_type = 2;
           body.data.data.push({
@@ -695,6 +702,32 @@ try {
   await page.getByRole("button", { name: "刷新表情", exact: true }).click();
   await retry.waitFor({ state: "hidden" });
   assert.equal(await page.evaluate(() => window.requestCounts.emoticons), beforeFailedRefresh + 2);
+  await page.keyboard.press("Escape");
+  await page.evaluate(() => { window.roomSpecificEmoticons = true; });
+  // 用未访问过的房间建立缓存，再切回检验实际更新。
+  const enterRoom = async (roomId, select = true) => {
+    await page.evaluate((roomId) => window.connection.setState({ state: { status: "connected", roomId, anchorName: `主播${roomId}` } }), roomId);
+    await page.getByRole("dialog").waitFor({ state: "hidden" });
+    await page.getByRole("button", { name: "发送弹幕", exact: true }).click();
+    await page.getByRole("button", { name: "表情", exact: true }).click();
+    if (select) await page.getByRole("tab", { name: `房间${roomId}专属`, exact: true }).click();
+  };
+  await enterRoom(111);
+  await page.getByRole("button", { name: "房间111第1版", exact: true }).waitFor();
+  await enterRoom(222);
+  await page.getByRole("button", { name: "房间222第1版", exact: true }).waitFor();
+  assert.equal(await page.getByRole("tab", { name: "房间111专属", exact: true }).count(), 0);
+  await page.evaluate(() => { window.roomEmoticonVersion = 2; });
+  await enterRoom(111);
+  await page.getByRole("button", { name: "房间111第2版", exact: true }).waitFor({ timeout: 1500 });
+  await page.evaluate(() => { window.slowEmoteRoom = 333; });
+  await enterRoom(333, false);
+  await page.waitForFunction(() => !!window.releaseLateEmotes);
+  await enterRoom(444);
+  await page.evaluate(() => { window.releaseLateEmotes(); });
+  await page.waitForTimeout(50);
+  assert.equal(await page.getByRole("tab", { name: "房间333专属", exact: true }).count(), 0, "旧房间迟到的结果不得替换当前表情");
+  assert(await page.getByRole("button", { name: "房间444第2版", exact: true }).isVisible());
   assert.deepEqual(errors, []);
   console.log(
     "图标分类、设备信息、小表情混排与字数、大表情即时发送及回复草稿、粉丝牌切换、IME、缩放与四语言通过",
