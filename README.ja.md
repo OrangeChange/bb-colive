@@ -10,10 +10,10 @@
 
 Bilibili ライブ向けの弾幕表示・音声読み上げ・スタイルカスタマイズ・配信履歴管理ツール。
 
-<a href="https://github.com/OrangeChange/bb-colive/releases/tag/v1.2.0"><picture><source media="(prefers-color-scheme: dark)" srcset="docs/images/badges/github-version-dark.svg" /><img src="docs/images/badges/github-version-light.svg" alt="GitHub リリース 1.2.0" width="132" height="24" /></picture></a>
-<a href="https://gitee.com/orange-chan/bb-colive/releases/tag/v1.2.0"><picture><source media="(prefers-color-scheme: dark)" srcset="docs/images/badges/gitee-version-dark.svg" /><img src="docs/images/badges/gitee-version-light.svg" alt="Gitee リリース 1.2.0" width="126" height="24" /></picture></a>
-<picture><source media="(prefers-color-scheme: dark)" srcset="docs/images/badges/windows-dark.svg" /><img src="docs/images/badges/windows-light.svg" alt="Windows 10 / 11 x64" width="193" height="24" /></picture>
-<a href="LICENSE"><picture><source media="(prefers-color-scheme: dark)" srcset="docs/images/badges/license-dark.svg" /><img src="docs/images/badges/license-light.svg" alt="ソースアベイラブルライセンス" width="130" height="24" /></picture></a>
+<a href="https://github.com/OrangeChange/bb-colive/releases/tag/v1.2.0"><picture><source media="(prefers-color-scheme: dark)" srcset="docs/images/badges/github-version-dark.svg" /><img src="docs/images/badges/github-version-light.svg" alt="GitHub リリース 1.2.0" width="118" height="24" /></picture></a>
+<a href="https://gitee.com/orange-chan/bb-colive/releases/tag/v1.2.0"><picture><source media="(prefers-color-scheme: dark)" srcset="docs/images/badges/gitee-version-dark.svg" /><img src="docs/images/badges/gitee-version-light.svg" alt="Gitee リリース 1.2.0" width="107" height="24" /></picture></a>
+<picture><source media="(prefers-color-scheme: dark)" srcset="docs/images/badges/windows-dark.svg" /><img src="docs/images/badges/windows-light.svg" alt="Windows 10 / 11 x64" width="165" height="24" /></picture>
+<a href="LICENSE"><picture><source media="(prefers-color-scheme: dark)" srcset="docs/images/badges/license-dark.svg" /><img src="docs/images/badges/license-light.svg" alt="ソースアベイラブルライセンス" width="122" height="24" /></picture></a>
 
 [主な機能](#主な機能) · [画面プレビュー](#画面プレビュー) · [クイックスタート](#クイックスタート) · [ドキュメント](#ドキュメント) · [開発とビルド](#開発とビルド)
 
@@ -162,7 +162,7 @@ npm run tauri -- build --bundles nsis   # Windows インストーラーを生成
 <a href="https://react.dev/"><picture><source media="(prefers-color-scheme: dark)" srcset="docs/images/badges/react-dark.png" /><img src="docs/images/badges/react-light.png" alt="React" width="72" height="24" /></picture></a>
 <a href="https://tauri.app/"><picture><source media="(prefers-color-scheme: dark)" srcset="docs/images/badges/tauri-dark.png" /><img src="docs/images/badges/tauri-light.png" alt="Tauri" width="68" height="24" /></picture></a>
 <a href="https://tailwindcss.com/"><picture><source media="(prefers-color-scheme: dark)" srcset="docs/images/badges/tailwind-dark.png" /><img src="docs/images/badges/tailwind-light.png" alt="Tailwind CSS" width="117" height="24" /></picture></a>
-<a href="https://ui.shadcn.com/"><picture><source media="(prefers-color-scheme: dark)" srcset="docs/images/badges/shadcn-dark.svg" /><img src="docs/images/badges/shadcn-light.svg" alt="shadcn/ui" width="104" height="24" /></picture></a>
+<a href="https://ui.shadcn.com/"><picture><source media="(prefers-color-scheme: dark)" srcset="docs/images/badges/shadcn-dark.svg" /><img src="docs/images/badges/shadcn-light.svg" alt="shadcn/ui" width="103" height="24" /></picture></a>
 <a href="https://www.radix-ui.com/"><picture><source media="(prefers-color-scheme: dark)" srcset="docs/images/badges/radix-dark.png" /><img src="docs/images/badges/radix-light.png" alt="Radix UI" width="88" height="24" /></picture></a>
 </p>
 
