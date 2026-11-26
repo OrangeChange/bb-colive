@@ -53,6 +53,7 @@ export interface FanMedalInfo {
   /** B 站粉丝牌原始类型，供兼容层保留。 */
   type?: number
   anchorName?: string
+  anchorRoomId?: number
   /** 大航海图标 URL；仅在原始粉丝牌明确绑定当前主播时保留。 */
   guardIconUrl?: string
   /** 粉丝牌所属主播 UID；部分旧载荷没有此字段。 */

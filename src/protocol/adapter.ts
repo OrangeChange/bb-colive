@@ -121,14 +121,14 @@ function medalLighted(value: unknown): boolean | undefined {
 
 function medalBelongsToCurrentRoom(raw: any, currentAnchorUid?: string): boolean | undefined {
   if (!currentAnchorUid) return undefined
-  const rawAnchorUid = raw?.anchorUid ?? raw?.anchor_uid ?? raw?.ruid
+  const rawAnchorUid = raw?.anchorUid ?? raw?.anchor_uid ?? raw?.ruid ?? raw?.target_id
   if (rawAnchorUid == null || rawAnchorUid === '') return undefined
   return String(rawAnchorUid) === currentAnchorUid
 }
 
 function currentRoomGuardIconUrl(raw: any, currentAnchorUid?: string): string | undefined {
   if (!currentAnchorUid) return undefined
-  const rawAnchorUid = raw?.anchorUid ?? raw?.anchor_uid ?? raw?.ruid
+  const rawAnchorUid = raw?.anchorUid ?? raw?.anchor_uid ?? raw?.ruid ?? raw?.target_id
   if (rawAnchorUid === undefined || rawAnchorUid === null || rawAnchorUid === ''
     || String(rawAnchorUid) !== currentAnchorUid) return undefined
   const icon = raw?.guard_icon ?? raw?.guardIconUrl
@@ -148,7 +148,7 @@ function medalFromPayload(raw: any, currentAnchorUid?: string): FanMedalInfo | u
   const level = raw.level ?? raw.medal_level
   const guardIconUrl = currentRoomGuardIconUrl(raw, currentAnchorUid)
   if (!name && (level === undefined || level === null) && !guardIconUrl) return undefined
-  const rawAnchorUid = raw.anchorUid ?? raw.anchor_uid ?? raw.ruid
+  const rawAnchorUid = raw.anchorUid ?? raw.anchor_uid ?? raw.ruid ?? raw.target_id
   const anchorUid = rawAnchorUid !== undefined && rawAnchorUid !== null && rawAnchorUid !== ''
     ? String(rawAnchorUid)
     : undefined
@@ -161,7 +161,8 @@ function medalFromPayload(raw: any, currentAnchorUid?: string): FanMedalInfo | u
     level: Number(level ?? 0),
     ...(guardLevel !== undefined ? { guardLevel } : {}),
     ...(type !== undefined ? { type } : {}),
-    ...(raw.anchorName ? { anchorName: String(raw.anchorName) } : {}),
+    ...((raw.anchorName || raw.anchor_uname) ? { anchorName: String(raw.anchorName || raw.anchor_uname) } : {}),
+    ...(Number(raw.anchorRoomId ?? raw.anchor_roomid) > 0 ? { anchorRoomId: Number(raw.anchorRoomId ?? raw.anchor_roomid) } : {}),
     ...(guardIconUrl ? { guardIconUrl } : {}),
     ...(anchorUid ? { anchorUid } : {}),
     ...(currentAnchorUid && medalBelongsToCurrentRoom(raw, currentAnchorUid) !== undefined
@@ -427,7 +428,9 @@ function medalFromInfo(info3: any[], payload?: any, currentAnchorUid?: string): 
     ...payload,
     level: info3[0] ?? payload?.level ?? 0,
     name: info3[1] ?? payload?.name ?? '',
-    anchorName: info3[2] || undefined,
+    anchorName: info3[2] || payload?.anchorName || undefined,
+    anchorRoomId: info3[3] || payload?.anchorRoomId,
+    anchorUid: info3[12] || payload?.anchorUid,
     is_light: payload?.is_light ?? payload?.is_lighted ?? info3[11],
   }, currentAnchorUid)
 }

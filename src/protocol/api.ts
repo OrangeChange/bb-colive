@@ -317,12 +317,18 @@ export const getRoomInfo = (realRoomId: number, cookie?: string) =>
 export interface MasterInfoData {
   uname: string
   face: string
+  followerCount?: number
+  roomId?: number
 }
 
-/** 主播信息（名字+头像，room_init 拿 uid 后调用） */
-export const getMasterInfo = (uid: number, cookie?: string) =>
-  biliGet<{ info: { uname: string; face: string } }>(`https://api.live.bilibili.com/live_user/v1/Master/info?uid=${uid}`, cookie)
-    .then(d => ({ uname: d.info.uname, face: d.info.face }))
+/** 主播资料；连接与粉丝牌资料卡共用。 */
+export const getMasterInfo = (uid: number | string, cookie?: string): Promise<MasterInfoData> =>
+  biliGet<{ info: { uname: string; face: string }; follower_num?: number; room_id?: number }>(`https://api.live.bilibili.com/live_user/v1/Master/info?uid=${encodeURIComponent(uid)}`, cookie)
+    .then(d => ({
+      uname: d.info.uname, face: d.info.face,
+      ...(typeof d.follower_num === 'number' && d.follower_num >= 0 ? { followerCount: d.follower_num } : {}),
+      ...(typeof d.room_id === 'number' && d.room_id > 0 ? { roomId: d.room_id } : {}),
+    }))
 
 export interface GiftConfigItem {
   id: number

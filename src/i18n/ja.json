@@ -4570,5 +4570,16 @@
   "danmaku.medalMore": "さらに読み込む",
   "danmaku.medalRefresh": "ファンバッジを更新",
   "danmaku.usage": "使用量 {count}",
-  "danmaku.usageLimit": "使用量 {count} / {limit}"
+  "danmaku.usageLimit": "使用量 {count} / {limit}",
+  "fanMedalProfile.title": "配信者情報",
+  "fanMedalProfile.unknown": "不明な配信者",
+  "fanMedalProfile.unavailable": "配信者情報なし",
+  "fanMedalProfile.loading": "読み込み中…",
+  "fanMedalProfile.retry": "読み込み失敗・再試行",
+  "fanMedalProfile.followers": "フォロワー {count}",
+  "fanMedalProfile.profile": "プロフィール",
+  "fanMedalProfile.room": "配信ルーム",
+  "fanMedalProfile.avatar": "{name}のアイコンを表示",
+  "fanMedalProfile.linkError": "リンクを開けませんでした。再試行してください",
+  "fanMedalProfile.badge": "ファンメダル：{name} レベル{level}"
 }

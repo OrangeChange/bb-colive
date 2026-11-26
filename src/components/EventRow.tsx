@@ -67,6 +67,7 @@ type EventDisplayContextValue = EventDisplayPreferences & {
   userNicknames: UserNicknames;
   eventStyleType: EventStyleType;
   maskUsername: boolean;
+  interactiveFanMedals?: boolean;
 };
 
 export const EventDisplayContext = createContext<EventDisplayContextValue>({
@@ -429,7 +430,7 @@ function Badges({ user, hideGuard = false, hideMedal = false }: { user?: Danmaku
         </span>
       )}
       {showMedal && (
-        <FanMedalBadge medal={user.medal} eventStyle={!preferences.archiveLayout} />
+        <FanMedalBadge medal={user.medal} eventStyle={!preferences.archiveLayout} interactive={preferences.interactiveFanMedals} />
       )}
     </span>
   );
@@ -1253,7 +1254,7 @@ export const EventRow = memo(function EventRow({
   );
 
   return (
-    <EventDisplayContext.Provider value={{ ...displayPreferences, eventStyleSettings, liveLayout, archiveLayout, enableBilibiliVideoLinks, userNicknames, eventStyleType, maskUsername }}>
+    <EventDisplayContext.Provider value={{ ...displayPreferences, eventStyleSettings, liveLayout, archiveLayout, enableBilibiliVideoLinks, userNicknames, eventStyleType, maskUsername, interactiveFanMedals: Boolean(eventMenu) }}>
       <div
         className={[
           "event event-row group",

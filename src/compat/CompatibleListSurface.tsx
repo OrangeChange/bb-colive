@@ -1,8 +1,11 @@
+import { FanMedalProfile } from "../components/FanMedalProfile";
+import { stableCompatibleEventId } from "./compatibleLiveBridge";
+import type { FanMedalInfo } from "../protocol/types";
 import { forwardRef, useEffect, useMemo, useRef, useState, useLayoutEffect } from "react";
 import { BlivechatSourceSurface, type BlivechatSourceControl } from "./blivechat/BlivechatSourceSurface.tsx";
 import { LaplaceProductSurface } from "./laplace/LaplaceProductSurface.tsx";
 
-import { compatibleRowBounds, observeCompatibleRows, type CompatibleRowBounds } from "./compatibleRowInteraction.ts";
+import { compatibleRowBounds, observeCompatibleRows, observeCompatibleMedals, type CompatibleRowBounds } from "./compatibleRowInteraction.ts";
 import type { RoomGuardProfile } from '../protocol/types.ts';
 import { useVoiceSettings } from '../voice/voiceSettings.ts';
 import { projectCompatibleDisplayNames } from './compatibleDisplayNames.ts';
@@ -45,6 +48,23 @@ export const CompatibleListSurface = forwardRef<BlivechatSourceControl, Compatib
   const measuredRate = useCompatibleEventRate(eventIds);
   const container = useRef<HTMLDivElement>(null);
   const latest = useRef(props); latest.current = props;
+  const [medalProfile, setMedalProfile] = useState<{medal: FanMedalInfo; anchor: {left: number; top: number; width: number; height: number}} | null>(null);
+  useEffect(() => {
+    if (props.renderMode !== 'dashboard' || !props.onRowHover) return;
+    const root = container.current;
+    let stop = () => {};
+    const bind = () => {
+      stop(); setMedalProfile(null);
+      const frame = root?.querySelector('iframe');
+      if (frame) stop = observeCompatibleMedals(frame, (id, anchor) => {
+        const medal = latest.current.events.find(event => stableCompatibleEventId(event) === id)?.user?.medal;
+        if (medal) setMedalProfile({medal, anchor});
+      });
+    };
+    bind(); root?.addEventListener('load', bind, true);
+    return () => { stop(); root?.removeEventListener('load', bind, true); };
+  }, [props.renderMode, Boolean(props.onRowHover), props.descriptor.renderer, props.descriptor.protocol]);
+
   useLayoutEffect(() => {
     if (!props.onRowHover && !props.onLocatedRow) return;
     let stop = () => {}, frameId = 0, locatedKey = "";
@@ -71,5 +91,5 @@ export const CompatibleListSurface = forwardRef<BlivechatSourceControl, Compatib
   const rendererIdentity = props.descriptor.renderer ?? props.descriptor.protocol;
   return <div ref={container} className="theme-surface" style={{ width: "100%", height: "100%" }}>{props.descriptor.renderer === "laplace"
     ? <LaplaceProductSurface key={rendererIdentity} ref={ref} {...props} descriptor={descriptor} rate={rate ?? measuredRate} renderMode={renderMode === "dashboard" ? "dashboard" : "obs"} />
-    : <BlivechatSourceSurface key={rendererIdentity} ref={ref} {...blivechatProps} descriptor={descriptor} renderMode={renderMode === "dashboard" ? "dashboard" : "output"} />}</div>;
+    : <BlivechatSourceSurface key={rendererIdentity} ref={ref} {...blivechatProps} descriptor={descriptor} renderMode={renderMode === "dashboard" ? "dashboard" : "output"} />}{medalProfile && <FanMedalProfile key={`${medalProfile.medal.anchorUid}:${medalProfile.anchor.top}`} medal={medalProfile.medal} anchor={medalProfile.anchor} onClose={() => setMedalProfile(null)} />}</div>;
 });

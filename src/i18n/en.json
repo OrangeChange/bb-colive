@@ -4570,5 +4570,16 @@
   "danmaku.medalMore": "Load more",
   "danmaku.medalRefresh": "Refresh fan medals",
   "danmaku.usage": "Used {count}",
-  "danmaku.usageLimit": "Used {count} / {limit}"
+  "danmaku.usageLimit": "Used {count} / {limit}",
+  "fanMedalProfile.title": "Streamer profile",
+  "fanMedalProfile.unknown": "Unknown streamer",
+  "fanMedalProfile.unavailable": "Streamer info unavailable",
+  "fanMedalProfile.loading": "Loading…",
+  "fanMedalProfile.retry": "Load failed. Retry",
+  "fanMedalProfile.followers": "Followers {count}",
+  "fanMedalProfile.profile": "Profile",
+  "fanMedalProfile.room": "Live room",
+  "fanMedalProfile.avatar": "Preview {name}’s avatar",
+  "fanMedalProfile.linkError": "Could not open link. Try again.",
+  "fanMedalProfile.badge": "Fan medal: {name}, level {level}"
 }

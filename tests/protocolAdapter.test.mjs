@@ -448,3 +448,14 @@ test('真实礼物报文的粉丝牌进入公共事件组件，并服从归属�
   assert.match(render({}),/fan-medal/);assert(render({}).includes(e.user.medal.name));assert(!render({onlyAnchorFanMedal:true}).includes('fan-medal'));
  }
 });
+
+test('粉丝牌保留数组与JSON载荷的主播归属，不用牌名推断', () => {
+ const medal=[25,'牌子','所属主播',123];medal[12]=456;
+ const chat=adapt({cmd:'DANMU_MSG',info:[[],'你好',[99,'用户'],medal,[]]}, {roomId:1,anchorUid:'9'});
+ assert.equal(chat.user.medal.anchorUid,'456');
+ assert.equal(chat.user.medal.anchorRoomId,123);
+ const gift=adapt({cmd:'SEND_GIFT',data:{uid:99,uname:'用户',giftName:'礼物',giftId:1,num:1,price:100,coin_type:'gold',sender_uinfo:{medal:{medal_name:'牌子',medal_level:25,target_id:456,anchor_uname:'所属主播',anchor_roomid:123}}}},{roomId:1,anchorUid:'9'});
+ assert.equal(gift.user.medal.anchorUid,'456');
+ assert.equal(gift.user.medal.anchorName,'所属主播');
+ assert.equal(gift.user.medal.anchorRoomId,123);
+});

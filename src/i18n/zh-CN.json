@@ -4570,5 +4570,16 @@
   "danmaku.medalMore": "加载更多",
   "danmaku.medalRefresh": "刷新粉丝牌",
   "danmaku.usage": "占用 {count}",
-  "danmaku.usageLimit": "占用 {count} / {limit}"
+  "danmaku.usageLimit": "占用 {count} / {limit}",
+  "fanMedalProfile.title": "主播资料",
+  "fanMedalProfile.unknown": "未知主播",
+  "fanMedalProfile.unavailable": "暂无主播信息",
+  "fanMedalProfile.loading": "加载中…",
+  "fanMedalProfile.retry": "加载失败，重试",
+  "fanMedalProfile.followers": "粉丝 {count}",
+  "fanMedalProfile.profile": "个人主页",
+  "fanMedalProfile.room": "直播间",
+  "fanMedalProfile.avatar": "预览 {name} 的头像",
+  "fanMedalProfile.linkError": "链接打开失败，请重试",
+  "fanMedalProfile.badge": "粉丝牌：{name} {level}级"
 }

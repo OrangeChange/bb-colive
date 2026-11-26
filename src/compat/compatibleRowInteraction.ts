@@ -49,3 +49,29 @@ export function observeCompatibleRows(frame: HTMLIFrameElement, publish: (row: C
   frame.ownerDocument.documentElement.addEventListener('pointerleave', clear);
   return () => { if (animation) view.cancelAnimationFrame(animation); doc.removeEventListener('pointermove', move); frame.ownerDocument.removeEventListener('pointermove', leave); frame.ownerDocument.documentElement.removeEventListener('pointerleave', clear); };
 }
+
+
+/** 宿主中的粉丝牌入口；不向兼容主题插入新的布局节点。 */
+export function observeCompatibleMedals(frame: HTMLIFrameElement, select: (eventId: string, bounds: {left: number; top: number; width: number; height: number}) => void): () => void {
+  const doc = frame.contentDocument;
+  if (!doc) return () => {};
+  const selector = '.fans-medal,yt-live-chat-author-medal-renderer,#chat-medal';
+  const mark = () => doc.querySelectorAll<HTMLElement>(selector).forEach(node => {
+    node.setAttribute('role', 'button'); node.tabIndex = 0;
+  });
+  const click = (event: Event) => {
+    const node = (event.target as Element | null)?.closest<HTMLElement>(selector);
+    const row = node?.closest<HTMLElement>('[data-compatible-event-id],[data-event-id]');
+    const id = row?.dataset.compatibleEventId ?? row?.dataset.eventId;
+    if (!node || !id) return;
+    event.preventDefault(); event.stopPropagation();
+    const box = node.getBoundingClientRect(), host = frame.getBoundingClientRect();
+    const scale = frame.clientWidth ? host.width / frame.clientWidth : 1;
+    select(id, {left: host.left + box.left * scale, top: host.top + box.top * scale, width: box.width * scale, height: box.height * scale});
+  };
+  const key = (event: KeyboardEvent) => { if (event.key === 'Enter' || event.key === ' ') click(event); };
+  mark();
+  const observer = new MutationObserver(mark); observer.observe(doc, {childList: true, subtree: true});
+  doc.addEventListener('click', click, true); doc.addEventListener('keydown', key, true);
+  return () => { observer.disconnect(); doc.removeEventListener('click', click, true); doc.removeEventListener('keydown', key, true); };
+}
