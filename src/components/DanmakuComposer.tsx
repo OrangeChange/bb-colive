@@ -138,6 +138,7 @@ export function DanmakuComposer({
   };
   const send = async (immediateEmoticon?: LiveEmoticon) => {
     if (!available || !session || !roomId || state.busy) return;
+    const started = performance.now();
     if (!immediateEmoticon && !draft.text.trim()) {
       setEmptyError(true);
       input.current?.focus();
@@ -153,19 +154,22 @@ export function DanmakuComposer({
     const abort = new AbortController();
     requestAbort.current = abort;
     await state.submit(async (d) => {
+      let timings: Record<string, number> = {};
       const result = await sendLiveDanmaku(
         d.mode === "emoticon" && d.emoticon
           ? { roomId, kind: "emoticon", unique: d.emoticon.unique }
           : { roomId, kind: "text", text: d.text, replyUid: d.reply?.uid },
         session,
         abort.signal,
+        (value) => { timings = value; },
       );
+      timings.totalMs = performance.now() - started;
       recordFeatureDiagnostic({
         featureId: "danmaku-sending",
         stage: result.status === "sent" ? "success" : "failure",
         action: "send",
         outcome: result.status,
-        data: { roomId, ...("code" in result ? { code: result.code } : {}) },
+        data: { roomId, kind: immediateEmoticon ? "emoticon" : "text", ...timings, ...("code" in result ? { code: result.code } : {}) },
       });
       return result;
     }, immediateEmoticon);

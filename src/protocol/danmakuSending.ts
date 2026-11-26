@@ -33,7 +33,8 @@ const emoticons = new Map<
   string,
   { packages: RoomEmoticonPackage[]; expiresAt: number }
 >();
-const loadingEmoticons = new Map<string, Promise<RoomEmoticonPackage[]>>();
+interface EmoticonPreparation { packages: RoomEmoticonPackage[]; expiresAt: number }
+const loadingEmoticons = new Map<string, Promise<EmoticonPreparation>>();
 const loadingRoomInfo = new Map<string, Promise<any>>();
 export function clearLiveSendingPreparation() {
   prepared = undefined;
@@ -185,11 +186,21 @@ export async function getRoomEmoticonPackages(
   signal?: AbortSignal,
   refresh = false,
 ) {
+  return (await prepareRoomEmoticons(roomId, cookie, signal, refresh)).packages;
+}
+
+export async function prepareRoomEmoticons(
+  roomId: number,
+  cookie: string,
+  signal?: AbortSignal,
+  refresh = false,
+  refreshAheadMs = 0,
+): Promise<EmoticonPreparation> {
   if (signal?.aborted) throw new Error("cancelled");
   const key = `${cookie}\n${roomId}`;
   if (refresh) invalidateLiveEmoticons(cookie, roomId);
   const existing = emoticons.get(key);
-  if (existing && existing.expiresAt > Date.now()) return existing.packages;
+  if (existing && existing.expiresAt - Date.now() > refreshAheadMs) return existing;
   let request = loadingEmoticons.get(key);
   if (!request) {
     request = (async () => {
@@ -204,12 +215,10 @@ export async function getRoomEmoticonPackages(
       );
       if (!response.ok) throw new Error("emoticons");
       const packages = parseEmoticonPackages(await response.json());
+      const value = { packages, expiresAt: Date.now() + PREPARATION_AGE_MS };
       if (loadingEmoticons.get(key) === request)
-        emoticons.set(key, {
-          packages,
-          expiresAt: Date.now() + PREPARATION_AGE_MS,
-        });
-      return packages;
+        emoticons.set(key, value);
+      return value;
     })().finally(() => {
       if (loadingEmoticons.get(key) === request) loadingEmoticons.delete(key);
     });
@@ -223,7 +232,18 @@ export async function sendLiveDanmaku(
   request: LiveDanmakuRequest,
   session: Session,
   signal?: AbortSignal,
+  onTimings?: (timings: Record<string, number>) => void,
 ) {
+  const started = performance.now();
+  const timings: Record<string, number> = {};
+  let phase = "formMs";
+  let phaseStarted = started;
+  const nextPhase = (next: string) => {
+    const now = performance.now();
+    timings[phase] = now - phaseStarted;
+    phaseStarted = now;
+    phase = next;
+  };
   const controller = new AbortController();
   const cancel = () => controller.abort();
   signal?.addEventListener("abort", cancel, { once: true });
@@ -236,11 +256,13 @@ export async function sendLiveDanmaku(
       session.cookie,
       Math.floor(Date.now() / 1000),
     );
+    nextPhase("preparationMs");
     if (controller.signal.aborted) return { status: "failed" as const };
     const ready = await awaitSharedResult(
       prepareLiveDanmaku(session),
       controller.signal,
     );
+    nextPhase("permissionMs");
     if (controller.signal.aborted) return { status: "failed" as const };
     if (request.kind === "emoticon") {
       const packages = await getRoomEmoticonPackages(
@@ -256,12 +278,14 @@ export async function sendLiveDanmaku(
         return { status: "unavailableEmoticon" as const };
     }
     if (controller.signal.aborted) return { status: "failed" as const };
+    nextPhase("signingMs");
     const query = encWbi(
       { web_location: "444.8" },
       ready.imgKey,
       ready.subKey,
       Math.floor(Date.now() / 1000),
     );
+    nextPhase("transportMs");
     submitted = true;
     const response = await postLiveDanmaku(
       query,
@@ -272,7 +296,9 @@ export async function sendLiveDanmaku(
       },
       form,
       controller.signal,
+      timings,
     );
+    nextPhase("resultMs");
     if (!response.ok) return { status: "unknown" as const };
     const result = parseSendResult(await response.json());
     if (result.status === "login") clearLiveSendingPreparation();
@@ -292,6 +318,9 @@ export async function sendLiveDanmaku(
       return { status: "login" as const };
     return { status: submitted ? ("unknown" as const) : ("failed" as const) };
   } finally {
+    timings[phase] = performance.now() - phaseStarted;
+    timings.totalMs = performance.now() - started;
+    onTimings?.(timings);
     clearTimeout(timer);
     signal?.removeEventListener("abort", cancel);
   }

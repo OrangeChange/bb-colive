@@ -9,6 +9,9 @@ import { useDanmakuComposer } from "../../src/stores/danmakuComposer";
 import { useConnection } from "../../src/stores/connection";
 import { useSession } from "../../src/stores/session";
 import { setUiLanguage } from "../../src/i18n";
+import { createDiagnosticContext, flushAllDiagnosticLogs } from "../../src/diagnostics/diagnosticLogger";
+const diagnosticLines: string[] = [];
+createDiagnosticContext({ flushIntervalMs: 0, invoke: async (_command, args) => { diagnosticLines.push(String(args.lines)); } });
 import "../../src/App.css";
 import "../../src/shadcn.css";
 useSession.setState({
@@ -29,6 +32,10 @@ Object.assign(window, {
   session: useSession,
   connection: useConnection,
   language: setUiLanguage,
+  sendDiagnostics: async () => {
+    await flushAllDiagnosticLogs();
+    return diagnosticLines.join("").trim().split("\n").filter(Boolean).map(line => JSON.parse(line));
+  },
 });
 const event = {
   id: "local-not-platform",

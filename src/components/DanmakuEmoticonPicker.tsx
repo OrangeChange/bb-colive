@@ -1,7 +1,7 @@
 import { useEffect, useState, useRef } from "react";
 import { RefreshCw, Smile } from "lucide-react";
 import { Button } from "./shadcn/button";
-import { getRoomEmoticonPackages } from "../protocol/danmakuSending";
+import { prepareRoomEmoticons } from "../protocol/danmakuSending";
 import type {
   LiveEmoticon,
   RoomEmoticonPackage,
@@ -60,29 +60,32 @@ export function DanmakuEmoticonPicker({
   const [tab, setTab] = useState("");
   useEffect(() => {
     const abort = new AbortController();
-    setLoading(true);
-    setFailed(false);
-    const load = getRoomEmoticonPackages(
-      roomId,
-      cookie,
-      abort.signal,
-      revision > 0,
-    );
-    void load
-      .then((value) => {
+    let timer: number | undefined;
+    setPackages([]);
+    const load = async (force = false) => {
+      setLoading(true);
+      setFailed(false);
+      try {
+        const value = await prepareRoomEmoticons(roomId, cookie, abort.signal, force, 60_000);
         if (abort.signal.aborted) return;
-        setPackages(value);
-        onPackagesRef.current?.(value);
-        setTab(value[0]?.id ?? "");
-        setLoading(false);
-      })
-      .catch(() => {
+        setPackages(value.packages);
+        onPackagesRef.current?.(value.packages);
+        setTab(old => value.packages.some(p => p.id === old) ? old : value.packages[0]?.id ?? "");
+        timer = window.setTimeout(() => void load(), Math.max(1000, value.expiresAt - Date.now() - 60_000));
+      } catch {
         if (!abort.signal.aborted) {
           setFailed(true);
-          setLoading(false);
+          timer = window.setTimeout(() => void load(), 60_000);
         }
-      });
-    return () => abort.abort();
+      } finally {
+        if (!abort.signal.aborted) setLoading(false);
+      }
+    };
+    void load(revision > 0);
+    return () => {
+      abort.abort();
+      if (timer !== undefined) window.clearTimeout(timer);
+    };
   }, [key, roomId, cookie, revision]);
   const refresh = () => {
     setRevision((n) => n + 1);
@@ -163,9 +166,12 @@ export function DanmakuEmoticonPicker({
           <RefreshCw size={14} />
         </Button>
       </div>
-      {loading ? (
+      {failed && packages.length > 0 && (
+        <Button type="button" variant="ghost" onClick={refresh}>{uiText("danmaku.loadError")}</Button>
+      )}
+      {loading && !packages.length ? (
         <p role="status">{uiText("danmaku.loading")}</p>
-      ) : failed ? (
+      ) : failed && !packages.length ? (
         <Button type="button" variant="ghost" onClick={refresh}>
           {uiText("danmaku.loadError")}
         </Button>

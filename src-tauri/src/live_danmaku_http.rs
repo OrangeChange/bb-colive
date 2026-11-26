@@ -26,6 +26,10 @@ pub enum LiveRequest {
 pub struct LiveResponse {
     status: u16,
     body: String,
+    #[serde(rename = "headersMs")]
+    headers_ms: f64,
+    #[serde(rename = "bodyMs")]
+    body_ms: f64,
 }
 
 struct PendingRequest {
@@ -53,10 +57,18 @@ impl PendingRequest {
             .take()
             .ok_or("request unavailable")?;
         let work = async {
+            let started = std::time::Instant::now();
             let response = request.send().await.map_err(|_| "network request failed")?;
+            let headers_ms = started.elapsed().as_secs_f64() * 1000.0;
+            let body_started = std::time::Instant::now();
             let status = response.status().as_u16();
             let body = response.text().await.map_err(|_| "response read failed")?;
-            Ok(LiveResponse { status, body })
+            Ok(LiveResponse {
+                status,
+                body,
+                headers_ms,
+                body_ms: body_started.elapsed().as_secs_f64() * 1000.0,
+            })
         };
         tokio::select! {
             biased;
@@ -138,9 +150,11 @@ mod tests {
                 let n = socket.read(&mut bytes).await.unwrap();
                 assert!(n > 0);
                 socket
-                    .write_all(b"HTTP/1.1 200 OK\r\nContent-Length: 2\r\n\r\n{}")
+                    .write_all(b"HTTP/1.1 200 OK\r\nContent-Length: 2\r\n\r\n")
                     .await
                     .unwrap();
+                tokio::time::sleep(std::time::Duration::from_millis(30)).await;
+                socket.write_all(b"{}").await.unwrap();
             }
             let mut bytes = [0; 4096];
             assert!(socket.read(&mut bytes).await.unwrap() > 0);
@@ -148,14 +162,13 @@ mod tests {
         });
         let client = crate::http_client::shared_http_client();
         let url = format!("http://{address}/");
-        assert_eq!(
-            PendingRequest::new(client.get(&url))
-                .execute()
-                .await
-                .unwrap()
-                .body,
-            "{}"
-        );
+        let response = PendingRequest::new(client.get(&url))
+            .execute()
+            .await
+            .unwrap();
+        assert_eq!(response.body, "{}");
+        assert!(response.headers_ms.is_finite() && response.headers_ms >= 0.0);
+        assert!(response.body_ms >= 20.0, "应独立记录响应内容的读取等待");
         assert_eq!(
             PendingRequest::new(client.post(&url).body("hello"))
                 .execute()

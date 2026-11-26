@@ -23,6 +23,8 @@ await page.addInitScript(() => {
   const nativeSetTimeout = window.setTimeout.bind(window);
   window.setTimeout = (callback, delay, ...args) => {
     if (delay > 180_000 && delay < 300_000)
+      window.runLastPreparationRefresh = () => callback(...args);
+    if (delay > 180_000 && delay < 300_000)
       window.preparationRefreshTimers.push({ createdAt: Date.now(), delay });
     return nativeSetTimeout(callback, delay, ...args);
   };
@@ -63,7 +65,7 @@ await page.addInitScript(() => {
           await new Promise(resolve => { window.releaseRoomWarmup = resolve; });
         if (q.method === "POST") window.sent.push(q);
         const bytes = await window.__TAURI_INTERNALS__.invoke("plugin:http|fetch_read_body", args);
-        return { status: 200, body: new TextDecoder().decode(new Uint8Array(bytes.slice(0, -1))) };
+        return { status: 200, body: new TextDecoder().decode(new Uint8Array(bytes.slice(0, -1))), headersMs: 23, bodyMs: 4 };
       }
       if (cmd === "plugin:http|fetch") {
         const n = ++id;
@@ -205,6 +207,7 @@ await page.addInitScript(() => {
                     }
                   : window.sendResult;
         if (q.url.includes("GetEmoticons")) {
+          if (window.emoticonError) body.code = -500;
           body.data.data[1].pkg_type = 2;
           body.data.data.push({
             pkg_id: 3,
@@ -348,6 +351,14 @@ try {
   await page.getByRole("button", { name: "发送", exact: true }).click();
   await page.getByRole("status").filter({ hasText: "已发送" }).waitFor();
   assert.equal(await read(), "");
+  const sendRecord = await page.evaluate(async () => (await window.sendDiagnostics()).find(r => r.action === "send" && r.outcome === "sent"));
+  assert(Number.isFinite(sendRecord?.data.totalMs), "发送结果应包含各阶段耗时");
+  for (const stage of ["formMs", "preparationMs", "permissionMs", "signingMs", "encodingMs", "bridgePrepareMs", "bridgeExecuteMs", "responseWaitMs", "responseReadMs", "transportMs", "resultMs", "totalMs"])
+    assert(Number.isFinite(sendRecord.data[stage]) && sendRecord.data[stage] >= 0, stage);
+  assert.equal(sendRecord.data.responseWaitMs, 23);
+  assert.equal(sendRecord.data.responseReadMs, 4);
+  assert(!JSON.stringify(sendRecord).includes("你好"));
+  assert(!JSON.stringify(sendRecord).includes("SESSDATA"));
   assert.equal(
     await page.evaluate(() => window.requestCounts.nav),
     readyCounts.nav,
@@ -428,7 +439,10 @@ try {
   assert.equal(await read(), "草稿");
   await page.keyboard.press("Escape");
   await page.getByRole("dialog").waitFor({ state: "hidden" });
+  const beforeReopen = await page.evaluate(() => window.roomInfoRequests);
   await page.getByRole("button", { name: "发送弹幕", exact: true }).click();
+  await page.getByRole("button", { name: "粉丝牌", exact: true }).locator(".fan-medal").waitFor();
+  assert.equal(await page.evaluate(() => window.roomInfoRequests), beforeReopen + 1, "打开输入框复用粉丝牌查询准备连接，不重复请求");
   assert.equal(
     await page
       .getByRole("button", { name: "表情", exact: true })
@@ -462,6 +476,14 @@ try {
       .getByRole("button", { name: "未解锁", exact: true })
       .isDisabled(),
   );
+  const beforeRefresh = await page.evaluate(() => window.requestCounts.emoticons);
+  await page.evaluate(() => {
+    window.advanceSendingClock(4 * 60_000 + 1000);
+    window.runLastPreparationRefresh();
+  });
+  await page.waitForFunction((n) => window.requestCounts.emoticons > n, beforeRefresh, { timeout: 1500 });
+  await page.waitForFunction(() => document.querySelector('button[aria-label="刷新表情"]')?.disabled === false);
+  assert.equal(await page.getByRole("tab", { name: "大表情", exact: true }).getAttribute("aria-selected"), "true", "提前刷新不得跳回首个分类");
   const beforeLarge = await page.evaluate(() => ({ ...window.requestCounts }));
   await page.getByRole("button", { name: "大笑", exact: true }).click();
   await page.getByRole("status").filter({ hasText: "已发送" }).waitFor();
@@ -653,6 +675,27 @@ try {
   );
   assert.deepEqual(errors, []);
   assert.deepEqual(refinements, []);
+  await page.reload({ waitUntil: "commit" });
+  await page.waitForFunction(() => !!window.releaseRoomWarmup);
+  await page.evaluate(() => window.releaseRoomWarmup());
+  await page.getByRole("button", { name: "发送弹幕", exact: true }).click();
+  await page.getByRole("button", { name: "表情", exact: true }).click();
+  await page.getByRole("tab", { name: "大表情", exact: true }).click();
+  const beforeFailedRefresh = await page.evaluate(() => window.requestCounts.emoticons);
+  await page.evaluate(() => {
+    window.emoticonError = true;
+    window.advanceSendingClock(4 * 60_000 + 1000);
+    window.runLastPreparationRefresh();
+  });
+  const retry = page.getByRole("button", { name: "表情没能加载，请重试。", exact: true });
+  await retry.waitFor();
+  assert.equal(await page.getByRole("tab", { name: "大表情", exact: true }).getAttribute("aria-selected"), "true");
+  assert(await page.getByRole("button", { name: "大笑", exact: true }).isVisible(), "后台刷新失败保留当前列表");
+  await page.evaluate(() => { window.emoticonError = false; });
+  await page.getByRole("button", { name: "刷新表情", exact: true }).click();
+  await retry.waitFor({ state: "hidden" });
+  assert.equal(await page.evaluate(() => window.requestCounts.emoticons), beforeFailedRefresh + 2);
+  assert.deepEqual(errors, []);
   console.log(
     "图标分类、设备信息、小表情混排与字数、大表情即时发送及回复草稿、粉丝牌切换、IME、缩放与四语言通过",
   );
