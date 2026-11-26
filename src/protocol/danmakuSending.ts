@@ -14,15 +14,33 @@ import {
   parseEmoticonPackages,
   type LiveDanmakuRequest,
 } from "./danmakuSendingModel";
+let liveDevice: { b_3: string; b_4: string } | undefined;
+export async function liveRequestCookie(cookie: string, signal?: AbortSignal) {
+  if (!liveDevice) {
+    const value = await biliGet<{ b_3: string; b_4: string }>(
+      "https://api.bilibili.com/x/frontend/finger/spi",
+      undefined,
+      signal,
+    );
+    if (!value.b_3 || !value.b_4) throw new Error("device");
+    liveDevice = value;
+  }
+  const base = cookie
+    .split(";")
+    .filter((p) => !/^\s*buvid[34]=/.test(p))
+    .join(";");
+  return `${base}; buvid3=${liveDevice.b_3}; buvid4=${liveDevice.b_4}`;
+}
 export async function getRoomEmoticonPackages(
   roomId: number,
   cookie: string,
   signal?: AbortSignal,
 ) {
+  const requestCookie = await liveRequestCookie(cookie, signal);
   const response = await fetch(
     `https://api.live.bilibili.com/xlive/web-ucenter/v2/emoticon/GetEmoticons?platform=pc&room_id=${roomId}`,
     {
-      headers: { ...BILI_HEADERS, Cookie: cookie },
+      headers: { ...BILI_HEADERS, Cookie: requestCookie },
       signal: signal ?? AbortSignal.timeout(15000),
     },
   );
@@ -66,6 +84,10 @@ export async function sendLiveDanmaku(
       )
         return { status: "unavailableEmoticon" as const };
     }
+    const requestCookie = await liveRequestCookie(
+      session.cookie,
+      controller.signal,
+    );
     if (controller.signal.aborted) return { status: "failed" as const };
     const query = encWbi(
       { web_location: "444.8" },
@@ -80,7 +102,7 @@ export async function sendLiveDanmaku(
         method: "POST",
         headers: {
           ...BILI_HEADERS,
-          Cookie: session.cookie,
+          Cookie: requestCookie,
           referer: `https://live.bilibili.com/${request.roomId}`,
         },
         body: form,

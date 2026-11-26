@@ -4558,5 +4558,17 @@
   "danmaku.cancel": "取消",
   "danmaku.empty": "請先輸入彈幕內容。",
   "danmaku.savedEmoticon": "切換到表情草稿",
-  "danmaku.unavailableEmoticon": "這個表情暫不可用，請重新選擇。"
+  "danmaku.unavailableEmoticon": "這個表情暫不可用，請重新選擇。",
+  "danmaku.medals": "粉絲牌",
+  "danmaku.medalLit": "已點亮",
+  "danmaku.medalUnlit": "未點亮",
+  "danmaku.medalWorn": "目前佩戴",
+  "danmaku.medalLoadError": "未能載入粉絲牌，請重新整理後再試。",
+  "danmaku.medalWearError": "未能確認佩戴結果，請重新整理粉絲牌後再試。",
+  "danmaku.medalLoading": "正在讀取粉絲牌…",
+  "danmaku.medalEmpty": "暫無粉絲牌",
+  "danmaku.medalMore": "載入更多",
+  "danmaku.medalRefresh": "重新整理粉絲牌",
+  "danmaku.usage": "佔用 {count}",
+  "danmaku.usageLimit": "佔用 {count} / {limit}"
 }

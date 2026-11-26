@@ -4558,5 +4558,17 @@
   "danmaku.cancel": "キャンセル",
   "danmaku.empty": "コメントを入力してください。",
   "danmaku.savedEmoticon": "保存したスタンプに切り替え",
-  "danmaku.unavailableEmoticon": "このスタンプは利用できません。別のスタンプを選んでください。"
+  "danmaku.unavailableEmoticon": "このスタンプは利用できません。別のスタンプを選んでください。",
+  "danmaku.medals": "ファンバッジ",
+  "danmaku.medalLit": "点灯中",
+  "danmaku.medalUnlit": "未点灯",
+  "danmaku.medalWorn": "着用中",
+  "danmaku.medalLoadError": "ファンバッジを読み込めませんでした。更新して再試行してください。",
+  "danmaku.medalWearError": "着用結果を確認できませんでした。バッジを更新してから再試行してください。",
+  "danmaku.medalLoading": "ファンバッジを読み込み中…",
+  "danmaku.medalEmpty": "ファンバッジがありません",
+  "danmaku.medalMore": "さらに読み込む",
+  "danmaku.medalRefresh": "ファンバッジを更新",
+  "danmaku.usage": "使用量 {count}",
+  "danmaku.usageLimit": "使用量 {count} / {limit}"
 }

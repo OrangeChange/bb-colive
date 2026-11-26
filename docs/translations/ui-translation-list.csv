@@ -756,7 +756,7 @@ src/components/NativeThemeBasicSettings.tsx:31","清空","清空","Clear","ク�
 "common.close","common","src/App.tsx:1394
 src/components/AboutDialog.tsx:18
 src/components/CloudRecoveryProgress.tsx:89
-src/components/DanmakuComposer.tsx:189
+src/components/DanmakuComposer.tsx:185
 src/components/FavoriteOrganizationEditor.tsx:92
 src/components/NativePriceGradientControls.tsx:37
 src/components/NativeThemeAdvancedEditor.tsx:92
@@ -1242,37 +1242,48 @@ src/themes/compatThemeCapabilities.ts:80","点赞","按讚","Like","いいね","
 "customHttpProvider.createCustomHttpProvider.synthesize","customHttpProvider","src/voice/customHttpProvider.ts:33","没有可播报的文字","沒有可播報的文字","No text to read aloud","読み上げるテキストがありません","","仅软件操作界面；保持占位符名称原样，可按语序移动。"
 "customHttpProvider.createCustomHttpProvider.synthesize2","customHttpProvider","src/voice/customHttpProvider.ts:35","请先填写自定义 API 地址","請先填寫自訂 API 位址","Please enter the custom API URL first","先にカスタム API の URL を入力してください","","仅软件操作界面；保持占位符名称原样，可按语序移动。"
 "customHttpProvider.createCustomHttpProvider.synthesize3","customHttpProvider","src/voice/customHttpProvider.ts:75","自定义 API 语音合成失败：{detail}","自訂 API 語音合成失敗：{detail}","Custom API TTS synthesis failed: {detail}","カスタム API 音声合成に失敗しました：{detail}","detail","仅软件操作界面；保持占位符名称原样，可按语序移动。"
-"danmaku.cancel","danmaku","src/components/DanmakuComposer.tsx:346","取消","取消","Cancel","キャンセル","","仅软件操作界面；保持占位符名称原样，可按语序移动。"
-"danmaku.cancelEmoticon","danmaku","src/components/DanmakuComposer.tsx:226","取消表情","取消表情","Remove emoticon","スタンプを解除","","仅软件操作界面；保持占位符名称原样，可按语序移动。"
-"danmaku.cancelReply","danmaku","src/components/DanmakuComposer.tsx:204","取消回复","取消回覆","Cancel reply","返信を解除","","仅软件操作界面；保持占位符名称原样，可按语序移动。"
-"danmaku.content","danmaku","src/components/DanmakuComposer.tsx:212","弹幕内容","彈幕內容","Message","コメント","","仅软件操作界面；保持占位符名称原样，可按语序移动。"
-"danmaku.count","danmaku","src/components/DanmakuComposer.tsx:290","{count} 字","{count} 字","{count} characters","{count} 文字","count","仅软件操作界面；保持占位符名称原样，可按语序移动。"
-"danmaku.emoticonReply","danmaku","src/components/DanmakuComposer.tsx:326","这个表情暂不支持回复用户。","這個表情暫不支援回覆使用者。","This emoticon cannot be used as a reply yet.","このスタンプはユーザーへの返信に対応していません。","","仅软件操作界面；保持占位符名称原样，可按语序移动。"
-"danmaku.emoticons","danmaku","src/components/DanmakuComposer.tsx:265
-src/components/DanmakuComposer.tsx:266
-src/components/DanmakuEmoticonPicker.tsx:63","表情","表情","Emoticons","スタンプ","","仅软件操作界面；保持占位符名称原样，可按语序移动。"
-"danmaku.empty","danmaku","src/components/DanmakuComposer.tsx:355","请先输入弹幕内容。","請先輸入彈幕內容。","Enter a message first.","コメントを入力してください。","","仅软件操作界面；保持占位符名称原样，可按语序移动。"
-"danmaku.emptyEmoticons","danmaku","src/components/DanmakuEmoticonPicker.tsx:99","这个直播间暂无表情","這個直播間暫無表情","No emoticons in this room","このルームにはスタンプがありません","","仅软件操作界面；保持占位符名称原样，可按语序移动。"
-"danmaku.loadError","danmaku","src/components/DanmakuEmoticonPicker.tsx:96","表情没能加载，请重试。","表情載入失敗，請重試。","Could not load emoticons. Please try again.","スタンプを読み込めませんでした。再試行してください。","","仅软件操作界面；保持占位符名称原样，可按语序移动。"
-"danmaku.loading","danmaku","src/components/DanmakuEmoticonPicker.tsx:93","正在加载表情…","正在載入表情…","Loading emoticons…","スタンプを読み込み中…","","仅软件操作界面；保持占位符名称原样，可按语序移动。"
-"danmaku.login","danmaku","src/components/DanmakuComposer.tsx:143","请重新登录后再发。","請重新登入後再發。","Please sign in again before sending.","再ログインしてから送信してください。","","仅软件操作界面；保持占位符名称原样，可按语序移动。"
-"danmaku.noRoom","danmaku","src/components/DanmakuComposer.tsx:143","请先连接直播间","請先連線直播間","Connect to a live room first","先に配信ルームに接続してください","","仅软件操作界面；保持占位符名称原样，可按语序移动。"
-"danmaku.open","danmaku","src/components/DanmakuComposer.tsx:174
-src/components/DanmakuComposer.tsx:377
-src/components/DanmakuComposer.tsx:378
+"danmaku.cancelReply","danmaku","src/components/DanmakuComposer.tsx:200","取消回复","取消回覆","Cancel reply","返信を解除","","仅软件操作界面；保持占位符名称原样，可按语序移动。"
+"danmaku.content","danmaku","src/components/DanmakuComposer.tsx:229","弹幕内容","彈幕內容","Message","コメント","","仅软件操作界面；保持占位符名称原样，可按语序移动。"
+"danmaku.emoticons","danmaku","src/components/DanmakuComposer.tsx:254
+src/components/DanmakuComposer.tsx:255
+src/components/DanmakuEmoticonPicker.tsx:68
+src/components/DanmakuEmoticonPicker.tsx:74","表情","表情","Emoticons","スタンプ","","仅软件操作界面；保持占位符名称原样，可按语序移动。"
+"danmaku.empty","danmaku","src/components/DanmakuComposer.tsx:288","请先输入弹幕内容。","請先輸入彈幕內容。","Enter a message first.","コメントを入力してください。","","仅软件操作界面；保持占位符名称原样，可按语序移动。"
+"danmaku.emptyEmoticons","danmaku","src/components/DanmakuEmoticonPicker.tsx:145","这个直播间暂无表情","這個直播間暫無表情","No emoticons in this room","このルームにはスタンプがありません","","仅软件操作界面；保持占位符名称原样，可按语序移动。"
+"danmaku.loadError","danmaku","src/components/DanmakuEmoticonPicker.tsx:142","表情没能加载，请重试。","表情載入失敗，請重試。","Could not load emoticons. Please try again.","スタンプを読み込めませんでした。再試行してください。","","仅软件操作界面；保持占位符名称原样，可按语序移动。"
+"danmaku.loading","danmaku","src/components/DanmakuEmoticonPicker.tsx:139","正在加载表情…","正在載入表情…","Loading emoticons…","スタンプを読み込み中…","","仅软件操作界面；保持占位符名称原样，可按语序移动。"
+"danmaku.login","danmaku","src/components/DanmakuComposer.tsx:139","请重新登录后再发。","請重新登入後再發。","Please sign in again before sending.","再ログインしてから送信してください。","","仅软件操作界面；保持占位符名称原样，可按语序移动。"
+"danmaku.medalEmpty","danmaku","src/components/DanmakuMedalControl.tsx:183","暂无粉丝牌","暫無粉絲牌","No fan medals","ファンバッジがありません","","仅软件操作界面；保持占位符名称原样，可按语序移动。"
+"danmaku.medalLit","danmaku","src/components/DanmakuMedalControl.tsx:118
+src/components/DanmakuMedalControl.tsx:160
+src/components/DanmakuMedalControl.tsx:165","已点亮","已點亮","Lit","点灯中","","仅软件操作界面；保持占位符名称原样，可按语序移动。"
+"danmaku.medalLoadError","danmaku","src/components/DanmakuMedalControl.tsx:74","粉丝牌没能加载，请刷新重试。","未能載入粉絲牌，請重新整理後再試。","Could not load fan medals. Refresh to try again.","ファンバッジを読み込めませんでした。更新して再試行してください。","","仅软件操作界面；保持占位符名称原样，可按语序移动。"
+"danmaku.medalLoading","danmaku","src/components/DanmakuMedalControl.tsx:179","正在读取粉丝牌…","正在讀取粉絲牌…","Loading fan medals…","ファンバッジを読み込み中…","","仅软件操作界面；保持占位符名称原样，可按语序移动。"
+"danmaku.medalMore","danmaku","src/components/DanmakuMedalControl.tsx:195","加载更多","載入更多","Load more","さらに読み込む","","仅软件操作界面；保持占位符名称原样，可按语序移动。"
+"danmaku.medalRefresh","danmaku","src/components/DanmakuMedalControl.tsx:202
+src/components/DanmakuMedalControl.tsx:203","刷新粉丝牌","重新整理粉絲牌","Refresh fan medals","ファンバッジを更新","","仅软件操作界面；保持占位符名称原样，可按语序移动。"
+"danmaku.medals","danmaku","src/components/DanmakuMedalControl.tsx:107
+src/components/DanmakuMedalControl.tsx:131","粉丝牌","粉絲牌","Fan medals","ファンバッジ","","仅软件操作界面；保持占位符名称原样，可按语序移动。"
+"danmaku.medalUnlit","danmaku","src/components/DanmakuMedalControl.tsx:119
+src/components/DanmakuMedalControl.tsx:161
+src/components/DanmakuMedalControl.tsx:166","未点亮","未點亮","Unlit","未点灯","","仅软件操作界面；保持占位符名称原样，可按语序移动。"
+"danmaku.medalWearError","danmaku","src/components/DanmakuMedalControl.tsx:94","未能确认佩戴结果，请刷新粉丝牌后再试。","未能確認佩戴結果，請重新整理粉絲牌後再試。","Could not confirm the change. Refresh your fan medals before trying again.","着用結果を確認できませんでした。バッジを更新してから再試行してください。","","仅软件操作界面；保持占位符名称原样，可按语序移动。"
+"danmaku.medalWorn","danmaku","src/components/DanmakuMedalControl.tsx:172","当前佩戴","目前佩戴","Currently worn","着用中","","仅软件操作界面；保持占位符名称原样，可按语序移动。"
+"danmaku.noRoom","danmaku","src/components/DanmakuComposer.tsx:139","请先连接直播间","請先連線直播間","Connect to a live room first","先に配信ルームに接続してください","","仅软件操作界面；保持占位符名称原样，可按语序移动。"
+"danmaku.open","danmaku","src/components/DanmakuComposer.tsx:170
+src/components/DanmakuComposer.tsx:310
+src/components/DanmakuComposer.tsx:311
 src/diagnostics/featureCatalog.ts:53","发送弹幕","發送彈幕","Send danmaku","コメントを送信","","仅软件操作界面；保持占位符名称原样，可按语序移动。"
-"danmaku.refresh","danmaku","src/components/DanmakuEmoticonPicker.tsx:84
-src/components/DanmakuEmoticonPicker.tsx:85","刷新表情","重新整理表情","Refresh emoticons","スタンプを更新","","仅软件操作界面；保持占位符名称原样，可按语序移动。"
+"danmaku.refresh","danmaku","src/components/DanmakuEmoticonPicker.tsx:130
+src/components/DanmakuEmoticonPicker.tsx:131","刷新表情","重新整理表情","Refresh emoticons","スタンプを更新","","仅软件操作界面；保持占位符名称原样，可按语序移动。"
 "danmaku.reply","danmaku","src/components/EventContextMenu.tsx:389
 src/components/EventContextMenu.tsx:403
 src/components/SettingsPanel.tsx:280","回复该用户","回覆該使用者","Reply to this user","このユーザーに返信","","仅软件操作界面；保持占位符名称原样，可按语序移动。"
-"danmaku.replyTo","danmaku","src/components/DanmakuComposer.tsx:198","回复 {name}","回覆 {name}","Reply to {name}","{name} に返信","name","仅软件操作界面；保持占位符名称原样，可按语序移动。"
-"danmaku.savedEmoticon","danmaku","src/components/DanmakuComposer.tsx:278
-src/components/DanmakuComposer.tsx:279","切换到表情草稿","切換到表情草稿","Switch to saved emoticon","保存したスタンプに切り替え","","仅软件操作界面；保持占位符名称原样，可按语序移动。"
-"danmaku.send","danmaku","src/components/DanmakuComposer.tsx:303","发送","發送","Send","送信","","仅软件操作界面；保持占位符名称原样，可按语序移动。"
-"danmaku.sendNormally","danmaku","src/components/DanmakuComposer.tsx:338","取消回复并选择表情","取消回覆並選擇表情","Cancel reply and select emoticon","返信を解除してスタンプを選択","","仅软件操作界面；保持占位符名称原样，可按语序移动。"
-"danmaku.unavailable","danmaku","src/components/DanmakuEmoticonPicker.tsx:113","暂不可用","暫不可用","Unavailable","現在利用できません","","仅软件操作界面；保持占位符名称原样，可按语序移动。"
-"danmaku.unavailableEmoticon","danmaku","src/components/DanmakuComposer.tsx:353","这个表情暂不可用，请重新选择。","這個表情暫不可用，請重新選擇。","This emoticon is unavailable. Please choose another.","このスタンプは利用できません。別のスタンプを選んでください。","","仅软件操作界面；保持占位符名称原样，可按语序移动。"
+"danmaku.replyTo","danmaku","src/components/DanmakuComposer.tsx:194","回复 {name}","回覆 {name}","Reply to {name}","{name} に返信","name","仅软件操作界面；保持占位符名称原样，可按语序移动。"
+"danmaku.send","danmaku","src/components/DanmakuComposer.tsx:273","发送","發送","Send","送信","","仅软件操作界面；保持占位符名称原样，可按语序移动。"
+"danmaku.unavailable","danmaku","src/components/DanmakuEmoticonPicker.tsx:159","暂不可用","暫不可用","Unavailable","現在利用できません","","仅软件操作界面；保持占位符名称原样，可按语序移动。"
+"danmaku.usage","danmaku","src/components/DanmakuComposer.tsx:267","占用 {count}","佔用 {count}","Used {count}","使用量 {count}","count","仅软件操作界面；保持占位符名称原样，可按语序移动。"
+"danmaku.usageLimit","danmaku","src/components/DanmakuComposer.tsx:263","占用 {count} / {limit}","佔用 {count} / {limit}","Used {count} / {limit}","使用量 {count} / {limit}","count、limit","仅软件操作界面；保持占位符名称原样，可按语序移动。"
 "dateTimeField.hour","dateTimeField","src/components/DateTimeField.tsx:229","小时","小時","Hour","時","","仅软件操作界面；保持占位符名称原样，可按语序移动。"
 "dateTimeField.minute","dateTimeField","src/components/DateTimeField.tsx:235","分钟","分鐘","Minute","分","","仅软件操作界面；保持占位符名称原样，可按语序移动。 界面单位，不改变数值或换算规则。"
 "dateTimeField.openCalendar","dateTimeField","src/components/DateTimeField.tsx:193","{label}：选择日期","{label}：選擇日期","{label}: choose date","{label}：日付を選択","label","仅软件操作界面；保持占位符名称原样，可按语序移动。"

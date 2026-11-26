@@ -4558,5 +4558,17 @@
   "danmaku.cancel": "取消",
   "danmaku.empty": "请先输入弹幕内容。",
   "danmaku.savedEmoticon": "切换到表情草稿",
-  "danmaku.unavailableEmoticon": "这个表情暂不可用，请重新选择。"
+  "danmaku.unavailableEmoticon": "这个表情暂不可用，请重新选择。",
+  "danmaku.medals": "粉丝牌",
+  "danmaku.medalLit": "已点亮",
+  "danmaku.medalUnlit": "未点亮",
+  "danmaku.medalWorn": "当前佩戴",
+  "danmaku.medalLoadError": "粉丝牌没能加载，请刷新重试。",
+  "danmaku.medalWearError": "未能确认佩戴结果，请刷新粉丝牌后再试。",
+  "danmaku.medalLoading": "正在读取粉丝牌…",
+  "danmaku.medalEmpty": "暂无粉丝牌",
+  "danmaku.medalMore": "加载更多",
+  "danmaku.medalRefresh": "刷新粉丝牌",
+  "danmaku.usage": "占用 {count}",
+  "danmaku.usageLimit": "占用 {count} / {limit}"
 }

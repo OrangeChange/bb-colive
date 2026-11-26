@@ -4558,5 +4558,17 @@
   "danmaku.cancel": "Cancel",
   "danmaku.empty": "Enter a message first.",
   "danmaku.savedEmoticon": "Switch to saved emoticon",
-  "danmaku.unavailableEmoticon": "This emoticon is unavailable. Please choose another."
+  "danmaku.unavailableEmoticon": "This emoticon is unavailable. Please choose another.",
+  "danmaku.medals": "Fan medals",
+  "danmaku.medalLit": "Lit",
+  "danmaku.medalUnlit": "Unlit",
+  "danmaku.medalWorn": "Currently worn",
+  "danmaku.medalLoadError": "Could not load fan medals. Refresh to try again.",
+  "danmaku.medalWearError": "Could not confirm the change. Refresh your fan medals before trying again.",
+  "danmaku.medalLoading": "Loading fan medals…",
+  "danmaku.medalEmpty": "No fan medals",
+  "danmaku.medalMore": "Load more",
+  "danmaku.medalRefresh": "Refresh fan medals",
+  "danmaku.usage": "Used {count}",
+  "danmaku.usageLimit": "Used {count} / {limit}"
 }

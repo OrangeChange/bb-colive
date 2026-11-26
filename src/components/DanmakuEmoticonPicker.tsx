@@ -1,5 +1,5 @@
 import { useEffect, useState, useRef } from "react";
-import { RefreshCw } from "lucide-react";
+import { RefreshCw, Smile } from "lucide-react";
 import { Button } from "./shadcn/button";
 import { getRoomEmoticonPackages } from "../protocol/danmakuSending";
 import type {
@@ -8,13 +8,20 @@ import type {
 } from "../protocol/danmakuSendingModel";
 import { uiText } from "../i18n";
 const cache = new Map<string, RoomEmoticonPackage[]>();
+export function clearAccountEmoticonCache(accountKey: string) {
+  for (const key of cache.keys())
+    if (key.startsWith(`${accountKey}:`)) cache.delete(key);
+}
+
 export function DanmakuEmoticonPicker({
   roomId,
   cookie,
   accountKey,
   onChoose,
   onPackages,
+  disabled = false,
 }: {
+  disabled?: boolean;
   roomId: number;
   cookie: string;
   accountKey: string;
@@ -63,19 +70,60 @@ export function DanmakuEmoticonPicker({
       aria-label={uiText("danmaku.emoticons")}
       className="rounded-md border border-line p-2"
     >
-      <div className="mb-2 flex items-center gap-1 overflow-x-auto">
-        {packages.map((p) => (
-          <Button
-            key={p.id}
-            type="button"
-            variant={tab === p.id ? "secondary" : "ghost"}
-            size="sm"
-            aria-pressed={tab === p.id}
-            onClick={() => setTab(p.id)}
-          >
-            {p.name}
-          </Button>
-        ))}
+      <div className="mb-2 flex items-center gap-1">
+        <div
+          role="tablist"
+          aria-label={uiText("danmaku.emoticons")}
+          className="flex min-w-0 flex-1 gap-1 overflow-x-auto"
+        >
+          {packages.map((p) => (
+            <Button
+              key={p.id}
+              type="button"
+              variant={tab === p.id ? "secondary" : "ghost"}
+              size="icon-sm"
+              className="shrink-0"
+              title={p.name}
+              aria-label={p.name}
+              role="tab"
+              aria-selected={tab === p.id}
+              tabIndex={tab === p.id ? 0 : -1}
+              onKeyDown={(event) => {
+                const index = packages.findIndex((v) => v.id === p.id);
+                const next =
+                  event.key === "ArrowRight"
+                    ? (index + 1) % packages.length
+                    : event.key === "ArrowLeft"
+                      ? (index - 1 + packages.length) % packages.length
+                      : event.key === "Home"
+                        ? 0
+                        : event.key === "End"
+                          ? packages.length - 1
+                          : -1;
+                if (next >= 0) {
+                  event.preventDefault();
+                  setTab(packages[next].id);
+                  const element =
+                    event.currentTarget.parentElement?.querySelectorAll<HTMLElement>(
+                      '[role="tab"]',
+                    )[next];
+                  element?.focus();
+                  element?.scrollIntoView({
+                    block: "nearest",
+                    inline: "nearest",
+                  });
+                }
+              }}
+              onClick={() => setTab(p.id)}
+            >
+              {p.cover ? (
+                <img src={p.cover} alt="" className="h-6 w-6 object-contain" />
+              ) : (
+                <Smile size={18} />
+              )}
+            </Button>
+          ))}
+        </div>
         <Button
           type="button"
           variant="ghost"
@@ -105,7 +153,7 @@ export function DanmakuEmoticonPicker({
               <button
                 key={e.unique}
                 type="button"
-                disabled={!e.available}
+                disabled={disabled || !e.available}
                 aria-label={e.text}
                 title={
                   e.available

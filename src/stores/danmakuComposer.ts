@@ -6,6 +6,7 @@ import type {
 export interface ComposerDraft {
   text: string;
   mode: "text" | "emoticon";
+  inlineEmoticons?: Record<string, LiveEmoticon>;
   reply?: { uid: string; name: string };
   emoticon?: LiveEmoticon;
   status?: SendStatus;
@@ -24,6 +25,7 @@ interface ComposerState {
   edit: (patch: Partial<ComposerDraft>) => void;
   submit: (
     send: (draft: ComposerDraft) => Promise<{ status: SendStatus }>,
+    immediateEmoticon?: LiveEmoticon,
   ) => Promise<void>;
 }
 export const useDanmakuComposer = create<ComposerState>((set, get) => ({
@@ -57,7 +59,7 @@ export const useDanmakuComposer = create<ComposerState>((set, get) => ({
         },
       };
     }),
-  submit: async (send) => {
+  submit: async (send, immediateEmoticon) => {
     const { context, busy, drafts } = get();
     if (busy || !context) return;
     const draft = drafts[context] ?? empty();
@@ -67,7 +69,18 @@ export const useDanmakuComposer = create<ComposerState>((set, get) => ({
     }));
     let status: SendStatus;
     try {
-      status = (await send(draft)).status;
+      status = (
+        await send(
+          immediateEmoticon
+            ? {
+                ...draft,
+                mode: "emoticon",
+                emoticon: immediateEmoticon,
+                reply: undefined,
+              }
+            : draft,
+        )
+      ).status;
     } catch {
       status = "unknown";
     }
@@ -80,7 +93,7 @@ export const useDanmakuComposer = create<ComposerState>((set, get) => ({
           ...s.drafts,
           [context]: {
             ...current,
-            ...(unchanged && status === "sent"
+            ...(unchanged && status === "sent" && !immediateEmoticon
               ? draft.mode === "emoticon"
                 ? { emoticon: undefined, mode: "text" as const }
                 : { text: "" }

@@ -49,25 +49,57 @@ test("重复提交被阻止，独立表情成功保留文字草稿", async () =>
 });
 test("从表情转为回复文字后保留另一类草稿", async () => {
   store.getState().setContext("reply:1");
-  store
-    .getState()
-    .edit({
-      text: "文字",
-      emoticon: {
-        unique: "saved",
-        available: true,
-        text: "图",
-        url: "https://x",
-        width: 1,
-        height: 1,
-        textual: false,
-        unlockText: "",
-      },
-    });
+  store.getState().edit({
+    text: "文字",
+    emoticon: {
+      unique: "saved",
+      available: true,
+      text: "图",
+      url: "https://x",
+      width: 1,
+      height: 1,
+      textual: false,
+      unlockText: "",
+    },
+  });
   store.getState().show({ uid: "2", name: "人" });
   assert.equal(store.getState().drafts["reply:1"].emoticon?.unique, "saved");
   assert.equal(store.getState().drafts["reply:1"].mode, "text");
   await store.getState().submit(async () => ({ status: "sent" }));
   assert.equal(store.getState().drafts["reply:1"].text, "");
   assert.equal(store.getState().drafts["reply:1"].emoticon?.unique, "saved");
+});
+
+test("回复中即时发送大表情不带回复参数，也不清空文字和回复对象", async () => {
+  store.getState().setContext("immediate:1");
+  store
+    .getState()
+    .edit({
+      text: "保留[dog]",
+      mode: "text",
+      reply: { uid: "77", name: "用户" },
+    });
+  let sent;
+  await store.getState().submit(
+    async (d) => {
+      sent = d;
+      return { status: "sent" };
+    },
+    {
+      unique: "upower_x",
+      text: "笑",
+      url: "https://x",
+      width: 1,
+      height: 1,
+      available: true,
+      textual: false,
+      unlockText: "",
+    },
+  );
+  assert.equal(sent.mode, "emoticon");
+  assert.equal(sent.reply, undefined);
+  const d = store.getState().drafts["immediate:1"];
+  assert.equal(d.text, "保留[dog]");
+  assert.equal(d.reply.uid, "77");
+  assert.equal(d.mode, "text");
 });

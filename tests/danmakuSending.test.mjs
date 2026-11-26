@@ -85,3 +85,85 @@ test("表情包保留权限、原始比例和文字表情分类", () => {
   assert.equal(p[0].emoticons[0].unlockText, "需要粉丝牌");
   assert.equal(p[0].emoticons[0].width, 200);
 });
+
+test("小表情使用触发词且不依赖大表情标识，个人包保留", () => {
+  const packages = parseEmoticonPackages({
+    code: 0,
+    data: {
+      data: [
+        {
+          pkg_id: 100,
+          pkg_type: 3,
+          emoticons: [
+            { emoji: "dog", descript: "[dog]", url: "https://x", perm: 1 },
+          ],
+        },
+        {
+          pkg_id: 44,
+          pkg_type: 5,
+          pkg_name: "我的表情",
+          emoticons: [
+            {
+              emoticon_unique: "emoji_44",
+              emoji: "赞",
+              url: "https://y",
+              perm: 1,
+            },
+          ],
+        },
+      ],
+    },
+  });
+  assert.equal(packages[0].emoticons[0].text, "[dog]");
+  assert.equal(packages[0].emoticons.length, 1);
+  assert.equal(packages[1].emoticons[0].textual, false);
+});
+
+test("小表情包的零级权限不阻止可用表情，同编号个人包独立", () => {
+  const p = parseEmoticonPackages({
+    code: 0,
+    data: {
+      data: [
+        {
+          pkg_id: 1,
+          pkg_type: 3,
+          pkg_perm: 0,
+          emoticons: [{ emoji: "[dog]", url: "https://x", perm: 1 }],
+        },
+        { pkg_id: 1, pkg_type: 5, emoticons: [] },
+      ],
+    },
+  });
+  assert.equal(p[0].emoticons[0].available, true);
+  assert.notEqual(p[0].id, p[1].id);
+});
+
+test("粉丝牌保留佩戴与点亮两个状态及翻页信息", async () => {
+  const { parseMedalPanel } =
+    await import("../src/protocol/liveMedalsModel.ts");
+  const p = parseMedalPanel({
+    list: [
+      {
+        medal: {
+          medal_id: 12,
+          medal_name: "牌子",
+          level: 9,
+          wearing_status: 1,
+          is_lighted: 0,
+        },
+        anchor_info: { nick_name: "主播" },
+      },
+    ],
+    page_info: { cur_page: 1, total_page: 2 },
+  });
+  assert.equal(p.medals[0].worn, true);
+  assert.equal(p.medals[0].lighted, false);
+  assert.equal(p.hasMore, true);
+});
+
+test("字数占用按直播输入规则计算发送文本，图片仍计触发词", async () => {
+  const { danmakuTextUsage } =
+    await import("../src/protocol/danmakuSendingModel.ts");
+  assert.equal(danmakuTextUsage("a中😀[dog]"), 12);
+  assert.equal(danmakuTextUsage(" 草稿[笑]\n"), 8);
+});

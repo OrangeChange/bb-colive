@@ -112,21 +112,43 @@ export function parseEmoticonPackages(body: any): RoomEmoticonPackage[] {
   if (body?.code !== 0) throw new Error("emoticons");
   return (Array.isArray(body.data?.data) ? body.data.data : []).map(
     (p: any, index: number) => ({
-      id: String(p.pkg_id ?? index),
+      id: `${p.pkg_type}:${p.pkg_id ?? index}`,
       name: String(p.pkg_name ?? ""),
-      cover: String(p.current_cover ?? ""),
+      cover: String(p.current_cover || p.emoticons?.[0]?.url || "").replace(
+        /^http:/,
+        "https:",
+      ),
       emoticons: (Array.isArray(p.emoticons) ? p.emoticons : [])
-        .filter((e: any) => e?.emoticon_unique && e?.url)
+        .filter(
+          (e: any) =>
+            e?.url &&
+            (e.emoticon_unique ||
+              (p.pkg_type === 3 && (e.descript || e.emoji))),
+        )
         .map((e: any) => ({
-          unique: String(e.emoticon_unique),
-          text: String(e.emoji || e.descript || ""),
+          unique: String(e.emoticon_unique || e.descript || e.emoji),
+          text: String(
+            p.pkg_type === 3
+              ? e.descript || e.emoji || ""
+              : e.emoji || e.descript || "",
+          ),
           url: String(e.url).replace(/^http:/, "https:"),
           width: Number(e.width) || 40,
           height: Number(e.height) || 40,
-          available: p.pkg_perm !== 0 && e.perm === 1,
+          available: e.perm === 1,
           unlockText: String(e.unlock_show_text || ""),
           textual: p.pkg_type === 3,
         })),
     }),
   );
+}
+
+/** 直播网页按可打印 ASCII 计一单位，其余 UTF-16 单元计两单位。 */
+export function danmakuTextUsage(text: string): number {
+  let count = 0;
+  for (const char of text.replace(/\r?\n/g, " ").trim()) {
+    const code = char.codePointAt(0)!;
+    count += code >= 32 && code <= 126 ? 1 : 2 * char.length;
+  }
+  return count;
 }
