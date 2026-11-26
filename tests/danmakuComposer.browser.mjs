@@ -163,6 +163,32 @@ await page.addInitScript(() => {
                       },
                     }
                   : window.sendResult;
+        if (q.url.includes("GetEmoticons")) {
+          body.data.data[1].pkg_type = 2;
+          body.data.data.push({
+            pkg_id: 3,
+            pkg_type: 1,
+            pkg_name: "通用长条",
+            emoticons: [
+              {
+                emoji: "长条",
+                emoticon_unique: "official_3",
+                width: 200,
+                height: 60,
+                url: "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7",
+                perm: 1,
+              },
+            ],
+          });
+        }
+        if (q.url.includes("/fansMedal/panel") && body.code === 0) {
+          body.data.special_list = body.data.list.filter(
+            (item) => item.medal.wearing_status === 1,
+          );
+          body.data.list = body.data.list.filter(
+            (item) => item.medal.wearing_status !== 1,
+          );
+        }
         if (q.url.includes("/fansMedal/panel") && window.medalPagination) {
           if (new URL(q.url).searchParams.get("page") === "2") {
             window.medalPageRequests++;
@@ -223,6 +249,25 @@ try {
       .getAttribute("aria-expanded"),
     "false",
   );
+  await page
+    .getByRole("button", { name: "粉丝牌", exact: true })
+    .locator(".fan-medal")
+    .waitFor();
+  assert.equal(
+    await page
+      .getByRole("dialog")
+      .getByText("发送账号", { exact: true })
+      .count(),
+    0,
+  );
+  assert(
+    await page
+      .getByRole("button", { name: "粉丝牌", exact: true })
+      .evaluate(
+        (button) =>
+          button.parentElement.querySelector('[title="测试主播"]') !== null,
+      ),
+  );
   await field.fill("你好\n世界");
   await field.evaluate((e) =>
     e.dispatchEvent(
@@ -255,10 +300,42 @@ try {
   await page.getByRole("button", { name: "表情", exact: true }).click();
   const tab = page.getByRole("tab", { name: "文字表情", exact: true });
   await tab.waitFor();
+  const wheelCheck = await page.getByRole("tablist").evaluate((el) => {
+    el.style.maxWidth = "32px";
+    el.scrollLeft = 0;
+    const event = new WheelEvent("wheel", {
+      deltaY: 80,
+      bubbles: true,
+      cancelable: true,
+    });
+    el.dispatchEvent(event);
+    const moved = el.scrollLeft > 0 && event.defaultPrevented;
+    el.scrollLeft = el.scrollWidth;
+    const edge = new WheelEvent("wheel", {
+      deltaY: 80,
+      bubbles: true,
+      cancelable: true,
+    });
+    el.dispatchEvent(edge);
+    const released = !edge.defaultPrevented;
+    el.style.maxWidth = "";
+    el.scrollLeft = 0;
+    return { moved, released };
+  });
+  assert.deepEqual(wheelCheck, { moved: true, released: true });
+
   assert.equal((await tab.innerText()).trim(), "");
   await page.getByRole("button", { name: "[笑]", exact: true }).click();
   assert.equal(await read(), "草稿[笑]");
   assert.equal(await field.locator("img").count(), 1);
+  assert.equal(
+    (
+      await page
+        .getByRole("button", { name: "[笑]", exact: true })
+        .boundingBox()
+    ).height,
+    32,
+  );
   assert(!(await field.innerText().then((t) => t.includes("[笑]"))));
   await page.getByText("占用 8 / 80", { exact: true }).waitFor();
   await field.press("End");
@@ -291,7 +368,24 @@ try {
   await page.locator(".event-row-with-menu").hover();
   await page.getByRole("button", { name: "回复该用户", exact: true }).click();
   await page.getByRole("button", { name: "表情", exact: true }).click();
+  await page.getByRole("tab", { name: "通用长条", exact: true }).click();
+  assert.equal(
+    (
+      await page
+        .getByRole("button", { name: "长条", exact: true })
+        .boundingBox()
+    ).height,
+    28,
+  );
   await page.getByRole("tab", { name: "大表情", exact: true }).click();
+  assert.equal(
+    (
+      await page
+        .getByRole("button", { name: "大笑", exact: true })
+        .boundingBox()
+    ).height,
+    48,
+  );
   assert(
     await page
       .getByRole("button", { name: "未解锁", exact: true })
@@ -357,9 +451,9 @@ try {
       state: { status: "connected", roomId: 456, anchorName: "房间乙" },
     });
   });
-  await page.getByRole("dialog").waitFor({state:"hidden"});
+  await page.getByRole("dialog").waitFor({ state: "hidden" });
   await page.getByRole("button", { name: "发送弹幕", exact: true }).click();
-  await page.getByRole("dialog").waitFor({state:"visible"});
+  await page.getByRole("dialog").waitFor({ state: "visible" });
   await page.getByRole("button", { name: "粉丝牌", exact: true }).click();
   await page.evaluate(() => (window.emoticonsLocked = true));
   await page.getByRole("button", { name: /紫色 9/ }).click();
@@ -375,9 +469,9 @@ try {
       state: { status: "connected", roomId: 123, anchorName: "测试主播" },
     }),
   );
-  await page.getByRole("dialog").waitFor({state:"hidden"});
+  await page.getByRole("dialog").waitFor({ state: "hidden" });
   await page.getByRole("button", { name: "发送弹幕", exact: true }).click();
-  await page.getByRole("dialog").waitFor({state:"visible"});
+  await page.getByRole("dialog").waitFor({ state: "visible" });
   await page.getByRole("button", { name: "表情", exact: true }).click();
   await page.getByRole("button", { name: "[笑]", exact: true }).waitFor();
   if (

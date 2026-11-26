@@ -174,14 +174,30 @@ export function DanmakuComposer({
           }}
           className="flex min-w-0 flex-col gap-2"
         >
-          <div className="flex min-w-0 items-center justify-between gap-2">
-            <span className="truncate font-medium" title={name}>
+          <div className="flex min-w-0 flex-wrap items-center gap-2">
+            <span className="min-w-0 flex-1 truncate font-medium" title={name}>
               {name || roomId}
             </span>
+            {session && roomId && (
+              <DanmakuMedalControl
+                key={context + ":" + session.savedAt}
+                session={session}
+                roomId={roomId}
+                disabled={state.busy || !available}
+                onLimit={setLimit}
+                onChanged={() => {
+                  clearAccountEmoticonCache(
+                    `${session.mid}:${session.savedAt}`,
+                  );
+                  setEmoteRevision((n) => n + 1);
+                }}
+              />
+            )}
             <Button
               type="button"
               variant="ghost"
               size="icon-sm"
+              className="order-2"
               aria-label={uiText("common.close")}
               onClick={state.close}
             >
@@ -203,19 +219,6 @@ export function DanmakuComposer({
                 <X size={14} />
               </Button>
             </div>
-          )}
-          {session && roomId && (
-            <DanmakuMedalControl
-              key={context + ":" + session.savedAt}
-              session={session}
-              roomId={roomId}
-              disabled={state.busy || !available}
-              onLimit={setLimit}
-              onChanged={() => {
-                clearAccountEmoticonCache(`${session.mid}:${session.savedAt}`);
-                setEmoteRevision((n) => n + 1);
-              }}
-            />
           )}
           <DanmakuRichInput
             ref={input}

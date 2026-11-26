@@ -28,6 +28,34 @@ export function DanmakuEmoticonPicker({
   onChoose: (emoticon: LiveEmoticon) => void;
   onPackages?: (packages: RoomEmoticonPackage[]) => void;
 }) {
+  const strip = useRef<HTMLDivElement>(null);
+  useEffect(() => {
+    const element = strip.current;
+    if (!element) return;
+    const wheel = (event: WheelEvent) => {
+      if (event.ctrlKey || Math.abs(event.deltaX) >= Math.abs(event.deltaY))
+        return;
+      const distance =
+        event.deltaY *
+        (event.deltaMode === 1
+          ? 20
+          : event.deltaMode === 2
+            ? element.clientWidth
+            : 1);
+      const next = Math.max(
+        0,
+        Math.min(
+          element.scrollWidth - element.clientWidth,
+          element.scrollLeft + distance,
+        ),
+      );
+      if (Math.abs(next - element.scrollLeft) < 1) return;
+      event.preventDefault();
+      element.scrollLeft = next;
+    };
+    element.addEventListener("wheel", wheel, { passive: false });
+    return () => element.removeEventListener("wheel", wheel);
+  }, []);
   const onPackagesRef = useRef(onPackages);
   onPackagesRef.current = onPackages;
   const key = `${accountKey}:${roomId}`;
@@ -65,6 +93,9 @@ export function DanmakuEmoticonPicker({
     cache.delete(key);
     setRevision((n) => n + 1);
   };
+  const selected = packages.find((p) => p.id === tab);
+  const small = selected?.type === 3;
+  const banner = selected?.type === 1;
   return (
     <section
       aria-label={uiText("danmaku.emoticons")}
@@ -72,6 +103,7 @@ export function DanmakuEmoticonPicker({
     >
       <div className="mb-2 flex items-center gap-1">
         <div
+          ref={strip}
           role="tablist"
           aria-label={uiText("danmaku.emoticons")}
           className="flex min-w-0 flex-1 gap-1 overflow-x-auto"
@@ -146,40 +178,44 @@ export function DanmakuEmoticonPicker({
       ) : !packages.length ? (
         <p>{uiText("danmaku.emptyEmoticons")}</p>
       ) : (
-        <div className="grid max-h-44 grid-cols-6 gap-1 overflow-y-auto">
-          {packages
-            .find((p) => p.id === tab)
-            ?.emoticons.map((e) => (
-              <button
-                key={e.unique}
-                type="button"
-                disabled={disabled || !e.available}
-                aria-label={e.text}
-                title={
-                  e.available
-                    ? e.text
-                    : e.unlockText || uiText("danmaku.unavailable")
+        <div
+          className={`grid max-h-44 gap-1 overflow-y-auto ${small ? "grid-cols-8" : "grid-cols-6"}`}
+        >
+          {selected?.emoticons.map((e) => (
+            <button
+              key={e.unique}
+              type="button"
+              disabled={disabled || !e.available}
+              aria-label={e.text}
+              title={
+                e.available
+                  ? e.text
+                  : e.unlockText || uiText("danmaku.unavailable")
+              }
+              className={`flex min-w-0 items-center justify-center rounded border border-transparent p-1 hover:border-accent focus-visible:ring-2 focus-visible:ring-accent-ring disabled:opacity-40 ${small ? "h-8" : banner ? "h-7" : "h-12"}`}
+              onClick={() => onChoose(e)}
+            >
+              <img
+                src={e.url}
+                alt={e.text}
+                loading="lazy"
+                className={
+                  small
+                    ? "h-6 w-6 object-contain"
+                    : "max-h-full max-w-full object-contain"
                 }
-                className="flex h-12 min-w-0 items-center justify-center rounded border border-transparent p-1 hover:border-accent focus-visible:ring-2 focus-visible:ring-accent-ring disabled:opacity-40"
-                onClick={() => onChoose(e)}
-              >
-                <img
-                  src={e.url}
-                  alt={e.text}
-                  loading="lazy"
-                  className="max-h-full max-w-full object-contain"
-                  onError={(event) => {
-                    event.currentTarget.hidden = true;
-                    event.currentTarget.nextElementSibling?.removeAttribute(
-                      "hidden",
-                    );
-                  }}
-                />
-                <span hidden className="text-xs">
-                  {e.text}
-                </span>
-              </button>
-            ))}
+                onError={(event) => {
+                  event.currentTarget.hidden = true;
+                  event.currentTarget.nextElementSibling?.removeAttribute(
+                    "hidden",
+                  );
+                }}
+              />
+              <span hidden className="text-xs">
+                {e.text}
+              </span>
+            </button>
+          ))}
         </div>
       )}
     </section>

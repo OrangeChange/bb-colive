@@ -7,6 +7,7 @@ import {
   ChevronDown,
   RefreshCw,
 } from "lucide-react";
+import { FanMedalBadge } from "./FanMedalBadge";
 import { Button } from "./shadcn/button";
 import { getLiveMedals, wearLiveMedal } from "../protocol/liveMedals";
 import type { LiveMedal } from "../protocol/liveMedalsModel";
@@ -97,39 +98,42 @@ export function DanmakuMedalControl({
     }
   };
   return (
-    <div className="min-w-0">
+    <>
       <Button
         type="button"
         variant="ghost"
         size="sm"
-        className="max-w-full justify-start gap-1 px-1"
+        className="order-1 max-w-[60%] justify-start gap-1 px-1"
         disabled={disabled || wearing}
         aria-label={uiText("danmaku.medals")}
         aria-expanded={expanded}
         onClick={() => setExpanded((v) => !v)}
       >
-        <Award size={14} className="shrink-0" />
-        <span className="truncate">{session.uname}</span>
+        {!current && <Award size={14} className="shrink-0" />}
         {current && (
           <span
-            className="truncate rounded bg-inset px-1 text-xs"
+            className="min-w-0 max-w-full truncate"
             title={
               current.lighted
                 ? uiText("danmaku.medalLit")
                 : uiText("danmaku.medalUnlit")
             }
           >
-            {current.name} {current.level}
+            <FanMedalBadge
+              medal={{
+                name: current.name,
+                level: current.level,
+                isLighted: current.lighted,
+              }}
+            />
           </span>
         )}
-        {current &&
-          (current.lighted ? <CircleCheck size={12} /> : <Circle size={12} />)}
         <ChevronDown size={12} />
       </Button>
       {expanded && (
         <section
           aria-label={uiText("danmaku.medals")}
-          className="rounded-md border border-line p-1"
+          className="order-3 w-full rounded-md border border-line p-1"
         >
           <div className="max-h-40 overflow-y-auto">
             {medals.map((m) => (
@@ -143,16 +147,9 @@ export function DanmakuMedalControl({
                 onClick={() => void wear(m)}
                 aria-pressed={m.worn}
               >
-                <span
-                  className="min-w-16 rounded bg-inset px-1"
-                  style={
-                    m.background
-                      ? { backgroundColor: m.background, color: "#fff" }
-                      : undefined
-                  }
-                >
-                  {m.name} {m.level}
-                </span>
+                <FanMedalBadge
+                  medal={{ name: m.name, level: m.level, isLighted: m.lighted }}
+                />
                 <span className="mr-auto truncate text-t2">{m.anchor}</span>
                 <span
                   title={
@@ -216,10 +213,10 @@ export function DanmakuMedalControl({
         </section>
       )}
       {error && (
-        <p role="status" className="text-xs text-t2">
+        <p role="status" className="order-3 w-full text-xs text-t2">
           {error}
         </p>
       )}
-    </div>
+    </>
   );
 }

@@ -5,10 +5,12 @@ export interface LiveMedal {
   anchor: string;
   worn: boolean;
   lighted: boolean;
-  background: string;
 }
 export function parseMedalPanel(data: any) {
-  const medals: LiveMedal[] = (Array.isArray(data?.list) ? data.list : [])
+  const medals: LiveMedal[] = [
+    ...(Array.isArray(data?.special_list) ? data.special_list : []),
+    ...(Array.isArray(data?.list) ? data.list : []),
+  ]
     .map((item: any) => {
       const m = item.medal ?? {};
       const u = item.uinfo_medal ?? {};
@@ -19,15 +21,12 @@ export function parseMedalPanel(data: any) {
         anchor: String(item.anchor_info?.nick_name || ""),
         worn: m.wearing_status === 1,
         lighted: (u.is_light ?? m.is_lighted) === 1,
-        background: String(
-          u.v2_medal_color_start ||
-            (m.is_lighted === 1
-              ? `#${(Number(m.medal_color) || 0).toString(16).padStart(6, "0")}`
-              : ""),
-        ),
       };
     })
-    .filter((m: LiveMedal) => m.id > 0);
+    .filter(
+      (m: LiveMedal, index: number, list: LiveMedal[]) =>
+        m.id > 0 && list.findIndex((value) => value.id === m.id) === index,
+    );
   const info = data?.page_info ?? {};
   return {
     medals,
@@ -51,6 +50,5 @@ export function parseWornMedal(medal: any): LiveMedal | null {
     anchor: "",
     worn: true,
     lighted: m.is_light === 1,
-    background: String(m.v2_medal_color_start || ""),
   };
 }

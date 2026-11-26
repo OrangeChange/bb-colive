@@ -23,6 +23,7 @@ export interface LiveEmoticon {
   textual: boolean;
 }
 export interface RoomEmoticonPackage {
+  type: number;
   id: string;
   name: string;
   cover: string;
@@ -113,6 +114,7 @@ export function parseEmoticonPackages(body: any): RoomEmoticonPackage[] {
   return (Array.isArray(body.data?.data) ? body.data.data : []).map(
     (p: any, index: number) => ({
       id: `${p.pkg_type}:${p.pkg_id ?? index}`,
+      type: Number(p.pkg_type) || 0,
       name: String(p.pkg_name ?? ""),
       cover: String(p.current_cover || p.emoticons?.[0]?.url || "").replace(
         /^http:/,

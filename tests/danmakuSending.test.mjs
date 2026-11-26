@@ -167,3 +167,47 @@ test("字数占用按直播输入规则计算发送文本，图片仍计触发�
   assert.equal(danmakuTextUsage("a中😀[dog]"), 12);
   assert.equal(danmakuTextUsage(" 草稿[笑]\n"), 8);
 });
+
+test("单独返回的当前佩戴粉丝牌也进入切换列表，重复项只显示一次", async () => {
+  const { parseMedalPanel } =
+    await import("../src/protocol/liveMedalsModel.ts");
+  const current = {
+    medal: {
+      medal_id: 9,
+      medal_name: "NOI",
+      level: 9,
+      wearing_status: 1,
+      is_lighted: 0,
+    },
+  };
+  const result = parseMedalPanel({
+    special_list: [current],
+    list: [
+      { medal: { medal_id: 8, medal_name: "另一牌子", wearing_status: 0 } },
+    ],
+    total_number: 2,
+  });
+  assert.equal(result.medals.length, 2);
+  assert.equal(result.medals[0].worn, true);
+  assert.equal(
+    parseMedalPanel({ special_list: [current], list: [current] }).medals.length,
+    1,
+  );
+});
+
+test("表情包保留类型以区分小表情、长条和大表情", () => {
+  const p = parseEmoticonPackages({
+    code: 0,
+    data: {
+      data: [
+        { pkg_type: 3, emoticons: [] },
+        { pkg_type: 1, emoticons: [] },
+        { pkg_type: 5, emoticons: [] },
+      ],
+    },
+  });
+  assert.deepEqual(
+    p.map((v) => v.type),
+    [3, 1, 5],
+  );
+});
