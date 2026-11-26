@@ -16,12 +16,13 @@ export async function liveHttp(request: LiveRequest, signal?: AbortSignal, timin
   try {
     if (signal?.aborted) throw new Error("cancelled");
     const executeStarted = performance.now();
-    const result = await invoke<{ status: number; body: string; headersMs: number; bodyMs: number }>("execute_live_http", { rid }).finally(() => {
+    const result = await invoke<{ status: number; body: string; headersMs: number; bodyMs: number; localPort?: number | null }>("execute_live_http", { rid }).finally(() => {
       if (timings) timings.bridgeExecuteMs = performance.now() - executeStarted;
     });
     if (timings) {
       timings.responseWaitMs = result.headersMs;
       timings.responseReadMs = result.bodyMs;
+      if (result.localPort != null) timings.connectionPort = result.localPort;
     }
     if (signal?.aborted) throw new Error("cancelled");
     return new Response(result.body, { status: result.status });

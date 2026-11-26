@@ -21,7 +21,20 @@ await page.addInitScript(() => {
   window.navCompleted = 0;
   window.preparationRefreshTimers = [];
   const nativeSetTimeout = window.setTimeout.bind(window);
+  const nativeClearTimeout = window.clearTimeout.bind(window);
+  window.keepWarmTimers = new Set();
+  window.clearTimeout = (timer) => { window.keepWarmTimers.delete(timer); nativeClearTimeout(timer); };
   window.setTimeout = (callback, delay, ...args) => {
+    if (delay === 40_000) {
+      const timer = nativeSetTimeout(() => { window.keepWarmTimers.delete(timer); callback(...args); }, delay);
+      window.keepWarmTimers.add(timer);
+      window.fireKeepWarm = () => {
+        if (!window.keepWarmTimers.delete(timer)) return;
+        nativeClearTimeout(timer);
+        callback(...args);
+      };
+      return timer;
+    }
     if (delay > 180_000 && delay < 300_000)
       window.runLastPreparationRefresh = () => callback(...args);
     if (delay > 180_000 && delay < 300_000)
@@ -64,8 +77,10 @@ await page.addInitScript(() => {
         if (q.url.includes("getInfoByUser") && ++window.roomInfoRequests === 1)
           await new Promise(resolve => { window.releaseRoomWarmup = resolve; });
         if (q.method === "POST") window.sent.push(q);
+        if (q.method === "POST" && window.sendDelay)
+          await new Promise(resolve => setTimeout(resolve, window.sendDelay));
         const bytes = await window.__TAURI_INTERNALS__.invoke("plugin:http|fetch_read_body", args);
-        return { status: 200, body: new TextDecoder().decode(new Uint8Array(bytes.slice(0, -1))), headersMs: 23, bodyMs: 4 };
+        return { status: 200, body: new TextDecoder().decode(new Uint8Array(bytes.slice(0, -1))), headersMs: 23, bodyMs: 4, localPort: 43210 };
       }
       if (cmd === "plugin:http|fetch") {
         const n = ++id;
@@ -345,6 +360,20 @@ try {
   );
 
   await field.fill("你好\n世界");
+  assert.equal(await page.evaluate(() => window.keepWarmTimers.size), 1, "仅展开发送框时安排连接维护");
+  const beforeKeepWarm = await page.evaluate(() => window.roomInfoRequests);
+  await page.evaluate(() => window.fireKeepWarm());
+  await page.waitForFunction(n => window.roomInfoRequests === n + 1, beforeKeepWarm);
+  await page.waitForFunction(() => window.keepWarmTimers.size === 1);
+  await page.evaluate(() => {
+    window.hiddenForTest = true;
+    Object.defineProperty(document, "hidden", { configurable: true, get: () => window.hiddenForTest });
+    document.dispatchEvent(new Event("visibilitychange"));
+  });
+  assert.equal(await page.evaluate(() => window.keepWarmTimers.size), 0, "隐藏页面暂停连接维护");
+  await page.evaluate(() => { window.hiddenForTest = false; document.dispatchEvent(new Event("visibilitychange")); });
+  await page.waitForFunction(n => window.roomInfoRequests === n + 2, beforeKeepWarm);
+  await page.evaluate(() => { window.sendDelay = 300; });
   await field.evaluate((e) =>
     e.dispatchEvent(
       new KeyboardEvent("keydown", {
@@ -356,7 +385,9 @@ try {
   );
   assert.equal(await page.evaluate(() => window.sent.length), 0);
   await page.getByRole("button", { name: "发送", exact: true }).click();
+  assert.equal(await page.evaluate(() => window.keepWarmTimers.size), 0, "正在发送时不安排维护查询");
   await page.getByRole("status").filter({ hasText: "已发送" }).waitFor();
+  await page.evaluate(() => { window.sendDelay = 0; });
   assert.equal(await read(), "");
   const sendRecord = await page.evaluate(async () => (await window.sendDiagnostics()).find(r => r.action === "send" && r.outcome === "sent"));
   assert(Number.isFinite(sendRecord?.data.totalMs), "发送结果应包含各阶段耗时");
@@ -364,6 +395,7 @@ try {
     assert(Number.isFinite(sendRecord.data[stage]) && sendRecord.data[stage] >= 0, stage);
   assert.equal(sendRecord.data.responseWaitMs, 23);
   assert.equal(sendRecord.data.responseReadMs, 4);
+  assert.equal(sendRecord.data.connectionPort, 43210, "发送日志保留连接标记以核对复用");
   assert(!JSON.stringify(sendRecord).includes("你好"));
   assert(!JSON.stringify(sendRecord).includes("SESSDATA"));
   assert.equal(
@@ -447,6 +479,7 @@ try {
   await page.keyboard.press("Escape");
   await page.getByRole("dialog").waitFor({ state: "hidden" });
   const beforeReopen = await page.evaluate(() => window.roomInfoRequests);
+  assert.equal(await page.evaluate(() => window.keepWarmTimers.size), 0, "收起后停止连接维护");
   await page.getByRole("button", { name: "发送弹幕", exact: true }).click();
   await page.getByRole("button", { name: "粉丝牌", exact: true }).locator(".fan-medal").waitFor();
   assert.equal(await page.evaluate(() => window.roomInfoRequests), beforeReopen + 1, "打开输入框复用粉丝牌查询准备连接，不重复请求");

@@ -30,6 +30,8 @@ pub struct LiveResponse {
     headers_ms: f64,
     #[serde(rename = "bodyMs")]
     body_ms: f64,
+    #[serde(rename = "localPort")]
+    local_port: Option<u16>,
 }
 
 struct PendingRequest {
@@ -60,6 +62,10 @@ impl PendingRequest {
             let started = std::time::Instant::now();
             let response = request.send().await.map_err(|_| "network request failed")?;
             let headers_ms = started.elapsed().as_secs_f64() * 1000.0;
+            let local_port = response
+                .extensions()
+                .get::<hyper_util::client::legacy::connect::HttpInfo>()
+                .map(|info| info.local_addr().port());
             let body_started = std::time::Instant::now();
             let status = response.status().as_u16();
             let body = response.text().await.map_err(|_| "response read failed")?;
@@ -68,6 +74,7 @@ impl PendingRequest {
                 body,
                 headers_ms,
                 body_ms: body_started.elapsed().as_secs_f64() * 1000.0,
+                local_port,
             })
         };
         tokio::select! {
@@ -121,6 +128,52 @@ pub fn cancel_live_http(webview: Webview, rid: u32) {
 #[cfg(test)]
 mod tests {
     use super::*;
+
+    #[tokio::test]
+    async fn response_identifies_reused_and_replaced_connections() {
+        use axum::{extract::ConnectInfo, routing::get, Router};
+        let listener = tokio::net::TcpListener::bind("127.0.0.1:0").await.unwrap();
+        let address = listener.local_addr().unwrap();
+        let server = tokio::spawn(async move {
+            let router = Router::new().route(
+                "/",
+                get(
+                    |ConnectInfo(peer): ConnectInfo<std::net::SocketAddr>| async move {
+                        peer.port().to_string()
+                    },
+                ),
+            );
+            axum::serve(
+                listener,
+                router.into_make_service_with_connect_info::<std::net::SocketAddr>(),
+            )
+            .await
+            .unwrap();
+        });
+        let client = reqwest::Client::builder()
+            .pool_idle_timeout(Duration::from_millis(50))
+            .build()
+            .unwrap();
+        let url = format!("http://{address}/");
+        let first = PendingRequest::new(client.get(&url))
+            .execute()
+            .await
+            .unwrap();
+        let second = PendingRequest::new(client.get(&url))
+            .execute()
+            .await
+            .unwrap();
+        assert_eq!(first.local_port, Some(first.body.parse::<u16>().unwrap()));
+        assert_eq!(first.local_port, second.local_port);
+        tokio::time::sleep(Duration::from_millis(120)).await;
+        let third = PendingRequest::new(client.get(&url))
+            .execute()
+            .await
+            .unwrap();
+        assert_eq!(third.local_port, Some(third.body.parse::<u16>().unwrap()));
+        assert_ne!(first.local_port, third.local_port);
+        server.abort();
+    }
 
     #[tokio::test]
     async fn cancelled_request_does_not_connect() {

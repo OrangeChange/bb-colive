@@ -80,6 +80,40 @@ export function DanmakuComposer({
   const [emptyError, setEmptyError] = useState(false);
   const available = phase === "loggedIn" && !!context && status === "connected";
   useEffect(() => {
+    if (!open || !available || state.busy || !session || !roomId) return;
+    const controller = new AbortController();
+    let timer: number | undefined;
+    let warming = false;
+    const schedule = () => {
+      if (timer !== undefined) window.clearTimeout(timer);
+      if (!controller.signal.aborted && !document.hidden)
+        timer = window.setTimeout(() => void warm(), 40_000);
+    };
+    const warm = async () => {
+      if (controller.signal.aborted || document.hidden || warming) return;
+      warming = true;
+      try {
+        await prepareLiveRoomSending(session, roomId, controller.signal);
+      } catch {
+        // 连接准备失败不影响输入和接收，下一次维护或发送可重新准备。
+      } finally {
+        warming = false;
+        schedule();
+      }
+    };
+    const visibility = () => {
+      if (document.hidden) schedule();
+      else void warm();
+    };
+    document.addEventListener("visibilitychange", visibility);
+    schedule();
+    return () => {
+      controller.abort();
+      if (timer !== undefined) window.clearTimeout(timer);
+      document.removeEventListener("visibilitychange", visibility);
+    };
+  }, [open, available, state.busy, context, session?.savedAt, session?.cookie]);
+  useEffect(() => {
     if (!available || !session || !roomId) return;
     const controller = new AbortController();
     void prepareLiveRoomSending(session, roomId, controller.signal).catch(() => {});
