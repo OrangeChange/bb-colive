@@ -7,12 +7,6 @@ import type {
   RoomEmoticonPackage,
 } from "../protocol/danmakuSendingModel";
 import { uiText } from "../i18n";
-const cache = new Map<string, RoomEmoticonPackage[]>();
-export function clearAccountEmoticonCache(accountKey: string) {
-  for (const key of cache.keys())
-    if (key.startsWith(`${accountKey}:`)) cache.delete(key);
-}
-
 export function DanmakuEmoticonPicker({
   roomId,
   cookie,
@@ -68,14 +62,15 @@ export function DanmakuEmoticonPicker({
     const abort = new AbortController();
     setLoading(true);
     setFailed(false);
-    const existing = cache.get(key);
-    const load = existing
-      ? Promise.resolve(existing)
-      : getRoomEmoticonPackages(roomId, cookie, abort.signal);
+    const load = getRoomEmoticonPackages(
+      roomId,
+      cookie,
+      abort.signal,
+      revision > 0,
+    );
     void load
       .then((value) => {
         if (abort.signal.aborted) return;
-        cache.set(key, value);
         setPackages(value);
         onPackagesRef.current?.(value);
         setTab(value[0]?.id ?? "");
@@ -90,7 +85,6 @@ export function DanmakuEmoticonPicker({
     return () => abort.abort();
   }, [key, roomId, cookie, revision]);
   const refresh = () => {
-    cache.delete(key);
     setRevision((n) => n + 1);
   };
   const selected = packages.find((p) => p.id === tab);

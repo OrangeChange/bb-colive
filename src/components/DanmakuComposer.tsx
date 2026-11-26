@@ -8,7 +8,7 @@ import {
   type ReactNode,
   type RefObject,
 } from "react";
-import { SquarePen, Smile, X, Send } from "lucide-react";
+import { MessageCirclePlus, Smile, X, Send } from "lucide-react";
 import { Popover, PopoverAnchor, PopoverContent } from "./shadcn/popover";
 import { Button } from "./shadcn/button";
 import { DanmakuRichInput, type DanmakuInputHandle } from "./DanmakuRichInput";
@@ -19,15 +19,17 @@ import {
   useDanmakuComposer,
   EMPTY_COMPOSER_DRAFT,
 } from "../stores/danmakuComposer";
-import { sendLiveDanmaku } from "../protocol/danmakuSending";
+import {
+  sendLiveDanmaku,
+  prepareLiveDanmaku,
+  clearLiveSendingPreparation,
+  invalidateLiveEmoticons,
+} from "../protocol/danmakuSending";
 import {
   danmakuTextUsage,
   type LiveEmoticon,
 } from "../protocol/danmakuSendingModel";
-import {
-  DanmakuEmoticonPicker,
-  clearAccountEmoticonCache,
-} from "./DanmakuEmoticonPicker";
+import { DanmakuEmoticonPicker } from "./DanmakuEmoticonPicker";
 import { uiText } from "../i18n";
 import { useUiLanguage } from "../i18n/react";
 export function DanmakuComposer({
@@ -76,6 +78,32 @@ export function DanmakuComposer({
   const [limit, setLimit] = useState<number>();
   const [emptyError, setEmptyError] = useState(false);
   const available = phase === "loggedIn" && !!context && status === "connected";
+  useEffect(() => {
+    if (phase !== "loggedIn") clearLiveSendingPreparation();
+  }, [phase]);
+  useEffect(() => {
+    if (!available || !session) return;
+    let stopped = false;
+    let timer: number | undefined;
+    const warm = async () => {
+      try {
+        const ready = await prepareLiveDanmaku(session, 60_000);
+        if (!stopped && open)
+          timer = window.setTimeout(
+            () => void warm(),
+            Math.max(1000, ready.expiresAt - Date.now() - 60_000),
+          );
+      } catch {
+        if (!stopped && open)
+          timer = window.setTimeout(() => void warm(), 60_000);
+      }
+    };
+    void warm();
+    return () => {
+      stopped = true;
+      if (timer !== undefined) window.clearTimeout(timer);
+    };
+  }, [available, session?.mid, session?.savedAt, session?.cookie, open]);
   useEffect(() => {
     state.setContext(context);
     setEmotes(false);
@@ -186,9 +214,7 @@ export function DanmakuComposer({
                 disabled={state.busy || !available}
                 onLimit={setLimit}
                 onChanged={() => {
-                  clearAccountEmoticonCache(
-                    `${session.mid}:${session.savedAt}`,
-                  );
+                  invalidateLiveEmoticons(session.cookie);
                   setEmoteRevision((n) => n + 1);
                 }}
               />
@@ -312,7 +338,7 @@ export function DanmakuComposerTrigger() {
       aria-expanded={state.open}
       onClick={() => (state.open ? state.close() : state.show())}
     >
-      <SquarePen size={16} />
+      <MessageCirclePlus size={16} />
     </Button>
   );
 }

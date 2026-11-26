@@ -26,6 +26,7 @@ useConnection.setState({
 });
 Object.assign(window, {
   composer: useDanmakuComposer,
+  session: useSession,
   connection: useConnection,
   language: setUiLanguage,
 });

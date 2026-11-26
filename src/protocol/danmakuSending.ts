@@ -13,39 +13,180 @@ import {
   parseSendResult,
   parseEmoticonPackages,
   type LiveDanmakuRequest,
+  type RoomEmoticonPackage,
 } from "./danmakuSendingModel";
+const PREPARATION_AGE_MS = 5 * 60_000;
 let liveDevice: { b_3: string; b_4: string } | undefined;
-export async function liveRequestCookie(cookie: string, signal?: AbortSignal) {
-  if (!liveDevice) {
-    const value = await biliGet<{ b_3: string; b_4: string }>(
-      "https://api.bilibili.com/x/frontend/finger/spi",
-      undefined,
-      signal,
+let deviceRequest: Promise<{ b_3: string; b_4: string }> | undefined;
+interface SendingPreparation {
+  key: string;
+  cookie: string;
+  imgKey: string;
+  subKey: string;
+  expiresAt: number;
+}
+let prepared: SendingPreparation | undefined;
+let preparing:
+  { key: string; promise: Promise<SendingPreparation> } | undefined;
+const emoticons = new Map<
+  string,
+  { packages: RoomEmoticonPackage[]; expiresAt: number }
+>();
+const loadingEmoticons = new Map<string, Promise<RoomEmoticonPackage[]>>();
+export function clearLiveSendingPreparation() {
+  prepared = undefined;
+  preparing = undefined;
+  emoticons.clear();
+  loadingEmoticons.clear();
+}
+export function invalidateLiveEmoticons(cookie: string, roomId?: number) {
+  const prefix = `${cookie}\n`;
+  for (const map of [emoticons, loadingEmoticons])
+    for (const key of map.keys())
+      if (
+        roomId === undefined
+          ? key.startsWith(prefix)
+          : key === `${prefix}${roomId}`
+      )
+        map.delete(key);
+}
+/** 取消当前等待者，不中断其他入口共用的准备请求。 */
+function awaitSharedResult<T>(
+  promise: Promise<T>,
+  signal?: AbortSignal,
+): Promise<T> {
+  if (!signal) return promise;
+  if (signal.aborted) return Promise.reject(new Error("cancelled"));
+  return new Promise((resolve, reject) => {
+    const cancel = () => {
+      signal.removeEventListener("abort", cancel);
+      reject(new Error("cancelled"));
+    };
+    signal.addEventListener("abort", cancel, { once: true });
+    promise.then(
+      (value) => {
+        signal.removeEventListener("abort", cancel);
+        resolve(value);
+      },
+      (error) => {
+        signal.removeEventListener("abort", cancel);
+        reject(error);
+      },
     );
-    if (!value.b_3 || !value.b_4) throw new Error("device");
-    liveDevice = value;
+  });
+}
+export async function liveRequestCookie(cookie: string, signal?: AbortSignal) {
+  if (signal?.aborted) throw new Error("cancelled");
+  if (!liveDevice) {
+    if (!deviceRequest) {
+      deviceRequest = biliGet<{ b_3: string; b_4: string }>(
+        "https://api.bilibili.com/x/frontend/finger/spi",
+        undefined,
+        AbortSignal.timeout(15000),
+      )
+        .then((value) => {
+          if (!value.b_3 || !value.b_4) throw new Error("device");
+          liveDevice = value;
+          return value;
+        })
+        .finally(() => {
+          deviceRequest = undefined;
+        });
+    }
+    await awaitSharedResult(deviceRequest, signal);
   }
+  if (signal?.aborted) throw new Error("cancelled");
   const base = cookie
     .split(";")
     .filter((p) => !/^\s*buvid[34]=/.test(p))
     .join(";");
-  return `${base}; buvid3=${liveDevice.b_3}; buvid4=${liveDevice.b_4}`;
+  return `${base}; buvid3=${liveDevice!.b_3}; buvid4=${liveDevice!.b_4}`;
+}
+/** 只准备发送所需的登录信息、签名材料与设备信息，不发送消息。 */
+export async function prepareLiveDanmaku(
+  session: Session,
+  refreshAheadMs = 0,
+): Promise<SendingPreparation> {
+  const key = `${session.mid}:${session.savedAt}:${session.cookie}`;
+  if (prepared?.key === key && prepared.expiresAt - Date.now() > refreshAheadMs)
+    return prepared;
+  if (preparing?.key === key) return preparing.promise;
+  const promise = Promise.all([
+    biliGet<NavData>(
+      "https://api.bilibili.com/x/web-interface/nav",
+      session.cookie,
+      AbortSignal.timeout(15000),
+    ),
+    liveRequestCookie(session.cookie),
+  ])
+    .then(([nav, cookie]) => {
+      if (!nav.isLogin || String(nav.mid) !== session.mid)
+        throw new Error("login");
+      const value = {
+        key,
+        cookie,
+        imgKey: keyFromUrl(nav.wbi_img.img_url),
+        subKey: keyFromUrl(nav.wbi_img.sub_url),
+        expiresAt: Date.now() + PREPARATION_AGE_MS,
+      };
+      if (preparing?.promise === promise) prepared = value;
+      return value;
+    })
+    .catch((error) => {
+      if (
+        prepared?.key === key &&
+        ((error instanceof Error && error.message === "login") ||
+          (error instanceof ApiError &&
+            [-101, -111].some((code) => code === error.code)))
+      )
+        prepared = undefined;
+      throw error;
+    })
+    .finally(() => {
+      if (preparing?.promise === promise) preparing = undefined;
+    });
+  preparing = { key, promise };
+  return promise;
 }
 export async function getRoomEmoticonPackages(
   roomId: number,
   cookie: string,
   signal?: AbortSignal,
+  refresh = false,
 ) {
-  const requestCookie = await liveRequestCookie(cookie, signal);
-  const response = await fetch(
-    `https://api.live.bilibili.com/xlive/web-ucenter/v2/emoticon/GetEmoticons?platform=pc&room_id=${roomId}`,
-    {
-      headers: { ...BILI_HEADERS, Cookie: requestCookie },
-      signal: signal ?? AbortSignal.timeout(15000),
-    },
-  );
-  if (!response.ok) throw new Error("emoticons");
-  return parseEmoticonPackages(await response.json());
+  if (signal?.aborted) throw new Error("cancelled");
+  const key = `${cookie}\n${roomId}`;
+  if (refresh) invalidateLiveEmoticons(cookie, roomId);
+  const existing = emoticons.get(key);
+  if (existing && existing.expiresAt > Date.now()) return existing.packages;
+  let request = loadingEmoticons.get(key);
+  if (!request) {
+    request = (async () => {
+      const timeout = AbortSignal.timeout(15000);
+      const requestCookie = await liveRequestCookie(cookie, timeout);
+      const response = await fetch(
+        `https://api.live.bilibili.com/xlive/web-ucenter/v2/emoticon/GetEmoticons?platform=pc&room_id=${roomId}`,
+        {
+          headers: { ...BILI_HEADERS, Cookie: requestCookie },
+          signal: timeout,
+        },
+      );
+      if (!response.ok) throw new Error("emoticons");
+      const packages = parseEmoticonPackages(await response.json());
+      if (loadingEmoticons.get(key) === request)
+        emoticons.set(key, {
+          packages,
+          expiresAt: Date.now() + PREPARATION_AGE_MS,
+        });
+      return packages;
+    })().finally(() => {
+      if (loadingEmoticons.get(key) === request) loadingEmoticons.delete(key);
+    });
+    loadingEmoticons.set(key, request);
+  }
+  const packages = await awaitSharedResult(request, signal);
+  if (signal?.aborted) throw new Error("cancelled");
+  return packages;
 }
 export async function sendLiveDanmaku(
   request: LiveDanmakuRequest,
@@ -64,13 +205,12 @@ export async function sendLiveDanmaku(
       session.cookie,
       Math.floor(Date.now() / 1000),
     );
-    const nav = await biliGet<NavData>(
-      "https://api.bilibili.com/x/web-interface/nav",
-      session.cookie,
+    if (controller.signal.aborted) return { status: "failed" as const };
+    const ready = await awaitSharedResult(
+      prepareLiveDanmaku(session),
       controller.signal,
     );
-    if (!nav.isLogin || String(nav.mid) !== session.mid)
-      return { status: "login" as const };
+    if (controller.signal.aborted) return { status: "failed" as const };
     if (request.kind === "emoticon") {
       const packages = await getRoomEmoticonPackages(
         request.roomId,
@@ -84,15 +224,11 @@ export async function sendLiveDanmaku(
       )
         return { status: "unavailableEmoticon" as const };
     }
-    const requestCookie = await liveRequestCookie(
-      session.cookie,
-      controller.signal,
-    );
     if (controller.signal.aborted) return { status: "failed" as const };
     const query = encWbi(
       { web_location: "444.8" },
-      keyFromUrl(nav.wbi_img.img_url),
-      keyFromUrl(nav.wbi_img.sub_url),
+      ready.imgKey,
+      ready.subKey,
       Math.floor(Date.now() / 1000),
     );
     submitted = true;
@@ -102,7 +238,7 @@ export async function sendLiveDanmaku(
         method: "POST",
         headers: {
           ...BILI_HEADERS,
-          Cookie: requestCookie,
+          Cookie: ready.cookie,
           referer: `https://live.bilibili.com/${request.roomId}`,
         },
         body: form,
@@ -110,7 +246,14 @@ export async function sendLiveDanmaku(
       },
     );
     if (!response.ok) return { status: "unknown" as const };
-    return parseSendResult(await response.json());
+    const result = parseSendResult(await response.json());
+    if (result.status === "login") clearLiveSendingPreparation();
+    else if (
+      request.kind === "emoticon" &&
+      ["failed", "unavailableEmoticon"].includes(result.status)
+    )
+      invalidateLiveEmoticons(session.cookie, request.roomId);
+    return result;
   } catch (error) {
     if (
       error instanceof ApiError &&

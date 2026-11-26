@@ -10,13 +10,26 @@ await page.addInitScript(() => {
   let id = 0;
   const requests = new Map(),
     read = new Set();
+  const originalNow = Date.now;
+  let offset = 0;
+  Date.now = () => originalNow() + offset;
+  window.advanceSendingClock = (ms) => (offset += ms);
   window.sent = [];
+  window.requestCounts = { nav: 0, emoticons: 0 };
+  window.navCompleted = 0;
+  window.preparationRefreshTimers = [];
+  const nativeSetTimeout = window.setTimeout.bind(window);
+  window.setTimeout = (callback, delay, ...args) => {
+    if (delay > 180_000 && delay < 300_000)
+      window.preparationRefreshTimers.push({ createdAt: Date.now(), delay });
+    return nativeSetTimeout(callback, delay, ...args);
+  };
   window.worn = [];
   window.medalId = 11;
   window.medalPagination = false;
   window.medalPageRequests = 0;
   window.navCode = 0;
-  window.navDelay = 0;
+  window.navDelay = 350;
   window.emoticonsLocked = false;
   window.sendResult = { code: 0, message: "", msg: "" };
   window.__TAURI_INTERNALS__ = {
@@ -30,6 +43,9 @@ await page.addInitScript(() => {
       if (cmd === "plugin:http|fetch") {
         const n = ++id;
         requests.set(n, args.clientConfig);
+        if (args.clientConfig.url.includes("/nav")) window.requestCounts.nav++;
+        if (args.clientConfig.url.includes("GetEmoticons"))
+          window.requestCounts.emoticons++;
         if (args.clientConfig.method === "POST") {
           if (args.clientConfig.url.includes("/fansMedal/wear")) {
             window.worn.push(args.clientConfig);
@@ -217,6 +233,10 @@ await page.addInitScript(() => {
             body.data.page_info = { has_more: true, next_page: 2 };
           }
         }
+        if (q.url.includes("/nav")) {
+          window.navCompleted++;
+          window.navFinishedAt = Date.now();
+        }
         return [...new TextEncoder().encode(JSON.stringify(body)), 0];
       }
       if (cmd === "plugin:store|load") return 100;
@@ -268,6 +288,22 @@ try {
           button.parentElement.querySelector('[title="测试主播"]') !== null,
       ),
   );
+  await page.waitForFunction(() => window.navCompleted >= 1, null, {
+    timeout: 1500,
+  });
+  const readyCounts = await page.evaluate(() => ({ ...window.requestCounts }));
+  assert.equal(readyCounts.nav, 1, "连接和打开输入框应共用预备请求");
+  assert(
+    await page.evaluate(() =>
+      window.preparationRefreshTimers.some(
+        (t) =>
+          Math.abs(t.createdAt + t.delay - window.navFinishedAt - 240_000) <
+          1500,
+      ),
+    ),
+    "应在实际准备完成四分钟后刷新，预留完整一分钟",
+  );
+
   await field.fill("你好\n世界");
   await field.evaluate((e) =>
     e.dispatchEvent(
@@ -282,6 +318,11 @@ try {
   await page.getByRole("button", { name: "发送", exact: true }).click();
   await page.getByRole("status").filter({ hasText: "已发送" }).waitFor();
   assert.equal(await read(), "");
+  assert.equal(
+    await page.evaluate(() => window.requestCounts.nav),
+    readyCounts.nav,
+    "就绪后文字发送不得再查登录",
+  );
   const first = await page.evaluate(() => window.sent[0]);
   assert.match(
     first.headers.find(([k]) => k.toLowerCase() === "content-type")[1],
@@ -391,7 +432,15 @@ try {
       .getByRole("button", { name: "未解锁", exact: true })
       .isDisabled(),
   );
+  const beforeLarge = await page.evaluate(() => ({ ...window.requestCounts }));
   await page.getByRole("button", { name: "大笑", exact: true }).click();
+  await page.getByRole("status").filter({ hasText: "已发送" }).waitFor();
+  assert.deepEqual(
+    await page.evaluate(() => ({ ...window.requestCounts })),
+    beforeLarge,
+    "已加载的大表情应直接提交",
+  );
+
   await page.getByRole("status").filter({ hasText: "已发送" }).waitFor();
   assert.equal(await page.evaluate(() => window.sent.length), 2);
   assert.equal(await read(), "草稿");
@@ -518,17 +567,25 @@ try {
     await page.getByRole("button", { name: label, exact: true }).waitFor();
     assert.equal(await read(), "保留文字");
   }
+  await page.evaluate(() => window.language("zh-CN"));
+  await page.keyboard.press("Escape");
+  await page.getByRole("dialog").waitFor({ state: "hidden" });
+  const beforeExpiry = await page.evaluate(() => window.navCompleted);
+  await page.evaluate(() => window.advanceSendingClock(6 * 60_000));
+  await page.getByRole("button", { name: "发送弹幕", exact: true }).click();
+  await page.waitForFunction((n) => window.navCompleted > n, beforeExpiry);
   await page.evaluate(() => {
     window.language("zh-CN");
-    window.navCode = -101;
+    window.sendResult = { code: -101 };
   });
   const before = await page.evaluate(() => window.sent.length);
   await page.getByRole("button", { name: "发送", exact: true }).click();
   await page.getByText("请重新登录后再发。", { exact: true }).waitFor();
-  assert.equal(await page.evaluate(() => window.sent.length), before);
+  assert.equal(await page.evaluate(() => window.sent.length), before + 1);
   await page.evaluate(() => {
     window.navCode = 0;
     window.navDelay = 300;
+    window.sendResult = { code: 0, message: "", msg: "" };
   });
   await page.getByRole("button", { name: "发送", exact: true }).click();
   await page.evaluate(() =>
@@ -536,9 +593,34 @@ try {
       state: { status: "connected", roomId: 999, anchorName: "新房间" },
     }),
   );
+  await page.waitForFunction(() => !window.composer.getState().busy, null, {
+    timeout: 150,
+  });
   await page.waitForTimeout(600);
-  assert.equal(await page.evaluate(() => window.sent.length), before);
+  assert.equal(await page.evaluate(() => window.sent.length), before + 1);
   await page.getByRole("dialog").waitFor({ state: "hidden" });
+  await page.evaluate(() => {
+    window.navDelay = 0;
+    const old = window.session.getState().session;
+    window.session.setState({
+      session: {
+        ...old,
+        mid: "2",
+        savedAt: 2,
+        cookie: "SESSDATA=other;bili_jct=other",
+      },
+    });
+  });
+  await page.getByRole("button", { name: "发送弹幕", exact: true }).click();
+  await page.getByRole("textbox", { name: "弹幕内容" }).fill("新账号草稿");
+  const beforeOther = await page.evaluate(() => window.sent.length);
+  await page.getByRole("button", { name: "发送", exact: true }).click();
+  await page.getByText("请重新登录后再发。", { exact: true }).waitFor();
+  assert.equal(
+    await page.evaluate(() => window.sent.length),
+    beforeOther,
+    "新账号不能复用旧账号的准备结果",
+  );
   assert.deepEqual(errors, []);
   assert.deepEqual(refinements, []);
   console.log(
