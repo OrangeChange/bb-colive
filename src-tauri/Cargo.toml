@@ -1,6 +1,6 @@
 [package]
 name = "bb-colive"
-version = "1.3.0"
+version = "1.4.0"
 description = "B站直播弹幕桌面工具"
 authors = ["橙橙子君（Orange）"]
 license-file = "../LICENSE"

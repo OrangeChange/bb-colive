@@ -1,15 +1,15 @@
 # 构建与发布
 
-本文的分发文件对应1.3.0；主分支后续修改不自动进入这些安装包。当前差异见[项目状态](../project-status.md)。
+本文的分发文件对应1.4.0；主分支后续修改不自动进入这些安装包。当前差异见[项目状态](../project-status.md)。
 
 ## 当前分发
 
-客户端版本 1.3.0，正式支持 Windows 10/11 x64。分发文件：
+客户端版本 1.4.0，正式支持 Windows 10/11 x64。分发文件：
 
-- NSIS 安装包：`release/bb-colive_1.3.0_x64-setup.exe`
-- 便携 ZIP：`release/bb-colive_1.3.0_x64-portable.zip`
-- 便携解压目录：`release/bb-colive-1.3.0-portable/`
-- 源码 ZIP：`release/bb-colive-1.3.0-source.zip`，包含生成时的正式源码和文档，并遵循 `.gitattributes` 排除规则。
+- NSIS 安装包：`release/bb-colive_1.4.0_x64-setup.exe`
+- 便携 ZIP：`release/bb-colive_1.4.0_x64-portable.zip`
+- 便携解压目录：`release/bb-colive-1.4.0-portable/`
+- 源码 ZIP：`release/bb-colive-1.4.0-source.zip`，包含生成时的正式源码和文档，并遵循 `.gitattributes` 排除规则。
 
 不包含 MSI。安装包与便携包使用同一次 release 构建，源码包对应同一发行源码。NSIS 原始输出位于 Cargo 目标目录的 `release/bundle/nsis/`。
 
@@ -17,7 +17,7 @@
 
 安装版提供安装目录、快捷方式与卸载项，便携解压运行；两者功能和 WebView2 依赖相同。安装包与便携包都必须包含四模式 `style` 目录和内置主题文件；构建产物不含用户凭据、数据库或本地音频。自定义主题写入该目录，目录不可写时程序明确提示，不回退到应用数据目录。
 
-主题库展示31个内置主题：原生3、BLC原版3、BLC开放版7、LAPLACE 18。分发目录另保留BLC开放版旧YT主题文件，合计32份，旧引用仍可读取。`npm run themes:prepare`生成干净的`src-tauri/style-distribution`，安装和便携打包均部署为程序旁`style/`。分发只包含主题定义和9个来源内嵌SVG。网络依赖保留原址，预览按需经本机服务进入`style/remote-cache`；应用时固定成功获取的依赖版本，失败的网络依赖保留原CSS回退行为，不阻断整个主题；完整ZIP必须准备全部依赖，失败不生成不完整包。覆盖升级保留旧资源和自定义主题；卸载后重装不等同于覆盖升级。
+主题库展示31个内置主题：原生3、BLC原版3、BLC开放版7、LAPLACE 18。分发目录另保留BLC开放版旧YT主题文件，合计32份，旧引用仍可读取。`npm run themes:prepare`生成干净的`src-tauri/style-distribution`，安装和便携打包均部署为程序旁`style/`。分发只包含主题定义和9个来源内嵌SVG。网络依赖保留原址，预览按需经本机服务进入`style/remote-cache`；应用主题不等待远程字体和图片下载，已有缓存继续复用，其余素材按需加载；完整 ZIP 并发收集独立依赖，网络最多四路，缺失时不生成不完整包。覆盖升级保留旧资源和自定义主题；卸载后重装不等同于覆盖升级。
 
 `style/catalog-assets.json` 为已应用快照的旧素材地址提供定位；本地服务仍可读取旧 `/theme-catalog/assets/` 地址，实际素材取自程序旁主题目录。新的应用按清单使用 `/theme-assets/` 或版本固定的 `/theme-resources/`。迁移目录不会清空应用绑定或重新应用主题。主题文件缺失时保留原绑定及已发布快照，编辑明确提示恢复文件或重新导入，不替换成默认主题。
 
