@@ -36,7 +36,7 @@ test('静态和点选豁免容量与寿命；全部部件只放开显示条件�
  assert.equal(result.events.length,1);assert.equal(result.sticky.length,1);
  }
  const p=settings();p.displayPreferences.eventAnimationPreset='slide';p.displayPreferences.eventAnimationDurationMs=345;
- assert.deepEqual(policy.stylePreviewAnimation(p),{preset:'slide',durationMs:345});
+ assert.deepEqual(policy.stylePreviewAnimation(p),{preferThemeAnimation:false,preset:'slide',durationMs:345});
  assert.equal(policy.selectStylePreviewEvents([gift('a',100)],p,{target:'live',displayAll:true,mode:'static',now:1001}).sticky.length,0);
  assert.equal(policy.selectStylePreviewEvents([gift('a',100)],p,{target:'obs',displayAll:false,mode:'static',now:1001}).sticky.length,0);
 });

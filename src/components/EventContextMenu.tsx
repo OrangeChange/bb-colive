@@ -161,12 +161,13 @@ function formatEventTime(ts: number): string {
 export function EventContextMenu({ event, nickname, eventFontSize, shortcutActions, eventAreaRef, getAnchorRect, scope = "live", handlers, remoteOpenRequest, onInteractionChange, dismissRevision }: EventContextMenuProps) {
   useUiLanguage();
   const [open, setOpen] = useState(false);
+  const [actionsFocused, setActionsFocused] = useState(false);
 
   const [nicknameDialogOpen, setNicknameDialogOpen] = useState(false);
   const [avatarPreviewOpen, setAvatarPreviewOpen] = useState(false);
   const interactionChange = useRef(onInteractionChange); interactionChange.current = onInteractionChange;
   const previousActive = useRef(false);
-  const activeInteraction = open || nicknameDialogOpen || avatarPreviewOpen;
+  const activeInteraction = open || actionsFocused || nicknameDialogOpen || avatarPreviewOpen;
   useEffect(() => { if (previousActive.current !== activeInteraction) { previousActive.current = activeInteraction; interactionChange.current?.(activeInteraction); } }, [activeInteraction]);
   const previousDismiss = useRef(dismissRevision);
   useEffect(() => { if (previousDismiss.current !== dismissRevision) { previousDismiss.current = dismissRevision; setOpen(false); } }, [dismissRevision]);
@@ -374,6 +375,14 @@ export function EventContextMenu({ event, nickname, eventFontSize, shortcutActio
     (action === "favorite" && favorited) || (action === "mark" && marked)
   );
   const persistentShortcutActions = visibleShortcutActions.filter(shortcutActionPersistent);
+  useLayoutEffect(() => {
+    const row = triggerRef.current?.closest<HTMLElement>(".event-row-with-menu");
+    if (!row) return;
+    const owner = row.matches(".event-surface-archive,.compatible-event-row-menu") ? row : row.closest<HTMLElement>(".event-row-slot-content") ?? row;
+    owner.style.setProperty("--event-menu-action-count", String(visibleShortcutActions.length + 1));
+    owner.style.setProperty("--event-menu-rest-action-count", String(persistentShortcutActions.length));
+    return () => { owner.style.removeProperty("--event-menu-action-count"); owner.style.removeProperty("--event-menu-rest-action-count"); };
+  }, [visibleShortcutActions.length, persistentShortcutActions.length]);
   const actions: MenuAction[] = [
     ...(scope === "live" && handlers.onReplyUser && user?.uid ? [{label:uiText("danmaku.reply"),icon:"reply" as const,disabled:handlers.canReplyUser?.(event)===false,onSelect:()=>handlers.onReplyUser?.(event)}] : []),
     {
@@ -454,7 +463,7 @@ export function EventContextMenu({ event, nickname, eventFontSize, shortcutActio
 
   return (
     <>
-      <div className={`event-row-actions absolute right-2 z-10 flex items-center gap-1${remoteOpenRequest ? " hidden" : ""}`}>
+      <div className={`event-row-actions absolute right-2 z-10 flex items-center gap-1${remoteOpenRequest ? " hidden" : ""}`} onFocusCapture={() => setActionsFocused(true)} onBlurCapture={event => { if (!event.currentTarget.contains(event.relatedTarget as Node | null)) setActionsFocused(false); }}>
         <div className="event-quick-actions">
         {visibleShortcutActions.map((shortcutAction, index) => {
           const active = shortcutActionActive(shortcutAction);

@@ -8,6 +8,7 @@ import { uiText } from "../i18n/index.ts";
  * 头像除外）到统一 render 日志，和 source/app 记录通过事件 ID 关联。
  */
 import { useCallback, useEffect, useLayoutEffect, useMemo, useRef, useState, type RefObject } from "react";
+import { Bookmark, ArrowDownToLine, ArrowUpToLine } from "lucide-react";
 import { useVirtualizer } from "@tanstack/react-virtual";
 import { filterNativeFeedIndices } from '../themes/nativeFeedVisibility.ts';
 import type { NativeThemeSettings } from '../themes/nativeComponentAppearance.ts';
@@ -187,10 +188,11 @@ export function EventList({
     : -1;
   const markedEvent = markedIndex >= 0 ? events[orderedVisibleIndices[markedIndex]] : undefined;
   const latestEdgeClass = scrollDirection === "top" ? "top-3" : "bottom-3";
-  const latestArrow = scrollDirection === "top" ? "↑" : "↓";
+  const LatestIcon = scrollDirection === "top" ? ArrowUpToLine : ArrowDownToLine;
   const [locatedMarkKey, setLocatedMarkKey] = useState<string | null>(null);
   const sourceControlRef = useRef<BlivechatSourceControl>(null);
   const [sourceHover, setSourceHover] = useState<CompatibleRowBounds | null>(null);
+  const [sourcePersistentRows, setSourcePersistentRows] = useState<CompatibleRowBounds[]>([]);
   const [sourceLocated, setSourceLocated] = useState<CompatibleRowBounds | null>(null);
   const [sourceDismissRevision, setSourceDismissRevision] = useState(0);
   const [sourceMenuEventId, setSourceMenuEventId] = useState<string | null>(null);
@@ -822,7 +824,7 @@ export function EventList({
     <EventRow animateOnMount={false} ev={ev} liveLayout={liveLayout} reviewLayout={!liveLayout} allowWinnerExpansion={liveLayout} showTime={!liveLayout || (eventStyleSettings as EventStyleSettings & { display?: { showTimestamp?: boolean } }).display?.showTimestamp === true} onUserFilter={onUserFilter} displayPreferences={displayPreferences} eventStyleSettings={eventStyleSettings} eventFontSize={eventFontSize} enableBilibiliVideoLinks={enableBilibiliVideoLinks} eventAreaRef={eventAreaRef} locatedHighlight={locatedMarkKey === getEventRowKey(ev)} eventMenu={rowEventMenu} giftEffectResolver={giftEffectResolver} onPlayGiftEffect={onPlayGiftEffect} />
   </EventRowSlot>;
   const eventListContent = <>
-        {compatibleListSurface && <BlivechatSourceSurface roomGuardProfile={roomGuardProfile} ref={sourceControlRef} descriptor={compatibleListSurface} events={compatibleListEvents} viewKey={viewKey} scale={contentScale} renderMode="dashboard" onRowHover={eventMenuHandlers ? setSourceHover : undefined} locatedEventId={locatedMarkKey} onLocatedRow={setSourceLocated} tickerEnabled={false} stickyItems={[]} animation={{ preset: displayPreferences?.eventAnimationPreset ?? "none", durationMs: getEventAnimationExitDuration(displayPreferences?.eventAnimationPreset ?? "none", displayPreferences?.eventAnimationDurationMs ?? 0) }} direction={scrollDirection} contentAlignment={liveLayout ? contentAlignment : "top"} fallbackRenderer={renderCompatibleFallback} fallbackStyle={{ scope: areaStyle.scope, css: areaStyle.css }} enableBilibiliVideoLinks={enableBilibiliVideoLinks} initialScrollState={{ followingLatest: feedSession.followingLatest, scrollTop: feedSession.scrollTop, anchorId: feedSession.anchorId, anchorOffset: feedSession.anchorOffset }} onPointerDown={() => { setSourceMenu(null); setSourceDismissRevision(value => value + 1); }} onScrollState={state => {
+        {compatibleListSurface && <BlivechatSourceSurface roomGuardProfile={roomGuardProfile} ref={sourceControlRef} descriptor={compatibleListSurface} events={compatibleListEvents} viewKey={viewKey} scale={contentScale} renderMode="dashboard" onRowHover={eventMenuHandlers ? setSourceHover : undefined} interactionEventId={sourceMenu?.eventId ?? sourceMenuEventId} persistentEventIds={eventMenuHandlers ? compatibleListEvents.filter(event => eventMenuHandlers.isFavorite(event) || eventMenuHandlers.isMarked?.(feedKey, event)).map(getEventRowKey) : undefined} onPersistentRows={eventMenuHandlers ? setSourcePersistentRows : undefined} locatedEventId={locatedMarkKey} onLocatedRow={setSourceLocated} tickerEnabled={false} stickyItems={[]} animation={{ preferThemeAnimation: displayPreferences?.preferThemeAnimation, preset: displayPreferences?.eventAnimationPreset ?? "none", durationMs: getEventAnimationExitDuration(displayPreferences?.eventAnimationPreset ?? "none", displayPreferences?.eventAnimationDurationMs ?? 0) }} direction={scrollDirection} contentAlignment={liveLayout ? contentAlignment : "top"} fallbackRenderer={renderCompatibleFallback} fallbackStyle={{ scope: areaStyle.scope, css: areaStyle.css }} enableBilibiliVideoLinks={enableBilibiliVideoLinks} initialScrollState={{ followingLatest: feedSession.followingLatest, scrollTop: feedSession.scrollTop, anchorId: feedSession.anchorId, anchorOffset: feedSession.anchorOffset }} onPointerDown={() => { setSourceMenu(null); setSourceDismissRevision(value => value + 1); }} onScrollState={state => {
           followRef.current = state.followingLatest;
           feedSession.followingLatest = state.followingLatest;
           feedSession.scrollTop = state.scrollTop;
@@ -876,18 +878,20 @@ export function EventList({
         {eventListContent}
         </div>
         {sourceLocated && locatedMarkKey === sourceLocated.eventId && <div className="pointer-events-none event-row-located-indicator" style={{ position: "fixed", left: sourceLocated.left, top: sourceLocated.top, width: sourceLocated.width, height: sourceLocated.height, zIndex: 15 }} />}
-        {eventMenuHandlers && (() => {
-          const eventId = sourceMenu?.eventId ?? sourceMenuEventId ?? sourceHover?.eventId;
-          const event = compatibleListEvents.find(value => getEventRowKey(value) === eventId);
-          if (!event) return null;
-          const bounds = sourceHover?.eventId === eventId ? sourceHover : null;
-          return <div key={eventId} className="event-row-with-menu" data-source-hovered={bounds ? "true" : undefined} style={{ position: "fixed", left: bounds?.left ?? sourceMenu?.x ?? 0, top: bounds?.top ?? sourceMenu?.y ?? 0, width: bounds?.width ?? 0, height: bounds?.height ?? 0, ...(bounds?.actionsRightInset ? { "--event-menu-right-inset": `${bounds.actionsRightInset}px` } : {}), pointerEvents: "none", zIndex: 20 }}>
-            <EventContextMenu event={event} nickname={event.user ? userNicknames[event.user.uid] : undefined} eventFontSize={eventFontSize} scope={liveLayout ? "live" : "review"} shortcutActions={shortcutActions} eventAreaRef={eventAreaRef} handlers={{ ...eventMenuHandlers, regionKey: feedKey, onPlayGiftEffect }} dismissRevision={sourceDismissRevision} onInteractionChange={active => { setSourceMenuEventId(active ? eventId! : null); if (!active) setSourceMenu(null); }} getAnchorRect={() => {
-              const frame=scrollRef.current?.querySelector('iframe');
-              const row=frame && [...(frame.contentDocument?.querySelectorAll<HTMLElement>('[data-compatible-event-id],[data-event-id]') ?? [])].find(node => (node.dataset.compatibleEventId ?? node.dataset.eventId) === eventId);
-              return frame && row ? compatibleElementBounds(frame,row) : null;
-            }} remoteOpenRequest={sourceMenu ? { revision: sourceMenu.revision, left: sourceMenu.x, top: sourceMenu.y } : undefined} />
-          </div>;
+        {compatibleListSurface && eventMenuHandlers && (() => {
+          const activeId = sourceMenu?.eventId ?? sourceMenuEventId ?? sourceHover?.eventId;
+          return [...new Set([activeId, ...sourcePersistentRows.map(row => row.eventId)].filter((id): id is string => Boolean(id)))].map(eventId => {
+            const event = compatibleListEvents.find(value => getEventRowKey(value) === eventId);
+            if (!event) return null;
+            const bounds = sourceHover?.eventId === eventId ? sourceHover : sourcePersistentRows.find(row => row.eventId === eventId);
+            return <div key={eventId} className={`event-row-with-menu compatible-event-row-menu${sourcePersistentRows.some(row => row.eventId === eventId) ? " event-row-has-persistent-action" : ""}`} data-source-hovered={sourceHover?.eventId === eventId ? "true" : undefined} style={{ position: "fixed", left: bounds?.left ?? sourceMenu?.x ?? 0, top: bounds?.top ?? sourceMenu?.y ?? 0, width: bounds?.width ?? 0, height: bounds?.height ?? 0, ...(bounds?.actionsRightInset ? { "--event-menu-right-inset": `${bounds.actionsRightInset}px` } : {}), pointerEvents: "none", zIndex: 20 }}>
+              <EventContextMenu event={event} nickname={event.user ? userNicknames[event.user.uid] : undefined} eventFontSize={eventFontSize} scope={liveLayout ? "live" : "review"} shortcutActions={shortcutActions} eventAreaRef={eventAreaRef} handlers={{ ...eventMenuHandlers, regionKey: feedKey, onPlayGiftEffect }} dismissRevision={sourceDismissRevision} onInteractionChange={active => { setSourceMenuEventId(current => active ? eventId : current === eventId ? null : current); if (!active) setSourceMenu(current => current?.eventId === eventId ? null : current); }} getAnchorRect={() => {
+                const frame=scrollRef.current?.querySelector('iframe');
+                const row=frame && [...(frame.contentDocument?.querySelectorAll<HTMLElement>('[data-compatible-event-id],[data-event-id]') ?? [])].find(node => (node.dataset.compatibleEventId ?? node.dataset.eventId) === eventId);
+                return frame && row ? compatibleElementBounds(frame,row) : null;
+              }} remoteOpenRequest={sourceMenu?.eventId === eventId ? { revision: sourceMenu.revision, left: sourceMenu.x, top: sourceMenu.y } : undefined} />
+            </div>;
+          });
         })()}
       </div>
       {(unreadCount > 0 || markedIndex >= 0) && (
@@ -921,7 +925,7 @@ export function EventList({
                 className="pointer-events-auto inline-flex min-h-8 items-center gap-1.5 rounded-full border border-accent/60 bg-surface px-3.5 py-1.5 ui-type-control font-semibold text-accent-text shadow-lg ring-1 ring-black/5 transition-colors hover:border-accent hover:bg-raised focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent-ring"
                 aria-label={uiText("eventList.aria_label")}
               >
-                <span aria-hidden="true" className="inline-flex h-4 items-center text-sm leading-none">⌖</span>
+                <Bookmark size={16} strokeWidth={2} className="shrink-0" aria-hidden="true" />
                 <span className="inline-flex h-4 items-center ui-type-control">{uiText("eventList.EventList2")}</span>
               </button>
             )}
@@ -932,7 +936,7 @@ export function EventList({
                 className="pointer-events-auto inline-flex min-h-8 items-center gap-1.5 rounded-full border border-accent/60 bg-surface px-3.5 py-1.5 ui-type-control font-semibold text-accent-text shadow-lg ring-1 ring-black/5 transition-colors hover:border-accent hover:bg-raised focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent-ring"
                 aria-label={uiText("eventList.aria_label2")}
               >
-                <span aria-hidden="true" className="inline-flex h-4 items-center text-sm leading-none">{latestArrow}</span>
+                <LatestIcon size={16} strokeWidth={2} className="shrink-0" aria-hidden="true" />
                 <span className="inline-flex h-4 items-center ui-type-control">{uiText("eventList.EventList3")}</span>
                 <span className="inline-flex h-4 items-center rounded-full bg-accent-subtle px-1.5 ui-type-micro">
                   {unreadCount >= 999 ? "999+" : unreadCount} {uiText("eventList.EventList4")}</span>

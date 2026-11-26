@@ -134,7 +134,7 @@ export interface RendererHostProps {
   tickerPosition?: 'top' | 'bottom'; renderMode?: 'dashboard' | 'obs'; enableBilibiliVideoLinks?: boolean; coordinateScale?: number;
   variant?: 'product';
   productElements?: { classicScope: boolean };
-  animation?: { preset: 'none' | 'fade' | 'lift' | 'scale' | 'slide'; durationMs: number };
+  animation?: { preset: 'none' | 'fade' | 'lift' | 'scale' | 'slide'; durationMs: number; preferThemeAnimation?: boolean };
   removingEventIds?: string[];
   recalledEventIds?: string[];
   layout?: Array<{ kind: 'source' | 'fallback'; eventId: string }>;

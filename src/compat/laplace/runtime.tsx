@@ -395,7 +395,7 @@ export function createLaplaceThemeRuntime(
 export const laplaceThemeRuntime = createLaplaceThemeRuntime();
 
 export function resolvePublishedLaplaceRender(current: PublishedLaplaceTarget, context: CompatibleEventSurfaceContext) {
-      const roomMatches = !current.context.roomId || context.roomId == null || Number(current.context.roomId) === context.roomId;
+      const roomMatches = context.target !== "obs" || !current.context.roomId || context.roomId == null || Number(current.context.roomId) === context.roomId;
       const settings = { ...settingsOf(current.document), eventVisibility: resolveThemeEventVisibility(normalizeCompatibleEventVisibility("laplace", current.document.settings.eventVisibility), context.target) };
       const mode = context.target === "live" ? "dashboard" : "obs";
       const render = (() => null) as unknown as CompatibleEventRenderWithRoot & {

@@ -91,7 +91,7 @@ function prepareEditorSession(session: ThemeEditorSession): ThemeEditorSession {
   return session;
 }
 const resolveThemeAssets = async (document: ThemeDocument, changes: Record<string, Uint8Array | null> = {}, publish = false, preparation: {signal?:AbortSignal;onProgress?:(completed:number)=>void} = {}) => {
-  if(publish) document=(await localizeThemeResources(document,document.metadata.resourceBaseUrl||document.metadata.sourceUrl||"file:///theme.css",themeDependencyLoader(false,preparation.signal,preparation.onProgress),"apply")).document;
+  if(publish) document=(await localizeThemeResources(document,document.metadata.resourceBaseUrl||document.metadata.sourceUrl||"file:///theme.css",themeDependencyLoader(false,preparation.signal,preparation.onProgress),"preserve")).document;
   const urls = await resolveCatalogRuntimeAssets(document, changes, path => readThemeAssetDraft(path, changes, savedPath => repository.readThemeAsset(document.themeId, savedPath)));
   const localAssets=document.assets.filter(a=>!a.sharedResourceId&&!a.cacheResourceId&&!/^https?:/i.test(a.sourceUrl??""));
   if (publish && localAssets.length) {

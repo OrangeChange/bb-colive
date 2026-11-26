@@ -18341,7 +18341,7 @@
     const options = useOptions(), guard = numeric(data.guardType), user = numeric(data.userType), rank = numeric(data.currentRank);
     const perk = usePerk(data.origin);
     const avatar = (className) => /* @__PURE__ */ (0, import_jsx_runtime2.jsx)(Avatar, { data, mode, className, sender: true });
-    const reply = data.reply && Object.keys(data.reply).length ? data.reply : null;
+    const reply = data.reply && (numeric(data.reply.uid) > 0 || String(data.reply.uname ?? "").trim()) ? data.reply : null;
     const border = `#${numeric(data.userLvlBorder).toString(16).padStart(6, "0")}`;
     return /* @__PURE__ */ (0, import_jsx_runtime2.jsxs)(EventRoot, { data, className: classes(`guard-level--${guard}`, `current-rank--${rank}`, `user-type--${user}`, `user-type--${user === 100 ? "streamer" : user === 1 ? "mod" : "user"}`, `guard-leader--${data.guardLeader ? 1 : 0}`, data.read && "read", data.isMirror && "is-mirror", Object.keys(data.bmotes || {}).length && "has-bmotes", data.reply?.uid && "has-reply", data.emote && "has-emotes", options.colorScheme === "dark" && "dark"), children: [
       avatar("avatar-alt-outer hidden"),
@@ -18667,8 +18667,7 @@
       /* @__PURE__ */ (0, import_jsx_runtime5.jsx)("span", { className: "message", children: like ? /* @__PURE__ */ (0, import_jsx_runtime5.jsxs)(import_jsx_runtime5.Fragment, { children: [
         data.message,
         /* @__PURE__ */ (0, import_jsx_runtime5.jsx)(IconThumbUpFilled, { size: "1em" })
-      ] }) : `${action[1]}\u76F4\u64AD\u95F4` }),
-      !like && mode === "dashboard" && data.relation?.type > 0 && data.relation.icon && /* @__PURE__ */ (0, import_jsx_runtime5.jsx)("span", { className: `relation-wrap relation-type--${data.relation.type}`, title: data.relation.text, children: /* @__PURE__ */ (0, import_jsx_runtime5.jsx)(Picture, { className: "relation-icon-wrap", imageClass: "relation-icon", alt: data.relation.text, src: data.relation.icon }) })
+      ] }) : `${action[1]}\u76F4\u64AD\u95F4` })
     ] });
   }
   function EffectMessage({ data, mode = "obs" }) {
@@ -18948,7 +18947,9 @@
     };
     doc.addEventListener("visibilitychange", onVisibility);
     frame = view.requestAnimationFrame(() => {
+      view.getComputedStyle(node).opacity;
       frame = view.requestAnimationFrame(() => {
+        view.getComputedStyle(node).opacity;
         delete node.dataset.eventMotionEntering;
         doc.removeEventListener("visibilitychange", onVisibility);
       });
@@ -18956,7 +18957,7 @@
   }
   var EVENT_TRANSITION_CSS = `
 [data-event-motion]:not([data-event-motion="none"]){transition-property:opacity,translate,scale;transition-duration:var(--event-motion-duration,0ms);transition-timing-function:ease-out}
-[data-event-motion-entering]{transition:none}
+[data-event-motion][data-event-motion-entering]{transition:none}
 [data-event-motion-entering],[data-event-motion-removing="true"]{opacity:0}
 [data-event-motion-entering][data-event-motion="lift"]{translate:0 6px}
 [data-event-motion-entering][data-event-motion="scale"]{scale:.985}
@@ -26438,7 +26439,7 @@
     if (value.giftEffectInteractive !== void 0 && typeof value.giftEffectInteractive !== "boolean") return false;
     const validEvents = (events) => Array.isArray(events) && events.length <= 2e4 && events.every((event) => record(event) && typeof event.type === "string" && typeof event.id === "string" && Number.isFinite(event.origin) && Number.isFinite(event.originIdx) && Number.isFinite(event.timestampNormalized) && Object.keys(event).every((key) => eventFields.has(key)) && plainData(event));
     const validLayout = value.layout === void 0 || Array.isArray(value.layout) && value.layout.length <= 2e4 && value.layout.every((item) => record(item) && Object.keys(item).length === 2 && (item.kind === "source" || item.kind === "fallback") && typeof item.eventId === "string" && item.eventId.length > 0);
-    const validAnimation = value.animation === void 0 || record(value.animation) && ["none", "fade", "lift", "scale", "slide"].includes(String(value.animation.preset)) && Number.isFinite(value.animation.durationMs) && Number(value.animation.durationMs) >= 0;
+    const validAnimation = value.animation === void 0 || record(value.animation) && ["none", "fade", "lift", "scale", "slide"].includes(String(value.animation.preset)) && Number.isFinite(value.animation.durationMs) && Number(value.animation.durationMs) >= 0 && (value.animation.preferThemeAnimation === void 0 || typeof value.animation.preferThemeAnimation === "boolean");
     const validRemoving = value.removingEventIds === void 0 || Array.isArray(value.removingEventIds) && value.removingEventIds.length <= 2e4 && value.removingEventIds.every((id) => typeof id === "string");
     const validEditorSelection = value.editorSelection === void 0 || record(value.editorSelection) && typeof value.editorSelection.part === "string" && record(value.editorSelection.scope) && typeof value.editorSelection.scope.part === "string" && typeof value.editorSelection.scope.eventType === "string" && typeof value.editorSelection.scope.identity === "string" && typeof value.editorSelection.scope.placement === "string" && typeof value.editorSelection.reveal === "boolean" && record(value.editorSelection.selectors) && Object.values(value.editorSelection.selectors).every((selectors) => Array.isArray(selectors) && selectors.every((selector) => typeof selector === "string")) && Array.isArray(value.editorSelection.focusSelectors) && value.editorSelection.focusSelectors.every((selector) => typeof selector === "string");
     if (record(value.editorSelection) && (!Number.isSafeInteger(value.editorSelection.inspectionRevision) || Number(value.editorSelection.inspectionRevision) < 0)) return false;
@@ -26526,61 +26527,14 @@
   }
 
   // src/compat/laplace/renderer/entryMotion.ts
-  var revisions = /* @__PURE__ */ new WeakMap();
-  var LAPLACE_ENTRY_MOTION_CSS = `@layer config {
-  :where(.event-list [data-laplace-entry-motion]) {
-    animation-duration: var(--laplace-entry-durations);
-    animation-delay: var(--laplace-entry-delays);
-  }
-}`;
-  function restoreEntryMotion(node) {
-    node.removeAttribute("data-laplace-entry-motion");
-    node.style.removeProperty("--laplace-entry-durations");
-    node.style.removeProperty("--laplace-entry-delays");
-  }
-  function reconcileLaplaceEntryMotion(root2, revision, hostMotionEnabled = true) {
-    let state = revisions.get(root2);
-    if (!hostMotionEnabled) {
-      for (const node of state?.nodes ?? []) restoreEntryMotion(node);
-      revisions.delete(root2);
-      return;
-    }
-    if (state?.revision !== revision) {
-      for (const node of state?.nodes ?? []) restoreEntryMotion(node);
-      state = { revision, nodes: /* @__PURE__ */ new Set() };
-      revisions.set(root2, state);
-    }
-    for (const node of state.nodes) if (!root2.contains(node)) state.nodes.delete(node);
-    const entries = /* @__PURE__ */ new Map();
-    for (const animation of root2.getAnimations({ subtree: true })) {
+  function hasLaplaceThemeEntryMotion(row) {
+    return row.getAnimations({ subtree: true }).some((animation) => {
       const effect = animation.effect;
-      if (!(animation instanceof CSSAnimation) || !(effect instanceof KeyframeEffect) || effect.pseudoElement || !(effect.target instanceof HTMLElement)) continue;
-      const node = effect.target;
-      if (state.nodes.has(node) || !node.closest(".event-list") || effect.getTiming().iterations === Infinity) continue;
-      const frames = effect.getKeyframes();
-      const end = frames[frames.length - 1];
-      if (end && (end.opacity !== void 0 && Number(end.opacity) <= 0 || end.visibility === "hidden" || end.visibility === "collapse" || end.display === "none")) continue;
-      let names = entries.get(node);
-      if (!names) {
-        names = /* @__PURE__ */ new Set();
-        entries.set(node, names);
-      }
-      names.add(animation.animationName);
-    }
-    for (const [node, entryNames] of entries) {
-      const style = getComputedStyle(node);
-      const names = style.animationName.split(",");
-      if (names.every((name) => name.trim() === "none")) continue;
-      const iterations = style.animationIterationCount.split(",");
-      const durations = style.animationDuration.split(",");
-      const delays = style.animationDelay.split(",");
-      const finite = names.map((name, index) => entryNames.has(name.trim()) && iterations[index % iterations.length].trim() !== "infinite");
-      if (!finite.some(Boolean)) continue;
-      node.style.setProperty("--laplace-entry-durations", finite.map((finish, index) => finish ? "0s" : durations[index % durations.length]).join(","));
-      node.style.setProperty("--laplace-entry-delays", finite.map((finish, index) => finish ? "0s" : delays[index % delays.length]).join(","));
-      node.setAttribute("data-laplace-entry-motion", "");
-      state.nodes.add(node);
-    }
+      if (!(animation instanceof CSSAnimation) || !(effect instanceof KeyframeEffect) || effect.pseudoElement || effect.getTiming().iterations === Infinity || Number(effect.getTiming().duration) <= 0) return false;
+      const frames = effect.getKeyframes(), end = frames[frames.length - 1];
+      if (end && (end.opacity !== void 0 && Number(end.opacity) <= 0 || end.visibility === "hidden" || end.visibility === "collapse" || end.display === "none")) return false;
+      return true;
+    });
   }
 
   // src/components/bilibiliVideoLinks.ts
@@ -26912,7 +26866,7 @@
       ${message.tickerPosition ? "@layer utilities{.events-list-wrap>.gift-sticky-bar{order:0!important}.events-list-wrap>.event-list{order:0!important}}" : ""}
       ${EVENT_TRANSITION_CSS}
       ${COMPATIBLE_RECALL_CSS}
-      ${role === "candidate" ? LAPLACE_ENTRY_MOTION_CSS : ""}`
+      `
       ];
       return values;
     }
@@ -26974,7 +26928,6 @@
       }, [scheme]);
       const customCss = React11.useMemo(() => role === "candidate" ? composeLaplaceFrameCustomCss(message.css.custom) : message.css.custom, [message.css.custom]);
       const hostMotionEnabled = Boolean(message.animation && message.animation.preset !== "none" && message.animation.durationMs > 0);
-      const entryMotionRevision = React11.useMemo(() => ({}), [message.css.cloud, message.css.remote, customCss, scheme, scene, message.rate > 6, hostMotionEnabled]);
       const values = styleValues(message, customCss);
       useOriginalStyle(() => values[0], "base-font-size");
       useOriginalStyle(() => values[1], "demo-bg");
@@ -27277,7 +27230,6 @@
         const bind = () => {
           if (decorationSuspended) return;
           bindLaplaceStableEventRoots(rootNode, message.events, message.stickyEvents);
-          if (role === "candidate") reconcileLaplaceEntryMotion(rootNode, entryMotionRevision, hostMotionEnabled);
           const removing = new Set(message.removingEventIds ?? []);
           const recalled = new Set(message.recalledEventIds ?? []);
           rootNode.querySelectorAll("[data-event-id]").forEach((row) => {
@@ -27287,7 +27239,7 @@
             delete row.dataset.hostEnter;
             delete row.dataset.hostRemoving;
             row.style.removeProperty("--host-animation-duration");
-            applyEventTransition(row, message.animation, isRemoving);
+            applyEventTransition(row, !isRemoving && role === "candidate" && message.animation?.preferThemeAnimation === true && hasLaplaceThemeEntryMotion(row) ? { preset: "none", durationMs: 0 } : message.animation, isRemoving);
           });
           reconcileRepeatCounts(rootNode, [...message.events, ...message.stickyEvents]);
           reconcileVideoLinks(rootNode, message.enableBilibiliVideoLinks === true);

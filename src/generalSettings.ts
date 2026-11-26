@@ -200,6 +200,7 @@ export function resetEventDisplayPreferenceValues(current: EventDisplayPreferenc
   const reset = { ...current,
     eventAnimationPreset: DEFAULT_EVENT_DISPLAY_PREFERENCES.eventAnimationPreset,
     eventAnimationDurationMs: DEFAULT_EVENT_DISPLAY_PREFERENCES.eventAnimationDurationMs,
+    preferThemeAnimation: DEFAULT_EVENT_DISPLAY_PREFERENCES.preferThemeAnimation,
   };
   for (const key of eventFilterPreferenceKeys) reset[key] = current[key] as never;
   return reset;

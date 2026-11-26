@@ -11,6 +11,15 @@ import {materializeOpenLiveSourceCss} from '../compat/openlive/css.ts';
 
 export interface LoadedThemeDependency {css?:string;finalUrl?:string;asset?:ThemeAssetReference;bytes?:Uint8Array}
 export interface ThemeResourceLoader {load(url:string,css:boolean):Promise<LoadedThemeDependency>;signal?:AbortSignal}
+async function forEachConcurrent<T>(items:T[],operation:(item:T)=>Promise<void>):Promise<void>{
+ let index=0,failed=false,error:unknown;
+ await Promise.all(Array.from({length:Math.min(4,items.length)},async()=>{
+  while(!failed&&index<items.length){
+   try{await operation(items[index++]);}catch(cause){if(!failed){failed=true;error=cause;}}
+  }
+ }));
+ if(failed)throw error;
+}
 function checkSignal(signal?:AbortSignal){if(signal?.aborted)throw new UiMessageError("themeResourceDependencies.checkSignal");}
 function cssUrl(node:ValueNode):string|undefined {
  if(node.type==='string')return node.value;
@@ -57,19 +66,19 @@ export async function localizeThemeResources(document:ThemeDocument,origin:strin
   const root=safeParse(css);
   const declarations:postcss.Declaration[]=[];root.walkDecls(d=>{declarations.push(d)});
   const imports:postcss.AtRule[]=[];root.walkAtRules('import',n=>{imports.push(n)});
-  for(const rule of imports){
+  await forEachConcurrent(imports, async rule=>{
    const parsed=valueParser(rule.params),first=parsed.nodes.find(n=>n.type!=='space'&&n.type!=='comment');
    const raw=first&&cssUrl(first);if(!raw)throw new UiMessageError("themeResourceDependencies.localizeThemeResources.process", { params: rule.params });
    const inlineCss=document.mode==="native"&&/^data:/i.test(raw);
-   if(/^data:/i.test(raw)&&!inlineCss)continue;
+   if(/^data:/i.test(raw)&&!inlineCss)return;
    const url=inlineCss?raw:resourceUrl(raw,base);if(!url)throw new UiMessageError("themeResourceDependencies.localizeThemeResources.process2");
    if(remotePolicy==="preserve" && /^https?:/i.test(url)){
-    continue;
+    return;
    }
-   if(ancestors.has(url)){rule.remove();continue;}
+   if(ancestors.has(url)){rule.remove();return;}
    let loaded:LoadedThemeDependency;
    try{loaded=inlineCss?{css:await (await fetch(url)).text(),finalUrl:url}:await load(url,true)}catch(error){checkSignal(loader.signal);if(remotePolicy==='apply'&&document.mode!=="native"&&/^https?:/i.test(url)){
-    if(first?.type==='string')first.value=url;else if(first?.type==='function')first.nodes=[quoted(url)];rule.params=parsed.toString();continue;
+    if(first?.type==='string')first.value=url;else if(first?.type==='function')first.nodes=[quoted(url)];rule.params=parsed.toString();return;
    }throw error;}
    checkSignal(loader.signal);if(loaded.css===undefined)throw new UiMessageError("themeResourceDependencies.localizeThemeResources.process3", { url: url });
    const nested=safeParse(await process(loaded.css,loaded.finalUrl||url,new Set([...ancestors,url,loaded.finalUrl||url]))) as postcss.Root;
@@ -87,10 +96,10 @@ export async function localizeThemeResources(document:ThemeDocument,origin:strin
    if(supports)wrap('supports',/^(\(|not\s|selector\(|font-tech\(|font-format\()/i.test(supports)?supports:`(${supports})`);
    if(layer!==undefined)wrap('layer',layer);
    rule.replaceWith(...contents);
-  }
-  for(const declaration of declarations){
+  });
+  await forEachConcurrent(declarations, async declaration=>{
    const offset=declaration.source?.start?.offset;
-   if(offset!==undefined&&engineRanges.some(range=>offset>=range.start&&offset<range.end))continue;
+   if(offset!==undefined&&engineRanges.some(range=>offset>=range.start&&offset<range.end))return;
    const parsed=valueParser(declaration.value);
    const rewrite=async(nodes:ValueNode[],imageSet=false):Promise<void>=>{
     for(let i=0;i<nodes.length;i++){
@@ -102,7 +111,7 @@ export async function localizeThemeResources(document:ThemeDocument,origin:strin
     }
    };
    await rewrite(parsed.nodes);declaration.value=parsed.toString();
-  }
+  });
   return root.toString();
  };
  for(const layer of ['baseCss','visualCss','customCss'] as const){

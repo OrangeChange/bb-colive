@@ -10,7 +10,7 @@ import { compatibleRowBounds, observeCompatibleRows, observeCompatibleMedals, ty
 import type { RoomGuardProfile } from '../protocol/types.ts';
 import { useVoiceSettings } from '../voice/voiceSettings.ts';
 import { projectCompatibleDisplayNames } from './compatibleDisplayNames.ts';
-type CompatibleListSurfaceProps = Omit<React.ComponentProps<typeof BlivechatSourceSurface>, "renderMode"> & { roomGuardProfile?: RoomGuardProfile; rate?: number; renderMode?: "dashboard" | "obs" | "output"; onRowHover?: (row: CompatibleRowBounds | null) => void; locatedEventId?: string | null; onLocatedRow?: (row: CompatibleRowBounds | null) => void };
+type CompatibleListSurfaceProps = Omit<React.ComponentProps<typeof BlivechatSourceSurface>, "renderMode"> & { roomGuardProfile?: RoomGuardProfile; rate?: number; renderMode?: "dashboard" | "obs" | "output"; onRowHover?: (row: CompatibleRowBounds | null) => void; interactionEventId?: string | null; persistentEventIds?: readonly string[]; onPersistentRows?: (rows: CompatibleRowBounds[]) => void; locatedEventId?: string | null; onLocatedRow?: (row: CompatibleRowBounds | null) => void };
 export interface CompatibleRateWindow { seen: Set<string>; arrivals: number[] }
 export function advanceCompatibleRateWindow(state: CompatibleRateWindow, eventIds: readonly string[], now: number): CompatibleRateWindow {
   const current = new Set(eventIds);
@@ -49,6 +49,10 @@ export const CompatibleListSurface = forwardRef<BlivechatSourceControl, Compatib
   const measuredRate = useCompatibleEventRate(eventIds);
   const container = useRef<HTMLDivElement>(null);
   const latest = useRef(props); latest.current = props;
+  const [hoveredRow, setHoveredRow] = useState<CompatibleRowBounds | null>(null);
+  const [interactionRow, setInteractionRow] = useState<CompatibleRowBounds | null>(null);
+  const [lastHighlight, setLastHighlight] = useState<CompatibleRowBounds | null>(null);
+  const persistentKey = JSON.stringify(props.persistentEventIds ?? []);
   const [medalProfile, setMedalProfile] = useState<{medal: FanMedalInfo; anchor: {left: number; top: number; width: number; height: number}; getAnchorRect: () => OverlayRect | null} | null>(null);
   useEffect(() => {
     if (props.renderMode !== 'dashboard' || !props.onRowHover) return;
@@ -68,11 +72,16 @@ export const CompatibleListSurface = forwardRef<BlivechatSourceControl, Compatib
 
   useLayoutEffect(() => {
     if (!props.onRowHover && !props.onLocatedRow) return;
-    let stop = () => {}, frameId = 0, locatedKey = "";
+    let stop = () => {}, frameId = 0, locatedKey = "", interactionKey = "", persistentBoundsKey = "";
     const bind = () => {
-      stop();
+      stop(); setHoveredRow(null); setInteractionRow(null);
+      latest.current.onRowHover?.(null);
       const frame = container.current?.querySelector("iframe");
-      if (frame?.contentDocument) stop = observeCompatibleRows(frame, row => latest.current.onRowHover?.(row));
+      if (frame?.contentDocument) stop = observeCompatibleRows(frame, row => {
+        setHoveredRow(row);
+        if (row) setLastHighlight(row);
+        if (!latest.current.interactionEventId) latest.current.onRowHover?.(row);
+      });
     };
     const loaded = (event: Event) => { if ((event.target as Element)?.tagName === "IFRAME") bind(); };
     const refresh = () => {
@@ -82,15 +91,38 @@ export const CompatibleListSurface = forwardRef<BlivechatSourceControl, Compatib
         const bounds = row ? compatibleRowBounds(frame, row) : null, key = JSON.stringify(bounds);
         if (key !== locatedKey) { locatedKey = key; latest.current.onLocatedRow?.(bounds); }
       }
-      if (latest.current.locatedEventId) frameId = requestAnimationFrame(refresh);
+      const interactionId = latest.current.interactionEventId;
+      if (frame && interactionId) {
+        const row = [...(frame.contentDocument?.querySelectorAll<HTMLElement>("[data-compatible-event-id],[data-event-id]") ?? [])].find(node => (node.dataset.compatibleEventId ?? node.dataset.eventId) === interactionId);
+        const bounds = row ? compatibleRowBounds(frame, row) : null, key = JSON.stringify(bounds);
+        if (key !== interactionKey) {
+          interactionKey = key; setInteractionRow(bounds);
+          if (bounds) setLastHighlight(bounds);
+          latest.current.onRowHover?.(bounds);
+        }
+      }
+      const persistentIds = new Set(latest.current.persistentEventIds);
+      if (latest.current.onPersistentRows) {
+        const rows = frame && persistentIds.size ? [...(frame.contentDocument?.querySelectorAll<HTMLElement>("[data-compatible-event-id],[data-event-id]") ?? [])].filter(row => persistentIds.has(row.dataset.compatibleEventId ?? row.dataset.eventId ?? '')).map(row => compatibleRowBounds(frame, row)).filter((row): row is CompatibleRowBounds => row !== null) : [];
+        const key = JSON.stringify(rows);
+        if (key !== persistentBoundsKey) { persistentBoundsKey = key; latest.current.onPersistentRows(rows); }
+      }
+      if (latest.current.locatedEventId || interactionId || persistentIds.size) frameId = requestAnimationFrame(refresh);
     };
     bind(); refresh(); container.current?.addEventListener("load", loaded, true);
     const root = container.current;
     return () => { stop(); cancelAnimationFrame(frameId); root?.removeEventListener("load", loaded, true); };
-  }, [props.descriptor.renderer, props.descriptor.protocol, Boolean(props.onRowHover), Boolean(props.onLocatedRow), props.locatedEventId]);
-  const { roomGuardProfile: _roomProfile, rate, renderMode, onRowHover: _hover, locatedEventId: _located, onLocatedRow: _locatedRow, ...blivechatProps } = props;
+  }, [props.descriptor.renderer, props.descriptor.protocol, Boolean(props.onRowHover), Boolean(props.onLocatedRow), props.locatedEventId, props.interactionEventId, persistentKey]);
+  const { roomGuardProfile: _roomProfile, rate, renderMode, onRowHover: _hover, interactionEventId: _interaction, persistentEventIds: _persistentIds, onPersistentRows: _persistentRows, locatedEventId: _located, onLocatedRow: _locatedRow, ...blivechatProps } = props;
   const rendererIdentity = props.descriptor.renderer ?? props.descriptor.protocol;
-  return <div ref={container} className="theme-surface" style={{ width: "100%", height: "100%" }}>{props.descriptor.renderer === "laplace"
+  const activeHighlight = props.interactionEventId ? interactionRow : hoveredRow;
+  const highlight = activeHighlight ?? lastHighlight;
+  const rootBounds = container.current?.getBoundingClientRect();
+  const scaleX = rootBounds && container.current?.clientWidth ? rootBounds.width / container.current.clientWidth : 1;
+  const scaleY = rootBounds && container.current?.clientHeight ? rootBounds.height / container.current.clientHeight : 1;
+  return <div ref={container} className={`theme-surface${props.onRowHover ? " compatible-interactive-surface" : ""}`} style={{ width: "100%", height: "100%" }}>
+    {props.onRowHover && highlight && rootBounds && <div aria-hidden="true" className="compatible-event-row-highlight" data-active={Boolean(activeHighlight)} style={{left:(highlight.left-rootBounds.left)/scaleX,top:(highlight.top-rootBounds.top)/scaleY,width:highlight.width/scaleX,height:highlight.height/scaleY}} />}
+    {props.descriptor.renderer === "laplace"
     ? <LaplaceProductSurface key={rendererIdentity} ref={ref} {...props} descriptor={descriptor} rate={rate ?? measuredRate} renderMode={renderMode === "dashboard" ? "dashboard" : "obs"} />
     : <BlivechatSourceSurface key={rendererIdentity} ref={ref} {...blivechatProps} descriptor={descriptor} renderMode={renderMode === "dashboard" ? "dashboard" : "output"} />}{medalProfile && <FanMedalProfile key={`${medalProfile.medal.anchorUid}:${medalProfile.anchor.top}`} medal={medalProfile.medal} anchor={medalProfile.anchor} getAnchorRect={medalProfile.getAnchorRect} onClose={() => setMedalProfile(null)} />}</div>;
 });

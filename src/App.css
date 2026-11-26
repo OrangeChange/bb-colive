@@ -972,6 +972,11 @@ html[data-window="gift"] body {
   --event-menu-bottom: var(--event-spacing, calc(var(--event-font-size, calc(var(--review-main, 14px) * 16 / 14)) * 6 / 16));
 }
 /* 现场交互以整行槽位定位，主题仍可保持气泡的内容宽度。 */
+.event-area,
+.event.event-surface-archive,
+.compatible-interactive-surface {
+  --event-hover-fill: color-mix(in srgb, var(--surface-raised) 86%, var(--accent) 14%);
+}
 .theme-surface.live .event.event-row-with-menu {
   position: relative;
 }
@@ -986,13 +991,14 @@ html[data-window="gift"] body {
   z-index: -1;
   border-radius: inherit;
   background: var(--surface-raised);
-  background: color-mix(in srgb, var(--surface-raised) 86%, var(--accent) 14%);
+  background: var(--event-hover-fill);
   opacity: 0;
   pointer-events: none;
   transition: opacity 140ms ease;
 }
 .theme-surface.live .event-row-slot-content:has(> .event-row-with-menu):hover::before,
-.theme-surface.live .event-row-slot-content:has(> .event-row-with-menu:focus-within)::before {
+.theme-surface.live .event-row-slot-content:has(> .event-row-with-menu:focus-within)::before,
+.theme-surface.live .event-row-slot-content:has(.event-menu-trigger[aria-expanded="true"])::before {
   opacity: 1;
 }
 .review-event-search-hit {
@@ -1533,8 +1539,48 @@ html[data-window="gift"] body {
 }
 
 /* 事件菜单只在悬停/聚焦时显露：右缘渐变提示可操作区域，不改变列表行高度。 */
+.compatible-event-row-menu {
+  --event-menu-bottom: 0px;
+  border-radius: var(--event-row-radius, 8px);
+}
+.compatible-interactive-surface {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+}
+.compatible-interactive-surface > :not(.compatible-event-row-highlight) {
+  position: relative;
+  z-index: 1;
+}
+.compatible-event-row-highlight {
+  position: absolute;
+  z-index: 0;
+  border-radius: var(--event-row-radius, 8px);
+  background: var(--event-hover-fill);
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 140ms ease;
+}
+.compatible-event-row-highlight[data-active="true"] {
+  opacity: 1;
+}
+.event-row-slot-content,
+.event.event-surface-archive,
+.compatible-event-row-menu {
+  --event-menu-visible-count: var(--event-menu-rest-action-count, 0);
+  --event-menu-unit: var(--event-font-size, calc(var(--review-main, 14px) * 16 / 14));
+}
+.theme-surface.live .event-row-slot-content:has(> .event-row-with-menu):is(:hover, :focus-within),
+.theme-surface.live .event-row-slot-content:has(.event-menu-trigger[aria-expanded="true"]),
+.event.event-surface-archive.event-row-with-menu:is(:hover, :focus-within),
+.event.event-surface-archive:has(.event-menu-trigger[aria-expanded="true"]),
+.compatible-event-row-menu:is([data-source-hovered="true"], :focus-within),
+.compatible-event-row-menu:has(.event-menu-trigger[aria-expanded="true"]) {
+  --event-menu-visible-count: var(--event-menu-action-count, 4);
+}
 .theme-surface.live .event-row-slot-content:has(> .event-row-with-menu)::after,
-.event.event-surface-archive.event-row-with-menu::after {
+.event.event-surface-archive.event-row-with-menu::after,
+.compatible-event-row-menu::after {
   display: block;
   left: auto;
   height: auto;
@@ -1542,13 +1588,13 @@ html[data-window="gift"] body {
   border-radius: inherit;
   position: absolute;
   top: 0;
-  right: 0;
+  right: var(--event-menu-right-inset, 0px);
   bottom: var(--event-menu-bottom);
-  width: min(32%, calc(var(--event-font-size, calc(var(--review-main, 14px) * 16 / 14)) * 180 / 16));
+  width: min(calc(100% - var(--event-menu-right-inset, 0px)), calc((var(--event-menu-visible-count) * var(--event-menu-unit) * 1.5 + var(--event-menu-unit) * .5) / .58));
   z-index: 2;
   pointer-events: none;
   content: "";
-  background: linear-gradient(90deg, transparent 0%, color-mix(in srgb, var(--surface-raised) 86%, var(--accent) 14%) 42%, color-mix(in srgb, var(--surface-raised) 96%, var(--accent) 4%) 74%, var(--surface-raised) 100%);
+  background: linear-gradient(90deg, transparent 0%, var(--event-hover-fill) 42%, color-mix(in srgb, var(--surface-raised) 96%, var(--accent) 4%) 74%, var(--surface-raised) 100%);
   opacity: 0;
   transition: opacity 140ms ease;
 }
@@ -1557,7 +1603,10 @@ html[data-window="gift"] body {
 .theme-surface.live .event-row-slot-content:has(> .event-row-with-menu .event-menu-trigger[aria-expanded="true"])::after,
 .event.event-surface-archive.event-row-with-menu:is(:hover, :focus-within)::after,
 .event.event-surface-archive.event-row-with-menu:has(.event-menu-trigger[aria-expanded="true"])::after,
-.event.event-surface-archive.event-row-has-persistent-action::after {
+.event.event-surface-archive.event-row-has-persistent-action::after,
+.compatible-event-row-menu.event-row-has-persistent-action::after,
+.compatible-event-row-menu:is([data-source-hovered="true"], :focus-within)::after,
+.compatible-event-row-menu:has(.event-menu-trigger[aria-expanded="true"])::after {
   opacity: 1;
 }
 

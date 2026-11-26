@@ -191,7 +191,7 @@ export function createOpenLiveThemeRuntime(bindings: ThemeBindingRegistry = them
 export const openLiveThemeRuntime = createOpenLiveThemeRuntime();
 
 export function resolvePublishedOpenLiveRender(current: PublishedOpenLiveTarget, context: CompatibleEventSurfaceContext) {
-      const roomMatches = !current.context.roomId || context.roomId == null || current.context.roomId === String(context.roomId);
+      const roomMatches = context.target !== "obs" || !current.context.roomId || context.roomId == null || current.context.roomId === String(context.roomId);
       const scopeId = `blivechat-open:${context.target}:${context.targetId}`;
       const settings = { ...settingsOf(current.document), eventVisibility: resolveThemeEventVisibility(normalizeCompatibleEventVisibility("blivechat-open", current.document.settings.eventVisibility), context.target) }; const auxiliary = context.target !== "live";
       const render = (() => null) as CompatibleEventRenderWithRoot;

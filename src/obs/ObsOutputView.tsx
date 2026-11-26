@@ -123,6 +123,7 @@ export function ObsOutputView({
         tickerPosition={stickyEvents.position}
         direction={scrollDirection} contentAlignment={contentAlignment}
         animation={{
+          preferThemeAnimation: softwareDisplay.preferThemeAnimation,
           preset: softwareDisplay.eventAnimationPreset,
           durationMs: getEventAnimationExitDuration(
             softwareDisplay.eventAnimationPreset,

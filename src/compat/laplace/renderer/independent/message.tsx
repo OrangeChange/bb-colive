@@ -6,7 +6,7 @@ export function MessageEvent({ data, mode = 'obs' }: EventProps) {
   const options = useOptions(), guard = numeric(data.guardType), user = numeric(data.userType), rank = numeric(data.currentRank);
   const perk = usePerk(data.origin);
   const avatar = (className: string) => <Avatar data={data} mode={mode} className={className} sender />;
-  const reply = data.reply && Object.keys(data.reply).length ? data.reply : null;
+  const reply = data.reply && (numeric(data.reply.uid) > 0 || String(data.reply.uname ?? '').trim()) ? data.reply : null;
   const border = `#${numeric(data.userLvlBorder).toString(16).padStart(6, '0')}`;
   return <EventRoot data={data} className={classes(`guard-level--${guard}`, `current-rank--${rank}`, `user-type--${user}`, `user-type--${user === 100 ? 'streamer' : user === 1 ? 'mod' : 'user'}`, `guard-leader--${data.guardLeader ? 1 : 0}`, data.read && 'read', data.isMirror && 'is-mirror', Object.keys(data.bmotes || {}).length && 'has-bmotes', data.reply?.uid && 'has-reply', data.emote && 'has-emotes', options.colorScheme === 'dark' && 'dark')}>
     {avatar('avatar-alt-outer hidden')}

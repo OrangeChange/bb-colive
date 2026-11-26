@@ -12,7 +12,7 @@ test('零时长不启用软件入场，主题保留自己的过渡', () => {
 test('新节点进入一次，更新不重播且保留来源布局变换', () => {
   const frames = [];
   const values = {};
-  const node = { dataset: {}, style: { transform: 'translateY(20px)', setProperty: (key, value) => values[key] = value }, ownerDocument: { addEventListener() {}, removeEventListener() {}, defaultView: { requestAnimationFrame: fn => frames.push(fn) } } };
+  const node = { dataset: {}, style: { transform: 'translateY(20px)', setProperty: (key, value) => values[key] = value }, ownerDocument: { addEventListener() {}, removeEventListener() {}, defaultView: { getComputedStyle: () => ({opacity:"0"}), requestAnimationFrame: fn => frames.push(fn) } } };
   applyEventTransition(node, { preset: 'slide', durationMs: 800 });
   assert.equal(node.dataset.eventMotionEntering, '');
   assert.equal(values['--event-motion-duration'], '800ms');
@@ -28,7 +28,7 @@ test('新节点进入一次，更新不重播且保留来源布局变换', () =>
 
 test('隐藏时新增事件不排队播放入场动画', () => {
   const frames = [];
-  const node = { dataset: {}, style: { setProperty() {} }, ownerDocument: { visibilityState: 'hidden', defaultView: { requestAnimationFrame: fn => frames.push(fn) } } };
+  const node = { dataset: {}, style: { setProperty() {} }, ownerDocument: { visibilityState: 'hidden', defaultView: { getComputedStyle: () => ({opacity:"0"}), requestAnimationFrame: fn => frames.push(fn) } } };
   applyEventTransition(node, { preset: 'fade', durationMs: 200 });
   assert.equal(node.dataset.eventMotionEntering, undefined);
   assert.equal(frames.length, 0);

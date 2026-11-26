@@ -58,3 +58,23 @@ test('原生data CSS导入展开并保留层和媒体条件',async()=>{
  assert.match(actual.document.styles.baseCss,/@media screen/);
  assert.match(actual.document.styles.baseCss,/\.username\s*\{/);
 });
+
+test('完整收集并发加载独立素材，重复地址仍只读取一次且保留CSS顺序',async()=>{
+ const d=document();d.styles.baseCss=Array.from({length:9},(_,i)=>`.item${i}{background:url(https://test/${i%8}.png)}`).join('');
+ let active=0,peak=0;const calls=[];
+ const result=await localizeThemeResources(d,'file:///theme.css',{load:async url=>{calls.push(url);active++;peak=Math.max(peak,active);await new Promise(resolve=>setTimeout(resolve,15));active--;return {asset:{id:url,name:url.split('/').pop(),path:'',mediaType:'image/png',cacheResourceId:url}};}});
+ assert.equal(peak,4);assert.equal(calls.length,8);assert.equal(result.document.assets.length,8);
+ assert.deepEqual([...result.document.styles.baseCss.matchAll(/\.item(\d)/g)].map(x=>Number(x[1])),[0,1,2,3,4,5,6,7,8]);
+});
+
+test('独立CSS导入可以并发，完成顺序不改变层叠顺序',async()=>{
+ const d=document();d.styles.baseCss='@import "https://test/first.css";@import "https://test/second.css";';let active=0,peak=0;
+ const r=await localizeThemeResources(d,'file:///theme.css',{load:async url=>{active++;peak=Math.max(peak,active);await new Promise(resolve=>setTimeout(resolve,url.includes('first')?25:5));active--;return {css:`.event{color:${url.includes('first')?'red':'blue'}}`,finalUrl:url};}});
+ assert.equal(peak,2);assert.ok(r.document.styles.baseCss.indexOf('red')<r.document.styles.baseCss.indexOf('blue'));
+});
+
+test('并发收集失败后不启动后续资源，返回前结束已启动任务',async()=>{
+ const d=document();d.styles.baseCss=Array.from({length:10},(_,i)=>`.item${i}{background:url(https://test/${i}.png)}`).join('');let active=0,calls=0;
+ await assert.rejects(localizeThemeResources(d,'file:///theme.css',{load:async url=>{calls++;active++;await new Promise(resolve=>setTimeout(resolve,url.endsWith('/0.png')?1:20));active--;if(url.endsWith('/0.png'))throw Error('素材缺失');return {asset:{id:url,name:url.split('/').pop(),path:'',mediaType:'image/png',cacheResourceId:url}};}}),/素材缺失/);
+ assert.equal(active,0);assert.equal(calls,4);
+});

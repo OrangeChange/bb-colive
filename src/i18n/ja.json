@@ -4581,5 +4581,7 @@
   "fanMedalProfile.room": "配信ルーム",
   "fanMedalProfile.avatar": "{name}のアイコンを表示",
   "fanMedalProfile.linkError": "リンクを開けませんでした。再試行してください",
-  "fanMedalProfile.badge": "ファンメダル：{name} レベル{level}"
+  "fanMedalProfile.badge": "ファンメダル：{name} レベル{level}",
+  "settingsPanel.preferThemeAnimation": "テーマのアニメーションを優先",
+  "settingsPanel.preferThemeAnimationHint": "LAPLACE に適用されます。テーマに登場アニメーションがあるイベントには、ソフト側の登場アニメーションを重ねません。"
 }

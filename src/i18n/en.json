@@ -4581,5 +4581,7 @@
   "fanMedalProfile.room": "Live room",
   "fanMedalProfile.avatar": "Preview {name}’s avatar",
   "fanMedalProfile.linkError": "Could not open link. Try again.",
-  "fanMedalProfile.badge": "Fan medal: {name}, level {level}"
+  "fanMedalProfile.badge": "Fan medal: {name}, level {level}",
+  "settingsPanel.preferThemeAnimation": "Prioritize theme animations",
+  "settingsPanel.preferThemeAnimationHint": "Applies to LAPLACE. Skip the software entrance animation when an event has a theme entrance animation."
 }

@@ -16,6 +16,7 @@ import { ObsOutputView } from "../../src/obs/ObsOutputView.tsx";
 import { DEFAULT_STICKY_EVENT_SETTINGS } from "../../src/windows/stickyEventModel.ts";
 import { GiftEffectOverlay } from "../../src/components/GiftEffectOverlay.tsx";
 import {RendererHost} from "../../src/compat/laplace/RendererHost.tsx";
+import {useTheme, applyThemeToDocument} from "../../src/theme.ts";
 import {projectLaplaceEvent} from "../../src/compat/laplace/projection.ts";
 import type { GiftEffectNotice } from "../../src/windows/giftEffectBus.ts";
 import "../../src/compat/blivechat/register.tsx";
@@ -33,6 +34,7 @@ const animation = query.get("animation") ?? "slide";
 const target = query.get("target") ?? "live";
 const alignment: "top" | "bottom" | undefined = query.has("legacy") ? undefined : query.get("alignment") === "bottom" ? "bottom" : "top";
 const duration = Number(query.get("duration") ?? 800);
+(window as any).setFixtureScheme = (mode: 'light' | 'dark') => { applyThemeToDocument('sakura', mode); useTheme.getState().setMode(mode); };
 function App() {
   const [flow,setFlow]=useState(direction),[align,setAlign]=useState(alignment);
   const [events, setEvents] = useState<DanmakuEvent[]>([]);
@@ -40,32 +42,37 @@ function App() {
   const [notices, setNotices] = useState<GiftEffectNotice[]>([]);
   const [effectsEnabled, setEffectsEnabled] = useState(true);
   const [room, setRoom] = useState(1);
+  const [favorites, setFavorites] = useState(new Set<string>());
+  const [marks, setMarks] = useState(new Set<string>());
+  const eventRoom = query.has("roomSwitch") ? room : 1;
+  const giftPrice = query.has("smallGift") ? 0.1 : 50;
   const session = useMemo(() => createFeedScrollSession(0), []);
   const document = useMemo(() => {
     const value = mode === "native" ? createBuiltinNativeTheme("native-default") : createCompatibleThemeModeAdapter(mode).createBuiltinTheme();
     if (query.has("medal") && mode === "laplace") Object.assign(value.settings, { showMedal: true, showMedalCurrentRoomOnly: true, showMedalLightenedOnly: true });
     if(query.has("hide"))Object.assign(value.settings,{showAvatar:false,showUsername:false,showMedal:false,classicElementScope:query.has("classic")});
+    if (query.has("themeAnimation")) value.styles.customCss += "\n@keyframes fixtureThemeEntry{from{transform:scale(.9);opacity:.2}to{transform:scale(1);opacity:1}} .event--message .message{animation:fixtureThemeEntry 1s both}";
     return value;
   }, []);
   const render = useMemo(() => {
     if (mode === "native") return undefined;
     const current = { document, context: { target, targetId: target, roomId: "1" } } as any;
-    const context = { target, targetId: target, placement: "main", roomId: 1 } as any;
+    const context = { target, targetId: target, placement: "main", roomId: eventRoom } as any;
     return mode === "blivechat" ? resolvePublishedBlivechatRender(current, context)
       : mode === "blivechat-open" ? resolvePublishedOpenLiveRender(current, context)
         : resolvePublishedLaplaceRender(current, context);
-  }, []);
+  }, [eventRoom]);
   const append = () => setEvents(rows => [...rows, {
-    id: `row-${rows.length + 1}`, roomId: 1, ts: Date.now(), msgType: query.has("fallback") ? 10 : query.has("gift") ? 1 : 0,
+    id: `row-${rows.length + 1}`, roomId: eventRoom, ts: Date.now(), msgType: query.has("fallback") ? 10 : query.has("gift") ? 1 : 0,
     ...(query.has("fallback") ? {interactKind:"entry"} : {}),
-    ...(query.has("gift") ? {gift:{id:34868,name:"特效礼物",count:1,price:50000,total:50000,priceRmb:50,totalRmb:50,paymentRmb:50,coinType:"gold"}} : {}),
+    ...(query.has("gift") ? {gift:{id:34868,name:"特效礼物",count:1,price:giftPrice*1000,total:giftPrice*1000,priceRmb:giftPrice,totalRmb:giftPrice,paymentRmb:giftPrice,coinType:"gold"}} : {}),
     ...(query.has("late")&&rows.length%5===0?{emoticon:{url:`/media/style-preview-avatar-1.jpg?late=${rows.length}`,width:100,height:100}}:{}),
-    text: `事件 ${rows.length + 1} ${query.has("late")?"长文本换行验收".repeat(12):""}`, user: { uid: "1", uname: "验收用户", phoneVerified: true,
+    text: `${query.has("roomSwitch") ? `房间 ${eventRoom} ` : ""}事件 ${rows.length + 1} ${query.has("late")?"长文本换行验收".repeat(12):""}`, user: { uid: "1", uname: "验收用户", phoneVerified: true,
       ...(query.has("medal") ? { medal: { name: `粉丝牌${rows.length + 1}`, level: 10, anchorUid: "2",
         isCurrentRoom: [true, false, true, true, undefined][rows.length % 5],
         isLighted: [true, true, undefined, false, true][rows.length % 5] } } : {}) },
   } as DanmakuEvent]);
-  const display = { ...DEFAULT_EVENT_DISPLAY_PREFERENCES, eventAnimationPreset: animation as any, eventAnimationDurationMs: duration };
+  const display = { ...DEFAULT_EVENT_DISPLAY_PREFERENCES, preferThemeAnimation: query.has("preferThemeAnimation"), eventAnimationPreset: animation as any, eventAnimationDurationMs: duration };
   const play = (broken = false, manual = false) => setNotices(previous => [...previous, {
     manual,
     event: { id: `effect-${previous.length}`, roomId: room, ts: Date.now(), msgType: 1 } as DanmakuEvent,
@@ -79,7 +86,7 @@ function App() {
     <section data-event-overlay-region="live" className="event-area live" style={{ width: query.has("resize") ? "min(100%,600px)" : 400, height: 500, position: "relative" }}>
     {query.has("reference") ? <RendererHost variant="product" settings={document.settings as any} css={{cloud:"",remote:"",custom:""}} events={events.map((event,index)=>projectLaplaceEvent(event,{roomId:1,generation:0},index,event.ts)?.event).filter(Boolean) as any} stickyEvents={[]} renderMode={target==="live"?"dashboard":"obs"} scrollable /> : target === "obs" ? <ObsOutputView events={events} removingEventIds={removing} snapshot={createObsSnapshot(document,"obs","1",Number(query.get("scale")??1),DEFAULT_STICKY_EVENT_SETTINGS)} stickyCards={[]} stickyEvents={DEFAULT_STICKY_EVENT_SETTINGS} scrollDirection={flow} contentAlignment={align} softwareDisplay={display} compatibleMainRender={render} /> : <EventList events={events} visibleIndices={events.map((_, index) => index)} viewKey="investigation" feedKey="investigation" feedSession={session}
       liveLayout displayScale={Number(query.get("scale")??1)} scrollDirection={flow} contentAlignment={align} compatibleEventRender={render}
-      eventMenuHandlers={{onSpeakEvent:()=>{},isFavorite:()=>false,onToggleFavorite:()=>{},onPlayGiftEffect:()=>play(false,true)}}
+      eventMenuHandlers={{onSpeakEvent:()=>{},isFavorite:event=>favorites.has(event.id),onToggleFavorite:event=>setFavorites(previous=>{const next=new Set(previous);if(next.has(event.id))next.delete(event.id);else next.add(event.id);return next;}),isMarked:(_region,event)=>marks.has(event.id),onToggleMark:(_region,event)=>setMarks(previous=>{const next=new Set(previous);if(next.has(event.id))next.delete(event.id);else next.add(event.id);return next;}),onPlayGiftEffect:()=>play(false,true)}}
       onPlayGiftEffect={()=>play(false,true)}
       displayPreferences={display} />}
     {query.has("effects") && <GiftEffectOverlay enabled={effectsEnabled} notices={notices} roomKey={room} />}

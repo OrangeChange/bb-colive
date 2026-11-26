@@ -23,7 +23,9 @@ export function applyEventTransition(node, animation, removing = false) {
   };
   doc.addEventListener('visibilitychange', onVisibility);
   frame = view.requestAnimationFrame(() => {
+    view.getComputedStyle(node).opacity;
     frame = view.requestAnimationFrame(() => {
+    view.getComputedStyle(node).opacity;
       delete node.dataset.eventMotionEntering;
       doc.removeEventListener('visibilitychange', onVisibility);
     });
@@ -32,7 +34,7 @@ export function applyEventTransition(node, animation, removing = false) {
 
 export const EVENT_TRANSITION_CSS = `
 [data-event-motion]:not([data-event-motion="none"]){transition-property:opacity,translate,scale;transition-duration:var(--event-motion-duration,0ms);transition-timing-function:ease-out}
-[data-event-motion-entering]{transition:none}
+[data-event-motion][data-event-motion-entering]{transition:none}
 [data-event-motion-entering],[data-event-motion-removing="true"]{opacity:0}
 [data-event-motion-entering][data-event-motion="lift"]{translate:0 6px}
 [data-event-motion-entering][data-event-motion="scale"]{scale:.985}

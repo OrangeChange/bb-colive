@@ -4581,5 +4581,7 @@
   "fanMedalProfile.room": "直播间",
   "fanMedalProfile.avatar": "预览 {name} 的头像",
   "fanMedalProfile.linkError": "链接打开失败，请重试",
-  "fanMedalProfile.badge": "粉丝牌：{name} {level}级"
+  "fanMedalProfile.badge": "粉丝牌：{name} {level}级",
+  "settingsPanel.preferThemeAnimation": "主题动画优先",
+  "settingsPanel.preferThemeAnimationHint": "适用于 LAPLACE。开启后，有主题入场动画的事件不再叠加软件入场动画。"
 }

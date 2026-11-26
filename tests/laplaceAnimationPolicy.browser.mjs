@@ -33,7 +33,7 @@ try {
   await render('none', source);
   assert.ok((await animations()).some(animation => animation.name === 'themeEntry' && animation.running && animation.duration === 2000), '关闭软件动画后，主题入场动画应运行');
   await render('slide', source);
-  assert.ok(!(await animations()).some(animation => animation.name === 'themeEntry' && animation.running), '软件入场动画启用时不叠加主题入场');
+  assert.ok((await animations()).some(animation => animation.name === 'themeEntry' && animation.running), '默认叠加时保留主题入场动画');
   await render('none', source);
   assert.ok((await animations()).some(animation => animation.name === 'themeEntry' && animation.running && animation.duration === 2000), '从软件动画切换到关闭时恢复主题动画');
   assert.ok((await animations()).some(animation => animation.name === 'themeLoop' && animation.running), '主题循环装饰不受软件开关影响');

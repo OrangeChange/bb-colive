@@ -37,7 +37,7 @@ export interface LaplaceRenderMessage {
   /** BB source provenance only; never a restored Laplace connection setting. */
   acquisitionMode?: 'direct' | 'open-platform';
   productElements?: { classicScope: boolean };
-  animation?: { preset: 'none' | 'fade' | 'lift' | 'scale' | 'slide'; durationMs: number };
+  animation?: { preset: 'none' | 'fade' | 'lift' | 'scale' | 'slide'; durationMs: number; preferThemeAnimation?: boolean };
   removingEventIds?: string[];
   recalledEventIds?: string[];
   appearance?: { demoBgColor: string; uiHue: number; uiChroma: number };
@@ -148,7 +148,7 @@ export function isLaplaceRenderEnvelope(value: unknown, previousCss?: LaplaceRen
   if (value.giftEffectInteractive !== undefined && typeof value.giftEffectInteractive !== 'boolean') return false;
   const validEvents = (events: unknown) => Array.isArray(events) && events.length <= 20_000 && events.every(event => record(event) && typeof event.type === 'string' && typeof event.id === 'string' && Number.isFinite(event.origin) && Number.isFinite(event.originIdx) && Number.isFinite(event.timestampNormalized) && Object.keys(event).every(key => eventFields.has(key)) && plainData(event));
   const validLayout = value.layout === undefined || Array.isArray(value.layout) && value.layout.length <= 20_000 && value.layout.every(item => record(item) && Object.keys(item).length === 2 && (item.kind === 'source' || item.kind === 'fallback') && typeof item.eventId === 'string' && item.eventId.length > 0);
-  const validAnimation = value.animation === undefined || record(value.animation) && ['none','fade','lift','scale','slide'].includes(String(value.animation.preset)) && Number.isFinite(value.animation.durationMs) && Number(value.animation.durationMs) >= 0;
+  const validAnimation = value.animation === undefined || record(value.animation) && ['none','fade','lift','scale','slide'].includes(String(value.animation.preset)) && Number.isFinite(value.animation.durationMs) && Number(value.animation.durationMs) >= 0 && (value.animation.preferThemeAnimation === undefined || typeof value.animation.preferThemeAnimation === "boolean");
   const validRemoving = value.removingEventIds === undefined || Array.isArray(value.removingEventIds) && value.removingEventIds.length <= 20_000 && value.removingEventIds.every(id => typeof id === 'string');
   const validEditorSelection = value.editorSelection === undefined || record(value.editorSelection) && typeof value.editorSelection.part === 'string' && record(value.editorSelection.scope) && typeof value.editorSelection.scope.part === 'string' && typeof value.editorSelection.scope.eventType === 'string' && typeof value.editorSelection.scope.identity === 'string' && typeof value.editorSelection.scope.placement === 'string' && typeof value.editorSelection.reveal === 'boolean' && record(value.editorSelection.selectors) && Object.values(value.editorSelection.selectors).every(selectors => Array.isArray(selectors) && selectors.every(selector => typeof selector === 'string')) && Array.isArray(value.editorSelection.focusSelectors) && value.editorSelection.focusSelectors.every(selector => typeof selector === 'string');
   if (record(value.editorSelection) && (!Number.isSafeInteger(value.editorSelection.inspectionRevision) || Number(value.editorSelection.inspectionRevision) < 0)) return false;

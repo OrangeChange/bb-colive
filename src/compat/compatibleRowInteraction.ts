@@ -11,9 +11,9 @@ export function compatibleRowBounds(frame: HTMLIFrameElement, row: HTMLElement):
   const viewport = frame.contentWindow;
   const top = Math.max(0, rect.top), bottom = Math.min(viewport?.innerHeight ?? rect.bottom, rect.bottom);
   if (bottom <= top || rect.width <= 0) return null;
-  const giftIcon = row.matches('.event--gift') ? [...row.querySelectorAll<HTMLElement>('.gift-icon-wrap')].map(icon => icon.getBoundingClientRect()).find(box => box.width > 0 && box.left >= rect.left + rect.width / 2) : undefined;
-  return { eventId, left: host.left + Math.max(0, rect.left) * scale, top: host.top + top * scale, width: Math.min(rect.width, (viewport?.innerWidth ?? rect.right) - Math.max(0, rect.left)) * scale, height: (bottom - top) * scale,
-    ...(giftIcon ? { actionsRightInset: Math.max(0, rect.right - giftIcon.left) * scale } : {}) };
+  const giftIcon = row.matches('.event--gift') ? [...row.querySelectorAll<HTMLElement>('.gift-icon-wrap')].filter(icon => frame.contentWindow?.getComputedStyle(icon).position === 'absolute').map(icon => icon.getBoundingClientRect()).find(box => box.width > 0 && box.left >= rect.left + rect.width / 2) : undefined;
+  return { eventId, left: host.left, top: host.top + top * scale, width: host.width, height: (bottom - top) * scale,
+    ...(giftIcon ? { actionsRightInset: Math.max(0, host.width / scale - giftIcon.left) * scale } : {}) };
 }
 
 export function observeCompatibleRows(frame: HTMLIFrameElement, publish: (row: CompatibleRowBounds | null) => void): () => void {
@@ -26,10 +26,13 @@ export function observeCompatibleRows(frame: HTMLIFrameElement, publish: (row: C
     if (pointer && doc.elementFromPoint) {
       active = doc.elementFromPoint(pointer.x, pointer.y)?.closest<HTMLElement>('[data-compatible-event-id],[data-event-id]') ?? null;
       if (active?.hasAttribute('data-compatible-fallback-id')) active = null;
+    } else if (!pointer) {
+      active = doc.hasFocus() ? doc.activeElement?.closest<HTMLElement>('[data-compatible-event-id],[data-event-id]') ?? null : null;
+      if (active?.hasAttribute('data-compatible-fallback-id')) active = null;
     }
     const bounds = active ? compatibleRowBounds(frame, active) : null;
     emit(bounds);
-    if (pointer) animation = view.requestAnimationFrame(refresh); else active = null;
+    if (pointer || active) animation = view.requestAnimationFrame(refresh);
   };
   const move = (event: Event) => {
     const position = event as PointerEvent; pointer = { x: position.clientX, y: position.clientY };
@@ -45,10 +48,13 @@ export function observeCompatibleRows(frame: HTMLIFrameElement, publish: (row: C
     if (position.clientX < host.left || position.clientX > host.right || position.clientY < host.top || position.clientY > host.bottom) { pointer = null; active = null; refresh(); }
   };
   const clear = () => { pointer = null; active = null; emit(null); };
+  const focus = () => { pointer = null; if (animation) view.cancelAnimationFrame(animation); animation = view.requestAnimationFrame(refresh); };
   doc.addEventListener('pointermove', move);
+  doc.addEventListener('focusin', focus);
+  doc.addEventListener('focusout', focus);
   frame.ownerDocument.addEventListener('pointermove', leave);
   frame.ownerDocument.documentElement.addEventListener('pointerleave', clear);
-  return () => { if (animation) view.cancelAnimationFrame(animation); doc.removeEventListener('pointermove', move); frame.ownerDocument.removeEventListener('pointermove', leave); frame.ownerDocument.documentElement.removeEventListener('pointerleave', clear); };
+  return () => { if (animation) view.cancelAnimationFrame(animation); doc.removeEventListener('pointermove', move); doc.removeEventListener('focusin', focus); doc.removeEventListener('focusout', focus); frame.ownerDocument.removeEventListener('pointermove', leave); frame.ownerDocument.documentElement.removeEventListener('pointerleave', clear); };
 }
 
 

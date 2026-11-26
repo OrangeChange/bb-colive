@@ -15,7 +15,7 @@ import { Flipper, Flipped, OriginalScrollArea, useOriginalStyle } from './indepe
 import { assetLedger, resolveLaplaceRenderSettings } from './runtime-context.mjs';
 import { getOriginalSamples, generateOriginalSimulationEvent } from './samples';
 import { bindLaplaceStableEventRoots } from './stableRoots';
-import { LAPLACE_ENTRY_MOTION_CSS, reconcileLaplaceEntryMotion } from './entryMotion';
+import { hasLaplaceThemeEntryMotion } from './entryMotion';
 import { splitBilibiliVideoText } from '../../../components/bilibiliVideoLinks';
 import { attachLaplaceLayoutFollowing, laplaceAutoScrollBehavior } from './layoutFollowing';
 import { isLaplaceControlMessage, isLaplaceRenderEnvelope, laplaceConnectionModeClass, LAPLACE_CHANNEL, LAPLACE_BRIDGE_VERSION, type LaplaceRenderMessage, type LaplaceRendererReply } from './bridge';
@@ -110,7 +110,7 @@ export function startFrame(role: 'candidate' | 'reference', renderer: RenderExpo
       ${message.tickerPosition ? '@layer utilities{.events-list-wrap>.gift-sticky-bar{order:0!important}.events-list-wrap>.event-list{order:0!important}}' : ''}
       ${EVENT_TRANSITION_CSS}
       ${COMPATIBLE_RECALL_CSS}
-      ${role==='candidate'?LAPLACE_ENTRY_MOTION_CSS:''}`];
+      `];
     return values;
   }
   const {LaplaceEventRenderer:SourceEvent,LaplaceRenderContext:Context,defaultOptions}=renderer;
@@ -154,7 +154,6 @@ export function startFrame(role: 'candidate' | 'reference', renderer: RenderExpo
     React.useEffect(()=>{document.documentElement.setAttribute('data-theme',scheme);},[scheme]);
     const customCss=React.useMemo(()=>role==='candidate'?composeLaplaceFrameCustomCss(message.css.custom):message.css.custom,[message.css.custom]);
     const hostMotionEnabled=Boolean(message.animation&&message.animation.preset!=='none'&&message.animation.durationMs>0);
-    const entryMotionRevision=React.useMemo(()=>({}),[message.css.cloud,message.css.remote,customCss,scheme,scene,message.rate>6,hostMotionEnabled]);
     const values=styleValues(message,customCss);
     useOriginalStyle(()=>values[0],'base-font-size');
     useOriginalStyle(()=>values[1],'demo-bg');
@@ -222,7 +221,6 @@ export function startFrame(role: 'candidate' | 'reference', renderer: RenderExpo
       const bind=()=>{
         if(decorationSuspended)return;
         bindLaplaceStableEventRoots(rootNode,message.events,message.stickyEvents);
-        if(role==='candidate')reconcileLaplaceEntryMotion(rootNode,entryMotionRevision,hostMotionEnabled);
         const removing=new Set(message.removingEventIds??[]);
         const recalled=new Set(message.recalledEventIds??[]);
         rootNode.querySelectorAll<HTMLElement>('[data-event-id]').forEach(row=>{
@@ -232,7 +230,7 @@ export function startFrame(role: 'candidate' | 'reference', renderer: RenderExpo
           delete row.dataset.hostEnter;
           delete row.dataset.hostRemoving;
           row.style.removeProperty('--host-animation-duration');
-          applyEventTransition(row,message.animation,isRemoving);
+          applyEventTransition(row,!isRemoving&&role==='candidate'&&message.animation?.preferThemeAnimation===true&&hasLaplaceThemeEntryMotion(row)?{preset:'none',durationMs:0}:message.animation,isRemoving);
         });
         reconcileRepeatCounts(rootNode,[...message.events,...message.stickyEvents]);
         reconcileVideoLinks(rootNode,message.enableBilibiliVideoLinks===true);

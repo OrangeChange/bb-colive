@@ -352,7 +352,7 @@ export const blivechatThemeRuntime = createBlivechatThemeRuntime();
 
 
 export function resolvePublishedBlivechatRender(current: PublishedBlivechatTarget, context: CompatibleEventSurfaceContext, externalInstanceId?: string) {
-      const roomMatches = !current.context.roomId || context.roomId == null || current.context.roomId === String(context.roomId);
+      const roomMatches = context.target !== "obs" || !current.context.roomId || context.roomId == null || current.context.roomId === String(context.roomId);
       const settings = { ...settingsOf(current.document), eventVisibility: resolveThemeEventVisibility(normalizeCompatibleEventVisibility("blivechat", current.document.settings.eventVisibility), context.target) };
       const scopeId = `blivechat:${context.target}:${context.targetId}`;
       const auxiliaryDisplay = context.target !== "live";

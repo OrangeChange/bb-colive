@@ -60,6 +60,7 @@ export type EventDisplayPreferences = {
   eventAnimationPreset: EventAnimationPreset;
   /** 事件进入和退出动画的持续时间；不设上限。 */
   eventAnimationDurationMs: number;
+  preferThemeAnimation: boolean;
   showAvatar: boolean;
   showAvatarFrame: boolean;
   showGuardIdentity: boolean;
@@ -90,6 +91,7 @@ export const DEFAULT_EVENT_DISPLAY_PREFERENCES: EventDisplayPreferences = {
   eventPadding: DEFAULT_EVENT_PADDING,
   eventAnimationPreset: DEFAULT_EVENT_ANIMATION_PRESET,
   eventAnimationDurationMs: DEFAULT_EVENT_ANIMATION_DURATION_MS,
+  preferThemeAnimation: false,
   showAvatar: true,
   showAvatarFrame: true,
   showGuardIdentity: true,
@@ -144,6 +146,7 @@ export function normalizeEventDisplayPreferences(value: unknown): EventDisplayPr
     eventAnimationDurationMs: typeof input.eventAnimationDurationMs === "number"
       ? normalizeEventAnimationDuration(input.eventAnimationDurationMs)
       : DEFAULT_EVENT_ANIMATION_DURATION_MS,
+    preferThemeAnimation: input.preferThemeAnimation === true,
     showAvatar: typeof input.showAvatar === "boolean" ? input.showAvatar : DEFAULT_EVENT_DISPLAY_PREFERENCES.showAvatar,
     showAvatarFrame: typeof input.showAvatarFrame === "boolean" ? input.showAvatarFrame : DEFAULT_EVENT_DISPLAY_PREFERENCES.showAvatarFrame,
     showGuardIdentity: typeof input.showGuardIdentity === "boolean" ? input.showGuardIdentity : DEFAULT_EVENT_DISPLAY_PREFERENCES.showGuardIdentity,
@@ -202,5 +205,6 @@ export function resolveEventDisplayPreferences<T extends EventDisplayPreferences
     onlyGuardEntry: software.onlyGuardEntry,
     eventAnimationPreset: software.eventAnimationPreset,
     eventAnimationDurationMs: software.eventAnimationDurationMs,
+    preferThemeAnimation: software.preferThemeAnimation,
   };
 }

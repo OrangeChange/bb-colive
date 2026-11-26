@@ -192,6 +192,7 @@ const SETTINGS_SEARCH_ENTRIES: readonly SettingsSearchEntry[] = localized(() => 
   { id: "favorite-edit", label: uiText("settingsPanel.SETTINGS_SEARCH_ENTRIES.label8"), keywords: uiSearchText("settingsPanel.SETTINGS_SEARCH_ENTRIES.label8", "settingsPanel.SETTINGS_SEARCH_ENTRIES.keywords8"), sectionId: "display" },
   { id: "content-alignment", label: uiText("settingsPanel.SETTINGS_SEARCH_ENTRIES.label9"), keywords: uiSearchText("settingsPanel.SETTINGS_SEARCH_ENTRIES.label9", "settingsPanel.SETTINGS_SEARCH_ENTRIES.keywords9"), sectionId: "display" },
   { id: "feed-direction", label: uiText("settingsPanel.SETTINGS_SEARCH_ENTRIES.label10"), keywords: uiSearchText("settingsPanel.SETTINGS_SEARCH_ENTRIES.label10", "settingsPanel.SETTINGS_SEARCH_ENTRIES.keywords10"), sectionId: "display" },
+  { id: "theme-animation-priority", label: uiText("settingsPanel.preferThemeAnimation"), keywords: uiSearchText("settingsPanel.preferThemeAnimation", "settingsPanel.preferThemeAnimationHint"), sectionId: "display" },
   { id: "event-animation", label: uiText("settingsPanel.SETTINGS_SEARCH_ENTRIES.label11"), keywords: uiSearchText("settingsPanel.SETTINGS_SEARCH_ENTRIES.label11", "settingsPanel.SETTINGS_SEARCH_ENTRIES.keywords11"), sectionId: "display" },
   { id: "auto-danmaku", label: uiText("settingsPanel.SETTINGS_SEARCH_ENTRIES.label12"), keywords: uiSearchText("settingsPanel.SETTINGS_SEARCH_ENTRIES.label12", "settingsPanel.SETTINGS_SEARCH_ENTRIES.keywords12"), sectionId: "filters" },
   { id: "phone-not-verified", label: uiText("settingsPanel.SETTINGS_SEARCH_ENTRIES.label13"), keywords: uiSearchText("settingsPanel.SETTINGS_SEARCH_ENTRIES.label13", "settingsPanel.SETTINGS_SEARCH_ENTRIES.keywords13"), sectionId: "filters" },
@@ -1462,6 +1463,7 @@ export function SettingsPanel({
             onChange={setEventAnimationPreset}
             searchId="event-animation"
           />
+          <SettingSwitch label={uiText("settingsPanel.preferThemeAnimation")} checked={eventDisplayPreferences.preferThemeAnimation} onChange={() => setEventDisplayPreference("preferThemeAnimation", !eventDisplayPreferences.preferThemeAnimation)} searchId="theme-animation-priority" hint={uiText("settingsPanel.preferThemeAnimationHint")} />
           <SettingsFlowPreview alignment={liveContentAlignment} direction={liveScrollDirection} preset={eventDisplayPreferences.eventAnimationPreset} duration={eventDisplayPreferences.eventAnimationDurationMs} />
           <SettingsSubsectionTitle iconName="sticky" title={uiText("settingsPanel.title16")} />
           <SettingSwitch label={uiText("settingsPanel.label12")} checked={stickyEvents.enabled} onChange={() => setStickyEvents(current => ({...current,enabled:!current.enabled}))} searchId="sticky-events" />

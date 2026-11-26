@@ -9,7 +9,7 @@
   --review-secondary: rgb(40, 40, 40);
   --review-muted: rgb(40, 40, 40);
   --review-border: rgb(226, 229, 233);
-  --review-hover: color-mix(in srgb, var(--surface-raised) 86%, var(--accent) 14%);
+  --review-hover: var(--event-hover-fill);
   --event-menu-bottom: 0px;
   --review-anchor: rgb(246, 66, 117);
   --review-admin: rgb(36, 128, 97);
@@ -561,7 +561,8 @@
 .event.event-surface-archive::after {
   display: none;
 }
-.event.event-surface-archive.event-row-with-menu:is(:hover, :focus-within) {
+.event.event-surface-archive.event-row-with-menu:is(:hover, :focus-within),
+.event.event-surface-archive.event-row-with-menu:has(.event-menu-trigger[aria-expanded="true"]) {
   background-image: linear-gradient(var(--review-fill, transparent), var(--review-fill, transparent));
   background-color: var(--review-hover);
 }

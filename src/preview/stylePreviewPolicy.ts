@@ -35,7 +35,7 @@ export interface StylePreviewPolicyOptions {
   now: number;
 }
 export function stylePreviewAnimation(settings: StylePreviewPolicySettings) {
-  return { preset: settings.displayPreferences.eventAnimationPreset, durationMs: settings.displayPreferences.eventAnimationDurationMs };
+  return { preferThemeAnimation: settings.displayPreferences.preferThemeAnimation, preset: settings.displayPreferences.eventAnimationPreset, durationMs: settings.displayPreferences.eventAnimationDurationMs };
 }
 export function scopeStylePreviewSample(event: DanmakuEvent, targetRoomId?: number): DanmakuEvent {
   return targetRoomId && targetRoomId > 0 ? { ...event, roomId: targetRoomId } : event;

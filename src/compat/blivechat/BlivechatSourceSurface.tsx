@@ -31,7 +31,7 @@ export interface BlivechatContextRequest { eventId: string; x: number; y: number
 export type BlivechatFlowDirection = "top" | "bottom";
 export interface BlivechatEventWindow { events: DanmakuEvent[]; start: number; end: number }
 export interface BlivechatStickyItem { event: DanmakuEvent; startedAt: number; expiresAt: number }
-export interface BlivechatSourceAnimation { preset: "none" | "fade" | "lift" | "scale" | "slide"; durationMs: number }
+export interface BlivechatSourceAnimation { preset: "none" | "fade" | "lift" | "scale" | "slide"; durationMs: number; preferThemeAnimation?: boolean }
 
 export function buildBlivechatPresentationLayout(events: readonly DanmakuEvent[], eventDecision: (event: DanmakuEvent) => "render" | "omit" | "fallback", removingEventIds: ReadonlySet<string>) {
   return events.map(event => {

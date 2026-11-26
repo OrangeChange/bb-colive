@@ -59,7 +59,7 @@ test('匿名回复保留用户名，空回复不生成回复节点', async () =>
       assert.ok(html.includes('ア***'), mode);
       assert.ok(html.includes('class="reply"'), mode);
       assert.equal(html.includes('has-reply'), false, '匿名回复沿用原项目的根节点 class');
-      for (const reply of [undefined, {}]) {
+      for (const reply of [undefined, {}, { uid: 0, uname: '', avatar: '' }, { uid: '0', uname: '   ', avatar: '/media/noface.gif' }]) {
         const empty = render(h(MessageEvent, { data: { ...base, reply }, mode }));
         assert.equal(empty.includes('class="reply"'), false, mode);
       }
@@ -131,3 +131,17 @@ test('独立付费事件保留盲盒、SC译文和大航海月份', async () => 
 });
 
 
+
+test('互动事件不生成关系身份标签', async () => {
+  const vite = await createServer({ configFile: false, esbuild: { jsx: 'automatic' }, server: { watch: null }, logLevel: 'error' });
+  try {
+    const { createElement: h } = await import('react');
+    const { renderToStaticMarkup: render } = await import('react-dom/server');
+    const { InteractionEvent } = await vite.ssrLoadModule('/src/compat/laplace/renderer/independent/otherEvents.tsx');
+    for (const mode of ['dashboard', 'obs']) for (const type of [1, 2, 3]) {
+      const html = render(h(InteractionEvent, { mode, data: { type: 'interaction', id: 'entry', action: 1, uid: 1, username: '进入用户', origin: 2, relation: { type, text: '潜在粉丝', icon: '/relation-label.png' } } }));
+      assert.ok(html.includes('进入直播间'));
+      for (const removed of ['relation-wrap', 'relation-icon', '潜在粉丝', '/relation-label.png']) assert.equal(html.includes(removed), false);
+    }
+  } finally { await vite.close(); }
+});
