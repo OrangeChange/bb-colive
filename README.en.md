@@ -10,8 +10,8 @@
 
 A Windows desktop tool for Bilibili Live featuring Danmaku display, TTS readout, theme customization, and local stream history.
 
-<a href="https://github.com/OrangeChange/bb-colive/releases/tag/v1.2.0"><picture><source media="(prefers-color-scheme: dark)" srcset="docs/images/badges/github-version-dark.svg" /><img src="docs/images/badges/github-version-light.svg" alt="GitHub Release 1.2.0" width="118" height="24" /></picture></a>
-<a href="https://gitee.com/orange-chan/bb-colive/releases/tag/v1.2.0"><picture><source media="(prefers-color-scheme: dark)" srcset="docs/images/badges/gitee-version-dark.svg" /><img src="docs/images/badges/gitee-version-light.svg" alt="Gitee Release 1.2.0" width="107" height="24" /></picture></a>
+<a href="https://github.com/OrangeChange/bb-colive/releases/tag/v1.3.0"><picture><source media="(prefers-color-scheme: dark)" srcset="docs/images/badges/github-version-dark.svg" /><img src="docs/images/badges/github-version-light.svg" alt="GitHub Release 1.3.0" width="118" height="24" /></picture></a>
+<a href="https://gitee.com/orange-chan/bb-colive/releases/tag/v1.3.0"><picture><source media="(prefers-color-scheme: dark)" srcset="docs/images/badges/gitee-version-dark.svg" /><img src="docs/images/badges/gitee-version-light.svg" alt="Gitee Release 1.3.0" width="107" height="24" /></picture></a>
 <picture><source media="(prefers-color-scheme: dark)" srcset="docs/images/badges/windows-dark.svg" /><img src="docs/images/badges/windows-light.svg" alt="Windows 10 / 11 x64" width="165" height="24" /></picture>
 <a href="LICENSE"><picture><source media="(prefers-color-scheme: dark)" srcset="docs/images/badges/license-dark.svg" /><img src="docs/images/badges/license-light.svg" alt="Source-available license" width="122" height="24" /></picture></a>
 
@@ -19,7 +19,7 @@ A Windows desktop tool for Bilibili Live featuring Danmaku display, TTS readout,
 
 </div>
 
-> Download badges point to the released v1.2.0 build. This README describes the `main` branch; see [Project Status](docs/project-status.md) for unreleased changes.
+> Download badges point to the released v1.3.0 build. This README describes the `main` branch; see [Project Status](docs/project-status.md) for unreleased changes.
 
 ## Features
 
@@ -27,6 +27,7 @@ Everything from live Danmaku monitoring and standalone overlay windows to voice 
 
 | Feature | What it does |
 | --- | --- |
+| **Danmaku sending & streamer profiles** | Send text, replies, and Live emotes; switch your equipped fan medal. Click an event’s fan medal to view its streamer’s name, avatar, and follower count, and open their profile or live room. |
 | **Live** | View Danmaku, interactions, gifts, Super Chats, Membership events, and system messages; filter by category and amount, and inspect room overview, viewer rankings, and Membership rankings. |
 | **Secondary windows** | Open the Danmaku window and Revenue window; the Revenue window can be split into Gifts, Super Chat, and Membership windows with always-on-top, lock, and click-through support. |
 | **OBS output** | Save Browser Source profiles per room with independent themes, display scale, and light/dark appearance to overlay events on your stream. |

@@ -10,8 +10,8 @@
 
 Bilibili ライブ向けの弾幕表示・音声読み上げ・スタイルカスタマイズ・配信履歴管理ツール。
 
-<a href="https://github.com/OrangeChange/bb-colive/releases/tag/v1.2.0"><picture><source media="(prefers-color-scheme: dark)" srcset="docs/images/badges/github-version-dark.svg" /><img src="docs/images/badges/github-version-light.svg" alt="GitHub リリース 1.2.0" width="118" height="24" /></picture></a>
-<a href="https://gitee.com/orange-chan/bb-colive/releases/tag/v1.2.0"><picture><source media="(prefers-color-scheme: dark)" srcset="docs/images/badges/gitee-version-dark.svg" /><img src="docs/images/badges/gitee-version-light.svg" alt="Gitee リリース 1.2.0" width="107" height="24" /></picture></a>
+<a href="https://github.com/OrangeChange/bb-colive/releases/tag/v1.3.0"><picture><source media="(prefers-color-scheme: dark)" srcset="docs/images/badges/github-version-dark.svg" /><img src="docs/images/badges/github-version-light.svg" alt="GitHub リリース 1.3.0" width="118" height="24" /></picture></a>
+<a href="https://gitee.com/orange-chan/bb-colive/releases/tag/v1.3.0"><picture><source media="(prefers-color-scheme: dark)" srcset="docs/images/badges/gitee-version-dark.svg" /><img src="docs/images/badges/gitee-version-light.svg" alt="Gitee リリース 1.3.0" width="107" height="24" /></picture></a>
 <picture><source media="(prefers-color-scheme: dark)" srcset="docs/images/badges/windows-dark.svg" /><img src="docs/images/badges/windows-light.svg" alt="Windows 10 / 11 x64" width="165" height="24" /></picture>
 <a href="LICENSE"><picture><source media="(prefers-color-scheme: dark)" srcset="docs/images/badges/license-dark.svg" /><img src="docs/images/badges/license-light.svg" alt="ソースアベイラブルライセンス" width="122" height="24" /></picture></a>
 
@@ -19,7 +19,7 @@ Bilibili ライブ向けの弾幕表示・音声読み上げ・スタイルカ�
 
 </div>
 
-> ダウンロードバッジはリリース済みの v1.2.0 を指しています。本ページは現在の `main` ブランチに基づく説明です。インストーラー未収録の更新については[プロジェクト状況](docs/project-status.md)をご覧ください。
+> ダウンロードバッジはリリース済みの v1.3.0 を指しています。本ページは現在の `main` ブランチに基づく説明です。インストーラー未収録の更新については[プロジェクト状況](docs/project-status.md)をご覧ください。
 
 ## 主な機能
 
@@ -27,6 +27,7 @@ Bilibili ライブ向けの弾幕表示・音声読み上げ・スタイルカ�
 
 | 機能 | できること |
 | --- | --- |
+| **弾幕送信・配信者情報** | ライブ画面からテキスト・返信・ライブ絵文字を送信し、着用中のファンメダルを切り替え。イベントのファンメダルから配信者名・アバター・フォロワー数を確認し、プロフィールや配信ルームを開けます。 |
 | **ライブ** | 弾幕・インタラクション・ギフト・Super Chat・大航海・システムメッセージを表示。種別や金額での絞り込み、ルーム概要・視聴者ランキング・大航海ランキングの確認に対応。 |
 | **サブウィンドウ** | 弾幕ウィンドウと収益ウィンドウを表示。収益ウィンドウはギフト・Super Chat・大航海の3つに分割でき、最前面表示・ロック・マウス操作透過に対応。 |
 | **OBS 表示** | ルームごとにブラウザソース設定を保存し、テーマ・表示スケール・明暗モードを個別に設定して配信画面へ出力。 |

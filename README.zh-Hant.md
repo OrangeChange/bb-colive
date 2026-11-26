@@ -10,8 +10,8 @@
 
 面向 B站直播的彈幕展示、語音播報、樣式自訂與記錄回看工具。
 
-<a href="https://github.com/OrangeChange/bb-colive/releases/tag/v1.2.0"><picture><source media="(prefers-color-scheme: dark)" srcset="docs/images/badges/github-version-dark.svg" /><img src="docs/images/badges/github-version-light.svg" alt="GitHub 版本 1.2.0" width="118" height="24" /></picture></a>
-<a href="https://gitee.com/orange-chan/bb-colive/releases/tag/v1.2.0"><picture><source media="(prefers-color-scheme: dark)" srcset="docs/images/badges/gitee-version-dark.svg" /><img src="docs/images/badges/gitee-version-light.svg" alt="Gitee 版本 1.2.0" width="107" height="24" /></picture></a>
+<a href="https://github.com/OrangeChange/bb-colive/releases/tag/v1.3.0"><picture><source media="(prefers-color-scheme: dark)" srcset="docs/images/badges/github-version-dark.svg" /><img src="docs/images/badges/github-version-light.svg" alt="GitHub 版本 1.3.0" width="118" height="24" /></picture></a>
+<a href="https://gitee.com/orange-chan/bb-colive/releases/tag/v1.3.0"><picture><source media="(prefers-color-scheme: dark)" srcset="docs/images/badges/gitee-version-dark.svg" /><img src="docs/images/badges/gitee-version-light.svg" alt="Gitee 版本 1.3.0" width="107" height="24" /></picture></a>
 <picture><source media="(prefers-color-scheme: dark)" srcset="docs/images/badges/windows-dark.svg" /><img src="docs/images/badges/windows-light.svg" alt="Windows 10 / 11 x64" width="165" height="24" /></picture>
 <a href="LICENSE"><picture><source media="(prefers-color-scheme: dark)" srcset="docs/images/badges/license-dark.svg" /><img src="docs/images/badges/license-light.svg" alt="原始碼可用授權" width="122" height="24" /></picture></a>
 
@@ -19,7 +19,7 @@
 
 </div>
 
-> 下載徽章指向已發佈的 1.2.0 版本。本文說明目前主分支；尚未隨安裝檔發佈的更新請見[專案狀態](docs/project-status.md)。
+> 下載徽章指向已發佈的 1.3.0 版本。本文說明目前主分支；尚未隨安裝檔發佈的更新請見[專案狀態](docs/project-status.md)。
 
 ## 功能特色
 
@@ -27,6 +27,7 @@
 
 | 功能 | 可以做什麼 |
 | --- | --- |
+| **彈幕傳送與主播資料** | 在現場傳送文字、回覆與直播表情，切換佩戴的粉絲牌；點擊事件粉絲牌查看對應主播的名稱、頭像、粉絲數，並開啟個人主頁或直播間。 |
 | **直播現場** | 查看彈幕、互動、禮物、醒目留言、大航海與系統訊息；依分類與金額篩選，查看直播間概覽、觀眾榜與大航海榜。 |
 | **獨立視窗** | 開啟彈幕視窗與收益視窗；收益視窗可拆分為禮物、醒目留言與大航海三個視窗，支援置頂、鎖定與滑鼠穿透。 |
 | **OBS 展示** | 為不同直播間儲存瀏覽器來源設定，分別設定主題、縮放與深淺模式，將事件展示到直播畫面。 |

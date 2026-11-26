@@ -10,8 +10,8 @@
 
 面向 B站直播的弹幕展示、语音播报、样式定制与记录回看工具。
 
-<a href="https://github.com/OrangeChange/bb-colive/releases/tag/v1.2.0"><picture><source media="(prefers-color-scheme: dark)" srcset="docs/images/badges/github-version-dark.svg" /><img src="docs/images/badges/github-version-light.svg" alt="GitHub 版本 1.2.0" width="118" height="24" /></picture></a>
-<a href="https://gitee.com/orange-chan/bb-colive/releases/tag/v1.2.0"><picture><source media="(prefers-color-scheme: dark)" srcset="docs/images/badges/gitee-version-dark.svg" /><img src="docs/images/badges/gitee-version-light.svg" alt="Gitee 版本 1.2.0" width="107" height="24" /></picture></a>
+<a href="https://github.com/OrangeChange/bb-colive/releases/tag/v1.3.0"><picture><source media="(prefers-color-scheme: dark)" srcset="docs/images/badges/github-version-dark.svg" /><img src="docs/images/badges/github-version-light.svg" alt="GitHub 版本 1.3.0" width="118" height="24" /></picture></a>
+<a href="https://gitee.com/orange-chan/bb-colive/releases/tag/v1.3.0"><picture><source media="(prefers-color-scheme: dark)" srcset="docs/images/badges/gitee-version-dark.svg" /><img src="docs/images/badges/gitee-version-light.svg" alt="Gitee 版本 1.3.0" width="107" height="24" /></picture></a>
 <picture><source media="(prefers-color-scheme: dark)" srcset="docs/images/badges/windows-dark.svg" /><img src="docs/images/badges/windows-light.svg" alt="Windows 10 / 11 x64" width="165" height="24" /></picture>
 <a href="LICENSE"><picture><source media="(prefers-color-scheme: dark)" srcset="docs/images/badges/license-dark.svg" /><img src="docs/images/badges/license-light.svg" alt="源码可用许可" width="122" height="24" /></picture></a>
 
@@ -19,7 +19,7 @@
 
 </div>
 
-> 下载徽章指向已发布的 1.2.0。本文说明当前主分支；尚未随安装包发布的更新见[项目状态](docs/project-status.md)。
+> 下载徽章指向已发布的 1.3.0。本文说明当前主分支；尚未随安装包发布的更新见[项目状态](docs/project-status.md)。
 
 ## 功能特性
 
@@ -27,6 +27,7 @@
 
 | 功能 | 可以做什么 |
 | --- | --- |
+| **弹幕发送与主播资料** | 在现场发送文字、回复与直播表情，切换佩戴的粉丝牌；点击事件粉丝牌查看对应主播的名称、头像、粉丝数，并打开主页或直播间。 |
 | **直播现场** | 查看弹幕、互动、礼物、醒目留言、大航海和系统消息；按分类与金额筛选，查看直播间概览、观众榜和大航海榜。 |
 | **独立窗口** | 开启弹幕窗与收益窗；收益窗可分为礼物、醒目留言和大航海三个窗口，支持置顶、锁定与鼠标穿透。 |
 | **OBS 展示** | 为不同直播间保存浏览器源配置，分别设置主题、缩放与明暗模式，把事件展示到直播画面。 |

@@ -1,15 +1,15 @@
 # 构建与发布
 
-本文的分发文件对应1.2.0；主分支后续修改不自动进入这些安装包。当前差异见[项目状态](../project-status.md)。
+本文的分发文件对应1.3.0；主分支后续修改不自动进入这些安装包。当前差异见[项目状态](../project-status.md)。
 
 ## 当前分发
 
-客户端版本 1.2.0，正式支持 Windows 10/11 x64。分发文件：
+客户端版本 1.3.0，正式支持 Windows 10/11 x64。分发文件：
 
-- NSIS 安装包：`release/bb-colive_1.2.0_x64-setup.exe`
-- 便携 ZIP：`release/bb-colive_1.2.0_x64-portable.zip`
-- 便携解压目录：`release/bb-colive-1.2.0-portable/`
-- 源码 ZIP：`release/bb-colive-1.2.0-source.zip`，包含生成时的正式源码和文档，并遵循 `.gitattributes` 排除规则。
+- NSIS 安装包：`release/bb-colive_1.3.0_x64-setup.exe`
+- 便携 ZIP：`release/bb-colive_1.3.0_x64-portable.zip`
+- 便携解压目录：`release/bb-colive-1.3.0-portable/`
+- 源码 ZIP：`release/bb-colive-1.3.0-source.zip`，包含生成时的正式源码和文档，并遵循 `.gitattributes` 排除规则。
 
 不包含 MSI。安装包与便携包使用同一次 release 构建，源码包对应同一发行源码。NSIS 原始输出位于 Cargo 目标目录的 `release/bundle/nsis/`。
 
