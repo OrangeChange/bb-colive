@@ -1,4 +1,4 @@
-import { useEventOverlayGeometry, placeEventOverlay, type OverlayRect } from "./eventOverlayGeometry";
+import { useEventOverlayGeometry, useEventOverlayPortal, placeEventOverlay, type OverlayRect } from "./eventOverlayGeometry";
 import { Input } from "./shadcn/input";
 import { Button } from "./shadcn/button";
 import { formatUiDateTime } from "../i18n/format.ts";
@@ -179,6 +179,7 @@ export function EventContextMenu({ event, nickname, eventFontSize, shortcutActio
   const menuRef = useRef<HTMLDivElement>(null);
   const remoteOrigin = useRef<{revision: number; anchor: OverlayRect} | null>(null);
   const geometry = useEventOverlayGeometry(open, triggerRef, {area: eventAreaRef, getAnchorRect, onDetach: () => setOpen(false)});
+  const overlayPortal = useEventOverlayPortal(open, geometry?.boundary);
   const nicknameDialogRef = useRef<HTMLDivElement>(null);
   const nicknameInputRef = useRef<HTMLInputElement>(null);
   const nicknameDragRef = useRef<{ pointerId: number; startX: number; startY: number; startLeft: number; startTop: number } | null>(null);
@@ -258,7 +259,7 @@ export function EventContextMenu({ event, nickname, eventFontSize, shortcutActio
     }
     const next = placeEventOverlay(geometry.anchor, rect.width, rect.height, geometry.boundary, point);
     setPosition({left: next.left, top: next.top, ready: true});
-  }, [open, geometry, remoteOpenRequest?.revision]);
+  }, [open, geometry, remoteOpenRequest?.revision, overlayPortal]);
 
   useLayoutEffect(() => {
     if (open && position.ready && document.activeElement === triggerRef.current)
@@ -537,9 +538,10 @@ export function EventContextMenu({ event, nickname, eventFontSize, shortcutActio
           <LucideEllipsis className="event-menu-glyph" aria-hidden="true" />
         </Button>
       </div>
-      {open && createPortal(
+      {open && overlayPortal && createPortal(
         <div
           ref={menuRef}
+          onWheel={event => event.stopPropagation()}
           role="menu"
           onKeyDown={event => {
             const items = [...event.currentTarget.querySelectorAll<HTMLButtonElement>('button:not(:disabled)')];
@@ -555,6 +557,8 @@ export function EventContextMenu({ event, nickname, eventFontSize, shortcutActio
           style={{
             left: position.left,
             top: position.top,
+            pointerEvents: "auto",
+            overscrollBehavior: "contain",
             visibility: position.ready && geometry ? "visible" : "hidden",
             maxWidth: geometry ? Math.max(1, geometry.boundary.width - 16) : undefined,
             maxHeight: geometry ? Math.min(440, Math.max(1, geometry.boundary.height - 16)) : undefined,
@@ -633,7 +637,7 @@ export function EventContextMenu({ event, nickname, eventFontSize, shortcutActio
             ))}
           </div>
         </div>,
-        document.body,
+        overlayPortal,
       )}
       {user?.avatar && (
         <ImagePreviewOverlay

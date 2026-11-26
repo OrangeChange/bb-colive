@@ -19,10 +19,11 @@ function PopoverContent({
   align = "center",
   sideOffset = 4,
   onEscapeKeyDown,
+  container,
   ...props
-}: React.ComponentProps<typeof PopoverPrimitive.Content>) {
+}: React.ComponentProps<typeof PopoverPrimitive.Content> & { container?: HTMLElement }) {
   return (
-    <PopoverPrimitive.Portal>
+    <PopoverPrimitive.Portal container={container}>
       <PopoverPrimitive.Content
         onEscapeKeyDown={(event) => {
           if (event.isComposing) {

@@ -1,5 +1,5 @@
-import { useEventOverlayGeometry, type OverlayRect } from "./eventOverlayGeometry";
-import { useState, useRef, type ReactElement } from 'react';
+import { useEventOverlayGeometry, useEventOverlayPortal, placeEventOverlay, type OverlayRect } from "./eventOverlayGeometry";
+import { useState, useRef, useLayoutEffect, type ReactElement } from 'react';
 import { useQuery } from '@tanstack/react-query';
 import { UserRound, Radio, RotateCw } from 'lucide-react';
 import { openUrl } from '@tauri-apps/plugin-opener';
@@ -69,20 +69,34 @@ export function FanMedalProfile({ medal, children, anchor, getAnchorRect, onClos
   const [preview, setPreview] = useState<{src: string; name: string} | null>(null);
   const trigger = useRef<HTMLElement>(null);
   const geometry = useEventOverlayGeometry(open, trigger, {getAnchorRect, onDetach: () => {setOpen(false); onClose?.();}});
+  const overlayPortal = useEventOverlayPortal(open, geometry?.boundary);
+  const contentRef = useRef<HTMLDivElement>(null);
+  const [placement, setPlacement] = useState({alignOffset:0,sideOffset:4,ready:false});
+  useLayoutEffect(() => {
+    if(!open){setPlacement(old=>old.ready?{...old,ready:false}:old);return;}
+    const content=contentRef.current;
+    if(!geometry || !content)return;
+    const update=()=>{
+      const next=placeEventOverlay(geometry.anchor,content.offsetWidth,content.offsetHeight,geometry.boundary,{left:geometry.anchor.left,top:geometry.anchor.bottom+4});
+      const value={alignOffset:next.left-geometry.anchor.left,sideOffset:next.top-geometry.anchor.bottom,ready:true};
+      setPlacement(old=>old.ready&&old.alignOffset===value.alignOffset&&old.sideOffset===value.sideOffset?old:value);
+    };
+    update();const observer=new ResizeObserver(update);observer.observe(content);return()=>observer.disconnect();
+  },[open,geometry,overlayPortal]);
   const anchorBox = geometry?.anchor ?? anchor;
   const changeOpen = (next: boolean) => { setOpen(next); if (!next) onClose?.(); };
   return <>
     <Popover open={open} onOpenChange={changeOpen}>
       {anchor ? <PopoverAnchor asChild><span ref={node => {trigger.current = node;}} style={{position:'fixed',left:anchorBox!.left,top:anchorBox!.top,width:anchorBox!.width,height:anchorBox!.height,pointerEvents:'none'}} /></PopoverAnchor> :
         <PopoverTrigger ref={node => {trigger.current=node;}} asChild>{children}</PopoverTrigger>}
-      <PopoverContent align="start" collisionPadding={8} collisionBoundary={geometry?.elements} sticky="always"
-        style={{visibility: geometry ? 'visible' : 'hidden', maxWidth: geometry ? Math.max(1, geometry.boundary.width - 16) : undefined,
-          maxHeight: geometry ? Math.max(1, geometry.boundary.height - 16) : undefined, overflowY: 'auto'}} aria-label={uiText('fanMedalProfile.title')}
+      {overlayPortal && <PopoverContent ref={contentRef} container={overlayPortal!} align="start" side="bottom" alignOffset={placement.alignOffset} sideOffset={placement.sideOffset} avoidCollisions={false}
+        style={{visibility: geometry && placement.ready ? 'visible' : 'hidden', maxWidth: geometry ? Math.max(1, geometry.boundary.width - 16) : undefined,
+          maxHeight: geometry ? Math.max(1, geometry.boundary.height - 16) : undefined, overflowY: 'auto',overscrollBehavior:'contain',pointerEvents:'auto'}} aria-label={uiText('fanMedalProfile.title')}
         className="fan-medal-profile w-72 max-w-[calc(100vw-16px)] font-normal"
-        onClick={e => e.stopPropagation()} onPointerDown={e => e.stopPropagation()}
+        onWheel={e => e.stopPropagation()} onClick={e => e.stopPropagation()} onPointerDown={e => e.stopPropagation()}
         onCloseAutoFocus={e => { if (preview) e.preventDefault(); }}>
         {open && <AnchorProfileContent medal={medal} onPreview={(src, name) => { setPreview({src,name}); setOpen(false); }} />}
-      </PopoverContent>
+      </PopoverContent>}
     </Popover>
     {preview && <ImagePreviewOverlay open src={preview.src} alt={preview.name} label={preview.name}
       closeLabel={uiText('eventContextMenu.closeLabel')} variant="avatar" restoreFocusRef={trigger}

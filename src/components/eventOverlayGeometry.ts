@@ -186,3 +186,32 @@ export function useEventOverlayGeometry(
   }, [open, trigger]);
   return geometry;
 }
+
+/** 宿主浮层共用的绘制范围，过渡动画也不能越过内容区。 */
+export function useEventOverlayPortal(open: boolean, boundary?: OverlayRect) {
+  const [container, setContainer] = useState<HTMLDivElement | null>(null);
+  useLayoutEffect(() => {
+    if (!open) return;
+    const node = document.createElement("div");
+    node.dataset.eventOverlayClip = "";
+    Object.assign(node.style, {
+      position: "fixed",
+      inset: "0",
+      pointerEvents: "none",
+      zIndex: "70",
+      visibility: "hidden",
+    });
+    document.body.appendChild(node);
+    setContainer(node);
+    return () => {
+      node.remove();
+      setContainer(null);
+    };
+  }, [open]);
+  useLayoutEffect(() => {
+    if (!container || !boundary) return;
+    container.style.clipPath = `inset(${boundary.top}px ${Math.max(0, window.innerWidth - boundary.right)}px ${Math.max(0, window.innerHeight - boundary.bottom)}px ${boundary.left}px)`;
+    container.style.visibility = "visible";
+  }, [container, boundary]);
+  return container;
+}

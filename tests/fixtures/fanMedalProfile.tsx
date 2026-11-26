@@ -35,7 +35,7 @@ const client=new QueryClient({defaultOptions:{queries:{retry:false,refetchOnWind
 function Fixture(){
  const [compat,setCompat]=useState<any>(null);
  const [remote,setRemote]=useState<any>(null);
- return <div data-event-overlay-region={params.has("bounds") ? "fixture" : undefined} style={params.has("bounds") ? {position:"fixed",left:72,top:104,width:600,height:240,overflow:"auto",border:"1px solid",padding:8} : {padding:24}}>
+ return <div onWheel={ev=>{if(params.has('wheel-trap') && !ev.currentTarget.contains(ev.target as Node)){ev.preventDefault();ev.currentTarget.scrollTop+=ev.deltaY;}}} data-event-overlay-region={params.has("bounds") ? "fixture" : undefined} style={params.has("bounds") ? {position:"fixed",left:72,top:104,width:600,height:240,overflow:"auto",border:"1px solid",padding:8} : {padding:24}}>
   <section data-scene="live"><EventRow ev={event} liveLayout eventMenu={menu} /></section>
   <section data-scene="review" style={{marginTop:32}}><EventRow ev={event} reviewLayout eventMenu={menu} /></section>
   <section data-scene="output" style={{marginTop:32}}><EventRow ev={event} /></section>
