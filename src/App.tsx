@@ -543,7 +543,7 @@ function MainArea({
         />
       )}
       {!showEmpty && <UrgentSystemNotice event={visibleUrgent} onDismiss={() => setDismissedUrgentId(visibleUrgent?.id ?? null)} />}
-      <main ref={eventAreaRef} className="relative min-h-0 flex-1 bg-bg">
+      <main ref={eventAreaRef} data-event-overlay-region="live" className="relative min-h-0 flex-1 bg-bg">
         <div className="absolute inset-0 min-h-0">
         {showEmpty ? (
           <EmptyState />

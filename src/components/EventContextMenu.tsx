@@ -1,3 +1,4 @@
+import { useEventOverlayGeometry, placeEventOverlay, type OverlayRect } from "./eventOverlayGeometry";
 import { Input } from "./shadcn/input";
 import { Button } from "./shadcn/button";
 import { formatUiDateTime } from "../i18n/format.ts";
@@ -43,12 +44,11 @@ export type EventMenuHandlers = {
   onToggleMark?: (regionKey: string, event: DanmakuEvent) => void;
 };
 
-export function clampRemoteMenuPosition(left: number, top: number, width: number, height: number, bounds: { left: number; top: number; right: number; bottom: number }, margin = 8) {
-  const minLeft = Math.max(margin, bounds.left);
-  const minTop = Math.max(margin, bounds.top);
-  const maxLeft = Math.max(minLeft, Math.min(window.innerWidth - margin, bounds.right) - width);
-  const maxTop = Math.max(minTop, Math.min(window.innerHeight - margin, bounds.bottom) - height);
-  return { left: Math.max(minLeft, Math.min(left, maxLeft)), top: Math.max(minTop, Math.min(top, maxTop)), ready: true };
+export function clampRemoteMenuPosition(left: number, top: number, width: number, height: number, bounds: { left: number; top: number; right: number; bottom: number }) {
+  const boundary={...bounds,width:bounds.right-bounds.left,height:bounds.bottom-bounds.top};
+  const anchor={left,top,right:left,bottom:top,width:0,height:0};
+  const point=placeEventOverlay(anchor,width,height,boundary,{left,top});
+  return {left:point.left,top:point.top,ready:true};
 }
 
 export type EventMenuScope = "live" | "review";
@@ -59,6 +59,7 @@ type EventContextMenuProps = {
   eventFontSize?: number;
   shortcutActions: readonly VoiceShortcutAction[];
   eventAreaRef?: RefObject<HTMLElement | null>;
+  getAnchorRect?: () => OverlayRect | null;
   scope?: EventMenuScope;
   handlers: EventMenuHandlers;
   onInteractionChange?: (active: boolean) => void;
@@ -157,7 +158,7 @@ function formatEventTime(ts: number): string {
   return formatUiDateTime(ts, { second: "2-digit" });
 }
 
-export function EventContextMenu({ event, nickname, eventFontSize, shortcutActions, eventAreaRef, scope = "live", handlers, remoteOpenRequest, onInteractionChange, dismissRevision }: EventContextMenuProps) {
+export function EventContextMenu({ event, nickname, eventFontSize, shortcutActions, eventAreaRef, getAnchorRect, scope = "live", handlers, remoteOpenRequest, onInteractionChange, dismissRevision }: EventContextMenuProps) {
   useUiLanguage();
   const [open, setOpen] = useState(false);
 
@@ -176,6 +177,8 @@ export function EventContextMenu({ event, nickname, eventFontSize, shortcutActio
   const [ageNow, setAgeNow] = useState(() => Date.now());
   const triggerRef = useRef<HTMLButtonElement>(null);
   const menuRef = useRef<HTMLDivElement>(null);
+  const remoteOrigin = useRef<{revision: number; anchor: OverlayRect} | null>(null);
+  const geometry = useEventOverlayGeometry(open, triggerRef, {area: eventAreaRef, getAnchorRect, onDetach: () => setOpen(false)});
   const nicknameDialogRef = useRef<HTMLDivElement>(null);
   const nicknameInputRef = useRef<HTMLInputElement>(null);
   const nicknameDragRef = useRef<{ pointerId: number; startX: number; startY: number; startLeft: number; startTop: number } | null>(null);
@@ -245,46 +248,17 @@ export function EventContextMenu({ event, nickname, eventFontSize, shortcutActio
   }, [open]);
 
   useLayoutEffect(() => {
-    if (!open) return;
-    const updatePosition = () => {
-      const menu = menuRef.current;
-      if (!menu) return;
-      if (remoteOpenRequest) {
-        const menuRect = menu.getBoundingClientRect();
-        const margin = 8;
-        const area = eventAreaRef?.current?.getBoundingClientRect();
-        setPosition(clampRemoteMenuPosition(remoteOpenRequest.left, remoteOpenRequest.top, menuRect.width, menuRect.height, area ?? { left: 0, top: 0, right: window.innerWidth, bottom: window.innerHeight }, margin));
-        return;
-      }
-      const trigger = triggerRef.current;
-      if (!trigger) return;
-      const triggerRect = trigger.getBoundingClientRect();
-      const menuRect = menu.getBoundingClientRect();
-      const gap = 8;
-      const margin = 8;
-      const belowTop = triggerRect.bottom + gap;
-      const aboveTop = triggerRect.top - menuRect.height - gap;
-      const top = belowTop + menuRect.height <= window.innerHeight - margin || aboveTop < margin
-        ? Math.min(belowTop, window.innerHeight - menuRect.height - margin)
-        : aboveTop;
-      const left = Math.min(
-        Math.max(margin, triggerRect.right - menuRect.width),
-        window.innerWidth - menuRect.width - margin,
-      );
-      setPosition({
-        left: Math.max(margin, left),
-        top: Math.max(margin, top),
-        ready: true,
-      });
-    };
-    updatePosition();
-    window.addEventListener("resize", updatePosition);
-    window.addEventListener("scroll", updatePosition, true);
-    return () => {
-      window.removeEventListener("resize", updatePosition);
-      window.removeEventListener("scroll", updatePosition, true);
-    };
-  }, [open, remoteOpenRequest?.revision, eventAreaRef]);
+    if (!open || !geometry || !menuRef.current) return;
+    const rect = {width: menuRef.current.offsetWidth, height: menuRef.current.offsetHeight};
+    let point: {left: number; top: number} | undefined;
+    if (remoteOpenRequest) {
+      if (remoteOrigin.current?.revision !== remoteOpenRequest.revision) remoteOrigin.current = {revision: remoteOpenRequest.revision, anchor: geometry.anchor};
+      point = {left: remoteOpenRequest.left + geometry.anchor.left - remoteOrigin.current.anchor.left,
+        top: remoteOpenRequest.top + geometry.anchor.top - remoteOrigin.current.anchor.top};
+    }
+    const next = placeEventOverlay(geometry.anchor, rect.width, rect.height, geometry.boundary, point);
+    setPosition({left: next.left, top: next.top, ready: true});
+  }, [open, geometry, remoteOpenRequest?.revision]);
 
   useLayoutEffect(() => {
     if (open && position.ready && document.activeElement === triggerRef.current)
@@ -581,7 +555,9 @@ export function EventContextMenu({ event, nickname, eventFontSize, shortcutActio
           style={{
             left: position.left,
             top: position.top,
-            visibility: position.ready ? "visible" : "hidden",
+            visibility: position.ready && geometry ? "visible" : "hidden",
+            maxWidth: geometry ? Math.max(1, geometry.boundary.width - 16) : undefined,
+            maxHeight: geometry ? Math.min(440, Math.max(1, geometry.boundary.height - 16)) : undefined,
             "--event-context-menu-event-size": `${menuEventSize}px`,
           } as CSSProperties}
         >

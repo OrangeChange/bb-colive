@@ -109,6 +109,7 @@ function EventMatchSummary({
     >
       {event ? (
         <EventRowSlot><EventRow
+          interactiveFanMedals
           ev={event}
           archiveLayout reviewLayout
           showTime
@@ -178,7 +179,7 @@ export function ReviewOwnerEventResults({
   }
 
   return (
-    <section aria-label={uiText("reviewOwnerEventResults.aria_label4")} data-style-api="1"  className="event-area review review-owner-event-results flex min-w-0 flex-col gap-2">
+    <section aria-label={uiText("reviewOwnerEventResults.aria_label4")} data-style-api="1" data-event-overlay-region="review-results" className="event-area review review-owner-event-results flex min-w-0 flex-col gap-2">
 
       {loading && <div role="status" aria-live="polite" className="ui-type-meta text-t3">{uiText("reviewOwnerEventResults.ReviewOwnerEventResults3")}</div>}
       {error && page && (

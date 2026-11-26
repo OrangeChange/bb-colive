@@ -733,7 +733,7 @@ test("来源右键请求打开软件菜单，并按宿主能力执行复制和�
 test("iframe 菜单坐标仍受事件区域和窗口边界约束", () => {
   const previousWindow = globalThis.window;
   globalThis.window = { innerWidth: 300, innerHeight: 200 };
-  try { assert.deepEqual(clampRemoteMenuPosition(999, 999, 120, 80, { left: 20, top: 10, right: 260, bottom: 180 }), { left: 140, top: 100, ready: true }); }
+  try { assert.deepEqual(clampRemoteMenuPosition(999, 999, 120, 80, { left: 20, top: 10, right: 260, bottom: 180 }), { left: 132, top: 92, ready: true }); }
   finally { globalThis.window = previousWindow; }
 });
 after(async () => vite?.close());

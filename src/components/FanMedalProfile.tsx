@@ -1,3 +1,4 @@
+import { useEventOverlayGeometry, type OverlayRect } from "./eventOverlayGeometry";
 import { useState, useRef, type ReactElement } from 'react';
 import { useQuery } from '@tanstack/react-query';
 import { UserRound, Radio, RotateCw } from 'lucide-react';
@@ -56,22 +57,27 @@ function AnchorProfileContent({ medal, onPreview }: { medal: FanMedalInfo; onPre
   </>;
 }
 
-export function FanMedalProfile({ medal, children, anchor, onClose }: {
+export function FanMedalProfile({ medal, children, anchor, getAnchorRect, onClose }: {
   medal: FanMedalInfo;
   children?: ReactElement;
   anchor?: { left: number; top: number; width: number; height: number };
+  getAnchorRect?: () => OverlayRect | null;
   onClose?: () => void;
 }) {
   useUiLanguage();
   const [open, setOpen] = useState(Boolean(anchor));
   const [preview, setPreview] = useState<{src: string; name: string} | null>(null);
-  const trigger = useRef<HTMLButtonElement>(null);
+  const trigger = useRef<HTMLElement>(null);
+  const geometry = useEventOverlayGeometry(open, trigger, {getAnchorRect, onDetach: () => {setOpen(false); onClose?.();}});
+  const anchorBox = geometry?.anchor ?? anchor;
   const changeOpen = (next: boolean) => { setOpen(next); if (!next) onClose?.(); };
   return <>
     <Popover open={open} onOpenChange={changeOpen}>
-      {anchor ? <PopoverAnchor asChild><span style={{position:'fixed',left:anchor.left,top:anchor.top,width:anchor.width,height:anchor.height,pointerEvents:'none'}} /></PopoverAnchor> :
-        <PopoverTrigger ref={trigger} asChild>{children}</PopoverTrigger>}
-      <PopoverContent align="start" collisionPadding={8} aria-label={uiText('fanMedalProfile.title')}
+      {anchor ? <PopoverAnchor asChild><span ref={node => {trigger.current = node;}} style={{position:'fixed',left:anchorBox!.left,top:anchorBox!.top,width:anchorBox!.width,height:anchorBox!.height,pointerEvents:'none'}} /></PopoverAnchor> :
+        <PopoverTrigger ref={node => {trigger.current=node;}} asChild>{children}</PopoverTrigger>}
+      <PopoverContent align="start" collisionPadding={8} collisionBoundary={geometry?.elements} sticky="always"
+        style={{visibility: geometry ? 'visible' : 'hidden', maxWidth: geometry ? Math.max(1, geometry.boundary.width - 16) : undefined,
+          maxHeight: geometry ? Math.max(1, geometry.boundary.height - 16) : undefined, overflowY: 'auto'}} aria-label={uiText('fanMedalProfile.title')}
         className="fan-medal-profile w-72 max-w-[calc(100vw-16px)] font-normal"
         onClick={e => e.stopPropagation()} onPointerDown={e => e.stopPropagation()}
         onCloseAutoFocus={e => { if (preview) e.preventDefault(); }}>

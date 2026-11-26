@@ -1157,6 +1157,7 @@ export const EventRow = memo(function EventRow({
   locatedHighlight = false,
   eventMenu,
   eventMenuScope,
+  interactiveFanMedals,
   giftEffectResolver,
   onPlayGiftEffect,
   onContentSizeChange,
@@ -1181,6 +1182,7 @@ export const EventRow = memo(function EventRow({
   locatedHighlight?: boolean;
   eventMenu?: EventMenuHandlers;
   eventMenuScope?: EventMenuScope;
+  interactiveFanMedals?: boolean;
   giftEffectResolver?: GiftEffectResolver;
   onPlayGiftEffect?: GiftEffectHandler;
   onContentSizeChange?: (element: HTMLImageElement) => void;
@@ -1254,7 +1256,7 @@ export const EventRow = memo(function EventRow({
   );
 
   return (
-    <EventDisplayContext.Provider value={{ ...displayPreferences, eventStyleSettings, liveLayout, archiveLayout, enableBilibiliVideoLinks, userNicknames, eventStyleType, maskUsername, interactiveFanMedals: Boolean(eventMenu) }}>
+    <EventDisplayContext.Provider value={{ ...displayPreferences, eventStyleSettings, liveLayout, archiveLayout, enableBilibiliVideoLinks, userNicknames, eventStyleType, maskUsername, interactiveFanMedals: interactiveFanMedals ?? Boolean(eventMenu) }}>
       <div
         className={[
           "event event-row group",

@@ -26,7 +26,7 @@ import { openUrl } from "@tauri-apps/plugin-opener";
 import { buildEventContentText } from "../events/eventContentText.ts";
 import { CompatibleEventRenderer, compatibleListSurfaceOf, compatibleRendererSurface, type CompatibleEventRender } from "../compat/CompatibleEventRenderer.tsx";
 import { type BlivechatContextRequest, type BlivechatSourceControl } from "../compat/blivechat/BlivechatSourceSurface.tsx";
-import type { CompatibleRowBounds } from "../compat/compatibleRowInteraction.ts";
+import { compatibleElementBounds, type CompatibleRowBounds } from "../compat/compatibleRowInteraction.ts";
 import { CompatibleListSurface as BlivechatSourceSurface } from "../compat/CompatibleListSurface.tsx";
 import { dispatchCompatibleLiveAction, type CompatibleLiveAction } from "../compat/compatibleLiveBridge.ts";
 import { useVoiceSettings } from "../voice/voiceSettings.ts";
@@ -882,7 +882,11 @@ export function EventList({
           if (!event) return null;
           const bounds = sourceHover?.eventId === eventId ? sourceHover : null;
           return <div key={eventId} className="event-row-with-menu" data-source-hovered={bounds ? "true" : undefined} style={{ position: "fixed", left: bounds?.left ?? sourceMenu?.x ?? 0, top: bounds?.top ?? sourceMenu?.y ?? 0, width: bounds?.width ?? 0, height: bounds?.height ?? 0, ...(bounds?.actionsRightInset ? { "--event-menu-right-inset": `${bounds.actionsRightInset}px` } : {}), pointerEvents: "none", zIndex: 20 }}>
-            <EventContextMenu event={event} nickname={event.user ? userNicknames[event.user.uid] : undefined} eventFontSize={eventFontSize} scope={liveLayout ? "live" : "review"} shortcutActions={shortcutActions} eventAreaRef={eventAreaRef} handlers={{ ...eventMenuHandlers, regionKey: feedKey, onPlayGiftEffect }} dismissRevision={sourceDismissRevision} onInteractionChange={active => { setSourceMenuEventId(active ? eventId! : null); if (!active) setSourceMenu(null); }} remoteOpenRequest={sourceMenu ? { revision: sourceMenu.revision, left: sourceMenu.x, top: sourceMenu.y } : undefined} />
+            <EventContextMenu event={event} nickname={event.user ? userNicknames[event.user.uid] : undefined} eventFontSize={eventFontSize} scope={liveLayout ? "live" : "review"} shortcutActions={shortcutActions} eventAreaRef={eventAreaRef} handlers={{ ...eventMenuHandlers, regionKey: feedKey, onPlayGiftEffect }} dismissRevision={sourceDismissRevision} onInteractionChange={active => { setSourceMenuEventId(active ? eventId! : null); if (!active) setSourceMenu(null); }} getAnchorRect={() => {
+              const frame=scrollRef.current?.querySelector('iframe');
+              const row=frame && [...(frame.contentDocument?.querySelectorAll<HTMLElement>('[data-compatible-event-id],[data-event-id]') ?? [])].find(node => (node.dataset.compatibleEventId ?? node.dataset.eventId) === eventId);
+              return frame && row ? compatibleElementBounds(frame,row) : null;
+            }} remoteOpenRequest={sourceMenu ? { revision: sourceMenu.revision, left: sourceMenu.x, top: sourceMenu.y } : undefined} />
           </div>;
         })()}
       </div>

@@ -5,7 +5,8 @@ import { EventRow } from '../../src/components/EventRow';
 import { MsgType } from '../../src/protocol/types';
 import { applyThemeToDocument } from '../../src/theme';
 import { setUiLanguage } from '../../src/i18n';
-import { observeCompatibleMedals } from '../../src/compat/compatibleRowInteraction';
+import { EventContextMenu } from '../../src/components/EventContextMenu';
+import { observeCompatibleMedals, compatibleElementBounds } from '../../src/compat/compatibleRowInteraction';
 import { FanMedalProfile } from '../../src/components/FanMedalProfile';
 import { useState } from 'react';
 import '../../src/shadcn.css';
@@ -33,13 +34,23 @@ const menu={regionKey:'fixture',onSpeakEvent:()=>{},isFavorite:()=>false,onToggl
 const client=new QueryClient({defaultOptions:{queries:{retry:false,refetchOnWindowFocus:false}}});
 function Fixture(){
  const [compat,setCompat]=useState<any>(null);
- return <div style={{padding:24}}>
+ const [remote,setRemote]=useState<any>(null);
+ return <div data-event-overlay-region={params.has("bounds") ? "fixture" : undefined} style={params.has("bounds") ? {position:"fixed",left:72,top:104,width:600,height:240,overflow:"auto",border:"1px solid",padding:8} : {padding:24}}>
   <section data-scene="live"><EventRow ev={event} liveLayout eventMenu={menu} /></section>
   <section data-scene="review" style={{marginTop:32}}><EventRow ev={event} reviewLayout eventMenu={menu} /></section>
   <section data-scene="output" style={{marginTop:32}}><EventRow ev={event} /></section>
   <iframe title="compatible" style={{marginTop:32,width:300,height:80}} srcDoc={'<div data-event-id="medal-event"><div class="fans-medal">兼容粉丝牌</div></div>'}
-   onLoad={e=>observeCompatibleMedals(e.currentTarget,(_,anchor)=>setCompat({medal:event.user.medal,anchor}))} />
-  {compat&&<FanMedalProfile medal={compat.medal} anchor={compat.anchor} onClose={()=>setCompat(null)} />}
+   onLoad={e=>{
+     const frame=e.currentTarget;
+     observeCompatibleMedals(frame,(_,anchor,getAnchorRect)=>setCompat({medal:event.user.medal,anchor,getAnchorRect}));
+     frame.contentDocument?.addEventListener('contextmenu', ev=>{
+       ev.preventDefault();const host=frame.getBoundingClientRect(),node=frame.contentDocument!.querySelector<HTMLElement>('.fans-medal')!;
+       setRemote({revision:Date.now(),left:host.left+ev.clientX,top:host.top+ev.clientY,getAnchorRect:()=>compatibleElementBounds(frame,node)});
+     });
+   }} />
+  {remote && <EventContextMenu event={event} shortcutActions={[]} handlers={menu} remoteOpenRequest={remote} getAnchorRect={remote.getAnchorRect} onInteractionChange={active=>{if(!active)setRemote(null);}} />}
+  {params.has("bounds") && <div style={{height:500}} />}
+  {compat&&<FanMedalProfile medal={compat.medal} anchor={compat.anchor} getAnchorRect={compat.getAnchorRect} onClose={()=>setCompat(null)} />}
  </div>;
 }
 createRoot(document.getElementById('root')!).render(<QueryClientProvider client={client}><Fixture /></QueryClientProvider>);

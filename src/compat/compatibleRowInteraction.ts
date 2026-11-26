@@ -1,3 +1,4 @@
+import type { OverlayRect } from "../components/eventOverlayGeometry";
 export interface CompatibleRowBounds { eventId: string; left: number; top: number; width: number; height: number; actionsRightInset?: number }
 
 /** Same-origin hosts expose row geometry without changing source markup. */
@@ -52,7 +53,7 @@ export function observeCompatibleRows(frame: HTMLIFrameElement, publish: (row: C
 
 
 /** 宿主中的粉丝牌入口；不向兼容主题插入新的布局节点。 */
-export function observeCompatibleMedals(frame: HTMLIFrameElement, select: (eventId: string, bounds: {left: number; top: number; width: number; height: number}) => void): () => void {
+export function observeCompatibleMedals(frame: HTMLIFrameElement, select: (eventId: string, bounds: {left: number; top: number; width: number; height: number}, getAnchorRect: () => OverlayRect | null) => void): () => void {
   const doc = frame.contentDocument;
   if (!doc) return () => {};
   const selector = '.fans-medal,yt-live-chat-author-medal-renderer,#chat-medal';
@@ -67,11 +68,22 @@ export function observeCompatibleMedals(frame: HTMLIFrameElement, select: (event
     event.preventDefault(); event.stopPropagation();
     const box = node.getBoundingClientRect(), host = frame.getBoundingClientRect();
     const scale = frame.clientWidth ? host.width / frame.clientWidth : 1;
-    select(id, {left: host.left + box.left * scale, top: host.top + box.top * scale, width: box.width * scale, height: box.height * scale});
+    select(id, {left: host.left + box.left * scale, top: host.top + box.top * scale, width: box.width * scale, height: box.height * scale}, () => compatibleElementBounds(frame, node));
   };
   const key = (event: KeyboardEvent) => { if (event.key === 'Enter' || event.key === ' ') click(event); };
   mark();
   const observer = new MutationObserver(mark); observer.observe(doc, {childList: true, subtree: true});
   doc.addEventListener('click', click, true); doc.addEventListener('keydown', key, true);
   return () => { observer.disconnect(); doc.removeEventListener('click', click, true); doc.removeEventListener('keydown', key, true); };
+}
+
+
+export function compatibleElementBounds(frame: HTMLIFrameElement, node: HTMLElement): OverlayRect | null {
+  if(!node.isConnected || !frame.isConnected)return null;
+  const box=node.getBoundingClientRect(),host=frame.getBoundingClientRect();
+  if(box.bottom<=0 || box.top>=frame.clientHeight || box.right<=0 || box.left>=frame.clientWidth)return null;
+  const scale=frame.clientWidth ? host.width/frame.clientWidth : 1;
+  const left=host.left+Math.max(0,box.left)*scale,top=host.top+Math.max(0,box.top)*scale;
+  const right=host.left+Math.min(frame.clientWidth,box.right)*scale,bottom=host.top+Math.min(frame.clientHeight,box.bottom)*scale;
+  return {left,top,right,bottom,width:right-left,height:bottom-top};
 }

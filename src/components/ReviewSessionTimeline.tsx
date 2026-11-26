@@ -986,6 +986,7 @@ export function ReviewSessionTimeline({
       {targetLocateMessage && <div role="status" className="shrink-0 border-b border-warning/30 bg-warning/5 px-3 py-2 ui-type-meta text-warning">{targetLocateMessage}</div>}
       <div
         ref={scrollRef}
+        data-event-overlay-region="review-timeline"
         data-review-timeline-scroll
 
         data-style-api="1"
