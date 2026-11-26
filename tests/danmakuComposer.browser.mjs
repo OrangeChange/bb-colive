@@ -15,6 +15,8 @@ await page.addInitScript(() => {
   Date.now = () => originalNow() + offset;
   window.advanceSendingClock = (ms) => (offset += ms);
   window.sent = [];
+  window.roomInfoRequests = 0;
+  window.releaseRoomWarmup = undefined;
   window.requestCounts = { nav: 0, emoticons: 0 };
   window.navCompleted = 0;
   window.preparationRefreshTimers = [];
@@ -40,6 +42,29 @@ await page.addInitScript(() => {
     transformCallback: () => 1,
     unregisterCallback() {},
     invoke: async (cmd, args = {}) => {
+      if (cmd === "prepare_live_http") {
+        const request = args.request;
+        const rid = ++id;
+        requests.set(rid, {
+          method: request.kind === "send" ? "POST" : "GET",
+          url: request.kind === "send"
+            ? `https://api.live.bilibili.com/msg/send?${request.query}`
+            : `https://api.live.bilibili.com/xlive/web-room/v1/index/getInfoByUser?room_id=${request.roomId}`,
+          headers: Object.entries(request.headers),
+          data: request.body,
+        });
+        return rid;
+      }
+      if (cmd === "cancel_live_http") { requests.delete(args.rid); return; }
+      if (cmd === "execute_live_http") {
+        const q = requests.get(args.rid);
+        if (!q) throw new Error("cancelled");
+        if (q.url.includes("getInfoByUser") && ++window.roomInfoRequests === 1)
+          await new Promise(resolve => { window.releaseRoomWarmup = resolve; });
+        if (q.method === "POST") window.sent.push(q);
+        const bytes = await window.__TAURI_INTERNALS__.invoke("plugin:http|fetch_read_body", args);
+        return { status: 200, body: new TextDecoder().decode(new Uint8Array(bytes.slice(0, -1))) };
+      }
       if (cmd === "plugin:http|fetch") {
         const n = ++id;
         requests.set(n, args.clientConfig);
@@ -251,8 +276,13 @@ try {
   await page.goto("http://127.0.0.1:1437/tests/fixtures/danmakuComposer.html", {
     waitUntil: "commit",
   });
+  await page.waitForFunction(() => !!window.releaseRoomWarmup);
+  assert.equal(await page.getByRole("button", { name: "发送弹幕", exact: true }).isEnabled(), true);
   await page.getByRole("button", { name: "发送弹幕", exact: true }).click();
   const field = page.getByRole("textbox", { name: "弹幕内容" });
+  await field.waitFor();
+  assert.equal(await page.evaluate(() => window.roomInfoRequests), 1);
+  await page.evaluate(() => window.releaseRoomWarmup());
   const read = () =>
     page.evaluate(
       () =>

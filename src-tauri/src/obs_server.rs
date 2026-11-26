@@ -130,8 +130,7 @@ fn gift_resource_response(status: StatusCode, headers: &HeaderMap, body: Vec<u8>
 }
 async fn gift_resource(Path((token, name)): Path<(String, String)>, headers: HeaderMap, method: Method) -> Response {
     let url = match gift_resource_url(&token) { Ok(url) => url, Err(status) => return status.into_response() };
-    static CLIENT: std::sync::OnceLock<reqwest::Client> = std::sync::OnceLock::new();
-    let client = CLIENT.get_or_init(reqwest::Client::new);
+    let client = crate::http_client::shared_http_client();
     let mut request = client.request(method.clone(), url.clone());
     for key in ["range", "if-range"] {
         if let Some(value) = headers.get(key) { request = request.header(key, value); }

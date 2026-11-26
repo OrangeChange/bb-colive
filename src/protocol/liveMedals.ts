@@ -1,6 +1,6 @@
 import { fetch } from "@tauri-apps/plugin-http";
 import { biliGet, BILI_HEADERS, type NavData } from "./api";
-import { liveRequestCookie } from "./danmakuSending";
+import { liveRequestCookie, getLiveRoomSendingInfo } from "./danmakuSending";
 import { sessionCookieValue } from "./danmakuSendingModel";
 import { parseMedalPanel, parseWornMedal } from "./liveMedalsModel";
 import type { Session } from "./login";
@@ -18,11 +18,7 @@ export async function getLiveMedals(
       signal,
     ),
     page === 1
-      ? biliGet<any>(
-          `https://api.live.bilibili.com/xlive/web-room/v1/index/getInfoByUser?room_id=${roomId}`,
-          requestCookie,
-          signal,
-        )
+      ? getLiveRoomSendingInfo(roomId, cookie, signal)
       : Promise.resolve(undefined),
   ]);
   return {

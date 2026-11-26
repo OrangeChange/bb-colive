@@ -8,6 +8,7 @@ import {
   ApiError,
 } from "./api";
 import type { Session } from "./login";
+import { liveHttp, postLiveDanmaku } from "./liveDanmakuTransport";
 import {
   buildDanmakuForm,
   parseSendResult,
@@ -33,11 +34,13 @@ const emoticons = new Map<
   { packages: RoomEmoticonPackage[]; expiresAt: number }
 >();
 const loadingEmoticons = new Map<string, Promise<RoomEmoticonPackage[]>>();
+const loadingRoomInfo = new Map<string, Promise<any>>();
 export function clearLiveSendingPreparation() {
   prepared = undefined;
   preparing = undefined;
   emoticons.clear();
   loadingEmoticons.clear();
+  loadingRoomInfo.clear();
 }
 export function invalidateLiveEmoticons(cookie: string, roomId?: number) {
   const prefix = `${cookie}\n`;
@@ -148,6 +151,34 @@ export async function prepareLiveDanmaku(
   preparing = { key, promise };
   return promise;
 }
+/** 同一账号、房间的并发查询共用连接，不保留佩戴状态缓存。 */
+export async function getLiveRoomSendingInfo(roomId: number, cookie: string, signal?: AbortSignal) {
+  if (signal?.aborted) throw new Error("cancelled");
+  const key = `${cookie}\n${roomId}`;
+  let pending = loadingRoomInfo.get(key);
+  if (!pending) {
+    pending = (async () => {
+      const timeout = AbortSignal.timeout(15000);
+      const requestCookie = await liveRequestCookie(cookie, timeout);
+      const response = await liveHttp({ kind: "roomInfo", roomId, headers: { ...BILI_HEADERS, Cookie: requestCookie } }, timeout);
+      if (!response.ok) throw new ApiError("room information unavailable", response.status);
+      const result = await response.json();
+      if (result.code !== 0) throw new ApiError("room information unavailable", result.code);
+      return result.data;
+    })().finally(() => {
+      if (loadingRoomInfo.get(key) === pending) loadingRoomInfo.delete(key);
+    });
+    loadingRoomInfo.set(key, pending);
+  }
+  return awaitSharedResult(pending, signal);
+}
+
+export async function prepareLiveRoomSending(session: Session, roomId: number, signal: AbortSignal) {
+  await awaitSharedResult(prepareLiveDanmaku(session), signal);
+  if (signal.aborted) return;
+  await getLiveRoomSendingInfo(roomId, session.cookie, signal);
+}
+
 export async function getRoomEmoticonPackages(
   roomId: number,
   cookie: string,
@@ -232,18 +263,15 @@ export async function sendLiveDanmaku(
       Math.floor(Date.now() / 1000),
     );
     submitted = true;
-    const response = await fetch(
-      `https://api.live.bilibili.com/msg/send?${query}`,
+    const response = await postLiveDanmaku(
+      query,
       {
-        method: "POST",
-        headers: {
-          ...BILI_HEADERS,
-          Cookie: ready.cookie,
-          referer: `https://live.bilibili.com/${request.roomId}`,
-        },
-        body: form,
-        signal: controller.signal,
+        ...BILI_HEADERS,
+        Cookie: ready.cookie,
+        referer: `https://live.bilibili.com/${request.roomId}`,
       },
+      form,
+      controller.signal,
     );
     if (!response.ok) return { status: "unknown" as const };
     const result = parseSendResult(await response.json());

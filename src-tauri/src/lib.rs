@@ -3,6 +3,8 @@ mod ui_messages;
 mod data_paths;
 mod data_migration;
 mod updates;
+mod http_client;
+mod live_danmaku_http;
 // Tauri 后端：薄壳，只做窗口管理 + 插件注册
 // 协议层/存储逻辑全在前端 TS
 
@@ -2596,6 +2598,9 @@ pub fn run() {
         // JSON 配置：登录 cookie / 窗口布局 / 样式参数
         .plugin(tauri_plugin_store::Builder::default().build())
         .invoke_handler(tauri::generate_handler![
+            live_danmaku_http::prepare_live_http,
+            live_danmaku_http::execute_live_http,
+            live_danmaku_http::cancel_live_http,
             updates::commands::restore_software_update,
             updates::commands::check_software_update,
             updates::commands::download_software_update,

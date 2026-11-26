@@ -22,6 +22,7 @@ import {
 import {
   sendLiveDanmaku,
   prepareLiveDanmaku,
+  prepareLiveRoomSending,
   clearLiveSendingPreparation,
   invalidateLiveEmoticons,
 } from "../protocol/danmakuSending";
@@ -78,6 +79,12 @@ export function DanmakuComposer({
   const [limit, setLimit] = useState<number>();
   const [emptyError, setEmptyError] = useState(false);
   const available = phase === "loggedIn" && !!context && status === "connected";
+  useEffect(() => {
+    if (!available || !session || !roomId) return;
+    const controller = new AbortController();
+    void prepareLiveRoomSending(session, roomId, controller.signal).catch(() => {});
+    return () => controller.abort();
+  }, [available, context, session?.savedAt, session?.cookie]);
   useEffect(() => {
     if (phase !== "loggedIn") clearLiveSendingPreparation();
   }, [phase]);
