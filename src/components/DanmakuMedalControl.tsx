@@ -1,12 +1,5 @@
 import { useEffect, useState } from "react";
-import {
-  Award,
-  Check,
-  Circle,
-  CircleCheck,
-  ChevronDown,
-  RefreshCw,
-} from "lucide-react";
+import { Award, Check, ChevronDown, RefreshCw } from "lucide-react";
 import { FanMedalBadge } from "./FanMedalBadge";
 import { Button } from "./shadcn/button";
 import { getLiveMedals, wearLiveMedal } from "../protocol/liveMedals";
@@ -146,25 +139,16 @@ export function DanmakuMedalControl({
                 disabled={loading || wearing || disabled}
                 onClick={() => void wear(m)}
                 aria-pressed={m.worn}
+                title={
+                  m.lighted
+                    ? uiText("danmaku.medalLit")
+                    : uiText("danmaku.medalUnlit")
+                }
               >
                 <FanMedalBadge
                   medal={{ name: m.name, level: m.level, isLighted: m.lighted }}
                 />
                 <span className="mr-auto truncate text-t2">{m.anchor}</span>
-                <span
-                  title={
-                    m.lighted
-                      ? uiText("danmaku.medalLit")
-                      : uiText("danmaku.medalUnlit")
-                  }
-                  aria-label={
-                    m.lighted
-                      ? uiText("danmaku.medalLit")
-                      : uiText("danmaku.medalUnlit")
-                  }
-                >
-                  {m.lighted ? <CircleCheck size={14} /> : <Circle size={14} />}
-                </span>
                 {m.worn && (
                   <Check size={14} aria-label={uiText("danmaku.medalWorn")} />
                 )}
